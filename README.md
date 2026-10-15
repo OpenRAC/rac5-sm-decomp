@@ -10,7 +10,7 @@ An early matching-decompilation workspace for the **USA PlayStation 2** version
 parts of [OpenRAC's RAC2 project](https://github.com/OpenRAC/rac2-gc-decomp):
 authored source belongs in `src/`, game-derived material stays local, and a function
 only counts as matched after a byte-identical build. This repository does **not**
-yet have a qualified compiler, a function catalogue, or a matching build.
+yet have a qualified compiler, a retail function catalogue, or a match-counting build.
 
 ## What is established
 
@@ -47,6 +47,9 @@ also keeps the complete boot `.text`, retail `PT_LOAD` header and raw
 file-backed bytes exact after linking twenty authored C functions together.
 They remain in `nonmatching/` until the compiler, reviewed function
 catalogue, complete ELF metadata and runtime gates are satisfied.
+The [boot trial gate](docs/BOOT-TRIAL-GATE.md) now rebuilds all 17 C objects
+from pinned local tools and verifies the entire load image in one private run;
+its report explicitly counts **zero** accepted matches.
 The [VU overlay audit](docs/DVP-OVERLAYS.md) also reproduces the boot's 31
 non-loaded DVP sections privately and records why full-file identity and
 PCSX2's executable CRC remain separate checks.
@@ -163,10 +166,12 @@ profile have been qualified, keep one authored C/C++ definition per function
 in `src/`. A useful attempt that does not match belongs in `nonmatching/`.
 Only a qualified toolchain reproducing the **complete retail program bytes at
 every applicable placement** can establish a match. Compiling successfully,
-matching a few instructions, or comparing masked bytes cannot. This project
-does not yet provide that build or checker, so current PRs must not claim C
-matches or report a percentage. RAC2's compiler configuration is not evidence
-for this game ([compiler status](docs/COMPILER-STATUS.md)).
+matching a few instructions, or comparing masked bytes cannot. The
+[reproducible boot trial gate](docs/BOOT-TRIAL-GATE.md) checks candidate objects
+and loaded bytes, but the project has no qualified match-counting build yet.
+Current PRs must not claim C matches or report a percentage. RAC2's compiler
+configuration is not evidence for this game
+([compiler status](docs/COMPILER-STATUS.md)).
 
 ## Repository layout
 
@@ -176,7 +181,7 @@ for this game ([compiler status](docs/COMPILER-STATUS.md)).
 | `config/boot/`, `config/levels/` | Generated symbol names, addresses, module hashes and export offsets; no matches |
 | `tools/`, `tests/` | ISO9660, ELF, SNR2 and local relocation tools, repository guard and synthetic tests |
 | `src/` | Authored C/C++ definitions after the matching pipeline is qualified |
-| `nonmatching/` | Useful attempts that do not reproduce retail bytes |
+| `nonmatching/` | Provisional C attempts, including exact slices awaiting profile qualification |
 | `progress/` | Reserved for measured progress after catalogue and build qualification |
 | `baserom/`, `asm/`, `build/`, `toolchain/` | Local-only game inputs and outputs |
 

@@ -20,6 +20,9 @@ not qualified; this adds no counted matches.
 All twenty now also link together into the complete boot text while preserving
 the retail raw `PT_LOAD` bytes and program header
 ([combined witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)).
+The [boot trial gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identity,
+rebuilds all 17 objects from authored C and checks that full link in one run;
+its machine-readable report remains provisional with zero counted matches.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
 `nop`. An [isolated RAC5 short-loop threshold trial](COMPILER-LOOP-TRIAL.md)
 now reproduces that function while leaving all earlier object hashes unchanged.
@@ -30,8 +33,10 @@ third short loop with an unfilled branch delay now matches in
 families still need controls before qualifying the compiler profile.
 
 In particular, RAC2's reconstructed GNU EE-GCC game profile and its Sony SDK
-profile have **not** been qualified for Size Matters. The project has no
-`config/cflags.txt`, C/C++ match count, or compiler patch stack yet.
+profile have **not** been qualified for Size Matters. The repository now has
+a [provisional boot compiler trial](../config/boot/compiler_trial.json) and one
+[RAC5-only patch](../tools/compiler/patches/0001-rac5-short-loop-six.patch),
+but no qualified `config/cflags.txt` or C/C++ match count.
 
 To qualify one, first establish a byte-identical assembly baseline for the
 verified boot and loaded level programs. Then use independently reconstructed

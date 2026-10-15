@@ -1,0 +1,25 @@
+{
+  "id": "rac5-boot-gnu-ee-loop-six-trial-20261015",
+  "status": "provisional",
+  "scope": "SCUS_976.15 boot only",
+  "source": {
+    "mips_c_before_patch_sha256": "c76c0bec5b56c198381ab2a4fc60c161a4287e8312d7d1fdea3d1e6a0e1af614",
+    "mips_h_sha256": "52f470a043ffbba535582e2f08a8353d23bbf6521b1b63e241847f464891d9e6",
+    "patch": "tools/compiler/patches/0001-rac5-short-loop-six.patch",
+    "patch_sha256_lf": "8762332cf1b3f2c85c055051251f88b2f66c5faa8bf256a6f07f089c3e0caced"
+  },
+  "tools": {
+    "cpp_sha256": "2ac3d8d3ca177e6705ac2cbdd1bd9e9a7181ac3e40f6230dea6875c3218ec155",
+    "cc1_sha256": "9614eceecbcb1f7a64cf3a4ad3c827b3e257ab6b1f934e42fcbc4ded0f0584d6",
+    "as_sha256": "c71a15dba889fc273b0b699986de7316d056b94ae2155ad2c2573eaa62b8d902",
+    "sn_assembler_sha256": "c839dd63facabe7b76573c114056be61eaa7b3aa2329dd546930ab8f98898c76",
+    "sn_linker_sha256": "80f3724a63ce3c77c8b00d075f5c49448636518700ae251e5d6a6c809bbf5f48"
+  },
+  "flags": {
+    "cpp": [],
+    "cc1": ["-quiet", "-O2", "-G0"],
+    "as": []
+  },
+  "expected_objects": 17,
+  "expected_function_witnesses": 20
+}

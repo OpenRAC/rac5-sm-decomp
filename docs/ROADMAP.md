@@ -41,6 +41,8 @@
    raw retail `PT_LOAD` bytes and header. A combined trial now preserves them
    with twenty C functions linked together (`docs/BOOT-C-WITNESS.md`), but does
    not yet qualify the compiler, whole-file identity, or runtime behavior.
+   The [boot trial gate](BOOT-TRIAL-GATE.md) now rebuilds all C objects from
+   SHA-pinned local tools and checks the complete load image reproducibly.
    The [VU overlay audit](DVP-OVERLAYS.md) privately reproduces the 31 DVP
    sections while preserving the exact load segment; the full ELF and PCSX2
    executable CRC still differ.
