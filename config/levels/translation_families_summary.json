@@ -1,28 +1,35 @@
 {
   "status": "structural_translation_leads",
   "module_count": 21,
-  "group_count": 2362,
-  "placement_body_bytes": 7693152,
-  "template_body_bytes": 654712,
-  "callgraph_resolved_groups": 920,
-  "callgraph_placement_body_bytes": 3761628,
-  "groups_with_pointer_or_nonzero_tail": 478,
-  "placement_bytes_with_pointer_or_nonzero_tail": 1101456,
-  "extra_candidate_savings_beyond_exact": 5039904,
-  "template_lead_upper_bound_bytes": 28128988,
+  "group_count": 2416,
+  "placement_body_bytes": 8150148,
+  "template_body_bytes": 687524,
+  "callgraph_resolved_groups": 959,
+  "callgraph_placement_body_bytes": 4167524,
+  "groups_with_pointer_or_nonzero_tail": 496,
+  "placement_bytes_with_pointer_or_nonzero_tail": 1198916,
+  "unique_data_window_groups": 36,
+  "unique_data_window_placement_bytes": 396016,
+  "extra_candidate_savings_beyond_exact": 5447924,
+  "template_lead_upper_bound_bytes": 27720968,
   "rejection_counts": {
     "boundary_disagreement": 433,
     "code_relocation_or_unpaired_hi": 849,
-    "different_local_code_targets": 140,
-    "nonuniform_data_translation": 938,
+    "different_local_code_targets": 246,
+    "nonuniform_data_translation": 759,
     "repeated_module": 281,
-    "unresolved_callgraph_dependencies": 1248
+    "unresolved_callgraph_dependencies": 1267
   },
   "largest_groups": [
     {
       "body_bytes": 32796,
       "placements": 20,
       "fingerprint": "41c6ab0da9b0393ace6de61c6d868c436bcd368f5670b9074df9b77eaabbdde7"
+    },
+    {
+      "body_bytes": 6536,
+      "placements": 20,
+      "fingerprint": "e592541a085b5a3f371f94bca58540bf87fbb1485b786cd4c71b7c3f6cb94236"
     },
     {
       "body_bytes": 6068,
@@ -48,6 +55,11 @@
       "body_bytes": 2492,
       "placements": 21,
       "fingerprint": "9419b0b3723a73e5abe663c186fe5b3116abf8249f7299a8602fb4e01be3f1a4"
+    },
+    {
+      "body_bytes": 2804,
+      "placements": 18,
+      "fingerprint": "49661c38bbfdfa0d19da503e946f423148a203f10c8ec872f2a3a95f4b786337"
     },
     {
       "body_bytes": 2236,
@@ -108,21 +120,11 @@
       "body_bytes": 1472,
       "placements": 20,
       "fingerprint": "7710bfe88d4fa570139e15a9b3b3bee9a90a1ab5c373779a9a0c7db44bf6e346"
-    },
-    {
-      "body_bytes": 1420,
-      "placements": 20,
-      "fingerprint": "36f2ca435ec48ecb3c52de990749e3f3077768050feff14980642dd0942f030e"
-    },
-    {
-      "body_bytes": 1408,
-      "placements": 20,
-      "fingerprint": "a921e8288907da61ae537ec70572e7f3347050e7afcdae0ab7bde5c013434a41"
     }
   ],
   "inventory_sha256": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
   "ghidra_crosscheck_sha256": "0f00587cd4f346955d8264343f93cde9259170ed8e0c61259cada3682b979f9d",
   "overall_percent": null,
   "bytematch_ready": false,
-  "warning": "The candidate-size scenario assumes each structural lead is one shared template. Data-target semantics and complete function ownership are not proven; this is not an unconditional upper bound or progress denominator."
+  "warning": "The candidate-size scenario assumes each structural lead is one shared template. Unique 64-byte data windows corroborate target bytes but not source-level identity; complete function ownership is also unproven. This is not an unconditional upper bound or progress denominator."
 }

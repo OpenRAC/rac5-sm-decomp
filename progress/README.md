@@ -20,7 +20,7 @@ now records 124,356 possible entry intervals, 74,051 stronger bounded
 candidates and an exact-duplicate upper bound of 33,168,892 candidate bytes.
 Relocation-masked groups remain review leads, not counted progress.
 An independent R5900 Ghidra pass agrees with **91,350** of those candidate
-boundaries. The data-translation and closed local-callgraph checks retain **2,362
+boundaries. The data-target and closed local-callgraph checks retain **2,416
 shared template leads**, including one 32,796-byte body across all twenty numbered
 levels. The [audit guide](../docs/LEVEL-FUNCTION-INVENTORY.md) explains why
 these are useful deduplication worklists but still not an exact unique-code
@@ -32,7 +32,7 @@ newly called function entries and **229** contiguous cases without a recovered
 indirect reference. These remain candidate evidence, not counted C progress.
 The split-body audit selects **4,369** corroborated segments inside **2,651**
 oversized candidate intervals, leaving 187,276 surrounding bytes unique.
-Its **26,042,088-byte** result is a
+Its **25,634,068-byte** result is a
 conditional deduplication scenario, not a verified unique-code denominator.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,

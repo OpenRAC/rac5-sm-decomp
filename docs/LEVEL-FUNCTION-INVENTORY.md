@@ -147,21 +147,26 @@ contains only counts and hashes, never program bytes. See the
 filters masked groups to one placement per module, requires every boundary
 to agree with Ghidra, preserves named relocation symbols and addends, and
 requires local HI16/LO16 data references to move by one consistent
-module-specific delta when the body has HI16 data references. With none, the
-data shift is zero and any unpaired LO16 values must still agree. A further
+module-specific delta when the body has HI16 data references. If two data
+regions move by different offsets, an alternate review path requires an
+identical **64-byte data window unique within each module payload** at every
+corresponding HI16 target; unpaired LO16 values must follow one of the
+verified low-half shifts. With no HI16 targets, the data shift is zero and
+unpaired LO16 values must still agree. A further
 closed local-callgraph pass requires each
 J/JAL target either to be the same relative offset within the body or to
 identify a Ghidra-corroborated callee family already accepted by those rules.
 Unknown code targets, 32-bit pointers, differing target families and open
 callgraph dependencies remain excluded. The audit also considers pointer-only
 and nonzero-tail bodies when their complete body boundary agrees with Ghidra;
-their uncertain surrounding bytes are not included. **2,362 groups** passed
-the combined structural checks, including **920** closed local-callgraph
-groups and **478** groups involving a pointer-only or nonzero-tail placement.
-They contain **7,693,152 placement body bytes** but only **654,712 body bytes**
+their uncertain surrounding bytes are not included. **2,416 groups** passed
+the combined structural checks, including **959** closed local-callgraph
+groups, **496** groups involving a pointer-only or nonzero-tail placement, and
+**36** groups requiring unique data windows. They contain **8,150,148**
+placement body bytes but only **687,524** body bytes
 when one representative per group is counted. Their additional candidate
-savings beyond raw-identical groups are **5,039,904 bytes**, giving a
-**28,128,988-byte conditional structural-lead scenario** over the original
+savings beyond raw-identical groups are **5,447,924 bytes**, giving a
+**27,720,968-byte conditional structural-lead scenario** over the original
 candidate intervals. It assumes those leads really share code; this number is
 *not* a proved upper bound on unique game code or a progress denominator.
 The saving uses connected components of exact and structural body links, so
@@ -198,8 +203,8 @@ The audit removes each selected parent from exact duplicate grouping before
 adding its disjoint verified segments, while leaving the residual bytes
 unique. It then recomputes connected components of exact and structural links.
 Exact candidate savings rise from **1,846,532** to **2,550,912 bytes** and
-combined candidate savings from **6,886,436** to **8,973,336 bytes**. This
-yields a **26,042,088-byte conditional candidate scenario**, 2,086,900 bytes
+combined candidate savings from **7,294,456** to **9,381,356 bytes**. This
+yields a **25,634,068-byte conditional candidate scenario**, 2,086,900 bytes
 below the prior scenario. The calculation never counts a parent and its split
 segments at the same time. Ghidra-derived starts and structural equivalence
 remain review leads, so this is **not** a qualified unique-code denominator or
