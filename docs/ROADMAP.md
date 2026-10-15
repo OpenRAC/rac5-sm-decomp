@@ -20,8 +20,11 @@
    directly to EE memory before constructors (`docs/RELOCATED-IMAGE.md`).
    Candidate code intervals for all 21 placements are backed by exact
    jump-relocation site sets and private assembly comparisons
-   (`docs/SNR2-ASSEMBLY-CAMPAIGN.md`). Further review of their boundaries,
-   data layout and runtime behavior remains necessary; do not reuse RAC2's
+   (`docs/SNR2-ASSEMBLY-CAMPAIGN.md`). The
+   [frontend and level 01 program gate](LEVEL-PROGRAM-GATE.md) now combines
+   exact assembly with the full original module and two measured relocated
+   images. Further review of other boundaries, shared code, data layout and
+   runtime behavior remains necessary; do not reuse RAC2's
    WAD layout.
 3. **Establish an assembly baseline (in progress).** The entire 498,900-byte
    boot `.text` section now reassembles exactly with a measured local SN
@@ -30,7 +33,9 @@
    809,872 file-backed boot load bytes. Candidate code intervals in all 21
    SNR2 placements also reassemble exactly (36,341,888 cumulative bytes by
    placement), but their remaining bytes are not independent assembly
-   baselines. Verify BSS/runtime behavior
+   baselines. The first two complete SNR2 module files now have private
+   integration gates, with non-code bytes supplied by the pinned disc. Verify
+   BSS/runtime behavior
    before calling this a full-program baseline. Non-code copying is not
    decompilation.
 4. **Identify compiler profiles.** Mangled C++ exports and ProDG SNR2 modules
@@ -58,9 +63,13 @@
    (`config/boot/witness_boundaries.tsv`). Review remaining boundaries,
    padding, aliases and placements before producing a retail function
    catalogue; commit metadata only.
-6. **Start C/C++ matching (boot only).** `MEMCARD_Busy__Fv` is the first
-   accepted 16-byte boot placement. Other boot witnesses remain provisional;
-   level functions need their own qualified build and placement checks.
+6. **Start scoped C/C++ matching.** `MEMCARD_Busy__Fv` is the first
+   accepted 16-byte boot placement. The
+   [shared level witness](LEVEL-C-WITNESS.md) accepts one 8-byte authored
+   function at twenty level placements. Other functions still need reviewed
+   boundaries, compiler profiles and placement
+   checks. The [scoped progress snapshot](../progress/README.md) records
+   measured status without publishing a premature game-wide percentage.
 
 The tools complete step 1, the SNR2 metadata part of step 2, and the boot's
 file-backed assembly/load-image part of step 3. Runtime and level-program
