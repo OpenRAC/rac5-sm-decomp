@@ -8,7 +8,8 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-from rel import HEADER, MAGIC, RELOCATION, SYMBOL, parse_module, render_exports, render_modules  # noqa: E402
+from rel import (HEADER, MAGIC, RELOCATION, SYMBOL, packed_relocation_types,
+                 parse_module, render_exports, render_modules)  # noqa: E402
 
 
 def sample() -> bytearray:
@@ -31,6 +32,7 @@ class RelTests(unittest.TestCase):
         self.assertEqual(module.imports, ("external",))
         self.assertEqual(module.import_references, (("external", 1),))
         self.assertEqual(module.relocation_types, ((4, 1),))
+        self.assertEqual(module.packed_relocation_types, ())
         self.assertEqual([(x.name, x.address) for x in module.exports],
                          [("lib_main__FiPPc", 0xA0)])
         self.assertIn("LVL/TEST.REL\t224\t", render_modules([module]))
@@ -53,3 +55,35 @@ class RelTests(unittest.TestCase):
         struct.pack_into("<I", blob, 0xC8, 0xD8)
         with self.assertRaisesRegex(ValueError, "symbol"):
             parse_module("test", bytes(blob))
+
+    def test_packed_local_fixups_and_hi16_pair(self) -> None:
+        data = bytearray(0x200)
+        # Absolute HI16 at 0x100, then relative LO16, 26-bit and 32-bit sites.
+        stream = b"\x01" + struct.pack("<I", 0x100) + b"\x04\x06\x07" + b"\0" * 5
+        data[0x180:0x180 + len(stream)] = stream
+        self.assertEqual(packed_relocation_types(bytes(data), 0x180, 0x180),
+                         ((0, 1), (1, 1), (2, 1), (3, 1)))
+
+    def test_packed_fixups_reject_bad_sites_and_unpaired_hi16(self) -> None:
+        data = bytearray(0x190)
+        data[0x180:0x189] = b"\x01" + struct.pack("<I", 0x100) + b"\0" * 4
+        with self.assertRaisesRegex(ValueError, "no following LO16"):
+            packed_relocation_types(bytes(data), 0x180, 0x180)
+        data[0x180:0x185] = b"\x03" + struct.pack("<I", 0x102)
+        with self.assertRaisesRegex(ValueError, "invalid packed relocation site"):
+            packed_relocation_types(bytes(data), 0x180, 0x180)
+
+    def test_packed_fixups_require_terminator_and_zero_padding(self) -> None:
+        data = bytearray(0x186)
+        data[0x180:0x185] = b"\x03" + struct.pack("<I", 0x100)
+        data[0x185] = 4
+        with self.assertRaisesRegex(ValueError, "unterminated"):
+            packed_relocation_types(bytes(data), 0x180, 0x180)
+        data = bytearray(0x18B)
+        data[0x180:0x185] = b"\x03" + struct.pack("<I", 0x100)
+        data[0x18A] = 1
+        with self.assertRaisesRegex(ValueError, "nonzero data"):
+            packed_relocation_types(bytes(data), 0x180, 0x180)
+        data[0x180:0x185] = b"\x03" + struct.pack("<I", 0x180)
+        with self.assertRaisesRegex(ValueError, "invalid packed relocation site"):
+            packed_relocation_types(bytes(data), 0x180, 0x180)
