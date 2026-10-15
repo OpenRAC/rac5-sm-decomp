@@ -11,6 +11,7 @@ import argparse
 import bisect
 import hashlib
 import json
+import struct
 from collections import Counter
 from pathlib import Path
 
@@ -22,6 +23,7 @@ RANGES = WORK / "ranges"
 SUMMARY = ROOT / "config/levels/flow_range_summary.json"
 INVENTORY = ROOT / "config/levels/function_inventory_summary.json"
 CROSSCHECK = ROOT / "config/levels/ghidra_crosscheck_summary.json"
+CODE_CATALOGUE = ROOT / "config/levels/code_intervals.tsv"
 
 
 def digest(path: Path) -> str:
@@ -52,27 +54,74 @@ def parse_ranges(functions: list[dict[str, str]]) -> tuple[list[tuple[int, int, 
     return intervals, claimed
 
 
-def classify(static: list[dict[str, str]], functions: list[dict[str, str]]) -> tuple[dict, str]:
+def body_owner(address: int, intervals: list[tuple[int, int, int]],
+               boundaries: list[int]) -> int | None:
+    idx = bisect.bisect_right(boundaries, address) - 1
+    return intervals[idx][2] if idx >= 0 and address <= intervals[idx][1] else None
+
+
+def direct_noncall_target(word: int, site: int) -> int | None:
+    """Decode R5900 direct branches and J; exclude link/call forms."""
+    opcode = word >> 26
+    if opcode == 2:  # J
+        return ((site + 4) & 0xF0000000) | ((word & 0x03FFFFFF) << 2)
+    branch = opcode in (4, 5, 6, 7, 20, 21, 22, 23)
+    if opcode == 1:  # REGIMM: BLTZ/BGEZ and likely variants, excluding *AL
+        branch = ((word >> 16) & 31) in (0, 1, 2, 3)
+    elif opcode in (16, 17, 18):  # COP0/1/2 branch-on-condition
+        branch = ((word >> 21) & 31) == 8 and ((word >> 16) & 31) in (0, 1, 2, 3)
+    if branch:
+        immediate = word & 0xFFFF
+        if immediate & 0x8000:
+            immediate -= 0x10000
+        return site + 4 + (immediate << 2)
+    return None
+
+
+def same_body_edges(code: bytes, intervals: list[tuple[int, int, int]],
+                    boundaries: list[int]) -> set[int]:
+    """Find targets of non-call direct control transfers within one Ghidra body."""
+    supported = set()
+    for offset in range(0, len(code), 4):
+        site = offset + 0x80
+        word = struct.unpack_from("<I", code, offset)[0]
+        target = direct_noncall_target(word, site)
+        if target is None:
+            continue
+        owner = body_owner(site, intervals, boundaries)
+        if owner is not None and body_owner(target, intervals, boundaries) == owner:
+            supported.add(target)
+    return supported
+
+
+def classify(static: list[dict[str, str]], functions: list[dict[str, str]],
+             code: bytes | None = None) -> tuple[dict, str]:
     intervals, covered = parse_ranges(functions)
     boundaries = [row[0] for row in intervals]
     entries = {int(row["entry"], 16) for row in functions}
+    supported = same_body_edges(code, intervals, boundaries) if code is not None else set()
     counts: Counter[str] = Counter()
     work = ["# Candidate placement status, never an accepted function claim.",
             "start\tstatic_status\tghidra_owner\tflow_disposition"]
     for row in static:
         start = int(row["start"], 16)
-        idx = bisect.bisect_right(boundaries, start) - 1
-        owner = intervals[idx][2] if idx >= 0 and start <= intervals[idx][1] else None
+        owner = body_owner(start, intervals, boundaries)
         disposition = ("same_entry" if start in entries else
                        "inside_other_body" if owner is not None else "unowned")
         counts[f"{row['status']}:{disposition}"] += 1
+        if disposition == "inside_other_body" and start in supported:
+            counts["internal_block_with_same_body_direct_edge"] += 1
         if disposition != "same_entry" or row["status"] in ("no_return", "nonzero_tail"):
             work.append(f"0x{start:08X}\t{row['status']}\t"
-                        f"{f'0x{owner:08X}' if owner is not None else ''}\t{disposition}")
+                        f"{f'0x{owner:08X}' if owner is not None else ''}\t"
+                        f"{disposition}{'+same_body_edge' if start in supported else ''}")
     return ({"ghidra_body_bytes_by_placement": covered,
             "ghidra_functions": len(functions),
             "candidate_entries": len(static),
-            "disposition_counts": dict(sorted(counts.items())),
+            "disposition_counts": dict(sorted(
+                (key, value) for key, value in counts.items() if ":" in key)),
+            "internal_block_with_same_body_direct_edge":
+                counts["internal_block_with_same_body_direct_edge"],
             "candidate_internal_block_leads": sum(
                 value for key, value in counts.items() if key.endswith(":inside_other_body"))},
             "\n".join(work) + "\n")
@@ -99,15 +148,28 @@ def main() -> None:
                 or summary["overall_percent"] is not None
                 or summary["bytematch_ready"] is not False
                 or summary["candidate_internal_block_leads"] != sum(
-                    row["candidate_internal_block_leads"] for row in summary["modules"])):
+                    row["candidate_internal_block_leads"] for row in summary["modules"])
+                or summary["internal_block_with_same_body_direct_edge"] != sum(
+                    row["internal_block_with_same_body_direct_edge"]
+                    for row in summary["modules"])
+                or not 0 <= summary["internal_block_with_same_body_direct_edge"] <=
+                summary["candidate_internal_block_leads"]):
             raise ValueError("flow-range snapshot is stale or overclaims")
         print(f"flow-range candidate metadata current: {len(modules)} modules")
         return
     results = []
     private_work = {}
+    code_rows = {row["module"]: row for row in rows(CODE_CATALOGUE)}
+    if set(code_rows) != set(modules):
+        raise ValueError("level code catalogue differs from pinned modules")
     for module in modules:
         path = RANGES / f"{module}.code.bin.ghidra.tsv"
-        summary, work = classify(rows(WORK / f"{module}.tsv"), rows(path))
+        code = (WORK / f"{module}.code.bin").read_bytes()
+        if (len(code) != int(code_rows[module]["interval_bytes"])
+                or hashlib.sha256(code).hexdigest() != code_rows[module]["sha256"]):
+            raise ValueError(f"{module} private code slice differs from pinned interval")
+        summary, work = classify(rows(WORK / f"{module}.tsv"), rows(path),
+                                 code)
         original = next(row for row in crosscheck["modules"] if row["module"] == module)
         if summary["ghidra_functions"] != original["ghidra_auto_functions"]:
             raise ValueError(f"{module} Ghidra function count changed")
@@ -120,6 +182,8 @@ def main() -> None:
                   row["ghidra_body_bytes_by_placement"] for row in results),
               "candidate_internal_block_leads": sum(
                   row["candidate_internal_block_leads"] for row in results),
+              "internal_block_with_same_body_direct_edge": sum(
+                  row["internal_block_with_same_body_direct_edge"] for row in results),
               "inventory_sha256": digest(INVENTORY),
               "crosscheck_sha256": digest(CROSSCHECK),
               "overall_percent": None, "bytematch_ready": False,

@@ -74,7 +74,7 @@ separates bounded entries from uncertain pointer/table entries and identifies
 exact duplicates plus relocation-masked review leads. No ByteMatch report is
 published yet.
 The independent Ghidra pass corroborates 91,350 candidate level boundaries;
-531 masked families also pass a uniform data-translation check. Neither
+593 masked families pass data-translation and closed local-callgraph checks. Neither
 turns unresolved function/data boundaries into a game-wide percentage.
 Names, symbol addresses and module hashes are research metadata, not proof of
 matching code. The [roadmap](docs/ROADMAP.md) tracks the remaining gates.

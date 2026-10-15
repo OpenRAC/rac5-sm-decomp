@@ -68,8 +68,9 @@
    entries and unresolved spans. Review those boundaries and masked duplicate
    leads before declaring a unique-code denominator.
    An independent Ghidra pass now corroborates 91,350 candidate boundaries;
-   531 masked groups pass uniform data-translation checks. Review the
-   disagreements, local code-call targets and remaining data references
+   593 masked groups pass data-translation and closed local-callgraph checks;
+   1,209 internal-block leads also have a same-body direct edge. Review the
+   remaining disagreements, indirect targets and data references
    before treating these leads as one shared source family each.
    A Ghidra body-range pass also flags 1,590 candidate starts inside another
    body; review indirect flows and embedded data before assigning ownership.

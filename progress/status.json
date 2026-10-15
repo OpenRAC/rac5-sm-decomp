@@ -203,15 +203,17 @@
     "no_return_cross_limit_or_noncontiguous": 1634
   },
   "structural_shared_code_leads": {
-    "families": 531,
-    "placement_body_bytes": 1744600,
-    "template_body_bytes": 151048,
-    "candidate_upper_bound_after_translation": 31674280,
+    "families": 593,
+    "placement_body_bytes": 1919820,
+    "template_body_bytes": 165688,
+    "local_callgraph_resolved_families": 61,
+    "candidate_upper_bound_after_translation": 31520528,
     "qualified_unique_denominator": null
   },
   "flow_range_review": {
     "ghidra_body_bytes_by_placement": 32805452,
     "possible_internal_block_entries": 1590,
+    "with_same_body_direct_edge": 1209,
     "qualified_unique_denominator": null
   },
   "remaining_for_gamewide_report": [
@@ -432,7 +434,7 @@
     "accepted_level_c_source_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",
     "level_function_inventory": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
     "level_ghidra_crosscheck": "0f00587cd4f346955d8264343f93cde9259170ed8e0c61259cada3682b979f9d",
-    "level_translation_families": "c13ee28c96d664f9a0147764d4b9e38138104f7e050d90acb0857d8c29bfb749",
-    "level_flow_ranges": "913bb91dcb07f06f76cc15b48c861727c36bde2346857076be9468384e751f1a"
+    "level_translation_families": "289a4e464d02e57e4b569706393db353135a2a0de7b8f62c7a8e504264052773",
+    "level_flow_ranges": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8"
   }
 }

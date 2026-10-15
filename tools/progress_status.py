@@ -264,6 +264,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "families": translation["group_count"],
             "placement_body_bytes": translation["placement_body_bytes"],
             "template_body_bytes": translation["template_body_bytes"],
+            "local_callgraph_resolved_families":
+                translation["callgraph_resolved_groups"],
             "candidate_upper_bound_after_translation":
                 translation["template_lead_upper_bound_bytes"],
             "qualified_unique_denominator": None,
@@ -271,6 +273,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
         "flow_range_review": {
             "ghidra_body_bytes_by_placement": flow["ghidra_body_bytes_by_placement"],
             "possible_internal_block_entries": flow["candidate_internal_block_leads"],
+            "with_same_body_direct_edge":
+                flow["internal_block_with_same_body_direct_edge"],
             "qualified_unique_denominator": None,
         },
         "remaining_for_gamewide_report": [

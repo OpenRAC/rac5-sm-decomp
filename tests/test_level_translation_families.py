@@ -8,7 +8,8 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-from level_translation_families import (ghidra_confirmed, local_references,  # noqa: E402
+from level_translation_families import (close_callgraph, ghidra_confirmed,  # noqa: E402
+                                        local_code_references, local_references,
                                         lows_follow_translation, uniform_translation)
 from rel import PackedRelocation  # noqa: E402
 
@@ -39,6 +40,37 @@ class LevelTranslationFamiliesTests(unittest.TestCase):
                          ({0: 0x200}, {}))
         self.assertIsNone(local_references(bytes(source), 0x100, 0x108, 0x280,
                                            fixups, [0x100, 0x104]))
+
+    def test_local_jump_requires_correlated_callee_or_internal_offset(self) -> None:
+        source = bytearray(0x400)
+        struct.pack_into("<I", source, 0x100, 0x0C000080)  # jal 0x200
+        fixups = [PackedRelocation(2, 0x100)]
+        callee = (16, "callee-family")
+        self.assertEqual(local_code_references(bytes(source), 0x100, 0x104,
+                                               fixups, {("A", 0x200): callee}, "A"),
+                         {0: ("callee", callee)})
+        self.assertIsNone(local_code_references(bytes(source), 0x100, 0x104,
+                                                 fixups, {}, "A"))
+        struct.pack_into("<I", source, 0x100, 0x08000041)  # j 0x104
+        self.assertEqual(local_code_references(bytes(source), 0x100, 0x108,
+                                               fixups, {}, "A"),
+                         {0: ("internal", 4)})
+        self.assertIsNone(local_code_references(bytes(source), 0x100, 0x108,
+                                                 [PackedRelocation(3, 0x100)], {}, "A"))
+
+    def test_callgraph_closes_only_when_dependencies_are_accepted(self) -> None:
+        base = (8, "base")
+        middle = (12, "middle")
+        outer = (16, "outer")
+        unknown = (20, "unknown")
+        pending = {middle: ({}, {base}), outer: ({}, {middle}),
+                   unknown: ({}, {(24, "missing")})}
+        self.assertEqual(close_callgraph(pending, {base}), {middle, outer})
+        cycle_a = (28, "cycle-a")
+        cycle_b = (32, "cycle-b")
+        pending[cycle_a] = ({}, {cycle_b})
+        pending[cycle_b] = ({}, {cycle_a})
+        self.assertEqual(close_callgraph(pending, {base}), {middle, outer})
 
 
 if __name__ == "__main__":

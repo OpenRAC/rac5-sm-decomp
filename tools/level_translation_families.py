@@ -85,6 +85,45 @@ def ghidra_confirmed(row: dict[str, str], functions: dict[int, dict[str, str]]) 
                 and int(function["body_bytes"]) == int(row["body_bytes"]))
 
 
+def local_code_references(data: bytes, start: int, end: int, fixups: list,
+                          known_entries: dict[tuple[str, int], tuple[int, str]],
+                          module: str) -> dict[int, tuple[str, int | tuple[int, str]]] | None:
+    """Resolve each local J/JAL to an internal offset or corroborated callee.
+
+    Unknown targets and 32-bit code pointers fail closed. The masked body hash
+    already fixes the instruction opcode and relocation-site positions.
+    """
+    references = {}
+    for fixup in fixups:
+        if fixup.kind == 3:
+            return None
+        if fixup.kind != 2:
+            continue
+        word = WORD.unpack_from(data, fixup.site)[0]
+        if word >> 26 not in (2, 3):
+            return None
+        target = (word & 0x03FFFFFF) << 2
+        if start <= target < end:
+            references[fixup.site - start] = ("internal", target - start)
+        elif (module, target) in known_entries:
+            references[fixup.site - start] = ("callee", known_entries[(module, target)])
+        else:
+            return None
+    return references
+
+
+def close_callgraph(pending: dict[tuple[int, str], tuple[dict, set]],
+                    seeds: set[tuple[int, str]]) -> set[tuple[int, str]]:
+    """Accept a family only when every external callee family is accepted."""
+    accepted = set(seeds)
+    while True:
+        fresh = {key for key, (_group, targets) in pending.items()
+                 if key not in accepted and targets <= accepted | {key}}
+        if not fresh:
+            return accepted - seeds
+        accepted.update(fresh)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     mode = parser.add_mutually_exclusive_group(required=True)
@@ -108,6 +147,9 @@ def main() -> None:
                 or summary["overall_percent"] is not None
                 or summary["bytematch_ready"] is not False
                 or summary["module_count"] != 21
+                or not 0 <= summary["callgraph_resolved_groups"] <= summary["group_count"]
+                or not 0 <= summary["callgraph_placement_body_bytes"] <=
+                summary["placement_body_bytes"]
                 or summary["template_lead_upper_bound_bytes"] !=
                 inventory["exact_byte_dedupe_upper_bound"] -
                 summary["extra_candidate_savings_beyond_exact"]):
@@ -122,14 +164,19 @@ def main() -> None:
         raise ValueError("level catalogues differ from 21 pinned modules")
     bodies: dict[tuple[int, str], list[dict]] = defaultdict(list)
     ghidra = {}
+    known_entries = {}
     for module in modules:
         file = WORK / f"{module}.code.bin.ghidra.tsv"
         ghidra[module] = {int(row["entry"], 16): row for row in rows(file)}
         for row in rows(WORK / f"{module}.tsv"):
             if row["status"] == "bounded_candidate":
-                bodies[(int(row["body_bytes"]), row["masked_lead_sha256"])].append(
-                    {**row, "module": module})
+                key = (int(row["body_bytes"]), row["masked_lead_sha256"])
+                bodies[key].append({**row, "module": module})
+                if ghidra_confirmed(row, ghidra[module]):
+                    known_entries[(module, int(row["start"], 16))] = key
     accepted = []
+    base_keys = set()
+    pending = {}
     reasons = Counter()
     retained = set(modules) - {name for group in inventory["identical_full_interval_groups"]
                                for name in group[1:]}
@@ -157,15 +204,26 @@ def main() -> None:
             reasons["boundary_disagreement"] += 1
             continue
         references = []
+        call_references = []
+        has_code_relocation = False
         for row in group:
             module = row["module"]
             start = int(row["start"], 16)
             code_end = int(interval_rows[module]["end_exclusive"], 16)
+            local = fixups[module][bisect.bisect_left(fixup_sites[module], start):
+                                   bisect.bisect_left(fixup_sites[module], start + size)]
+            code = local_code_references(data[module], start, start + size,
+                                         local, known_entries, module)
+            if code is None:
+                break
+            has_code_relocation |= bool(code)
+            data_fixups = [fixup for fixup in local if fixup.kind != 2]
             refs = local_references(data[module], start, start + size, code_end,
-                                    fixups[module], fixup_sites[module])
+                                    data_fixups, [fixup.site for fixup in data_fixups])
             if refs is None:
                 break
             references.append(refs)
+            call_references.append(code)
         if len(references) != len(group):
             reasons["code_relocation_or_unpaired_hi"] += 1
             continue
@@ -180,11 +238,26 @@ def main() -> None:
         if len(translations) != len(group):
             reasons["nonuniform_data_translation"] += 1
             continue
-        accepted.append({"body_bytes": size, "fingerprint": fingerprint,
+        if any(code != call_references[0] for code in call_references):
+            reasons["different_local_code_targets"] += 1
+            continue
+        item = {"body_bytes": size, "fingerprint": fingerprint,
                          "placements": [(row["module"], int(row["start"], 16))
                                         for row in group],
                          "raw_variants": len({row["raw_sha256"] for row in group}),
-                         "data_deltas": translations})
+                         "data_deltas": translations,
+                         "resolution": "callgraph" if has_code_relocation else "uniform_data"}
+        key = (size, fingerprint)
+        if has_code_relocation:
+            targets = {value[1] for value in call_references[0].values()
+                       if value[0] == "callee"}
+            pending[key] = (item, targets)
+        else:
+            accepted.append(item)
+            base_keys.add(key)
+    resolved_keys = close_callgraph(pending, base_keys)
+    accepted.extend(pending[key][0] for key in sorted(resolved_keys))
+    reasons["unresolved_callgraph_dependencies"] = len(pending) - len(resolved_keys)
     extra_savings = 0
     for group in accepted:
         kept_rows = [module for module, _start in group["placements"] if module in retained]
@@ -204,6 +277,10 @@ def main() -> None:
         "placement_body_bytes": sum(group["body_bytes"] * len(group["placements"])
                                     for group in accepted),
         "template_body_bytes": sum(group["body_bytes"] for group in accepted),
+        "callgraph_resolved_groups": len(resolved_keys),
+        "callgraph_placement_body_bytes": sum(
+            group["body_bytes"] * len(group["placements"]) for group in accepted
+            if group["resolution"] == "callgraph"),
         "extra_candidate_savings_beyond_exact": extra_savings,
         "template_lead_upper_bound_bytes":
             inventory["exact_byte_dedupe_upper_bound"] - extra_savings,
@@ -218,22 +295,24 @@ def main() -> None:
         "ghidra_crosscheck_sha256": digest(GHIDRA_CROSSCHECK),
         "overall_percent": None,
         "bytematch_ready": False,
-        "warning": "Uniform translated data references and corroborated machine-code bodies identify templates, not proven source semantics or a complete unique-code denominator.",
+        "warning": "Uniform translated data references, corroborated bodies and closed local callee families identify templates, not proven source semantics or a complete unique-code denominator.",
     }
     lines = ["# Structural translation leads only; no accepted C or denominator claims.",
-             "body_bytes\tplacements\traw_variants\tfingerprint\tmembers_and_data_deltas"]
+             "body_bytes\tplacements\traw_variants\tresolution\tfingerprint\tmembers_and_data_deltas"]
     for group in sorted(accepted, key=lambda item: -item["body_bytes"] *
                         (len(item["placements"]) - 1)):
         members = ";".join(f"{module}:0x{start:X}:{delta:+d}" for
                            (module, start), delta in zip(group["placements"],
                                                         group["data_deltas"]))
         lines.append(f"{group['body_bytes']}\t{len(group['placements'])}\t"
-                     f"{group['raw_variants']}\t{group['fingerprint']}\t{members}")
+                     f"{group['raw_variants']}\t{group['resolution']}\t"
+                     f"{group['fingerprint']}\t{members}")
     (WORK / "translation_review_leads.tsv").write_text(
         "\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     SUMMARY.write_text(json.dumps(summary, indent=2) + "\n",
                        encoding="utf-8", newline="\n")
-    print(f"{len(accepted)} corroborated uniform-data translation leads; "
+    print(f"{len(accepted)} structural leads, including {len(resolved_keys)} "
+          "closed local-callgraph groups; "
           "no game-wide percentage")
 
 

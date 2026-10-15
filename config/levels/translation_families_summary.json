@@ -1,16 +1,20 @@
 {
   "status": "structural_translation_leads",
   "module_count": 21,
-  "group_count": 531,
-  "placement_body_bytes": 1744600,
-  "template_body_bytes": 151048,
-  "extra_candidate_savings_beyond_exact": 1494612,
-  "template_lead_upper_bound_bytes": 31674280,
+  "group_count": 593,
+  "placement_body_bytes": 1919820,
+  "template_body_bytes": 165688,
+  "callgraph_resolved_groups": 61,
+  "callgraph_placement_body_bytes": 170660,
+  "extra_candidate_savings_beyond_exact": 1648364,
+  "template_lead_upper_bound_bytes": 31520528,
   "rejection_counts": {
     "boundary_disagreement": 408,
-    "code_relocation_or_unpaired_hi": 2977,
-    "nonuniform_data_translation": 855,
-    "repeated_module": 220
+    "code_relocation_or_unpaired_hi": 1398,
+    "different_local_code_targets": 33,
+    "nonuniform_data_translation": 1867,
+    "repeated_module": 220,
+    "unresolved_callgraph_dependencies": 472
   },
   "largest_groups": [
     {
@@ -54,6 +58,11 @@
       "fingerprint": "8b650bb12989852966ea9db16d554302424381535dee6eb7d39d23e3c670dc47"
     },
     {
+      "body_bytes": 756,
+      "placements": 20,
+      "fingerprint": "8f931989f71b478f1d4d13c0e47ddbc8db5b0fa9d3a9a9a0de0ebed1caa3b1b0"
+    },
+    {
       "body_bytes": 728,
       "placements": 20,
       "fingerprint": "f03f95ce46390503d83bb6f7ff342d9fbea7c61fe66decc46ca4ddef5c305893"
@@ -72,6 +81,11 @@
       "body_bytes": 780,
       "placements": 17,
       "fingerprint": "8900d163b7515e00d2854bcfcf357c0b0aaaef1ba2088bd4135a5082684e34e1"
+    },
+    {
+      "body_bytes": 616,
+      "placements": 20,
+      "fingerprint": "462869b6945f84d23776426995b158e8397285dd259d6308548782f463a78eb9"
     },
     {
       "body_bytes": 780,
@@ -102,16 +116,6 @@
       "body_bytes": 528,
       "placements": 20,
       "fingerprint": "62b51313fa4c9ef348a45dbea534645bd566cd56c64c7afc94ac54c9dac05457"
-    },
-    {
-      "body_bytes": 832,
-      "placements": 13,
-      "fingerprint": "4ffd734fd6116d2356a416da340b64ea049b95c16a6f82385828a7ca15ac9d61"
-    },
-    {
-      "body_bytes": 456,
-      "placements": 21,
-      "fingerprint": "b39b19b756c64849bc209cba016acd2b47f648c78cee0690c47242395469e4fa"
     }
   ],
   "inventory_sha256": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",

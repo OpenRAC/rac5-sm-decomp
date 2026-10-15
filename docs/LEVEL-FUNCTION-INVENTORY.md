@@ -97,8 +97,12 @@ An optional body-range export now records Ghidra's actual address sets rather
 than only minimum and maximum addresses.
 [`level_flow_ranges.py`](../tools/level_flow_ranges.py) finds **32,805,452
 bytes by placement** assigned to Ghidra function bodies and **1,590 static
-candidate starts inside another Ghidra body**. Those starts are likely
-internal blocks or table targets, but this is still a review lead. A code-only
+candidate starts inside another Ghidra body**. Of these, **1,209** also have a
+direct non-call branch/jump from that same Ghidra body to the candidate start.
+This independently supports an internal-block interpretation; the other **381**
+have no such direct edge and remain particularly important for indirect-flow
+and table review. Neither class is automatically removed from the candidate
+inventory. A code-only
 Ghidra import can also leave real address-taken code unowned; the range pass
 does not prove an exhaustive function inventory.
 See [`tools/ghidra/README.md`](../tools/ghidra/README.md) for reproducing the
@@ -110,11 +114,16 @@ analysis with a lawful image and local Ghidra installation.
 filters masked groups to one placement per module, requires every boundary
 to agree with Ghidra, preserves named relocation symbols and addends, and
 requires local HI16/LO16 data references to move by one consistent
-module-specific delta. **531 groups** passed those structural checks. They
-contain **1,744,600 placement body bytes** but only **151,048 body bytes**
+module-specific delta. A further closed local-callgraph pass requires each
+J/JAL target either to be the same relative offset within the body or to
+identify a Ghidra-corroborated callee family already accepted by those rules.
+Unknown code targets, 32-bit pointers, differing target families and open
+callgraph dependencies remain excluded. **593 groups** passed the combined
+structural checks, including **61** closed local-callgraph groups. They
+contain **1,919,820 placement body bytes** but only **165,688 body bytes**
 when one representative per group is counted. Their additional candidate
-savings beyond raw-identical groups are **1,494,612 bytes**, giving a
-**31,674,280-byte structural lead upper bound** over the original candidate
+savings beyond raw-identical groups are **1,648,364 bytes**, giving a
+**31,520,528-byte structural lead upper bound** over the original candidate
 intervals. This number is *not* a qualified unique-code denominator.
 
 The largest lead has a **32,796-byte** body in all twenty numbered levels.
@@ -123,5 +132,7 @@ same 82 named call relocations, while all 47 local HI16 data references
 translate by one consistent offset for that level; the remaining unpaired
 low reference follows the same offset modulo 16 bits. This strongly supports
 one shared code template, while the game-level role and source identity still
-require review. Groups with local code jumps or nonuniform data translations
-remain in the unresolved worklist.
+require review. Local code targets that do not satisfy the callgraph closure,
+nonuniform data translations and uncertain function ownership remain in the
+unresolved worklists. This pass narrows disagreements; it does not finish the
+game-wide function catalogue.
