@@ -1,5 +1,9 @@
 # Ratchet & Clank: Size Matters (PS2) decompilation
 
+![Original RAC5 research artwork showing a planet and abstract circuitry](docs/images/rac5-banner.png)
+
+*Original project artwork; no game assets.*
+
 An early matching-decompilation workspace for the **USA PlayStation 2** version
 (`SCUS_976.15`, `SYSTEM.CNF` version `1.00`). The layout follows the useful
 parts of [OpenRAC's RAC2 project](https://github.com/OpenRAC/rac2-gc-decomp):
