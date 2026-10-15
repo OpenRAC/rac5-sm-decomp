@@ -7,7 +7,8 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-from boot_symbols import parse_sndata, render_symbols  # noqa: E402
+from boot_symbols import (BootSymbol, parse_sndata, render_code_intervals,
+                          render_symbols)  # noqa: E402
 from rel import HEADER, MAGIC, RELOCATION, SYMBOL  # noqa: E402
 
 
@@ -38,3 +39,15 @@ class BootSymbolTests(unittest.TestCase):
         data[12:16] = (0x2000).to_bytes(4, "little")
         with self.assertRaisesRegex(ValueError, "table bounds"):
             parse_sndata(bytes(data), 0x1000, [])
+
+    def test_code_label_bounds_keep_aliases_and_exclude_data_markers(self) -> None:
+        report = {"sections": [{"name": ".text", "virtual_address": "0x00002000",
+                                "size": 0x30}]}
+        symbols = [BootSymbol("first", 0x2004, 2, ".text"),
+                   BootSymbol("alias", 0x2004, 3, ".text"),
+                   BootSymbol("second", 0x2010, 2, ".text"),
+                   BootSymbol("not_code", 0x2000, 4, ".text")]
+        rendered = render_code_intervals(report, symbols)
+        self.assertIn("0x00002004\t0x00002010\t12\t2,3\talias | first\tnext_label", rendered)
+        self.assertIn("0x00002010\t0x00002030\t32\t2\tsecond\ttext_end", rendered)
+        self.assertNotIn("not_code", rendered)

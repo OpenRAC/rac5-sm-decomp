@@ -38,9 +38,13 @@
    signatures on code and SDK-library ranges. Do not copy RAC2's `sdk` or game
    compiler routing without witness functions and baseline controls. One
    [boot C-object integration witness](BOOT-C-WITNESS.md) preserves all
-   file-backed bytes but does not yet qualify the compiler or retail ELF layout.
-5. **Catalogue functions.** Generate names, boundaries, sizes and placements
-   from the verified programs. Commit metadata only; review uncertain splits.
+   raw retail `PT_LOAD` bytes and header but does not yet qualify the compiler,
+   complete ELF metadata, or runtime behavior.
+5. **Catalogue functions.** The boot now has generated next-label bounds for
+   1,315 distinct code addresses (`config/boot/code_intervals.tsv`). They are
+   search limits, not validated function sizes. Review boundaries, padding,
+   aliases and placements before producing a function catalogue; commit
+   metadata only.
 6. **Start C/C++ matching.** Replace an assembly marker with one definition
    under the qualified profile, check every placement, and count it only after
    the full-program byte gate.
