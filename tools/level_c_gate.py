@@ -20,7 +20,8 @@ from disc import IsoDisc, verify_disc
 from elf import inspect_elf
 from level_program_gate import MEASURED_LOADS, replace_range, sha
 from r5900_assembly import LINKER_SHA256, check_tool, run_tool
-from rel import HEADER, RELOCATION, iter_packed_relocations, unpack_relocation
+from rel import (HEADER, RELOCATION, SYMBOL, iter_packed_relocations,
+                 unpack_relocation)
 from relocate import relocate_module
 from snr2_assembly import CODE_START, pinned_modules
 
@@ -37,11 +38,16 @@ def profile_and_sources(cpp: Path, cc1: Path, gnu_as: Path) -> tuple[dict, list[
     base = json.loads(BASE_PROFILE.read_text(encoding="utf-8"))
     accepted = profile["accepted"]
     controls = profile["provisional_controls"]
-    if (profile["status"] != "qualified_shared_constant_only"
+    additional = profile["additional_accepted"]
+    if (profile["status"] != "qualified_two_shared_functions_only"
             or profile["base_profile"] != "config/boot/compiler_trial.json"
             or base["status"] != "qualified_boot_only"
             or accepted["source"] != "src/levels/shared/func_00000100.c"
             or accepted["offset"] != 0x100 or accepted["body_bytes"] != 8
+            or additional["source"] !=
+            "src/levels/shared/func_shared_zero_buffer.c"
+            or additional["body_bytes"] != 72
+            or len(additional["placements"]) != 20
             or [row["source"] for row in controls] != [
                 "nonmatching/levels/func_00000190.c",
                 "nonmatching/levels/func_00002CD8.c"]
@@ -51,11 +57,11 @@ def profile_and_sources(cpp: Path, cc1: Path, gnu_as: Path) -> tuple[dict, list[
     for label, path in (("cpp", cpp), ("cc1", cc1), ("as", gnu_as)):
         if digest(path) != base["tools"][f"{label}_sha256"]:
             raise ValueError(f"{label} differs from pinned RAC5 compiler trial")
-    for row in (accepted, *controls):
+    for row in (accepted, additional, *controls):
         source = ROOT / row["source"]
         if normalized_digest(source) != row["source_sha256_lf"]:
             raise ValueError(f"level C source differs from measured trial: {source.name}")
-    return profile, [accepted, *controls]
+    return profile, [accepted, additional, *controls]
 
 
 def compile_sources(profile: dict, sources: list[dict], cpp: Path, cc1: Path,
@@ -96,6 +102,98 @@ def linked_body(row: dict, linker: Path) -> bytes:
     if (int(section["virtual_address"], 16) != row["offset"]
             or section["size"] != row["body_bytes"]):
         raise ValueError(f"linked C body has wrong offset or size: {stem}")
+    data = elf.read_bytes()
+    return data[section["file_offset"]:section["file_offset"] + section["size"]]
+
+
+def shared_buffer_targets(module: str, source: bytes, start: int,
+                          code_end: int) -> tuple[int, int, tuple[bytes, bytes]]:
+    """Check the reviewed body, import and uniquely identifiable data objects."""
+    import rabbitizer
+
+    end = start + 72
+    head = HEADER.unpack_from(source)
+    if (not CODE_START <= start < end <= code_end
+            or source[start + 0x40:start + 0x44] != WORD.pack(0x03E00008)
+            or source[start + 0x34:start + 0x38] != WORD.pack(0x0C000000)):
+        raise ValueError(f"{module} shared buffer body boundary changed")
+    local = {row.site: row for row in iter_packed_relocations(
+        source, head[13], head[1]) if start <= row.site < end}
+    if {(site - start, row.kind,
+         row.low_site - start if row.low_site is not None else None)
+            for site, row in local.items()} != {
+                (4, 1, 16), (12, 1, 24), (16, 0, None), (24, 0, None)}:
+        raise ValueError(f"{module} shared buffer local fixups changed")
+    named = []
+    for i in range(head[2]):
+        site, kind, index, addend = unpack_relocation(
+            source, head[1] + i * RELOCATION.size)
+        if start <= site < end:
+            name_at, address, *_ = SYMBOL.unpack_from(
+                source, head[3] + index * SYMBOL.size)
+            name = source[name_at:source.index(b"\0", name_at)].decode("ascii")
+            named.append((site - start, kind, name, address, addend))
+    if named != [(52, 4, "memset", 0, 0)]:
+        raise ValueError(f"{module} shared buffer imported call changed")
+
+    # A label at the expected start is only a function boundary if no direct
+    # control-flow edge enters its interior.
+    calls = 0
+    for site in range(CODE_START, code_end, 4):
+        word = WORD.unpack_from(source, site)[0]
+        if word >> 26 in (2, 3):
+            target = (word & 0x03FFFFFF) << 2
+            if start < target < end:
+                raise ValueError(f"{module} jump enters shared buffer body")
+            calls += word >> 26 == 3 and target == start
+        if max(CODE_START, start - 0x20000) <= site < min(
+                code_end, end + 0x20000):
+            insn = rabbitizer.Instruction(word, site,
+                                          rabbitizer.InstrCategory.R5900)
+            if insn.isBranch() and start < insn.getBranchVramGeneric() < end:
+                raise ValueError(f"{module} branch enters shared buffer body")
+    if not calls:
+        raise ValueError(f"{module} shared buffer has no direct caller")
+
+    targets = []
+    signatures = []
+    for site in (start + 12, start + 4):
+        low_site = local[site].low_site
+        high = WORD.unpack_from(source, site)[0] & 0xFFFF
+        low = WORD.unpack_from(source, low_site)[0] & 0xFFFF
+        if low & 0x8000:
+            low -= 0x10000
+        target = (high << 16) + low
+        if not code_end <= target <= head[1] - 64:
+            raise ValueError(f"{module} shared buffer data target outside payload")
+        signature = source[target:target + 64]
+        if (source.find(signature, code_end, head[1]) != target
+                or source.find(signature, target + 1, head[1]) >= 0):
+            raise ValueError(f"{module} shared buffer data target is not unique")
+        targets.append(target)
+        signatures.append(signature)
+    if targets[0] == targets[1]:
+        raise ValueError(f"{module} shared buffer data targets collapsed")
+    return targets[0], targets[1], (signatures[0], signatures[1])
+
+
+def linked_shared_buffer(row: dict, module: str, start: int,
+                         targets: tuple[int, int], linker: Path) -> bytes:
+    stem = Path(row["source"]).stem
+    name = f"{stem}_{module}"
+    script = (f"level_data_a = 0x{targets[0]:08X};\n"
+              f"level_data_b = 0x{targets[1]:08X};\nmemset = 0;\n"
+              f"SECTIONS {{ . = 0x{start:08X}; "
+              f".text : {{ {stem}.o(.text) }} }}\n")
+    (OUTPUT / f"{name}.ld").write_text(script, encoding="ascii", newline="\n")
+    run_tool([str(linker.resolve()), "-T", f"{name}.ld", "-o",
+              f"{name}.elf", f"{stem}.o"], OUTPUT, OUTPUT / f"{name}.link.log")
+    elf = OUTPUT / f"{name}.elf"
+    section = next(item for item in inspect_elf(elf)["sections"]
+                   if item["name"] == ".text")
+    if (int(section["virtual_address"], 16) != start
+            or section["size"] != row["body_bytes"]):
+        raise ValueError(f"{module} shared buffer linked body size or site differs")
     data = elf.read_bytes()
     return data[section["file_offset"]:section["file_offset"] + section["size"]]
 
@@ -161,7 +259,7 @@ def main() -> None:
     compile_sources(profile, sources, args.cpp, args.cc1, args.gnu_as,
                     args.output_dir)
     bodies = {Path(row["source"]).stem: linked_body(row, args.linker)
-              for row in sources}
+              for row in sources if "offset" in row}
     target = json.loads((ROOT / "config/target.json").read_text(encoding="utf-8"))
     boot, boot_symbols = read_boot(args.boot)
     if boot["sha256"] != target["boot_sha256"]:
@@ -169,9 +267,11 @@ def main() -> None:
     addresses = {symbol.name: symbol.address for symbol in boot_symbols}
     known, ends = pinned_modules(), code_ends()
     names = [name for name in sorted(known) if name.startswith("LEVEL_")]
-    if len(names) != 20:
+    additional = profile["additional_accepted"]
+    if len(names) != 20 or set(additional["placements"]) != set(names):
         raise ValueError("expected twenty pinned numbered level modules")
     matched = []
+    data_signatures = None
     with IsoDisc(args.image) as disc:
         verify_disc(disc, target)
         for name in names:
@@ -183,6 +283,18 @@ def main() -> None:
             if body != source[0x100:0x108]:
                 raise ValueError(f"shared C function differs in {name}")
             rebuilt = replace_range(source, body, 0x100, 0x108)
+            start = additional["placements"][name]
+            target_a, target_b, signatures = shared_buffer_targets(
+                name, source, start, ends[name])
+            if data_signatures is None:
+                data_signatures = signatures
+            elif signatures != data_signatures:
+                raise ValueError(f"{name} shared buffer data identities differ")
+            buffer_body = linked_shared_buffer(
+                additional, name, start, (target_a, target_b), args.linker)
+            if buffer_body != source[start:start + 72]:
+                raise ValueError(f"shared buffer C function differs in {name}")
+            rebuilt = replace_range(rebuilt, buffer_body, start, start + 72)
             if name == "LEVEL_01.REL":
                 control = bodies["func_00000190"]
                 if control != source[0x190:0x190 + len(control)]:
@@ -198,7 +310,9 @@ def main() -> None:
                     raise ValueError("LEVEL_01 C-linked relocated image differs")
             matched.append({"module": name, "size": len(source),
                             "sha256": known[name], "body_offset": 0x100,
-                            "body_bytes": len(body)})
+                            "body_bytes": len(body),
+                            "shared_buffer_offset": start,
+                            "shared_buffer_bytes": len(buffer_body)})
         frontend = disc.file_bytes("LVL/FRONTEND.REL")
         control = bodies["func_00002CD8"]
         if control != frontend[0x2CD8:0x2CD8 + len(control)]:
@@ -211,16 +325,17 @@ def main() -> None:
                                                  base, addresses)
         if sha(relocated) != load_sha or unresolved != missing:
             raise ValueError("FRONTEND C-linked relocated image differs")
-    report = {"status": "passed_shared_constant_only", "profile": profile["id"],
-              "accepted_function": "func_00000100", "counted_matches": 1,
-              "unique_body_bytes": 8, "matched_placement_bytes": 160,
+    report = {"status": "passed_two_shared_functions", "profile": profile["id"],
+              "accepted_functions": ["func_00000100", "func_shared_zero_buffer"],
+              "counted_matches": 2,
+              "unique_body_bytes": 80, "matched_placement_bytes": 1600,
               "placements": matched,
               "provisional_controls": ["LEVEL_01.REL:0x190:24",
                                        "FRONTEND.REL:0x2CD8:12"],
               "runtime_measured_placements": ["FRONTEND.REL", "LEVEL_01.REL"]}
     REPORT.write_text(json.dumps(report, indent=2) + "\n",
                       encoding="utf-8", newline="\n")
-    print("shared C function: 8/8 bytes at all 20 level placements; "
+    print("shared C functions: 8+72 bytes at all 20 level placements; "
           "20/20 complete modules exact, two provisional controls exact")
 
 

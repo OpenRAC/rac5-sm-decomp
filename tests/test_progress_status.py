@@ -19,8 +19,10 @@ class ProgressStatusTests(unittest.TestCase):
         self.assertIsNone(report["overall_percent"])
         self.assertFalse(report["bytematch_objdiff_ready"])
         self.assertEqual(report["boot"]["accepted_c_bytes"], 16)
-        self.assertEqual(report["levels"]["accepted_c_bytes_per_unique_source"], 8)
-        self.assertEqual(report["levels"]["accepted_c_bytes_by_placement"], 160)
+        self.assertEqual(report["levels"]["accepted_c_bytes_per_unique_source"], 80)
+        self.assertEqual(report["levels"]["accepted_c_bytes_by_placement"], 1600)
+        self.assertEqual(report["levels"]["accepted_shared_functions"],
+                         ["func_00000100", "func_shared_zero_buffer"])
 
     def test_rejects_unproven_match_and_relocated_image(self) -> None:
         evidence = json.loads(OUTPUT.read_text(encoding="utf-8"))["evidence"]
@@ -33,7 +35,7 @@ class ProgressStatusTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "pinned placement"):
             snapshot(changed)
         changed = copy.deepcopy(evidence)
-        changed["level_c"]["matched_placement_bytes"] = 168
+        changed["level_c"]["matched_placement_bytes"] = 1608
         with self.assertRaisesRegex(ValueError, "level C evidence"):
             snapshot(changed)
 

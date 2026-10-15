@@ -83,8 +83,8 @@
    accepted function sizes or a game-wide denominator.
 6. **Start scoped C/C++ matching.** `MEMCARD_Busy__Fv` is the first
    accepted 16-byte boot placement. The
-   [shared level witness](LEVEL-C-WITNESS.md) accepts one 8-byte authored
-   function at twenty level placements. Other functions still need reviewed
+   [shared level witness](LEVEL-C-WITNESS.md) accepts two authored C functions,
+   8 and 72 bytes, at twenty level placements. Other functions still need reviewed
    boundaries, compiler profiles and placement
    checks. The [scoped progress snapshot](../progress/README.md) records
    measured status without publishing a premature game-wide percentage.
