@@ -38,6 +38,11 @@ also reassemble exactly before relocation: **36,341,888 cumulative bytes by
 placement**, not unique code or matched C. Their other module bytes and most
 runtime placements remain open.
 
+A [provisional boot C-object witness](docs/BOOT-C-WITNESS.md) also keeps the
+complete boot `.text` and logical file-backed bytes exact after linking one
+authored C function. It remains in `nonmatching/` until the compiler,
+catalogue, retail ELF layout and runtime gates are satisfied.
+
 **No C or C++ function match is claimed.** The exact compiler and flags, level
 relocation/load behavior, complete assembly baseline, and function boundaries
 are still under investigation. There is no valid progress percentage yet.

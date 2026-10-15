@@ -36,7 +36,9 @@
 4. **Identify compiler profiles.** Mangled C++ exports and ProDG SNR2 modules
    are evidence, not a compiler version (`docs/COMPILER-STATUS.md`). Measure
    signatures on code and SDK-library ranges. Do not copy RAC2's `sdk` or game
-   compiler routing without witness functions and baseline controls.
+   compiler routing without witness functions and baseline controls. One
+   [boot C-object integration witness](BOOT-C-WITNESS.md) preserves all
+   file-backed bytes but does not yet qualify the compiler or retail ELF layout.
 5. **Catalogue functions.** Generate names, boundaries, sizes and placements
    from the verified programs. Commit metadata only; review uncertain splits.
 6. **Start C/C++ matching.** Replace an assembly marker with one definition

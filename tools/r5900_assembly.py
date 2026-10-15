@@ -22,7 +22,8 @@ def check_tool(path: Path, expected: str) -> None:
 
 def render_assembly(words: tuple[int, ...], start: int, *, symbol: str,
                     allow_zero_jump: bool = False,
-                    raw_cop1_branches: bool = False) -> tuple[str, dict[str, int]]:
+                    raw_cop1_branches: bool = False,
+                    exclude: tuple[int, int] | None = None) -> tuple[str, dict[str, int]]:
     try:
         import rabbitizer
     except ImportError as error:
@@ -47,12 +48,25 @@ def render_assembly(words: tuple[int, ...], start: int, *, symbol: str,
     outside_jumps = {target for target in jumps if not start <= target < end}
     if outside_jumps - {0} or (0 in outside_jumps and not allow_zero_jump):
         raise ValueError("absolute jump target exits measured code interval")
+    if exclude is not None:
+        excluded_start, excluded_end = exclude
+        if (not start < excluded_start < excluded_end < end
+                or excluded_start % 4 or excluded_end % 4):
+            raise ValueError("replacement interval lies outside aligned code range")
+        if any(excluded_start <= target < excluded_end for target in branches | jumps):
+            raise ValueError("control flow targets the excluded replacement interval")
 
-    source = [".set noat", ".set noreorder", ".section .text",
+    source = [".set noat", ".set noreorder",
+              ".section .text.before" if exclude is not None else ".section .text",
               f".globl {symbol}", f"{symbol}:"]
     sqrt_count = raw_count = zero_jump_count = 0
     for index, (word, instruction) in enumerate(zip(words, instructions)):
         address = start + index * 4
+        if exclude is not None:
+            if address == excluded_end:
+                source.append(".section .text.after")
+            if excluded_start <= address < excluded_end:
+                continue
         if address in branches or address in jumps:
             source.append(f"L_{address:08X}:")
         name = instruction.getOpcodeName()
@@ -85,6 +99,8 @@ def render_assembly(words: tuple[int, ...], start: int, *, symbol: str,
     stats = {"instructions": len(words), "branch_targets": len(branches),
              "jump_targets": len(jumps - {0}), "zero_target_jumps": zero_jump_count,
              "sqrt_s": sqrt_count, "cop1_branch_words": raw_count}
+    if exclude is not None:
+        stats["excluded_words"] = (excluded_end - excluded_start) // 4
     return "\n".join(source) + "\n", stats
 
 

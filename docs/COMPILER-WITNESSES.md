@@ -34,7 +34,10 @@ linked call and return-address save/restore; `FastMemCopy` also shifts an
 argument into the call delay slot, while `CAMERA_Init` writes a global before
 its call. They add 104 exact local bytes, bringing the trial total to
 **280/280 bytes across eleven functions**. This still does not qualify a
-whole-program match.
+whole-program match. A later
+[provisional integration witness](BOOT-C-WITNESS.md) linked the
+`MEMCARD_Busy__Fv` C object into the entire boot assembly and kept the full
+file-backed bytes exact; it remains uncounted under the project gates.
 
 `FOG_PreUpdate__Fv` at `0x01E7D4A8` is a useful **negative control**. The
 authored loop in `nonmatching/boot/fog_preupdate.c` reproduces the first 48
@@ -89,6 +92,7 @@ python tools/compare_boot_slice.py baserom/SCUS_976.15 build/fog_preupdate.elf 0
 
 The checker verifies the boot hash pinned in `config/target.json`, ELF
 architecture and requested executable `.text` range, then reports only the
-equal-byte count and candidate-slice hash. The decisive next gates remain a
-complete byte-identical assembly baseline, broader compiler controls and a
-full-program C replacement check. No ByteMatch report is warranted yet.
+equal-byte count and candidate-slice hash. The complete boot text baseline
+and one full file-backed C-object replacement now exist; compiler/profile,
+catalogue, ELF layout and runtime checks still prevent a counted match. No
+ByteMatch report is warranted yet.

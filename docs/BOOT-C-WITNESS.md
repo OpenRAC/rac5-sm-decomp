@@ -1,0 +1,62 @@
+# Provisional whole-boot C replacement witness
+
+`MEMCARD_Busy__Fv` at `0x01E627C0`–`0x01E627D0` is the first authored C
+candidate linked **inside the complete boot assembly baseline**. The trial
+GNU EE chain compiled the source in
+[`nonmatching/boot/memcard_busy.c`](../nonmatching/boot/memcard_busy.c) with
+`-O2 -G0`, without the optional spacing sentinel. Its 16-byte `.text`
+replaced the retail assembly at that exact address. SN `ld.exe` linked that
+real object between two private assembly sections; the object bytes were
+not rewritten after compilation.
+
+The resulting boot `.text` matches **498,900 / 498,900 bytes**, SHA-256
+`8dab904fd9dd57e1c3774c92b07fe0872445a99775e85dc62229e857a1a6830c`.
+With non-code sections copied from the pinned boot as in the
+[assembly baseline](ASSEMBLY-STATUS.md), the logical file-backed load image
+matches **809,872 / 809,872 bytes**, SHA-256
+`4f4fb8fe218317dbd7a2f65ca4e64934d743d03e673dbd75220937cfc6fd47fb`.
+The linked BSS is NOBITS at the retail address `0x01F28100` with the same
+817,644-byte section size. No branch or jump in the pinned boot targets the
+excluded 16-byte interval.
+
+[`tools/boot_c_witness.py`](../tools/boot_c_witness.py) reproduces this
+experiment using the pinned boot, local SN assembler/linker, and a privately
+compiled C object. It checks the normalized C source SHA-256
+`a9eb80c64d794873ec06689b36c7fa204263c295e5a33077659cbb1c10e02194`
+and object SHA-256
+`415800c82c13e302c09de6aa773a68f82414410e28375e6b726db591fbdeb674`,
+as well as the measured SN tool hashes. Generated game-derived assembly,
+data objects and linked ELF stay under ignored `build/boot-c-witness/`.
+
+The object was produced from the source's bare filename on a local Linux
+filesystem by the reconstructed GNU EE `cpp`/`cc1`/`as` chain, hashes
+`2ac3d8d3ca177e6705ac2cbdd1bd9e9a7181ac3e40f6230dea6875c3218ec155`,
+`37704f483fba7269791576879b3573445cd455ce0473e6d58a3bcceb45105f95`,
+and `c71a15dba889fc273b0b699986de7316d056b94ae2155ad2c2573eaa62b8d902`.
+The compiler was copied into an isolated private RAC5 directory before this
+trial so concurrent RAC2 tool changes could not alter it. Rebuild the object
+from the bare `memcard_busy.c` filename on a Linux filesystem with your own
+lawful copies of those tools, then keep it under ignored `build/`:
+
+```sh
+cpp memcard_busy.c > memcard_busy.i
+cc1 -quiet -O2 -G0 memcard_busy.i -o memcard_busy.s
+as -o memcard_busy.o memcard_busy.s
+```
+
+Copy the object into the ignored workspace and run:
+
+```sh
+python tools/boot_c_witness.py baserom/SCUS_976.15 \
+  --c-object build/memcard_busy.o \
+  --assembler /path/to/Ps2EeAs.exe --linker /path/to/ld.exe
+```
+
+This is a **provisional integration witness, not a counted match**. The
+candidate linker's ELF `PT_LOAD` header still differs in file offset,
+alignment and memory size from retail even though the linked sections and
+logical file-backed bytes match. A live runtime comparison, qualified
+compiler profile and reviewed function catalogue are also outstanding.
+The source therefore stays in `nonmatching/`; no ByteMatch progress report
+is warranted yet. The [FOG loop counterexample](COMPILER-WITNESSES.md)
+remains a reminder that this trial compiler cannot reproduce every body.
