@@ -74,3 +74,9 @@ complete REL. The same guarded procedure has since reproduced candidate
 code intervals for **all 21 SNR2 placements**
 ([campaign evidence](SNR2-ASSEMBLY-CAMPAIGN.md)). Those bytes are counted by
 placement, not as unique code or C progress.
+
+A [provisional C integration witness](BOOT-C-WITNESS.md) has also replaced
+the 16-byte boot body `MEMCARD_Busy__Fv` with a linked GNU EE C object while
+preserving the entire boot `.text` and logical file-backed load image. It is
+still under `nonmatching/` because the remaining compiler, ELF layout,
+catalogue and runtime gates have not been completed.
