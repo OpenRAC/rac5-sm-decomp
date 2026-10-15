@@ -22,6 +22,12 @@ The tool reports unresolved external symbol names; the frontend's
 Other modules may need symbols from another loaded module, so a produced file
 alone does **not** prove runtime equality.
 
+As a format check, the tool processed all 21 pinned modules at a synthetic
+128-byte-aligned base of `0x01000000` without a parser or relocation error.
+Only the frontend reported a missing external name. This test base is **not**
+a measured runtime placement and provides no loaded-byte proof for the other
+19 modules.
+
 ## What was verified
 
 In isolated PCSX2 `d75a0ad` runs of the pinned USA disc (CRC `8661F7BA`),
