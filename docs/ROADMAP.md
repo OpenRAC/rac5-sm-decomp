@@ -15,8 +15,9 @@
    several boot globals and the 12-word loader-site signature
    (`docs/MULTIWORLD-CROSSCHECK.md`); per-level runtime placement is still open.
    The boot loader's two relocation sources and all 21 packed local-fixup
-   streams are now mapped (`docs/REL-FORMAT.md`). Capture actual load bases,
-   resident code/data extents and relocated bytes; do not reuse RAC2's WAD
+   streams are now mapped (`docs/REL-FORMAT.md`). Frontend and level 01 load
+   bases have sampled runtime confirmation. Establish resident code/data
+   extents and reproduce complete relocated bytes; do not reuse RAC2's WAD
    layout.
 3. **Establish an assembly baseline.** Split the verified boot and level
    programs into local ignored `asm/` and `build/` outputs, then rebuild and
