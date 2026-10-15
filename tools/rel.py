@@ -179,9 +179,9 @@ def render_modules(modules: list[Module]) -> str:
         packed = dict(module.packed_relocation_types)
         lines.append(f"{module.path}\t{module.size}\t{module.sha256}\t"
                      f"{module.relocation_count}\t{module.symbol_count}\t"
-                 f"{len(module.imports)}\t{len(module.exports)}\t"
-                 f"{packed.get(1, 0)}\t{packed.get(0, 0)}\t"
-                 f"{packed.get(2, 0)}\t{packed.get(3, 0)}")
+                     f"{len(module.imports)}\t{len(module.exports)}\t"
+                     f"{packed.get(1, 0)}\t{packed.get(0, 0)}\t"
+                     f"{packed.get(2, 0)}\t{packed.get(3, 0)}")
     return "\n".join(lines) + "\n"
 
 
