@@ -31,17 +31,22 @@ those two **load images**, not a compiler or authored C/C++ source.
 The [complete 498,900-byte boot `.text` section](docs/ASSEMBLY-STATUS.md)
 also reassembles byte for byte. With the non-code sections copied from the
 private pinned ELF, all **809,872 file-backed boot load bytes** compare equal.
-The boot's BSS/runtime state and all level-program assembly rebuilds remain
-open; copied reference data is not decompiled source. A
-[candidate code intervals in all 21 SNR2 placements](docs/SNR2-ASSEMBLY-CAMPAIGN.md)
+The boot's BSS/runtime state and complete level-program assembly rebuilds
+remain open; copied reference data is not decompiled source.
+[Candidate code intervals in all 21 SNR2 placements](docs/SNR2-ASSEMBLY-CAMPAIGN.md)
 also reassemble exactly before relocation: **36,341,888 cumulative bytes by
 placement**, not unique code or matched C. Their other module bytes and most
 runtime placements remain open.
 
+The boot's embedded labels also yield
+[1,315 generated code-label bounds](config/boot/code_intervals.tsv). These are
+next-label search limits, not validated function sizes or matches.
+
 A [provisional boot C-object witness](docs/BOOT-C-WITNESS.md) also keeps the
-complete boot `.text` and logical file-backed bytes exact after linking one
-authored C function. It remains in `nonmatching/` until the compiler,
-catalogue, retail ELF layout and runtime gates are satisfied.
+complete boot `.text`, retail `PT_LOAD` header and raw file-backed bytes exact
+after linking one authored C function. It remains in `nonmatching/` until the
+compiler, reviewed function catalogue, complete ELF metadata and runtime
+gates are satisfied.
 
 **No C or C++ function match is claimed.** The exact compiler and flags, level
 relocation/load behavior, complete assembly baseline, and function boundaries

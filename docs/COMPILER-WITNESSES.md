@@ -93,6 +93,7 @@ python tools/compare_boot_slice.py baserom/SCUS_976.15 build/fog_preupdate.elf 0
 The checker verifies the boot hash pinned in `config/target.json`, ELF
 architecture and requested executable `.text` range, then reports only the
 equal-byte count and candidate-slice hash. The complete boot text baseline
-and one full file-backed C-object replacement now exist; compiler/profile,
-catalogue, ELF layout and runtime checks still prevent a counted match. No
-ByteMatch report is warranted yet.
+and one C-object replacement with exact raw `PT_LOAD` bytes and program
+header now exist; compiler/profile, reviewed function catalogue, complete
+ELF metadata and runtime checks still prevent a counted match. No ByteMatch
+report is warranted yet.

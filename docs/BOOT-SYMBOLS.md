@@ -15,6 +15,18 @@ classification. Labels inside `.text` are not necessarily function starts;
 none carries a validated size or C match. The `kind` column preserves the
 SNR2 number without assigning a meaning not yet demonstrated.
 
+[`config/boot/code_intervals.tsv`](../config/boot/code_intervals.tsv) provides
+**1,315 distinct address bounds** for the `.text` symbols with observed kinds
+2 or 3. Aliases at one address share a row. `end_exclusive` is the next
+distinct code label, or the `.text` end for the final row; `max_bytes` is the
+distance between those addresses. The first eight `.text` bytes precede the
+first code label and are not assigned to a row. The bounds identify convenient
+regions to investigate, **not verified function boundaries or body sizes**:
+they may contain padding, local labels, thunks, or unlabeled code. The 11
+existing C witness bodies happen to occupy their full corresponding bounds,
+which checks this derivation for those intervals only. The file is generated
+from the hash-pinned boot and does not claim a matched function count.
+
 The boot table has `lib_main__FiPPc` with address zero. Every level `.REL`
 exports that name with a nonzero module-relative offset, consistent with a
 level-provided entry, though the loader's exact relocation and call path are
@@ -30,5 +42,7 @@ The catalogues are reproducible locally from the pinned input:
 python tools/boot_symbols.py inspect baserom/SCUS_976.15
 python tools/boot_symbols.py catalogue baserom/SCUS_976.15
 python tools/boot_symbols.py catalogue baserom/SCUS_976.15 --write
+python tools/boot_symbols.py code-intervals baserom/SCUS_976.15
+python tools/boot_symbols.py code-intervals baserom/SCUS_976.15 --write
 python tools/rel.py inspect baserom/SCUS_976.15.iso --boot baserom/SCUS_976.15
 ```
