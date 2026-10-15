@@ -70,3 +70,39 @@ catalogue are also outstanding.
 The source therefore stays in `nonmatching/`; no ByteMatch progress report
 is warranted yet. The [FOG loop counterexample](COMPILER-WITNESSES.md)
 remains a reminder that this trial compiler cannot reproduce every body.
+
+## Combined provisional C witness
+
+The same full-boot link has now been repeated with **all eleven authored C
+functions** from the eight exact-slice source groups in
+[`COMPILER-WITNESSES.md`](COMPILER-WITNESSES.md). Compile these sources with
+the same isolated GNU EE chain, `-O2 -G0`, and **without**
+`RAC5_WITNESS_PADDING`; place the resulting eight `.o` files in an ignored
+local directory. Run [`tools/boot_c_campaign.py`](../tools/boot_c_campaign.py)
+with that directory:
+
+```sh
+python tools/boot_c_campaign.py baserom/SCUS_976.15 \
+  --objects-dir build/boot-c-objects \
+  --assembler /path/to/Ps2EeAs.exe --linker /path/to/ld.exe
+```
+
+The tool pins each public C source and private object by SHA-256, splits the
+verified boot assembly around the eight object intervals, and links those
+objects without rewriting their instructions. Five objects end four bytes
+before the next measured label. SN `ld` adds the four zero alignment bytes
+between input sections; those bytes match the retail boot. Branch labels in
+the replaced intervals are rebound to their measured addresses. The linked
+ELF symbol table places all eleven C functions at the expected boot addresses:
+their compiled bodies total 248 bytes, with 32 zero alignment bytes across
+the 280-byte set of next-label intervals. The linked
+result matches the entire boot `.text` **498,900 / 498,900**, the raw
+file-backed `PT_LOAD` **809,872 / 809,872**, its complete program header, and
+the original BSS section placement and size. Generated assembly, copied
+non-code sections, objects and ELF stay under ignored `build/`.
+
+This is still a **provisional integration result**, not eleven accepted
+matches. The original compiler profile, complete ELF metadata, runtime
+behavior, and reviewed function catalogue remain unqualified. The
+non-code sections still come from the pinned game image; this does not
+constitute a reconstructed game build or ByteMatch progress.
