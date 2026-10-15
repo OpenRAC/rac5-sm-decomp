@@ -14,7 +14,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from elf import inspect_elf
-from rel import HEADER, MAGIC, RELOCATION, SYMBOL
+from rel import HEADER, MAGIC, RELOCATION, SYMBOL, unpack_relocation
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -41,7 +41,7 @@ def parse_sndata(data: bytes, base: int, sections: list[dict[str, object]]) -> l
         raise ValueError("invalid .sndata SNR2 table bounds")
 
     for index in range(head[2]):
-        _offset, _kind, symbol, _pad, _addend = RELOCATION.unpack_from(
+        _offset, _kind, symbol, _addend = unpack_relocation(
             data, reloc_at + index * RELOCATION.size)
         if symbol >= head[4]:
             raise ValueError(f"invalid .sndata relocation symbol {index}")

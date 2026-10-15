@@ -24,6 +24,11 @@ embedded table provides 1,803 named symbols. See
 [`docs/BOOT-SYMBOLS.md`](docs/BOOT-SYMBOLS.md) and
 [`docs/REL-FORMAT.md`](docs/REL-FORMAT.md) for what those counts mean.
 
+The loader's complete relocated output for the frontend and level 01 has
+been reconstructed locally and compared byte for byte with paused PCSX2
+memory ([evidence and commands](docs/RELOCATED-IMAGE.md)). This qualifies
+those two **load images**, not a compiler or authored C/C++ source.
+
 **No C or C++ function match is claimed.** The exact compiler and flags, level
 relocation/load behavior, complete assembly baseline, and function boundaries
 are still under investigation. There is no valid progress percentage yet.
@@ -89,6 +94,10 @@ proprietary compiler. Read [LEGAL.md](LEGAL.md) and
    python tools/rel.py catalogue "/path/to/your-size-matters-us.iso"
    ```
 
+   After measuring a module base in your own run, you can reconstruct its
+   private loaded image with `tools/relocate.py` (see the
+   [relocation guide](docs/RELOCATED-IMAGE.md)).
+
 4. Before starting substantial research, check open issues and pull requests
    and state your intended scope in an issue or draft PR. There is **no
    reservation or automated matching queue yet**. Current useful work includes
@@ -133,7 +142,7 @@ for this game ([compiler status](docs/COMPILER-STATUS.md)).
 | --- | --- |
 | `config/target.json` | Verified identity of the complete USA input |
 | `config/boot/`, `config/levels/` | Generated symbol names, addresses, module hashes and export offsets; no matches |
-| `tools/`, `tests/` | ISO9660, ELF and SNR2 inspection, repository guard and synthetic tests |
+| `tools/`, `tests/` | ISO9660, ELF, SNR2 and local relocation tools, repository guard and synthetic tests |
 | `src/` | Authored C/C++ definitions after the matching pipeline is qualified |
 | `nonmatching/` | Useful attempts that do not reproduce retail bytes |
 | `progress/` | Reserved for measured progress after catalogue and build qualification |

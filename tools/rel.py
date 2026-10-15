@@ -17,15 +17,22 @@ import struct
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Iterator
 
 from disc import IsoDisc, verify_disc
 
 ROOT = Path(__file__).resolve().parent.parent
 HEADER = struct.Struct("<15I")
-# The pinned boot reads the signed addend as the third 32-bit word (offset 8).
-RELOCATION = struct.Struct("<IBBHi")
+# The pinned boot reads a 32-bit r_info word: low 8 bits type, high 24 symbol.
+# The signed addend is the third word (offset 8).
+RELOCATION = struct.Struct("<IIi")
 SYMBOL = struct.Struct("<IIHBB")
 MAGIC = 0x32524E53  # ASCII SNR2, little endian
+
+
+def unpack_relocation(data: bytes, offset: int) -> tuple[int, int, int, int]:
+    site, info, addend = RELOCATION.unpack_from(data, offset)
+    return site, info & 0xFF, info >> 8, addend
 
 
 @dataclass(frozen=True)
@@ -48,8 +55,15 @@ class Module:
     packed_relocation_types: tuple[tuple[int, int], ...]
 
 
-def packed_relocation_types(data: bytes, start: int, payload_end: int) -> tuple[tuple[int, int], ...]:
-    """Count local fixup sites in the SNR2 packed stream without applying them.
+@dataclass(frozen=True)
+class PackedRelocation:
+    kind: int
+    site: int
+    low_site: int | None = None
+
+
+def iter_packed_relocations(data: bytes, start: int, payload_end: int) -> Iterator[PackedRelocation]:
+    """Decode local fixup sites in the SNR2 packed stream without applying them.
 
     The boot loader at 0x01E9B5A8 reads two bits of operation and six bits of
     site delta from each byte. A zero delta is followed by a 32-bit absolute
@@ -57,7 +71,7 @@ def packed_relocation_types(data: bytes, start: int, payload_end: int) -> tuple[
     a later LO16 site but do not consume it from the main stream.
     """
     if start == 0:
-        return ()
+        return
     if not 0 < start < len(data):
         raise ValueError("invalid packed relocation stream start")
 
@@ -80,15 +94,14 @@ def packed_relocation_types(data: bytes, start: int, payload_end: int) -> tuple[
             raise ValueError(f"invalid packed relocation site 0x{site:X}")
         return kind, site, cursor, False
 
-    counts: Counter[int] = Counter()
     cursor, site = start, 0
     while True:
         kind, site, cursor, done = next_site(cursor, site)
         if done:
             if any(data[cursor:]):
                 raise ValueError("nonzero data after packed relocation terminator")
-            return tuple(sorted(counts.items()))
-        counts[kind] += 1
+            return
+        low_site = None
         if kind == 1:
             look_cursor, look_site = cursor, site
             while True:
@@ -96,7 +109,15 @@ def packed_relocation_types(data: bytes, start: int, payload_end: int) -> tuple[
                 if look_done:
                     raise ValueError(f"packed HI16 at 0x{site:X} has no following LO16")
                 if look_kind == 0:
+                    low_site = look_site
                     break
+        yield PackedRelocation(kind, site, low_site)
+
+
+def packed_relocation_types(data: bytes, start: int, payload_end: int) -> tuple[tuple[int, int], ...]:
+    """Count packed local fixup operations without publishing program bytes."""
+    counts = Counter(item.kind for item in iter_packed_relocations(data, start, payload_end))
+    return tuple(sorted(counts.items()))
 
 
 def parse_module(path: str, data: bytes) -> Module:
@@ -123,7 +144,7 @@ def parse_module(path: str, data: bytes) -> Module:
     types: Counter[int] = Counter()
     referenced: Counter[int] = Counter()
     for index in range(reloc_count):
-        offset, kind, symbol, _pad, _addend = RELOCATION.unpack_from(
+        offset, kind, symbol, _addend = unpack_relocation(
             data, reloc_at + index * RELOCATION.size)
         if offset >= reloc_at or symbol >= symbol_count:
             raise ValueError(f"{path}: invalid relocation {index}")

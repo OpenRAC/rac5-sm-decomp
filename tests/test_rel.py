@@ -9,6 +9,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from rel import (HEADER, MAGIC, RELOCATION, SYMBOL, packed_relocation_types,
+                 unpack_relocation,
                  parse_module, render_exports, render_modules)  # noqa: E402
 
 
@@ -18,7 +19,7 @@ def sample() -> bytearray:
                      0xD4, 0, 0x80, len(data), 0, 0xD4, 0xD4)
     data[0x80:0x80 + len(b"external\0")] = b"external\0"
     data[0x90:0x90 + len(b"lib_main__FiPPc\0")] = b"lib_main__FiPPc\0"
-    RELOCATION.pack_into(data, 0xB0, 0xA4, 4, 0, 0, 0)
+    RELOCATION.pack_into(data, 0xB0, 0xA4, 4, 0)
     SYMBOL.pack_into(data, 0xBC, 0x80, 0, 0, 1, 0)
     SYMBOL.pack_into(data, 0xC8, 0x90, 0xA0, 0, 2, 0)
     return data
@@ -58,11 +59,18 @@ class RelTests(unittest.TestCase):
 
     def test_named_relocation_addend_is_last_word(self) -> None:
         blob = sample()
-        RELOCATION.pack_into(blob, 0xB0, 0xA4, 4, 0, 0, 0x12345)
+        RELOCATION.pack_into(blob, 0xB0, 0xA4, 4, 0x12345)
         self.assertEqual(blob[0xB6:0xB8], b"\0\0")
         self.assertEqual(blob[0xB8:0xBC], struct.pack("<i", 0x12345))
-        self.assertEqual(RELOCATION.unpack_from(blob, 0xB0)[4], 0x12345)
+        self.assertEqual(unpack_relocation(blob, 0xB0)[3], 0x12345)
         self.assertEqual(parse_module("test", bytes(blob)).relocation_count, 1)
+
+    def test_named_relocation_symbol_index_uses_24_bits(self) -> None:
+        blob = sample()
+        RELOCATION.pack_into(blob, 0xB0, 0xA4, (257 << 8) | 4, 0)
+        self.assertEqual(unpack_relocation(blob, 0xB0), (0xA4, 4, 257, 0))
+        with self.assertRaisesRegex(ValueError, "relocation"):
+            parse_module("test", bytes(blob))
 
     def test_packed_local_fixups_and_hi16_pair(self) -> None:
         data = bytearray(0x200)
