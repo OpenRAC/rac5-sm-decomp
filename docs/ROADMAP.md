@@ -77,6 +77,10 @@
    including 21 newly called entries and 229 linear cases without recovered
    indirect references. Confirm real ownership and embedded data before
    accepting function boundaries.
+   A stricter two-analysis split pass now separates 1,200 oversized candidate
+   intervals into 2,690 code segments with zero-only gaps and independent
+   return checks. These are shared-code review leads, not accepted function
+   sizes or a game-wide denominator.
 6. **Start scoped C/C++ matching.** `MEMCARD_Busy__Fv` is the first
    accepted 16-byte boot placement. The
    [shared level witness](LEVEL-C-WITNESS.md) accepts one 8-byte authored

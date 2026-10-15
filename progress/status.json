@@ -228,6 +228,13 @@
     "ignored_noncode_auto_functions": 26,
     "qualified_unique_denominator": null
   },
+  "split_boundary_review": {
+    "parent_candidate_intervals": 1200,
+    "corroborated_segments": 2690,
+    "closed_structural_groups": 58,
+    "conditional_candidate_bytes": 26941148,
+    "qualified_unique_denominator": null
+  },
   "remaining_for_gamewide_report": [
     "review Ghidra-only and static-only entries and unbounded function spans",
     "validate masked code/data relocation target equivalence beyond the structural leads",
@@ -448,6 +455,7 @@
     "level_ghidra_crosscheck": "0f00587cd4f346955d8264343f93cde9259170ed8e0c61259cada3682b979f9d",
     "level_translation_families": "d199f1d788f80de1b9ce9d158b10994eed95aa32dcb14913aab37748498fd55f",
     "level_flow_ranges": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8",
-    "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352"
+    "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
+    "level_split_dedupe": "f9f2f38736dd6fd45f0070ecad7e827962b0569a5bc5d49c94a38e9b34903b99"
   }
 }

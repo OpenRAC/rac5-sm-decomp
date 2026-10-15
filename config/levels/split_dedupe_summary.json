@@ -1,0 +1,159 @@
+{
+  "status": "split_structural_leads_only",
+  "module_count": 21,
+  "split_parent_intervals": 1200,
+  "split_segments": 2690,
+  "split_parent_placement_bytes": 2776184,
+  "candidate_masked_split_groups": 277,
+  "closed_split_groups": 58,
+  "raw_identical_split_target_seeds": 64,
+  "rejection_counts": {
+    "repeated_module": 4,
+    "unresolved_references": 101
+  },
+  "retained_candidate_interval_bytes": 35015424,
+  "previous_exact_candidate_savings": 1846532,
+  "split_aware_exact_candidate_savings": 2361580,
+  "previous_combined_candidate_savings": 6886436,
+  "combined_candidate_savings": 8074276,
+  "previous_conditional_bytes": 28128988,
+  "conditional_candidate_bytes": 26941148,
+  "additional_conditional_savings": 1187840,
+  "inventory_sha256": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
+  "translation_sha256": "d199f1d788f80de1b9ce9d158b10994eed95aa32dcb14913aab37748498fd55f",
+  "flow_sha256": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8",
+  "full_flow_sha256": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
+  "code_catalogue_sha256": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
+  "module_catalogue_sha256": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
+  "overall_percent": null,
+  "bytematch_ready": false,
+  "warning": "Ghidra split spans with independent return and zero-gap checks are code-shape review leads, not accepted retail function boundaries. The conditional size assumes shared-source equivalence and is not a progress denominator.",
+  "modules": [
+    {
+      "module": "FRONTEND.REL",
+      "split_parent_intervals": 1,
+      "split_segments": 3,
+      "parent_placement_bytes": 296
+    },
+    {
+      "module": "LEVEL_01.REL",
+      "split_parent_intervals": 75,
+      "split_segments": 166,
+      "parent_placement_bytes": 175324
+    },
+    {
+      "module": "LEVEL_02.REL",
+      "split_parent_intervals": 74,
+      "split_segments": 166,
+      "parent_placement_bytes": 173680
+    },
+    {
+      "module": "LEVEL_03.REL",
+      "split_parent_intervals": 75,
+      "split_segments": 167,
+      "parent_placement_bytes": 182452
+    },
+    {
+      "module": "LEVEL_04.REL",
+      "split_parent_intervals": 84,
+      "split_segments": 188,
+      "parent_placement_bytes": 184572
+    },
+    {
+      "module": "LEVEL_05.REL",
+      "split_parent_intervals": 69,
+      "split_segments": 152,
+      "parent_placement_bytes": 162040
+    },
+    {
+      "module": "LEVEL_06.REL",
+      "split_parent_intervals": 72,
+      "split_segments": 163,
+      "parent_placement_bytes": 169980
+    },
+    {
+      "module": "LEVEL_07.REL",
+      "split_parent_intervals": 73,
+      "split_segments": 161,
+      "parent_placement_bytes": 185080
+    },
+    {
+      "module": "LEVEL_08.REL",
+      "split_parent_intervals": 90,
+      "split_segments": 208,
+      "parent_placement_bytes": 195600
+    },
+    {
+      "module": "LEVEL_09.REL",
+      "split_parent_intervals": 65,
+      "split_segments": 144,
+      "parent_placement_bytes": 154960
+    },
+    {
+      "module": "LEVEL_10.REL",
+      "split_parent_intervals": 74,
+      "split_segments": 165,
+      "parent_placement_bytes": 177748
+    },
+    {
+      "module": "LEVEL_15.REL",
+      "split_parent_intervals": 31,
+      "split_segments": 70,
+      "parent_placement_bytes": 53124
+    },
+    {
+      "module": "LEVEL_16.REL",
+      "split_parent_intervals": 53,
+      "split_segments": 120,
+      "parent_placement_bytes": 121200
+    },
+    {
+      "module": "LEVEL_17.REL",
+      "split_parent_intervals": 49,
+      "split_segments": 112,
+      "parent_placement_bytes": 115572
+    },
+    {
+      "module": "LEVEL_18.REL",
+      "split_parent_intervals": 53,
+      "split_segments": 120,
+      "parent_placement_bytes": 119996
+    },
+    {
+      "module": "LEVEL_19.REL",
+      "split_parent_intervals": 56,
+      "split_segments": 126,
+      "parent_placement_bytes": 128056
+    },
+    {
+      "module": "LEVEL_20.REL",
+      "split_parent_intervals": 23,
+      "split_segments": 52,
+      "parent_placement_bytes": 46660
+    },
+    {
+      "module": "LEVEL_21.REL",
+      "split_parent_intervals": 31,
+      "split_segments": 70,
+      "parent_placement_bytes": 53124
+    },
+    {
+      "module": "LEVEL_22.REL",
+      "split_parent_intervals": 32,
+      "split_segments": 72,
+      "parent_placement_bytes": 83720
+    },
+    {
+      "module": "LEVEL_23.REL",
+      "split_parent_intervals": 60,
+      "split_segments": 132,
+      "parent_placement_bytes": 152084
+    },
+    {
+      "module": "LEVEL_24.REL",
+      "split_parent_intervals": 60,
+      "split_segments": 133,
+      "parent_placement_bytes": 140916
+    }
+  ]
+}

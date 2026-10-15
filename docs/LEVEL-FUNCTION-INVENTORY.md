@@ -177,3 +177,28 @@ require review. Local code targets that do not satisfy the callgraph closure,
 nonuniform data translations and uncertain function ownership remain in the
 unresolved worklists. This pass narrows disagreements; it does not finish the
 game-wide function catalogue.
+
+## Splitting oversized candidate intervals
+
+Some static next-entry intervals contain several real functions. The
+[`level_split_dedupe.py`](../tools/level_split_dedupe.py) review only splits an
+interval when the code-only and full-module Ghidra analyses agree on every
+body range, each segment ends in `jr $ra` plus its delay slot, and every gap
+inside or between segments contains only zero bytes with no relocation site.
+The pinned private pass found **1,200 parent intervals by placement**
+(2,776,184 bytes) that satisfy those controls and yielded **2,690** separate
+segments. A reference/translation and callgraph pass closed **58** shared
+segment families; 64 additional split groups were raw-byte-identical target
+controls. Detailed addresses remain in ignored worklists.
+
+The audit replaces each validated parent with its disjoint segments before
+recomputing connected components of exact and structural duplicate links.
+Exact candidate savings rise from **1,846,532** to **2,361,580 bytes** and
+combined candidate savings from **6,886,436** to **8,074,276 bytes**. This
+yields a **26,941,148-byte conditional candidate scenario**, 1,187,840 bytes
+below the prior scenario. The calculation never counts a parent and its split
+segments at the same time. Ghidra-derived starts and structural equivalence
+remain review leads, so this is **not** a qualified unique-code denominator or
+a ByteMatch percentage. The compact
+[`split_dedupe_summary.json`](../config/levels/split_dedupe_summary.json)
+records counts and input hashes only.
