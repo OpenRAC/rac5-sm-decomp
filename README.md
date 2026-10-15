@@ -30,6 +30,8 @@ python tools/disc.py inspect /path/to/your-size-matters-us.iso
 python tools/disc.py verify /path/to/your-size-matters-us.iso
 python tools/disc.py extract-boot /path/to/your-size-matters-us.iso
 python tools/elf.py baserom/SCUS_976.15
+python tools/boot_symbols.py inspect baserom/SCUS_976.15
+python tools/boot_symbols.py catalogue baserom/SCUS_976.15
 python tools/rel.py inspect /path/to/your-size-matters-us.iso
 python tools/rel.py catalogue /path/to/your-size-matters-us.iso
 python -m unittest discover -s tests
@@ -46,6 +48,7 @@ against the hash in `config/target.json`.
 | Path | Role |
 | --- | --- |
 | `config/target.json` | Verified identity of the complete USA input |
+| `config/boot/` | Generated boot symbol names and addresses, not matched functions |
 | `config/levels/` | Generated SNR2 module hashes and export offsets, not function matches |
 | `tools/` | ISO9660, ELF and SNR2 inspection; later, matching-build tools |
 | `src/` | One authored C/C++ definition per verified function, when matching begins |
@@ -55,5 +58,7 @@ against the hash in `config/target.json`.
 
 The disc contains 21 `LVL/*.REL` level programs. Their SNR2 metadata is now
 documented in [`docs/REL-FORMAT.md`](docs/REL-FORMAT.md); the actual loader and
-matching compiler remain open. See [`docs/COMPILER-STATUS.md`](docs/COMPILER-STATUS.md)
+matching compiler remain open. The boot's embedded symbol table is documented
+in [`docs/BOOT-SYMBOLS.md`](docs/BOOT-SYMBOLS.md). See
+[`docs/COMPILER-STATUS.md`](docs/COMPILER-STATUS.md)
 and [`docs/ROADMAP.md`](docs/ROADMAP.md).

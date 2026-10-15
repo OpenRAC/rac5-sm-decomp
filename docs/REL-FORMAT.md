@@ -25,6 +25,7 @@ addresses. Regenerate or verify them with:
 
 ```sh
 python tools/rel.py inspect baserom/SCUS_976.15.iso
+python tools/rel.py inspect baserom/SCUS_976.15.iso --boot baserom/SCUS_976.15
 python tools/rel.py catalogue baserom/SCUS_976.15.iso
 python tools/rel.py catalogue baserom/SCUS_976.15.iso --write
 ```
@@ -32,3 +33,5 @@ python tools/rel.py catalogue baserom/SCUS_976.15.iso --write
 The next research step is the loader's placement of code/data and the meaning
 of each relocation during loading. This metadata does **not** establish
 function boundaries, sizes, shared-function identities, or a matching build.
+The linked boot's related symbol table and an unresolved frontend import are
+described in [`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md).

@@ -8,6 +8,9 @@ The SNR2 level modules expose the mangled symbol
 the SNR2 packaging, this is evidence of C++ and SN ProDG tooling in the
 programs. It does **not** identify the exact compiler executable, version,
 flags or assembler for each source unit.
+The boot also retains 1,803 names in its embedded SNR2 table
+([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
+for selecting witnesses but do not prove a compiler profile.
 
 In particular, RAC2's reconstructed GNU EE-GCC game profile and its Sony SDK
 profile have **not** been qualified for Size Matters. The project has no

@@ -28,6 +28,8 @@ class RelTests(unittest.TestCase):
         module = parse_module("LVL/TEST.REL", bytes(sample()))
         self.assertEqual(module.relocation_count, 1)
         self.assertEqual(module.symbol_count, 2)
+        self.assertEqual(module.imports, ("external",))
+        self.assertEqual(module.import_references, (("external", 1),))
         self.assertEqual(module.relocation_types, ((4, 1),))
         self.assertEqual([(x.name, x.address) for x in module.exports],
                          [("lib_main__FiPPc", 0xA0)])

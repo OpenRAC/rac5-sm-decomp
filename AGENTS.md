@@ -18,9 +18,9 @@ compiler settings or level-format assumptions.
 - A match requires the qualified toolchain to reproduce the complete retail
   program bytes at every applicable placement. A source file compiling, a
   similar disassembly, or a masked comparison is not sufficient.
-- Regenerate catalogues and progress with their tools; `tools/rel.py` currently
-  generates export metadata, not function or progress claims. Never hand-edit
-  generated claims.
+- Regenerate catalogues and progress with their tools. `tools/rel.py` and
+  `tools/boot_symbols.py` generate symbol metadata, not function or progress
+  claims. Never hand-edit generated claims.
 - Run the relevant tests and `python tools/check_repository.py` before a
   commit. Describe what was verified and what remains provisional.
 - Work on a branch for contributions. Keep game data and private paths out of

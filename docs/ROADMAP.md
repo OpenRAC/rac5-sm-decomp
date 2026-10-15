@@ -9,6 +9,8 @@
    (size `0x79CD4`). The disc also has `LVL/FRONTEND.REL` and numbered
    `LVL/LEVEL_*.REL` files. Their SNR2 headers, relocation tables and exported
    symbols have been checked across all 21 modules (`docs/REL-FORMAT.md`).
+   The boot's embedded SNR2 table provides 1,803 named symbols
+   (`docs/BOOT-SYMBOLS.md`).
    Determine the loader's placement and relocation semantics and the code/data
    extents; do not reuse RAC2's WAD layout.
 3. **Establish an assembly baseline.** Split the verified boot and level
