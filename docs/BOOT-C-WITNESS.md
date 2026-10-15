@@ -88,6 +88,9 @@ python tools/boot_c_campaign.py baserom/SCUS_976.15 \
   --assembler /path/to/Ps2EeAs.exe --linker /path/to/ld.exe
 ```
 
+For a single command that first recompiles those objects with the pinned
+private tools, use the [boot trial gate](BOOT-TRIAL-GATE.md).
+
 The tool pins each public C source and private object by SHA-256, splits the
 verified boot assembly around the seventeen object intervals, and links those
 objects without rewriting their instructions. Eight objects end four bytes
