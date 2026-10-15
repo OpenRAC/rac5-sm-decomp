@@ -147,17 +147,25 @@ contains only counts and hashes, never program bytes. See the
 filters masked groups to one placement per module, requires every boundary
 to agree with Ghidra, preserves named relocation symbols and addends, and
 requires local HI16/LO16 data references to move by one consistent
-module-specific delta. A further closed local-callgraph pass requires each
+module-specific delta when the body has HI16 data references. With none, the
+data shift is zero and any unpaired LO16 values must still agree. A further
+closed local-callgraph pass requires each
 J/JAL target either to be the same relative offset within the body or to
 identify a Ghidra-corroborated callee family already accepted by those rules.
 Unknown code targets, 32-bit pointers, differing target families and open
-callgraph dependencies remain excluded. **593 groups** passed the combined
-structural checks, including **61** closed local-callgraph groups. They
-contain **1,919,820 placement body bytes** but only **165,688 body bytes**
+callgraph dependencies remain excluded. The audit also considers pointer-only
+and nonzero-tail bodies when their complete body boundary agrees with Ghidra;
+their uncertain surrounding bytes are not included. **2,362 groups** passed
+the combined structural checks, including **920** closed local-callgraph
+groups and **478** groups involving a pointer-only or nonzero-tail placement.
+They contain **7,693,152 placement body bytes** but only **654,712 body bytes**
 when one representative per group is counted. Their additional candidate
-savings beyond raw-identical groups are **1,648,364 bytes**, giving a
-**31,520,528-byte structural lead upper bound** over the original candidate
-intervals. This number is *not* a qualified unique-code denominator.
+savings beyond raw-identical groups are **5,039,904 bytes**, giving a
+**28,128,988-byte conditional structural-lead scenario** over the original
+candidate intervals. It assumes those leads really share code; this number is
+*not* a proved upper bound on unique game code or a progress denominator.
+The saving uses connected components of exact and structural body links, so
+overlapping evidence cannot subtract a placement twice.
 
 The largest lead has a **32,796-byte** body in all twenty numbered levels.
 Ghidra agrees with its boundary in every placement. Each placement has the

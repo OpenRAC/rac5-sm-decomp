@@ -20,7 +20,7 @@ now records 124,356 possible entry intervals, 74,051 stronger bounded
 candidates and an exact-duplicate upper bound of 33,168,892 candidate bytes.
 Relocation-masked groups remain review leads, not counted progress.
 An independent R5900 Ghidra pass agrees with **91,350** of those candidate
-boundaries. The data-translation and closed local-callgraph checks retain **593
+boundaries. The data-translation and closed local-callgraph checks retain **2,362
 shared template leads**, including one 32,796-byte body across all twenty numbered
 levels. The [audit guide](../docs/LEVEL-FUNCTION-INVENTORY.md) explains why
 these are useful deduplication worklists but still not an exact unique-code

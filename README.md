@@ -74,7 +74,7 @@ separates bounded entries from uncertain pointer/table entries and identifies
 exact duplicates plus relocation-masked review leads. No ByteMatch report is
 published yet.
 The independent Ghidra pass corroborates 91,350 candidate level boundaries;
-593 masked families pass data-translation and closed local-callgraph checks.
+2,362 masked families pass data-translation and closed local-callgraph checks.
 A full-module flow pass assigns the 1,590 code-only inside-body disagreements
 to review categories, including 21 newly called entry leads. Neither analysis
 turns unresolved function/data boundaries into a game-wide percentage.
