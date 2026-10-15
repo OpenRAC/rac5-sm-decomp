@@ -19,7 +19,7 @@ The [function-boundary and deduplication audit](../docs/LEVEL-FUNCTION-INVENTORY
 now records 124,356 possible entry intervals, 74,051 stronger bounded
 candidates and an exact-duplicate upper bound of 33,168,892 candidate bytes.
 Relocation-masked groups remain review leads, not counted progress.
-An independent R5900 Ghidra pass agrees with **83,459** of those candidate
+An independent R5900 Ghidra pass agrees with **91,350** of those candidate
 boundaries. The stricter uniform-data-translation check retains **531 shared
 template leads**, including one 32,796-byte body across all twenty numbered
 levels. The [audit guide](../docs/LEVEL-FUNCTION-INVENTORY.md) explains why

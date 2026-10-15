@@ -115,7 +115,7 @@
     }
   ],
   "inventory_sha256": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
-  "ghidra_crosscheck_sha256": "e1d82fb4dc111bc32d17962fa3b6ab75c48c1d704e09501f7a10af047a5c77cb",
+  "ghidra_crosscheck_sha256": "0f00587cd4f346955d8264343f93cde9259170ed8e0c61259cada3682b979f9d",
   "overall_percent": null,
   "bytematch_ready": false,
   "warning": "Uniform translated data references and corroborated machine-code bodies identify templates, not proven source semantics or a complete unique-code denominator."

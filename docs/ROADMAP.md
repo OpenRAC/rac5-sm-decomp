@@ -67,7 +67,7 @@
    covers all 21 placements and separates bounded call targets from pointer
    entries and unresolved spans. Review those boundaries and masked duplicate
    leads before declaring a unique-code denominator.
-   An independent Ghidra pass now corroborates 83,459 candidate boundaries;
+   An independent Ghidra pass now corroborates 91,350 candidate boundaries;
    531 masked groups pass uniform data-translation checks. Review the
    disagreements, local code-call targets and remaining data references
    before treating these leads as one shared source family each.

@@ -196,10 +196,11 @@
     "qualified_unique_denominator": null
   },
   "independent_boundary_crosscheck": {
-    "corroborated_candidate_boundaries": 83459,
-    "corroborated_body_bytes_by_placement": 24107476,
+    "corroborated_candidate_boundaries": 91350,
+    "corroborated_body_bytes_by_placement": 25823716,
     "ghidra_only_entries": 2689,
-    "static_only_entries": 27692
+    "static_only_entries": 27692,
+    "no_return_cross_limit_or_noncontiguous": 1634
   },
   "structural_shared_code_leads": {
     "families": 531,
@@ -425,7 +426,7 @@
     "level_compiler_profile": "88ba030f0b06691e526e27817ed00184449e8bc655b0436969626a670bf88bbd",
     "accepted_level_c_source_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",
     "level_function_inventory": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
-    "level_ghidra_crosscheck": "e1d82fb4dc111bc32d17962fa3b6ab75c48c1d704e09501f7a10af047a5c77cb",
-    "level_translation_families": "e25535d5898a3b767eb37880a7f1eafa7cb375f28322eb6319ce26ef0cc8a7ab"
+    "level_ghidra_crosscheck": "0f00587cd4f346955d8264343f93cde9259170ed8e0c61259cada3682b979f9d",
+    "level_translation_families": "c13ee28c96d664f9a0147764d4b9e38138104f7e050d90acb0857d8c29bfb749"
   }
 }

@@ -24,6 +24,15 @@ class LevelGhidraCrosscheckTests(unittest.TestCase):
         self.assertEqual(result["corroborated_boundaries"], 0)
         self.assertEqual(agreed, [])
         self.assertIn("boundary_disagreement", worklist)
+        static[0]["status"] = "nonzero_tail"
+        ghidra[0]["body_bytes"] = "8"
+        result, _, _ = compare("LEVEL_01.REL", static, ghidra)
+        self.assertEqual(result["corroborated_nonzero_tail_boundaries"], 1)
+        static[0]["status"] = "no_return"
+        static[0]["limit"] = "0x104"
+        result, _, _ = compare("LEVEL_01.REL", static, ghidra)
+        self.assertEqual(result["no_return_shared_entries"], 1)
+        self.assertEqual(result["no_return_cross_limit_or_noncontiguous"], 1)
 
     def test_masked_lead_does_not_collapse_same_module_repeats(self) -> None:
         rows = [{"module": name, "body_bytes": "8", "raw_sha256": raw,

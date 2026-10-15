@@ -74,16 +74,25 @@ authored [`ExportFunctionBounds.java`](../tools/ghidra/ExportFunctionBounds.java
 exports only entry/body metadata. The
 [`level_ghidra_crosscheck.py`](../tools/level_ghidra_crosscheck.py) tool
 requires the Ghidra body to be contiguous from the same candidate entry and
-to end at the independently inferred return boundary. The identical
+to end at the independently inferred return boundary. A nonzero tail after
+that boundary stays unclassified but does not invalidate the agreed body.
+The identical
 `LEVEL_15`/`LEVEL_21` code intervals produced identical Ghidra export hashes,
 an additional repeatability control.
 
-Across all modules, **83,459 candidate boundaries** and **24,107,476 body
+Across all modules, **91,350 candidate boundaries** and **25,823,716 body
 bytes by placement** agree exactly between the two methods. Ghidra alone
 proposed **2,689** entries; the static call/pointer audit alone proposed
-**27,692**. The differences are private review worklists. Ghidra's raw-code
+**27,692**. Of the agreeing bodies, **7,891** have a nonzero tail beyond the
+return and are kept in a separate review class. The differences are private
+review worklists. Ghidra's raw-code
 import excludes module data and can miss calls or misclassify embedded data;
 agreement is corroboration, not proof that every other address is non-code.
+Among 1,655 shared entries with no return before the next candidate start,
+**1,634** have a Ghidra body that is noncontiguous or crosses that next start.
+These cannot be sized correctly by a simple next-entry rule; they need a
+control-flow/body-range review. The remaining 21 appear as short terminal
+call/tail forms and are also left unaccepted.
 See [`tools/ghidra/README.md`](../tools/ghidra/README.md) for reproducing the
 analysis with a lawful image and local Ghidra installation.
 

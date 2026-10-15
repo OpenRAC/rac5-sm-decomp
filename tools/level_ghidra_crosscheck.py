@@ -38,15 +38,24 @@ def compare(module: str, static: list[dict[str, str]],
         raise ValueError(f"duplicate candidate/Ghidra entry in {module}")
     corroborated = []
     mismatched = []
+    no_return_shared = 0
+    no_return_cross_limit_or_noncontiguous = 0
     for entry, row in functions.items():
         candidate = candidates.get(entry)
         if candidate is None:
             mismatched.append((entry, "ghidra_only", "", "", row["max"], row["body_bytes"]))
             continue
+        if candidate["status"] == "no_return":
+            no_return_shared += 1
+            if (int(row["min"], 16) != entry
+                    or int(row["body_bytes"]) != int(row["max"], 16) + 1 - entry
+                    or int(row["max"], 16) + 1 > int(candidate["limit"], 16)):
+                no_return_cross_limit_or_noncontiguous += 1
         body_end = int(candidate["body_end"], 16) if candidate["body_end"] else None
         ghidra_end = int(row["max"], 16) + 1
         ghidra_size = int(row["body_bytes"])
-        if (candidate["status"] in ("bounded_candidate", "pointer_only")
+        if (candidate["status"] in ("bounded_candidate", "pointer_only",
+                                    "nonzero_tail")
                 and body_end == ghidra_end
                 and int(row["min"], 16) == entry
                 and ghidra_size == int(candidate["body_bytes"])):
@@ -73,10 +82,15 @@ def compare(module: str, static: list[dict[str, str]],
             "call" in row["evidence"] for row in corroborated),
         "corroborated_pointer_only_boundaries": sum(
             row["status"] == "pointer_only" for row in corroborated),
+        "corroborated_nonzero_tail_boundaries": sum(
+            row["status"] == "nonzero_tail" for row in corroborated),
         "corroborated_body_bytes": sum(int(row["body_bytes"]) for row in corroborated),
         "ghidra_only_entries": len(functions.keys() - candidates.keys()),
         "static_only_entries": len(candidates.keys() - functions.keys()),
         "disagreement_entries": sum(row[1] == "boundary_disagreement" for row in mismatched),
+        "no_return_shared_entries": no_return_shared,
+        "no_return_cross_limit_or_noncontiguous":
+            no_return_cross_limit_or_noncontiguous,
     }, "\n".join(lines) + "\n", corroborated
 
 

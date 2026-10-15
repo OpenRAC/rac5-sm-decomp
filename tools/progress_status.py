@@ -247,6 +247,9 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                                        for row in crosscheck["modules"]),
             "static_only_entries": sum(row["static_only_entries"]
                                        for row in crosscheck["modules"]),
+            "no_return_cross_limit_or_noncontiguous": sum(
+                row["no_return_cross_limit_or_noncontiguous"]
+                for row in crosscheck["modules"]),
         },
         "structural_shared_code_leads": {
             "families": translation["group_count"],

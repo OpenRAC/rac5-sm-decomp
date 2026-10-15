@@ -28,7 +28,10 @@ The script writes `<module>.code.bin.ghidra.tsv` in the ignored build
 directory. Auto-analysis can misidentify embedded data and cannot read the
 data sections omitted from these code slices; warnings about unreadable data
 addresses are expected. Its boundaries are an **independent candidate view**,
-not ground truth. Compare them with the static call/relocation analysis using:
+not ground truth. Add the optional second script argument `ranges` to export
+Ghidra's noncontiguous body-address ranges for private investigation. The
+committed cross-check uses the default five-column form. Compare it with the
+static call/relocation analysis using:
 
 ```sh
 python tools/level_ghidra_crosscheck.py --write
