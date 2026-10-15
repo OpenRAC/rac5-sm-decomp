@@ -11,7 +11,7 @@ parts of [OpenRAC's RAC2 project](https://github.com/OpenRAC/rac2-gc-decomp):
 authored source belongs in `src/`, game-derived material stays local, and a function
 only counts as matched after a byte-identical build. This repository does **not**
 yet have a general qualified compiler, a complete retail function catalogue,
-or a ByteMatch progress report. One boot function and one shared level function
+or a ByteMatch progress report. One boot function and two shared level functions
 have narrowly scoped private whole-program gates.
 
 ## What is established
@@ -42,7 +42,7 @@ runtime placements remain open. A new
 [complete-program gate for the frontend and level 01](docs/LEVEL-PROGRAM-GATE.md)
 checks their full modules and the two previously measured relocated-image
 hashes. A separate [shared-level C gate](docs/LEVEL-C-WITNESS.md) now accepts
-one 8-byte authored function at all twenty numbered level placements; two
+two authored functions (8 and 72 bytes) at all twenty numbered level placements; two
 additional C shapes are compiler controls only.
 
 The boot's embedded labels also yield

@@ -1,14 +1,42 @@
 {
-  "id": "rac5-level-shared-constant-gnu-ee-trial-20261015",
-  "status": "qualified_shared_constant_only",
+  "id": "rac5-level-shared-c-gnu-ee-trial-20261015",
+  "status": "qualified_two_shared_functions_only",
   "base_profile": "config/boot/compiler_trial.json",
-  "scope": "func_00000100 at module offset 0x100 in the twenty pinned LEVEL_*.REL placements",
+  "scope": "func_00000100 and func_shared_zero_buffer at twenty pinned LEVEL_*.REL placements only",
   "accepted": {
     "source": "src/levels/shared/func_00000100.c",
     "source_sha256_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",
     "object_sha256": "33f3990d0112f1a54faa0440dce113fcfa1b1738948fddabb698727b6c722fc4",
     "offset": 256,
     "body_bytes": 8
+  },
+  "additional_accepted": {
+    "source": "src/levels/shared/func_shared_zero_buffer.c",
+    "source_sha256_lf": "8425fefc73b121bd3eb6ffc09e4c49bf6425958c0f5b63d638af3b11d6c6e387",
+    "object_sha256": "fd9519ff060ad74b5180d6bfeba77981f963c9f9d07e00a96614b86a87117f55",
+    "body_bytes": 72,
+    "placements": {
+      "LEVEL_01.REL": 100352,
+      "LEVEL_02.REL": 103048,
+      "LEVEL_03.REL": 99848,
+      "LEVEL_04.REL": 99680,
+      "LEVEL_05.REL": 97992,
+      "LEVEL_06.REL": 94376,
+      "LEVEL_07.REL": 102248,
+      "LEVEL_08.REL": 102888,
+      "LEVEL_09.REL": 97384,
+      "LEVEL_10.REL": 97936,
+      "LEVEL_15.REL": 86040,
+      "LEVEL_16.REL": 93592,
+      "LEVEL_17.REL": 92088,
+      "LEVEL_18.REL": 91224,
+      "LEVEL_19.REL": 92936,
+      "LEVEL_20.REL": 85064,
+      "LEVEL_21.REL": 86040,
+      "LEVEL_22.REL": 87104,
+      "LEVEL_23.REL": 95672,
+      "LEVEL_24.REL": 95248
+    }
   },
   "provisional_controls": [
     {

@@ -66,11 +66,12 @@ def public_evidence(boot: dict[str, object], level: dict[str, object],
             or level.get("counted_matches") != 0
             or not isinstance(level.get("modules"), list)):
         raise ValueError("private level-program gate is incomplete")
-    if (level_c.get("status") != "passed_shared_constant_only"
-            or level_c.get("accepted_function") != "func_00000100"
-            or level_c.get("counted_matches") != 1
-            or level_c.get("unique_body_bytes") != 8
-            or level_c.get("matched_placement_bytes") != 160
+    if (level_c.get("status") != "passed_two_shared_functions"
+            or level_c.get("accepted_functions") !=
+            ["func_00000100", "func_shared_zero_buffer"]
+            or level_c.get("counted_matches") != 2
+            or level_c.get("unique_body_bytes") != 80
+            or level_c.get("matched_placement_bytes") != 1600
             or not isinstance(level_c.get("placements"), list)):
         raise ValueError("private shared-level C gate is incomplete")
     keys = ("module", "size", "sha256", "code_interval_bytes",
@@ -90,7 +91,7 @@ def public_evidence(boot: dict[str, object], level: dict[str, object],
         "level_gate_status": level["status"],
         "levels": checked_modules,
         "level_c": {key: level_c[key] for key in
-                    ("status", "profile", "accepted_function", "counted_matches",
+                    ("status", "profile", "accepted_functions", "counted_matches",
                      "unique_body_bytes", "matched_placement_bytes", "placements",
                      "provisional_controls", "runtime_measured_placements")},
     }
@@ -123,17 +124,25 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
         raise ValueError("accepted C source or boundary changed")
     level_c = evidence["level_c"]
     level_source = ROOT / level_profile["accepted"]["source"]
-    if (level_c["status"] != "passed_shared_constant_only"
+    additional = level_profile["additional_accepted"]
+    additional_source = ROOT / additional["source"]
+    if (level_c["status"] != "passed_two_shared_functions"
             or level_c["profile"] != level_profile["id"]
-            or level_c["accepted_function"] != "func_00000100"
-            or level_c["counted_matches"] != 1
-            or level_c["unique_body_bytes"] != 8
-            or level_c["matched_placement_bytes"] != 160
-            or level_profile["status"] != "qualified_shared_constant_only"
+            or level_c["accepted_functions"] !=
+            ["func_00000100", "func_shared_zero_buffer"]
+            or level_c["counted_matches"] != 2
+            or level_c["unique_body_bytes"] != 80
+            or level_c["matched_placement_bytes"] != 1600
+            or level_profile["status"] != "qualified_two_shared_functions_only"
             or level_profile["accepted"]["source"] !=
             "src/levels/shared/func_00000100.c"
             or normalized_source_digest(level_source) !=
-            level_profile["accepted"]["source_sha256_lf"]):
+            level_profile["accepted"]["source_sha256_lf"]
+            or additional["source"] !=
+            "src/levels/shared/func_shared_zero_buffer.c"
+            or additional["body_bytes"] != 72
+            or normalized_source_digest(additional_source) !=
+            additional["source_sha256_lf"]):
         raise ValueError("accepted level C evidence differs from pinned scope")
     intervals = records(CODE_CATALOGUE)
     modules = records(MODULE_CATALOGUE)
@@ -154,7 +163,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
         rows.append({"module": module, "module_sha256": by_name[module]["sha256"],
                      "candidate_code_bytes_by_placement": size,
                      "candidate_code_sha256": row["sha256"],
-                     "accepted_c_bytes": 8 if module.startswith("LEVEL_") else 0})
+                     "accepted_c_bytes": 80 if module.startswith("LEVEL_") else 0})
     measured = {row["module"]: row for row in evidence["levels"]}
     if set(measured) != set(MEASURED_LOADS) or len(evidence["levels"]) != len(measured):
         raise ValueError("level gate receipt lacks the two measured placements")
@@ -226,6 +235,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
     level_placements = {row["module"]: row for row in level_c["placements"]}
     level_names = {name for name in by_name if name.startswith("LEVEL_")}
     if (set(level_placements) != level_names
+            or set(additional["placements"]) != level_names
             or len(level_c["placements"]) != len(level_names)
             or level_c["provisional_controls"] != ["LEVEL_01.REL:0x190:24",
                                                      "FRONTEND.REL:0x2CD8:12"]
@@ -235,7 +245,10 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
     for module, row in level_placements.items():
         if (row["sha256"] != by_name[module]["sha256"]
                 or row["size"] != int(by_name[module]["size"])
-                or row["body_offset"] != 0x100 or row["body_bytes"] != 8):
+                or row["body_offset"] != 0x100 or row["body_bytes"] != 8
+                or row["shared_buffer_offset"] !=
+                additional["placements"][module]
+                or row["shared_buffer_bytes"] != 72):
             raise ValueError(f"shared C placement differs from pinned module: {module}")
     return {
         "format": "rac5-scoped-progress-v1",
@@ -250,9 +263,10 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                    "candidate_code_bytes_by_placement": sum(
                        row["candidate_code_bytes_by_placement"] for row in rows),
                    "full_program_gates": sorted(measured),
-                   "accepted_shared_functions": ["func_00000100"],
-                   "accepted_c_bytes_per_unique_source": 8,
-                   "accepted_c_bytes_by_placement": 160,
+                   "accepted_shared_functions": ["func_00000100",
+                                                 "func_shared_zero_buffer"],
+                   "accepted_c_bytes_per_unique_source": 80,
+                   "accepted_c_bytes_by_placement": 1600,
                    "known_identical_full_intervals": duplicates},
         "function_inventory": {
             "candidate_entry_intervals": inventory["entry_intervals"],
@@ -331,6 +345,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "accepted_c_source_lf": accepted.source_sha256,
             "level_compiler_profile": digest(LEVEL_PROFILE),
             "accepted_level_c_source_lf": level_profile["accepted"]["source_sha256_lf"],
+            "accepted_shared_buffer_c_source_lf":
+                level_profile["additional_accepted"]["source_sha256_lf"],
             "level_function_inventory": digest(FUNCTION_INVENTORY),
             "level_ghidra_crosscheck": digest(GHIDRA_CROSSCHECK),
             "level_translation_families": digest(TRANSLATION_FAMILIES),
@@ -360,8 +376,8 @@ def main() -> None:
         OUTPUT.write_text(content, encoding="utf-8", newline="\n")
     elif OUTPUT.read_text(encoding="utf-8") != content:
         raise ValueError("progress snapshot is stale; rerun private gates and --write")
-    print("scoped progress: boot 16/498900 C bytes; one shared 8-byte level C "
-          "function at 20 placements; no game-wide percentage")
+    print("scoped progress: boot 16/498900 C bytes; two shared level C "
+          "functions (8+72 bytes) at 20 placements; no game-wide percentage")
 
 
 if __name__ == "__main__":
