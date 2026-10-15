@@ -63,6 +63,20 @@
    (`config/boot/witness_boundaries.tsv`). Review remaining boundaries,
    padding, aliases and placements before producing a retail function
    catalogue; commit metadata only.
+   Across levels, the [candidate inventory](LEVEL-FUNCTION-INVENTORY.md)
+   covers all 21 placements and separates bounded call targets from pointer
+   entries and unresolved spans. Review those boundaries and masked duplicate
+   leads before declaring a unique-code denominator.
+   An independent Ghidra pass now corroborates 91,350 candidate boundaries;
+   593 masked groups pass data-translation and closed local-callgraph checks;
+   1,209 internal-block leads also have a same-body direct edge. Review the
+   remaining disagreements, indirect targets and data references
+   before treating these leads as one shared source family each.
+   A Ghidra body-range pass also flags 1,590 candidate starts inside another
+   body. A full-module pass assigns them to flow-evidence review categories,
+   including 21 newly called entries and 229 linear cases without recovered
+   indirect references. Confirm real ownership and embedded data before
+   accepting function boundaries.
 6. **Start scoped C/C++ matching.** `MEMCARD_Busy__Fv` is the first
    accepted 16-byte boot placement. The
    [shared level witness](LEVEL-C-WITNESS.md) accepts one 8-byte authored

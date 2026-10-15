@@ -1,0 +1,126 @@
+{
+  "status": "structural_translation_leads",
+  "module_count": 21,
+  "group_count": 593,
+  "placement_body_bytes": 1919820,
+  "template_body_bytes": 165688,
+  "callgraph_resolved_groups": 61,
+  "callgraph_placement_body_bytes": 170660,
+  "extra_candidate_savings_beyond_exact": 1648364,
+  "template_lead_upper_bound_bytes": 31520528,
+  "rejection_counts": {
+    "boundary_disagreement": 408,
+    "code_relocation_or_unpaired_hi": 1398,
+    "different_local_code_targets": 33,
+    "nonuniform_data_translation": 1867,
+    "repeated_module": 220,
+    "unresolved_callgraph_dependencies": 472
+  },
+  "largest_groups": [
+    {
+      "body_bytes": 32796,
+      "placements": 20,
+      "fingerprint": "41c6ab0da9b0393ace6de61c6d868c436bcd368f5670b9074df9b77eaabbdde7"
+    },
+    {
+      "body_bytes": 1796,
+      "placements": 20,
+      "fingerprint": "2b7ed48b3c923c9611475f1111366475e82ad4338236dc1e8aed0c5be3fca16c"
+    },
+    {
+      "body_bytes": 1688,
+      "placements": 20,
+      "fingerprint": "7775f874a3625778f2a13ff1dee066b4ad3f2e631c222faf34bfd75d94552a48"
+    },
+    {
+      "body_bytes": 1184,
+      "placements": 20,
+      "fingerprint": "48c682cf4bd910191a692229e4188f9f41aa9fdc812e7f77267a6b88d2972707"
+    },
+    {
+      "body_bytes": 1168,
+      "placements": 16,
+      "fingerprint": "a51791130554dd27a4d51068e7c3b61aad20cd236ca276c29728b3ac6e1e894a"
+    },
+    {
+      "body_bytes": 864,
+      "placements": 20,
+      "fingerprint": "cb5b5c80a753492a19c3d19eb0d78526a61bd621ffb0ca4e337bbb4b8f11f2ad"
+    },
+    {
+      "body_bytes": 1092,
+      "placements": 16,
+      "fingerprint": "79a8d8f22a428b55adb23f8fcedd4f4324dc4a4574336f0bd69a5d745c713ab9"
+    },
+    {
+      "body_bytes": 15200,
+      "placements": 2,
+      "fingerprint": "8b650bb12989852966ea9db16d554302424381535dee6eb7d39d23e3c670dc47"
+    },
+    {
+      "body_bytes": 756,
+      "placements": 20,
+      "fingerprint": "8f931989f71b478f1d4d13c0e47ddbc8db5b0fa9d3a9a9a0de0ebed1caa3b1b0"
+    },
+    {
+      "body_bytes": 728,
+      "placements": 20,
+      "fingerprint": "f03f95ce46390503d83bb6f7ff342d9fbea7c61fe66decc46ca4ddef5c305893"
+    },
+    {
+      "body_bytes": 696,
+      "placements": 20,
+      "fingerprint": "2fc3b13f4c6a0d6eac65ae32bb8998ad23f5377c73c5009b694f1eced1818613"
+    },
+    {
+      "body_bytes": 660,
+      "placements": 20,
+      "fingerprint": "9fb339e9d5e1e8de6bfb0b43453b05d090730fbdc54984a0f397a01c351efd57"
+    },
+    {
+      "body_bytes": 780,
+      "placements": 17,
+      "fingerprint": "8900d163b7515e00d2854bcfcf357c0b0aaaef1ba2088bd4135a5082684e34e1"
+    },
+    {
+      "body_bytes": 616,
+      "placements": 20,
+      "fingerprint": "462869b6945f84d23776426995b158e8397285dd259d6308548782f463a78eb9"
+    },
+    {
+      "body_bytes": 780,
+      "placements": 16,
+      "fingerprint": "0272bf1b8c124b4304b52f41cc8114b2020d48a6d576651d7613509466470806"
+    },
+    {
+      "body_bytes": 576,
+      "placements": 21,
+      "fingerprint": "8dcb3f6e078b0fcf8d33de091a36b480522fbf49710b70c3866a05fa76a40357"
+    },
+    {
+      "body_bytes": 600,
+      "placements": 20,
+      "fingerprint": "c4abc3b198f8f15aaff7893849bc8650b70c81a006bb54cc81563b20f8449445"
+    },
+    {
+      "body_bytes": 872,
+      "placements": 13,
+      "fingerprint": "1f0d67aec1d96abd1dcbddc549b587d24295292bdfac26a62609abea39089222"
+    },
+    {
+      "body_bytes": 536,
+      "placements": 20,
+      "fingerprint": "ca993e088f0a19b12c510f59cecf240693b381ebec3661f6208f84c3da7a716c"
+    },
+    {
+      "body_bytes": 528,
+      "placements": 20,
+      "fingerprint": "62b51313fa4c9ef348a45dbea534645bd566cd56c64c7afc94ac54c9dac05457"
+    }
+  ],
+  "inventory_sha256": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
+  "ghidra_crosscheck_sha256": "0f00587cd4f346955d8264343f93cde9259170ed8e0c61259cada3682b979f9d",
+  "overall_percent": null,
+  "bytematch_ready": false,
+  "warning": "Uniform translated data references and corroborated machine-code bodies identify templates, not proven source semantics or a complete unique-code denominator."
+}

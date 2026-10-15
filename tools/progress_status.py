@@ -28,6 +28,11 @@ CODE_CATALOGUE = ROOT / "config/levels/code_intervals.tsv"
 MODULE_CATALOGUE = ROOT / "config/levels/modules.tsv"
 PROFILE = ROOT / "config/boot/compiler_trial.json"
 LEVEL_PROFILE = ROOT / "config/levels/compiler_trial.json"
+FUNCTION_INVENTORY = ROOT / "config/levels/function_inventory_summary.json"
+GHIDRA_CROSSCHECK = ROOT / "config/levels/ghidra_crosscheck_summary.json"
+TRANSLATION_FAMILIES = ROOT / "config/levels/translation_families_summary.json"
+FLOW_RANGES = ROOT / "config/levels/flow_range_summary.json"
+FULL_MODULE_FLOW = ROOT / "config/levels/full_module_flow_summary.json"
 TARGET = ROOT / "config/target.json"
 ACCEPTED_SYMBOL = "MEMCARD_Busy__Fv"
 
@@ -165,6 +170,46 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                 or row["counted_matches"] != 0):
             raise ValueError(f"level gate evidence differs from pinned placement: {module}")
     duplicates = [names for names in groups.values() if len(names) > 1]
+    inventory = json.loads(FUNCTION_INVENTORY.read_text(encoding="utf-8"))
+    crosscheck = json.loads(GHIDRA_CROSSCHECK.read_text(encoding="utf-8"))
+    translation = json.loads(TRANSLATION_FAMILIES.read_text(encoding="utf-8"))
+    flow = json.loads(FLOW_RANGES.read_text(encoding="utf-8"))
+    full_flow = json.loads(FULL_MODULE_FLOW.read_text(encoding="utf-8"))
+    if (inventory["status"] != "candidate_inventory_only"
+            or inventory["module_count"] != 21
+            or inventory["candidate_code_bytes_by_placement"] !=
+            sum(row["candidate_code_bytes_by_placement"] for row in rows)
+            or inventory["overall_percent"] is not None
+            or inventory["bytematch_ready"] is not False):
+        raise ValueError("level function inventory is not a qualified denominator")
+    if (crosscheck["status"] != "independent_candidate_crosscheck"
+            or crosscheck["inventory_sha256"] != digest(FUNCTION_INVENTORY)
+            or crosscheck["module_count"] != 21
+            or crosscheck["overall_percent"] is not None
+            or crosscheck["bytematch_ready"] is not False
+            or translation["status"] != "structural_translation_leads"
+            or translation["inventory_sha256"] != digest(FUNCTION_INVENTORY)
+            or translation["ghidra_crosscheck_sha256"] != digest(GHIDRA_CROSSCHECK)
+            or translation["module_count"] != 21
+            or translation["overall_percent"] is not None
+            or translation["bytematch_ready"] is not False):
+        raise ValueError("independent boundaries or shared-code leads are stale")
+    if (flow["status"] != "flow_range_candidates_only"
+            or flow["inventory_sha256"] != digest(FUNCTION_INVENTORY)
+            or flow["crosscheck_sha256"] != digest(GHIDRA_CROSSCHECK)
+            or flow["module_count"] != 21
+            or flow["overall_percent"] is not None
+            or flow["bytematch_ready"] is not False):
+        raise ValueError("Ghidra flow-range review is stale")
+    if (full_flow["status"] != "full_module_flow_leads_only"
+            or full_flow["flow_range_sha256"] != digest(FLOW_RANGES)
+            or full_flow["module_catalogue_sha256"] != digest(MODULE_CATALOGUE)
+            or full_flow["code_catalogue_sha256"] != digest(CODE_CATALOGUE)
+            or full_flow["module_count"] != 21
+            or full_flow["candidate_entries"] != flow["candidate_internal_block_leads"]
+            or full_flow["overall_percent"] is not None
+            or full_flow["bytematch_ready"] is not False):
+        raise ValueError("full-module flow review is stale or overclaims")
     level_placements = {row["module"]: row for row in level_c["placements"]}
     level_names = {name for name in by_name if name.startswith("LEVEL_")}
     if (set(level_placements) != level_names
@@ -196,9 +241,63 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                    "accepted_c_bytes_per_unique_source": 8,
                    "accepted_c_bytes_by_placement": 160,
                    "known_identical_full_intervals": duplicates},
+        "function_inventory": {
+            "candidate_entry_intervals": inventory["entry_intervals"],
+            "bounded_candidate_intervals":
+                inventory["boundary_status_counts"]["bounded_candidate"],
+            "unresolved_or_pointer_only_intervals": inventory["entry_intervals"] -
+                inventory["boundary_status_counts"]["bounded_candidate"],
+            "bounded_candidate_body_bytes_by_placement":
+                inventory["bounded_candidate_body_bytes_by_placement"],
+            "raw_exact_distinct_candidate_bytes":
+                inventory["raw_exact_distinct_candidate_bytes"],
+            "relocation_masked_conservative_lead_bytes":
+                inventory["relocation_masked_conservative_lead_bytes"],
+            "exact_byte_dedupe_upper_bound":
+                inventory["exact_byte_dedupe_upper_bound"],
+            "identical_full_interval_groups":
+                inventory["identical_full_interval_groups"],
+            "qualified_unique_denominator": None,
+        },
+        "independent_boundary_crosscheck": {
+            "corroborated_candidate_boundaries": crosscheck["corroborated_boundaries"],
+            "corroborated_body_bytes_by_placement":
+                crosscheck["corroborated_body_bytes_by_placement"],
+            "ghidra_only_entries": sum(row["ghidra_only_entries"]
+                                       for row in crosscheck["modules"]),
+            "static_only_entries": sum(row["static_only_entries"]
+                                       for row in crosscheck["modules"]),
+            "no_return_cross_limit_or_noncontiguous": sum(
+                row["no_return_cross_limit_or_noncontiguous"]
+                for row in crosscheck["modules"]),
+        },
+        "structural_shared_code_leads": {
+            "families": translation["group_count"],
+            "placement_body_bytes": translation["placement_body_bytes"],
+            "template_body_bytes": translation["template_body_bytes"],
+            "local_callgraph_resolved_families":
+                translation["callgraph_resolved_groups"],
+            "candidate_upper_bound_after_translation":
+                translation["template_lead_upper_bound_bytes"],
+            "qualified_unique_denominator": None,
+        },
+        "flow_range_review": {
+            "ghidra_body_bytes_by_placement": flow["ghidra_body_bytes_by_placement"],
+            "possible_internal_block_entries": flow["candidate_internal_block_leads"],
+            "with_same_body_direct_edge":
+                flow["internal_block_with_same_body_direct_edge"],
+            "qualified_unique_denominator": None,
+        },
+        "full_module_flow_review": {
+            "code_only_inside_body_candidates": full_flow["candidate_entries"],
+            "categories": full_flow["categories"],
+            "ignored_noncode_auto_functions":
+                full_flow["ignored_noncode_auto_functions"],
+            "qualified_unique_denominator": None,
+        },
         "remaining_for_gamewide_report": [
-            "reviewed function boundaries and compiler profiles for level programs",
-            "shared-code deduplication across SNR2 placements",
+            "review Ghidra-only and static-only entries and unbounded function spans",
+            "validate masked code/data relocation target equivalence beyond the structural leads",
             "complete-program C gates for accepted level functions",
         ],
         "evidence": evidence,
@@ -209,6 +308,11 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "accepted_c_source_lf": accepted.source_sha256,
             "level_compiler_profile": digest(LEVEL_PROFILE),
             "accepted_level_c_source_lf": level_profile["accepted"]["source_sha256_lf"],
+            "level_function_inventory": digest(FUNCTION_INVENTORY),
+            "level_ghidra_crosscheck": digest(GHIDRA_CROSSCHECK),
+            "level_translation_families": digest(TRANSLATION_FAMILIES),
+            "level_flow_ranges": digest(FLOW_RANGES),
+            "level_full_module_flow": digest(FULL_MODULE_FLOW),
         },
     }
 

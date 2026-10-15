@@ -15,6 +15,21 @@ candidate code intervals, not verified function sizes or unique game code.
 hashes; smaller shared functions may occur elsewhere. `overall_percent` is
 therefore `null`. The only percentage in the snapshot is explicitly scoped to
 the boot `.text`: 16 / 498,900 bytes (0.00320706%).
+The [function-boundary and deduplication audit](../docs/LEVEL-FUNCTION-INVENTORY.md)
+now records 124,356 possible entry intervals, 74,051 stronger bounded
+candidates and an exact-duplicate upper bound of 33,168,892 candidate bytes.
+Relocation-masked groups remain review leads, not counted progress.
+An independent R5900 Ghidra pass agrees with **91,350** of those candidate
+boundaries. The data-translation and closed local-callgraph checks retain **593
+shared template leads**, including one 32,796-byte body across all twenty numbered
+levels. The [audit guide](../docs/LEVEL-FUNCTION-INVENTORY.md) explains why
+these are useful deduplication worklists but still not an exact unique-code
+denominator.
+The optional Ghidra body-range pass flags **1,590** candidate starts inside
+another body; **1,209** also have a direct branch or jump from that same body.
+A full-module pass classifies all 1,590 as review leads, including **21**
+newly called function entries and **229** contiguous cases without a recovered
+indirect reference. These remain candidate evidence, not counted C progress.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,
 run the [boot gate](../docs/BOOT-TRIAL-GATE.md), the
@@ -22,10 +37,21 @@ run the [boot gate](../docs/BOOT-TRIAL-GATE.md), the
 [shared level C gate](../docs/LEVEL-C-WITNESS.md), then:
 
 ```sh
+python tools/level_function_inventory.py --write baserom/SCUS_976.15.iso
+python tools/level_function_inventory.py --check
+python tools/level_ghidra_crosscheck.py --write
+python tools/level_translation_families.py --write baserom/SCUS_976.15.iso
+python tools/level_flow_ranges.py --write
+python tools/level_full_module_flow.py --extract baserom/SCUS_976.15.iso
+# Run the private full-module Ghidra pass described in tools/ghidra/README.md.
+python tools/level_full_module_flow.py --write baserom/SCUS_976.15.iso --ghidra-dir build/level-functions/full-ghidra
+python tools/level_full_module_flow.py --check
 python tools/progress_status.py --write
 python tools/progress_status.py --check
 ```
 
+The Ghidra cross-check also requires private metadata exports; its
+[reproduction guide](../tools/ghidra/README.md) gives the command. Progress
 `--write` requires the ignored private gate receipts. CI can run `--check`
 without game data; it detects drift in the committed catalogues, accepted C
 source and reported evidence. CI does not repeat the proprietary-tool builds.

@@ -179,9 +179,58 @@
       ]
     ]
   },
+  "function_inventory": {
+    "candidate_entry_intervals": 124356,
+    "bounded_candidate_intervals": 74051,
+    "unresolved_or_pointer_only_intervals": 50305,
+    "bounded_candidate_body_bytes_by_placement": 26702516,
+    "raw_exact_distinct_candidate_bytes": 23765324,
+    "relocation_masked_conservative_lead_bytes": 4106316,
+    "exact_byte_dedupe_upper_bound": 33168892,
+    "identical_full_interval_groups": [
+      [
+        "LEVEL_15.REL",
+        "LEVEL_21.REL"
+      ]
+    ],
+    "qualified_unique_denominator": null
+  },
+  "independent_boundary_crosscheck": {
+    "corroborated_candidate_boundaries": 91350,
+    "corroborated_body_bytes_by_placement": 25823716,
+    "ghidra_only_entries": 2689,
+    "static_only_entries": 27692,
+    "no_return_cross_limit_or_noncontiguous": 1634
+  },
+  "structural_shared_code_leads": {
+    "families": 593,
+    "placement_body_bytes": 1919820,
+    "template_body_bytes": 165688,
+    "local_callgraph_resolved_families": 61,
+    "candidate_upper_bound_after_translation": 31520528,
+    "qualified_unique_denominator": null
+  },
+  "flow_range_review": {
+    "ghidra_body_bytes_by_placement": 32805452,
+    "possible_internal_block_entries": 1590,
+    "with_same_body_direct_edge": 1209,
+    "qualified_unique_denominator": null
+  },
+  "full_module_flow_review": {
+    "code_only_inside_body_candidates": 1590,
+    "categories": {
+      "called_function_lead": 21,
+      "computed_dispatch_block_lead": 1285,
+      "direct_flow_block_lead": 34,
+      "inside_new_called_body_lead": 21,
+      "linear_fallthrough_block_lead": 229
+    },
+    "ignored_noncode_auto_functions": 26,
+    "qualified_unique_denominator": null
+  },
   "remaining_for_gamewide_report": [
-    "reviewed function boundaries and compiler profiles for level programs",
-    "shared-code deduplication across SNR2 placements",
+    "review Ghidra-only and static-only entries and unbounded function spans",
+    "validate masked code/data relocation target equivalence beyond the structural leads",
     "complete-program C gates for accepted level functions"
   ],
   "evidence": {
@@ -394,6 +443,11 @@
     "level_module_catalogue": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
     "accepted_c_source_lf": "16e4be48785a4f90e710cf9b5ffe596e071bd1041a41a8fab5936dbb1fca9e18",
     "level_compiler_profile": "88ba030f0b06691e526e27817ed00184449e8bc655b0436969626a670bf88bbd",
-    "accepted_level_c_source_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad"
+    "accepted_level_c_source_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",
+    "level_function_inventory": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
+    "level_ghidra_crosscheck": "0f00587cd4f346955d8264343f93cde9259170ed8e0c61259cada3682b979f9d",
+    "level_translation_families": "289a4e464d02e57e4b569706393db353135a2a0de7b8f62c7a8e504264052773",
+    "level_flow_ranges": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8",
+    "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352"
   }
 }

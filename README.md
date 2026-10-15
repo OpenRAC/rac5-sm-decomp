@@ -68,8 +68,16 @@ this is not a fully source-derived game build.
 No other C or C++ match is claimed. The original compiler identity and general level
 profiles, most function boundaries and full runtime behavior are still under
 investigation. The [scoped progress snapshot](progress/README.md) records the
-verified boot match and level baselines without claiming a game-wide
-percentage. No ByteMatch report is published yet.
+verified boot and shared-level matches without claiming a game-wide
+percentage. The [21-module function audit](docs/LEVEL-FUNCTION-INVENTORY.md)
+separates bounded entries from uncertain pointer/table entries and identifies
+exact duplicates plus relocation-masked review leads. No ByteMatch report is
+published yet.
+The independent Ghidra pass corroborates 91,350 candidate level boundaries;
+593 masked families pass data-translation and closed local-callgraph checks.
+A full-module flow pass assigns the 1,590 code-only inside-body disagreements
+to review categories, including 21 newly called entry leads. Neither analysis
+turns unresolved function/data boundaries into a game-wide percentage.
 Names, symbol addresses and module hashes are research metadata, not proof of
 matching code. The [roadmap](docs/ROADMAP.md) tracks the remaining gates.
 

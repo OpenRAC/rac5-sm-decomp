@@ -16,5 +16,13 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Check scoped progress snapshot
         run: python tools/progress_status.py --check
+      - name: Check level function inventory metadata
+        run: python tools/level_function_inventory.py --check
+      - name: Check independent boundaries and translation leads
+        run: |
+          python tools/level_ghidra_crosscheck.py --check
+          python tools/level_translation_families.py --check
+          python tools/level_flow_ranges.py --check
+          python tools/level_full_module_flow.py --check
       - name: No game data or build artifacts in the repository
         run: python tools/check_repository.py
