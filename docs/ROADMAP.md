@@ -22,7 +22,9 @@
    RAC2's WAD layout.
 3. **Establish an assembly baseline.** Split the verified boot and level
    programs into local ignored `asm/` and `build/` outputs, then rebuild and
-   compare complete loaded bytes. Record the exact assembler/linker used.
+   compare complete loaded bytes. One 160-byte boot function has been
+   reassembled exactly with a measured local SN assembler/linker combination
+   (`docs/ASSEMBLY-STATUS.md`); this does not qualify the full baseline.
 4. **Identify compiler profiles.** Mangled C++ exports and ProDG SNR2 modules
    are evidence, not a compiler version (`docs/COMPILER-STATUS.md`). Measure
    signatures on code and SDK-library ranges. Do not copy RAC2's `sdk` or game

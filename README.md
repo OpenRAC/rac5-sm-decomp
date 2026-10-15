@@ -28,6 +28,8 @@ The loader's complete relocated output for the frontend and level 01 has
 been reconstructed locally and compared byte for byte with paused PCSX2
 memory ([evidence and commands](docs/RELOCATED-IMAGE.md)). This qualifies
 those two **load images**, not a compiler or authored C/C++ source.
+One [160-byte assembly witness](docs/ASSEMBLY-STATUS.md) also matched; the
+complete assembly rebuild remains open.
 
 **No C or C++ function match is claimed.** The exact compiler and flags, level
 relocation/load behavior, complete assembly baseline, and function boundaries
