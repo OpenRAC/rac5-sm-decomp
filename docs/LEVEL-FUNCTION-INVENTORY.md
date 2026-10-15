@@ -147,17 +147,25 @@ contains only counts and hashes, never program bytes. See the
 filters masked groups to one placement per module, requires every boundary
 to agree with Ghidra, preserves named relocation symbols and addends, and
 requires local HI16/LO16 data references to move by one consistent
-module-specific delta. A further closed local-callgraph pass requires each
+module-specific delta when the body has HI16 data references. With none, the
+data shift is zero and any unpaired LO16 values must still agree. A further
+closed local-callgraph pass requires each
 J/JAL target either to be the same relative offset within the body or to
 identify a Ghidra-corroborated callee family already accepted by those rules.
 Unknown code targets, 32-bit pointers, differing target families and open
-callgraph dependencies remain excluded. **593 groups** passed the combined
-structural checks, including **61** closed local-callgraph groups. They
-contain **1,919,820 placement body bytes** but only **165,688 body bytes**
+callgraph dependencies remain excluded. The audit also considers pointer-only
+and nonzero-tail bodies when their complete body boundary agrees with Ghidra;
+their uncertain surrounding bytes are not included. **2,362 groups** passed
+the combined structural checks, including **920** closed local-callgraph
+groups and **478** groups involving a pointer-only or nonzero-tail placement.
+They contain **7,693,152 placement body bytes** but only **654,712 body bytes**
 when one representative per group is counted. Their additional candidate
-savings beyond raw-identical groups are **1,648,364 bytes**, giving a
-**31,520,528-byte structural lead upper bound** over the original candidate
-intervals. This number is *not* a qualified unique-code denominator.
+savings beyond raw-identical groups are **5,039,904 bytes**, giving a
+**28,128,988-byte conditional structural-lead scenario** over the original
+candidate intervals. It assumes those leads really share code; this number is
+*not* a proved upper bound on unique game code or a progress denominator.
+The saving uses connected components of exact and structural body links, so
+overlapping evidence cannot subtract a placement twice.
 
 The largest lead has a **32,796-byte** body in all twenty numbered levels.
 Ghidra agrees with its boundary in every placement. Each placement has the
@@ -169,3 +177,32 @@ require review. Local code targets that do not satisfy the callgraph closure,
 nonuniform data translations and uncertain function ownership remain in the
 unresolved worklists. This pass narrows disagreements; it does not finish the
 game-wide function catalogue.
+
+## Splitting oversized candidate intervals
+
+Some static next-entry intervals appear to contain several functions. The
+[`level_split_dedupe.py`](../tools/level_split_dedupe.py) review only splits an
+interval at each selected sub-body for which the code-only and full-module
+Ghidra analyses agree, its end contains `jr $ra` plus the delay slot, and any
+gap *inside that sub-body* contains only zero bytes with no relocation site.
+Bytes outside selected sub-bodies are left unique even if they look similar.
+The pinned private pass found **2,651 parent intervals by placement**
+(5,134,376 bytes) with **4,369** qualifying segments spanning 4,947,100
+bytes; the other **187,276 bytes** stay uncollapsed. Reference/translation and
+callgraph checks closed **112** split-segment families plus **69** existing
+static families whose calls now resolve to those segments. Another 107 raw-
+identical split groups served as target controls. Detailed addresses remain
+in ignored worklists.
+
+The audit removes each selected parent from exact duplicate grouping before
+adding its disjoint verified segments, while leaving the residual bytes
+unique. It then recomputes connected components of exact and structural links.
+Exact candidate savings rise from **1,846,532** to **2,550,912 bytes** and
+combined candidate savings from **6,886,436** to **8,973,336 bytes**. This
+yields a **26,042,088-byte conditional candidate scenario**, 2,086,900 bytes
+below the prior scenario. The calculation never counts a parent and its split
+segments at the same time. Ghidra-derived starts and structural equivalence
+remain review leads, so this is **not** a qualified unique-code denominator or
+a ByteMatch percentage. The compact
+[`split_dedupe_summary.json`](../config/levels/split_dedupe_summary.json)
+records counts and input hashes only.

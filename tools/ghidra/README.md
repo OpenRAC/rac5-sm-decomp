@@ -88,3 +88,15 @@ counts and excludes these from code ownership, and rejects any function whose
 body crosses the pinned code boundary.
 The full REL files and detailed exports remain ignored; only compact counts
 and input hashes may be committed.
+
+With both code-only and full-module range exports available, the optional
+split-boundary audit reuses them without another Ghidra run:
+
+```sh
+python tools/level_split_dedupe.py --write baserom/SCUS_976.15.iso --ghidra-dir build/level-functions/full-ghidra
+python tools/level_split_dedupe.py --check
+```
+
+It requires two agreeing body analyses, a real return at each selected body
+end, and zero-only *internal* gaps without relocation sites. Other parent
+bytes remain unique. Only metadata summaries are tracked.

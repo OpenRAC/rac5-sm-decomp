@@ -38,6 +38,8 @@ def digest(path: Path) -> str:
 def uniform_translation(reference: dict[int, int], current: dict[int, int]) -> int | None:
     if reference.keys() != current.keys():
         return None
+    if not reference:
+        return 0  # No HI16 data target needs relocation; verify unpaired lows separately.
     shifts = {current[site] - value for site, value in reference.items()}
     return shifts.pop() if len(shifts) == 1 else None
 
@@ -86,8 +88,8 @@ def ghidra_confirmed(row: dict[str, str], functions: dict[int, dict[str, str]]) 
 
 
 def local_code_references(data: bytes, start: int, end: int, fixups: list,
-                          known_entries: dict[tuple[str, int], tuple[int, str]],
-                          module: str) -> dict[int, tuple[str, int | tuple[int, str]]] | None:
+                          known_entries: dict[tuple[str, int], tuple],
+                          module: str) -> dict[int, tuple[str, int | tuple]] | None:
     """Resolve each local J/JAL to an internal offset or corroborated callee.
 
     Unknown targets and 32-bit code pointers fail closed. The masked body hash
@@ -124,6 +126,56 @@ def close_callgraph(pending: dict[tuple[int, str], tuple[dict, set]],
         accepted.update(fresh)
 
 
+def combined_dedupe_savings(exact_bodies: dict[tuple[int, str], list[dict]],
+                            accepted: list[dict], retained: set[str]) -> tuple[int, int]:
+    """Union exact and structural bodies without counting overlapping links twice."""
+    parent: dict[tuple[str, int], tuple[str, int]] = {}
+    sizes: dict[tuple[str, int], int] = {}
+
+    def add(node: tuple[str, int], size: int) -> None:
+        if node in sizes and sizes[node] != size:
+            raise ValueError("candidate body has conflicting sizes")
+        parent.setdefault(node, node)
+        sizes[node] = size
+
+    def root(node: tuple[str, int]) -> tuple[str, int]:
+        while parent[node] != node:
+            parent[node] = parent[parent[node]]
+            node = parent[node]
+        return node
+
+    def union(nodes: list[tuple[str, int]]) -> None:
+        if not nodes:
+            return
+        for node in nodes[1:]:
+            if sizes[node] != sizes[nodes[0]]:
+                raise ValueError("candidate group mixes body sizes")
+            parent[root(node)] = root(nodes[0])
+
+    def savings() -> int:
+        components: Counter[tuple[str, int]] = Counter(root(node) for node in parent)
+        return sum(sizes[node] * (count - 1) for node, count in components.items())
+
+    for (size, _fingerprint), group in exact_bodies.items():
+        kept = [row for row in group if row["module"] in retained]
+        if len({row["module"] for row in kept}) != len(kept):
+            continue  # Repeated identical bodies in one module remain separate.
+        nodes = [(row["module"], int(row["start"], 16)) for row in kept]
+        for node in nodes:
+            add(node, size)
+        union(nodes)
+    exact_savings = savings()
+    for group in accepted:
+        nodes = [(module, start) for module, start in group["placements"]
+                 if module in retained]
+        if len({module for module, _start in nodes}) != len(nodes):
+            raise ValueError("structural family repeats a module")
+        for node in nodes:
+            add(node, group["body_bytes"])
+        union(nodes)
+    return exact_savings, savings()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     mode = parser.add_mutually_exclusive_group(required=True)
@@ -150,6 +202,10 @@ def main() -> None:
                 or not 0 <= summary["callgraph_resolved_groups"] <= summary["group_count"]
                 or not 0 <= summary["callgraph_placement_body_bytes"] <=
                 summary["placement_body_bytes"]
+                or not 0 <= summary["groups_with_pointer_or_nonzero_tail"] <=
+                summary["group_count"]
+                or not 0 <= summary["placement_bytes_with_pointer_or_nonzero_tail"] <=
+                summary["placement_body_bytes"]
                 or summary["template_lead_upper_bound_bytes"] !=
                 inventory["exact_byte_dedupe_upper_bound"] -
                 summary["extra_candidate_savings_beyond_exact"]):
@@ -163,6 +219,8 @@ def main() -> None:
     if len(modules) != 21 or set(module_rows) != set(modules):
         raise ValueError("level catalogues differ from 21 pinned modules")
     bodies: dict[tuple[int, str], list[dict]] = defaultdict(list)
+    exact_bodies: dict[tuple[int, str], list[dict]] = defaultdict(list)
+    unconfirmed_bodies: dict[tuple[int, str], list[dict]] = defaultdict(list)
     ghidra = {}
     known_entries = {}
     for module in modules:
@@ -170,14 +228,26 @@ def main() -> None:
         ghidra[module] = {int(row["entry"], 16): row for row in rows(file)}
         for row in rows(WORK / f"{module}.tsv"):
             if row["status"] == "bounded_candidate":
+                exact_bodies[(int(row["body_bytes"]), row["raw_sha256"])].append(
+                    {**row, "module": module})
+            confirmed = ghidra_confirmed(row, ghidra[module])
+            if row["status"] in ("bounded_candidate", "pointer_only", "nonzero_tail"):
                 key = (int(row["body_bytes"]), row["masked_lead_sha256"])
-                bodies[key].append({**row, "module": module})
-                if ghidra_confirmed(row, ghidra[module]):
-                    known_entries[(module, int(row["start"], 16))] = key
+                if confirmed:
+                    bodies[key].append({**row, "module": module})
+                elif row["status"] == "bounded_candidate":
+                    unconfirmed_bodies[key].append({**row, "module": module})
+            if (row["status"] in ("bounded_candidate", "pointer_only", "nonzero_tail")
+                    and confirmed):
+                known_entries[(module, int(row["start"], 16))] = (
+                    int(row["body_bytes"]), row["masked_lead_sha256"])
     accepted = []
     base_keys = set()
     pending = {}
     reasons = Counter()
+    reasons["boundary_disagreement"] = sum(
+        len(group) + len(bodies.get(key, [])) >= 2
+        for key, group in unconfirmed_bodies.items())
     retained = set(modules) - {name for group in inventory["identical_full_interval_groups"]
                                for name in group[1:]}
     with IsoDisc(args.write) as disc:
@@ -201,8 +271,7 @@ def main() -> None:
             reasons["repeated_module"] += 1
             continue
         if not all(ghidra_confirmed(row, ghidra[row["module"]]) for row in group):
-            reasons["boundary_disagreement"] += 1
-            continue
+            raise ValueError("uncorroborated body entered structural group")
         references = []
         call_references = []
         has_code_relocation = False
@@ -246,6 +315,8 @@ def main() -> None:
                                         for row in group],
                          "raw_variants": len({row["raw_sha256"] for row in group}),
                          "data_deltas": translations,
+                         "includes_pointer_or_nonzero_tail": any(
+                             row["status"] != "bounded_candidate" for row in group),
                          "resolution": "callgraph" if has_code_relocation else "uniform_data"}
         key = (size, fingerprint)
         if has_code_relocation:
@@ -258,18 +329,13 @@ def main() -> None:
     resolved_keys = close_callgraph(pending, base_keys)
     accepted.extend(pending[key][0] for key in sorted(resolved_keys))
     reasons["unresolved_callgraph_dependencies"] = len(pending) - len(resolved_keys)
-    extra_savings = 0
-    for group in accepted:
-        kept_rows = [module for module, _start in group["placements"] if module in retained]
-        if len(kept_rows) < 2:
-            continue
-        # Raw-identical bodies have already been removed by the strict bound.
-        # Recompute variants on the retained placements rather than counting
-        # the fully identical LEVEL_15/LEVEL_21 interval twice.
-        source_group = bodies[(group["body_bytes"], group["fingerprint"])]
-        variants = {row["raw_sha256"] for row in source_group
-                    if row["module"] in retained}
-        extra_savings += group["body_bytes"] * (len(variants) - 1)
+    exact_savings, combined_savings = combined_dedupe_savings(
+        exact_bodies, accepted, retained)
+    retained_interval_bytes = sum(int(interval_rows[module]["interval_bytes"])
+                                  for module in retained)
+    if retained_interval_bytes - exact_savings != inventory["exact_byte_dedupe_upper_bound"]:
+        raise ValueError("exact body deduplication differs from pinned inventory")
+    extra_savings = combined_savings - exact_savings
     summary = {
         "status": "structural_translation_leads",
         "module_count": len(modules),
@@ -281,9 +347,13 @@ def main() -> None:
         "callgraph_placement_body_bytes": sum(
             group["body_bytes"] * len(group["placements"]) for group in accepted
             if group["resolution"] == "callgraph"),
+        "groups_with_pointer_or_nonzero_tail": sum(
+            group["includes_pointer_or_nonzero_tail"] for group in accepted),
+        "placement_bytes_with_pointer_or_nonzero_tail": sum(
+            group["body_bytes"] * len(group["placements"]) for group in accepted
+            if group["includes_pointer_or_nonzero_tail"]),
         "extra_candidate_savings_beyond_exact": extra_savings,
-        "template_lead_upper_bound_bytes":
-            inventory["exact_byte_dedupe_upper_bound"] - extra_savings,
+        "template_lead_upper_bound_bytes": retained_interval_bytes - combined_savings,
         "rejection_counts": dict(sorted(reasons.items())),
         "largest_groups": [
             {"body_bytes": group["body_bytes"],
@@ -295,7 +365,7 @@ def main() -> None:
         "ghidra_crosscheck_sha256": digest(GHIDRA_CROSSCHECK),
         "overall_percent": None,
         "bytematch_ready": False,
-        "warning": "Uniform translated data references, corroborated bodies and closed local callee families identify templates, not proven source semantics or a complete unique-code denominator.",
+        "warning": "The candidate-size scenario assumes each structural lead is one shared template. Data-target semantics and complete function ownership are not proven; this is not an unconditional upper bound or progress denominator.",
     }
     lines = ["# Structural translation leads only; no accepted C or denominator claims.",
              "body_bytes\tplacements\traw_variants\tresolution\tfingerprint\tmembers_and_data_deltas"]

@@ -20,7 +20,7 @@ now records 124,356 possible entry intervals, 74,051 stronger bounded
 candidates and an exact-duplicate upper bound of 33,168,892 candidate bytes.
 Relocation-masked groups remain review leads, not counted progress.
 An independent R5900 Ghidra pass agrees with **91,350** of those candidate
-boundaries. The data-translation and closed local-callgraph checks retain **593
+boundaries. The data-translation and closed local-callgraph checks retain **2,362
 shared template leads**, including one 32,796-byte body across all twenty numbered
 levels. The [audit guide](../docs/LEVEL-FUNCTION-INVENTORY.md) explains why
 these are useful deduplication worklists but still not an exact unique-code
@@ -30,6 +30,10 @@ another body; **1,209** also have a direct branch or jump from that same body.
 A full-module pass classifies all 1,590 as review leads, including **21**
 newly called function entries and **229** contiguous cases without a recovered
 indirect reference. These remain candidate evidence, not counted C progress.
+The split-body audit selects **4,369** corroborated segments inside **2,651**
+oversized candidate intervals, leaving 187,276 surrounding bytes unique.
+Its **26,042,088-byte** result is a
+conditional deduplication scenario, not a verified unique-code denominator.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,
 run the [boot gate](../docs/BOOT-TRIAL-GATE.md), the
@@ -46,6 +50,8 @@ python tools/level_full_module_flow.py --extract baserom/SCUS_976.15.iso
 # Run the private full-module Ghidra pass described in tools/ghidra/README.md.
 python tools/level_full_module_flow.py --write baserom/SCUS_976.15.iso --ghidra-dir build/level-functions/full-ghidra
 python tools/level_full_module_flow.py --check
+python tools/level_split_dedupe.py --write baserom/SCUS_976.15.iso --ghidra-dir build/level-functions/full-ghidra
+python tools/level_split_dedupe.py --check
 python tools/progress_status.py --write
 python tools/progress_status.py --check
 ```
