@@ -45,3 +45,4 @@ this new assembly experiment did not repeat that runtime comparison.
 It identifies no matching C/C++ functions and adds no ByteMatch progress.
 The same assembly workflow now covers a separate
 [candidate interval in LEVEL_01.REL](LEVEL-01-ASSEMBLY.md).
+It has since been applied to [all 21 SNR2 placements](SNR2-ASSEMBLY-CAMPAIGN.md).
