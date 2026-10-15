@@ -14,7 +14,10 @@ offset and count, symbol-table offset and count, and a file-size field at
 record occupies 12 bytes; the relocation table ends exactly where the symbol
 table begins. The 21 files hold **85,694 named-symbol relocation records**: type 2 (483),
 type 4 (73,765), type 5 (5,329) and type 6 (6,117). Every recorded symbol
-index is in range. These are structure checks, not relocated game images.
+index is in range. The record's signed addend occupies its final four bytes
+(`+0x08`), as read by the pinned boot; the two bytes at `+0x06` are padding.
+This differs from the field order in the external RE4 loader used for initial
+format orientation. These are structure checks, not relocated game images.
 
 ## Packed local fixups and the boot loader
 

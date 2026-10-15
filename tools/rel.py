@@ -22,7 +22,8 @@ from disc import IsoDisc, verify_disc
 
 ROOT = Path(__file__).resolve().parent.parent
 HEADER = struct.Struct("<15I")
-RELOCATION = struct.Struct("<IBBiH")
+# The pinned boot reads the signed addend as the third 32-bit word (offset 8).
+RELOCATION = struct.Struct("<IBBHi")
 SYMBOL = struct.Struct("<IIHBB")
 MAGIC = 0x32524E53  # ASCII SNR2, little endian
 
@@ -122,7 +123,7 @@ def parse_module(path: str, data: bytes) -> Module:
     types: Counter[int] = Counter()
     referenced: Counter[int] = Counter()
     for index in range(reloc_count):
-        offset, kind, symbol, _addend, _pad = RELOCATION.unpack_from(
+        offset, kind, symbol, _pad, _addend = RELOCATION.unpack_from(
             data, reloc_at + index * RELOCATION.size)
         if offset >= reloc_at or symbol >= symbol_count:
             raise ValueError(f"{path}: invalid relocation {index}")
