@@ -77,8 +77,8 @@ The independent Ghidra pass corroborates 91,350 candidate level boundaries;
 2,362 masked families pass data-translation and closed local-callgraph checks.
 A full-module flow pass assigns the 1,590 code-only inside-body disagreements
 to review categories, including 21 newly called entry leads. A subsequent
-split review separates 1,200 oversized candidate intervals into 2,690
-corroborated code segments for deduplication. None of these analyses
+split review selects 4,369 corroborated code segments from 2,651 oversized
+candidate intervals, leaving all unselected bytes unique. None of these analyses
 turns unresolved function/data boundaries into a game-wide percentage.
 Names, symbol addresses and module hashes are research metadata, not proof of
 matching code. The [roadmap](docs/ROADMAP.md) tracks the remaining gates.

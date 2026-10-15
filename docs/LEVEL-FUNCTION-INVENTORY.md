@@ -180,22 +180,26 @@ game-wide function catalogue.
 
 ## Splitting oversized candidate intervals
 
-Some static next-entry intervals contain several real functions. The
+Some static next-entry intervals appear to contain several functions. The
 [`level_split_dedupe.py`](../tools/level_split_dedupe.py) review only splits an
-interval when the code-only and full-module Ghidra analyses agree on every
-body range, each segment ends in `jr $ra` plus its delay slot, and every gap
-inside or between segments contains only zero bytes with no relocation site.
-The pinned private pass found **1,200 parent intervals by placement**
-(2,776,184 bytes) that satisfy those controls and yielded **2,690** separate
-segments. A reference/translation and callgraph pass closed **58** shared
-segment families; 64 additional split groups were raw-byte-identical target
-controls. Detailed addresses remain in ignored worklists.
+interval at each selected sub-body for which the code-only and full-module
+Ghidra analyses agree, its end contains `jr $ra` plus the delay slot, and any
+gap *inside that sub-body* contains only zero bytes with no relocation site.
+Bytes outside selected sub-bodies are left unique even if they look similar.
+The pinned private pass found **2,651 parent intervals by placement**
+(5,134,376 bytes) with **4,369** qualifying segments spanning 4,947,100
+bytes; the other **187,276 bytes** stay uncollapsed. Reference/translation and
+callgraph checks closed **112** split-segment families plus **69** existing
+static families whose calls now resolve to those segments. Another 107 raw-
+identical split groups served as target controls. Detailed addresses remain
+in ignored worklists.
 
-The audit replaces each validated parent with its disjoint segments before
-recomputing connected components of exact and structural duplicate links.
-Exact candidate savings rise from **1,846,532** to **2,361,580 bytes** and
-combined candidate savings from **6,886,436** to **8,029,460 bytes**. This
-yields a **26,985,964-byte conditional candidate scenario**, 1,143,024 bytes
+The audit removes each selected parent from exact duplicate grouping before
+adding its disjoint verified segments, while leaving the residual bytes
+unique. It then recomputes connected components of exact and structural links.
+Exact candidate savings rise from **1,846,532** to **2,550,912 bytes** and
+combined candidate savings from **6,886,436** to **8,973,336 bytes**. This
+yields a **26,042,088-byte conditional candidate scenario**, 2,086,900 bytes
 below the prior scenario. The calculation never counts a parent and its split
 segments at the same time. Ghidra-derived starts and structural equivalence
 remain review leads, so this is **not** a qualified unique-code denominator or

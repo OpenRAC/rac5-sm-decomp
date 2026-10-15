@@ -311,7 +311,10 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
         "split_boundary_review": {
             "parent_candidate_intervals": split["split_parent_intervals"],
             "corroborated_segments": split["split_segments"],
+            "selected_span_bytes": split["selected_span_bytes"],
+            "uncollapsed_parent_bytes": split["residual_parent_bytes"],
             "closed_structural_groups": split["closed_split_groups"],
+            "newly_closed_static_groups": split["newly_closed_static_groups"],
             "conditional_candidate_bytes": split["conditional_candidate_bytes"],
             "qualified_unique_denominator": None,
         },

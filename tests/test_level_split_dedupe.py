@@ -1,4 +1,4 @@
-"""A split requires independent body agreement, real returns, and zero gaps."""
+"""Selected sub-bodies require independent agreement and leave gaps untouched."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from level_split_dedupe import split_parent  # noqa: E402
 
 
 class LevelSplitDedupeTests(unittest.TestCase):
-    def test_accepts_two_returning_bodies_with_only_zero_gaps(self) -> None:
+    def test_selects_only_valid_returning_sub_bodies(self) -> None:
         data = bytearray(0x200)
         struct.pack_into("<I", data, 0x90, 0x03E00008)
         struct.pack_into("<I", data, 0xAC, 0x03E00008)
@@ -28,13 +28,23 @@ class LevelSplitDedupeTests(unittest.TestCase):
                                       [0x80, 0x9C], bytes(data), []),
                          [(0x80, 0x98, 20), (0x9C, 0xB4, 24)])
         data[0x88] = 1
-        self.assertIsNone(split_parent(row, ranges, ranges, ranges,
-                                       [0x80, 0x9C], bytes(data), []))
+        self.assertEqual(split_parent(row, ranges, ranges, ranges,
+                                      [0x80, 0x9C], bytes(data), []),
+                         [(0x9C, 0xB4, 24)])
         data[0x88] = 0
-        self.assertIsNone(split_parent(row, ranges, ranges, ranges,
-                                       [0x80, 0x9C], bytes(data), [0x98]))
+        self.assertEqual(split_parent(row, ranges, ranges, ranges,
+                                      [0x80, 0x9C], bytes(data), [0x98]),
+                         [(0x80, 0x98, 20), (0x9C, 0xB4, 24)])
         divergent = {**ranges, 0x9C: {**ranges[0x9C], "body_bytes": "20"}}
-        self.assertIsNone(split_parent(row, ranges, ranges, divergent,
+        self.assertEqual(split_parent(row, ranges, ranges, divergent,
+                                      [0x80, 0x9C], bytes(data), []),
+                         [(0x80, 0x98, 20)])
+        struct.pack_into("<I", data, 0x90, 0)
+        self.assertEqual(split_parent(row, ranges, ranges, ranges,
+                                      [0x80, 0x9C], bytes(data), []),
+                         [(0x9C, 0xB4, 24)])
+        struct.pack_into("<I", data, 0xAC, 0)
+        self.assertIsNone(split_parent(row, ranges, ranges, ranges,
                                        [0x80, 0x9C], bytes(data), []))
 
 

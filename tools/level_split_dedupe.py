@@ -49,14 +49,14 @@ def split_parent(row: dict[str, str], code_functions: dict[int, dict[str, str]],
                  full_ranges: dict[int, dict[str, str]],
                  entries: list[int], data: bytes,
                  relocation_sites: list[int]) -> list[tuple[int, int, int]] | None:
-    """Require two independent analyses, return instructions and zero-only gaps."""
+    """Select only corroborated returning spans; leave other parent bytes unique."""
     if row["status"] != "bounded_candidate" or not row["body_end"]:
         return None
     start, end = int(row["start"], 16), int(row["body_end"], 16)
     if ghidra_confirmed(row, code_functions):
         return None
     selected = entries[bisect.bisect_left(entries, start):bisect.bisect_left(entries, end)]
-    if len(selected) < 2 or selected[0] != start:
+    if not selected:
         return None
     spans = []
     last = start
@@ -65,32 +65,36 @@ def split_parent(row: dict[str, str], code_functions: dict[int, dict[str, str]],
         full = full_ranges.get(entry)
         if full is None or any(full.get(key) != function.get(key)
                                for key in ("min", "max", "body_bytes", "ranges")):
-            return None
+            continue
         maximum = int(function["max"], 16) + 1
         if (int(function["min"], 16) != entry or maximum > end or
                 maximum - entry < 8 or entry < last or
-                struct.unpack_from("<I", data, maximum - 8)[0] != JR_RA or
-                not zero_without_relocation(data, last, entry, relocation_sites)):
-            return None
+                struct.unpack_from("<I", data, maximum - 8)[0] != JR_RA):
+            continue
         body_ranges = []
+        valid = True
         for part in function["ranges"].split(";"):
             left, right = (int(value, 16) for value in part.split("-"))
             if left % 4 or (right + 1) % 4 or left > right:
-                return None
+                valid = False
+                break
             body_ranges.append((left, right + 1))
-        if (not body_ranges or body_ranges[0][0] != entry or
+        if (not valid or not body_ranges or body_ranges[0][0] != entry or
                 body_ranges[-1][1] != maximum or
                 sum(right - left for left, right in body_ranges) !=
                 int(function["body_bytes"])):
-            return None
+            continue
         for (_left, left_end), (right_start, _right_end) in zip(body_ranges,
                                                                body_ranges[1:]):
             if not zero_without_relocation(data, left_end, right_start,
                                            relocation_sites):
-                return None
+                valid = False
+                break
+        if not valid:
+            continue
         spans.append((entry, maximum, int(function["body_bytes"])))
         last = maximum
-    return spans if zero_without_relocation(data, last, end, relocation_sites) else None
+    return spans or None
 
 
 def translated_family(group: list[dict], size: int, data: dict[str, bytes],
@@ -166,8 +170,15 @@ def main() -> None:
                     row["split_segments"] for row in summary["modules"]) or
                 summary["split_parent_placement_bytes"] != sum(
                     row["parent_placement_bytes"] for row in summary["modules"]) or
+                summary["selected_span_bytes"] != sum(
+                    row["selected_span_bytes"] for row in summary["modules"]) or
+                summary["residual_parent_bytes"] != sum(
+                    row["residual_parent_bytes"] for row in summary["modules"]) or
+                summary["split_parent_placement_bytes"] !=
+                summary["selected_span_bytes"] + summary["residual_parent_bytes"] or
                 not 0 <= summary["closed_split_groups"] <=
                 summary["candidate_masked_split_groups"] or
+                summary["newly_closed_static_groups"] < 0 or
                 summary["overall_percent"] is not None or
                 summary["bytematch_ready"] is not False):
             raise ValueError("split-body candidate snapshot is stale or overclaims")
@@ -188,7 +199,7 @@ def main() -> None:
             if hashlib.sha256(data[module]).hexdigest() != module_rows[module]["sha256"]:
                 raise ValueError(f"{module} differs from pinned REL")
     fixups, sites, exact_original, exact_split = {}, {}, defaultdict(list), defaultdict(list)
-    known, split_groups = {}, defaultdict(list)
+    known, split_groups, static_groups = {}, defaultdict(list), defaultdict(list)
     resolved_parents = set()
     detail = ["# Split code-shape leads only; private metadata, no accepted function claims.",
               "module\tparent_start\tstart\tend\tspan_bytes\tghidra_body_bytes\t"
@@ -213,15 +224,16 @@ def main() -> None:
         fixups[module] = list(iter_packed_relocations(data[module], header[13], header[1]))
         sites[module] = [item.site for item in fixups[module]]
         static = rows(WORK / f"{module}.tsv")
-        parents, segments, placement_bytes = 0, 0, 0
+        parents, segments, placement_bytes, selected_bytes = 0, 0, 0, 0
         for row in static:
             if row["status"] == "bounded_candidate":
                 exact_original[(int(row["body_bytes"]), row["raw_sha256"])].append(
                     {**row, "module": module})
             if (row["status"] in ("bounded_candidate", "pointer_only", "nonzero_tail")
                     and ghidra_confirmed(row, code_functions)):
-                known[(module, int(row["start"], 16))] = (
-                    int(row["body_bytes"]), row["masked_lead_sha256"])
+                key = (int(row["body_bytes"]), row["masked_lead_sha256"])
+                known[(module, int(row["start"], 16))] = key
+                static_groups[key].append({**row, "module": module})
             spans = split_parent(row, code_functions, ranges, full, entries,
                                  data[module], relocation_sites)
             if spans is None:
@@ -231,6 +243,7 @@ def main() -> None:
             parents += 1
             segments += len(spans)
             placement_bytes += int(row["body_bytes"])
+            selected_bytes += sum(end - start for start, end, _body in spans)
             for start, end, body_bytes in spans:
                 raw = data[module][start:end]
                 fingerprint, _relocations = masked_body(raw, start, indexed,
@@ -249,7 +262,9 @@ def main() -> None:
                               f"{end-start-body_bytes}\t{member['raw_sha256']}\t{fingerprint}")
         module_results.append({"module": module, "split_parent_intervals": parents,
                                "split_segments": segments,
-                               "parent_placement_bytes": placement_bytes})
+                               "parent_placement_bytes": placement_bytes,
+                               "selected_span_bytes": selected_bytes,
+                               "residual_parent_bytes": placement_bytes - selected_bytes})
     accepted_previous = []
     accepted_keys = set()
     for row in rows(WORK / "translation_review_leads.tsv"):
@@ -269,18 +284,32 @@ def main() -> None:
         if len(group) < 2:
             continue
         if len({row["module"] for row in group}) != len(group):
-            rejection["repeated_module"] += 1
+            rejection["split_repeated_module"] += 1
             continue
         if len({row["raw_sha256"] for row in group}) == 1:
             exact_split_seeds.add(key)
         candidate = translated_family(group, size, data, fixups, sites,
                                       code_ends, known)
         if candidate is None:
-            rejection["unresolved_references"] += 1
+            rejection["split_unresolved_references"] += 1
+        else:
+            pending[key] = candidate
+    for key, group in static_groups.items():
+        if key in accepted_keys or len(group) < 2:
+            continue
+        if len({row["module"] for row in group}) != len(group):
+            rejection["static_repeated_module"] += 1
+            continue
+        candidate = translated_family(group, key[0], data, fixups, sites,
+                                      code_ends, known)
+        if candidate is None:
+            rejection["static_unresolved_references"] += 1
         else:
             pending[key] = candidate
     closed = close_callgraph(pending, accepted_keys | exact_split_seeds)
-    accepted_split = [pending[key][0] for key in sorted(closed)]
+    closed_split = {key for key in closed if len(key) == 3}
+    closed_static = closed - closed_split
+    accepted_new = [pending[key][0] for key in sorted(closed)]
     exact_replaced = defaultdict(list)
     for key, group in exact_original.items():
         exact_replaced[key].extend(
@@ -293,7 +322,7 @@ def main() -> None:
     old_exact, old_combined = combined_dedupe_savings(
         exact_original, accepted_previous, retained)
     new_exact, new_combined = combined_dedupe_savings(
-        exact_replaced, accepted_previous + accepted_split, retained)
+        exact_replaced, accepted_previous + accepted_new, retained)
     interval_bytes = sum(int(row["candidate_code_bytes"]) for row in inventory["modules"]
                          if row["module"] in retained)
     if (interval_bytes - old_exact != inventory["exact_byte_dedupe_upper_bound"] or
@@ -308,8 +337,12 @@ def main() -> None:
         "split_segments": sum(row["split_segments"] for row in module_results),
         "split_parent_placement_bytes": sum(row["parent_placement_bytes"]
                                             for row in module_results),
+        "selected_span_bytes": sum(row["selected_span_bytes"] for row in module_results),
+        "residual_parent_bytes": sum(row["residual_parent_bytes"]
+                                     for row in module_results),
         "candidate_masked_split_groups": sum(len(group) > 1 for group in split_groups.values()),
-        "closed_split_groups": len(closed),
+        "closed_split_groups": len(closed_split),
+        "newly_closed_static_groups": len(closed_static),
         "raw_identical_split_target_seeds": len(exact_split_seeds),
         "rejection_counts": dict(sorted(rejection.items())),
         "retained_candidate_interval_bytes": interval_bytes,
@@ -327,7 +360,7 @@ def main() -> None:
         "code_catalogue_sha256": digest(CODE),
         "module_catalogue_sha256": digest(MODULES),
         "overall_percent": None, "bytematch_ready": False,
-        "warning": "Ghidra split spans with independent return and zero-gap checks are code-shape review leads, not accepted retail function boundaries. The conditional size assumes shared-source equivalence and is not a progress denominator.",
+        "warning": "Selected Ghidra spans pass independent return and internal zero-gap checks. Unselected parent bytes remain unique. All shared-code links remain conditional review leads, not accepted retail function boundaries or a progress denominator.",
         "modules": module_results,
     }
     SUMMARY.write_text(json.dumps(summary, indent=2) + "\n",

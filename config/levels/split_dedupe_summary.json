@@ -1,24 +1,29 @@
 {
   "status": "split_structural_leads_only",
   "module_count": 21,
-  "split_parent_intervals": 1200,
-  "split_segments": 2690,
-  "split_parent_placement_bytes": 2776184,
-  "candidate_masked_split_groups": 277,
-  "closed_split_groups": 58,
-  "raw_identical_split_target_seeds": 64,
+  "split_parent_intervals": 2651,
+  "split_segments": 4369,
+  "split_parent_placement_bytes": 5134376,
+  "selected_span_bytes": 4947100,
+  "residual_parent_bytes": 187276,
+  "candidate_masked_split_groups": 435,
+  "closed_split_groups": 112,
+  "newly_closed_static_groups": 69,
+  "raw_identical_split_target_seeds": 107,
   "rejection_counts": {
-    "repeated_module": 4,
-    "unresolved_references": 104
+    "split_repeated_module": 5,
+    "split_unresolved_references": 149,
+    "static_repeated_module": 281,
+    "static_unresolved_references": 1760
   },
   "retained_candidate_interval_bytes": 35015424,
   "previous_exact_candidate_savings": 1846532,
-  "split_aware_exact_candidate_savings": 2361580,
+  "split_aware_exact_candidate_savings": 2550912,
   "previous_combined_candidate_savings": 6886436,
-  "combined_candidate_savings": 8029460,
+  "combined_candidate_savings": 8973336,
   "previous_conditional_bytes": 28128988,
-  "conditional_candidate_bytes": 26985964,
-  "additional_conditional_savings": 1143024,
+  "conditional_candidate_bytes": 26042088,
+  "additional_conditional_savings": 2086900,
   "inventory_sha256": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
   "translation_sha256": "d199f1d788f80de1b9ce9d158b10994eed95aa32dcb14913aab37748498fd55f",
   "flow_sha256": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8",
@@ -27,133 +32,175 @@
   "module_catalogue_sha256": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
   "overall_percent": null,
   "bytematch_ready": false,
-  "warning": "Ghidra split spans with independent return and zero-gap checks are code-shape review leads, not accepted retail function boundaries. The conditional size assumes shared-source equivalence and is not a progress denominator.",
+  "warning": "Selected Ghidra spans pass independent return and internal zero-gap checks. Unselected parent bytes remain unique. All shared-code links remain conditional review leads, not accepted retail function boundaries or a progress denominator.",
   "modules": [
     {
       "module": "FRONTEND.REL",
-      "split_parent_intervals": 1,
-      "split_segments": 3,
-      "parent_placement_bytes": 296
+      "split_parent_intervals": 9,
+      "split_segments": 11,
+      "parent_placement_bytes": 3524,
+      "selected_span_bytes": 3508,
+      "residual_parent_bytes": 16
     },
     {
       "module": "LEVEL_01.REL",
-      "split_parent_intervals": 75,
-      "split_segments": 166,
-      "parent_placement_bytes": 175324
+      "split_parent_intervals": 148,
+      "split_segments": 251,
+      "parent_placement_bytes": 303860,
+      "selected_span_bytes": 295408,
+      "residual_parent_bytes": 8452
     },
     {
       "module": "LEVEL_02.REL",
-      "split_parent_intervals": 74,
-      "split_segments": 166,
-      "parent_placement_bytes": 173680
+      "split_parent_intervals": 151,
+      "split_segments": 256,
+      "parent_placement_bytes": 306468,
+      "selected_span_bytes": 297196,
+      "residual_parent_bytes": 9272
     },
     {
       "module": "LEVEL_03.REL",
-      "split_parent_intervals": 75,
-      "split_segments": 167,
-      "parent_placement_bytes": 182452
+      "split_parent_intervals": 157,
+      "split_segments": 261,
+      "parent_placement_bytes": 322052,
+      "selected_span_bytes": 310464,
+      "residual_parent_bytes": 11588
     },
     {
       "module": "LEVEL_04.REL",
-      "split_parent_intervals": 84,
-      "split_segments": 188,
-      "parent_placement_bytes": 184572
+      "split_parent_intervals": 167,
+      "split_segments": 283,
+      "parent_placement_bytes": 330960,
+      "selected_span_bytes": 315308,
+      "residual_parent_bytes": 15652
     },
     {
       "module": "LEVEL_05.REL",
-      "split_parent_intervals": 69,
-      "split_segments": 152,
-      "parent_placement_bytes": 162040
+      "split_parent_intervals": 147,
+      "split_segments": 237,
+      "parent_placement_bytes": 289820,
+      "selected_span_bytes": 282440,
+      "residual_parent_bytes": 7380
     },
     {
       "module": "LEVEL_06.REL",
-      "split_parent_intervals": 72,
-      "split_segments": 163,
-      "parent_placement_bytes": 169980
+      "split_parent_intervals": 145,
+      "split_segments": 243,
+      "parent_placement_bytes": 298500,
+      "selected_span_bytes": 289148,
+      "residual_parent_bytes": 9352
     },
     {
       "module": "LEVEL_07.REL",
-      "split_parent_intervals": 73,
-      "split_segments": 161,
-      "parent_placement_bytes": 185080
+      "split_parent_intervals": 152,
+      "split_segments": 252,
+      "parent_placement_bytes": 324168,
+      "selected_span_bytes": 313976,
+      "residual_parent_bytes": 10192
     },
     {
       "module": "LEVEL_08.REL",
-      "split_parent_intervals": 90,
-      "split_segments": 208,
-      "parent_placement_bytes": 195600
+      "split_parent_intervals": 184,
+      "split_segments": 319,
+      "parent_placement_bytes": 356880,
+      "selected_span_bytes": 337436,
+      "residual_parent_bytes": 19444
     },
     {
       "module": "LEVEL_09.REL",
-      "split_parent_intervals": 65,
-      "split_segments": 144,
-      "parent_placement_bytes": 154960
+      "split_parent_intervals": 139,
+      "split_segments": 231,
+      "parent_placement_bytes": 289316,
+      "selected_span_bytes": 279084,
+      "residual_parent_bytes": 10232
     },
     {
       "module": "LEVEL_10.REL",
-      "split_parent_intervals": 74,
-      "split_segments": 165,
-      "parent_placement_bytes": 177748
+      "split_parent_intervals": 155,
+      "split_segments": 259,
+      "parent_placement_bytes": 317216,
+      "selected_span_bytes": 306776,
+      "residual_parent_bytes": 10440
     },
     {
       "module": "LEVEL_15.REL",
-      "split_parent_intervals": 31,
-      "split_segments": 70,
-      "parent_placement_bytes": 53124
+      "split_parent_intervals": 82,
+      "split_segments": 130,
+      "parent_placement_bytes": 98692,
+      "selected_span_bytes": 89728,
+      "residual_parent_bytes": 8964
     },
     {
       "module": "LEVEL_16.REL",
-      "split_parent_intervals": 53,
-      "split_segments": 120,
-      "parent_placement_bytes": 121200
+      "split_parent_intervals": 130,
+      "split_segments": 214,
+      "parent_placement_bytes": 249964,
+      "selected_span_bytes": 243628,
+      "residual_parent_bytes": 6336
     },
     {
       "module": "LEVEL_17.REL",
-      "split_parent_intervals": 49,
-      "split_segments": 112,
-      "parent_placement_bytes": 115572
+      "split_parent_intervals": 126,
+      "split_segments": 206,
+      "parent_placement_bytes": 242364,
+      "selected_span_bytes": 235568,
+      "residual_parent_bytes": 6796
     },
     {
       "module": "LEVEL_18.REL",
-      "split_parent_intervals": 53,
-      "split_segments": 120,
-      "parent_placement_bytes": 119996
+      "split_parent_intervals": 131,
+      "split_segments": 214,
+      "parent_placement_bytes": 251552,
+      "selected_span_bytes": 244332,
+      "residual_parent_bytes": 7220
     },
     {
       "module": "LEVEL_19.REL",
-      "split_parent_intervals": 56,
-      "split_segments": 126,
-      "parent_placement_bytes": 128056
+      "split_parent_intervals": 131,
+      "split_segments": 217,
+      "parent_placement_bytes": 255548,
+      "selected_span_bytes": 249060,
+      "residual_parent_bytes": 6488
     },
     {
       "module": "LEVEL_20.REL",
-      "split_parent_intervals": 23,
-      "split_segments": 52,
-      "parent_placement_bytes": 46660
+      "split_parent_intervals": 65,
+      "split_segments": 97,
+      "parent_placement_bytes": 81704,
+      "selected_span_bytes": 78840,
+      "residual_parent_bytes": 2864
     },
     {
       "module": "LEVEL_21.REL",
-      "split_parent_intervals": 31,
-      "split_segments": 70,
-      "parent_placement_bytes": 53124
+      "split_parent_intervals": 82,
+      "split_segments": 130,
+      "parent_placement_bytes": 98692,
+      "selected_span_bytes": 89728,
+      "residual_parent_bytes": 8964
     },
     {
       "module": "LEVEL_22.REL",
-      "split_parent_intervals": 32,
-      "split_segments": 72,
-      "parent_placement_bytes": 83720
+      "split_parent_intervals": 83,
+      "split_segments": 127,
+      "parent_placement_bytes": 157236,
+      "selected_span_bytes": 153752,
+      "residual_parent_bytes": 3484
     },
     {
       "module": "LEVEL_23.REL",
-      "split_parent_intervals": 60,
-      "split_segments": 132,
-      "parent_placement_bytes": 152084
+      "split_parent_intervals": 133,
+      "split_segments": 212,
+      "parent_placement_bytes": 275584,
+      "selected_span_bytes": 268884,
+      "residual_parent_bytes": 6700
     },
     {
       "module": "LEVEL_24.REL",
-      "split_parent_intervals": 60,
-      "split_segments": 133,
-      "parent_placement_bytes": 140916
+      "split_parent_intervals": 134,
+      "split_segments": 219,
+      "parent_placement_bytes": 280276,
+      "selected_span_bytes": 262836,
+      "residual_parent_bytes": 17440
     }
   ]
 }

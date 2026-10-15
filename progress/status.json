@@ -229,10 +229,13 @@
     "qualified_unique_denominator": null
   },
   "split_boundary_review": {
-    "parent_candidate_intervals": 1200,
-    "corroborated_segments": 2690,
-    "closed_structural_groups": 58,
-    "conditional_candidate_bytes": 26985964,
+    "parent_candidate_intervals": 2651,
+    "corroborated_segments": 4369,
+    "selected_span_bytes": 4947100,
+    "uncollapsed_parent_bytes": 187276,
+    "closed_structural_groups": 112,
+    "newly_closed_static_groups": 69,
+    "conditional_candidate_bytes": 26042088,
     "qualified_unique_denominator": null
   },
   "remaining_for_gamewide_report": [
@@ -456,6 +459,6 @@
     "level_translation_families": "d199f1d788f80de1b9ce9d158b10994eed95aa32dcb14913aab37748498fd55f",
     "level_flow_ranges": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8",
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
-    "level_split_dedupe": "9595f33cf77dbbe3a46d82d7d79f81c684afc1f00449e9e32ce5500e6b621184"
+    "level_split_dedupe": "c4ad3d1fb659326b8831d19a50b969f531b1344cf92c782ea8945ccff3288538"
   }
 }

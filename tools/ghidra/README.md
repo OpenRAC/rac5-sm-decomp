@@ -97,5 +97,6 @@ python tools/level_split_dedupe.py --write baserom/SCUS_976.15.iso --ghidra-dir 
 python tools/level_split_dedupe.py --check
 ```
 
-It requires two agreeing body analyses, a real return at each split end, and
-zero-only gaps without relocation sites. Only metadata summaries are tracked.
+It requires two agreeing body analyses, a real return at each selected body
+end, and zero-only *internal* gaps without relocation sites. Other parent
+bytes remain unique. Only metadata summaries are tracked.

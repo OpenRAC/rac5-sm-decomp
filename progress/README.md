@@ -30,8 +30,9 @@ another body; **1,209** also have a direct branch or jump from that same body.
 A full-module pass classifies all 1,590 as review leads, including **21**
 newly called function entries and **229** contiguous cases without a recovered
 indirect reference. These remain candidate evidence, not counted C progress.
-The split-body audit further divides **1,200** oversized candidate intervals
-into **2,690** corroborated segments. Its **26,985,964-byte** result is a
+The split-body audit selects **4,369** corroborated segments inside **2,651**
+oversized candidate intervals, leaving 187,276 surrounding bytes unique.
+Its **26,042,088-byte** result is a
 conditional deduplication scenario, not a verified unique-code denominator.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,
