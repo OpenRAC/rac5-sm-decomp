@@ -1,4 +1,4 @@
-/* Local candidate with a measured loop-order mismatch; not a C match. */
+/* Provisional candidate for the isolated RAC5 loop-threshold trial; uncounted. */
 typedef struct {
     unsigned char enabled;
     unsigned char padding[15];
