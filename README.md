@@ -47,6 +47,9 @@ also keeps the complete boot `.text`, retail `PT_LOAD` header and raw
 file-backed bytes exact after linking sixteen authored C functions together.
 They remain in `nonmatching/` until the compiler, reviewed function
 catalogue, complete ELF metadata and runtime gates are satisfied.
+The [VU overlay audit](docs/DVP-OVERLAYS.md) also reproduces the boot's 31
+non-loaded DVP sections privately and records why full-file identity and
+PCSX2's executable CRC remain separate checks.
 
 **No C or C++ function match is claimed.** The exact compiler and flags, level
 relocation/load behavior, complete assembly baseline, and function boundaries
