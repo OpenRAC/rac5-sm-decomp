@@ -12,8 +12,8 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-Eight independently authored C candidates now reproduce 176 boot `.text` bytes
-across four code families with one locally reconstructed GNU EE chain and
+Eleven independently authored C candidates now reproduce 280 boot `.text` bytes
+across several code areas with one locally reconstructed GNU EE chain and
 `-O2 -G0` ([witness evidence](COMPILER-WITNESSES.md)). They remain in
 `nonmatching/` because the full-program baseline and compiler profile are
 not qualified; this adds no counted matches.
