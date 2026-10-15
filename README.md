@@ -42,11 +42,11 @@ The boot's embedded labels also yield
 [1,315 generated code-label bounds](config/boot/code_intervals.tsv). These are
 next-label search limits, not validated function sizes or matches.
 
-A [provisional boot C-object witness](docs/BOOT-C-WITNESS.md) also keeps the
-complete boot `.text`, retail `PT_LOAD` header and raw file-backed bytes exact
-after linking one authored C function. It remains in `nonmatching/` until the
-compiler, reviewed function catalogue, complete ELF metadata and runtime
-gates are satisfied.
+A [provisional boot C-object campaign](docs/BOOT-C-WITNESS.md#combined-provisional-c-witness)
+also keeps the complete boot `.text`, retail `PT_LOAD` header and raw
+file-backed bytes exact after linking eleven authored C functions together.
+They remain in `nonmatching/` until the compiler, reviewed function
+catalogue, complete ELF metadata and runtime gates are satisfied.
 
 **No C or C++ function match is claimed.** The exact compiler and flags, level
 relocation/load behavior, complete assembly baseline, and function boundaries

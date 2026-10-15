@@ -37,7 +37,10 @@ its call. They add 104 exact local bytes, bringing the trial total to
 whole-program match. A later
 [provisional integration witness](BOOT-C-WITNESS.md) linked the
 `MEMCARD_Busy__Fv` C object into the entire boot assembly and kept the full
-file-backed bytes exact; it remains uncounted under the project gates.
+file-backed bytes exact. A [combined integration witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)
+now links all eleven authored functions into the boot at once and preserves
+the exact raw `PT_LOAD` bytes and header; it remains uncounted under the
+project gates.
 
 `FOG_PreUpdate__Fv` at `0x01E7D4A8` is a useful **negative control**. The
 authored loop in `nonmatching/boot/fog_preupdate.c` reproduces the first 48
@@ -64,9 +67,10 @@ SN `ld.exe` SHA-256 was
 These are **trial tool identities**, not a claim about the original retail
 compiler. Do not distribute proprietary binaries.
 
-To reproduce with your own lawful pinned USA executable, compile each C file
-locally through `cpp -DRAC5_WITNESS_PADDING`, `cc1 -quiet -O2 -G0`, then `as`.
-Link each resulting object with SN `ld -T config/boot/witness-*.ld`, matching
+To reproduce the original **individual slice** trials with your own lawful
+pinned USA executable, compile each C file locally through
+`cpp -DRAC5_WITNESS_PADDING`, `cc1 -quiet -O2 -G0`, then `as`. Link each
+resulting object with SN `ld -T config/boot/witness-*.ld`, matching
 the C source and linker script names. Keep every object and ELF in ignored
 `build/`. The `cc1` source and object must reside on the Linux filesystem if
 your 32-bit chain cannot stat files under `/mnt/d`. Then run:
@@ -82,6 +86,12 @@ python tools/compare_boot_slice.py baserom/SCUS_976.15 build/mcptrans_should_fad
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/snd_unlock_positional_array.elf 0x01E91708 0x18
 ```
 
+For the combined whole-boot witness, use the same eight C sources **without**
+`-DRAC5_WITNESS_PADDING`, compile them from bare filenames on the Linux
+filesystem, and run `tools/boot_c_campaign.py` as documented in
+[`BOOT-C-WITNESS.md`](BOOT-C-WITNESS.md#combined-provisional-c-witness).
+Its pinned object hashes guard the exact trial inputs.
+
 The `FOG_PreUpdate__Fv` control uses the same compile and link sequence with
 `config/boot/witness-fog-preupdate.ld`; its comparison command deliberately
 exits with failure:
@@ -93,7 +103,7 @@ python tools/compare_boot_slice.py baserom/SCUS_976.15 build/fog_preupdate.elf 0
 The checker verifies the boot hash pinned in `config/target.json`, ELF
 architecture and requested executable `.text` range, then reports only the
 equal-byte count and candidate-slice hash. The complete boot text baseline
-and one C-object replacement with exact raw `PT_LOAD` bytes and program
-header now exist; compiler/profile, reviewed function catalogue, complete
-ELF metadata and runtime checks still prevent a counted match. No ByteMatch
-report is warranted yet.
+and the combined eleven-function C-object link with exact raw `PT_LOAD` bytes
+and program header now exist; compiler/profile, reviewed function catalogue,
+complete ELF metadata and runtime checks still prevent counted matches. No
+ByteMatch report is warranted yet.
