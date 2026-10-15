@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-from elf import inspect_elf  # noqa: E402
+from elf import inspect_elf, read_global_functions  # noqa: E402
 
 
 class ElfTests(unittest.TestCase):
@@ -48,3 +48,26 @@ class ElfTests(unittest.TestCase):
             path.write_bytes(data)
             with self.assertRaisesRegex(ValueError, "program header"):
                 inspect_elf(path)
+
+    def test_reads_linked_function_body_extent(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "synthetic.elf"
+            self.make_elf(path)
+            data = bytearray(path.read_bytes())
+            data.extend(bytes(256))
+            struct.pack_into("<H", data, 16 + 32, 5)  # section count
+            names = b"\0.text\0.shstrtab\0.strtab\0.symtab\0"
+            strings = b"\0test_func\0"
+            data[320:320 + len(names)] = names
+            data[360:360 + len(strings)] = strings
+            struct.pack_into("<IIIIIIIIII", data, 96 + 80,
+                             7, 3, 0, 0, 320, len(names), 0, 0, 1, 0)
+            struct.pack_into("<IIIIIIIIII", data, 96 + 120,
+                             17, 3, 0, 0, 360, len(strings), 0, 0, 1, 0)
+            struct.pack_into("<IIIIIIIIII", data, 96 + 160,
+                             25, 2, 0, 0, 384, 32, 3, 0, 4, 16)
+            struct.pack_into("<IIIBBH", data, 400,
+                             1, 0x00100000, 4, 0x12, 0, 1)
+            path.write_bytes(data)
+            self.assertEqual(read_global_functions(path),
+                             {"test_func": (0x00100000, 4)})
