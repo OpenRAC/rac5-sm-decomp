@@ -209,6 +209,11 @@
     "candidate_upper_bound_after_translation": 31674280,
     "qualified_unique_denominator": null
   },
+  "flow_range_review": {
+    "ghidra_body_bytes_by_placement": 32805452,
+    "possible_internal_block_entries": 1590,
+    "qualified_unique_denominator": null
+  },
   "remaining_for_gamewide_report": [
     "review Ghidra-only and static-only entries and unbounded function spans",
     "validate masked code/data relocation target equivalence beyond the structural leads",
@@ -427,6 +432,7 @@
     "accepted_level_c_source_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",
     "level_function_inventory": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
     "level_ghidra_crosscheck": "0f00587cd4f346955d8264343f93cde9259170ed8e0c61259cada3682b979f9d",
-    "level_translation_families": "c13ee28c96d664f9a0147764d4b9e38138104f7e050d90acb0857d8c29bfb749"
+    "level_translation_families": "c13ee28c96d664f9a0147764d4b9e38138104f7e050d90acb0857d8c29bfb749",
+    "level_flow_ranges": "913bb91dcb07f06f76cc15b48c861727c36bde2346857076be9468384e751f1a"
   }
 }

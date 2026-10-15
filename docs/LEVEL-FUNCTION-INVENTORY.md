@@ -93,6 +93,14 @@ Among 1,655 shared entries with no return before the next candidate start,
 These cannot be sized correctly by a simple next-entry rule; they need a
 control-flow/body-range review. The remaining 21 appear as short terminal
 call/tail forms and are also left unaccepted.
+An optional body-range export now records Ghidra's actual address sets rather
+than only minimum and maximum addresses.
+[`level_flow_ranges.py`](../tools/level_flow_ranges.py) finds **32,805,452
+bytes by placement** assigned to Ghidra function bodies and **1,590 static
+candidate starts inside another Ghidra body**. Those starts are likely
+internal blocks or table targets, but this is still a review lead. A code-only
+Ghidra import can also leave real address-taken code unowned; the range pass
+does not prove an exhaustive function inventory.
 See [`tools/ghidra/README.md`](../tools/ghidra/README.md) for reproducing the
 analysis with a lawful image and local Ghidra installation.
 

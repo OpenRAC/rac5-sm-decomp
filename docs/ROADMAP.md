@@ -71,6 +71,8 @@
    531 masked groups pass uniform data-translation checks. Review the
    disagreements, local code-call targets and remaining data references
    before treating these leads as one shared source family each.
+   A Ghidra body-range pass also flags 1,590 candidate starts inside another
+   body; review indirect flows and embedded data before assigning ownership.
 6. **Start scoped C/C++ matching.** `MEMCARD_Busy__Fv` is the first
    accepted 16-byte boot placement. The
    [shared level witness](LEVEL-C-WITNESS.md) accepts one 8-byte authored

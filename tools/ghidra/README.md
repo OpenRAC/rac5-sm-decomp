@@ -38,6 +38,12 @@ python tools/level_ghidra_crosscheck.py --write
 python tools/level_translation_families.py --write baserom/SCUS_976.15.iso
 ```
 
+For the optional flow-range review, rerun `-postScript` against each saved
+Ghidra program with two script arguments: a private
+`build/level-functions/ranges/` output directory and `ranges`. No reanalysis
+is needed (`-process <program> -noanalysis -readOnly`). Then run
+`python tools/level_flow_ranges.py --write`; its detailed worklists stay ignored.
+
 Both commands commit only compact metadata summaries when the maintainer
 chooses to publish them; detailed disagreement and group worklists remain
 under ignored `build/level-functions/`.
