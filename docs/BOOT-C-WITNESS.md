@@ -19,6 +19,16 @@ The linked BSS is NOBITS at the retail address `0x01F28100` with the same
 817,644-byte section size. No branch or jump in the pinned boot targets the
 excluded 16-byte interval.
 
+The linker recipe now reproduces the **complete retail `PT_LOAD` program
+header**: file offset `128`, virtual and physical address `0x01E62500`,
+file size `809872`, memory size `1627648`, flags `7`, and alignment `128`. The actual raw
+809,872-byte segment at that file offset also matches byte for byte. SN `ld`
+needs `-N` to avoid page-aligned padding, a separate 128-byte aligned input
+section holding the unchanged first 32 boot instructions, and a 20-byte
+allocated NOBITS tail after the unchanged BSS. This tail accounts for the
+retail segment's memory extent without adding file-backed data or changing
+the BSS section. It is a linker layout reconstruction, not a new C function.
+
 [`tools/boot_c_witness.py`](../tools/boot_c_witness.py) reproduces this
 experiment using the pinned boot, local SN assembler/linker, and a privately
 compiled C object. It checks the normalized C source SHA-256
@@ -53,10 +63,10 @@ python tools/boot_c_witness.py baserom/SCUS_976.15 \
 ```
 
 This is a **provisional integration witness, not a counted match**. The
-candidate linker's ELF `PT_LOAD` header still differs in file offset,
-alignment and memory size from retail even though the linked sections and
-logical file-backed bytes match. A live runtime comparison, qualified
-compiler profile and reviewed function catalogue are also outstanding.
+loadable segment now matches, but the complete ELF file has not been shown
+identical: section headers, metadata and non-loaded bytes may differ. A live
+runtime comparison, qualified compiler profile and reviewed function
+catalogue are also outstanding.
 The source therefore stays in `nonmatching/`; no ByteMatch progress report
 is warranted yet. The [FOG loop counterexample](COMPILER-WITNESSES.md)
 remains a reminder that this trial compiler cannot reproduce every body.
