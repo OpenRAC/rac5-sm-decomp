@@ -56,6 +56,14 @@ class RelTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "symbol"):
             parse_module("test", bytes(blob))
 
+    def test_named_relocation_addend_is_last_word(self) -> None:
+        blob = sample()
+        RELOCATION.pack_into(blob, 0xB0, 0xA4, 4, 0, 0, 0x12345)
+        self.assertEqual(blob[0xB6:0xB8], b"\0\0")
+        self.assertEqual(blob[0xB8:0xBC], struct.pack("<i", 0x12345))
+        self.assertEqual(RELOCATION.unpack_from(blob, 0xB0)[4], 0x12345)
+        self.assertEqual(parse_module("test", bytes(blob)).relocation_count, 1)
+
     def test_packed_local_fixups_and_hi16_pair(self) -> None:
         data = bytearray(0x200)
         # Absolute HI16 at 0x100, then relative LO16, 26-bit and 32-bit sites.
