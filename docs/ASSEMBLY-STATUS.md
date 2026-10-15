@@ -77,6 +77,7 @@ placement, not as unique code or C progress.
 
 A [provisional C integration witness](BOOT-C-WITNESS.md) has also replaced
 the 16-byte boot body `MEMCARD_Busy__Fv` with a linked GNU EE C object while
-preserving the entire boot `.text` and logical file-backed load image. It is
-still under `nonmatching/` because the remaining compiler, ELF layout,
+preserving the entire boot `.text`. Its retail `PT_LOAD` header and raw
+809,872-byte file-backed segment now also match. It is still under
+`nonmatching/` because the remaining compiler, complete ELF metadata,
 catalogue and runtime gates have not been completed.
