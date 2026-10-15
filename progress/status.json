@@ -179,9 +179,38 @@
       ]
     ]
   },
+  "function_inventory": {
+    "candidate_entry_intervals": 124356,
+    "bounded_candidate_intervals": 74051,
+    "unresolved_or_pointer_only_intervals": 50305,
+    "bounded_candidate_body_bytes_by_placement": 26702516,
+    "raw_exact_distinct_candidate_bytes": 23765324,
+    "relocation_masked_conservative_lead_bytes": 4106316,
+    "exact_byte_dedupe_upper_bound": 33168892,
+    "identical_full_interval_groups": [
+      [
+        "LEVEL_15.REL",
+        "LEVEL_21.REL"
+      ]
+    ],
+    "qualified_unique_denominator": null
+  },
+  "independent_boundary_crosscheck": {
+    "corroborated_candidate_boundaries": 83459,
+    "corroborated_body_bytes_by_placement": 24107476,
+    "ghidra_only_entries": 2689,
+    "static_only_entries": 27692
+  },
+  "structural_shared_code_leads": {
+    "families": 531,
+    "placement_body_bytes": 1744600,
+    "template_body_bytes": 151048,
+    "candidate_upper_bound_after_translation": 31674280,
+    "qualified_unique_denominator": null
+  },
   "remaining_for_gamewide_report": [
-    "reviewed function boundaries and compiler profiles for level programs",
-    "shared-code deduplication across SNR2 placements",
+    "review Ghidra-only and static-only entries and unbounded function spans",
+    "validate masked code/data relocation target equivalence beyond the structural leads",
     "complete-program C gates for accepted level functions"
   ],
   "evidence": {
@@ -394,6 +423,9 @@
     "level_module_catalogue": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
     "accepted_c_source_lf": "16e4be48785a4f90e710cf9b5ffe596e071bd1041a41a8fab5936dbb1fca9e18",
     "level_compiler_profile": "88ba030f0b06691e526e27817ed00184449e8bc655b0436969626a670bf88bbd",
-    "accepted_level_c_source_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad"
+    "accepted_level_c_source_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",
+    "level_function_inventory": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
+    "level_ghidra_crosscheck": "e1d82fb4dc111bc32d17962fa3b6ab75c48c1d704e09501f7a10af047a5c77cb",
+    "level_translation_families": "e25535d5898a3b767eb37880a7f1eafa7cb375f28322eb6319ce26ef0cc8a7ab"
   }
 }
