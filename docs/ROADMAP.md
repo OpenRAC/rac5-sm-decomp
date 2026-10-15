@@ -18,19 +18,19 @@
    streams are now mapped (`docs/REL-FORMAT.md`). The complete loaded file
    bytes for the frontend and level 01 have been reproduced and compared
    directly to EE memory before constructors (`docs/RELOCATED-IMAGE.md`).
-   A candidate frontend code boundary at `0x27D00` is backed by exact jump
-   relocation-site sets (`docs/FRONTEND-ASSEMBLY.md`). Level 01 also has a
-   candidate code boundary at `0x1EF180` backed by both relocation sets
-   (`docs/LEVEL-01-ASSEMBLY.md`). Compare the other 19 modules and establish
-   their code/data extents; do not reuse RAC2's WAD layout.
+   Candidate code intervals for all 21 placements are backed by exact
+   jump-relocation site sets and private assembly comparisons
+   (`docs/SNR2-ASSEMBLY-CAMPAIGN.md`). Further review of their boundaries,
+   data layout and runtime behavior remains necessary; do not reuse RAC2's
+   WAD layout.
 3. **Establish an assembly baseline (in progress).** The entire 498,900-byte
    boot `.text` section now reassembles exactly with a measured local SN
    assembler/linker combination (`docs/ASSEMBLY-STATUS.md`). Copying the
    pinned non-code sections into ignored local assembly also reproduces all
-   809,872 file-backed boot load bytes. Candidate code intervals in the
-   frontend (162,944 bytes) and level 01 (2,027,776 bytes) also reassemble
-   exactly; their remaining bytes and the other 19 SNR2 modules still need
-   assembly baselines. Verify BSS/runtime behavior
+   809,872 file-backed boot load bytes. Candidate code intervals in all 21
+   SNR2 placements also reassemble exactly (36,341,888 cumulative bytes by
+   placement), but their remaining bytes are not independent assembly
+   baselines. Verify BSS/runtime behavior
    before calling this a full-program baseline. Non-code copying is not
    decompilation.
 4. **Identify compiler profiles.** Mangled C++ exports and ProDG SNR2 modules

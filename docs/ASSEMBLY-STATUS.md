@@ -70,4 +70,7 @@ assembly baseline.
 `0x80`–`0x1EF180`: **2,027,776 / 2,027,776 bytes** reassemble exactly,
 with complete local and named jump-site correspondence
 ([level 01 evidence](LEVEL-01-ASSEMBLY.md)). Neither result rebuilds a
-complete REL, and the other 19 modules remain untested for assembly.
+complete REL. The same guarded procedure has since reproduced candidate
+code intervals for **all 21 SNR2 placements**
+([campaign evidence](SNR2-ASSEMBLY-CAMPAIGN.md)). Those bytes are counted by
+placement, not as unique code or C progress.

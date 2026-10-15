@@ -58,3 +58,6 @@ Later [frontend](FRONTEND-ASSEMBLY.md) and
 [level 01](LEVEL-01-ASSEMBLY.md) assembly experiments rebuilt candidate
 pre-relocation code intervals byte for byte. They did not repeat runtime
 memory comparisons or establish complete REL assembly builds.
+The later [21-placement campaign](SNR2-ASSEMBLY-CAMPAIGN.md) extends this
+pre-relocation interval check to the other modules; it does not extend the
+paused-memory evidence beyond these two placements.

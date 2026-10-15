@@ -33,11 +33,10 @@ also reassembles byte for byte. With the non-code sections copied from the
 private pinned ELF, all **809,872 file-backed boot load bytes** compare equal.
 The boot's BSS/runtime state and all level-program assembly rebuilds remain
 open; copied reference data is not decompiled source. A
-[162,944-byte candidate code interval](docs/FRONTEND-ASSEMBLY.md) in
-`FRONTEND.REL` and a
-[2,027,776-byte interval](docs/LEVEL-01-ASSEMBLY.md) in `LEVEL_01.REL`
-also reassemble exactly before relocation; their remaining module bytes
-and the other 19 modules are still open.
+[candidate code intervals in all 21 SNR2 placements](docs/SNR2-ASSEMBLY-CAMPAIGN.md)
+also reassemble exactly before relocation: **36,341,888 cumulative bytes by
+placement**, not unique code or matched C. Their other module bytes and most
+runtime placements remain open.
 
 **No C or C++ function match is claimed.** The exact compiler and flags, level
 relocation/load behavior, complete assembly baseline, and function boundaries
@@ -61,7 +60,7 @@ proprietary compiler. Read [LEGAL.md](LEGAL.md) and
    ```sh
    git clone https://github.com/YOUR-USERNAME/rac5-sm-decomp.git
    cd rac5-sm-decomp
-   git remote add upstream https://github.com/llesieur99/rac5-sm-decomp.git
+   git remote add upstream https://github.com/OpenRAC/rac5-sm-decomp.git
    git fetch upstream
    git switch master
    git merge --ff-only upstream/master
@@ -114,10 +113,9 @@ proprietary compiler. Read [LEGAL.md](LEGAL.md) and
    assembler/linker and `rabbitizer==1.16.2`; see the
    [assembly guide](docs/ASSEMBLY-STATUS.md). Generated game-derived files
    remain under ignored `build/`.
-   The same optional tools can check the
-   [frontend](docs/FRONTEND-ASSEMBLY.md) and
-   [level 01](docs/LEVEL-01-ASSEMBLY.md) intervals with
-   `tools/snr2_assembly.py` (`tools/frontend_assembly.py` remains available).
+   The same optional tools can check [all 21 candidate SNR2 intervals](docs/SNR2-ASSEMBLY-CAMPAIGN.md)
+   with `tools/snr2_assembly.py --all` (`tools/frontend_assembly.py` remains
+   available for its one placement).
 
 4. Before starting substantial research, check open issues and pull requests
    and state your intended scope in an issue or draft PR. There is **no

@@ -41,3 +41,5 @@ The independent [relocated-image comparison](RELOCATED-IMAGE.md) previously
 matched the full level 01 loader output to paused EE memory at one observed
 base; this assembly experiment did not repeat that runtime comparison.
 It identifies no matching C/C++ functions and adds no ByteMatch progress.
+The same guarded workflow has since verified
+[candidate intervals in all 21 SNR2 placements](SNR2-ASSEMBLY-CAMPAIGN.md).
