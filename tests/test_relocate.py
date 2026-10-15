@@ -9,7 +9,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from rel import HEADER, MAGIC, RELOCATION, SYMBOL  # noqa: E402
-from relocate import patched_word, relocate_module  # noqa: E402
+from relocate import ROOT, output_path, patched_word, relocate_module  # noqa: E402
 
 
 def sample() -> bytes:
@@ -56,6 +56,12 @@ class RelocateTests(unittest.TestCase):
         self.assertEqual(patched_word(0x00000000, 2, 0x12345678), 0x12345678)
         with self.assertRaisesRegex(ValueError, "unsupported"):
             patched_word(0, 99, 0)
+
+    def test_game_bytes_must_stay_under_ignored_build(self) -> None:
+        destination = output_path("TEST.REL", 0x8000, None)
+        self.assertTrue(destination.is_relative_to((ROOT / "build").resolve()))
+        with self.assertRaisesRegex(ValueError, "ignored build"):
+            output_path("TEST.REL", 0x8000, ROOT / "README.md")
 
 
 if __name__ == "__main__":

@@ -115,6 +115,15 @@ def relocate_module(path: str, source: bytes, base: int,
     return bytes(image), tuple(sorted(missing))
 
 
+def output_path(module: str, base: int, requested: Path | None) -> Path:
+    """Keep every reconstructed game byte below the ignored build/ root."""
+    allowed = (ROOT / "build").resolve()
+    output = (requested or allowed / "relocated" / f"{module}.{base:08X}.bin").resolve()
+    if not output.is_relative_to(allowed):
+        raise ValueError("relocated game bytes must be written under ignored build/")
+    return output
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("image", type=Path, help="personally obtained pinned USA ISO")
@@ -138,10 +147,10 @@ def main() -> None:
     addresses = {symbol.name: symbol.address for symbol in boot_symbols}
     result, missing = relocate_module(args.module, source, args.base, addresses)
 
-    allowed = (ROOT / "build").resolve()
-    output = (args.out or allowed / "relocated" / f"{args.module}.{args.base:08X}.bin").resolve()
-    if not output.is_relative_to(allowed):
-        parser.error("relocated game bytes must be written under ignored build/")
+    try:
+        output = output_path(args.module, args.base, args.out)
+    except ValueError as error:
+        parser.error(str(error))
     if output.exists() and output.read_bytes() != result:
         raise FileExistsError(f"existing output differs: {output}")
     output.parent.mkdir(parents=True, exist_ok=True)
