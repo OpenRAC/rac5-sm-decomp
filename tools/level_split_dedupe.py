@@ -238,7 +238,9 @@ def main() -> None:
                 member = {"module": module, "start": f"0x{start:08X}",
                           "span_bytes": end - start,
                           "raw_sha256": hashlib.sha256(raw).hexdigest()}
-                key = (end - start, fingerprint)
+                # A split body and an independently bounded static body can
+                # have the same masked shape without proven target identity.
+                key = (end - start, fingerprint, "split")
                 split_groups[key].append(member)
                 exact_split[(end - start, member["raw_sha256"])].append(member)
                 known[(module, start)] = key
@@ -263,7 +265,7 @@ def main() -> None:
     exact_split_seeds = set()
     rejection = Counter()
     for key, group in split_groups.items():
-        size, _fingerprint = key
+        size = key[0]
         if len(group) < 2:
             continue
         if len({row["module"] for row in group}) != len(group):

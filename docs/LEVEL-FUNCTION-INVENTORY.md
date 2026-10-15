@@ -194,8 +194,8 @@ controls. Detailed addresses remain in ignored worklists.
 The audit replaces each validated parent with its disjoint segments before
 recomputing connected components of exact and structural duplicate links.
 Exact candidate savings rise from **1,846,532** to **2,361,580 bytes** and
-combined candidate savings from **6,886,436** to **8,074,276 bytes**. This
-yields a **26,941,148-byte conditional candidate scenario**, 1,187,840 bytes
+combined candidate savings from **6,886,436** to **8,029,460 bytes**. This
+yields a **26,985,964-byte conditional candidate scenario**, 1,143,024 bytes
 below the prior scenario. The calculation never counts a parent and its split
 segments at the same time. Ghidra-derived starts and structural equivalence
 remain review leads, so this is **not** a qualified unique-code denominator or

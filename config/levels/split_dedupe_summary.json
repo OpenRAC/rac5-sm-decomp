@@ -9,16 +9,16 @@
   "raw_identical_split_target_seeds": 64,
   "rejection_counts": {
     "repeated_module": 4,
-    "unresolved_references": 101
+    "unresolved_references": 104
   },
   "retained_candidate_interval_bytes": 35015424,
   "previous_exact_candidate_savings": 1846532,
   "split_aware_exact_candidate_savings": 2361580,
   "previous_combined_candidate_savings": 6886436,
-  "combined_candidate_savings": 8074276,
+  "combined_candidate_savings": 8029460,
   "previous_conditional_bytes": 28128988,
-  "conditional_candidate_bytes": 26941148,
-  "additional_conditional_savings": 1187840,
+  "conditional_candidate_bytes": 26985964,
+  "additional_conditional_savings": 1143024,
   "inventory_sha256": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
   "translation_sha256": "d199f1d788f80de1b9ce9d158b10994eed95aa32dcb14913aab37748498fd55f",
   "flow_sha256": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8",

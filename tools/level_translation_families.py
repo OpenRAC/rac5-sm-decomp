@@ -88,8 +88,8 @@ def ghidra_confirmed(row: dict[str, str], functions: dict[int, dict[str, str]]) 
 
 
 def local_code_references(data: bytes, start: int, end: int, fixups: list,
-                          known_entries: dict[tuple[str, int], tuple[int, str]],
-                          module: str) -> dict[int, tuple[str, int | tuple[int, str]]] | None:
+                          known_entries: dict[tuple[str, int], tuple],
+                          module: str) -> dict[int, tuple[str, int | tuple]] | None:
     """Resolve each local J/JAL to an internal offset or corroborated callee.
 
     Unknown targets and 32-bit code pointers fail closed. The masked body hash
