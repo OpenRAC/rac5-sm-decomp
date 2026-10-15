@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Link sixteen provisional C functions into the pinned whole-boot witness.
+"""Link seventeen provisional C functions into the pinned whole-boot witness.
 
 This is not a qualified compiler profile or a counted match. The caller
 compiles the hash-pinned C sources with privately held tools; all generated
@@ -65,6 +65,9 @@ REPLACEMENTS = (
     Replacement("rendereffect_reset", 0x01E7D450, 0x01E7D460,
                 "42abab422e07697fdf38b35556a9e6b16d00604b720f2ac251e72eeb81d74617",
                 "7f60b9dc41caff701d55b068d95c914c45f531337a3479a34b06a1ee8c877733"),
+    Replacement("fog_preupdate", 0x01E7D4A8, 0x01E7D4E8,
+                "97fb772301a839e09af0cadd9bc02968999593bf0dd7426e00bd53d03c51a45c",
+                "c2cb485df80e2e548499a984b4d9aeb753393dd8a958069255e42190631fc0f1"),
     Replacement("buffer_cache_ptr", 0x01E82EC0, 0x01E82ED0,
                 "defd1ec63d038655a7039fcc07dadf818693cb7c86e680dcd884f3fff3c67283",
                 "41e12407502d86cb7ec946d291e12acef0910dcf3eee9e88600f82bd850c85b8"),
@@ -90,6 +93,7 @@ LINKER_SYMBOLS = (
     "transition_active = 0x01EF037D;", "completion_flag = 0x01EF037C;",
     "transition_state = 0x01F66C30;", "fade_flag = 0x01EF037E;",
     "render_effect_reset = 0x01EF1057;",
+    "fog_entries = 0x01F70AE0;",
     "buffer_cache_ptr = 0x01EF57B0;", "clear_color = 0x01EF570C;",
     "animation_buffer_used_size = 0x01EF58F0;",
     "positional_lock = 0x01EF69B4;",
@@ -237,7 +241,7 @@ def main() -> None:
     print(f"C-linked raw PT_LOAD: {len(expected_raw)}/{len(expected_raw)} exact; "
           f"SHA-256 {load_digest}")
     print(f"ELF entry, PT_LOAD header and BSS: exact; {len(labels)} external code labels restored")
-    print("Sixteen provisional C functions; no qualified compiler or counted match")
+    print("Seventeen provisional C functions; no qualified compiler or counted match")
 
 
 if __name__ == "__main__":

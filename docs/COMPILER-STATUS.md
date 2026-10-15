@@ -12,17 +12,18 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-Sixteen independently authored C candidates now reproduce 360 boot `.text` bytes
+Seventeen independently authored C candidates now reproduce 424 boot `.text` bytes
 across several code areas with one locally reconstructed GNU EE chain and
 `-O2 -G0` ([witness evidence](COMPILER-WITNESSES.md)). They remain in
 `nonmatching/` because the full-program baseline and compiler profile are
 not qualified; this adds no counted matches.
-All sixteen now also link together into the complete boot text while preserving
+All seventeen now also link together into the complete boot text while preserving
 the retail raw `PT_LOAD` bytes and program header
 ([combined witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)).
-The same candidate misses the `FOG_PreUpdate__Fv` loop by one `nop` before
-its backward branch, a concrete counterexample to treating the trial chain
-as qualified.
+The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
+`nop`. An [isolated RAC5 short-loop threshold trial](COMPILER-LOOP-TRIAL.md)
+now reproduces that function while leaving all earlier object hashes unchanged.
+One loop control is not enough to qualify the compiler profile.
 
 In particular, RAC2's reconstructed GNU EE-GCC game profile and its Sony SDK
 profile have **not** been qualified for Size Matters. The project has no
