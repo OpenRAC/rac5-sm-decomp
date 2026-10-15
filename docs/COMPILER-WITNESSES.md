@@ -1,6 +1,6 @@
 # Provisional C compiler witnesses, USA PS2 boot
 
-Six small boot functions from three code families were reconstructed as
+Eight small boot functions from four code families were reconstructed as
 independently authored C in `nonmatching/boot/`. The pinned boot's `.text`
 intervals and each local candidate ELF were compared at the same virtual
 addresses, with no relocation masking. This is evidence that one **candidate**
@@ -12,12 +12,31 @@ These sources stay in `nonmatching/` and contribute **zero** to progress.
 | --- | --- | ---: | ---: | --- |
 | `memcard_busy.c` | `0x01E627C0`–`0x01E627CF` | 1 | 16/16 | `9a09682cfc1e09f8c9a452d2e7035b6a6767223d7f834cb0683b8554de576c07` |
 | `mcpi_msgboxes.c` | `0x01E64FE8`–`0x01E65027` | 4 | 64/64 | `784aa6333dbb2cbfcc6bfdaf07a64a906ad78f8489b64a796bdc935067f2a211` |
+| `mcptrans_is_complete.c` | `0x01E68F00`–`0x01E68F37` | 1 | 56/56 | `9cdb7c1d61aac09eba37aabf4ca5d3ead800fb8b19ae63c19e97e898353a7b1c` |
 | `mcptrans_should_fade.c` | `0x01E68F38`–`0x01E68F47` | 1 | 16/16 | `f21c780dbce47a749e53f20d035d49d38309d91f3dd5c87efaf1a94b17fcea3a` |
+| `snd_unlock_positional_array.c` | `0x01E91708`–`0x01E9171F` | 1 | 24/24 | `b70d0c2a72b4b88d10dc0d9b44ea595bcabacd7d3118ebab91aafae8a4fd019a` |
 
 The four `MCPI` labels are consecutive 16-byte placements: two setters and
 two getters. `RAC5_WITNESS_PADDING` adds a **local-only** function after the
 candidate bodies, so the assembler emits their final alignment bytes. That
 extra function is neither compared nor asserted to represent retail code.
+The newer `MCPTRANS_IsComplete` candidate covers two conditional branches and
+multiple returns; `SND_UnlockPositionalArray` covers a conditional store
+whose volatile read generates a branch-likely instruction. These strengthen
+the compatibility evidence beyond simple accessors, but are still only local
+interval checks.
+
+`FOG_PreUpdate__Fv` at `0x01E7D4A8` is a useful **negative control**. The
+authored loop in `nonmatching/boot/fog_preupdate.c` reproduces the first 48
+bytes, but the trial `cc1` emits two `nop` instructions between a comparison
+and backward branch where retail has one. The linked candidate `.text` is 68
+bytes against a 64-byte retail interval; positional comparison gives 50/64
+equal bytes, SHA-256
+`7f222dfa9836b51dac17373be53338ec896830a061516635955f8f9c69ce3a14`.
+Archived local compiler builds tried for this one source emitted either zero
+or two such `nop` instructions, and none matched. This is evidence of an
+unresolved scheduling/padding difference, not authorization to post-process
+the object or change a shared compiler.
 The globals' current names and types in the C files are hypotheses; their
 link-time addresses are measured from the pinned instructions and recorded in
 `config/boot/witness-*.ld`. The table deliberately contains no code bytes.
@@ -42,7 +61,17 @@ your 32-bit chain cannot stat files under `/mnt/d`. Then run:
 ```sh
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/memcard_busy.elf 0x01E627C0 0x10
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/mcpi_msgboxes.elf 0x01E64FE8 0x40
+python tools/compare_boot_slice.py baserom/SCUS_976.15 build/mcptrans_is_complete.elf 0x01E68F00 0x38
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/mcptrans_should_fade.elf 0x01E68F38 0x10
+python tools/compare_boot_slice.py baserom/SCUS_976.15 build/snd_unlock_positional_array.elf 0x01E91708 0x18
+```
+
+The `FOG_PreUpdate__Fv` control uses the same compile and link sequence with
+`config/boot/witness-fog-preupdate.ld`; its comparison command deliberately
+exits with failure:
+
+```sh
+python tools/compare_boot_slice.py baserom/SCUS_976.15 build/fog_preupdate.elf 0x01E7D4A8 0x40
 ```
 
 The checker verifies the boot hash pinned in `config/target.json`, ELF
