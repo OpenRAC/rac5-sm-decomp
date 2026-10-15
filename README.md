@@ -1,6 +1,6 @@
 # Ratchet & Clank: Size Matters (PS2) decompilation
 
-![Original RAC5 research artwork showing a planet and abstract circuitry](docs/images/rac5-banner.png)
+![Original RAC5 research artwork showing a planet and abstract circuitry](docs/images/rac5-banner.webp)
 
 *Original project artwork; no game assets.*
 
