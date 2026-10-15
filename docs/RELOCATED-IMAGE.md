@@ -53,3 +53,7 @@ bases. It does not establish code/data boundaries, assembly rebuilding,
 compiler identity or flags, C/C++ matches, or a progress percentage. The
 remaining 19 module placements still need runtime comparison. See the
 [roadmap](ROADMAP.md) for the next gates.
+
+A later [frontend assembly experiment](FRONTEND-ASSEMBLY.md) rebuilt one
+candidate pre-relocation code interval byte for byte. It did not repeat the
+runtime memory comparison or establish a complete frontend assembly build.

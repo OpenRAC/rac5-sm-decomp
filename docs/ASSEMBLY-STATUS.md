@@ -53,8 +53,15 @@ python tools/boot_assembly.py baserom/SCUS_976.15 \
 ```
 
 The BSS and live runtime memory have **not** been compared, and none of the
-21 SNR2 modules has an assembly baseline. The exact file-backed boot image is
+21 SNR2 modules has a **complete** assembly baseline. The exact file-backed boot image is
 not proof that the game's non-code data was independently reconstructed.
 Complete runtime and level-program baselines, plus a qualified compiler
 profile, remain prerequisites for a full-program C/C++ replacement check; no
 ByteMatch progress is claimed from this assembly result.
+
+The first module interval has since been tested separately: the candidate
+`FRONTEND.REL` code region at offsets `0x80`–`0x27D00` reassembles
+**162,944 / 162,944 bytes** from private mnemonics. Its jump sites agree
+exactly with both SNR2 relocation sources
+([frontend evidence](FRONTEND-ASSEMBLY.md)). This is not yet the whole REL
+assembly baseline.
