@@ -5,7 +5,7 @@ their tests first. Record a measured hypothesis in an issue or change to the
 appropriate tool or documentation; avoid adding guessed function matches.
 
 When the compiler, program format and function catalogue are qualified, write
-plain C in `src/`, with one definition per function. A function will be accepted
+matching C or C++ in `src/`, with one definition per function. A function will be accepted
 only by a complete byte-identical build of its target program. Put unsuccessful
 but useful bodies in `nonmatching/` and explain their remaining differences.
 
