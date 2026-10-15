@@ -30,18 +30,35 @@ produces object SHA-256
 the isolated linked interval matches **64/64 bytes**, SHA-256
 `f8a6560b8960c8d17085570344896f2e51ffea6285580cd0390579b61c6f7abe`.
 
+A second, independent loop shape provides another control.
+[`MCPFONT_FontStringLength__FPCc`](../nonmatching/boot/mcpfont_string_length.c)
+at `0x01E67978` and
+[`MCP_FontStringLength__FPCc`](../nonmatching/boot/mcp_string_length.c)
+at `0x01E67EE8` have identical retail 64-byte bodies. With the same authored
+indexed-string loop, the original threshold-seven `cc1` yields **48/64**
+equal bytes at either placement; threshold six yields **64/64** at each,
+slice SHA-256
+`7bc5cb5ef40e15ad48e97d0f83d1e10ad38599e84c99f45d235e4563355cd973`.
+The private compiled objects are distinct because they define different
+symbols; their SHA-256 values are
+`91227c38a9efa7c0e60f52c04006b1b7cce81750bd2931983d083034c54c309a`
+and `8b227d0835ceb0a800ad6d444d10a72b57fa5b7e40ef83e0030841094b949159`.
+Alternative pointer and while-loop C forms did not match, so this result also
+depends on the authored source shape.
+
 As a regression control, all thirteen prior C source files were rebuilt by
 the patched `cc1` without `RAC5_WITNESS_PADDING`. Their object SHA-256 values
 were **identical** to the previous pinned objects, preserving the other
-sixteen function witnesses. The full boot was then linked with all fourteen
+sixteen function witnesses. The full boot was then linked with all sixteen
 objects: `.text` **498,900/498,900** and raw `PT_LOAD`
 **809,872/809,872** remain exact, as do the ELF entry, program header and
-BSS placement. The provisional linked bodies total **380 bytes**, with
-**44 zero alignment bytes** across 424 measured placement bytes.
+BSS placement. The provisional linked bodies total **508 bytes**, with
+**44 zero alignment bytes** across 552 measured placement bytes.
 
-This trial resolves one concrete loop counterexample, but it does not qualify
-an original RAC5 compiler profile. Other loop lengths, branches and source
-families need independent controls. The GNU source, local compiler binaries,
+This trial matches two distinct loop shapes at three placements, but it does
+not qualify an original RAC5 compiler profile. Other loop lengths, unfilled
+delay slots, branches and source families need independent controls. The GNU
+source, local compiler binaries,
 objects, generated assembly and linked ELF are not distributed here. Keep
 this candidate under `nonmatching/` and report **zero** ByteMatch matches
 until the repository's full compiler and program gates hold.

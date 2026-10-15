@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Link seventeen provisional C functions into the pinned whole-boot witness.
+"""Link nineteen provisional C functions into the pinned whole-boot witness.
 
 This is not a qualified compiler profile or a counted match. The caller
 compiles the hash-pinned C sources with privately held tools; all generated
@@ -50,6 +50,12 @@ REPLACEMENTS = (
     Replacement("hig_io_read", 0x01E65458, 0x01E65478,
                 "0e06265ef549c2903522a0ab5d83d3432072cdf11d3b71cc782362ea06daaa44",
                 "28e487ec02cde2078f7cce27a15e8c4d6cac5afbdd043acd97ead3ce85892338"),
+    Replacement("mcpfont_string_length", 0x01E67978, 0x01E679B8,
+                "a3df436558c6b02fea72081177ad3ffab12d0bc54fe7a78225d02a8bc05858fb",
+                "91227c38a9efa7c0e60f52c04006b1b7cce81750bd2931983d083034c54c309a"),
+    Replacement("mcp_string_length", 0x01E67EE8, 0x01E67F28,
+                "7c68506e6dafc74864bd906ca143f604d261b14ee3c2a8f63ac930038792b99d",
+                "8b227d0835ceb0a800ad6d444d10a72b57fa5b7e40ef83e0030841094b949159"),
     Replacement("camera_init", 0x01E68630, 0x01E68658,
                 "0b9ffedec339205fbac3406d4538e24b3c08bd9be9a79fe76311caa8eefe9727",
                 "d773349a8d1ea69bbbd3f8411de541b800218be352df0ac96eb548f6825be514"),
@@ -241,7 +247,7 @@ def main() -> None:
     print(f"C-linked raw PT_LOAD: {len(expected_raw)}/{len(expected_raw)} exact; "
           f"SHA-256 {load_digest}")
     print(f"ELF entry, PT_LOAD header and BSS: exact; {len(labels)} external code labels restored")
-    print("Seventeen provisional C functions; no qualified compiler or counted match")
+    print("Nineteen provisional C functions; no qualified compiler or counted match")
 
 
 if __name__ == "__main__":

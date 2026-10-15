@@ -44,7 +44,7 @@ next-label search limits, not validated function sizes or matches.
 
 A [provisional boot C-object campaign](docs/BOOT-C-WITNESS.md#combined-provisional-c-witness)
 also keeps the complete boot `.text`, retail `PT_LOAD` header and raw
-file-backed bytes exact after linking seventeen authored C functions together.
+file-backed bytes exact after linking nineteen authored C functions together.
 They remain in `nonmatching/` until the compiler, reviewed function
 catalogue, complete ELF metadata and runtime gates are satisfied.
 The [VU overlay audit](docs/DVP-OVERLAYS.md) also reproduces the boot's 31

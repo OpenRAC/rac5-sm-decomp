@@ -1,6 +1,6 @@
 # Provisional C compiler witnesses, USA PS2 boot
 
-Seventeen small boot functions from several code areas were reconstructed as
+Nineteen small boot functions from several code areas were reconstructed as
 independently authored C in `nonmatching/boot/`. The pinned boot's `.text`
 intervals and each local candidate ELF were compared at the same virtual
 addresses, with no relocation masking. This is evidence that one **candidate**
@@ -14,6 +14,8 @@ These sources stay in `nonmatching/` and contribute **zero** to progress.
 | `memcard_get_widescreen.c` | `0x01E62838`–`0x01E62847` | 1 | 16/16 | `4b91d4555501ea04fd2eb11f8deadafcb862c141f2a76abd2049694054472bd9` |
 | `mcpi_msgboxes.c` | `0x01E64FE8`–`0x01E65027` | 4 | 64/64 | `784aa6333dbb2cbfcc6bfdaf07a64a906ad78f8489b64a796bdc935067f2a211` |
 | `hig_io_read.c` | `0x01E65458`–`0x01E65477` | 1 | 32/32 | `86746200bee52dcb43166ff611e7f723dd37ee204c26758b89a4135a969f9117` |
+| `mcpfont_string_length.c` | `0x01E67978`–`0x01E679B7` | 1 | 64/64 | `7bc5cb5ef40e15ad48e97d0f83d1e10ad38599e84c99f45d235e4563355cd973` |
+| `mcp_string_length.c` | `0x01E67EE8`–`0x01E67F27` | 1 | 64/64 | `7bc5cb5ef40e15ad48e97d0f83d1e10ad38599e84c99f45d235e4563355cd973` |
 | `camera_init.c` | `0x01E68630`–`0x01E68657` | 1 | 40/40 | `4ce3a071f1098892e7cddbd6f149546c2abc9804ac1b844e1667cda2fe644621` |
 | `fast_mem_copy.c` | `0x01E68EE0`–`0x01E68EFF` | 1 | 32/32 | `fd8428d3a925e06646a38fd352c2c76629c4ed5d49e37bfb17b664b80d9941b7` |
 | `mcptrans_is_complete.c` | `0x01E68F00`–`0x01E68F37` | 1 | 56/56 | `9cdb7c1d61aac09eba37aabf4ca5d3ead800fb8b19ae63c19e97e898353a7b1c` |
@@ -45,12 +47,15 @@ compiled body bytes in isolated links. Their twelve trailing alignment bytes
 also match in the complete boot link, bringing the measured candidate spans to
 **360/360 bytes across sixteen functions**. The isolated loop-threshold
 trial adds FOG's 64/64 bytes, bringing the current provisional span total to
-**424/424 bytes across seventeen functions**. This still does not qualify a
+**424/424 bytes across seventeen functions**. A second loop pattern,
+string length, matches 64/64 at each of two boot addresses under the same
+isolated threshold-six compiler, bringing the provisional span total to
+**552/552 bytes across nineteen functions**. This still does not qualify a
 whole-program match. A later
 [provisional integration witness](BOOT-C-WITNESS.md) linked the
 `MEMCARD_Busy__Fv` C object into the entire boot assembly and kept the full
 file-backed bytes exact. A [combined integration witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)
-now links all seventeen authored functions into the boot at once and preserves
+now links all nineteen authored functions into the boot at once and preserves
 the exact raw `PT_LOAD` bytes, program header and ELF entry; it remains
 uncounted under the project gates.
 
@@ -75,7 +80,7 @@ SN `ld.exe` SHA-256 was
 `80f3724a63ce3c77c8b00d075f5c49448636518700ae251e5d6a6c809bbf5f48`.
 These are **trial tool identities**, not a claim about the original retail
 compiler. Do not distribute proprietary binaries.
-The FOG and combined seventeen-function trials use the same `cpp`/`as`, but
+The loop and combined nineteen-function trials use the same `cpp`/`as`, but
 the isolated RAC5 `cc1` SHA-256
 `9614eceecbcb1f7a64cf3a4ad3c827b3e257ab6b1f934e42fcbc4ded0f0584d6`.
 The first thirteen object hashes remain identical under it.
@@ -93,6 +98,8 @@ python tools/compare_boot_slice.py baserom/SCUS_976.15 build/memcard_busy.elf 0x
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/memcard_get_widescreen.elf 0x01E62838 0x10
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/mcpi_msgboxes.elf 0x01E64FE8 0x40
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/hig_io_read.elf 0x01E65458 0x20
+python tools/compare_boot_slice.py baserom/SCUS_976.15 build/mcpfont_string_length.elf 0x01E67978 0x40
+python tools/compare_boot_slice.py baserom/SCUS_976.15 build/mcp_string_length.elf 0x01E67EE8 0x40
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/camera_init.elf 0x01E68630 0x28
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/fast_mem_copy.elf 0x01E68EE0 0x20
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/mcptrans_is_complete.elf 0x01E68F00 0x38
@@ -104,7 +111,7 @@ python tools/compare_boot_slice.py baserom/SCUS_976.15 build/anim_buffer_used.el
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/snd_unlock_positional_array.elf 0x01E91708 0x18
 ```
 
-For the combined whole-boot witness, use the fourteen C sources **without**
+For the combined whole-boot witness, use the sixteen C sources **without**
 `-DRAC5_WITNESS_PADDING` and with the isolated RAC5 `cc1`; compile them from
 bare filenames on the Linux filesystem, and run `tools/boot_c_campaign.py` as documented in
 [`BOOT-C-WITNESS.md`](BOOT-C-WITNESS.md#combined-provisional-c-witness).
@@ -122,7 +129,7 @@ python tools/compare_boot_slice.py baserom/SCUS_976.15 build/fog_preupdate.elf 0
 The checker verifies the boot hash pinned in `config/target.json`, ELF
 architecture and requested executable `.text` range, then reports only the
 equal-byte count and candidate-slice hash. The complete boot text baseline
-and the combined seventeen-function C-object link with exact raw `PT_LOAD` bytes,
+and the combined nineteen-function C-object link with exact raw `PT_LOAD` bytes,
 program header and ELF entry now exist; compiler/profile, reviewed function catalogue,
 complete ELF metadata and runtime checks still prevent counted matches. No
 ByteMatch report is warranted yet.
