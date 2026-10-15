@@ -12,20 +12,21 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-Nineteen independently authored C candidates now reproduce 552 boot `.text` bytes
+Twenty independently authored C candidates now reproduce 648 boot `.text` bytes
 across several code areas with one locally reconstructed GNU EE chain and
 `-O2 -G0` ([witness evidence](COMPILER-WITNESSES.md)). They remain in
 `nonmatching/` because the full-program baseline and compiler profile are
 not qualified; this adds no counted matches.
-All nineteen now also link together into the complete boot text while preserving
+All twenty now also link together into the complete boot text while preserving
 the retail raw `PT_LOAD` bytes and program header
 ([combined witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)).
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
 `nop`. An [isolated RAC5 short-loop threshold trial](COMPILER-LOOP-TRIAL.md)
 now reproduces that function while leaving all earlier object hashes unchanged.
-An independent string-length loop now matches at two boot addresses under
-the same threshold, while the original threshold misses both
-([loop evidence](COMPILER-LOOP-TRIAL.md)). Further loop forms and source
+An independent string-length loop matches at two boot addresses, and a
+third short loop with an unfilled branch delay now matches in
+`GLOBALWAD_ReleaseTransitionBank__Fv` under the same threshold
+([loop evidence](COMPILER-LOOP-TRIAL.md)). Further loop lengths and source
 families still need controls before qualifying the compiler profile.
 
 In particular, RAC2's reconstructed GNU EE-GCC game profile and its Sony SDK

@@ -73,12 +73,12 @@ is warranted yet. The original compiler's FOG loop mismatch motivated the
 
 ## Combined provisional C witness
 
-The same full-boot link has now been repeated with **nineteen authored C
-functions** from sixteen exact-slice source groups in
+The same full-boot link has now been repeated with **twenty authored C
+functions** from seventeen exact-slice source groups in
 [`COMPILER-WITNESSES.md`](COMPILER-WITNESSES.md). Compile these sources with
 the same pinned GNU EE `cpp`/`as` and the isolated
 [RAC5 short-loop `cc1` trial](COMPILER-LOOP-TRIAL.md), `-O2 -G0`, and **without**
-`RAC5_WITNESS_PADDING`; place the resulting sixteen `.o` files in an ignored
+`RAC5_WITNESS_PADDING`; place the resulting seventeen `.o` files in an ignored
 local directory. Run [`tools/boot_c_campaign.py`](../tools/boot_c_campaign.py)
 with that directory:
 
@@ -89,14 +89,14 @@ python tools/boot_c_campaign.py baserom/SCUS_976.15 \
 ```
 
 The tool pins each public C source and private object by SHA-256, splits the
-verified boot assembly around the sixteen object intervals, and links those
+verified boot assembly around the seventeen object intervals, and links those
 objects without rewriting their instructions. Eight objects end four bytes
 before the next measured label. SN `ld` adds the four zero alignment bytes
 between input sections; those bytes match the retail boot. Branch labels in
 the replaced intervals are rebound to their measured addresses. The linked
-ELF symbol table places all nineteen C functions at the expected boot addresses:
-their compiled bodies total 508 bytes, with 44 zero alignment bytes across
-the 552-byte set of next-label intervals. The linked
+ELF symbol table places all twenty C functions at the expected boot addresses:
+their compiled bodies total 604 bytes, with 44 zero alignment bytes across
+the 648-byte set of next-label intervals. The linked
 result matches the entire boot `.text` **498,900 / 498,900**, the raw
 file-backed `PT_LOAD` **809,872 / 809,872**, its complete program header, the
 retail entry address `0x01E62508`, and the original BSS section placement and
@@ -104,7 +104,7 @@ size. Generated assembly, copied
 non-code sections, objects and ELF stay under ignored `build/`.
 
 [`tools/boot_witness_boundaries.py`](../tools/boot_witness_boundaries.py)
-separately audits the linked ELF's nineteen global C function symbols against
+separately audits the linked ELF's twenty global C function symbols against
 the pinned boot and generates
 [`config/boot/witness_boundaries.tsv`](../config/boot/witness_boundaries.tsv):
 
@@ -116,7 +116,7 @@ python tools/boot_witness_boundaries.py baserom/SCUS_976.15 \
 For each witness it verifies the compiled symbol start/size, a final
 `jr $ra` with its delay slot inside the body, zero bytes up to the next boot
 label, and no **direct** boot branch or jump into that alignment. The result
-is 508 body bytes plus 44 zero alignment bytes. The compiled symbol size is
+is 604 body bytes plus 44 zero alignment bytes. The compiled symbol size is
 the candidate's body extent; it does not prove the retail build used the
 same source or assigned exactly that function size.
 
@@ -127,11 +127,12 @@ is still 20 bytes shorter than retail and retains section-layout differences.
 The separate PCSX2 CRC and boot-to-frontend smoke test are documented there;
 they do not establish complete runtime equivalence.
 
-`FOG_PreUpdate__Fv` and the two string-length witnesses use the isolated
+`FOG_PreUpdate__Fv`, the two string-length witnesses and
+`GLOBALWAD_ReleaseTransitionBank__Fv` use the isolated
 [RAC5 short-loop compiler trial](COMPILER-LOOP-TRIAL.md); the earlier sixteen
 retain their prior object hashes under that trial.
 
-This is still a **provisional integration result**, not nineteen accepted
+This is still a **provisional integration result**, not twenty accepted
 matches. The original compiler profile, complete ELF metadata, runtime
 behavior, and reviewed function catalogue remain unqualified. The
 non-code sections still come from the pinned game image; this does not
