@@ -54,6 +54,7 @@ compiler identity or flags, C/C++ matches, or a progress percentage. The
 remaining 19 module placements still need runtime comparison. See the
 [roadmap](ROADMAP.md) for the next gates.
 
-A later [frontend assembly experiment](FRONTEND-ASSEMBLY.md) rebuilt one
-candidate pre-relocation code interval byte for byte. It did not repeat the
-runtime memory comparison or establish a complete frontend assembly build.
+Later [frontend](FRONTEND-ASSEMBLY.md) and
+[level 01](LEVEL-01-ASSEMBLY.md) assembly experiments rebuilt candidate
+pre-relocation code intervals byte for byte. They did not repeat runtime
+memory comparisons or establish complete REL assembly builds.
