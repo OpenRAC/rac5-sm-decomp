@@ -119,13 +119,12 @@ is 316 body bytes plus 44 zero alignment bytes. The compiled symbol size is
 the candidate's body extent; it does not prove the retail build used the
 same source or assigned exactly that function size.
 
-The full ELF still differs. The retail file has 41 sections, including 31
-`.DVP` overlay/metadata sections totalling 43,220 bytes; those sections are
-outside its file-backed `PT_LOAD`. A private `ld -N -s` trial keeps the exact
-entry and load segment but has 10 sections and a file size of 810,632 bytes,
-versus 856,120 retail. The candidate's unstripped debug/symbol tables differ
-as well. This locates the remaining file-level gap without establishing whether
-those non-loaded sections matter to runtime tools.
+The full ELF still differs. The retail file has 31 VU `.DVP` sections outside
+its `PT_LOAD`. Their [metadata audit and private reproduction](DVP-OVERLAYS.md)
+now matches all 31 section contents and types. The resulting whole-boot file
+is still 20 bytes shorter than retail and retains section-layout differences.
+The separate PCSX2 CRC and boot-to-frontend smoke test are documented there;
+they do not establish complete runtime equivalence.
 
 This is still a **provisional integration result**, not sixteen accepted
 matches. The original compiler profile, complete ELF metadata, runtime
