@@ -19,7 +19,7 @@ class BootSymbolTests(unittest.TestCase):
                          0, 0, 0, base + 0xA4, 0, 0, 0xA4, 0, 0, 0)
         data[0x40:0x44] = b"foo\0"
         data[0x48:0x4C] = b"bar\0"
-        RELOCATION.pack_into(data, 0x80, 0x2000, 4, 0, 0, 0)
+        RELOCATION.pack_into(data, 0x80, 0x2000, 4, 0)
         SYMBOL.pack_into(data, 0x8C, base + 0x40, 0x2004, 0, 2, 0)
         SYMBOL.pack_into(data, 0x98, base + 0x48, 0, 0, 1, 0)
         return data

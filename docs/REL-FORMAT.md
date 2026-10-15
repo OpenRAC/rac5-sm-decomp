@@ -15,9 +15,13 @@ record occupies 12 bytes; the relocation table ends exactly where the symbol
 table begins. The 21 files hold **85,694 named-symbol relocation records**: type 2 (483),
 type 4 (73,765), type 5 (5,329) and type 6 (6,117). Every recorded symbol
 index is in range. The record's signed addend occupies its final four bytes
-(`+0x08`), as read by the pinned boot; the two bytes at `+0x06` are padding.
-This differs from the field order in the external RE4 loader used for initial
-format orientation. These are structure checks, not relocated game images.
+(`+0x08`), as read by the pinned boot. The middle word is `r_info`: its low
+eight bits are the type and its upper **24 bits** are the symbol index. The
+initial RE4-based parser treated that index as eight bits and the following
+two bytes as padding; that loses 254 valid references to symbols numbered
+256 or higher across 19 of the USA level modules. The boot uses the full index
+when applying a relocation. These are structure checks, not relocated game
+images.
 
 ## Packed local fixups and the boot loader
 
@@ -60,9 +64,10 @@ Each observed entry value equaled its base plus the catalogued offset, and
 the in-memory SNR2 pointer fields equaled the base plus their file offsets.
 For each module, the sampled packed sites cover HI16, LO16, 26-bit and 32-bit
 operations; the named sites cover types 2, 4, 5 and 6. All **28 sampled
-relocations** matched the locally predicted runtime words. No instruction
-words or RAM dumps are committed. This is a sampled cross-check, **not**
-complete relocated-image equality; another run may use different bases.
+relocations** matched the locally predicted runtime words. That preliminary
+check was followed by a direct comparison of **every loaded file byte** for
+both modules ([relocated-image evidence](RELOCATED-IMAGE.md)). No instruction
+words or RAM dumps are committed; another run may use different bases.
 
 The symbol tables expose **41 nonzero-address exports**: one
 `lib_main__FiPPc` in each module and `G_wadFilename` in each of the 20 level
@@ -78,10 +83,10 @@ python tools/rel.py catalogue baserom/SCUS_976.15.iso
 python tools/rel.py catalogue baserom/SCUS_976.15.iso --write
 ```
 
-The next research step is to establish resident code/data extents and
-reproduce complete loaded bytes in ignored local storage. The static
-scanner does not resolve imports or prove a complete loaded image. This metadata does
-**not** establish function boundaries, sizes, shared-function identities, or
-a matching build.
+The next research step is to compare the remaining modules and establish
+code/data extents. The `tools/rel.py` scanner alone does not resolve imports
+or prove a complete loaded image; `tools/relocate.py` now reconstructs the two
+runtime-verified images in ignored local storage. This does **not** establish
+function boundaries, sizes, shared-function identities, or a matching build.
 The linked boot's related symbol table and an unresolved frontend import are
 described in [`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md).
