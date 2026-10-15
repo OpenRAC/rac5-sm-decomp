@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify and catalogue the nineteen provisional C witness body extents.
+"""Verify and catalogue the twenty provisional C witness body extents.
 
 The private linked ELF must first pass tools/boot_c_campaign.py. This emits
 metadata only: compiled body extents are evidence, not retail function sizes
@@ -37,6 +37,7 @@ WITNESS_NAMES = (
     "GetBufferCachePtr__Fv",
     "SYSTEM_SetClearColor__FUi",
     "ANIM_GetBufferUsedSize__Fv",
+    "GLOBALWAD_ReleaseTransitionBank__Fv",
     "SND_UnlockPositionalArray__Fv",
 )
 
@@ -110,7 +111,7 @@ def verify(boot: Path, linked: Path) -> list[tuple[str, int, int, int]]:
         if any(padding) or any(body_end <= target < next_label for target in targets):
             raise ValueError(f"nonzero or targeted alignment after {name}")
         rows.append((name, address, body_end, next_label))
-    if (sum(end - start for _name, start, end, _next in rows) != 508
+    if (sum(end - start for _name, start, end, _next in rows) != 604
             or sum(next_label - end for _name, _start, end, next_label in rows) != 44):
         raise ValueError("witness body/alignment totals differ from measured campaign")
     return rows
@@ -128,8 +129,8 @@ def main() -> None:
         OUTPUT.write_text(content, encoding="utf-8", newline="\n")
     elif not OUTPUT.is_file() or OUTPUT.read_text(encoding="utf-8") != content:
         raise ValueError("witness boundary catalogue is missing or stale; rerun --write")
-    print("19 provisional C bodies: 508 compiled bytes + 44 zero alignment bytes "
-          "across 552 measured boot bytes; no counted match")
+    print("20 provisional C bodies: 604 compiled bytes + 44 zero alignment bytes "
+          "across 648 measured boot bytes; no counted match")
 
 
 if __name__ == "__main__":

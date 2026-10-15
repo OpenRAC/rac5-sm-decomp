@@ -39,14 +39,14 @@
    compiler routing without witness functions and baseline controls. One
    [boot C-object integration witness](BOOT-C-WITNESS.md) preserves all
    raw retail `PT_LOAD` bytes and header. A combined trial now preserves them
-   with nineteen C functions linked together (`docs/BOOT-C-WITNESS.md`), but does
+   with twenty C functions linked together (`docs/BOOT-C-WITNESS.md`), but does
    not yet qualify the compiler, whole-file identity, or runtime behavior.
    The [VU overlay audit](DVP-OVERLAYS.md) privately reproduces the 31 DVP
    sections while preserving the exact load segment; the full ELF and PCSX2
    executable CRC still differ.
 5. **Catalogue functions.** The boot now has generated next-label bounds for
    1,315 distinct code addresses (`config/boot/code_intervals.tsv`). They are
-   search limits, not validated function sizes. Nineteen linked C witnesses now
+   search limits, not validated function sizes. Twenty linked C witnesses now
    also have verified candidate body/padding extents
    (`config/boot/witness_boundaries.tsv`). Review remaining boundaries,
    padding, aliases and placements before producing a retail function

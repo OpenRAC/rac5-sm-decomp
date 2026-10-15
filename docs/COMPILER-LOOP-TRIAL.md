@@ -46,19 +46,31 @@ and `8b227d0835ceb0a800ad6d444d10a72b57fa5b7e40ef83e0030841094b949159`.
 Alternative pointer and while-loop C forms did not match, so this result also
 depends on the authored source shape.
 
+A third control exercises the other padding path: the backward branch in
+[`GLOBALWAD_ReleaseTransitionBank__Fv`](../nonmatching/boot/globalwad_release_transition_bank.c)
+at `0x01E8FE80` has an unfilled (`nop`) delay slot in retail. The original
+compiler yields **69/96** equal bytes and a 100-byte body. Threshold six
+yields **96/96**, SHA-256
+`daf80f2a29103e4a0a6dfffea346a53543864441d3002f2f4c4cdc87aff26ccd`,
+with a 96-byte object SHA-256
+`ca6040aee485385ffeab6bb2efd967b638c6168de5b49f0c96d4f5e74b773508`.
+The authored C unloads a transition sound bank, flushes pending commands and
+delays while the flush reports busy. This validates one unfilled-delay case;
+it does not establish behavior for every such branch.
+
 As a regression control, all thirteen prior C source files were rebuilt by
 the patched `cc1` without `RAC5_WITNESS_PADDING`. Their object SHA-256 values
 were **identical** to the previous pinned objects, preserving the other
-sixteen function witnesses. The full boot was then linked with all sixteen
+sixteen function witnesses. The full boot was then linked with all seventeen
 objects: `.text` **498,900/498,900** and raw `PT_LOAD`
 **809,872/809,872** remain exact, as do the ELF entry, program header and
-BSS placement. The provisional linked bodies total **508 bytes**, with
-**44 zero alignment bytes** across 552 measured placement bytes.
+BSS placement. The provisional linked bodies total **604 bytes**, with
+**44 zero alignment bytes** across 648 measured placement bytes.
 
-This trial matches two distinct loop shapes at three placements, but it does
-not qualify an original RAC5 compiler profile. Other loop lengths, unfilled
-delay slots, branches and source families need independent controls. The GNU
-source, local compiler binaries,
+This trial matches three distinct loop shapes at four placements, including
+one unfilled-delay case, but it does not qualify an original RAC5 compiler
+profile. Other loop lengths, branch forms and source families need independent
+controls. The GNU source, local compiler binaries,
 objects, generated assembly and linked ELF are not distributed here. Keep
 this candidate under `nonmatching/` and report **zero** ByteMatch matches
 until the repository's full compiler and program gates hold.

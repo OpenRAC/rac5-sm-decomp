@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Link nineteen provisional C functions into the pinned whole-boot witness.
+"""Link twenty provisional C functions into the pinned whole-boot witness.
 
 This is not a qualified compiler profile or a counted match. The caller
 compiles the hash-pinned C sources with privately held tools; all generated
@@ -83,6 +83,9 @@ REPLACEMENTS = (
     Replacement("anim_buffer_used", 0x01E8A1D0, 0x01E8A1E0,
                 "ae74f8150b58f54fd47ff0dfd1f476b7c3461f11fef99a423e77e85af1b0bd90",
                 "a7f6820679da1a705ad0776fd1808fa11220b8809d9a86b4794f9a947557fd72"),
+    Replacement("globalwad_release_transition_bank", 0x01E8FE80, 0x01E8FEE0,
+                "87bef077911a4245f3996cfaedb41f65816afd23219b2416210ce14ec60649f5",
+                "ca6040aee485385ffeab6bb2efd967b638c6168de5b49f0c96d4f5e74b773508"),
     Replacement("snd_unlock_positional_array", 0x01E91708, 0x01E91720,
                 "ad8186ecfbf318c89151b318e2b6cb826437f9a92da8a39fa78f1b385f539cd6",
                 "cdd13809ebc7d72fd5469ffaa8802526e24cfe89f49d87ef39f58d38968a7f96"),
@@ -102,6 +105,8 @@ LINKER_SYMBOLS = (
     "fog_entries = 0x01F70AE0;",
     "buffer_cache_ptr = 0x01EF57B0;", "clear_color = 0x01EF570C;",
     "animation_buffer_used_size = 0x01EF58F0;",
+    "transition_bank = 0x01EF6978;", "snd_UnloadBank = 0x01E94D90;",
+    "snd_FlushSoundCommands = 0x01E94700;", "DelayThread = 0x01ED1A70;",
     "positional_lock = 0x01EF69B4;",
 )
 
@@ -247,7 +252,7 @@ def main() -> None:
     print(f"C-linked raw PT_LOAD: {len(expected_raw)}/{len(expected_raw)} exact; "
           f"SHA-256 {load_digest}")
     print(f"ELF entry, PT_LOAD header and BSS: exact; {len(labels)} external code labels restored")
-    print("Nineteen provisional C functions; no qualified compiler or counted match")
+    print("Twenty provisional C functions; no qualified compiler or counted match")
 
 
 if __name__ == "__main__":
