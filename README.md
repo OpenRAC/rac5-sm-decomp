@@ -1,8 +1,9 @@
-# Ratchet & Clank: Size Matters (PS2) decompilation
+<p align="center">
+  <img src="docs/images/rac5-logo.webp" alt="RAC5 — Size Matters" width="560">
+</p>
+<p align="center"><strong>Ratchet &amp; Clank: Size Matters</strong></p>
 
-![Original RAC5 research artwork showing a planet and abstract circuitry](docs/images/rac5-banner.webp)
-
-*Original project artwork; no game assets.*
+<p align="center"><em>Original project artwork; no game assets.</em></p>
 
 An early matching-decompilation workspace for the **USA PlayStation 2** version
 (`SCUS_976.15`, `SYSTEM.CNF` version `1.00`). The layout follows the useful
