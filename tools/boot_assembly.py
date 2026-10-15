@@ -10,13 +10,13 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import re
 import struct
-import subprocess
 from pathlib import Path
 
 from compare_boot_slice import compare
 from elf import inspect_elf
+from r5900_assembly import (ASSEMBLER_SHA256, LINKER_SHA256, check_tool,
+                            render_assembly, run_tool)
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "build/boot-assembly"
@@ -29,15 +29,6 @@ DATA_SECTIONS = (
     (".rodata", 0x01F1BE80, 49368),
     (".gcc_except_table", 0x01F27F80, 272),
 )
-ASSEMBLER_SHA256 = "c839dd63facabe7b76573c114056be61eaa7b3aa2329dd546930ab8f98898c76"
-LINKER_SHA256 = "80f3724a63ce3c77c8b00d075f5c49448636518700ae251e5d6a6c809bbf5f48"
-
-
-def check_tool(path: Path, expected: str) -> None:
-    if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
-        raise ValueError(f"tool hash does not match the measured profile: {path.name}")
-
-
 def text_words(boot: Path, expected_hash: str) -> tuple[int, ...]:
     image = boot.read_bytes()
     if hashlib.sha256(image).hexdigest() != expected_hash:
@@ -49,69 +40,6 @@ def text_words(boot: Path, expected_hash: str) -> tuple[int, ...]:
         raise ValueError("pinned boot .text metadata differs from measured target")
     offset = int(section["file_offset"])
     return struct.unpack_from("<" + "I" * (TEXT_SIZE // 4), image, offset)
-
-
-def render_assembly(words: tuple[int, ...]) -> tuple[str, str, dict[str, int]]:
-    try:
-        import rabbitizer
-    except ImportError as error:
-        raise ValueError("optional rabbitizer 1.16.2 is required") from error
-    if rabbitizer.__version__ != "1.16.2":
-        raise ValueError("this assembly witness requires rabbitizer 1.16.2")
-
-    rabbitizer.config.pseudos_enablePseudos = False
-    rabbitizer.config.regNames_vr4300Cop0NamedRegisters = False
-    rabbitizer.config.regNames_userFpcCsr = False
-    instructions = [rabbitizer.Instruction(word, TEXT_START + index * 4,
-                                           rabbitizer.InstrCategory.R5900)
-                    for index, word in enumerate(words)]
-    if any(not instruction.isValid() for instruction in instructions):
-        raise ValueError("pinned boot .text contains an invalid R5900 instruction")
-
-    end = TEXT_START + TEXT_SIZE
-    branches = {item.getBranchVramGeneric() for item in instructions if item.isBranch()}
-    jumps = {item.getInstrIndexAsVram() for item in instructions if item.isJumpWithAddress()}
-    if any(not TEXT_START <= target < end for target in branches | jumps):
-        raise ValueError("boot .text has a control target outside its measured section")
-
-    lines = [".set noat", ".set noreorder", ".section .text",
-             ".globl boot_text_start", "boot_text_start:"]
-    sqrt_count = raw_branch_count = 0
-    for index, (word, instruction) in enumerate(zip(words, instructions)):
-        address = TEXT_START + index * 4
-        if address in branches or address in jumps:
-            lines.append(f"L_{address:08X}:")
-        name = instruction.getOpcodeName()
-        if (index > 0 and name.startswith("bc1")
-                and instructions[index - 1].getOpcodeName().startswith("c.")):
-            # SN inserts a retail-absent hazard nop for these six branches.
-            lines.append(f"    .word 0x{word:08X}")
-            raw_branch_count += 1
-            continue
-
-        mnemonic = instruction.disassemble().strip()
-        if name == "c1":
-            # Rabbitizer does not name this R5900 two-register sqrt.s form.
-            if ((word >> 26) != 0x11 or (word >> 21) & 31 != 0x10
-                    or (word >> 11) & 31 != 0 or word & 63 != 4):
-                raise ValueError(f"unmapped COP1 encoding at 0x{address:08X}")
-            mnemonic = f"sqrt.s $f{(word >> 6) & 31}, $f{(word >> 16) & 31}"
-            sqrt_count += 1
-        if instruction.isBranch():
-            label = f"L_{instruction.getBranchVramGeneric():08X}"
-            mnemonic = (mnemonic.rsplit(",", 1)[0] + f", {label}" if "," in mnemonic
-                        else mnemonic.split()[0] + f" {label}")
-        if instruction.isJumpWithAddress():
-            target = instruction.getInstrIndexAsVram()
-            mnemonic = re.sub(r"func_[0-9A-Fa-f]+", f"L_{target:08X}", mnemonic)
-        lines.append("    " + mnemonic)
-    if raw_branch_count != 6 or sqrt_count != 50:
-        raise ValueError("R5900 special-case counts differ from measured boot")
-    script = f"SECTIONS {{ . = 0x{TEXT_START:08X}; .text : {{ *(.text) }} }}\n"
-    stats = {"instructions": len(words), "branch_targets": len(branches),
-             "jump_targets": len(jumps), "sqrt_s": sqrt_count,
-             "cop1_branch_words": raw_branch_count}
-    return "\n".join(lines) + "\n", script, stats
 
 
 def render_data(boot: Path) -> tuple[str, str]:
@@ -161,14 +89,6 @@ def verify_load_image(boot: Path, rebuilt: Path) -> str:
     return hashlib.sha256(load).hexdigest()
 
 
-def run_tool(command: list[str], log: Path) -> None:
-    result = subprocess.run(command, cwd=OUTPUT, capture_output=True, text=True,
-                            timeout=300, check=False)
-    log.write_text(result.stdout + result.stderr, encoding="utf-8")
-    if result.returncode:
-        raise ValueError(f"{Path(command[0]).name} failed; see {log}")
-
-
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("boot", type=Path)
@@ -179,14 +99,18 @@ def main() -> None:
     check_tool(args.assembler, ASSEMBLER_SHA256)
     check_tool(args.linker, LINKER_SHA256)
     words = text_words(args.boot, target["boot_sha256"])
-    assembly, link_script, stats = render_assembly(words)
+    assembly, stats = render_assembly(words, TEXT_START, symbol="boot_text_start",
+                                      raw_cop1_branches=True)
+    if stats["cop1_branch_words"] != 6 or stats["sqrt_s"] != 50 or stats["zero_target_jumps"]:
+        raise ValueError("R5900 special-case counts differ from measured boot")
+    link_script = f"SECTIONS {{ . = 0x{TEXT_START:08X}; .text : {{ *(.text) }} }}\n"
     OUTPUT.mkdir(parents=True, exist_ok=True)
     (OUTPUT / "boot_text.s").write_text(assembly, encoding="ascii", newline="\n")
     (OUTPUT / "boot_text.ld").write_text(link_script, encoding="ascii", newline="\n")
     run_tool([str(args.assembler.resolve()), "-o", "boot_text.o", "boot_text.s"],
-             OUTPUT / "assembler.log")
+             OUTPUT, OUTPUT / "assembler.log")
     run_tool([str(args.linker.resolve()), "-T", "boot_text.ld", "-o",
-              "boot_text.elf", "boot_text.o"], OUTPUT / "linker.log")
+              "boot_text.elf", "boot_text.o"], OUTPUT, OUTPUT / "linker.log")
     rebuilt = OUTPUT / "boot_text.elf"
     section = next(item for item in inspect_elf(rebuilt)["sections"] if item["name"] == ".text")
     if section["size"] != TEXT_SIZE:
@@ -199,9 +123,10 @@ def main() -> None:
     (OUTPUT / "boot_data.s").write_text(data_source, encoding="ascii", newline="\n")
     (OUTPUT / "boot_load.ld").write_text(full_script, encoding="ascii", newline="\n")
     run_tool([str(args.assembler.resolve()), "-o", "boot_data.o", "boot_data.s"],
-             OUTPUT / "data_assembler.log")
+             OUTPUT, OUTPUT / "data_assembler.log")
     run_tool([str(args.linker.resolve()), "-T", "boot_load.ld", "-o",
-              "boot_load.elf", "boot_text.o", "boot_data.o"], OUTPUT / "load_linker.log")
+              "boot_load.elf", "boot_text.o", "boot_data.o"], OUTPUT,
+             OUTPUT / "load_linker.log")
     load_digest = verify_load_image(args.boot, OUTPUT / "boot_load.elf")
     print(f"boot .text: {equal_count}/{TEXT_SIZE} bytes exact; SHA-256 {digest}")
     print(f"boot file-backed load: {LOAD_FILE_SIZE}/{LOAD_FILE_SIZE} bytes exact; "

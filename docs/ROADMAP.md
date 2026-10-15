@@ -18,15 +18,19 @@
    streams are now mapped (`docs/REL-FORMAT.md`). The complete loaded file
    bytes for the frontend and level 01 have been reproduced and compared
    directly to EE memory before constructors (`docs/RELOCATED-IMAGE.md`).
-   Compare the other modules and establish code/data extents; do not reuse
-   RAC2's WAD layout.
+   A candidate frontend code boundary at `0x27D00` is backed by exact jump
+   relocation-site sets (`docs/FRONTEND-ASSEMBLY.md`). Compare the other
+   modules and establish their code/data extents; do not reuse RAC2's WAD
+   layout.
 3. **Establish an assembly baseline (in progress).** The entire 498,900-byte
    boot `.text` section now reassembles exactly with a measured local SN
    assembler/linker combination (`docs/ASSEMBLY-STATUS.md`). Copying the
    pinned non-code sections into ignored local assembly also reproduces all
-   809,872 file-backed boot load bytes. Verify BSS/runtime behavior and
-   reconstruct the 21 SNR2 modules before calling this a full-program
-   baseline. Non-code copying is not decompilation.
+   809,872 file-backed boot load bytes. A 162,944-byte frontend candidate
+   code interval also reassembles exactly; its remaining bytes and the other
+   20 SNR2 modules still need assembly baselines. Verify BSS/runtime behavior
+   before calling this a full-program baseline. Non-code copying is not
+   decompilation.
 4. **Identify compiler profiles.** Mangled C++ exports and ProDG SNR2 modules
    are evidence, not a compiler version (`docs/COMPILER-STATUS.md`). Measure
    signatures on code and SDK-library ranges. Do not copy RAC2's `sdk` or game

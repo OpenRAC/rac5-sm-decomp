@@ -32,7 +32,10 @@ The [complete 498,900-byte boot `.text` section](docs/ASSEMBLY-STATUS.md)
 also reassembles byte for byte. With the non-code sections copied from the
 private pinned ELF, all **809,872 file-backed boot load bytes** compare equal.
 The boot's BSS/runtime state and all level-program assembly rebuilds remain
-open; copied reference data is not decompiled source.
+open; copied reference data is not decompiled source. A
+[162,944-byte candidate code interval](docs/FRONTEND-ASSEMBLY.md) in
+`FRONTEND.REL` also reassembles exactly before relocation; its remaining
+module bytes and the other 20 levels are still open.
 
 **No C or C++ function match is claimed.** The exact compiler and flags, level
 relocation/load behavior, complete assembly baseline, and function boundaries
@@ -109,6 +112,9 @@ proprietary compiler. Read [LEGAL.md](LEGAL.md) and
    assembler/linker and `rabbitizer==1.16.2`; see the
    [assembly guide](docs/ASSEMBLY-STATUS.md). Generated game-derived files
    remain under ignored `build/`.
+   The same optional tools can check the
+   [frontend interval](docs/FRONTEND-ASSEMBLY.md) with
+   `tools/frontend_assembly.py`.
 
 4. Before starting substantial research, check open issues and pull requests
    and state your intended scope in an issue or draft PR. There is **no

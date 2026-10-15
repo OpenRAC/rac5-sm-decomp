@@ -83,8 +83,10 @@ python tools/rel.py catalogue baserom/SCUS_976.15.iso
 python tools/rel.py catalogue baserom/SCUS_976.15.iso --write
 ```
 
-The next research step is to compare the remaining modules and establish
-code/data extents. The `tools/rel.py` scanner alone does not resolve imports
+The [frontend assembly experiment](FRONTEND-ASSEMBLY.md) now establishes a
+candidate code interval with exact local and named jump-relocation site sets.
+The remaining modules still need code/data extent checks. The `tools/rel.py`
+scanner alone does not resolve imports
 or prove a complete loaded image; `tools/relocate.py` now reconstructs the two
 runtime-verified images in ignored local storage. This does **not** establish
 function boundaries, sizes, shared-function identities, or a matching build.
