@@ -11,7 +11,8 @@ parts of [OpenRAC's RAC2 project](https://github.com/OpenRAC/rac2-gc-decomp):
 authored source belongs in `src/`, game-derived material stays local, and a function
 only counts as matched after a byte-identical build. This repository does **not**
 yet have a general qualified compiler, a complete retail function catalogue,
-or a ByteMatch progress report. One boot-only match has a private full-load gate.
+or a ByteMatch progress report. One boot function and one shared level function
+have narrowly scoped private whole-program gates.
 
 ## What is established
 
@@ -37,7 +38,12 @@ remain open; copied reference data is not decompiled source.
 [Candidate code intervals in all 21 SNR2 placements](docs/SNR2-ASSEMBLY-CAMPAIGN.md)
 also reassemble exactly before relocation: **36,341,888 cumulative bytes by
 placement**, not unique code or matched C. Their other module bytes and most
-runtime placements remain open.
+runtime placements remain open. A new
+[complete-program gate for the frontend and level 01](docs/LEVEL-PROGRAM-GATE.md)
+checks their full modules and the two previously measured relocated-image
+hashes. A separate [shared-level C gate](docs/LEVEL-C-WITNESS.md) now accepts
+one 8-byte authored function at all twenty numbered level placements; two
+additional C shapes are compiler controls only.
 
 The boot's embedded labels also yield
 [1,315 generated code-label bounds](config/boot/code_intervals.tsv). These are
@@ -59,10 +65,11 @@ non-loaded DVP sections privately. The new
 retail SHA-256. Loaded non-code data still comes from the pinned retail input;
 this is not a fully source-derived game build.
 
-No other C or C++ match is claimed. The original compiler identity and level
-profiles, complete ELF-file identity, most function boundaries and full runtime
-behavior are still under investigation. There is no published ByteMatch
-progress percentage yet.
+No other C or C++ match is claimed. The original compiler identity and general level
+profiles, most function boundaries and full runtime behavior are still under
+investigation. The [scoped progress snapshot](progress/README.md) records the
+verified boot match and level baselines without claiming a game-wide
+percentage. No ByteMatch report is published yet.
 Names, symbol addresses and module hashes are research metadata, not proof of
 matching code. The [roadmap](docs/ROADMAP.md) tracks the remaining gates.
 

@@ -1,0 +1,33 @@
+{
+  "id": "rac5-level-shared-constant-gnu-ee-trial-20261015",
+  "status": "qualified_shared_constant_only",
+  "base_profile": "config/boot/compiler_trial.json",
+  "scope": "func_00000100 at module offset 0x100 in the twenty pinned LEVEL_*.REL placements",
+  "accepted": {
+    "source": "src/levels/shared/func_00000100.c",
+    "source_sha256_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",
+    "object_sha256": "33f3990d0112f1a54faa0440dce113fcfa1b1738948fddabb698727b6c722fc4",
+    "offset": 256,
+    "body_bytes": 8
+  },
+  "provisional_controls": [
+    {
+      "source": "nonmatching/levels/func_00000190.c",
+      "source_sha256_lf": "3e751a1da4064b76fb2f20c0fc6258a11ed3555be8000c06521cc2eb35974424",
+      "object_sha256": "384323c08e9f62ed32c1a56090126a882485572d962621ce216563abc8eed309",
+      "module": "LEVEL_01.REL",
+      "offset": 400,
+      "body_bytes": 24,
+      "linker_symbols": {"level01_array": 2144048}
+    },
+    {
+      "source": "nonmatching/levels/func_00002CD8.c",
+      "source_sha256_lf": "0fcba545e229f7fd9e3985c7affceee4678747d0519a604be9cf70d12aa8bed3",
+      "object_sha256": "204e0ef66922cb4bcb48f3a5c2d3df3b764ccbab458b9cfa953db634c75cd730",
+      "module": "FRONTEND.REL",
+      "offset": 11480,
+      "body_bytes": 12,
+      "linker_symbols": {"frontend_global": 163460}
+    }
+  ]
+}

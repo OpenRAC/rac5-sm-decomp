@@ -45,3 +45,7 @@ compare candidate C++/C toolchains and flags with independent functions and
 controls across code families. A local slice alone does not qualify a match.
 The [boot-only scope](BOOT-MATCH-SCOPE.md) records the accepted criterion,
 exact packaged ELF and remaining source/runtime limitations.
+For level modules, a separate
+[narrow shared-function trial](LEVEL-C-WITNESS.md) now verifies one 8-byte
+function at all twenty numbered placements, with a 24-byte level 01 and
+12-byte frontend control. It does not qualify a general level compiler.

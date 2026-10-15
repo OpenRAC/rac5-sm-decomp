@@ -14,5 +14,7 @@ jobs:
           python-version: "3.12"
       - name: Synthetic ISO and ELF tests
         run: python -m unittest discover -s tests -v
+      - name: Check scoped progress snapshot
+        run: python tools/progress_status.py --check
       - name: No game data or build artifacts in the repository
         run: python tools/check_repository.py

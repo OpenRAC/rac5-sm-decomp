@@ -61,3 +61,6 @@ memory comparisons or establish complete REL assembly builds.
 The later [21-placement campaign](SNR2-ASSEMBLY-CAMPAIGN.md) extends this
 pre-relocation interval check to the other modules; it does not extend the
 paused-memory evidence beyond these two placements.
+The newer [shared level C gate](LEVEL-C-WITNESS.md) preserves both measured
+relocated hashes after C integration. It does not add new paused-memory
+captures for the other nineteen numbered levels.
