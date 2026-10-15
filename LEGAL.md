@@ -1,7 +1,7 @@
 # Source and distribution scope
 
 This repository contains only independently authored tools, documentation and,
-later, reconstructed C. It does not distribute Ratchet & Clank: Size Matters,
+later, reconstructed C/C++. It does not distribute Ratchet & Clank: Size Matters,
 disc images, executables, extracted assets, assembly dumps or Sony tools.
 Contributors supply their own lawful game copy for local research.
 
