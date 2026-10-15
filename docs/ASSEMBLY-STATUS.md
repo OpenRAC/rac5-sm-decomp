@@ -65,3 +65,9 @@ The first module interval has since been tested separately: the candidate
 exactly with both SNR2 relocation sources
 ([frontend evidence](FRONTEND-ASSEMBLY.md)). This is not yet the whole REL
 assembly baseline.
+
+`LEVEL_01.REL` now has a separate, much larger candidate code interval at
+`0x80`–`0x1EF180`: **2,027,776 / 2,027,776 bytes** reassemble exactly,
+with complete local and named jump-site correspondence
+([level 01 evidence](LEVEL-01-ASSEMBLY.md)). Neither result rebuilds a
+complete REL, and the other 19 modules remain untested for assembly.

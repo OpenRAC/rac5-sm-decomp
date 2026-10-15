@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-from frontend_assembly import check_jump_relocations  # noqa: E402
+from snr2_assembly import check_jump_relocations  # noqa: E402
 from rel import HEADER, MAGIC, RELOCATION  # noqa: E402
 
 

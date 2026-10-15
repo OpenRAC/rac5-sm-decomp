@@ -19,14 +19,15 @@ type-4 relocation sites. The two site sets have no missing or extra entries.
 The 434 zero targets remain import placeholders until the SNR2 loader applies
 its named relocations.
 
-[`tools/frontend_assembly.py`](../tools/frontend_assembly.py) verifies the
+[`tools/frontend_assembly.py`](../tools/frontend_assembly.py), a compatibility
+entry point for the shared [`tools/snr2_assembly.py`](../tools/snr2_assembly.py), verifies the
 complete USA disc and frontend module hashes, both jump-site sets, and the
 measured SN tool hashes. It decodes 40,736 words with optional
 `rabbitizer==1.16.2`, including three R5900 `sqrt.s` forms that need an
 explicit decoder mapping. Unlike the boot assembly baseline, this interval
 needs **no raw instruction-word fallback**. SN `Ps2EeAs.exe` and `ld.exe`
 build it at its module-relative address `0x80`; all generated files remain
-under ignored `build/frontend-assembly/`. Run with your own lawful USA image
+under ignored `build/snr2-assembly/frontend/`. Run with your own lawful USA image
 and locally available measured tools:
 
 ```sh
@@ -42,3 +43,5 @@ still taken from the original module. The independent
 output for the full frontend matched paused EE memory at one observed base;
 this new assembly experiment did not repeat that runtime comparison.
 It identifies no matching C/C++ functions and adds no ByteMatch progress.
+The same assembly workflow now covers a separate
+[candidate interval in LEVEL_01.REL](LEVEL-01-ASSEMBLY.md).

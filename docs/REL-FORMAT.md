@@ -83,9 +83,10 @@ python tools/rel.py catalogue baserom/SCUS_976.15.iso
 python tools/rel.py catalogue baserom/SCUS_976.15.iso --write
 ```
 
-The [frontend assembly experiment](FRONTEND-ASSEMBLY.md) now establishes a
-candidate code interval with exact local and named jump-relocation site sets.
-The remaining modules still need code/data extent checks. The `tools/rel.py`
+The [frontend](FRONTEND-ASSEMBLY.md) and
+[level 01](LEVEL-01-ASSEMBLY.md) assembly experiments now establish candidate
+code intervals with exact local and named jump-relocation site sets. The
+remaining modules still need code/data extent checks. The `tools/rel.py`
 scanner alone does not resolve imports
 or prove a complete loaded image; `tools/relocate.py` now reconstructs the two
 runtime-verified images in ignored local storage. This does **not** establish
