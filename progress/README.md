@@ -27,7 +27,9 @@ these are useful deduplication worklists but still not an exact unique-code
 denominator.
 The optional Ghidra body-range pass flags **1,590** candidate starts inside
 another body; **1,209** also have a direct branch or jump from that same body.
-All remain candidate entries pending flow review.
+A full-module pass classifies all 1,590 as review leads, including **21**
+newly called function entries and **229** contiguous cases without a recovered
+indirect reference. These remain candidate evidence, not counted C progress.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,
 run the [boot gate](../docs/BOOT-TRIAL-GATE.md), the
@@ -40,6 +42,10 @@ python tools/level_function_inventory.py --check
 python tools/level_ghidra_crosscheck.py --write
 python tools/level_translation_families.py --write baserom/SCUS_976.15.iso
 python tools/level_flow_ranges.py --write
+python tools/level_full_module_flow.py --extract baserom/SCUS_976.15.iso
+# Run the private full-module Ghidra pass described in tools/ghidra/README.md.
+python tools/level_full_module_flow.py --write baserom/SCUS_976.15.iso --ghidra-dir build/level-functions/full-ghidra
+python tools/level_full_module_flow.py --check
 python tools/progress_status.py --write
 python tools/progress_status.py --check
 ```

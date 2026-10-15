@@ -216,6 +216,18 @@
     "with_same_body_direct_edge": 1209,
     "qualified_unique_denominator": null
   },
+  "full_module_flow_review": {
+    "code_only_inside_body_candidates": 1590,
+    "categories": {
+      "called_function_lead": 21,
+      "computed_dispatch_block_lead": 1285,
+      "direct_flow_block_lead": 34,
+      "inside_new_called_body_lead": 21,
+      "linear_fallthrough_block_lead": 229
+    },
+    "ignored_noncode_auto_functions": 26,
+    "qualified_unique_denominator": null
+  },
   "remaining_for_gamewide_report": [
     "review Ghidra-only and static-only entries and unbounded function spans",
     "validate masked code/data relocation target equivalence beyond the structural leads",
@@ -435,6 +447,7 @@
     "level_function_inventory": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
     "level_ghidra_crosscheck": "0f00587cd4f346955d8264343f93cde9259170ed8e0c61259cada3682b979f9d",
     "level_translation_families": "289a4e464d02e57e4b569706393db353135a2a0de7b8f62c7a8e504264052773",
-    "level_flow_ranges": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8"
+    "level_flow_ranges": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8",
+    "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352"
   }
 }

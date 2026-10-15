@@ -23,5 +23,6 @@ jobs:
           python tools/level_ghidra_crosscheck.py --check
           python tools/level_translation_families.py --check
           python tools/level_flow_ranges.py --check
+          python tools/level_full_module_flow.py --check
       - name: No game data or build artifacts in the repository
         run: python tools/check_repository.py

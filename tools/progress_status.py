@@ -32,6 +32,7 @@ FUNCTION_INVENTORY = ROOT / "config/levels/function_inventory_summary.json"
 GHIDRA_CROSSCHECK = ROOT / "config/levels/ghidra_crosscheck_summary.json"
 TRANSLATION_FAMILIES = ROOT / "config/levels/translation_families_summary.json"
 FLOW_RANGES = ROOT / "config/levels/flow_range_summary.json"
+FULL_MODULE_FLOW = ROOT / "config/levels/full_module_flow_summary.json"
 TARGET = ROOT / "config/target.json"
 ACCEPTED_SYMBOL = "MEMCARD_Busy__Fv"
 
@@ -173,6 +174,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
     crosscheck = json.loads(GHIDRA_CROSSCHECK.read_text(encoding="utf-8"))
     translation = json.loads(TRANSLATION_FAMILIES.read_text(encoding="utf-8"))
     flow = json.loads(FLOW_RANGES.read_text(encoding="utf-8"))
+    full_flow = json.loads(FULL_MODULE_FLOW.read_text(encoding="utf-8"))
     if (inventory["status"] != "candidate_inventory_only"
             or inventory["module_count"] != 21
             or inventory["candidate_code_bytes_by_placement"] !=
@@ -199,6 +201,15 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             or flow["overall_percent"] is not None
             or flow["bytematch_ready"] is not False):
         raise ValueError("Ghidra flow-range review is stale")
+    if (full_flow["status"] != "full_module_flow_leads_only"
+            or full_flow["flow_range_sha256"] != digest(FLOW_RANGES)
+            or full_flow["module_catalogue_sha256"] != digest(MODULE_CATALOGUE)
+            or full_flow["code_catalogue_sha256"] != digest(CODE_CATALOGUE)
+            or full_flow["module_count"] != 21
+            or full_flow["candidate_entries"] != flow["candidate_internal_block_leads"]
+            or full_flow["overall_percent"] is not None
+            or full_flow["bytematch_ready"] is not False):
+        raise ValueError("full-module flow review is stale or overclaims")
     level_placements = {row["module"]: row for row in level_c["placements"]}
     level_names = {name for name in by_name if name.startswith("LEVEL_")}
     if (set(level_placements) != level_names
@@ -277,6 +288,13 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                 flow["internal_block_with_same_body_direct_edge"],
             "qualified_unique_denominator": None,
         },
+        "full_module_flow_review": {
+            "code_only_inside_body_candidates": full_flow["candidate_entries"],
+            "categories": full_flow["categories"],
+            "ignored_noncode_auto_functions":
+                full_flow["ignored_noncode_auto_functions"],
+            "qualified_unique_denominator": None,
+        },
         "remaining_for_gamewide_report": [
             "review Ghidra-only and static-only entries and unbounded function spans",
             "validate masked code/data relocation target equivalence beyond the structural leads",
@@ -294,6 +312,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "level_ghidra_crosscheck": digest(GHIDRA_CROSSCHECK),
             "level_translation_families": digest(TRANSLATION_FAMILIES),
             "level_flow_ranges": digest(FLOW_RANGES),
+            "level_full_module_flow": digest(FULL_MODULE_FLOW),
         },
     }
 

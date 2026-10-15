@@ -73,7 +73,10 @@
    remaining disagreements, indirect targets and data references
    before treating these leads as one shared source family each.
    A Ghidra body-range pass also flags 1,590 candidate starts inside another
-   body; review indirect flows and embedded data before assigning ownership.
+   body. A full-module pass assigns them to flow-evidence review categories,
+   including 21 newly called entries and 229 linear cases without recovered
+   indirect references. Confirm real ownership and embedded data before
+   accepting function boundaries.
 6. **Start scoped C/C++ matching.** `MEMCARD_Busy__Fv` is the first
    accepted 16-byte boot placement. The
    [shared level witness](LEVEL-C-WITNESS.md) accepts one 8-byte authored

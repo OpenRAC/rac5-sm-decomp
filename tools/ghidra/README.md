@@ -47,3 +47,44 @@ is needed (`-process <program> -noanalysis -readOnly`). Then run
 Both commands commit only compact metadata summaries when the maintainer
 chooses to publish them; detailed disagreement and group worklists remain
 under ignored `build/level-functions/`.
+
+## Full-module flow review
+
+The code-only import cannot recover references from the SNR2 data region to
+switch blocks. For an additional **private, independent review**, import the
+complete pinned REL files into a *new* Ghidra project. The pre-script
+[`PrepareFullModule.java`](PrepareFullModule.java) marks only the pinned code
+interval executable; the header and data stay non-executable. This is still
+auto-analysis, not a retail function catalogue.
+
+```powershell
+python tools/level_full_module_flow.py --extract baserom/SCUS_976.15.iso
+$repo = (Get-Location).Path
+$ghidraOut = "$repo\build\level-functions\full-ghidra"
+New-Item -ItemType Directory -Force -Path $ghidraOut | Out-Null
+$inputs = Get-ChildItem "$repo\build\level-functions\full" -Filter '*.REL' -File |
+  Sort-Object Name | ForEach-Object FullName
+$rac5FullArgs = @('D:\private\ghidra-projects', 'rac5-full-modules', '-import') +
+  $inputs + @('-loader', 'BinaryLoader', '-loader-baseAddr', '0x0',
+    '-loader-blockName', 'module', '-processor', 'r5900:LE:32:default',
+    '-cspec', 'default', '-scriptPath', "$repo\tools\ghidra",
+    '-preScript', 'PrepareFullModule.java', "$repo\config\levels\code_intervals.tsv",
+    '-postScript', 'ExportFunctionBounds.java', $ghidraOut, 'ranges',
+    '-postScript', 'ExportCandidateFlowRefs.java',
+      "$repo\build\level-functions\ranges", $ghidraOut,
+    '-analysisTimeoutPerFile', '180', '-max-cpu', '4')
+& 'C:\path\to\ghidra\support\analyzeHeadless.bat' @rac5FullArgs
+python tools/level_full_module_flow.py --write baserom/SCUS_976.15.iso --ghidra-dir $ghidraOut
+python tools/level_full_module_flow.py --check
+```
+
+The reference export contains addresses and reference kinds only. The Python
+audit cross-checks data references against the pinned packed 32-bit pointer
+fixups before treating them as evidence. Computed jumps inside a Ghidra body
+and cross-body calls to newly identified entries are separate review classes.
+The raw BinaryLoader also creates one synthetic header entry at offset zero;
+auto-analysis may propose spurious functions in non-executable data. The audit
+counts and excludes these from code ownership, and rejects any function whose
+body crosses the pinned code boundary.
+The full REL files and detailed exports remain ignored; only compact counts
+and input hashes may be committed.

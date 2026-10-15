@@ -108,6 +108,39 @@ does not prove an exhaustive function inventory.
 See [`tools/ghidra/README.md`](../tools/ghidra/README.md) for reproducing the
 analysis with a lawful image and local Ghidra installation.
 
+### Full-module flow review
+
+An isolated second Ghidra pass imported each **complete pinned REL** while
+marking only the known code interval executable. Unlike the code-only import,
+this exposes data pointers and some computed jump/call references. The
+[`level_full_module_flow.py`](../tools/level_full_module_flow.py) audit verifies
+the pinned module hash and relocation sites, checks computed-flow instruction
+forms, and assigns all **1,590** previously inside-body candidate starts to
+review categories:
+
+| Full-module evidence | Candidate starts |
+| --- | ---: |
+| New Ghidra function entry with a cross-body call | 21 |
+| Packed data pointer and same-body computed jump | 1,285 |
+| Same-body direct control-flow edge | 34 |
+| Inside the newly identified called function's body | 21 |
+| Contiguous predecessor with no terminating transfer | 229 |
+
+Among the **381** starts that lacked a direct edge in the first pass, the
+corresponding counts are **21, 110, 0, 21 and 229**. The 21 called entries are
+one per module; they were hidden by the code-only function grouping. These
+categories settle which evidence to review for each disagreement, but do not
+promote Ghidra's auto-analysis to accepted retail function boundaries. The
+229 linear cases still lack a recovered indirect reference and need particular
+care before any function split. The full import also invented **21** synthetic
+header entries and **5** functions in non-executable data; these 26 are
+excluded. The full-module function and reference exports for identical
+`LEVEL_15`/`LEVEL_21` intervals have identical hashes, a repeatability check.
+All complete REL files and detailed worklists remain private. The tracked
+[`full_module_flow_summary.json`](../config/levels/full_module_flow_summary.json)
+contains only counts and hashes, never program bytes. See the
+[reproduction commands](../tools/ghidra/README.md#full-module-flow-review).
+
 ## Structural translation leads
 
 [`level_translation_families.py`](../tools/level_translation_families.py)
