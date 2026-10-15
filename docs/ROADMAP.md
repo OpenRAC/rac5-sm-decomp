@@ -43,9 +43,11 @@
    not yet qualify the compiler, complete ELF metadata, or runtime behavior.
 5. **Catalogue functions.** The boot now has generated next-label bounds for
    1,315 distinct code addresses (`config/boot/code_intervals.tsv`). They are
-   search limits, not validated function sizes. Review boundaries, padding,
-   aliases and placements before producing a function catalogue; commit
-   metadata only.
+   search limits, not validated function sizes. Eleven linked C witnesses now
+   also have verified candidate body/padding extents
+   (`config/boot/witness_boundaries.tsv`). Review remaining boundaries,
+   padding, aliases and placements before producing a retail function
+   catalogue; commit metadata only.
 6. **Start C/C++ matching.** Replace an assembly marker with one definition
    under the qualified profile, check every placement, and count it only after
    the full-program byte gate.

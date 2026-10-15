@@ -101,6 +101,23 @@ file-backed `PT_LOAD` **809,872 / 809,872**, its complete program header, and
 the original BSS section placement and size. Generated assembly, copied
 non-code sections, objects and ELF stay under ignored `build/`.
 
+[`tools/boot_witness_boundaries.py`](../tools/boot_witness_boundaries.py)
+separately audits the linked ELF's eleven global C function symbols against
+the pinned boot and generates
+[`config/boot/witness_boundaries.tsv`](../config/boot/witness_boundaries.tsv):
+
+```sh
+python tools/boot_witness_boundaries.py baserom/SCUS_976.15 \
+  build/boot-c-campaign/boot_multi.elf
+```
+
+For each witness it verifies the compiled symbol start/size, a final
+`jr $ra` with its delay slot inside the body, zero bytes up to the next boot
+label, and no **direct** boot branch or jump into that alignment. The result
+is 248 body bytes plus 32 zero alignment bytes. The compiled symbol size is
+the candidate's body extent; it does not prove the retail build used the
+same source or assigned exactly that function size.
+
 This is still a **provisional integration result**, not eleven accepted
 matches. The original compiler profile, complete ELF metadata, runtime
 behavior, and reviewed function catalogue remain unqualified. The

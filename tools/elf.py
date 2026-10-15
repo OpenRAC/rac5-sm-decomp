@@ -12,6 +12,7 @@ from pathlib import Path
 ELF_HEADER = struct.Struct("<HHIIIIIHHHHHH")
 PROGRAM_HEADER = struct.Struct("<IIIIIIII")
 SECTION_HEADER = struct.Struct("<IIIIIIIIII")
+ELF_SYMBOL = struct.Struct("<IIIBBH")
 SHT_NOBITS = 8
 PT_LOAD = 1
 EM_MIPS = 8
@@ -74,6 +75,37 @@ def inspect_elf(path: Path) -> dict[str, object]:
         "programs": programs,
         "sections": sections,
     }
+
+
+def read_global_functions(path: Path) -> dict[str, tuple[int, int]]:
+    """Read linked ELF32 global function symbols as address/compiled-body size."""
+    inspect_elf(path)
+    data = path.read_bytes()
+    (_kind, _machine, _version, _entry, _phoff, shoff, _flags, _ehsize,
+     _phentsize, _phnum, shentsize, shnum, _shstrndx) = ELF_HEADER.unpack_from(data, 16)
+    headers = [SECTION_HEADER.unpack_from(data, shoff + index * shentsize)
+               for index in range(shnum)]
+    functions: dict[str, tuple[int, int]] = {}
+    for header in headers:
+        if header[1] != 2:
+            continue
+        _name, _typ, _flags, _addr, offset, size, link, _info, _align, entsize = header
+        if (entsize != ELF_SYMBOL.size or size % entsize
+                or link >= shnum or headers[link][1] != 3):
+            raise ValueError("invalid ELF function symbol table")
+        strings = data[headers[link][4]:headers[link][4] + headers[link][5]]
+        for at in range(offset, offset + size, entsize):
+            name_at, value, body_size, sym_info, _other, section = ELF_SYMBOL.unpack_from(data, at)
+            if sym_info >> 4 != 1 or sym_info & 15 != 2 or section == 0:
+                continue
+            if name_at >= len(strings) or b"\0" not in strings[name_at:]:
+                raise ValueError("invalid ELF function symbol name")
+            end = strings.index(b"\0", name_at)
+            name = strings[name_at:end].decode("ascii", "strict")
+            if name in functions:
+                raise ValueError(f"duplicate ELF function symbol: {name}")
+            functions[name] = (value, body_size)
+    return functions
 
 
 def main() -> None:
