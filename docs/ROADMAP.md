@@ -14,8 +14,10 @@
    A metadata-only comparison with MultiworldGG's USA PS2 runtime map confirms
    several boot globals and the 12-word loader-site signature
    (`docs/MULTIWORLD-CROSSCHECK.md`); per-level runtime placement is still open.
-   Determine the loader's placement and relocation semantics and the code/data
-   extents; do not reuse RAC2's WAD layout.
+   The boot loader's two relocation sources and all 21 packed local-fixup
+   streams are now mapped (`docs/REL-FORMAT.md`). Capture actual load bases,
+   resident code/data extents and relocated bytes; do not reuse RAC2's WAD
+   layout.
 3. **Establish an assembly baseline.** Split the verified boot and level
    programs into local ignored `asm/` and `build/` outputs, then rebuild and
    compare complete loaded bytes. Record the exact assembler/linker used.
