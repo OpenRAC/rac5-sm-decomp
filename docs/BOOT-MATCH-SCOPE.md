@@ -19,15 +19,21 @@ bytes, with identical entry, complete program header and BSS location/size.
 The non-code loaded sections still originate from the user's hash-pinned
 retail executable. A source-slice comparison alone cannot pass this gate.
 
-For this boot, **complete program bytes** means the bytes the ELF program
-header asks the loader to place in memory, plus the zero-filled memory extent,
-entry and placement metadata. This definition scopes the C matching claim to
-the boot program that executes. The 31 `.DVP` sections are outside `PT_LOAD`:
-their contents were reproduced privately, but section layout and the complete
-ELF file still differ. PCSX2 computes an executable CRC over the whole file,
-so emulator patch selection may differ. The isolated smoke test reached the
-frontend's `SNR2` header, but full gameplay was not validated. The original
-compiler executable and all level compiler profiles remain unidentified.
+The [ELF packaging tool](../tools/boot_elf_pack.py) now takes the C-linked
+`PT_LOAD`, independently regenerates the 31 non-loaded `.DVP` sections and
+tables from public metadata, and emits the header, `.reginfo`, section names
+and section headers from a numeric [layout catalogue](../config/boot/elf_layout.json).
+The resulting **856,120-byte ELF matches the entire pinned file** by SHA-256.
+The direct SN-linker output still has a different section layout; the
+packaging step repairs that difference without copying the retail ELF file.
+The non-code **loaded** sections are still derived from the user's pinned
+retail executable, so this is not a wholly source-derived game build.
+
+The full-file equality also gives the same measured executable CRC,
+`8661F7BA`, for this pinned boot, although the packaged ELF has not been run through full
+gameplay. The earlier isolated smoke test used a stripped, different-CRC
+candidate and reached the frontend's `SNR2` header. The original compiler
+executable and all level compiler profiles remain unidentified.
 
 The gate writes a private `build/boot-trial-gate/report.json` only after every
 check succeeds, with `counted_matches: 1`, `counted_bytes: 16`, and
@@ -35,7 +41,8 @@ check succeeds, with `counted_matches: 1`, `counted_bytes: 16`, and
 `incomplete` with zero matches before checking anything. This report is
 evidence for the one boot placement; no game-wide percentage or ByteMatch
 report has been published. If a source, compiler, linker, boundary or boot
-input changes, rerun the full gate. If it fails, remove the counted claim and
+input changes, rerun the full gate, including ELF packaging. If it fails,
+remove the counted claim and
 repair the source or move it back to `nonmatching/` until it passes again.
 
 Further promotions require a separate placement and boundary review. Exact

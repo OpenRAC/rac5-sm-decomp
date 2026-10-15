@@ -43,5 +43,5 @@ To expand this beyond the accepted boot placement, establish complete
 assembly and loaded-program baselines for the applicable level modules, then
 compare candidate C++/C toolchains and flags with independent functions and
 controls across code families. A local slice alone does not qualify a match.
-The [boot-only scope](BOOT-MATCH-SCOPE.md) records the accepted criterion and
-the still-different complete ELF file.
+The [boot-only scope](BOOT-MATCH-SCOPE.md) records the accepted criterion,
+exact packaged ELF and remaining source/runtime limitations.

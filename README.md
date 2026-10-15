@@ -53,8 +53,11 @@ The [boot gate](docs/BOOT-TRIAL-GATE.md) rebuilds all 17 C objects from pinned
 local tools, verifies the entire load image in one private run, and counts
 **one boot-only match** after a successful gate.
 The [VU overlay audit](docs/DVP-OVERLAYS.md) also reproduces the boot's 31
-non-loaded DVP sections privately and records why full-file identity and
-PCSX2's executable CRC remain separate checks.
+non-loaded DVP sections privately. The new
+[ELF packaging gate](docs/BOOT-TRIAL-GATE.md) reconstructs the complete
+**856,120-byte boot ELF**, including `.reginfo` and section layout, with the
+retail SHA-256. Loaded non-code data still comes from the pinned retail input;
+this is not a fully source-derived game build.
 
 No other C or C++ match is claimed. The original compiler identity and level
 profiles, complete ELF-file identity, most function boundaries and full runtime

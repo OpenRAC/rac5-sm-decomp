@@ -1,4 +1,4 @@
-# Boot VU overlays and the remaining ELF-file gap
+# Boot VU overlays and exact ELF packaging
 
 The pinned USA boot has one file-backed `PT_LOAD` segment at file offsets
 `128`–`810000`. Its 31 `.DVP` sections are outside that segment. The
@@ -32,17 +32,24 @@ string table from that metadata under ignored `build/dvp-overlays/`. All
 **31/31 linked DVP sections** match the retail bytes, type, flags, address and
 alignment. A separate private whole-boot link including those regenerated
 sections still matches the ELF entry, program header and raw `PT_LOAD` bytes.
-It has 41 sections like retail, but its full file is **856,100** rather than
-**856,120 bytes**: section order, some flags/alignment, `.reginfo` placement,
-and our temporary BSS-tail section also differ. This is a reproducible
-metadata baseline, **not** a byte-identical entire ELF or a VU decompilation.
+That direct SN-linker output has 41 sections like retail, but its full file is
+**856,100** rather than **856,120 bytes**: section order, some flags/alignment,
+`.reginfo` placement, and the temporary BSS-tail section differ. The later
+[`tools/boot_elf_pack.py`](../tools/boot_elf_pack.py) reconstructs this file
+container from a C-linked `PT_LOAD` and the generated numeric
+[`elf_layout.json`](../config/boot/elf_layout.json). It regenerates `.DVP`
+payloads, `.reginfo`, section names and headers without copying the retail
+file. The packaged **856,120-byte ELF is byte-identical** to the pinned boot.
+The loaded non-code sections still come from the user's private boot; this is
+an exact packaging result, not VU or game-data decompilation.
 
 There is a concrete emulator consequence. PCSX2's
 [`ElfObject::GetCRC`](https://github.com/PCSX2/pcsx2/blob/master/pcsx2/Elfheader.cpp)
 XORs 32-bit words over the **whole ELF file**, and PCSX2 documents that
 [patches are keyed by game serial and executable CRC](https://pcsx2.net/docs/advanced/writing-patches/).
 The retail boot reports `8661F7BA`; the private stripped C-linked ELF without
-DVP sections reports `FA686352`. In an isolated PCSX2 run using the pinned
+DVP sections reports `FA686352`. The full-file-exact packaged ELF has the
+measured retail CRC `8661F7BA`. In an earlier isolated PCSX2 run using the pinned
 disc, that DVP-free ELF reached the frontend module's `SNR2` header in EE
 memory at `0x00F97B80`; a retail run reached the same header with the same
 first 32 bytes. This is a **boot-to-frontend smoke test**, not a full gameplay,
@@ -53,5 +60,5 @@ so linked ELF metadata can affect the debugger even when loaded bytes agree.
 For C matching, keep the exact entry and loaded program-byte check separate
 from whole-file identity and tool behavior. The `.DVP` data can now be
 regenerated privately for the baseline. This metadata result alone does not
-count a C match. The separate [boot-only gate](BOOT-MATCH-SCOPE.md) now accepts
-one reviewed 16-byte placement; full-file and emulator CRC differences remain.
+count a C match. The [boot-only gate](BOOT-MATCH-SCOPE.md) now accepts one
+reviewed 16-byte placement and requires the entire packaged ELF to match.

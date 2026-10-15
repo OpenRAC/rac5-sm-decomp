@@ -75,9 +75,13 @@ def main() -> None:
     linked = ROOT / "build/boot-c-campaign/boot_multi.elf"
     run_tool("boot_witness_boundaries.py", str(boot), str(linked))
     accepted_bytes = accepted_body_bytes()
+    run_tool("boot_elf_pack.py", "catalogue", str(boot))
+    run_tool("boot_elf_pack.py", "build", str(boot), "--linked", str(linked))
+    packed = ROOT / "build/boot-elf-pack/boot_exact.elf"
 
     reference = inspect_elf(boot)
     candidate = inspect_elf(linked)
+    complete = inspect_elf(packed)
     program = next(item for item in reference["programs"] if item["type"] == 1)
     raw = linked.read_bytes()[program["file_offset"]:
                               program["file_offset"] + program["file_size"]]
@@ -93,19 +97,21 @@ def main() -> None:
         "raw_load_size": program["file_size"],
         "raw_load_sha256": hashlib.sha256(raw).hexdigest(),
         "raw_load_and_header_exact": candidate["programs"] == reference["programs"],
-        "whole_elf_exact": candidate["sha256"] == reference["sha256"],
+        "whole_elf_exact": complete["sha256"] == reference["sha256"],
+        "whole_elf_size": complete["file_size"],
+        "whole_elf_sha256": complete["sha256"],
         "counted_matches": 1,
         "counted_bytes": accepted_bytes,
         "accepted_functions": [ACCEPTED_NAME],
-        "note": "boot-only loaded bytes; non-code data came from pinned retail ELF; original compiler identity, whole ELF and full gameplay remain unverified",
+        "note": "full ELF metadata was regenerated from the pinned numeric catalogue; non-code loaded data came from retail; original compiler identity and full gameplay remain unverified",
     }
-    if not report["raw_load_and_header_exact"]:
-        raise ValueError("trial report does not reflect the measured boot layout")
+    if not report["raw_load_and_header_exact"] or not report["whole_elf_exact"]:
+        raise ValueError("gate report does not reflect the measured complete boot")
     REPORT.write_text(json.dumps(report, indent=2) + "\n",
                       encoding="utf-8", newline="\n")
     print(f"boot gate passed: {len(REPLACEMENTS)} exact objects, "
           f"{len(WITNESS_NAMES)} C witnesses, {program['file_size']} exact raw "
-          f"load bytes; one boot-only match ({accepted_bytes} bytes)")
+          f"load bytes and complete ELF exact; one boot-only match ({accepted_bytes} bytes)")
 
 
 if __name__ == "__main__":

@@ -64,8 +64,9 @@ python tools/boot_c_witness.py baserom/SCUS_976.15 \
 
 This historical one-object witness alone was provisional. The later
 [full boot gate](BOOT-TRIAL-GATE.md) qualifies the 16-byte placement under a
-limited boot-only profile and counts one match. The complete ELF file still
-differs in section headers, metadata and non-loaded bytes; the original
+limited boot-only profile and counts one match. The direct SN-linker file
+differs in section headers and non-loaded metadata, while the later packaging
+gate reconstructs the complete ELF exactly. The original
 compiler identity, complete runtime comparison and game-wide catalogue remain
 open. No ByteMatch progress report is published yet. The original compiler's
 FOG loop mismatch motivated the
@@ -123,12 +124,13 @@ is 604 body bytes plus 44 zero alignment bytes. The compiled symbol size is
 the candidate's body extent; it does not prove the retail build used the
 same source or assigned exactly that function size.
 
-The full ELF still differs. The retail file has 31 VU `.DVP` sections outside
+The direct SN-linked ELF still differs. The retail file has 31 VU `.DVP` sections outside
 its `PT_LOAD`. Their [metadata audit and private reproduction](DVP-OVERLAYS.md)
-now matches all 31 section contents and types. The resulting whole-boot file
-is still 20 bytes shorter than retail and retains section-layout differences.
-The separate PCSX2 CRC and boot-to-frontend smoke test are documented there;
-they do not establish complete runtime equivalence.
+matches all 31 section contents and types. That direct-link file is 20 bytes
+shorter than retail and retains section-layout differences. The later
+[`boot_elf_pack.py`](../tools/boot_elf_pack.py) repairs those metadata
+differences and produces a complete byte-identical ELF. The earlier PCSX2
+smoke test is documented separately; it does not establish full gameplay.
 
 `FOG_PreUpdate__Fv`, the two string-length witnesses and
 `GLOBALWAD_ReleaseTransitionBank__Fv` use the isolated
