@@ -73,11 +73,11 @@ remains a reminder that this trial compiler cannot reproduce every body.
 
 ## Combined provisional C witness
 
-The same full-boot link has now been repeated with **all eleven authored C
-functions** from the eight exact-slice source groups in
+The same full-boot link has now been repeated with **sixteen authored C
+functions** from thirteen exact-slice source groups in
 [`COMPILER-WITNESSES.md`](COMPILER-WITNESSES.md). Compile these sources with
 the same isolated GNU EE chain, `-O2 -G0`, and **without**
-`RAC5_WITNESS_PADDING`; place the resulting eight `.o` files in an ignored
+`RAC5_WITNESS_PADDING`; place the resulting thirteen `.o` files in an ignored
 local directory. Run [`tools/boot_c_campaign.py`](../tools/boot_c_campaign.py)
 with that directory:
 
@@ -88,21 +88,22 @@ python tools/boot_c_campaign.py baserom/SCUS_976.15 \
 ```
 
 The tool pins each public C source and private object by SHA-256, splits the
-verified boot assembly around the eight object intervals, and links those
-objects without rewriting their instructions. Five objects end four bytes
+verified boot assembly around the thirteen object intervals, and links those
+objects without rewriting their instructions. Eight objects end four bytes
 before the next measured label. SN `ld` adds the four zero alignment bytes
 between input sections; those bytes match the retail boot. Branch labels in
 the replaced intervals are rebound to their measured addresses. The linked
-ELF symbol table places all eleven C functions at the expected boot addresses:
-their compiled bodies total 248 bytes, with 32 zero alignment bytes across
-the 280-byte set of next-label intervals. The linked
+ELF symbol table places all sixteen C functions at the expected boot addresses:
+their compiled bodies total 316 bytes, with 44 zero alignment bytes across
+the 360-byte set of next-label intervals. The linked
 result matches the entire boot `.text` **498,900 / 498,900**, the raw
-file-backed `PT_LOAD` **809,872 / 809,872**, its complete program header, and
-the original BSS section placement and size. Generated assembly, copied
+file-backed `PT_LOAD` **809,872 / 809,872**, its complete program header, the
+retail entry address `0x01E62508`, and the original BSS section placement and
+size. Generated assembly, copied
 non-code sections, objects and ELF stay under ignored `build/`.
 
 [`tools/boot_witness_boundaries.py`](../tools/boot_witness_boundaries.py)
-separately audits the linked ELF's eleven global C function symbols against
+separately audits the linked ELF's sixteen global C function symbols against
 the pinned boot and generates
 [`config/boot/witness_boundaries.tsv`](../config/boot/witness_boundaries.tsv):
 
@@ -114,11 +115,19 @@ python tools/boot_witness_boundaries.py baserom/SCUS_976.15 \
 For each witness it verifies the compiled symbol start/size, a final
 `jr $ra` with its delay slot inside the body, zero bytes up to the next boot
 label, and no **direct** boot branch or jump into that alignment. The result
-is 248 body bytes plus 32 zero alignment bytes. The compiled symbol size is
+is 316 body bytes plus 44 zero alignment bytes. The compiled symbol size is
 the candidate's body extent; it does not prove the retail build used the
 same source or assigned exactly that function size.
 
-This is still a **provisional integration result**, not eleven accepted
+The full ELF still differs. The retail file has 41 sections, including 31
+`.DVP` overlay/metadata sections totalling 43,220 bytes; those sections are
+outside its file-backed `PT_LOAD`. A private `ld -N -s` trial keeps the exact
+entry and load segment but has 10 sections and a file size of 810,632 bytes,
+versus 856,120 retail. The candidate's unstripped debug/symbol tables differ
+as well. This locates the remaining file-level gap without establishing whether
+those non-loaded sections matter to runtime tools.
+
+This is still a **provisional integration result**, not sixteen accepted
 matches. The original compiler profile, complete ELF metadata, runtime
 behavior, and reviewed function catalogue remain unqualified. The
 non-code sections still come from the pinned game image; this does not
