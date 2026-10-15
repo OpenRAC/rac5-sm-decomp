@@ -1,26 +1,60 @@
 # Assembly reconstruction status
 
-One **boot-function witness**, not the complete assembly baseline, has been
-reassembled and compared with the pinned USA executable. The witness is
-`MCP_LoadLevelModule__Fi` at `0x01E672E0`, spanning `0xA0` (160) bytes up to
-the next named function at `0x01E67380`.
+The complete pinned USA boot **`.text` section** at `0x01E62500`, size
+`0x79CD4` (498,900 bytes), has been rebuilt from private R5900 assembly and
+compared byte for byte with the retail ELF: **498,900 / 498,900 bytes equal**.
+The linked candidate `.text` SHA-256 is
+`8dab904fd9dd57e1c3774c92b07fe0872445a99775e85dc62229e857a1a6830c`.
+This expands the earlier 160-byte `MCP_LoadLevelModule__Fi` witness; it is
+still an assembly baseline, **not** an authored C/C++ match.
 
-The local experiment extracted those bytes from the verified boot `.text`
-section, disassembled them as little-endian R5900 instructions with
-`spimdisasm 1.42.4`, and assembled **instruction mnemonics throughout** with
-SN `Ps2EeAs.exe` version `1.8.19.316` (SHA-256
-`c839dd63facabe7b76573c114056be61eaa7b3aa2329dd546930ab8f98898c76`).
-Its three external call targets and three referenced addresses were resolved
-at their pinned boot values using SN `ld.exe` version `2.9-ee-991111`
-(SHA-256 `80f3724a63ce3c77c8b00d075f5c49448636518700ae251e5d6a6c809bbf5f48`).
-The linked `.text` section was placed at `0x01E672E0` and matched the retail
-function **160 / 160 bytes**, with zero differences. No raw instruction words
-or game-derived assembly are distributed in this repository.
+The tool also copies the pinned boot's `.data`, `.sndata`, `.rodata` and
+`.gcc_except_table` into **ignored local assembly**, links them at their
+measured addresses, and reconstructs the zero-filled alignment gaps. The
+byte sequence reconstructed from those linked sections matches all
+**809,872 / 809,872 file-backed PT_LOAD bytes** of the original segment,
+SHA-256
+`4f4fb8fe218317dbd7a2f65ca4e64934d743d03e673dbd75220937cfc6fd47fb`.
+Those non-code sections are copied reference bytes, not independently
+decompiled source.
 
-This independently verifies that this local assembler/linker combination can
-reproduce **one** RAC5 function. It does not identify the original compiler,
-qualify C/C++ flags, cover the full boot or any level module, or justify
-counting a matched function: the witness is still game-derived assembly, not
-authored C/C++. The next gate is to generate private assembly for the whole
-boot and loaded modules, link it, and compare every loaded byte with the
-pinned references. See the [roadmap](ROADMAP.md).
+[`tools/boot_assembly.py`](../tools/boot_assembly.py) verifies the pinned boot
+hash, decodes all 124,725 text words with optional `rabbitizer 1.16.2` in
+R5900 mode, writes all game-derived source only under ignored
+`build/boot-assembly/`, and assembles and links it at the measured addresses.
+The local SN
+`Ps2EeAs.exe` version `1.8.19.316` has SHA-256
+`c839dd63facabe7b76573c114056be61eaa7b3aa2329dd546930ab8f98898c76`;
+SN `ld.exe` version `2.9-ee-991111` has SHA-256
+`80f3724a63ce3c77c8b00d075f5c49448636518700ae251e5d6a6c809bbf5f48`.
+The tool checks both hashes before running either binary. No game-derived
+assembly, ELF, object, disc image or proprietary tool is distributed.
+
+Two measured decoder/assembler differences need explicit handling:
+
+- `rabbitizer` does not name 50 R5900 two-register `sqrt.s` instructions;
+  their exact encoding is mapped to `sqrt.s` mnemonics. A two-instruction
+  local assembler probe confirmed the encoding, and the complete text
+  comparison checks all 50 in place.
+- SN's assembler inserts a retail-absent hazard `nop` before six COP1
+  branches immediately following floating-point comparisons. Those six
+  branches are emitted as exact `.word` values in the **ignored private
+  assembly**. The other 124,719 words are emitted as instruction mnemonics.
+  Without this narrow fallback, the linked `.text` is 24 bytes too long and
+  fails the byte comparison. This does not change the shared assembler or any
+  C compiler.
+
+On Windows, with your own verified USA boot and locally available measured
+tools, install optional `rabbitizer==1.16.2` in a Python environment and run:
+
+```sh
+python tools/boot_assembly.py baserom/SCUS_976.15 \
+  --assembler /path/to/Ps2EeAs.exe --linker /path/to/ld.exe
+```
+
+The BSS and live runtime memory have **not** been compared, and none of the
+21 SNR2 modules has an assembly baseline. The exact file-backed boot image is
+not proof that the game's non-code data was independently reconstructed.
+Complete runtime and level-program baselines, plus a qualified compiler
+profile, remain prerequisites for a full-program C/C++ replacement check; no
+ByteMatch progress is claimed from this assembly result.

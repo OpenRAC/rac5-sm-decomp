@@ -20,11 +20,13 @@
    directly to EE memory before constructors (`docs/RELOCATED-IMAGE.md`).
    Compare the other modules and establish code/data extents; do not reuse
    RAC2's WAD layout.
-3. **Establish an assembly baseline.** Split the verified boot and level
-   programs into local ignored `asm/` and `build/` outputs, then rebuild and
-   compare complete loaded bytes. One 160-byte boot function has been
-   reassembled exactly with a measured local SN assembler/linker combination
-   (`docs/ASSEMBLY-STATUS.md`); this does not qualify the full baseline.
+3. **Establish an assembly baseline (in progress).** The entire 498,900-byte
+   boot `.text` section now reassembles exactly with a measured local SN
+   assembler/linker combination (`docs/ASSEMBLY-STATUS.md`). Copying the
+   pinned non-code sections into ignored local assembly also reproduces all
+   809,872 file-backed boot load bytes. Verify BSS/runtime behavior and
+   reconstruct the 21 SNR2 modules before calling this a full-program
+   baseline. Non-code copying is not decompilation.
 4. **Identify compiler profiles.** Mangled C++ exports and ProDG SNR2 modules
    are evidence, not a compiler version (`docs/COMPILER-STATUS.md`). Measure
    signatures on code and SDK-library ranges. Do not copy RAC2's `sdk` or game
@@ -35,6 +37,6 @@
    under the qualified profile, check every placement, and count it only after
    the full-program byte gate.
 
-The tools complete step 1 and the SNR2 metadata part of step 2. The remaining
-loader semantics, assembly baseline, compiler qualification and matching C/C++
-are not claimed complete.
+The tools complete step 1, the SNR2 metadata part of step 2, and the boot's
+file-backed assembly/load-image part of step 3. Runtime and level-program
+baselines, compiler qualification and matching C/C++ remain open.

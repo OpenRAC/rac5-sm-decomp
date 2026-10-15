@@ -28,8 +28,11 @@ The loader's complete relocated output for the frontend and level 01 has
 been reconstructed locally and compared byte for byte with paused PCSX2
 memory ([evidence and commands](docs/RELOCATED-IMAGE.md)). This qualifies
 those two **load images**, not a compiler or authored C/C++ source.
-One [160-byte assembly witness](docs/ASSEMBLY-STATUS.md) also matched; the
-complete assembly rebuild remains open.
+The [complete 498,900-byte boot `.text` section](docs/ASSEMBLY-STATUS.md)
+also reassembles byte for byte. With the non-code sections copied from the
+private pinned ELF, all **809,872 file-backed boot load bytes** compare equal.
+The boot's BSS/runtime state and all level-program assembly rebuilds remain
+open; copied reference data is not decompiled source.
 
 **No C or C++ function match is claimed.** The exact compiler and flags, level
 relocation/load behavior, complete assembly baseline, and function boundaries
@@ -99,6 +102,13 @@ proprietary compiler. Read [LEGAL.md](LEGAL.md) and
    After measuring a module base in your own run, you can reconstruct its
    private loaded image with `tools/relocate.py` (see the
    [relocation guide](docs/RELOCATED-IMAGE.md)).
+
+   For boot assembly research, the optional
+   [`tools/boot_assembly.py`](tools/boot_assembly.py) rebuilds the pinned
+   `.text` and checks the file-backed load bytes. It needs your own local SN
+   assembler/linker and `rabbitizer==1.16.2`; see the
+   [assembly guide](docs/ASSEMBLY-STATUS.md). Generated game-derived files
+   remain under ignored `build/`.
 
 4. Before starting substantial research, check open issues and pull requests
    and state your intended scope in an issue or draft PR. There is **no
