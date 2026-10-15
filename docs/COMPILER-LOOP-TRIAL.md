@@ -72,5 +72,6 @@ one unfilled-delay case, but it does not qualify an original RAC5 compiler
 profile. Other loop lengths, branch forms and source families need independent
 controls. The GNU source, local compiler binaries,
 objects, generated assembly and linked ELF are not distributed here. Keep
-this candidate under `nonmatching/` and report **zero** ByteMatch matches
-until the repository's full compiler and program gates hold.
+the three loop shapes under `nonmatching/`; they remain unaccepted. One
+different boot function, `MEMCARD_Busy__Fv`, has since passed the limited
+[boot-only gate](BOOT-MATCH-SCOPE.md). No ByteMatch report is published yet.

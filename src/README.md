@@ -1,5 +1,7 @@
 # Authored matching source
 
-No function has been promoted to matching C/C++ yet. Function boundaries,
-compiler profiles and complete-program comparisons must be verified first. Add one
-definition per function here only after that baseline exists.
+`boot/memcard_busy.c` is the first boot-only accepted C definition. Its pinned
+compiler, 16-byte body and complete boot load image are checked by
+`tools/boot_trial_gate.py` with a lawful local ELF. See
+`docs/BOOT-MATCH-SCOPE.md` for the exact acceptance scope and limitations.
+Other candidates remain in `nonmatching/` until independently reviewed.

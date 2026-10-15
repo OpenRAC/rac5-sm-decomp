@@ -15,7 +15,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from boot_c_campaign import REPLACEMENTS
+from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path
 from boot_witness_boundaries import WITNESS_NAMES
 from r5900_assembly import ASSEMBLER_SHA256, LINKER_SHA256
 
@@ -41,9 +41,12 @@ def require_private_output(path: Path) -> Path:
 
 def check_profile(cpp: Path, cc1: Path, assembler: Path) -> dict[str, object]:
     profile = json.loads(PROFILE.read_text(encoding="utf-8"))
-    if (profile["status"] != "provisional"
+    if (profile["status"] != "qualified_boot_only"
             or profile["expected_objects"] != len(REPLACEMENTS)
-            or profile["expected_function_witnesses"] != len(WITNESS_NAMES)):
+            or profile["expected_function_witnesses"] != len(WITNESS_NAMES)
+            or profile["accepted_function"] != "MEMCARD_Busy__Fv"
+            or profile["accepted_source"] != "src/boot/memcard_busy.c"
+            or ACCEPTED_SOURCES != frozenset({"memcard_busy"})):
         raise ValueError("compiler trial catalogue no longer matches the measured scope")
     patch = ROOT / profile["source"]["patch"]
     if normalized_digest(patch) != profile["source"]["patch_sha256_lf"]:
@@ -81,10 +84,10 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
     if output == export:
         raise ValueError("output and export directories must differ")
     output.mkdir(parents=True, exist_ok=True)
-    manifest = {"profile": profile["id"], "status": "provisional",
+    manifest = {"profile": profile["id"], "status": "qualified_boot_only",
                 "objects": []}
     for item in REPLACEMENTS:
-        source = ROOT / "nonmatching/boot" / f"{item.name}.c"
+        source = source_path(item.name)
         if normalized_digest(source) != item.source_sha256:
             raise ValueError(f"C source differs from measured trial: {item.name}")
         (output / source.name).write_bytes(source.read_bytes())
@@ -110,7 +113,7 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
             shutil.copyfile(output / f"{item.name}.o", export / f"{item.name}.o")
         shutil.copyfile(output / "trial_manifest.json", export / "trial_manifest.json")
     print(f"{len(REPLACEMENTS)} byte-identical objects for {len(WITNESS_NAMES)} "
-          "provisional boot C witnesses; no qualified or counted matches",
+          "boot C witnesses, one accepted under the boot-only profile",
           flush=True)
 
 

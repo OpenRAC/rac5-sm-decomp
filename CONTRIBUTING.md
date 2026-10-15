@@ -2,18 +2,21 @@
 
 Start with the complete [README contribution walkthrough](README.md#start-contributing)
 and [LEGAL.md](LEGAL.md). The pinned USA input and SNR2/boot metadata are
-verified, but the loader semantics, compiler profile, function catalogue and
-matching build are not. Run the synthetic tests first. For a game-derived
+verified, with one narrowly accepted boot function. The level compiler
+profiles, complete function catalogue and game-wide progress build remain
+open. Run the synthetic tests first. For a game-derived
 finding, verify your own lawful USA disc against `config/target.json` and
 identify the exact program, address, method and uncertainty. Share a measured
 hypothesis in an issue or a focused change to the tools or documentation.
 Check open issues and PRs before choosing a scope; no reservation queue exists
 yet. Do not add guessed function matches or claim progress from symbol names.
 
-When the compiler, program format and function catalogue are qualified, write
-matching C or C++ in `src/`, with one definition per function. A function will be accepted
-only by a complete byte-identical build of its target program. Put unsuccessful
-but useful bodies in `nonmatching/` and explain their remaining differences.
+Once the applicable compiler, program format and function boundary are
+qualified, write matching C or C++ in `src/`, with one definition per function.
+A function is accepted only after a byte-identical complete-program gate for
+every applicable placement. The boot-only scope and its remaining caveats are
+documented in `docs/BOOT-MATCH-SCOPE.md`. Put unaccepted but useful bodies in
+`nonmatching/` and explain their remaining differences.
 
 Use short, focused commits. Before a PR, run
 `python -m unittest discover -s tests -v` and

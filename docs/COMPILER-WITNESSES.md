@@ -1,12 +1,15 @@
 # Provisional C compiler witnesses, USA PS2 boot
 
 Twenty small boot functions from several code areas were reconstructed as
-independently authored C in `nonmatching/boot/`. The pinned boot's `.text`
+independently authored C, initially in `nonmatching/boot/`. The pinned boot's `.text`
 intervals and each local candidate ELF were compared at the same virtual
 addresses, with no relocation masking. This is evidence that one **candidate**
-toolchain and `-O2 -G0` can produce these limited intervals. It neither
-identifies the original compiler nor qualifies a complete matching build.
-These sources stay in `nonmatching/` and contribute **zero** to progress.
+toolchain and `-O2 -G0` can produce these limited intervals. It does not
+identify the original compiler; the later full-boot gate supplies the
+separate loaded-byte evidence for one accepted placement.
+The `MEMCARD_Busy__Fv` source has since moved to `src/boot/` under the
+[boot-only acceptance gate](BOOT-MATCH-SCOPE.md). The other nineteen functions
+remain in `nonmatching/` and contribute no accepted matches.
 
 | Source | Boot interval | Functions | Exact slice | Candidate slice SHA-256 |
 | --- | --- | ---: | ---: | --- |
@@ -54,14 +57,15 @@ isolated threshold-six compiler, bringing the provisional span total to
 **552/552 bytes across nineteen functions**. A third short-loop shape with
 an unfilled branch delay matches 96/96 in `GLOBALWAD_ReleaseTransitionBank`;
 the original compiler yielded 69/96. The current provisional span total is
-**648/648 bytes across twenty functions**. This still does not qualify a
-whole-program match. A later
+**648/648 bytes across twenty functions**. Isolated slice equality alone did
+not qualify a whole-program match. A later
 [provisional integration witness](BOOT-C-WITNESS.md) linked the
 `MEMCARD_Busy__Fv` C object into the entire boot assembly and kept the full
 file-backed bytes exact. A [combined integration witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)
 now links all twenty authored functions into the boot at once and preserves
 the exact raw `PT_LOAD` bytes, program header and ELF entry; it remains
-uncounted under the project gates.
+accepted only `MEMCARD_Busy__Fv` under the boot-only gate; the remaining
+nineteen functions are uncounted.
 
 `FOG_PreUpdate__Fv` at `0x01E7D4A8` exposed a short-loop padding mismatch in
 the original trial `cc1`: two `nop` instructions before the backward branch,
@@ -69,8 +73,8 @@ where retail has one. An [isolated RAC5-only compiler patch](COMPILER-LOOP-TRIAL
 changes the loop threshold from seven to six instructions and reproduces the
 entire **64/64-byte** body, without post-processing the object. All sixteen
 earlier function witnesses keep identical object hashes under that patched
-compiler. This is a stronger provisional profile control, not proof of the
-original compiler and not a counted match.
+compiler. This is a stronger profile control, not proof of the original
+compiler. The FOG function itself remains unaccepted.
 `GLOBALWAD_ReleaseTransitionBank__Fv` exercises a backward branch whose
 retail delay slot remains `nop`, covering the unfilled-delay path of that
 loop-padding trial ([details](COMPILER-LOOP-TRIAL.md)).
