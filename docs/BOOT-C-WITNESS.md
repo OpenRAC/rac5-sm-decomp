@@ -3,7 +3,7 @@
 `MEMCARD_Busy__Fv` at `0x01E627C0`–`0x01E627D0` is the first authored C
 candidate linked **inside the complete boot assembly baseline**. The trial
 GNU EE chain compiled the source in
-[`nonmatching/boot/memcard_busy.c`](../nonmatching/boot/memcard_busy.c) with
+[`src/boot/memcard_busy.c`](../src/boot/memcard_busy.c) with
 `-O2 -G0`, without the optional spacing sentinel. Its 16-byte `.text`
 replaced the retail assembly at that exact address. SN `ld.exe` linked that
 real object between two private assembly sections; the object bytes were
@@ -32,7 +32,7 @@ the BSS section. It is a linker layout reconstruction, not a new C function.
 [`tools/boot_c_witness.py`](../tools/boot_c_witness.py) reproduces this
 experiment using the pinned boot, local SN assembler/linker, and a privately
 compiled C object. It checks the normalized C source SHA-256
-`a9eb80c64d794873ec06689b36c7fa204263c295e5a33077659cbb1c10e02194`
+`16e4be48785a4f90e710cf9b5ffe596e071bd1041a41a8fab5936dbb1fca9e18`
 and object SHA-256
 `415800c82c13e302c09de6aa773a68f82414410e28375e6b726db591fbdeb674`,
 as well as the measured SN tool hashes. Generated game-derived assembly,
@@ -62,13 +62,13 @@ python tools/boot_c_witness.py baserom/SCUS_976.15 \
   --assembler /path/to/Ps2EeAs.exe --linker /path/to/ld.exe
 ```
 
-This is a **provisional integration witness, not a counted match**. The
-loadable segment now matches, but the complete ELF file has not been shown
-identical: section headers, metadata and non-loaded bytes may differ. A live
-runtime comparison, qualified compiler profile and reviewed function
-catalogue are also outstanding.
-The source therefore stays in `nonmatching/`; no ByteMatch progress report
-is warranted yet. The original compiler's FOG loop mismatch motivated the
+This historical one-object witness alone was provisional. The later
+[full boot gate](BOOT-TRIAL-GATE.md) qualifies the 16-byte placement under a
+limited boot-only profile and counts one match. The complete ELF file still
+differs in section headers, metadata and non-loaded bytes; the original
+compiler identity, complete runtime comparison and game-wide catalogue remain
+open. No ByteMatch progress report is published yet. The original compiler's
+FOG loop mismatch motivated the
 [isolated RAC5 threshold trial](COMPILER-LOOP-TRIAL.md) below.
 
 ## Combined provisional C witness
@@ -135,8 +135,9 @@ they do not establish complete runtime equivalence.
 [RAC5 short-loop compiler trial](COMPILER-LOOP-TRIAL.md); the earlier sixteen
 retain their prior object hashes under that trial.
 
-This is still a **provisional integration result**, not twenty accepted
-matches. The original compiler profile, complete ELF metadata, runtime
-behavior, and reviewed function catalogue remain unqualified. The
-non-code sections still come from the pinned game image; this does not
-constitute a reconstructed game build or ByteMatch progress.
+The integration still does **not** accept all twenty functions. Only
+`MEMCARD_Busy__Fv` passes the boot-only acceptance review; the other nineteen
+remain provisional. Complete ELF metadata, runtime behavior and the game-wide
+catalogue remain open. The non-code sections still come from the pinned game
+image; this does not constitute a reconstructed game build or ByteMatch
+progress.

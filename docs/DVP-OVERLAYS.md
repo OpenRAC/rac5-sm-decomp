@@ -52,6 +52,6 @@ so linked ELF metadata can affect the debugger even when loaded bytes agree.
 
 For C matching, keep the exact entry and loaded program-byte check separate
 from whole-file identity and tool behavior. The `.DVP` data can now be
-regenerated privately for the baseline. Do not count a C match from this
-metadata result; compiler qualification, runtime coverage and the repository's
-other match gates still apply.
+regenerated privately for the baseline. This metadata result alone does not
+count a C match. The separate [boot-only gate](BOOT-MATCH-SCOPE.md) now accepts
+one reviewed 16-byte placement; full-file and emulator CRC differences remain.

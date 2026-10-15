@@ -10,7 +10,8 @@ An early matching-decompilation workspace for the **USA PlayStation 2** version
 parts of [OpenRAC's RAC2 project](https://github.com/OpenRAC/rac2-gc-decomp):
 authored source belongs in `src/`, game-derived material stays local, and a function
 only counts as matched after a byte-identical build. This repository does **not**
-yet have a qualified compiler, a retail function catalogue, or a match-counting build.
+yet have a general qualified compiler, a complete retail function catalogue,
+or a ByteMatch progress report. One boot-only match has a private full-load gate.
 
 ## What is established
 
@@ -42,21 +43,23 @@ The boot's embedded labels also yield
 [1,315 generated code-label bounds](config/boot/code_intervals.tsv). These are
 next-label search limits, not validated function sizes or matches.
 
-A [provisional boot C-object campaign](docs/BOOT-C-WITNESS.md#combined-provisional-c-witness)
+A [boot C-object campaign](docs/BOOT-C-WITNESS.md#combined-provisional-c-witness)
 also keeps the complete boot `.text`, retail `PT_LOAD` header and raw
 file-backed bytes exact after linking twenty authored C functions together.
-They remain in `nonmatching/` until the compiler, reviewed function
-catalogue, complete ELF metadata and runtime gates are satisfied.
-The [boot trial gate](docs/BOOT-TRIAL-GATE.md) now rebuilds all 17 C objects
-from pinned local tools and verifies the entire load image in one private run;
-its report explicitly counts **zero** accepted matches.
+One reviewed 16-byte boot function now lives in `src/boot/`; the other nineteen
+remain in `nonmatching/`. The [boot-only acceptance scope](docs/BOOT-MATCH-SCOPE.md)
+explains why exact loaded bytes can be assessed separately from ELF packaging.
+The [boot gate](docs/BOOT-TRIAL-GATE.md) rebuilds all 17 C objects from pinned
+local tools, verifies the entire load image in one private run, and counts
+**one boot-only match** after a successful gate.
 The [VU overlay audit](docs/DVP-OVERLAYS.md) also reproduces the boot's 31
 non-loaded DVP sections privately and records why full-file identity and
 PCSX2's executable CRC remain separate checks.
 
-**No C or C++ function match is claimed.** The exact compiler and flags, level
-relocation/load behavior, complete assembly baseline, and function boundaries
-are still under investigation. There is no valid progress percentage yet.
+No other C or C++ match is claimed. The original compiler identity and level
+profiles, complete ELF-file identity, most function boundaries and full runtime
+behavior are still under investigation. There is no published ByteMatch
+progress percentage yet.
 Names, symbol addresses and module hashes are research metadata, not proof of
 matching code. The [roadmap](docs/ROADMAP.md) tracks the remaining gates.
 
@@ -161,16 +164,16 @@ repository's distribution boundary.
 
 ## What will count as a match
 
-After the program layout, assembly baseline, function catalogue and compiler
-profile have been qualified, keep one authored C/C++ definition per function
-in `src/`. A useful attempt that does not match belongs in `nonmatching/`.
+After the applicable program layout, assembly baseline, function boundary and
+compiler profile have been qualified, keep one authored C/C++ definition per
+function in `src/`. A useful unaccepted attempt belongs in `nonmatching/`.
 Only a qualified toolchain reproducing the **complete retail program bytes at
 every applicable placement** can establish a match. Compiling successfully,
 matching a few instructions, or comparing masked bytes cannot. The
-[reproducible boot trial gate](docs/BOOT-TRIAL-GATE.md) checks candidate objects
-and loaded bytes, but the project has no qualified match-counting build yet.
-Current PRs must not claim C matches or report a percentage. RAC2's compiler
-configuration is not evidence for this game
+[reproducible boot gate](docs/BOOT-TRIAL-GATE.md) checks candidate objects and
+all loaded boot bytes and accepts only `MEMCARD_Busy__Fv` (16 bytes). It is a
+boot-only match, not a complete game percentage or a published ByteMatch
+report. RAC2's compiler configuration alone is not evidence for this game
 ([compiler status](docs/COMPILER-STATUS.md)).
 
 ## Repository layout
@@ -178,11 +181,11 @@ configuration is not evidence for this game
 | Path | Role |
 | --- | --- |
 | `config/target.json` | Verified identity of the complete USA input |
-| `config/boot/`, `config/levels/` | Generated symbol names, addresses, module hashes and export offsets; no matches |
+| `config/boot/`, `config/levels/` | Generated metadata and the pinned boot-only trial profile |
 | `tools/`, `tests/` | ISO9660, ELF, SNR2 and local relocation tools, repository guard and synthetic tests |
-| `src/` | Authored C/C++ definitions after the matching pipeline is qualified |
-| `nonmatching/` | Provisional C attempts, including exact slices awaiting profile qualification |
-| `progress/` | Reserved for measured progress after catalogue and build qualification |
+| `src/` | Accepted authored C/C++ definitions; currently one boot-only function |
+| `nonmatching/` | Provisional C attempts, including exact slices awaiting acceptance review |
+| `progress/` | Reserved for generated game-wide progress after catalogue and build qualification |
 | `baserom/`, `asm/`, `build/`, `toolchain/` | Local-only game inputs and outputs |
 
 ## Licence

@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
-"""Run the complete pinned boot C *trial* gate with private inputs.
+"""Run the pinned complete-boot C gate with private inputs.
 
-This checks compiler/object identities and the linked retail load image. It
-does not qualify the original compiler, approve a function match, or create
-a public progress report.
+This checks compiler/object identities and the linked retail load image for
+one boot-only accepted match. It does not identify the original compiler or
+publish a ByteMatch report.
 """
 
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import json
 import subprocess
 import sys
 from pathlib import Path
 
-from boot_c_campaign import REPLACEMENTS
+from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path
 from boot_witness_boundaries import WITNESS_NAMES
 from compile_boot_trial import PROFILE, compile_objects
 from elf import inspect_elf
@@ -23,6 +24,21 @@ from elf import inspect_elf
 ROOT = Path(__file__).resolve().parent.parent
 EXPORT = ROOT / "build/boot-compiled-objects"
 REPORT = ROOT / "build/boot-trial-gate/report.json"
+ACCEPTED_NAME = "MEMCARD_Busy__Fv"
+
+
+def accepted_body_bytes() -> int:
+    if (ACCEPTED_SOURCES != frozenset({"memcard_busy"})
+            or not source_path("memcard_busy").is_file()):
+        raise ValueError("accepted boot source is missing or scope changed")
+    catalogue = ROOT / "config/boot/witness_boundaries.tsv"
+    with catalogue.open(encoding="utf-8", newline="") as file:
+        rows = csv.DictReader((line for line in file if not line.startswith("#")),
+                              delimiter="\t")
+        matches = [row for row in rows if row["symbol"] == ACCEPTED_NAME]
+    if len(matches) != 1 or int(matches[0]["body_bytes"]) != 16:
+        raise ValueError("accepted boot function extent differs from reviewed 16 bytes")
+    return 16
 
 
 def run_tool(name: str, *arguments: str) -> None:
@@ -58,6 +74,7 @@ def main() -> None:
              "--linker", str(args.linker.resolve()))
     linked = ROOT / "build/boot-c-campaign/boot_multi.elf"
     run_tool("boot_witness_boundaries.py", str(boot), str(linked))
+    accepted_bytes = accepted_body_bytes()
 
     reference = inspect_elf(boot)
     candidate = inspect_elf(linked)
@@ -67,7 +84,7 @@ def main() -> None:
     profile = json.loads(PROFILE.read_text(encoding="utf-8"))
     report = {
         "gate": "boot_trial",
-        "status": "passed_provisional",
+        "status": "passed_boot_only",
         "profile": profile["id"],
         "boot_sha256": reference["sha256"],
         "candidate_objects": len(REPLACEMENTS),
@@ -77,16 +94,18 @@ def main() -> None:
         "raw_load_sha256": hashlib.sha256(raw).hexdigest(),
         "raw_load_and_header_exact": candidate["programs"] == reference["programs"],
         "whole_elf_exact": candidate["sha256"] == reference["sha256"],
-        "counted_matches": 0,
-        "note": "non-code load bytes came from the user's pinned boot; original compiler and runtime are unqualified",
+        "counted_matches": 1,
+        "counted_bytes": accepted_bytes,
+        "accepted_functions": [ACCEPTED_NAME],
+        "note": "boot-only loaded bytes; non-code data came from pinned retail ELF; original compiler identity, whole ELF and full gameplay remain unverified",
     }
     if not report["raw_load_and_header_exact"]:
         raise ValueError("trial report does not reflect the measured boot layout")
     REPORT.write_text(json.dumps(report, indent=2) + "\n",
                       encoding="utf-8", newline="\n")
-    print(f"boot trial gate passed: {len(REPLACEMENTS)} exact objects, "
-          f"{len(WITNESS_NAMES)} provisional C functions, "
-          f"{program['file_size']} exact raw load bytes; zero counted matches")
+    print(f"boot gate passed: {len(REPLACEMENTS)} exact objects, "
+          f"{len(WITNESS_NAMES)} C witnesses, {program['file_size']} exact raw "
+          f"load bytes; one boot-only match ({accepted_bytes} bytes)")
 
 
 if __name__ == "__main__":

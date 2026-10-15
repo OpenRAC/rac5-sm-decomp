@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Link twenty provisional C functions into the pinned whole-boot witness.
+"""Link one accepted and nineteen provisional C functions into the boot.
 
-This is not a qualified compiler profile or a counted match. The caller
-compiles the hash-pinned C sources with privately held tools; all generated
-assembly, non-code data and linked binaries remain under ignored build/.
+This linking witness alone does not approve a match. The caller compiles the
+hash-pinned C sources with privately held tools; all generated assembly,
+non-code data and linked binaries remain under ignored build/.
 """
 
 from __future__ import annotations
@@ -22,6 +22,14 @@ from r5900_assembly import (ASSEMBLER_SHA256, LINKER_SHA256, check_tool,
                             render_assembly, run_tool)
 
 OUTPUT = ROOT / "build/boot-c-campaign"
+ACCEPTED_SOURCES = frozenset({"memcard_busy"})
+
+
+def source_path(name: str) -> Path:
+    folder = "src/boot" if name in ACCEPTED_SOURCES else "nonmatching/boot"
+    return ROOT / folder / f"{name}.c"
+
+
 BSS_START = 0x01F28100
 BSS_SIZE = 817644
 TRAIL_SIZE = 20
@@ -39,7 +47,7 @@ class Replacement:
 
 REPLACEMENTS = (
     Replacement("memcard_busy", 0x01E627C0, 0x01E627D0,
-                "a9eb80c64d794873ec06689b36c7fa204263c295e5a33077659cbb1c10e02194",
+                "16e4be48785a4f90e710cf9b5ffe596e071bd1041a41a8fab5936dbb1fca9e18",
                 "415800c82c13e302c09de6aa773a68f82414410e28375e6b726db591fbdeb674"),
     Replacement("memcard_get_widescreen", 0x01E62838, 0x01E62848,
                 "8f28355b23090cd3dd8ee6c229537e39656f31e93a1b93da33c243fc87b0e412",
@@ -113,7 +121,7 @@ LINKER_SYMBOLS = (
 
 def check_inputs(objects_dir: Path) -> None:
     for item in REPLACEMENTS:
-        source = ROOT / "nonmatching/boot" / f"{item.name}.c"
+        source = source_path(item.name)
         normalized = source.read_text(encoding="utf-8").replace("\r\n", "\n")
         if hashlib.sha256(normalized.encode("utf-8")).hexdigest() != item.source_sha256:
             raise ValueError(f"{item.name} source differs from measured trial")
@@ -252,7 +260,7 @@ def main() -> None:
     print(f"C-linked raw PT_LOAD: {len(expected_raw)}/{len(expected_raw)} exact; "
           f"SHA-256 {load_digest}")
     print(f"ELF entry, PT_LOAD header and BSS: exact; {len(labels)} external code labels restored")
-    print("Twenty provisional C functions; no qualified compiler or counted match")
+    print("One boot-only accepted C function and nineteen provisional witnesses")
 
 
 if __name__ == "__main__":

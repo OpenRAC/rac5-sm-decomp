@@ -39,10 +39,13 @@
    compiler routing without witness functions and baseline controls. One
    [boot C-object integration witness](BOOT-C-WITNESS.md) preserves all
    raw retail `PT_LOAD` bytes and header. A combined trial now preserves them
-   with twenty C functions linked together (`docs/BOOT-C-WITNESS.md`), but does
-   not yet qualify the compiler, whole-file identity, or runtime behavior.
-   The [boot trial gate](BOOT-TRIAL-GATE.md) now rebuilds all C objects from
+   with twenty C functions linked together (`docs/BOOT-C-WITNESS.md`). That
+   evidence supports one narrow boot placement, not a general compiler,
+   whole-file identity, or full runtime behavior.
+   The [boot gate](BOOT-TRIAL-GATE.md) now rebuilds all C objects from
    SHA-pinned local tools and checks the complete load image reproducibly.
+   One reviewed boot placement is accepted under this limited profile;
+   level programs and the original compiler identity remain open.
    The [VU overlay audit](DVP-OVERLAYS.md) privately reproduces the 31 DVP
    sections while preserving the exact load segment; the full ELF and PCSX2
    executable CRC still differ.
@@ -53,10 +56,11 @@
    (`config/boot/witness_boundaries.tsv`). Review remaining boundaries,
    padding, aliases and placements before producing a retail function
    catalogue; commit metadata only.
-6. **Start C/C++ matching.** Replace an assembly marker with one definition
-   under the qualified profile, check every placement, and count it only after
-   the full-program byte gate.
+6. **Start C/C++ matching (boot only).** `MEMCARD_Busy__Fv` is the first
+   accepted 16-byte boot placement. Other boot witnesses remain provisional;
+   level functions need their own qualified build and placement checks.
 
 The tools complete step 1, the SNR2 metadata part of step 2, and the boot's
 file-backed assembly/load-image part of step 3. Runtime and level-program
-baselines, compiler qualification and matching C/C++ remain open.
+baselines and game-wide matching C/C++ remain open. See the
+[boot-only acceptance scope](BOOT-MATCH-SCOPE.md) before counting more.

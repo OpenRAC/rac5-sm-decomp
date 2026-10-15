@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Link one provisional C object into the complete pinned boot baseline.
+"""Link the accepted boot C object into the complete pinned boot baseline.
 
-This is an object-level witness, not an accepted C match or progress report.
-The caller builds the hash-pinned object from nonmatching/boot/memcard_busy.c;
+This is an object-level witness; acceptance still requires boot_trial_gate.py.
+The caller builds the hash-pinned object from src/boot/memcard_busy.c;
 all game-derived assembly and linked output stay under ignored build/.
 """
 
@@ -22,8 +22,8 @@ from r5900_assembly import (ASSEMBLER_SHA256, LINKER_SHA256, check_tool,
                             render_assembly, run_tool)
 
 OUTPUT = ROOT / "build/boot-c-witness"
-SOURCE = ROOT / "nonmatching/boot/memcard_busy.c"
-SOURCE_SHA256 = "a9eb80c64d794873ec06689b36c7fa204263c295e5a33077659cbb1c10e02194"
+SOURCE = ROOT / "src/boot/memcard_busy.c"
+SOURCE_SHA256 = "16e4be48785a4f90e710cf9b5ffe596e071bd1041a41a8fab5936dbb1fca9e18"
 OBJECT_SHA256 = "415800c82c13e302c09de6aa773a68f82414410e28375e6b726db591fbdeb674"
 C_START = 0x01E627C0
 C_END = 0x01E627D0
