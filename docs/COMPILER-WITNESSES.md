@@ -1,6 +1,6 @@
 # Provisional C compiler witnesses, USA PS2 boot
 
-Eleven small boot functions from several code areas were reconstructed as
+Sixteen small boot functions from several code areas were reconstructed as
 independently authored C in `nonmatching/boot/`. The pinned boot's `.text`
 intervals and each local candidate ELF were compared at the same virtual
 addresses, with no relocation masking. This is evidence that one **candidate**
@@ -11,12 +11,17 @@ These sources stay in `nonmatching/` and contribute **zero** to progress.
 | Source | Boot interval | Functions | Exact slice | Candidate slice SHA-256 |
 | --- | --- | ---: | ---: | --- |
 | `memcard_busy.c` | `0x01E627C0`–`0x01E627CF` | 1 | 16/16 | `9a09682cfc1e09f8c9a452d2e7035b6a6767223d7f834cb0683b8554de576c07` |
+| `memcard_get_widescreen.c` | `0x01E62838`–`0x01E62847` | 1 | 16/16 | `4b91d4555501ea04fd2eb11f8deadafcb862c141f2a76abd2049694054472bd9` |
 | `mcpi_msgboxes.c` | `0x01E64FE8`–`0x01E65027` | 4 | 64/64 | `784aa6333dbb2cbfcc6bfdaf07a64a906ad78f8489b64a796bdc935067f2a211` |
 | `hig_io_read.c` | `0x01E65458`–`0x01E65477` | 1 | 32/32 | `86746200bee52dcb43166ff611e7f723dd37ee204c26758b89a4135a969f9117` |
 | `camera_init.c` | `0x01E68630`–`0x01E68657` | 1 | 40/40 | `4ce3a071f1098892e7cddbd6f149546c2abc9804ac1b844e1667cda2fe644621` |
 | `fast_mem_copy.c` | `0x01E68EE0`–`0x01E68EFF` | 1 | 32/32 | `fd8428d3a925e06646a38fd352c2c76629c4ed5d49e37bfb17b664b80d9941b7` |
 | `mcptrans_is_complete.c` | `0x01E68F00`–`0x01E68F37` | 1 | 56/56 | `9cdb7c1d61aac09eba37aabf4ca5d3ead800fb8b19ae63c19e97e898353a7b1c` |
 | `mcptrans_should_fade.c` | `0x01E68F38`–`0x01E68F47` | 1 | 16/16 | `f21c780dbce47a749e53f20d035d49d38309d91f3dd5c87efaf1a94b17fcea3a` |
+| `rendereffect_reset.c` | `0x01E7D450`–`0x01E7D45F` | 1 | 16/16 | `be8dbcbf52cb4de173df838a870426003c0f217f97686e2321a4f0c7933cb420` |
+| `buffer_cache_ptr.c` | `0x01E82EC0`–`0x01E82ECB` | 1 | 12/12 | `73f3c5c8a67f99ccf427cdcba54f5ed5229719f96d3306fbab5a19fe19175d05` |
+| `system_clear_color.c` | `0x01E83DA0`–`0x01E83DAB` | 1 | 12/12 | `2b90771555a7809856671840436cc9bedf55d188e675dab389104dfd6f530c98` |
+| `anim_buffer_used.c` | `0x01E8A1D0`–`0x01E8A1DB` | 1 | 12/12 | `bca983ad7bdf47446f8df906a43e7f1e9aae72de2021440011cd6b8943c8403a` |
 | `snd_unlock_positional_array.c` | `0x01E91708`–`0x01E9171F` | 1 | 24/24 | `b70d0c2a72b4b88d10dc0d9b44ea595bcabacd7d3118ebab91aafae8a4fd019a` |
 
 The four `MCPI` labels are consecutive 16-byte placements: two setters and
@@ -33,14 +38,18 @@ The new `higIoRead`, `CAMERA_Init` and `FastMemCopy` witnesses exercise a
 linked call and return-address save/restore; `FastMemCopy` also shifts an
 argument into the call delay slot, while `CAMERA_Init` writes a global before
 its call. They add 104 exact local bytes, bringing the trial total to
-**280/280 bytes across eleven functions**. This still does not qualify a
+**280/280 bytes across eleven functions**. Five further candidates in
+memory-card, render-effect, buffer, system and animation code reproduce 68/68
+compiled body bytes in isolated links. Their twelve trailing alignment bytes
+also match in the complete boot link, bringing the measured candidate spans to
+**360/360 bytes across sixteen functions**. This still does not qualify a
 whole-program match. A later
 [provisional integration witness](BOOT-C-WITNESS.md) linked the
 `MEMCARD_Busy__Fv` C object into the entire boot assembly and kept the full
 file-backed bytes exact. A [combined integration witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)
-now links all eleven authored functions into the boot at once and preserves
-the exact raw `PT_LOAD` bytes and header; it remains uncounted under the
-project gates.
+now links all sixteen authored functions into the boot at once and preserves
+the exact raw `PT_LOAD` bytes, program header and ELF entry; it remains
+uncounted under the project gates.
 
 `FOG_PreUpdate__Fv` at `0x01E7D4A8` is a useful **negative control**. The
 authored loop in `nonmatching/boot/fog_preupdate.c` reproduces the first 48
@@ -77,16 +86,21 @@ your 32-bit chain cannot stat files under `/mnt/d`. Then run:
 
 ```sh
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/memcard_busy.elf 0x01E627C0 0x10
+python tools/compare_boot_slice.py baserom/SCUS_976.15 build/memcard_get_widescreen.elf 0x01E62838 0x10
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/mcpi_msgboxes.elf 0x01E64FE8 0x40
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/hig_io_read.elf 0x01E65458 0x20
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/camera_init.elf 0x01E68630 0x28
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/fast_mem_copy.elf 0x01E68EE0 0x20
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/mcptrans_is_complete.elf 0x01E68F00 0x38
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/mcptrans_should_fade.elf 0x01E68F38 0x10
+python tools/compare_boot_slice.py baserom/SCUS_976.15 build/rendereffect_reset.elf 0x01E7D450 0x10
+python tools/compare_boot_slice.py baserom/SCUS_976.15 build/buffer_cache_ptr.elf 0x01E82EC0 0xC
+python tools/compare_boot_slice.py baserom/SCUS_976.15 build/system_clear_color.elf 0x01E83DA0 0xC
+python tools/compare_boot_slice.py baserom/SCUS_976.15 build/anim_buffer_used.elf 0x01E8A1D0 0xC
 python tools/compare_boot_slice.py baserom/SCUS_976.15 build/snd_unlock_positional_array.elf 0x01E91708 0x18
 ```
 
-For the combined whole-boot witness, use the same eight C sources **without**
+For the combined whole-boot witness, use the thirteen C sources **without**
 `-DRAC5_WITNESS_PADDING`, compile them from bare filenames on the Linux
 filesystem, and run `tools/boot_c_campaign.py` as documented in
 [`BOOT-C-WITNESS.md`](BOOT-C-WITNESS.md#combined-provisional-c-witness).
@@ -103,7 +117,7 @@ python tools/compare_boot_slice.py baserom/SCUS_976.15 build/fog_preupdate.elf 0
 The checker verifies the boot hash pinned in `config/target.json`, ELF
 architecture and requested executable `.text` range, then reports only the
 equal-byte count and candidate-slice hash. The complete boot text baseline
-and the combined eleven-function C-object link with exact raw `PT_LOAD` bytes
-and program header now exist; compiler/profile, reviewed function catalogue,
+and the combined sixteen-function C-object link with exact raw `PT_LOAD` bytes,
+program header and ELF entry now exist; compiler/profile, reviewed function catalogue,
 complete ELF metadata and runtime checks still prevent counted matches. No
 ByteMatch report is warranted yet.

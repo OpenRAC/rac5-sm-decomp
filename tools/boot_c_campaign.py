@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Link eleven provisional C functions into the pinned whole-boot witness.
+"""Link sixteen provisional C functions into the pinned whole-boot witness.
 
 This is not a qualified compiler profile or a counted match. The caller
 compiles the hash-pinned C sources with privately held tools; all generated
@@ -41,6 +41,9 @@ REPLACEMENTS = (
     Replacement("memcard_busy", 0x01E627C0, 0x01E627D0,
                 "a9eb80c64d794873ec06689b36c7fa204263c295e5a33077659cbb1c10e02194",
                 "415800c82c13e302c09de6aa773a68f82414410e28375e6b726db591fbdeb674"),
+    Replacement("memcard_get_widescreen", 0x01E62838, 0x01E62848,
+                "8f28355b23090cd3dd8ee6c229537e39656f31e93a1b93da33c243fc87b0e412",
+                "7c3312adb70bd342d68cc99bea1d6c0ab39c88bafc2d024e46c70b4495b96518"),
     Replacement("mcpi_msgboxes", 0x01E64FE8, 0x01E65028,
                 "31bf7c03b6a9baa2d898b73374755803a4c96ebe51384fc1e91b409ad777530d",
                 "704a89a04fd21a851880498cacbf16c9b12db034562877fb70001315a238ee77"),
@@ -59,6 +62,18 @@ REPLACEMENTS = (
     Replacement("mcptrans_should_fade", 0x01E68F38, 0x01E68F48,
                 "4936b0218c36ae8149534b556a956dcded9be2deb9a8a9bf2a93043a58cc004c",
                 "b303d1d814262e42298e90bb6eee27c4800c221ad5c7529cf2ad1c40382e1241"),
+    Replacement("rendereffect_reset", 0x01E7D450, 0x01E7D460,
+                "42abab422e07697fdf38b35556a9e6b16d00604b720f2ac251e72eeb81d74617",
+                "7f60b9dc41caff701d55b068d95c914c45f531337a3479a34b06a1ee8c877733"),
+    Replacement("buffer_cache_ptr", 0x01E82EC0, 0x01E82ED0,
+                "defd1ec63d038655a7039fcc07dadf818693cb7c86e680dcd884f3fff3c67283",
+                "41e12407502d86cb7ec946d291e12acef0910dcf3eee9e88600f82bd850c85b8"),
+    Replacement("system_clear_color", 0x01E83DA0, 0x01E83DB0,
+                "8d70bd39f035043115d053b5489bca472f0acd2e44178f750c749f35b7c4b186",
+                "6c08c7141ca7fb34316247e2d202a3bb2056780af175d99168bbbfc2527522b5"),
+    Replacement("anim_buffer_used", 0x01E8A1D0, 0x01E8A1E0,
+                "ae74f8150b58f54fd47ff0dfd1f476b7c3461f11fef99a423e77e85af1b0bd90",
+                "a7f6820679da1a705ad0776fd1808fa11220b8809d9a86b4794f9a947557fd72"),
     Replacement("snd_unlock_positional_array", 0x01E91708, 0x01E91720,
                 "ad8186ecfbf318c89151b318e2b6cb826437f9a92da8a39fa78f1b385f539cd6",
                 "cdd13809ebc7d72fd5469ffaa8802526e24cfe89f49d87ef39f58d38968a7f96"),
@@ -67,12 +82,16 @@ REPLACEMENTS = (
 # Addresses measured in the existing one-function linker witnesses.
 LINKER_SYMBOLS = (
     "busy_state = 0x01F4A654;",
+    "wide_screen_from_memcard = 0x01F4A6A4;",
     "my_msg_box_id = 0x01EDC7D4;", "their_msg_box_id = 0x01EDC7D8;",
     "ps2fioRead = 0x01EBBBA0;",
     "camera_initialized = 0x01EDE334;", "CAMERA_Reset__Fv = 0x01E68658;",
     "memcpy = 0x01EC614C;",
     "transition_active = 0x01EF037D;", "completion_flag = 0x01EF037C;",
     "transition_state = 0x01F66C30;", "fade_flag = 0x01EF037E;",
+    "render_effect_reset = 0x01EF1057;",
+    "buffer_cache_ptr = 0x01EF57B0;", "clear_color = 0x01EF570C;",
+    "animation_buffer_used_size = 0x01EF58F0;",
     "positional_lock = 0x01EF69B4;",
 )
 
@@ -184,7 +203,8 @@ def main() -> None:
                  "boot_bss", "boot_tail"):
         run_tool([str(args.assembler.resolve()), "-o", f"{stem}.o", f"{stem}.s"],
                  OUTPUT, OUTPUT / f"{stem}.log")
-    run_tool([str(args.linker.resolve()), "-N", "-T", "boot_multi.ld", "-o",
+    run_tool([str(args.linker.resolve()), "-N", "-e", "0x01E62508",
+              "-T", "boot_multi.ld", "-o",
               "boot_multi.elf", "boot_prefix_align.o", "boot_split_multi.o",
               *(f"{item.name}.o" for item in REPLACEMENTS),
               "boot_data.o", "boot_bss.o", "boot_tail.o"],
@@ -206,17 +226,18 @@ def main() -> None:
     expected_bss = next(item for item in reference["sections"] if item["name"] == ".bss")
     actual_bss = next(item for item in linked["sections"] if item["name"] == ".bss")
     tail = next(item for item in linked["sections"] if item["name"] == ".tail")
-    if (actual_program != expected_program or actual_raw != expected_raw
+    if (linked["entry"] != reference["entry"]
+            or actual_program != expected_program or actual_raw != expected_raw
             or actual_bss["virtual_address"] != expected_bss["virtual_address"]
             or actual_bss["size"] != expected_bss["size"] or actual_bss["type"] != 8
             or tail["type"] != 8 or tail["size"] != TRAIL_SIZE
             or int(tail["virtual_address"], 16) != BSS_START + BSS_SIZE):
-        raise ValueError("C-linked PT_LOAD/BSS layout or raw bytes differ from retail")
+        raise ValueError("C-linked entry/PT_LOAD/BSS layout or raw bytes differ from retail")
     print(f"C-linked boot .text: {count}/{TEXT_SIZE} exact; SHA-256 {digest}")
     print(f"C-linked raw PT_LOAD: {len(expected_raw)}/{len(expected_raw)} exact; "
           f"SHA-256 {load_digest}")
-    print(f"PT_LOAD header and BSS: exact; {len(labels)} external code labels restored")
-    print("Eleven provisional C functions; no qualified compiler or counted match")
+    print(f"ELF entry, PT_LOAD header and BSS: exact; {len(labels)} external code labels restored")
+    print("Sixteen provisional C functions; no qualified compiler or counted match")
 
 
 if __name__ == "__main__":
