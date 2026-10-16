@@ -84,8 +84,8 @@
    A separate full-module audit now identifies 1,117 contiguous switch bodies
    split by pointer-only case labels; only 62 families survive later context,
    data-target, callgraph and collision checks.
-   A broader site-paired role audit finds 33,149 conditional links beyond the
-   strict context audit, for a 10,955,612-byte normalized-code scenario.
+   A broader site-paired role audit finds 33,357 conditional links beyond the
+   strict context audit, for a 10,788,740-byte normalized-code scenario.
    Different callee implementations can fill the same call role; validate
    source identity and all remaining function boundaries before using that
    scenario as a game-wide denominator.

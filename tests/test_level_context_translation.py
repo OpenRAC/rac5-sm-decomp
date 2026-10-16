@@ -18,6 +18,7 @@ from level_context_translation import (OUTPUT, anchored_target, check_summary,
                                        prune_uncovered_calls,
                                        select_noncolliding_families,
                                        semantic_hi_pairs,
+                                       short_zero_run,
                                        unique_zero_run)  # noqa: E402
 from rel import PackedRelocation  # noqa: E402
 
@@ -208,6 +209,26 @@ class LevelContextTranslationTests(unittest.TestCase):
         self.assertFalse(anchored_target(
             "A", "B", 140, 240, {}, {}, [], bytes(source), bytes(dest),
             64, 64, 512, 512, {}))
+
+    def test_two_independent_callers_identify_short_zero_run(self) -> None:
+        source, dest = bytearray(b"Q" * 512), bytearray(b"R" * 512)
+        source[100:180] = bytes(80)
+        dest[200:280] = bytes(80)
+        anchors = {103: {203: {"first", "second"}}}
+        reverse = {203: {103}}
+        self.assertEqual(short_zero_run(source, 64, 512, 170), (100, 180))
+        self.assertTrue(anchored_target(
+            "A", "B", 170, 270, anchors, reverse, [103],
+            bytes(source), bytes(dest), 64, 64, 512, 512, {}))
+        anchors[103][203] = {"first"}
+        self.assertFalse(anchored_target(
+            "A", "B", 170, 270, anchors, reverse, [103],
+            bytes(source), bytes(dest), 64, 64, 512, 512, {}))
+        anchors[103][203] = {"first", "second"}
+        dest[280] = 0
+        self.assertFalse(anchored_target(
+            "A", "B", 170, 270, anchors, reverse, [103],
+            bytes(source), bytes(dest), 64, 64, 512, 512, {}))
 
     def test_window_cache_is_scoped_to_each_module(self) -> None:
         first, second, target = bytearray(512), bytearray(512), bytearray(512)

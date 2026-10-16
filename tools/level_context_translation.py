@@ -66,9 +66,9 @@ def context_key(static: list[dict[str, str]], index: int) -> str:
                           .encode("ascii")).hexdigest()
 
 
-def unique_zero_run(data: bytes, code_end: int, payload_end: int,
-                    target: int) -> tuple[int, bytes] | None:
-    """Identify a short zero run by its exact unique nonzero flanks."""
+def short_zero_run(data: bytes, code_end: int, payload_end: int,
+                   target: int) -> tuple[int, int] | None:
+    """Return a bounded zero-run interval without assuming its flanks match."""
     if not code_end + 8 <= target < payload_end - 8 or data[target] != 0:
         return None
     left = target
@@ -79,6 +79,16 @@ def unique_zero_run(data: bytes, code_end: int, payload_end: int,
         right += 1
     if not 64 <= right - left <= MAX_ZERO_RUN:
         return None
+    return left, right
+
+
+def unique_zero_run(data: bytes, code_end: int, payload_end: int,
+                    target: int) -> tuple[int, bytes] | None:
+    """Identify a short zero run by its exact unique nonzero flanks."""
+    bounds = short_zero_run(data, code_end, payload_end, target)
+    if bounds is None:
+        return None
+    left, right = bounds
     signature = data[left - 8:right + 8]
     if (data.find(signature, code_end, payload_end) != left - 8 or
             data.find(signature, left - 7, payload_end) >= 0):
@@ -267,6 +277,32 @@ def anchored_target(source_module: str, target_module: str,
         if (zero_run is not None and
                 zero_run == windows[target_module, target, "zero_run"]):
             return True
+        for module, address, data, code_end, payload_end in (
+                (source_module, source, source_data, source_code_end,
+                 source_payload_end),
+                (target_module, target, target_data, target_code_end,
+                 target_payload_end)):
+            key = module, address, "zero_bounds"
+            if key not in windows:
+                windows[key] = short_zero_run(data, code_end, payload_end,
+                                              address)
+        source_bounds = windows[source_module, source, "zero_bounds"]
+        target_bounds = windows[target_module, target, "zero_bounds"]
+        if (source_bounds is not None and target_bounds is not None and
+                source_bounds[1] - source_bounds[0] ==
+                target_bounds[1] - target_bounds[0] and
+                source - source_bounds[0] == target - target_bounds[0]):
+            shift = target - source
+            nearby = ordered[bisect.bisect_left(ordered, source_bounds[0]):
+                             bisect.bisect_left(ordered, source_bounds[1])]
+            for anchor in nearby:
+                if len(anchors[anchor]) != 1:
+                    continue
+                other, families = next(iter(anchors[anchor].items()))
+                if (len(families) >= 2 and other - anchor == shift and
+                        reverse.get(other) == {anchor} and
+                        target_bounds[0] <= other < target_bounds[1]):
+                    return True
     # Large zero-filled objects have no unique byte window. Two independent,
     # uniquely mapped references can still fix a nearby zero target's offset.
     if source_data[source] == target_data[target] == 0:

@@ -301,8 +301,11 @@ both halves must lie inside the body, the target must be a reviewed function
 entry, and the final global component must contain both target placements.
 Other HI/LO pairs are checked as data targets. An exact 64-byte window may be
 unique after the target or centered on it. A short zero run can be identified
-by its unique matching nonzero flanks and the target's offset inside it. For
-larger zero regions, two distinct accepted-family references within 1 KiB
+by its unique matching nonzero flanks and the target's offset inside it. When
+the following bytes differ, one uniquely mapped reference within the same
+short run can also fix the target's offset if at least two independent accepted
+families support that reference. For larger zero regions, two distinct
+accepted-family references within 1 KiB
 must uniquely map with the same shift, use at least two independent families,
 and have only zero bytes between each reference and the target in both modules.
 Otherwise, a target needs an unambiguous accepted-family reference or matching
@@ -313,21 +316,21 @@ the expected relocations, the register matches, and the local low immediate
 equals the low immediate selected by the packed loader stream.
 
 Using levels 01, 16 and 08 as independent references across the **19 retained
-numbered levels**, the callgraph closes 5,909 provisional context families.
+numbered levels**, the callgraph closes 5,919 provisional context families.
 The global union rejects 138 that would connect two distinct placements from
 the same module. Removing those links can invalidate callers: five further
-passes remove 1,957 caller placements and 150 families whose callees no longer
-share a final component. The result is **5,621 conditional families**, of
-which 62 include reviewed switch bodies, spanning **18,574,404 bytes by
+passes remove 1,959 caller placements and 150 families whose callees no longer
+share a final component. The result is **5,631 conditional families**, of
+which 62 include reviewed switch bodies, spanning **18,604,584 bytes by
 placement**. Independent audits find no remaining same-module collision or
-uncovered local callee or code pointer. Of 96,271 context/data candidate pairs, 62,563
-initially close in the callgraph; 31,340 of those
+uncovered local callee or code pointer. Of 96,341 context/data candidate pairs, 62,676
+initially close in the callgraph; 31,430 of those
 need a paired callee first. The data
 window cache is keyed by module as well as address, so reused offsets in
 different levels cannot share a signature accidentally. Unioning these links
 with exact and previously accepted structural groups avoids double counting.
-It adds **6,595,896 bytes of candidate savings** and reduces the conditional
-scenario from 23,471,984 to **16,876,088 bytes**. These links remain
+It adds **6,614,624 bytes of candidate savings** and reduces the conditional
+scenario from 23,471,984 to **16,857,360 bytes**. These links remain
 conditional until shared source and the full denominator are qualified.
 The private worklist and pinned ISO/Ghidra exports allow the pairings to be
 reproduced. Code context and data anchors still do not establish shared C
@@ -351,10 +354,10 @@ the same offset within a parent of the same masked shape.
 A global union rejects 96 pairs that would join two placements from one
 module. It then removes six pairs with ambiguous code-role mappings and 262
 callers whose dependencies lose their final component over seven rounds. The
-remaining **33,149 site-paired leads** add **5,920,476 bytes** of conditional
+remaining **33,357 site-paired leads** add **6,068,620 bytes** of conditional
 candidate savings beyond the stricter context audit, yielding a
-**10,955,612-byte role-mapped scenario**. An independent private audit rehashes
-20,394 participating placements from the pinned modules and checks their data,
+**10,788,740-byte role-mapped scenario**. An independent private audit rehashes
+20,482 participating placements from the pinned modules and checks their data,
 code edges, roles and final union. The generated private worklist and public
 summary retain the input hashes for reproduction.
 

@@ -84,11 +84,11 @@ An [optimistic shape-only audit](docs/LEVEL-FUNCTION-INVENTORY.md#optimistic-rel
 finds a 5,756,360-byte scenario after relocation masking, but shared C source
 and data-object identities have not been established for those shapes.
 A [code-context and data-anchor review](docs/LEVEL-FUNCTION-INVENTORY.md#repeated-shapes-with-code-context-and-data-anchors)
-narrows the separately validated structural scenario to 16,876,088 bytes
+narrows the separately validated structural scenario to 16,857,360 bytes
 after global collision and final-callee checks.
 A broader [site-paired code-role review](docs/LEVEL-FUNCTION-INVENTORY.md#site-paired-code-role-review)
 tests corresponding calls even when their callees have different bodies. Its
-separate conditional normalized-code scenario is 10,955,612 bytes after a
+separate conditional normalized-code scenario is 10,788,740 bytes after a
 global collision, role and dependency audit; it does not establish shared C
 source or a qualified unique-code denominator.
 Names, symbol addresses and module hashes are research metadata, not proof of
