@@ -276,14 +276,24 @@
   "role_mapped_structural_review": {
     "reference_modules": [
       "LEVEL_01.REL",
-      "LEVEL_16.REL",
-      "LEVEL_08.REL"
+      "LEVEL_02.REL",
+      "LEVEL_03.REL",
+      "LEVEL_05.REL",
+      "LEVEL_07.REL",
+      "LEVEL_08.REL",
+      "LEVEL_09.REL",
+      "LEVEL_10.REL",
+      "LEVEL_17.REL",
+      "LEVEL_18.REL",
+      "LEVEL_20.REL",
+      "LEVEL_22.REL",
+      "LEVEL_24.REL"
     ],
-    "families_by_pair": 33357,
-    "variant_role_edges": 6657,
-    "scatter_role_edges": 626,
-    "additional_candidate_savings": 6068620,
-    "conditional_candidate_bytes": 10788740,
+    "families_by_pair": 141319,
+    "variant_role_edges": 24979,
+    "scatter_role_edges": 2713,
+    "additional_candidate_savings": 6768700,
+    "conditional_candidate_bytes": 10088660,
     "qualified_unique_denominator": null
   },
   "remaining_for_gamewide_report": [
@@ -555,6 +565,6 @@
     "level_shape_scenario": "0b84a17077582c211603f07ef2a0cf8299774270499681112890d513cdc2fe47",
     "level_switch_body": "e5332627ffa1817ffa79178b85cd03a885c13eeb9721fbe1728d99330c32b0d3",
     "level_context_translation": "b22efea1dc6ee0d0e5661dab312042028fe6c8a213c6f7f260bd4ce00b4eac89",
-    "level_role_graph": "6b1e8f56c7b0e1b867a522ba8dc3d0de4b17d960f04c38d07e7b0c9dec58b75c"
+    "level_role_graph": "19657c4ff0d6df249d34694fae3367babfd368561e91593722076dd8b8fb4f32"
   }
 }

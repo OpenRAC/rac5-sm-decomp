@@ -339,8 +339,10 @@ source for every placement; this is not a qualified denominator.
 ## Site-paired code-role review
 
 The [role-graph audit](../tools/level_role_graph.py) tests a broader form of
-structural sharing across the 20 retained modules, using levels 01, 16 and 08
-as independent references. Each proposed pair has the same relocation-masked
+structural sharing across the 20 retained modules. The 13 reference modules
+listed in the summary reproduce the same candidate savings as a private run
+using all 20, while reducing the cost of regeneration. Each proposed pair has
+the same relocation-masked
 body and an independently reviewed boundary. Its data targets require the
 previously accepted data witnesses; internal J/JAL targets must have identical
 body-relative offsets, and external code-relocation sites must correspond.
@@ -351,13 +353,13 @@ matching relative ranges and agreement between code-only and full-module
 Ghidra exports. Code pointers into an unresolved static interval must identify
 the same offset within a parent of the same masked shape.
 
-A global union rejects 96 pairs that would join two placements from one
-module. It then removes six pairs with ambiguous code-role mappings and 262
+A global union rejects 473 pairs that would join two placements from one
+module. It then removes 11 pairs with ambiguous code-role mappings and 1,048
 callers whose dependencies lose their final component over seven rounds. The
-remaining **33,357 site-paired leads** add **6,068,620 bytes** of conditional
+remaining **141,319 site-paired leads** add **6,768,700 bytes** of conditional
 candidate savings beyond the stricter context audit, yielding a
-**10,788,740-byte role-mapped scenario**. An independent private audit rehashes
-20,482 participating placements from the pinned modules and checks their data,
+**10,088,660-byte role-mapped scenario**. An independent private audit rehashes
+24,781 participating placements from the pinned modules and checks their data,
 code edges, roles and final union. The generated private worklist and public
 summary retain the input hashes for reproduction.
 
