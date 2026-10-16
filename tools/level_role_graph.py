@@ -42,7 +42,10 @@ SWITCH = ROOT / "config/levels/switch_body_summary.json"
 CONTEXT = ROOT / "config/levels/context_translation_summary.json"
 GHIDRA = ROOT / "config/levels/ghidra_crosscheck_summary.json"
 FULL_FLOW = ROOT / "config/levels/full_module_flow_summary.json"
-REFERENCES = ("LEVEL_01.REL", "LEVEL_16.REL", "LEVEL_08.REL")
+REFERENCES = ("LEVEL_01.REL", "LEVEL_02.REL", "LEVEL_03.REL", "LEVEL_05.REL",
+              "LEVEL_07.REL", "LEVEL_08.REL", "LEVEL_09.REL", "LEVEL_10.REL",
+              "LEVEL_17.REL", "LEVEL_18.REL", "LEVEL_20.REL", "LEVEL_22.REL",
+              "LEVEL_24.REL")
 
 
 def digest(path: Path) -> str:
@@ -463,6 +466,7 @@ def main_write(image: Path, full_dir: Path) -> dict[str, object]:
     candidates, dependencies, role_edges = {}, {}, {}
     seed_pairs = reviewed_pairs = locally_closed_pairs = 0
     for ref in REFERENCES:
+        before_ref = len(candidates)
         for mod in sorted(retained - {ref}):
             alive, deps, roles, seeds, reviewed = paired_graph(
                 audit, ref, mod, accepted_members)
@@ -479,6 +483,8 @@ def main_write(image: Path, full_dir: Path) -> dict[str, object]:
                                    "placements": [left, right]}
                 dependencies[key] = [(ref, mod, x, y) for x, y in deps[a, b]]
                 role_edges[key] = roles[a, b]
+        print(f"{ref}: {len(candidates) - before_ref} new role candidates",
+              flush=True)
 
     closed, metrics = prune_role_graph(
         exact, baseline, candidates, dependencies, role_edges, retained)

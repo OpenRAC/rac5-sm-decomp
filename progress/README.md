@@ -47,8 +47,9 @@ retains 5,631 repeated-shape families, including reviewed split segments and
 gives a **16,857,360-byte conditional
 scenario**. This too remains a structural worklist, not counted C progress.
 The separate [site-paired role review](../docs/LEVEL-FUNCTION-INVENTORY.md#site-paired-code-role-review)
-retains 33,357 conditional pairs after global collision, code-role and
-dependency checks, giving a **10,788,740-byte normalized-code scenario**.
+retains 141,319 conditional pairs after global collision, code-role and
+dependency checks, giving a **10,088,660-byte normalized-code scenario**.
+Its 13 selected reference modules reproduce the savings measured with all 20.
 Variant callees may have different source; this is not a qualified denominator
 or counted C progress.
 

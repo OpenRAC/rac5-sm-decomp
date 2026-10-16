@@ -88,9 +88,10 @@ narrows the separately validated structural scenario to 16,857,360 bytes
 after global collision and final-callee checks.
 A broader [site-paired code-role review](docs/LEVEL-FUNCTION-INVENTORY.md#site-paired-code-role-review)
 tests corresponding calls even when their callees have different bodies. Its
-separate conditional normalized-code scenario is 10,788,740 bytes after a
+separate conditional normalized-code scenario is 10,088,660 bytes after a
 global collision, role and dependency audit; it does not establish shared C
-source or a qualified unique-code denominator.
+source or a qualified unique-code denominator. Thirteen selected reference
+modules reproduce the same savings measured with all twenty retained modules.
 Names, symbol addresses and module hashes are research metadata, not proof of
 matching code. The [roadmap](docs/ROADMAP.md) tracks the remaining gates.
 
