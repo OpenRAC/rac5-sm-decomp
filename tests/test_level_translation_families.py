@@ -11,7 +11,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from level_translation_families import (close_callgraph, combined_dedupe_savings,  # noqa: E402
                                         ghidra_confirmed,
                                         local_code_references, local_references,
-                                        lows_follow_translation, uniform_translation)
+                                        lows_follow_translation, uniform_translation,
+                                        unique_data_window, unique_target_shifts)
 from rel import PackedRelocation  # noqa: E402
 
 
@@ -101,6 +102,29 @@ class LevelTranslationFamiliesTests(unittest.TestCase):
                        "placements": [("A", 0x300), ("B", 0x340)]}]
         self.assertEqual(combined_dedupe_savings({}, structural, {"A", "B"}),
                          (0, 12))
+
+    def test_unique_data_targets_allow_two_verified_shifts(self) -> None:
+        reference = bytearray(0x600)
+        current = bytearray(0x600)
+        first = bytes(range(1, 65))
+        second = bytes((index * 3 + 7) & 0xFF for index in range(64))
+        reference[0x180:0x1C0] = first
+        reference[0x280:0x2C0] = second
+        current[0x1C0:0x200] = first
+        current[0x2C4:0x304] = second
+        base_refs = ({0: 0x180, 4: 0x280}, {8: 0x10})
+        other_refs = ({0: 0x1C0, 4: 0x2C4}, {8: 0x50})
+        self.assertEqual(unique_target_shifts(
+            base_refs, other_refs, bytes(reference), bytes(current),
+            0x100, 0x100, 0x500, 0x500, {}, {}), (64, 68))
+        self.assertEqual(unique_data_window(bytes(reference), 0x100, 0x500,
+                                            0x180), first)
+        reference[0x380:0x3C0] = first  # A duplicate signature is ambiguous.
+        self.assertIsNone(unique_target_shifts(
+            base_refs, other_refs, bytes(reference), bytes(current),
+            0x100, 0x100, 0x500, 0x500, {}, {}))
+        self.assertIsNone(unique_data_window(bytes(reference), 0x100, 0x500,
+                                             0x4E0))
 
 
 if __name__ == "__main__":

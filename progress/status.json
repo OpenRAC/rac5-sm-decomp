@@ -203,11 +203,11 @@
     "no_return_cross_limit_or_noncontiguous": 1634
   },
   "structural_shared_code_leads": {
-    "families": 2362,
-    "placement_body_bytes": 7693152,
-    "template_body_bytes": 654712,
-    "local_callgraph_resolved_families": 920,
-    "candidate_upper_bound_after_translation": 28128988,
+    "families": 2416,
+    "placement_body_bytes": 8150148,
+    "template_body_bytes": 687524,
+    "local_callgraph_resolved_families": 959,
+    "candidate_upper_bound_after_translation": 27720968,
     "qualified_unique_denominator": null
   },
   "flow_range_review": {
@@ -235,7 +235,7 @@
     "uncollapsed_parent_bytes": 187276,
     "closed_structural_groups": 112,
     "newly_closed_static_groups": 69,
-    "conditional_candidate_bytes": 26042088,
+    "conditional_candidate_bytes": 25634068,
     "qualified_unique_denominator": null
   },
   "remaining_for_gamewide_report": [
@@ -456,9 +456,9 @@
     "accepted_level_c_source_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",
     "level_function_inventory": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
     "level_ghidra_crosscheck": "0f00587cd4f346955d8264343f93cde9259170ed8e0c61259cada3682b979f9d",
-    "level_translation_families": "d199f1d788f80de1b9ce9d158b10994eed95aa32dcb14913aab37748498fd55f",
+    "level_translation_families": "2c77fa24f1617ded3c48b774b2b731e003bfc057e8d547a67fc1736d89e301b8",
     "level_flow_ranges": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8",
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
-    "level_split_dedupe": "c4ad3d1fb659326b8831d19a50b969f531b1344cf92c782ea8945ccff3288538"
+    "level_split_dedupe": "9527b4c15099871dad9467843e33a28dd8e8877b987b9e7208305a5b1146e9dd"
   }
 }

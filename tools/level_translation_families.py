@@ -29,6 +29,7 @@ CODE_CATALOGUE = ROOT / "config/levels/code_intervals.tsv"
 MODULE_CATALOGUE = ROOT / "config/levels/modules.tsv"
 TARGET = ROOT / "config/target.json"
 WORD = struct.Struct("<I")
+DATA_WINDOW = 64
 
 
 def digest(path: Path) -> str:
@@ -49,6 +50,49 @@ def lows_follow_translation(reference: dict[int, int], current: dict[int, int],
     return (reference.keys() == current.keys()
             and all(((current[site] - value) & 0xFFFF) == (shift & 0xFFFF)
                     for site, value in reference.items()))
+
+
+def unique_data_window(data: bytes, code_end: int, payload_end: int,
+                       target: int) -> bytes | None:
+    """Return an exact local data signature only when it occurs once."""
+    if not code_end <= target <= payload_end - DATA_WINDOW:
+        return None
+    signature = data[target:target + DATA_WINDOW]
+    if (data.find(signature, code_end, payload_end) != target or
+            data.find(signature, target + 1, payload_end) >= 0):
+        return None
+    return signature
+
+
+def unique_target_shifts(reference: tuple[dict[int, int], dict[int, int]],
+                         current: tuple[dict[int, int], dict[int, int]],
+                         reference_data: bytes, current_data: bytes,
+                         reference_code_end: int, current_code_end: int,
+                         reference_payload_end: int, current_payload_end: int,
+                         reference_cache: dict[int, bytes | None],
+                         current_cache: dict[int, bytes | None]) -> tuple[int, ...] | None:
+    """Require unique matching data bytes at every independently addressed target."""
+    base_hi, base_low = reference
+    hi, low = current
+    if not base_hi or base_hi.keys() != hi.keys() or base_low.keys() != low.keys():
+        return None
+    shifts = set()
+    for site, target in base_hi.items():
+        other = hi[site]
+        if target not in reference_cache:
+            reference_cache[target] = unique_data_window(
+                reference_data, reference_code_end, reference_payload_end, target)
+        if other not in current_cache:
+            current_cache[other] = unique_data_window(
+                current_data, current_code_end, current_payload_end, other)
+        signature = reference_cache[target]
+        if signature is None or signature != current_cache[other]:
+            return None
+        shifts.add(other - target)
+    if any(((low[site] - value) & 0xFFFF) not in
+           {shift & 0xFFFF for shift in shifts} for site, value in base_low.items()):
+        return None
+    return tuple(sorted(shifts))
 
 
 def local_references(data: bytes, start: int, end: int, code_end: int,
@@ -206,6 +250,10 @@ def main() -> None:
                 summary["group_count"]
                 or not 0 <= summary["placement_bytes_with_pointer_or_nonzero_tail"] <=
                 summary["placement_body_bytes"]
+                or not 0 <= summary["unique_data_window_groups"] <=
+                summary["group_count"]
+                or not 0 <= summary["unique_data_window_placement_bytes"] <=
+                summary["placement_body_bytes"]
                 or summary["template_lead_upper_bound_bytes"] !=
                 inventory["exact_byte_dedupe_upper_bound"] -
                 summary["extra_candidate_savings_beyond_exact"]):
@@ -258,8 +306,11 @@ def main() -> None:
             raise ValueError(f"{module} differs from pinned SNR2 file")
     fixups = {}
     fixup_sites = {}
+    payload_ends = {}
+    signature_cache = {module: {} for module in modules}
     for module in modules:
         head = HEADER.unpack_from(data[module])
+        payload_ends[module] = head[1]
         fixups[module] = list(iter_packed_relocations(
             data[module], head[13], head[1]))
         fixup_sites[module] = [row.site for row in fixups[module]]
@@ -296,6 +347,9 @@ def main() -> None:
         if len(references) != len(group):
             reasons["code_relocation_or_unpaired_hi"] += 1
             continue
+        if any(code != call_references[0] for code in call_references):
+            reasons["different_local_code_targets"] += 1
+            continue
         ref_hi, ref_unpaired = references[0]
         translations = []
         for hi, unpaired in references:
@@ -305,19 +359,34 @@ def main() -> None:
                 break
             translations.append(shift)
         if len(translations) != len(group):
-            reasons["nonuniform_data_translation"] += 1
-            continue
-        if any(code != call_references[0] for code in call_references):
-            reasons["different_local_code_targets"] += 1
-            continue
+            reference_module = group[0]["module"]
+            translations = []
+            for row, current in zip(group, references):
+                module = row["module"]
+                shifts = unique_target_shifts(
+                    references[0], current, data[reference_module], data[module],
+                    int(interval_rows[reference_module]["end_exclusive"], 16),
+                    int(interval_rows[module]["end_exclusive"], 16),
+                    payload_ends[reference_module], payload_ends[module],
+                    signature_cache[reference_module], signature_cache[module])
+                if shifts is None:
+                    break
+                translations.append(shifts)
+            if len(translations) != len(group):
+                reasons["nonuniform_data_translation"] += 1
+                continue
+            resolution = "unique_data_window"
+        else:
+            resolution = "callgraph" if has_code_relocation else "uniform_data"
         item = {"body_bytes": size, "fingerprint": fingerprint,
                          "placements": [(row["module"], int(row["start"], 16))
                                         for row in group],
                          "raw_variants": len({row["raw_sha256"] for row in group}),
                          "data_deltas": translations,
+                         "uses_local_code_relocation": has_code_relocation,
                          "includes_pointer_or_nonzero_tail": any(
                              row["status"] != "bounded_candidate" for row in group),
-                         "resolution": "callgraph" if has_code_relocation else "uniform_data"}
+                         "resolution": resolution}
         key = (size, fingerprint)
         if has_code_relocation:
             targets = {value[1] for value in call_references[0].values()
@@ -346,12 +415,17 @@ def main() -> None:
         "callgraph_resolved_groups": len(resolved_keys),
         "callgraph_placement_body_bytes": sum(
             group["body_bytes"] * len(group["placements"]) for group in accepted
-            if group["resolution"] == "callgraph"),
+            if group["uses_local_code_relocation"]),
         "groups_with_pointer_or_nonzero_tail": sum(
             group["includes_pointer_or_nonzero_tail"] for group in accepted),
         "placement_bytes_with_pointer_or_nonzero_tail": sum(
             group["body_bytes"] * len(group["placements"]) for group in accepted
             if group["includes_pointer_or_nonzero_tail"]),
+        "unique_data_window_groups": sum(
+            group["resolution"] == "unique_data_window" for group in accepted),
+        "unique_data_window_placement_bytes": sum(
+            group["body_bytes"] * len(group["placements"]) for group in accepted
+            if group["resolution"] == "unique_data_window"),
         "extra_candidate_savings_beyond_exact": extra_savings,
         "template_lead_upper_bound_bytes": retained_interval_bytes - combined_savings,
         "rejection_counts": dict(sorted(reasons.items())),
@@ -365,15 +439,18 @@ def main() -> None:
         "ghidra_crosscheck_sha256": digest(GHIDRA_CROSSCHECK),
         "overall_percent": None,
         "bytematch_ready": False,
-        "warning": "The candidate-size scenario assumes each structural lead is one shared template. Data-target semantics and complete function ownership are not proven; this is not an unconditional upper bound or progress denominator.",
+        "warning": "The candidate-size scenario assumes each structural lead is one shared template. Unique 64-byte data windows corroborate target bytes but not source-level identity; complete function ownership is also unproven. This is not an unconditional upper bound or progress denominator.",
     }
     lines = ["# Structural translation leads only; no accepted C or denominator claims.",
              "body_bytes\tplacements\traw_variants\tresolution\tfingerprint\tmembers_and_data_deltas"]
     for group in sorted(accepted, key=lambda item: -item["body_bytes"] *
                         (len(item["placements"]) - 1)):
-        members = ";".join(f"{module}:0x{start:X}:{delta:+d}" for
-                           (module, start), delta in zip(group["placements"],
-                                                        group["data_deltas"]))
+        members = ";".join(
+            f"{module}:0x{start:X}:" +
+            (",".join(f"{shift:+d}" for shift in delta) if isinstance(delta, tuple)
+             else f"{delta:+d}")
+            for (module, start), delta in zip(group["placements"],
+                                              group["data_deltas"]))
         lines.append(f"{group['body_bytes']}\t{len(group['placements'])}\t"
                      f"{group['raw_variants']}\t{group['resolution']}\t"
                      f"{group['fingerprint']}\t{members}")
