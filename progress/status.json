@@ -234,11 +234,13 @@
     "corroborated_segments": 4369,
     "selected_span_bytes": 4947100,
     "uncollapsed_parent_bytes": 187276,
-    "closed_structural_groups": 118,
-    "newly_closed_static_groups": 200,
-    "accepted_target_graph_groups": 54,
-    "accepted_target_graph_placement_bytes": 322432,
-    "conditional_candidate_bytes": 25121964,
+    "closed_structural_groups": 133,
+    "newly_closed_static_groups": 236,
+    "accepted_target_graph_groups": 76,
+    "accepted_target_graph_placement_bytes": 830308,
+    "closed_partial_groups": 33,
+    "closed_partial_placement_bytes": 464272,
+    "conditional_candidate_bytes": 24457788,
     "qualified_unique_denominator": null
   },
   "remaining_for_gamewide_report": [
@@ -506,6 +508,6 @@
     "level_translation_families": "2c77fa24f1617ded3c48b774b2b731e003bfc057e8d547a67fc1736d89e301b8",
     "level_flow_ranges": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8",
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
-    "level_split_dedupe": "30b9fb5769e03b8c2742e3f6cc61922e55cd06fb1cc215612458a45f043d7f44"
+    "level_split_dedupe": "96a203a6eb6dd68a15db2beb838e111e6496225c609d6aefcb7ba09495dc6e5c"
   }
 }

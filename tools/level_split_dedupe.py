@@ -18,7 +18,7 @@ from pathlib import Path
 from disc import IsoDisc, verify_disc
 from level_function_inventory import masked_body, relocations
 from level_ghidra_crosscheck import rows
-from level_translation_families import (close_callgraph, combined_dedupe_savings,
+from level_translation_families import (combined_dedupe_savings,
                                         digest, ghidra_confirmed,
                                         local_code_references, local_references,
                                         lows_follow_translation, uniform_translation,
@@ -171,23 +171,27 @@ def translated_family(group: list[dict], size: int, data: dict[str, bytes],
                       fixups: dict[str, list], sites: dict[str, list[int]],
                       code_ends: dict[str, int], known: dict,
                       incoming: dict[str, dict[int, set[tuple[str, int]]]],
-                      signature_targets: dict[str, dict[tuple[str, int], set[int]]]
+                      signature_targets: dict[str, dict[tuple[str, int], set[int]]],
+                      member_cache: dict,
+                      window_cache: dict[str, dict[int, bytes | None]]
                       ) -> tuple[dict, set] | None:
     references = []
     calls = []
     for row in group:
         module, start = row["module"], int(row["start"], 16)
-        local = fixups[module][bisect.bisect_left(sites[module], start):
-                               bisect.bisect_left(sites[module], start + size)]
-        code = local_code_references(data[module], start, start + size,
-                                     local, known, module)
-        if code is None:
-            return None
-        data_fixups = [item for item in local if item.kind != 2]
-        ref = local_references(data[module], start, start + size,
-                               code_ends[module], data_fixups,
-                               [item.site for item in data_fixups])
-        if ref is None:
+        key = (module, start, size)
+        if key not in member_cache:
+            local = fixups[module][bisect.bisect_left(sites[module], start):
+                                   bisect.bisect_left(sites[module], start + size)]
+            code = local_code_references(data[module], start, start + size,
+                                         local, known, module)
+            data_fixups = [item for item in local if item.kind != 2]
+            ref = local_references(data[module], start, start + size,
+                                   code_ends[module], data_fixups,
+                                   [item.site for item in data_fixups])
+            member_cache[key] = (code, ref)
+        code, ref = member_cache[key]
+        if code is None or ref is None:
             return None
         calls.append(code)
         references.append(ref)
@@ -200,8 +204,6 @@ def translated_family(group: list[dict], size: int, data: dict[str, bytes],
     resolution = "uniform_data"
     if not uniform:
         reference_module = group[0]["module"]
-        cache: dict[str, dict] = defaultdict(dict)
-        graph_cache: dict[str, dict[int, bytes | None]] = defaultdict(dict)
         for row, current in zip(group, references):
             module = row["module"]
             reference_head = HEADER.unpack_from(data[reference_module])
@@ -210,14 +212,14 @@ def translated_family(group: list[dict], size: int, data: dict[str, bytes],
                     references[0], current, data[reference_module], data[module],
                     code_ends[reference_module], code_ends[module],
                     reference_head[1], current_head[1],
-                    cache[reference_module], cache[module]) is None:
+                    window_cache[reference_module], window_cache[module]) is None:
                 break
         else:
             resolution = "unique_data_window"
         if resolution != "unique_data_window":
             if not all(graph_target_shifts(
                     references[0], current, reference_module, row["module"],
-                    data, code_ends, incoming, signature_targets, graph_cache)
+                    data, code_ends, incoming, signature_targets, window_cache)
                     for row, current in zip(group, references)):
                 return None
             resolution = "accepted_target_graph"
@@ -226,6 +228,52 @@ def translated_family(group: list[dict], size: int, data: dict[str, bytes],
             "resolution": resolution}
     targets = {value[1] for value in calls[0].values() if value[0] == "callee"}
     return item, targets
+
+
+def best_partial_family(group: list[dict], resolve) -> tuple[dict, set] | None:
+    """Keep only a pairwise-compatible subgroup when a full family diverges."""
+    compatible = {}
+
+    def pair_ok(left: int, right: int) -> bool:
+        left, right = sorted((left, right))
+        if (left, right) not in compatible:
+            compatible[left, right] = (
+                resolve([group[left], group[right]]) is not None and
+                resolve([group[right], group[left]]) is not None)
+        return compatible[left, right]
+
+    best: list[int] = []
+    for seed in dict.fromkeys((0, len(group) // 2, len(group) - 1)):
+        selected = [seed]
+        for candidate in range(len(group)):
+            if candidate == seed:
+                continue
+            if all(pair_ok(candidate, other) for other in selected):
+                selected.append(candidate)
+        if len(selected) > len(best):
+            best = selected
+        if len(best) * 2 >= len(group):
+            break
+    if len(best) < 2 or len(best) == len(group):
+        return None
+    return resolve([group[index] for index in best])
+
+
+def close_callgraph_by_placement(pending: dict, seed_coverage: dict) -> set:
+    """A caller is closed only where every callee is corroborated."""
+    coverage = {key: set(modules) for key, modules in seed_coverage.items()}
+    while True:
+        fresh = {}
+        for key, (item, targets) in pending.items():
+            if key in coverage:
+                continue
+            modules = {module for module, _start in item["placements"]}
+            if all(target == key or modules <= coverage.get(target, set())
+                   for target in targets):
+                fresh[key] = modules
+        if not fresh:
+            return set(coverage) - set(seed_coverage)
+        coverage.update(fresh)
 
 
 def main() -> None:
@@ -281,6 +329,9 @@ def main() -> None:
                 summary["closed_split_groups"] +
                 summary["newly_closed_static_groups"] or
                 summary["accepted_target_graph_placement_bytes"] < 0 or
+                not 0 <= summary["closed_partial_groups"] <=
+                summary["partial_candidate_groups"] or
+                summary["closed_partial_placement_bytes"] < 0 or
                 summary["overall_percent"] is not None or
                 summary["bytematch_ready"] is not False):
             raise ValueError("split-body candidate snapshot is stale or overclaims")
@@ -404,6 +455,15 @@ def main() -> None:
     pending = {}
     exact_split_seeds = set()
     rejection = Counter()
+    partial_candidates = []
+    member_cache = {}
+    window_cache: dict[str, dict[int, bytes | None]] = defaultdict(dict)
+
+    def resolve(group: list[dict], size: int) -> tuple[dict, set] | None:
+        return translated_family(group, size, data, fixups, sites, code_ends,
+                                 known, incoming, signature_targets,
+                                 member_cache, window_cache)
+
     for key, group in split_groups.items():
         size = key[0]
         if len(group) < 2:
@@ -413,10 +473,11 @@ def main() -> None:
             continue
         if len({row["raw_sha256"] for row in group}) == 1:
             exact_split_seeds.add(key)
-        candidate = translated_family(group, size, data, fixups, sites,
-                                      code_ends, known, incoming, signature_targets)
+        candidate = resolve(group, size)
         if candidate is None:
             rejection["split_unresolved_references"] += 1
+            if size >= 500 and len(group) >= 10 and size * (len(group) - 1) >= 10000:
+                partial_candidates.append((key, group, size))
         else:
             pending[key] = candidate
     for key, group in static_groups.items():
@@ -425,15 +486,34 @@ def main() -> None:
         if len({row["module"] for row in group}) != len(group):
             rejection["static_repeated_module"] += 1
             continue
-        candidate = translated_family(group, key[0], data, fixups, sites,
-                                      code_ends, known, incoming, signature_targets)
+        candidate = resolve(group, key[0])
         if candidate is None:
             rejection["static_unresolved_references"] += 1
+            if (key[0] >= 500 and len(group) >= 10
+                    and key[0] * (len(group) - 1) >= 10000):
+                partial_candidates.append((key, group, key[0]))
         else:
             pending[key] = candidate
-    closed = close_callgraph(pending, accepted_keys | exact_split_seeds)
+    partial_keys = set()
+    for key, group, size in partial_candidates:
+        resolved = best_partial_family(group, lambda subset: resolve(subset, size))
+        if resolved is not None:
+            resolved[0]["partial"] = True
+            pending[key] = resolved
+            partial_keys.add(key)
+    seed_coverage = {
+        (item["body_bytes"], item["fingerprint"]):
+            {module for module, _start in item["placements"]}
+        for item in accepted_previous}
+    seed_coverage.update({
+        key: {row["module"] for row in split_groups[key]}
+        for key in exact_split_seeds})
+    if set(seed_coverage) != accepted_keys | exact_split_seeds:
+        raise ValueError("accepted target coverage differs from structural seeds")
+    closed = close_callgraph_by_placement(pending, seed_coverage)
     closed_split = {key for key in closed if len(key) == 3}
     closed_static = closed - closed_split
+    closed_partial = closed & partial_keys
     accepted_new = [pending[key][0] for key in sorted(closed)]
     graph_new = [item for item in accepted_new
                  if item["resolution"] == "accepted_target_graph"]
@@ -442,7 +522,8 @@ def main() -> None:
     for key in sorted(closed):
         item = pending[key][0]
         review.append("\t".join((
-            "split" if len(key) == 3 else "static", item["resolution"],
+            ("partial_" if item.get("partial") else "") +
+            ("split" if len(key) == 3 else "static"), item["resolution"],
             str(item["body_bytes"]), str(len(item["placements"])),
             ";".join(f"{module}:0x{start:X}"
                      for module, start in item["placements"]))))
@@ -481,6 +562,11 @@ def main() -> None:
         "candidate_masked_split_groups": sum(len(group) > 1 for group in split_groups.values()),
         "closed_split_groups": len(closed_split),
         "newly_closed_static_groups": len(closed_static),
+        "partial_candidate_groups": len(partial_keys),
+        "closed_partial_groups": len(closed_partial),
+        "closed_partial_placement_bytes": sum(
+            pending[key][0]["body_bytes"] * len(pending[key][0]["placements"])
+            for key in closed_partial),
         "accepted_target_graph_groups": len(graph_new),
         "accepted_target_graph_placement_bytes": sum(
             item["body_bytes"] * len(item["placements"]) for item in graph_new),
