@@ -83,6 +83,14 @@ class LevelSplitDedupeTests(unittest.TestCase):
         self.assertEqual(split_parent(row, ranges, ranges, ranges,
                                       [0x80, 0x9C], bytes(data), []),
                          [(0x80, 0x98, 20), (0x9C, 0xB4, 24)])
+        self.assertEqual(split_parent({**row, "status": "pointer_only"},
+                                      ranges, ranges, ranges, [0x80, 0x9C],
+                                      bytes(data), []),
+                         [(0x80, 0x98, 20), (0x9C, 0xB4, 24)])
+        self.assertEqual(split_parent({**row, "status": "nonzero_tail"},
+                                      ranges, ranges, ranges, [0x80, 0x9C],
+                                      bytes(data), []),
+                         [(0x80, 0x98, 20), (0x9C, 0xB4, 24)])
         data[0x88] = 1
         self.assertEqual(split_parent(row, ranges, ranges, ranges,
                                       [0x80, 0x9C], bytes(data), []),

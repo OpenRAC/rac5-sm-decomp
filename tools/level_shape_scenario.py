@@ -105,7 +105,9 @@ def measured_units(image: Path) -> tuple[list[tuple[str, int, str, str]], int, i
                     raise ValueError(f"{module} static candidate intervals do not partition code")
                 cursor = limit
                 if left in selected[module]:
-                    if row["status"] != "bounded_candidate" or not row["body_end"]:
+                    if (row["status"] not in
+                            ("bounded_candidate", "pointer_only", "nonzero_tail")
+                            or not row["body_end"]):
                         raise ValueError(f"{module} split parent lacks a bounded body")
                     continue
                 if size:

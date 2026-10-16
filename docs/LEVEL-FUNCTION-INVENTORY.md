@@ -187,14 +187,15 @@ game-wide function catalogue.
 
 Some static next-entry intervals appear to contain several functions. The
 [`level_split_dedupe.py`](../tools/level_split_dedupe.py) review only splits an
-interval at each selected sub-body for which the code-only and full-module
+interval, including pointer-only and nonzero-tail parents, at each selected
+sub-body for which the code-only and full-module
 Ghidra analyses agree, its end contains `jr $ra` plus the delay slot, and any
 gap *inside that sub-body* contains only zero bytes with no relocation site.
 Bytes outside selected sub-bodies are left unique even if they look similar.
-The pinned private pass found **2,651 parent intervals by placement**
-(5,134,376 bytes) with **4,369** qualifying segments spanning 4,947,100
-bytes; the other **187,276 bytes** stay uncollapsed. Reference/translation and
-callgraph checks closed **133** split-segment families plus **236** existing
+The pinned private pass found **3,729 parent intervals by placement**
+(6,813,016 body bytes) with **6,245** qualifying segments spanning 6,518,180
+bytes; the other **294,836 body bytes** stay uncollapsed. Reference/translation and
+callgraph checks closed **177** split-segment families plus **245** existing
 static families whose calls now resolve to those segments. Another 107 raw-
 identical split groups served as target controls. Detailed addresses remain
 in ignored worklists.
@@ -205,7 +206,7 @@ need different evidence: a target within 32 bytes must have two distinct
 already accepted families pointing to it at the same relative sites in both
 modules, each edge must identify just one target per module, and the full
 span between target and anchor must remain zero. This additional conditional
-rule resolves **76 groups** spanning **830,308 placement bytes**. It uses
+rule resolves **81 groups** spanning **933,244 placement bytes**. It uses
 earlier structural families only as anchors; neither the anchors nor these
 new groups are certified source-level equivalents. The private
 `split_translation_review_leads.tsv` lists every newly closed family.
@@ -213,8 +214,8 @@ new groups are certified source-level equivalents. The private
 When some placements in a masked family have different data objects, the
 audit tries a pairwise-compatible subgroup instead of rejecting all of them.
 The local-callgraph closure then requires the callee to be corroborated in
-**every module occupied by its caller**. Of 161 provisional subgroup leads,
-33 pass this closure, covering 464,272 placement bytes. One 796-byte family
+**every module occupied by its caller**. Of 167 provisional subgroup leads,
+33 pass this closure, covering 469,624 placement bytes. One 796-byte family
 closes in 15 levels; its 9,196-byte caller closes in 13 of those levels. The
 other five callee placements remain outside that subgroup. This keeps the
 partial family from being treated as a shared source in levels where its data
@@ -223,9 +224,9 @@ identity still differs.
 The audit removes each selected parent from exact duplicate grouping before
 adding its disjoint verified segments, while leaving the residual bytes
 unique. It then recomputes connected components of exact and structural links.
-Exact candidate savings rise from **1,846,532** to **2,550,912 bytes** and
-combined candidate savings from **7,294,456** to **10,557,636 bytes**. This
-yields a **24,457,788-byte conditional candidate scenario**, 3,263,180 bytes
+Exact candidate savings rise from **1,846,532** to **3,019,468 bytes** and
+combined candidate savings from **7,294,456** to **11,569,080 bytes**. This
+yields a **23,446,344-byte conditional candidate scenario**, 4,274,624 bytes
 below the prior scenario. The calculation never counts a parent and its split
 segments at the same time. Ghidra-derived starts and structural equivalence
 remain review leads, so this is **not** a qualified unique-code denominator or
@@ -240,15 +241,15 @@ audit answers how low the candidate-byte count could go if every body with
 the same relocation-masked instructions and fixup descriptors shared a code
 shape. It rehashes every static and selected split body directly from the
 pinned private ISO. A split parent is removed before its disjoint segments are
-added. Of **35,015,424** retained candidate-interval bytes, **32,168,464**
-are represented by 102,307 body units; the other **2,846,960** stay unique.
+added. Of **35,015,424** retained candidate-interval bytes, **32,068,500**
+are represented by 103,083 body units; the other **2,946,924** stay unique.
 
-The 102,307 units yield **9,314 masked shapes**. Keeping as many instances of
+The 103,083 units yield **9,349 masked shapes**. Keeping as many instances of
 each shape as the maximum present in any one module gives an optimistic
-**7,008,576-byte scenario**. Counting only one instance per masked shape would
-give **6,891,240 bytes**, but 338 shapes repeat within a module, so that lower
+**7,060,508-byte scenario**. Counting only one instance per masked shape would
+give **6,941,800 bytes**, but 340 shapes repeat within a module, so that lower
 figure may collapse distinct placements. Using raw bytes instead of masked
-relocations gives 32,030,060 bytes under the same maximum-per-module rule.
+relocations gives 31,614,152 bytes under the same maximum-per-module rule.
 These are alternative *shape-counting assumptions*, not bounds that prove
 source equivalence. Matching masked code can still refer to different data,
 contain uncertain boundaries or require distinct C definitions. The
@@ -276,16 +277,16 @@ numbered levels**, the callgraph closes 3,940 provisional context families.
 The global union rejects 124 that would connect two distinct placements from
 the same module. Removing those links can invalidate callers: four further
 passes remove 1,445 caller placements and 103 families whose callees no longer
-share a final component. The result is **3,713 conditional families** spanning
-**8,286,000 bytes by placement**. Independent audits find no remaining
+share a final component. The result is **3,727 conditional families** spanning
+**8,300,500 bytes by placement**. Independent audits find no remaining
 same-module collision or uncovered local callee. Of 72,135 context/data
 candidate pairs, 41,797 initially close in the callgraph; 18,957 of those
 need a paired callee first. The data
 window cache is keyed by module as well as address, so reused offsets in
 different levels cannot share a signature accidentally. Unioning these links
 with exact and previously accepted structural groups avoids double counting.
-It adds **3,563,080 bytes of candidate savings** and reduces the conditional
-scenario from 24,457,788 to **20,894,708 bytes**. These links remain
+It adds **3,573,944 bytes of candidate savings** and reduces the conditional
+scenario from 23,446,344 to **19,872,400 bytes**. These links remain
 conditional until shared source and the full denominator are qualified.
 The private worklist and pinned ISO/Ghidra exports allow the pairings to be
 reproduced. Code context and data anchors still do not establish shared C
