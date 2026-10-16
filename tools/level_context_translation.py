@@ -65,6 +65,24 @@ def context_key(static: list[dict[str, str]], index: int) -> str:
                           .encode("ascii")).hexdigest()
 
 
+def code_pointer_fixups(data: bytes, local: list, start: int, end: int,
+                        code_end: int) -> tuple[dict[int, int], set[int]]:
+    """Find complete local HI/LO pairs aimed at code, including split entries."""
+    targets = {}
+    paired_sites = set()
+    for item in local:
+        if (item.kind != 1 or item.low_site is None or
+                not start <= item.low_site < end):
+            continue
+        high = int.from_bytes(data[item.site:item.site + 4], "little") & 0xFFFF
+        low = int.from_bytes(data[item.low_site:item.low_site + 4], "little") & 0xFFFF
+        target = (high << 16) + ((low ^ 0x8000) - 0x8000)
+        if 0x80 <= target < code_end and target % 4 == 0:
+            targets[item.site] = target
+            paired_sites.update((item.site, item.low_site))
+    return targets, paired_sites
+
+
 def context_units(static: list[dict[str, str]], split_by_parent: dict[int, list],
                   data: bytes, switches: list[dict[str, str]] | None = None
                   ) -> list[dict[str, str]]:
@@ -425,11 +443,18 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
                                    bisect.bisect_left(sites[module], start + size)]
             code = local_code_references(data[module], start, start + size,
                                          local, known, module)
-            data_fixups = [item for item in local if item.kind != 2]
+            pointers, paired_sites = code_pointer_fixups(
+                data[module], local, start, start + size, code_ends[module])
+            if any((module, target) not in known for target in pointers.values()):
+                ref_cache[key] = code, None, None
+                return ref_cache[key]
+            data_fixups = [item for item in local
+                           if item.kind != 2 and item.site not in paired_sites]
             refs = local_references(data[module], start, start + size,
                                     code_ends[module], data_fixups,
                                     [item.site for item in data_fixups])
-            ref_cache[key] = code, refs
+            ref_cache[key] = code, refs, {site - start: target
+                                           for site, target in pointers.items()}
         return ref_cache[key]
 
     def external_calls(module: str, start: int, size: int) -> dict[int, int]:
@@ -443,6 +468,11 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
             target = (word & 0x03FFFFFF) << 2
             if not start <= target < start + size:
                 targets[item.site - start] = target
+        pointers, _paired_sites = code_pointer_fixups(
+            data[module], local, start, start + size, code_ends[module])
+        for site, target in pointers.items():
+            if not start <= target < start + size:
+                targets[site - start] = target
         return targets
 
     context_ids = {(module, int(member[0]["start"], 16)): context
@@ -481,10 +511,11 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
                 if ((reference, left_start) in accepted_nodes and
                         (module, right_start) in accepted_nodes):
                     continue
-                code_a, refs_a = references(reference, left_start, size)
-                code_b, refs_b = references(module, right_start, size)
+                code_a, refs_a, pointers_a = references(reference, left_start, size)
+                code_b, refs_b, pointers_b = references(module, right_start, size)
                 if (code_a is None or code_a != code_b or refs_a is None or
-                        refs_b is None):
+                        refs_b is None or pointers_a is None or pointers_b is None or
+                        pointers_a.keys() != pointers_b.keys()):
                     continue
                 hi_a, low_a = refs_a
                 hi_b, low_b = refs_b

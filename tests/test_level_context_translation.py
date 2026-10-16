@@ -3,20 +3,36 @@
 from __future__ import annotations
 
 import json
+import struct
 import sys
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from level_context_translation import (OUTPUT, anchored_target, check_summary,
                                        candidate_boundary,
                                        close_context_dependencies,
+                                       code_pointer_fixups,
                                        context_key, context_units,
                                        prune_uncovered_calls,
                                        select_noncolliding_families)  # noqa: E402
 
 
 class LevelContextTranslationTests(unittest.TestCase):
+    def test_code_pointer_pair_requires_complete_local_pair(self) -> None:
+        data = bytearray(0x200)
+        struct.pack_into("<I", data, 0x90, 0x3C010000)
+        struct.pack_into("<I", data, 0x98, 0x342100C0)
+        pair = [SimpleNamespace(site=0x90, kind=1, low_site=0x98),
+                SimpleNamespace(site=0x98, kind=0, low_site=None)]
+        self.assertEqual(code_pointer_fixups(data, pair, 0x80, 0xA0, 0x100),
+                         ({0x90: 0xC0}, {0x90, 0x98}))
+        self.assertEqual(code_pointer_fixups(data, pair, 0x80, 0x94, 0x100),
+                         ({}, set()))
+        self.assertEqual(code_pointer_fixups(data, pair, 0x80, 0xA0, 0xC0),
+                         ({}, set()))
+
     def test_full_only_boundary_needs_direct_call_and_no_code_conflict(self) -> None:
         row = {"start": "0x80", "body_end": "0x90", "body_bytes": "16",
                "status": "bounded_candidate", "evidence": "call"}
