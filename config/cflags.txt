@@ -1,0 +1,18 @@
+# Per-source cc1 flags measured against the retail boot (SCUS_976.15).
+#
+# One entry per line: a repository-relative campaign C source path, then the
+# extra cc1 flags measured for that file. A source with no entry compiles with
+# the profile's global flags only, so its pinned object stays valid; an entry
+# is rejected when its path is missing, duplicated, or names no campaign source.
+# tools/cflags.py owns the format and the checks; compile_boot_trial.py,
+# boot_trial_gate.py and level_c_gate.py apply the entries they compile.
+#
+# -mno-check-zero-division (GCC 2.9 mips.md, divmodsi4, under
+# !TARGET_NO_CHECK_ZERO_DIV): the pinned chain always emits
+# "beql $rt,$zero ; break 0,7" before div/divu, while the retail boot leaves
+# 104 of its 111 div/divu sites unguarded, so the retail build used this flag.
+# Controls: compiling every campaign object with and without the flag gives
+# identical SHA-256 (none of the 405 pre-existing objects contains a division);
+# dlib_displist_direct_end__FP13DLIB_DISPLIST is 128 bytes and byte-exact only
+# with the flag, and 136 bytes with the guard, which is the default.
+nonmatching/boot/dlib_displist_direct_end__FP13DLIB_DISPLIST.c  -mno-check-zero-division

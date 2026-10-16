@@ -12,7 +12,7 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **14,808 boot `.text` bytes in 350 C bodies**
+The current catalogue records **14,936 boot `.text` bytes in 351 C bodies**
 across several code areas with one locally reconstructed GNU EE chain and
 `-O2 -G0` ([witness evidence](COMPILER-WITNESSES.md)).
 All of them link together into the complete boot text while preserving the
@@ -24,7 +24,7 @@ transfer it ends in. The reviewed `MEMCARD_Busy__Fv` placement is in
 `src/boot/`; the other bodies remain in `nonmatching/` pending their own
 acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identity,
-rebuilds all 405 objects from authored C and checks that full link in one run;
+rebuilds all 406 objects from authored C and checks that full link in one run;
 its machine-readable report accepts one 16-byte boot-only match after passing.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
 `nop`. An [isolated RAC5 short-loop threshold trial](COMPILER-LOOP-TRIAL.md)
@@ -68,6 +68,14 @@ substitutions are rejected. Only then update the reviewed profile and generated
 status. Do not pick a compiler or a one-function option merely because it raises
 a similarity score, and never change emitted instructions to pass a gate.
 
+An option measured for one source file belongs in
+[`config/cflags.txt`](../config/cflags.txt), not in the campaign profile: the
+profile keeps its global flags, so the objects of every other file stay pinned
+and need no requalification. `tools/cflags.py` owns that file and rejects a
+missing, duplicated or non-campaign path; `compile_boot_trial.py` and
+`level_c_gate.py` apply the entries they compile, and the complete-gate receipt
+is bound to the file's bytes.
+
 Qualification is scoped evidence, not a claim that this is the original compiler
 or that all future functions are supported. A failed control invalidates the
 proposed expansion; retain the previous accepted profile until repaired.
@@ -98,12 +106,20 @@ reproduces.
    body**, differing only in the prologue and epilogue. Any change here needs a
    per-file opt-in, because a global switch would break the bodies that already
    match with 8-byte slots.
-2. **Zero-division guard.** The pinned chain always emits
-   `beql $rt,$zero ; break 0,7` before `div` (`mips.md`, `divmodsi4`, under
-   `!TARGET_NO_CHECK_ZERO_DIV`). A sweep of the retail `.text` finds **104 of
-   111** `div`/`divu` sites unguarded, so the retail build used
-   `-mno-check-zero-division`. No body containing an integer division can match
-   under the current flags.
+2. **Zero-division guard — measured lever, option retained per source.** The
+   pinned chain always emits `beql $rt,$zero ; break 0,7` before `div`
+   (`mips.md`, `divmodsi4`, under `!TARGET_NO_CHECK_ZERO_DIV`); a sweep of the
+   retail `.text` finds **104 of its 111** `div`/`divu` sites unguarded, so the
+   retail build used `-mno-check-zero-division`. The option is carried by one
+   `config/cflags.txt` entry for
+   `nonmatching/boot/dlib_displist_direct_end__FP13DLIB_DISPLIST.c`, the first
+   dividing retail body recovered under it. Controls: compiling every campaign
+   object with and without the flag gives identical SHA-256 (no pre-existing
+   object contains a division, so no pinned object moves), and that body is
+   128 bytes and byte-exact only **with** the flag — without it the chain emits
+   the 2-instruction guard, the object is 136 bytes, and the trial compiler
+   refuses it against its pinned object hash. The requalified gate links the
+   406 objects and 351 bodies into the same complete 856,120-byte boot.
 3. **Sibling calls.** Retail emits a direct `j` for some tail calls; the pinned
    chain never does (the reconstructed sources comment the option out as
    "retail behaviour" for RAC2). A measured set of bodies ends in an
@@ -120,5 +136,12 @@ uncatalogued span rather than as part of the body.
 
 A span whose compiled object exposes no function symbol in the linked image is
 reported by the catalogue tool and left uncatalogued rather than counted; 55 of
-the 405 spans are in that state today, and the complete-program gate still
-checks their bytes. Investigating the cause is open work.
+the 406 spans are in that state today, and the complete-program gate still
+checks their bytes. They are the owners whose name is also listed in
+`LINKER_SYMBOLS` (`tools/boot_c_campaign.py`): the linker script definition is
+absolute, so the linked image keeps the address but exposes no function symbol
+for the catalogue. `dlib_displist_direct_end__FP13DLIB_DISPLIST` reproduced that
+state and lost it again when its `LINKER_SYMBOLS` line was dropped, which is
+what placed it in the catalogue. Relabelling the remaining 55, and confirming
+that none of them is referenced only through that absolute definition, is open
+work.

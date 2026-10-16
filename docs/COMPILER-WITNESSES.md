@@ -70,10 +70,14 @@ now links every authored body into the boot at once and preserves the exact raw
 ## Campaign expansion
 
 A later authoring campaign grew the same mechanism from twenty bodies to
-**405 compiler-produced C objects**, after hybrid instruction-assembly experiments
-were excluded. The catalogue identifies 350 global function bodies covering 14,808
-code bytes plus 576 zero alignment bytes; 20 object spans lack usable global
+**406 compiler-produced C objects**, after hybrid instruction-assembly experiments
+were excluded. The catalogue identifies 351 global function bodies covering 14,936
+code bytes plus 656 zero alignment bytes; 55 object spans lack usable global
 function extents and remain uncatalogued. Objects can contain multiple bodies.
+One body,
+`dlib_displist_direct_end__FP13DLIB_DISPLIST`, carries the per-source option
+`-mno-check-zero-division` recorded in
+[`config/cflags.txt`](../config/cflags.txt).
 Sources retain their retail ELF symbols, and the linked ELF must keep the complete
 856,120-byte boot byte-identical. The generated
 [`config/boot/witness_boundaries.tsv`](../config/boot/witness_boundaries.tsv)

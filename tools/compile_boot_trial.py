@@ -15,6 +15,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
+import cflags
 from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path, validate_replacements
 from r5900_assembly import ASSEMBLER_SHA256, LINKER_SHA256
 from c_source_policy import require_c_source
@@ -64,6 +65,12 @@ def check_profile(cpp: Path, cc1: Path, assembler: Path) -> dict[str, object]:
     return profile
 
 
+def cc1_flags(profile: dict, per_source: dict[str, tuple[str, ...]],
+              source: Path) -> list[str]:
+    """Profile cc1 flags for one source, plus the flags measured for that file."""
+    return [*profile["flags"]["cc1"], *cflags.for_source(per_source, source)]
+
+
 def run(command: list[str], cwd: Path, log: Path, stdout: Path | None = None) -> None:
     if stdout is None:
         result = subprocess.run(command, cwd=cwd, capture_output=True, text=True,
@@ -86,6 +93,7 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
     if output == export:
         raise ValueError("output and export directories must differ")
     output.mkdir(parents=True, exist_ok=True)
+    per_source = cflags.load()
     manifest = {"profile": profile["id"], "status": "qualified_boot_only",
                 "objects": []}
     for item in REPLACEMENTS:
@@ -97,16 +105,17 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
         preprocessed = output / f"{item.name}.i"
         assembly = output / f"{item.name}.s"
         obj = output / f"{item.name}.o"
+        flags = cc1_flags(profile, per_source, source)
         run([str(cpp.resolve()), *profile["flags"]["cpp"], source.name], output,
             output / f"{item.name}.cpp.log", preprocessed)
         require_c_source(preprocessed.read_text(encoding="utf-8"), f"{item.name} preprocessed input")
-        run([str(cc1.resolve()), *profile["flags"]["cc1"], preprocessed.name,
+        run([str(cc1.resolve()), *flags, preprocessed.name,
              "-o", assembly.name], output, output / f"{item.name}.cc1.log")
         run([str(assembler.resolve()), "-o", obj.name, assembly.name], output,
             output / f"{item.name}.as.log")
         if digest(obj) != item.object_sha256:
             raise ValueError(f"compiled object differs from measured trial: {item.name}")
-        manifest["objects"].append({"name": item.name,
+        manifest["objects"].append({"name": item.name, "cc1_flags": flags,
                                     "source_sha256_lf": item.source_sha256,
                                     "object_sha256": item.object_sha256})
     (output / "trial_manifest.json").write_text(
