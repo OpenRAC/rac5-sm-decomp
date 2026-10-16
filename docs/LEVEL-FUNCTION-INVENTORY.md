@@ -232,3 +232,26 @@ remain review leads, so this is **not** a qualified unique-code denominator or
 a ByteMatch percentage. The compact
 [`split_dedupe_summary.json`](../config/levels/split_dedupe_summary.json)
 records counts and input hashes only.
+
+## Optimistic relocation-masked shape scenario
+
+The separate [`level_shape_scenario.py`](../tools/level_shape_scenario.py)
+audit answers how low the candidate-byte count could go if every body with
+the same relocation-masked instructions and fixup descriptors shared a code
+shape. It rehashes every static and selected split body directly from the
+pinned private ISO. A split parent is removed before its disjoint segments are
+added. Of **35,015,424** retained candidate-interval bytes, **32,168,464**
+are represented by 102,307 body units; the other **2,846,960** stay unique.
+
+The 102,307 units yield **9,314 masked shapes**. Keeping as many instances of
+each shape as the maximum present in any one module gives an optimistic
+**7,008,576-byte scenario**. Counting only one instance per masked shape would
+give **6,891,240 bytes**, but 338 shapes repeat within a module, so that lower
+figure may collapse distinct placements. Using raw bytes instead of masked
+relocations gives 32,030,060 bytes under the same maximum-per-module rule.
+These are alternative *shape-counting assumptions*, not bounds that prove
+source equivalence. Matching masked code can still refer to different data,
+contain uncertain boundaries or require distinct C definitions. The
+[`shape_scenario_summary.json`](../config/levels/shape_scenario_summary.json)
+is deliberately separate from the conditional structural review and from
+qualified C progress; none supplies a ByteMatch denominator yet.

@@ -18,6 +18,7 @@ from pathlib import Path
 from boot_assembly import TEXT_SIZE
 from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path
 from level_program_gate import MEASURED_LOADS
+from level_shape_scenario import check_summary as check_shape_summary
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "progress/status.json"
@@ -34,6 +35,7 @@ TRANSLATION_FAMILIES = ROOT / "config/levels/translation_families_summary.json"
 FLOW_RANGES = ROOT / "config/levels/flow_range_summary.json"
 FULL_MODULE_FLOW = ROOT / "config/levels/full_module_flow_summary.json"
 SPLIT_DEDUPE = ROOT / "config/levels/split_dedupe_summary.json"
+SHAPE_SCENARIO = ROOT / "config/levels/shape_scenario_summary.json"
 TARGET = ROOT / "config/target.json"
 ACCEPTED_SYMBOL = "MEMCARD_Busy__Fv"
 
@@ -186,6 +188,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
     flow = json.loads(FLOW_RANGES.read_text(encoding="utf-8"))
     full_flow = json.loads(FULL_MODULE_FLOW.read_text(encoding="utf-8"))
     split = json.loads(SPLIT_DEDUPE.read_text(encoding="utf-8"))
+    shape = json.loads(SHAPE_SCENARIO.read_text(encoding="utf-8"))
+    check_shape_summary(shape)
     if (inventory["status"] != "candidate_inventory_only"
             or inventory["module_count"] != 21
             or inventory["candidate_code_bytes_by_placement"] !=
@@ -338,6 +342,15 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "conditional_candidate_bytes": split["conditional_candidate_bytes"],
             "qualified_unique_denominator": None,
         },
+        "optimistic_shape_scenario": {
+            "masked_max_per_module_bytes":
+                shape["masked_max_per_module_scenario_bytes"],
+            "masked_one_per_shape_bytes":
+                shape["masked_one_per_shape_scenario_bytes"],
+            "unrepresented_bytes_kept_unique":
+                shape["unrepresented_bytes_kept_unique"],
+            "qualified_unique_denominator": None,
+        },
         "remaining_for_gamewide_report": [
             "review Ghidra-only and static-only entries and unbounded function spans",
             "validate masked code/data relocation target equivalence beyond the structural leads",
@@ -359,6 +372,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "level_flow_ranges": digest(FLOW_RANGES),
             "level_full_module_flow": digest(FULL_MODULE_FLOW),
             "level_split_dedupe": digest(SPLIT_DEDUPE),
+            "level_shape_scenario": digest(SHAPE_SCENARIO),
         },
     }
 

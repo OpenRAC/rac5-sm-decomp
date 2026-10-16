@@ -332,6 +332,8 @@ def main() -> None:
                 not 0 <= summary["closed_partial_groups"] <=
                 summary["partial_candidate_groups"] or
                 summary["closed_partial_placement_bytes"] < 0 or
+                len(summary["split_review_sha256"]) != 64 or
+                len(summary["translation_review_sha256"]) != 64 or
                 summary["overall_percent"] is not None or
                 summary["bytematch_ready"] is not False):
             raise ValueError("split-body candidate snapshot is stale or overclaims")
@@ -586,6 +588,9 @@ def main() -> None:
         "full_flow_sha256": digest(FULL_FLOW),
         "code_catalogue_sha256": digest(CODE),
         "module_catalogue_sha256": digest(MODULES),
+        "split_review_sha256": digest(review_path),
+        "translation_review_sha256": digest(
+            WORK / "split_translation_review_leads.tsv"),
         "overall_percent": None, "bytematch_ready": False,
         "warning": "Selected Ghidra spans pass independent return and internal zero-gap checks. Unselected parent bytes remain unique. All shared-code links remain conditional review leads, not accepted retail function boundaries or a progress denominator.",
         "modules": module_results,
