@@ -5,8 +5,8 @@ locally reconstructed GNU EE `cpp`/`cc1`/`as` binaries by SHA-256, the
 RAC5-only short-loop patch, and the exact `-O2 -G0` flags. It is accepted
 **only for one reviewed boot placement** under the full loaded-byte criterion
 ([scope](BOOT-MATCH-SCOPE.md)); the original compiler is not identified.
-`MEMCARD_Busy__Fv` is in `src/boot/`. The other nineteen functions remain
-under `nonmatching/`.
+`MEMCARD_Busy__Fv` is in `src/boot/`. Every other body remains under
+`nonmatching/`.
 
 With your own lawful copy of the pinned USA boot and matching local tools,
 run this in WSL from the repository checkout. The compiler intermediates must
@@ -22,11 +22,11 @@ python3 tools/boot_trial_gate.py baserom/SCUS_976.15 \
 ```
 
 The command checks the patch and tool identities, copies each public C source
-to the Linux work directory, compiles **17 objects**, and requires their
-object hashes to match the measured campaign. It exports only the objects to
+to the Linux work directory, compiles **every campaign object**, and requires
+their object hashes to match the measured campaign. It exports only the objects to
 ignored `build/boot-compiled-objects/`, then checks the committed boot symbol
 and DVP metadata, links the objects into the complete private boot assembly,
-and rechecks the twenty candidate body boundaries. It requires exact boot
+and rechecks every candidate body boundary the catalogue records. It requires exact boot
 `.text` (**498,900/498,900**), raw `PT_LOAD` (**809,872/809,872**), entry,
 program header and BSS placement. It then regenerates the ELF container from
 [`config/boot/elf_layout.json`](../config/boot/elf_layout.json) and the DVP

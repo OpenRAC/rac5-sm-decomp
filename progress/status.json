@@ -549,7 +549,7 @@
   },
   "public_inputs_sha256": {
     "target": "043f3679a3a7f4e861986aeed303dd30e344c837c34303fc8591b71271a0f96f",
-    "compiler_profile": "ef5ace378a4316485627dc56a4ea66ce998d8730e6d0be9b15cff4db73ae2a21",
+    "compiler_profile": "784cd88800b996cfa5db86e58ea3c4aeaead825bb42b98b972e2cfff4fd14f74",
     "level_code_catalogue": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
     "level_module_catalogue": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
     "accepted_c_source_lf": "16e4be48785a4f90e710cf9b5ffe596e071bd1041a41a8fab5936dbb1fca9e18",

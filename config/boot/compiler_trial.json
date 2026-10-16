@@ -20,9 +20,13 @@
   },
   "flags": {
     "cpp": [],
-    "cc1": ["-quiet", "-O2", "-G0"],
+    "cc1": [
+      "-quiet",
+      "-O2",
+      "-G0"
+    ],
     "as": []
   },
-  "expected_objects": 17,
+  "expected_objects": 395,
   "expected_function_witnesses": 20
 }

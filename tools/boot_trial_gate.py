@@ -17,7 +17,6 @@ import sys
 from pathlib import Path
 
 from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path
-from boot_witness_boundaries import WITNESS_NAMES
 from compile_boot_trial import PROFILE, compile_objects
 from elf import inspect_elf
 
@@ -25,6 +24,15 @@ ROOT = Path(__file__).resolve().parent.parent
 EXPORT = ROOT / "build/boot-compiled-objects"
 REPORT = ROOT / "build/boot-trial-gate/report.json"
 ACCEPTED_NAME = "MEMCARD_Busy__Fv"
+
+
+def witness_count() -> int:
+    """Linked C witness bodies, from the catalogue boot_witness_boundaries writes."""
+    catalogue = ROOT / "config/boot/witness_boundaries.tsv"
+    with catalogue.open(encoding="utf-8", newline="") as file:
+        rows = csv.DictReader((line for line in file if not line.startswith("#")),
+                              delimiter="\t")
+        return sum(1 for _ in rows)
 
 
 def accepted_body_bytes() -> int:
@@ -92,7 +100,7 @@ def main() -> None:
         "profile": profile["id"],
         "boot_sha256": reference["sha256"],
         "candidate_objects": len(REPLACEMENTS),
-        "candidate_functions": len(WITNESS_NAMES),
+        "candidate_functions": witness_count(),
         "entry": candidate["entry"],
         "raw_load_size": program["file_size"],
         "raw_load_sha256": hashlib.sha256(raw).hexdigest(),
@@ -110,7 +118,7 @@ def main() -> None:
     REPORT.write_text(json.dumps(report, indent=2) + "\n",
                       encoding="utf-8", newline="\n")
     print(f"boot gate passed: {len(REPLACEMENTS)} exact objects, "
-          f"{len(WITNESS_NAMES)} C witnesses, {program['file_size']} exact raw "
+          f"{witness_count()} C witnesses, {program['file_size']} exact raw "
           f"load bytes and complete ELF exact; one boot-only match ({accepted_bytes} bytes)")
 
 

@@ -53,11 +53,17 @@ next-label search limits, not validated function sizes or matches.
 
 A [boot C-object campaign](docs/BOOT-C-WITNESS.md#combined-provisional-c-witness)
 also keeps the complete boot `.text`, retail `PT_LOAD` header and raw
-file-backed bytes exact after linking twenty authored C functions together.
-One reviewed 16-byte boot function now lives in `src/boot/`; the other nineteen
-remain in `nonmatching/`. The [boot-only acceptance scope](docs/BOOT-MATCH-SCOPE.md)
-explains why exact loaded bytes can be assessed separately from ELF packaging.
-The [boot gate](docs/BOOT-TRIAL-GATE.md) rebuilds all 17 C objects from pinned
+file-backed bytes exact after linking authored C bodies together. The campaign
+now links **395 compiled C objects** whose bodies reproduce **11,252 boot
+`.text` bytes** (11,848 bytes with their trailing alignment) at their retail
+addresses. Every linked body is listed, with its compiled extent and the kind
+of control transfer it ends in, in the generated
+[`config/boot/witness_boundaries.tsv`](config/boot/witness_boundaries.tsv)
+catalogue. One reviewed 16-byte boot function lives in `src/boot/`; the others
+remain provisional in `nonmatching/`. The
+[boot-only acceptance scope](docs/BOOT-MATCH-SCOPE.md) explains why exact loaded
+bytes can be assessed separately from ELF packaging.
+The [boot gate](docs/BOOT-TRIAL-GATE.md) rebuilds every C object from pinned
 local tools, verifies the entire load image in one private run, and counts
 **one boot-only match** after a successful gate.
 The [VU overlay audit](docs/DVP-OVERLAYS.md) also reproduces the boot's 31

@@ -62,10 +62,33 @@ not qualify a whole-program match. A later
 [provisional integration witness](BOOT-C-WITNESS.md) linked the
 `MEMCARD_Busy__Fv` C object into the entire boot assembly and kept the full
 file-backed bytes exact. A [combined integration witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)
-now links all twenty authored functions into the boot at once and preserves
-the exact raw `PT_LOAD` bytes, program header and ELF entry; it remains
-accepted only `MEMCARD_Busy__Fv` under the boot-only gate; the remaining
-nineteen functions are uncounted.
+now links every authored body into the boot at once and preserves the exact raw
+`PT_LOAD` bytes, program header and ELF entry; it remains accepted only
+`MEMCARD_Busy__Fv` under the boot-only gate, and every other body is uncounted.
+
+## Campaign expansion
+
+A later authoring campaign grew the same mechanism from twenty bodies to
+**395 compiled objects reproducing 11,252 boot `.text` bytes** (11,848 bytes
+with their trailing zero alignment), covering memory-card, MCP, sound, draw,
+CAMERA, GLOBALWAD, vector, YUV, libkernel syscall, C++ RTTI and C library
+ranges. Each body is one authored C file named after the retail mangled symbol
+it implements, and the linked ELF must keep the complete 856,120-byte boot
+byte-identical. The generated
+[`config/boot/witness_boundaries.tsv`](../config/boot/witness_boundaries.tsv)
+catalogue lists every linked body with its compiled extent, following zero
+alignment and the kind of control transfer it ends in (`jr_ra`, `jump`,
+`jr_reg`, `break`, `syscall`, or a call to a callee marked non-returning).
+A body may use a single inline `syscall` or `mfc0` statement where the retail
+instruction has no C form; the rest are plain C.
+
+Measured limits of the current pinned chain, from the campaign's failures:
+GCC 2.9 register-allocation and scheduling orders still block a minority of
+bodies, and two compiler settings inherited from the RAC2 reconstruction make a
+measured set of functions unreachable without a separate compiler profile. The
+first is a neutralised R5900 wide-integer anchor that sets the 16-byte
+register-save stride retail uses (`sq`/`lq` frames); the second is disabled
+sibling calls, where retail emits a direct `j` for some tail calls.
 
 `FOG_PreUpdate__Fv` at `0x01E7D4A8` exposed a short-loop padding mismatch in
 the original trial `cc1`: two `nop` instructions before the backward branch,

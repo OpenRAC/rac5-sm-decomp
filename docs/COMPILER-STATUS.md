@@ -12,16 +12,19 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-Twenty independently authored C candidates now reproduce 648 boot `.text` bytes
+Independently authored C candidates now reproduce **11,252 boot `.text` bytes**
 across several code areas with one locally reconstructed GNU EE chain and
-`-O2 -G0` ([witness evidence](COMPILER-WITNESSES.md)). The reviewed
-`MEMCARD_Busy__Fv` placement is in `src/boot/`; the other nineteen functions
-remain in `nonmatching/` pending their own acceptance reviews.
-All twenty now also link together into the complete boot text while preserving
-the retail raw `PT_LOAD` bytes and program header
-([combined witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)).
+`-O2 -G0` ([witness evidence](COMPILER-WITNESSES.md)).
+All of them link together into the complete boot text while preserving the
+retail raw `PT_LOAD` bytes and program header
+([combined witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)); the
+generated `config/boot/witness_boundaries.tsv` catalogue lists each linked body
+with its compiled extent, its following zero alignment and the kind of control
+transfer it ends in. The reviewed `MEMCARD_Busy__Fv` placement is in
+`src/boot/`; the other bodies remain in `nonmatching/` pending their own
+acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identity,
-rebuilds all 17 objects from authored C and checks that full link in one run;
+rebuilds all 395 objects from authored C and checks that full link in one run;
 its machine-readable report accepts one 16-byte boot-only match after passing.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
 `nop`. An [isolated RAC5 short-loop threshold trial](COMPILER-LOOP-TRIAL.md)
