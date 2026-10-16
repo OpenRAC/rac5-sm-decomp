@@ -12,9 +12,10 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **14,936 boot `.text` bytes in 351 C bodies**
-across several code areas with one locally reconstructed GNU EE chain and
-`-O2 -G0` ([witness evidence](COMPILER-WITNESSES.md)).
+The current catalogue records **15,464 boot `.text` bytes in 356 C bodies**
+across several code areas, built by the locally reconstructed GNU EE chain and,
+for five of them, by a second pinned compiler
+([witness evidence](COMPILER-WITNESSES.md)).
 All of them link together into the complete boot text while preserving the
 retail raw `PT_LOAD` bytes and program header
 ([combined witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)); the
@@ -23,8 +24,8 @@ with its compiled extent, its following zero alignment and the kind of control
 transfer it ends in. Thirty-one reviewed placements (1,064 bytes, starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
-The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identity,
-rebuilds all 406 objects from authored C and checks that full link in one run;
+The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
+rebuilds all 411 objects from authored C and checks that full link in one run;
 its machine-readable report accepts 31 boot-only placements (1,064 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
@@ -41,9 +42,121 @@ profile have **not** been qualified for Size Matters. The repository now has
 a [boot-only compiler profile](../config/boot/compiler_trial.json) accepted
 for its 31 reviewed placements and one
 [RAC5-only patch](../tools/compiler/patches/0001-rac5-short-loop-six.patch).
-Its per-source options live in
+Its per-source compiler and options live in
 [`config/cflags.txt`](../config/cflags.txt); it is not a game-wide C/C++
 qualification and publishes no game-wide percentage.
+
+## Three compilers in the boot
+
+The boot is not one build. Classifying the prologue of every named `.text`
+symbol separates three register-save conventions, and each one has been tied to
+a compiler by byte-exact C bodies at their own retail addresses:
+
+| Convention | Prologue signature | Compiler measured |
+|---|---|---|
+| 8-byte saves, ascending | `sd` at `0x0`, `0x8`, `0x10`… | the pinned chain: GNU EE-GCC 2.9-ee-991111b plus RAC2's stack |
+| 16-byte `sd`, `$ra` at the top | `sd $s0,0x0` … `sd $ra,0x10/0x20` | unmodified Sony 2.9-ee-991111 (the SDK compiler) |
+| 16-byte `sq`, `$ra` at `0x0` | `sd $ra,0x0` then `sq $s0,0x10`… | SN ProDG 3.01 `ee-gcc2953`, GCC 2.95.3 |
+
+Classifying the 1,316 named `.text` symbols by the save instruction gives 436
+that save nothing, 274 whose one save does not discriminate, **292 that save in
+8-byte slots, 196 whose save is a 16-byte `sd` and 111 whose save is an `sq`**,
+plus 7 that use `sw`. Reading the whole frame rather than the one instruction
+gives the two families the routes act on: **107 bodies in the P layout (16-byte
+`sq` saves with `$ra` at `0x0`) and 195 in the Q layout (16-byte `sd` saves with
+`$ra` on top)**, the remainder having neither. The layouts also occupy different
+address ranges: Q covers libgcc/libstdc++/exception handling, libcd,
+fileio/intr/DMA/sceSif and the timers, P covers ps2fio, ps2dlib, cdvdfs and
+newlib libc.
+
+Two mechanical details matter, because they are not the same cause:
+
+- The **stride** comes from `compute_frame_size`, which adds
+  `GET_MODE_SIZE (mips_reg_mode[0])` per saved register. The pinned chain
+  neutralises the R5900 rule (`if (0 && TARGET_MIPS5900) mips_reg_mode[0] =
+  TImode;`), so it allocates 8-byte slots. Re-enabling the anchor widens the
+  stride but does **not** reproduce P: `save_restore_insns` then emits the store
+  with `mips_reg_mode[regno]`, and the pinned chain also keeps RAC2's ascending
+  emission order while the retail P bodies **descend**. The anchor alone scores
+  98/108 on `sceCdSyncS`; the retail layouts need a different compiler, not a
+  flag.
+- The detector for the 16-byte families is "two or more `$sp` saves at offsets
+  that are multiples of `0x10`". Looking only for `sq`/`lq` misses about half of
+  them, because Q saves with `sd` at the same widened stride.
+
+The layouts coexist in one binary, so no global switch can serve both: a single
+compiler choice would break the bodies that already match. The selector belongs
+per file.
+
+## A second pinned compiler (route P)
+
+`config/cflags.txt` now names a compiler per line. A bare token in front of the
+flags selects one of the compilers the boot profile pins besides its own chain;
+without a token the line still extends the pinned chain's global `-quiet -O2
+-G0`, exactly as before, so no pre-existing object moved. With a token the flags
+are that compiler's complete flag set for that file.
+
+The one selector so far is `prodg2953`: SN Systems' *ProDG for PlayStation 2*
+3.01 `ee-gcc2953.exe`, which reports GCC 2.95.3. It is an external binary that
+the profile pins by SHA-256 together with the `cpp.exe` and `cc1.exe` it
+consults (`config/boot/compiler_trial.json`, `extra_compilers`); it is never
+rebuilt here and never committed. The gate runs it through WSL's Windows
+interop from an ignored staging directory, then assembles its output with the
+same pinned GNU `as` as every other object, so the campaign still has one
+assembler and one object format.
+
+Five P bodies are routed and each fills its owned interval exactly:
+
+| Source | Placement | Body | Pinned chain (negative control) |
+|---|---|---|---|
+| `ps2fioClose.c` | `0x01EBBCB0` | 124/124 | 114/124 |
+| `ps2fioDopen.c` | `0x01EBBD30` | 160/160 | 140/160 |
+| `ps2fioGetStat.c` | `0x01EBBEB0` | 92/92 | 78/92 |
+| `ps2fioFormatDevice.c` | `0x01EBC180` | 76/76 | 66/76 |
+| `cdvdfsFreeFS.c` | `0x01EC2218` | 76/76 | 68/76 |
+
+Controls for this route:
+
+1. **Non-regression.** Recompiling the campaign with the route enabled leaves
+   all **406** pre-existing objects byte-identical to their pins; only the five
+   new objects are added (411 total). Neither the profile's global flags nor any
+   existing `config/cflags.txt` line changed.
+2. **Negative control.** The same five sources without their selector score
+   66-140 of their bytes and `tools/compile_boot_trial.py` refuses the resulting
+   object against its pin — measured, not assumed.
+3. **The 8-byte family stays where it is.** `MC_SetError__Fi` (92 bytes) and
+   `MCPTRANS_FALL_Shutdown__Fv` (72 bytes) are byte-exact under the pinned chain
+   and **not** under `ee-gcc2953` (80/92 and 62/72). Routing a body to the wrong
+   compiler is therefore visible, and the selector is not a free upgrade.
+4. **Requalification.** The complete gate still passes at the final commit:
+   498,900/498,900 boot `.text` bytes, 809,872/809,872 raw `PT_LOAD` bytes,
+   856,120/856,120 ELF bytes, and
+   `tools/boot_promotion_audit.py --write --check --require-gate` is
+   `current_exact`. The 31 accepted placements and 1,064 counted bytes are
+   unchanged; the five new owners are provisional witnesses pending their own
+   semantic review.
+
+The related body `sceCdSyncS` is **not** route P: it is byte-exact under the
+unmodified Sony 2.9-ee SDK compiler (108/108) and reaches 100/108 under
+`ee-gcc2953`. That is the Q family, and its compiler is not pinned here yet.
+
+## What route P does not establish
+
+- **Scope, not identity.** The five bodies prove that *these* sources reproduce
+  under SN ProDG 3.01. They do not prove that every one of the 107 prologue-P
+  symbols came from that compiler, nor which flags, headers or library versions
+  the original build used. The count of P bodies that are actually reachable is
+  unknown: 107 is the number of symbols with that prologue, and reachability
+  additionally depends on the source being recoverable.
+- **Route Q is open.** The 195 prologue-Q symbols need the Sony SDK compiler
+  pinned the same way before any of them can be routed. Until then those bodies
+  stay assembly in the campaign, and `sceCdSyncS`-shaped functions remain
+  unwritten.
+- **The 292 8-byte bodies are still the pinned chain's**, and nothing here
+  changes their standing.
+- **No game-wide figure follows.** These five bodies are provisional witnesses;
+  acceptance remains a separate per-body review, and the boot-only scope
+  ([BOOT-MATCH-SCOPE.md](BOOT-MATCH-SCOPE.md)) is unchanged.
 
 To expand this beyond the accepted boot placements, establish complete
 assembly and loaded-program baselines for the applicable level modules, then
@@ -74,10 +187,16 @@ a similarity score, and never change emitted instructions to pass a gate.
 An option measured for one source file belongs in
 [`config/cflags.txt`](../config/cflags.txt), not in the campaign profile: the
 profile keeps its global flags, so the objects of every other file stay pinned
-and need no requalification. `tools/cflags.py` owns that file and rejects a
-missing, duplicated or non-campaign path; `compile_boot_trial.py` and
-`level_c_gate.py` apply the entries they compile, and the complete-gate receipt
-is bound to the file's bytes.
+and need no requalification. The same file carries the per-line compiler
+selector, for the same reason — a family that needs another compiler must not
+force one on the files that already match. `tools/cflags.py` owns the file and
+rejects an entry that is duplicated, names a missing or non-campaign path,
+names a selector the profile does not pin, or carries no flag;
+`compile_boot_trial.py` and `level_c_gate.py` apply the entries they compile,
+and the complete-gate receipt is bound to the file's bytes. A preview compiler
+is added by pinning its binaries in the profile's `extra_compilers` — never by
+rebuilding or patching an existing one, and never by widening the pinned chain's
+global flags to cover a family.
 
 Qualification is scoped evidence, not a claim that this is the original compiler
 or that all future functions are supported. A failed control invalidates the
@@ -122,7 +241,7 @@ reproduces.
    128 bytes and byte-exact only **with** the flag — without it the chain emits
    the 2-instruction guard, the object is 136 bytes, and the trial compiler
    refuses it against its pinned object hash. The requalified gate links the
-   406 objects and 351 bodies into the same complete 856,120-byte boot.
+   411 objects and 356 bodies into the same complete 856,120-byte boot.
 3. **Sibling calls.** Retail emits a direct `j` for some tail calls; the pinned
    chain never does (the reconstructed sources comment the option out as
    "retail behaviour" for RAC2). A measured set of bodies ends in an
@@ -139,7 +258,7 @@ uncatalogued span rather than as part of the body.
 
 A span whose compiled object exposes no function symbol in the linked image is
 reported by the catalogue tool and left uncatalogued rather than counted; 55 of
-the 406 spans are in that state today, and the complete-program gate still
+the 411 spans are in that state today, and the complete-program gate still
 checks their bytes. They are the owners whose name is also listed in
 `LINKER_SYMBOLS` (`tools/boot_c_campaign.py`): the linker script definition is
 absolute, so the linked image keeps the address but exposes no function symbol

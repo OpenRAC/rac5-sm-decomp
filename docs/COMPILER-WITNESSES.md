@@ -73,14 +73,16 @@ only the reviewed placements in the explicit gate set are counted.
 ## Campaign expansion
 
 A later authoring campaign grew the same mechanism from twenty bodies to
-**406 compiler-produced C objects**, after hybrid instruction-assembly experiments
-were excluded. The catalogue identifies 351 global function bodies covering 14,936
-code bytes plus 656 zero alignment bytes; 55 object spans lack usable global
+**411 compiler-produced C objects**, after hybrid instruction-assembly experiments
+were excluded. The catalogue identifies 356 global function bodies covering 15,464
+code bytes plus 672 zero alignment bytes; 55 object spans lack usable global
 function extents and remain uncatalogued. Objects can contain multiple bodies.
 One body,
 `dlib_displist_direct_end__FP13DLIB_DISPLIST`, carries the per-source option
 `-mno-check-zero-division` recorded in
-[`config/cflags.txt`](../config/cflags.txt).
+[`config/cflags.txt`](../config/cflags.txt), and five more are built by the
+second pinned compiler through the same file's selector
+([route P](COMPILER-STATUS.md#a-second-pinned-compiler-route-p)).
 Sources retain their retail ELF symbols, and the linked ELF must keep the complete
 856,120-byte boot byte-identical. **31 of these bodies** have since completed
 [promotion review](BOOT-PROMOTION.md) and now live in `src/boot/`: together with

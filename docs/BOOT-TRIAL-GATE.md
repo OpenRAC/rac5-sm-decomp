@@ -9,13 +9,14 @@ The 31 reviewed sources are in `src/boot/`, the profile lists them explicitly in
 `accepted_sources`, and the campaign enumerates the same set in
 `ACCEPTED_SOURCES`. Every other body remains under `nonmatching/`.
 
-The current campaign contains 406 compiler-produced C objects. Its verified
-catalogue records 351 global function bodies (14,936 bytes plus 656 zero alignment
+The current campaign contains 411 compiler-produced C objects. Its verified
+catalogue records 356 global function bodies (15,464 bytes plus 672 zero alignment
 bytes); 55 object spans without usable global-function extents remain uncatalogued.
 These counts are distinct from the 31 accepted boot placements (1,064 bytes).
-Per-source options measured for one file are listed in
+Per-source compiler and options measured for one file are listed in
 [`config/cflags.txt`](../config/cflags.txt) and applied by the gate; the profile
-keeps its global flags.
+keeps its global flags. Five of its six entries hand their file to a second
+pinned compiler, SN ProDG 3.01 `ee-gcc2953` ([route P](COMPILER-STATUS.md#a-second-pinned-compiler-route-p)).
 
 Both original and preprocessed C inputs must pass `tools/c_source_policy.py`:
 no instruction assembly, fixed registers or raw instruction words. The standalone
@@ -35,12 +36,18 @@ python3 tools/boot_trial_gate.py baserom/SCUS_976.15 \
   --cpp /path/to/cpp --cc1 /path/to/cc1 --as /path/to/as \
   --assembler /mnt/c/path/to/Ps2EeAs.exe \
   --linker /mnt/c/path/to/ld.exe \
+  --prodg-bin /mnt/c/path/to/ProDG/usr/local/sce/ee/gcc/bin \
   --output-dir /home/you/rac5-boot-trial
 ```
 
 The command checks the patch and tool identities, copies each public C source
 to the Linux work directory, compiles **every campaign object**, and requires
-their object hashes to match the measured campaign. It exports only the objects to
+their object hashes to match the measured campaign. `--prodg-bin` is the
+directory holding the pinned second compiler (`ee-gcc2953.exe`); the gate
+checks its hash and its `cpp.exe`/`cc1.exe` companions, stages the routed
+sources in Windows-visible ignored `build/boot-prodg-stage/`, and assembles the
+driver's output with the same pinned GNU `as` as every other object, so one
+assembler still produces the whole campaign. It exports only the objects to
 ignored `build/boot-compiled-objects/`, then checks the committed boot symbol
 and DVP metadata, links the objects into the complete private boot assembly,
 and rechecks every candidate body boundary the catalogue records. It requires exact boot
@@ -85,6 +92,11 @@ stripped ELF reported CRC `FA686353`, versus `8661F7BA` for retail. This
 confirms boot-to-frontend progress only. The newly packaged ELF is file-exact
 and has the measured retail CRC `8661F7BA`, but full gameplay has not been retested.
 The isolated emulator was stopped afterward.
+
+The gate is byte-exact under either route state: disabling the second compiler
+(compiling its five sources with the pinned chain instead) leaves every
+pre-existing object hash unchanged but makes those five objects differ from
+their pins, so `compile_boot_trial.py` refuses them.
 
 The first acceptance was `MEMCARD_Busy__Fv`: one measured boot placement,
 a 16-byte C body, no trailing alignment and an exact complete boot ELF. Thirty
