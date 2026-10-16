@@ -32,7 +32,8 @@ newly called function entries and **229** contiguous cases without a recovered
 indirect reference. These remain candidate evidence, not counted C progress.
 The split-body audit selects **4,369** corroborated segments inside **2,651**
 oversized candidate intervals, leaving 187,276 surrounding bytes unique.
-Its **25,634,068-byte** result is a
+Its **25,121,964-byte** result, including conditional target-graph matches
+for zero-filled local data, is a
 conditional deduplication scenario, not a verified unique-code denominator.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,

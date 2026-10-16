@@ -21,7 +21,8 @@ from level_ghidra_crosscheck import rows
 from level_translation_families import (close_callgraph, combined_dedupe_savings,
                                         digest, ghidra_confirmed,
                                         local_code_references, local_references,
-                                        lows_follow_translation, uniform_translation)
+                                        lows_follow_translation, uniform_translation,
+                                        unique_data_window, unique_target_shifts)
 from rel import HEADER, iter_packed_relocations
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -97,9 +98,81 @@ def split_parent(row: dict[str, str], code_functions: dict[int, dict[str, str]],
     return spans or None
 
 
+def graph_target_shifts(reference: tuple[dict[int, int], dict[int, int]],
+                        current: tuple[dict[int, int], dict[int, int]],
+                        reference_module: str, current_module: str,
+                        data: dict[str, bytes], code_ends: dict[str, int],
+                        incoming: dict[str, dict[int, set[tuple[str, int]]]],
+                        signature_targets: dict[str, dict[tuple[str, int], set[int]]],
+                        window_cache: dict[str, dict[int, bytes | None]]) -> bool:
+    """Corroborate zero-filled local data via two independent accepted callers.
+
+    Zero windows cannot identify an object by content. Require a nearby target
+    that has the same two accepted-family incoming edges in both modules, and
+    keep the zero object's relative offset from that target unchanged.
+    """
+    base_hi, base_low = reference
+    hi, low = current
+    if not base_hi or base_hi.keys() != hi.keys() or base_low.keys() != low.keys():
+        return False
+    base_head = HEADER.unpack_from(data[reference_module])
+    head = HEADER.unpack_from(data[current_module])
+
+    def window(module: str, target: int) -> bytes | None:
+        cache = window_cache[module]
+        if target not in cache:
+            cache[target] = unique_data_window(
+                data[module], code_ends[module],
+                HEADER.unpack_from(data[module])[1], target)
+        return cache[target]
+
+    shifts = set()
+    for site, base_target in base_hi.items():
+        target = hi[site]
+        if not (code_ends[reference_module] <= base_target <= base_head[1] - 64
+                and code_ends[current_module] <= target <= head[1] - 64):
+            return False
+        base_window, other_window = window(reference_module, base_target), \
+                                     window(current_module, target)
+        if base_window is not None and base_window == other_window:
+            shifts.add(target - base_target)
+            continue
+        if (any(data[reference_module][base_target:base_target + 64]) or
+                any(data[current_module][target:target + 64])):
+            return False
+        anchored = False
+        for offset in range(-32, 33, 4):
+            base_anchor, anchor = base_target + offset, target + offset
+            if not (code_ends[reference_module] <= base_anchor <= base_head[1] - 64
+                    and code_ends[current_module] <= anchor <= head[1] - 64):
+                continue
+            common = incoming[reference_module].get(base_anchor, set()) & \
+                     incoming[current_module].get(anchor, set())
+            unique_edges = {edge for edge in common
+                            if len(signature_targets[reference_module][edge]) == 1
+                            and len(signature_targets[current_module][edge]) == 1}
+            if (len({fingerprint for fingerprint, _ in unique_edges}) >= 2
+                    and not any(data[reference_module][
+                        min(base_target, base_anchor):
+                        max(base_target, base_anchor) + 64])
+                    and not any(data[current_module][
+                        min(target, anchor):max(target, anchor) + 64])):
+                anchored = True
+                break
+        if not anchored:
+            return False
+        shifts.add(target - base_target)
+    return all(((low[site] - value) & 0xFFFF) in
+               {shift & 0xFFFF for shift in shifts}
+               for site, value in base_low.items())
+
+
 def translated_family(group: list[dict], size: int, data: dict[str, bytes],
                       fixups: dict[str, list], sites: dict[str, list[int]],
-                      code_ends: dict[str, int], known: dict) -> tuple[dict, set] | None:
+                      code_ends: dict[str, int], known: dict,
+                      incoming: dict[str, dict[int, set[tuple[str, int]]]],
+                      signature_targets: dict[str, dict[tuple[str, int], set[int]]]
+                      ) -> tuple[dict, set] | None:
     references = []
     calls = []
     for row in group:
@@ -118,14 +191,39 @@ def translated_family(group: list[dict], size: int, data: dict[str, bytes],
             return None
         calls.append(code)
         references.append(ref)
-    base_hi, base_lo = references[0]
-    if (any((shift := uniform_translation(base_hi, hi)) is None or
-            not lows_follow_translation(base_lo, low, shift)
-            for hi, low in references) or
-            any(code != calls[0] for code in calls)):
+    if any(code != calls[0] for code in calls):
         return None
+    base_hi, base_lo = references[0]
+    uniform = all((shift := uniform_translation(base_hi, hi)) is not None and
+                  lows_follow_translation(base_lo, low, shift)
+                  for hi, low in references)
+    resolution = "uniform_data"
+    if not uniform:
+        reference_module = group[0]["module"]
+        cache: dict[str, dict] = defaultdict(dict)
+        graph_cache: dict[str, dict[int, bytes | None]] = defaultdict(dict)
+        for row, current in zip(group, references):
+            module = row["module"]
+            reference_head = HEADER.unpack_from(data[reference_module])
+            current_head = HEADER.unpack_from(data[module])
+            if unique_target_shifts(
+                    references[0], current, data[reference_module], data[module],
+                    code_ends[reference_module], code_ends[module],
+                    reference_head[1], current_head[1],
+                    cache[reference_module], cache[module]) is None:
+                break
+        else:
+            resolution = "unique_data_window"
+        if resolution != "unique_data_window":
+            if not all(graph_target_shifts(
+                    references[0], current, reference_module, row["module"],
+                    data, code_ends, incoming, signature_targets, graph_cache)
+                    for row, current in zip(group, references)):
+                return None
+            resolution = "accepted_target_graph"
     item = {"body_bytes": size,
-            "placements": [(row["module"], int(row["start"], 16)) for row in group]}
+            "placements": [(row["module"], int(row["start"], 16)) for row in group],
+            "resolution": resolution}
     targets = {value[1] for value in calls[0].values() if value[0] == "callee"}
     return item, targets
 
@@ -179,6 +277,10 @@ def main() -> None:
                 not 0 <= summary["closed_split_groups"] <=
                 summary["candidate_masked_split_groups"] or
                 summary["newly_closed_static_groups"] < 0 or
+                not 0 <= summary["accepted_target_graph_groups"] <=
+                summary["closed_split_groups"] +
+                summary["newly_closed_static_groups"] or
+                summary["accepted_target_graph_placement_bytes"] < 0 or
                 summary["overall_percent"] is not None or
                 summary["bytematch_ready"] is not False):
             raise ValueError("split-body candidate snapshot is stale or overclaims")
@@ -273,9 +375,32 @@ def main() -> None:
         placements = [(module, int(at, 16))
                       for item in row["members_and_data_deltas"].split(";")
                       for module, at, _delta in [item.split(":")]]
-        accepted_previous.append({"body_bytes": size, "placements": placements})
+        accepted_previous.append({"body_bytes": size, "placements": placements,
+                                  "fingerprint": row["fingerprint"]})
     if len(accepted_previous) != translation["group_count"]:
         raise ValueError("private translation worklist differs from public summary")
+    incoming: dict[str, dict[int, set[tuple[str, int]]]] = {
+        module: defaultdict(set) for module in modules}
+    for family in accepted_previous:
+        for module, start in family["placements"]:
+            local = fixups[module][bisect.bisect_left(sites[module], start):
+                                   bisect.bisect_left(sites[module],
+                                                      start + family["body_bytes"])]
+            data_fixups = [item for item in local if item.kind != 2]
+            refs = local_references(data[module], start,
+                                    start + family["body_bytes"],
+                                    code_ends[module], data_fixups,
+                                    [item.site for item in data_fixups])
+            if refs is None:
+                raise ValueError("accepted family data references changed")
+            for site, target in refs[0].items():
+                incoming[module][target].add((family["fingerprint"], site))
+    signature_targets: dict[str, dict[tuple[str, int], set[int]]] = {
+        module: defaultdict(set) for module in modules}
+    for module, targets in incoming.items():
+        for target, edges in targets.items():
+            for edge in edges:
+                signature_targets[module][edge].add(target)
     pending = {}
     exact_split_seeds = set()
     rejection = Counter()
@@ -289,7 +414,7 @@ def main() -> None:
         if len({row["raw_sha256"] for row in group}) == 1:
             exact_split_seeds.add(key)
         candidate = translated_family(group, size, data, fixups, sites,
-                                      code_ends, known)
+                                      code_ends, known, incoming, signature_targets)
         if candidate is None:
             rejection["split_unresolved_references"] += 1
         else:
@@ -301,7 +426,7 @@ def main() -> None:
             rejection["static_repeated_module"] += 1
             continue
         candidate = translated_family(group, key[0], data, fixups, sites,
-                                      code_ends, known)
+                                      code_ends, known, incoming, signature_targets)
         if candidate is None:
             rejection["static_unresolved_references"] += 1
         else:
@@ -310,6 +435,19 @@ def main() -> None:
     closed_split = {key for key in closed if len(key) == 3}
     closed_static = closed - closed_split
     accepted_new = [pending[key][0] for key in sorted(closed)]
+    graph_new = [item for item in accepted_new
+                 if item["resolution"] == "accepted_target_graph"]
+    review = ["# Conditional structural leads only; no source-equivalence claim.",
+              "kind\tresolution\tbody_bytes\tplacements\tmembers"]
+    for key in sorted(closed):
+        item = pending[key][0]
+        review.append("\t".join((
+            "split" if len(key) == 3 else "static", item["resolution"],
+            str(item["body_bytes"]), str(len(item["placements"])),
+            ";".join(f"{module}:0x{start:X}"
+                     for module, start in item["placements"]))))
+    (WORK / "split_translation_review_leads.tsv").write_text(
+        "\n".join(review) + "\n", encoding="utf-8", newline="\n")
     exact_replaced = defaultdict(list)
     for key, group in exact_original.items():
         exact_replaced[key].extend(
@@ -343,6 +481,9 @@ def main() -> None:
         "candidate_masked_split_groups": sum(len(group) > 1 for group in split_groups.values()),
         "closed_split_groups": len(closed_split),
         "newly_closed_static_groups": len(closed_static),
+        "accepted_target_graph_groups": len(graph_new),
+        "accepted_target_graph_placement_bytes": sum(
+            item["body_bytes"] * len(item["placements"]) for item in graph_new),
         "raw_identical_split_target_seeds": len(exact_split_seeds),
         "rejection_counts": dict(sorted(rejection.items())),
         "retained_candidate_interval_bytes": interval_bytes,

@@ -329,6 +329,9 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "uncollapsed_parent_bytes": split["residual_parent_bytes"],
             "closed_structural_groups": split["closed_split_groups"],
             "newly_closed_static_groups": split["newly_closed_static_groups"],
+            "accepted_target_graph_groups": split["accepted_target_graph_groups"],
+            "accepted_target_graph_placement_bytes":
+                split["accepted_target_graph_placement_bytes"],
             "conditional_candidate_bytes": split["conditional_candidate_bytes"],
             "qualified_unique_denominator": None,
         },
