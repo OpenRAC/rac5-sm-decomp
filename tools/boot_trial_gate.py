@@ -46,6 +46,12 @@ def accepted_body_bytes() -> int:
         matches = [row for row in rows if row["symbol"] == ACCEPTED_NAME]
     if len(matches) != 1 or int(matches[0]["body_bytes"]) != 16:
         raise ValueError("accepted boot function extent differs from reviewed 16 bytes")
+    row = matches[0]
+    owners = [item for item in REPLACEMENTS if item.name == "memcard_busy"]
+    if (len(owners) != 1
+            or (owners[0].start, owners[0].end) != (int(row["start"], 16), int(row["body_end"], 16))
+            or int(row["zero_padding_bytes"]) != 0 or row["exit"] != "jr_ra"):
+        raise ValueError("accepted body requires its complete C substitution, not assembly fallback")
     return 16
 
 

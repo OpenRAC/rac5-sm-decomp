@@ -15,6 +15,13 @@ import check_repository  # noqa: E402
 
 
 class RepositoryTests(unittest.TestCase):
+    def test_scratch_is_private_but_named_source_forms_are_allowed(self) -> None:
+        for name in ("scratch/probe.py", "nonmatching/boot/_scratch/form.c",
+                     "nonmatching/boot/_scratch2/report.txt", "scratch\\variant.c"):
+            with self.subTest(name=name):
+                self.assertEqual(forbidden_reason(name), "private scratch experiment directory")
+        self.assertIsNone(forbidden_reason("nonmatching/boot/alternatives/MEMCARD_Test__Fi-form-01.c"))
+
     def test_tracked_hybrid_source_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

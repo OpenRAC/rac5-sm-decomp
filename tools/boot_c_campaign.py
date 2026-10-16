@@ -51,7 +51,7 @@ REPLACEMENTS = (
                 "8bbb9a6336d0e44ffbd2adcff769b3b45b8d2e4053dfcf6dad0c1c431646d8a1",
                 "0e5ed10ee6d258bec835217e9aed1c324883c64a305792b6df0812b9cbbfd8c7"),
     Replacement("memcard_busy", 0x01E627C0, 0x01E627D0,
-                "16e4be48785a4f90e710cf9b5ffe596e071bd1041a41a8fab5936dbb1fca9e18",
+                "87b1494dad2d079980703f0275383e283a7eb000bf9d8d313d281175ed24705b",
                 "415800c82c13e302c09de6aa773a68f82414410e28375e6b726db591fbdeb674"),
     Replacement("MEMCARD_GetDanSkinUnlocked__Fv", 0x01E627F8, 0x01E62810,
                 "f792cf7a54a6d145ab2f8bb10bf55839200757d58488ed71da1c9e64660a15f2",
@@ -102,7 +102,7 @@ REPLACEMENTS = (
                 "c9c84f93bad33fe839723d2c76f311654b651f86200e10bde35ab2ff8746b3b7",
                 "e3637a2f3b4e23b406483e5371c992fff29394358431177bc3a47365f27576d2"),
     Replacement("mcpi_msgboxes", 0x01E64FE8, 0x01E65028,
-                "31bf7c03b6a9baa2d898b73374755803a4c96ebe51384fc1e91b409ad777530d",
+                "1542937bce7b97c1ba37ac6e1fe69561f0a5ffb9aab9e4221da7660358cddbbc",
                 "704a89a04fd21a851880498cacbf16c9b12db034562877fb70001315a238ee77"),
     Replacement("MCPI_PowerLock__Fv", 0x01E65140, 0x01E65148,
                 "8e8bec60aa2ca1ca5ca0c7805a50ea36574dca21ffd7471191ce290f29b92604",
@@ -147,7 +147,7 @@ REPLACEMENTS = (
                 "e7996965d1b5f09c59752961f00a3a09092894dfbd28681cdeb2c98ec97b8f83",
                 "d8fb6fe5808acb6977beb98b691c163eeac236f7e0435ac7bc8d8822170b326c"),
     Replacement("hig_io_read", 0x01E65458, 0x01E65478,
-                "0e06265ef549c2903522a0ab5d83d3432072cdf11d3b71cc782362ea06daaa44",
+                "318f001468eaacfbd835893d59d4c0e80d26a6fb4b6d48fc905a6a934d13f7f2",
                 "28e487ec02cde2078f7cce27a15e8c4d6cac5afbdd043acd97ead3ce85892338"),
     Replacement("higIoLseek__Fiii", 0x01E65478, 0x01E654A0,
                 "398904364553267da7424e1f78b3d923c6337458690fbee84ae91e1afda62254",
@@ -204,7 +204,7 @@ REPLACEMENTS = (
                 "f59def649de7d1a29ad1725aac781dbed12fbf9cc4fe01e06501a626250605f9",
                 "dd91d54b8d8df84ef569392693dd0cc28ad1dbda109d4cc301f09b021d175d1c"),
     Replacement("camera_init", 0x01E68630, 0x01E68658,
-                "0b9ffedec339205fbac3406d4538e24b3c08bd9be9a79fe76311caa8eefe9727",
+                "c0825620b281bdf1d33073a554586bc80329a27bfa6834328f02cf73818bf414",
                 "d773349a8d1ea69bbbd3f8411de541b800218be352df0ac96eb548f6825be514"),
     Replacement("CAMERA_GetDisplayMatrix__Fv", 0x01E68B00, 0x01E68B10,
                 "5ba265a900ad5d8e50543a4405efd2790f85ac21163a11144aed890ad18ac3e1",
@@ -219,13 +219,13 @@ REPLACEMENTS = (
                 "a20f731689ef27eb642dc088702c5a8422b367cb996a20151bd8c4cf7b9f6f75",
                 "38b8ca36048fe06de6fda02b884997df5482a19a68728218be9299250edadf5f"),
     Replacement("fast_mem_copy", 0x01E68EE0, 0x01E68F00,
-                "0d9325b4bf6b215c9ae441d5bc93fccd172b164224a560cd502581e387251493",
+                "14c41a6e3b275952b3691e6eb9053f36e1456ede992b8fbbb857c54c81c263e3",
                 "aac626e0fe8af2b7a86a814660ba1d3a484112cecf98ffbb31a00be21efae4b2"),
     Replacement("mcptrans_is_complete", 0x01E68F00, 0x01E68F38,
                 "2a62410fe1350c47670c328d786f94e3bf52a7591d6518abc09eaabf9abf1395",
                 "864fb45fa04c102dcf1876ae5bd60350394c399c9d8c45c9c6a1f975ac2a8578"),
     Replacement("mcptrans_should_fade", 0x01E68F38, 0x01E68F48,
-                "4936b0218c36ae8149534b556a956dcded9be2deb9a8a9bf2a93043a58cc004c",
+                "32d59360909c1108dfdb3916c651ecd5e0f926d68cde0fec0fca85156177b5bc",
                 "b303d1d814262e42298e90bb6eee27c4800c221ad5c7529cf2ad1c40382e1241"),
     Replacement("MCPTRANS_GetLevel__Fv", 0x01E69A98, 0x01E69AA8,
                 "94e933bc644013957017daf262c3aa7b404210e330bf148b1c247d88d1a22faf",
@@ -1366,7 +1366,23 @@ LINKER_SYMBOLS = (
 )
 
 
+def validate_replacements() -> None:
+    """Each aligned boot interval has one named owner; no aliases of object paths."""
+    names = [item.name for item in REPLACEMENTS]
+    if len(set(names)) != len(names):
+        raise ValueError("duplicate C interval owner")
+    if any(not name or name in (".", "..") or "/" in name or "\\" in name for name in names):
+        raise ValueError("C interval owners must be source basenames")
+    if any(type(item.start) is not int or type(item.end) is not int
+           or not TEXT_START + PREFIX_SIZE <= item.start < item.end <= TEXT_START + TEXT_SIZE
+           or item.start % 8 or item.end % 8 for item in REPLACEMENTS):
+        raise ValueError("C intervals lie outside aligned boot text")
+    if any(left.end > right.start for left, right in zip(REPLACEMENTS, REPLACEMENTS[1:])):
+        raise ValueError("C intervals overlap or are out of order")
+
+
 def check_inputs(objects_dir: Path) -> None:
+    validate_replacements()
     for item in REPLACEMENTS:
         source = source_path(item.name)
         normalized = source.read_text(encoding="utf-8").replace("\r\n", "\n")
@@ -1385,11 +1401,7 @@ def split_assembly(assembly: str) -> tuple[str, str, list[str]]:
               ".globl boot_text_start", "boot_text_start:"]
     if lines[:len(header)] != header:
         raise ValueError("boot assembly header differs from measured layout")
-    if any(not TEXT_START + PREFIX_SIZE <= item.start < item.end <= TEXT_START + TEXT_SIZE
-           or item.start % 8 or item.end % 8 for item in REPLACEMENTS):
-        raise ValueError("C intervals lie outside aligned boot text")
-    if any(left.end > right.start for left, right in zip(REPLACEMENTS, REPLACEMENTS[1:])):
-        raise ValueError("C intervals overlap")
+    validate_replacements()
     prefix = [".set noat", ".set noreorder", ".section .text.align", ".align 7",
               ".globl boot_text_start", "boot_text_start:"]
     remainder = [".set noat", ".set noreorder"]

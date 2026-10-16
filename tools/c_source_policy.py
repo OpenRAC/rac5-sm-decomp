@@ -29,6 +29,9 @@ def policy_errors(source: str) -> list[str]:
     problems = []
     for index, match in enumerate(tokens):
         value = match[0]
+        if match.lastgroup == "word" and value in {"RAC5_WITNESS_PADDING", "RAC5_padding_sentinel"}:
+            line = text.count('\n', 0, match.start()) + 1
+            problems.append(f"line {line}: synthetic alignment probes belong in private experiments")
         if match.lastgroup == "word" and value in ASM_NAMES:
             prefix = [item[0] for item in tokens[start:index]]
             suffix = [item[0] for item in tokens[index + 1:index + 5]]

@@ -6,8 +6,3 @@ void MCPI_SetMyMsgBoxId__Fi(int value) { my_msg_box_id = value; }
 void MCPI_SetTheirMsgBoxId__Fi(int value) { their_msg_box_id = value; }
 int MCPI_GetMyMsgBoxId__Fv(void) { return my_msg_box_id; }
 int MCPI_GetTheirMsgBoxId__Fv(void) { return their_msg_box_id; }
-
-#ifdef RAC5_WITNESS_PADDING
-/* Local spacing control; this is not a reconstructed game function. */
-int RAC5_padding_sentinel(int value) { return value; }
-#endif

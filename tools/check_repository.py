@@ -20,6 +20,8 @@ PRIVATE_SUFFIXES = (
 def forbidden_reason(name: str) -> str | None:
     path = name.replace("\\", "/")
     lower = path.lower()
+    if lower.startswith("scratch/") or any(part.startswith("_scratch") for part in lower.split("/")):
+        return "private scratch experiment directory"
     if path.startswith(PRIVATE_DIRS):
         return "private runtime directory"
     if lower.endswith(PRIVATE_SUFFIXES):

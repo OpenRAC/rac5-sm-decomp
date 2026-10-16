@@ -14,6 +14,10 @@ import level_c_gate as level
 
 
 class SourcePolicyTests(unittest.TestCase):
+    def test_retired_padding_probe_is_not_public_c_even_when_disabled(self):
+        source = '#ifdef RAC5_WITNESS_PADDING\nint RAC5_padding_sentinel(int x) { return x; }\n#endif'
+        self.assertTrue(any("alignment probes" in error for error in policy_errors(source)))
+
     def test_comments_literals_and_symbol_only_labels_are_allowed(self):
         source = '''#include "header.h"
 // asm("nop") and register bindings in explanatory text do not emit code.

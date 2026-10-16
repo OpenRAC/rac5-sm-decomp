@@ -33,3 +33,44 @@ input version, evidence, commands, results and remaining limitations in the
 PR description. Never include game-derived bytes, disassembly listings,
 memory dumps, personal disc paths, secrets or proprietary binaries. The
 maintainer merges accepted PRs manually.
+
+## Review and promotion
+
+Use the seven rules in `AGENTS.md` throughout a small, coherent change:
+
+- Identify the program, reference symbol and owned byte range before editing.
+  Account for padding, aliases, callees and any bytes following a compiled body.
+  Keep uncertain boundaries provisional; neither a terminal call nor a matching
+  prefix proves a complete retail function.
+- Promotion is a separate reviewed step. Show that the accepted source supplies
+  the claimed range, not the retained assembly baseline. Recompile with the pinned
+  profile and run the complete-program gate at every applicable placement after
+  integration. Record the tested commit and real output. If inputs change, repeat
+  the affected gates; a failed run must not preserve a previous passing claim.
+- Justify every compiler/profile change using a classified mismatch and source
+  provenance. Keep source and object controls from the previous qualified profile;
+  check that wrong tools, flags or inputs are rejected. Recompile all affected
+  accepted bodies before changing qualification. A patch to compiler source is
+  different from inserting dead C operations or editing emitted instructions.
+- Preserve the reference linker symbol when giving C a descriptive alias. Recover
+  prototypes from both callers and callees; verify layout, access width and sign
+  across users before introducing a shared struct. Use target-compatible size and
+  offset assertions where practical. Meaningful names and semantic correctness
+  are review obligations, not facts inferred from a passing linter.
+- Compare one hypothesis at a time and keep the best source. After three unchanged
+  mismatch classifications, revisit types/ABI/context, choose another approach,
+  or park the attempt. Record the first difference, profile, attempted shapes and
+  a reopening trigger in its existing near-miss entry. Keep raw logs privately;
+  no committed campaign queue or experiment ledger is needed.
+- Cleanup must preserve qualified output and original behavior. Recheck affected
+  callers after type/header changes. Do not fix retail bugs, add artificial dead
+  operations, or introduce PC behavior into a matching change. Platform ports and
+  deliberate behavior fixes need separate scope and validation.
+- Keep the public change focused: named source, useful explanations, maintained
+  tools and their tests. `scratch/`, `_scratch*/`, private paths, generated screening
+  output and toolchain experiments stay out of Git. Preserve useful variants under
+  `nonmatching/` with provenance, without turning them into matching credit.
+
+The repository, compiler and program gates cover machine-checkable invariants.
+The PR review must cover the remaining boundary, naming, ABI and behavioral evidence;
+CI without game inputs is not a full-image validation.

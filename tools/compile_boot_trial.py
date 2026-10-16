@@ -15,7 +15,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path
+from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path, validate_replacements
 from r5900_assembly import ASSEMBLER_SHA256, LINKER_SHA256
 from c_source_policy import require_c_source
 
@@ -40,6 +40,7 @@ def require_private_output(path: Path) -> Path:
 
 
 def check_profile(cpp: Path, cc1: Path, assembler: Path) -> dict[str, object]:
+    validate_replacements()
     profile = json.loads(PROFILE.read_text(encoding="utf-8"))
     if (profile["status"] != "qualified_boot_only"
             or profile["expected_objects"] != len(REPLACEMENTS)
