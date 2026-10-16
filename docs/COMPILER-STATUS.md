@@ -58,12 +58,16 @@ a compiler by byte-exact C bodies at their own retail addresses:
 | 16-byte `sd`, `$ra` at the top | `sd $s0,0x0` … `sd $ra,0x10/0x20` | unmodified Sony 2.9-ee-991111 (the SDK compiler) |
 | 16-byte `sq`, `$ra` at `0x0` | `sd $ra,0x0` then `sq $s0,0x10`… | SN ProDG 3.01 `ee-gcc2953`, GCC 2.95.3 |
 
-Classifying the named `.text` symbols gives 436 that save nothing, 274 that save
-once and are therefore not discriminating, **292 that save in 8-byte slots, 193
-in the 16-byte `sd` layout (Q) and 107 in the 16-byte `sq` layout (P)**, plus 7
-that use `sw`. The layouts also occupy different address ranges: Q covers
-libgcc/libstdc++/exception handling, libcd, fileio/intr/DMA/sceSif and the
-timers, P covers ps2fio, ps2dlib, cdvdfs and newlib libc.
+Classifying the 1,316 named `.text` symbols by the save instruction gives 436
+that save nothing, 274 whose one save does not discriminate, **292 that save in
+8-byte slots, 196 whose save is a 16-byte `sd` and 111 whose save is an `sq`**,
+plus 7 that use `sw`. Reading the whole frame rather than the one instruction
+gives the two families the routes act on: **107 bodies in the P layout (16-byte
+`sq` saves with `$ra` at `0x0`) and 195 in the Q layout (16-byte `sd` saves with
+`$ra` on top)**, the remainder having neither. The layouts also occupy different
+address ranges: Q covers libgcc/libstdc++/exception handling, libcd,
+fileio/intr/DMA/sceSif and the timers, P covers ps2fio, ps2dlib, cdvdfs and
+newlib libc.
 
 Two mechanical details matter, because they are not the same cause:
 
@@ -144,7 +148,7 @@ unmodified Sony 2.9-ee SDK compiler (108/108) and reaches 100/108 under
   the original build used. The count of P bodies that are actually reachable is
   unknown: 107 is the number of symbols with that prologue, and reachability
   additionally depends on the source being recoverable.
-- **Route Q is open.** The 193 prologue-Q symbols need the Sony SDK compiler
+- **Route Q is open.** The 195 prologue-Q symbols need the Sony SDK compiler
   pinned the same way before any of them can be routed. Until then those bodies
   stay assembly in the campaign, and `sceCdSyncS`-shaped functions remain
   unwritten.
