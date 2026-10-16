@@ -75,13 +75,19 @@ def main() -> None:
                         help="local SN PS2 EE linker")
     parser.add_argument("--output-dir", type=Path, required=True,
                         help="native Linux directory for compiler intermediates")
+    parser.add_argument("--prodg-bin", type=Path,
+                        help="directory holding the pinned second compiler driver; "
+                             "required once a config/cflags.txt entry selects it")
+    parser.add_argument("--prodg-stage", type=Path,
+                        help="Windows-visible staging directory for that driver")
     args = parser.parse_args()
 
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps({"gate": "boot_trial", "status": "incomplete",
                                   "counted_matches": 0}, indent=2) + "\n",
                       encoding="utf-8", newline="\n")
-    compile_objects(args.cpp, args.cc1, args.gnu_as, args.output_dir, EXPORT)
+    compile_objects(args.cpp, args.cc1, args.gnu_as, args.output_dir, EXPORT,
+                    args.prodg_bin, args.prodg_stage)
     boot = args.boot.resolve()
     run_tool("boot_symbols.py", "code-intervals", str(boot))
     run_tool("boot_dvp.py", "catalogue", str(boot))

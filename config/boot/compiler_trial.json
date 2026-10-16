@@ -58,5 +58,27 @@
     ],
     "as": []
   },
-  "expected_objects": 406
+  "extra_compilers": {
+    "prodg2953": {
+      "id": "rac5-boot-sn-prodg-3.01-ee-gcc2953-2.95.3",
+      "provenance": "SN Systems 'ProDG for PlayStation 2' 3.01 SDK distribution (github.com/AngheloAlf/SN-Systems-ProDG_for_PS2_3.01, commit d74f6fe); the driver reports GCC 2.95.3. Pinned per source, never rebuilt here and never committed.",
+      "status": "measured per source; boot-only",
+      "tools": {
+        "driver": "ee-gcc2953.exe",
+        "driver_sha256": "522d28f9d74ddfce89568437156c8ee323c806de525d99907f698050dee8d81e",
+        "libexec": "../lib/gcc-lib/ee/2.95.3",
+        "cpp": "cpp.exe",
+        "cpp_sha256": "b9c50aa66f9cf5dbd80b2affe9874ec7674b7328965c629476f6ad7c77943154",
+        "cc1": "cc1.exe",
+        "cc1_sha256": "0393bcd31f91a6b9f0255db97f1cc99eba78ee8fc003e9a04dfabed1ae1d522e"
+      },
+      "flags": {
+        "driver": [
+          "-S"
+        ],
+        "as": []
+      }
+    }
+  },
+  "expected_objects": 411
 }

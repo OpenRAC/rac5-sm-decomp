@@ -1,11 +1,19 @@
-# Per-source cc1 flags measured against the retail boot (SCUS_976.15).
+# Per-source compiler and flags measured against the retail boot (SCUS_976.15).
 #
-# One entry per line: a repository-relative campaign C source path, then the
-# extra cc1 flags measured for that file. A source with no entry compiles with
-# the profile's global flags only, so its pinned object stays valid; an entry
-# is rejected when its path is missing, duplicated, or names no campaign source.
-# tools/cflags.py owns the format and the checks; compile_boot_trial.py,
+# One entry per line: a repository-relative campaign C source path, an optional
+# compiler selector, then the flags measured for that file. A source with no
+# entry compiles with the profile's global flags and its own chain, so its
+# pinned object stays valid; an entry is rejected when its path is missing,
+# duplicated, names no campaign source, names an unpinned compiler or carries
+# no flag. tools/cflags.py owns the format and the checks; compile_boot_trial.py,
 # boot_trial_gate.py and level_c_gate.py apply the entries they compile.
+#
+# The selector is a bare token in front of the flags. Without one, the flags are
+# extra cc1 flags for the profile's pinned chain, on top of its global "-quiet
+# -O2 -G0". With one, the flags are the complete flag set for that compiler and
+# that file, so one line still says everything about how the object was built.
+# Pinned selectors: "prodg2953" is the second chain, SN ProDG 3.01 ee-gcc2953
+# (GCC 2.95.3), pinned in config/boot/compiler_trial.json.
 #
 # -mno-check-zero-division (GCC 2.9 mips.md, divmodsi4, under
 # !TARGET_NO_CHECK_ZERO_DIV): the pinned chain always emits
@@ -16,3 +24,15 @@
 # dlib_displist_direct_end__FP13DLIB_DISPLIST is 128 bytes and byte-exact only
 # with the flag, and 136 bytes with the guard, which is the default.
 nonmatching/boot/dlib_displist_direct_end__FP13DLIB_DISPLIST.c  -mno-check-zero-division
+
+# Route P: the ps2fio/cdvdfs prebuilt bodies whose retail bytes come from SN
+# ProDG 3.01 rather than the pinned chain. The pinned chain reaches 66-140 of
+# their bytes; under ee-gcc2953 with -O2 -G0 each fills its owned interval
+# exactly. Measured per source by tools/compile_boot_trial.py, which pins each
+# object's SHA-256 in tools/boot_c_campaign.py; the same sources without their
+# selector stay byte-inexact, which is this route's negative control.
+nonmatching/boot/ps2fioClose.c        prodg2953 -O2 -G0
+nonmatching/boot/ps2fioDopen.c        prodg2953 -O2 -G0
+nonmatching/boot/ps2fioGetStat.c      prodg2953 -O2 -G0
+nonmatching/boot/ps2fioFormatDevice.c prodg2953 -O2 -G0
+nonmatching/boot/cdvdfsFreeFS.c       prodg2953 -O2 -G0
