@@ -53,11 +53,22 @@ next-label search limits, not validated function sizes or matches.
 
 A [boot C-object campaign](docs/BOOT-C-WITNESS.md#combined-provisional-c-witness)
 also keeps the complete boot `.text`, retail `PT_LOAD` header and raw
-file-backed bytes exact after linking twenty authored C functions together.
-One reviewed 16-byte boot function now lives in `src/boot/`; the other nineteen
-remain in `nonmatching/`. The [boot-only acceptance scope](docs/BOOT-MATCH-SCOPE.md)
-explains why exact loaded bytes can be assessed separately from ELF packaging.
-The [boot gate](docs/BOOT-TRIAL-GATE.md) rebuilds all 17 C objects from pinned
+file-backed bytes exact after linking authored C bodies together. The campaign
+now links **342 compiler-produced C objects**. The generated catalogue identifies
+**325 global function bodies**, covering **9,912 boot `.text` bytes** plus 576
+zero alignment bytes. Twenty object spans do not expose a global function
+symbol with a usable extent and remain explicitly uncatalogued. Each catalogued
+body records its compiled extent and observed terminal transfer in the generated
+[`config/boot/witness_boundaries.tsv`](config/boot/witness_boundaries.tsv)
+catalogue. One reviewed 16-byte boot function lives in `src/boot/`; the others
+remain provisional in `nonmatching/`. The
+[boot-only acceptance scope](docs/BOOT-MATCH-SCOPE.md) explains why exact loaded
+bytes can be assessed separately from ELF packaging.
+Inline/global assembly, fixed-register bindings and raw instruction injection do
+not qualify as C evidence, even in provisional trials. Hybrid experiments stay
+private and their original intervals remain in the assembly baseline. Declaration
+labels that only name an ELF symbol are allowed; they emit no instructions.
+The [boot gate](docs/BOOT-TRIAL-GATE.md) rebuilds every C object from pinned
 local tools, verifies the entire load image in one private run, and counts
 **one boot-only match** after a successful gate.
 The [VU overlay audit](docs/DVP-OVERLAYS.md) also reproduces the boot's 31

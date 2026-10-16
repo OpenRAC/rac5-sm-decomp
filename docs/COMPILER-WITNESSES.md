@@ -32,10 +32,11 @@ remain in `nonmatching/` and contribute no accepted matches.
 | `snd_unlock_positional_array.c` | `0x01E91708`–`0x01E9171F` | 1 | 24/24 | `b70d0c2a72b4b88d10dc0d9b44ea595bcabacd7d3118ebab91aafae8a4fd019a` |
 
 The four `MCPI` labels are consecutive 16-byte placements: two setters and
-two getters. Where needed, `RAC5_WITNESS_PADDING` adds a **local-only**
+two getters. In those historical slice trials, `RAC5_WITNESS_PADDING` added a
 function after the candidate body, so the assembler emits its final alignment
 bytes. That extra function is neither compared nor asserted to represent
-retail code.
+retail code. Those diagnostic probes have been archived privately and removed
+from public sources. They are not permitted in current C evidence.
 The newer `MCPTRANS_IsComplete` candidate covers two conditional branches and
 multiple returns; `SND_UnlockPositionalArray` covers a conditional store
 whose volatile read generates a branch-likely instruction. These strengthen
@@ -62,10 +63,34 @@ not qualify a whole-program match. A later
 [provisional integration witness](BOOT-C-WITNESS.md) linked the
 `MEMCARD_Busy__Fv` C object into the entire boot assembly and kept the full
 file-backed bytes exact. A [combined integration witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)
-now links all twenty authored functions into the boot at once and preserves
-the exact raw `PT_LOAD` bytes, program header and ELF entry; it remains
-accepted only `MEMCARD_Busy__Fv` under the boot-only gate; the remaining
-nineteen functions are uncounted.
+now links every authored body into the boot at once and preserves the exact raw
+`PT_LOAD` bytes, program header and ELF entry; it remains accepted only
+`MEMCARD_Busy__Fv` under the boot-only gate, and every other body is uncounted.
+
+## Campaign expansion
+
+A later authoring campaign grew the same mechanism from twenty bodies to
+**342 compiler-produced C objects**, after hybrid instruction-assembly experiments
+were excluded. The catalogue identifies 325 global function bodies covering 9,912
+code bytes plus 576 zero alignment bytes; 20 object spans lack usable global
+function extents and remain uncatalogued. Objects can contain multiple bodies.
+Sources retain their retail ELF symbols, and the linked ELF must keep the complete
+856,120-byte boot byte-identical. The generated
+[`config/boot/witness_boundaries.tsv`](../config/boot/witness_boundaries.tsv)
+catalogue lists each identifiable linked body with its compiled extent, following zero
+alignment and the kind of control transfer it ends in (`jr_ra`, `jump`,
+`jr_reg`, `break`, `syscall`, or `call`). A terminal call does not prove that its
+callee cannot return. No inline assembly, fixed-register bindings or raw instruction
+words are permitted, including system-call wrappers. Such routines stay in the
+assembly baseline without C credit; C can still call them normally.
+
+Measured limits of the current pinned chain, from the campaign's failures:
+GCC 2.9 register-allocation and scheduling orders still block a minority of
+bodies, and two compiler settings inherited from the RAC2 reconstruction make a
+measured set of functions unreachable without a separate compiler profile. The
+first is a neutralised R5900 wide-integer anchor that sets the 16-byte
+register-save stride retail uses (`sq`/`lq` frames); the second is disabled
+sibling calls, where retail emits a direct `j` for some tail calls.
 
 `FOG_PreUpdate__Fv` at `0x01E7D4A8` exposed a short-loop padding mismatch in
 the original trial `cc1`: two `nop` instructions before the backward branch,
@@ -96,9 +121,10 @@ the isolated RAC5 `cc1` SHA-256
 `9614eceecbcb1f7a64cf3a4ad3c827b3e257ab6b1f934e42fcbc4ded0f0584d6`.
 The first thirteen object hashes remain identical under it.
 
-To reproduce the original **individual slice** trials with your own lawful
-pinned USA executable, compile each C file locally through
-`cpp -DRAC5_WITNESS_PADDING`, `cc1 -quiet -O2 -G0`, then `as`. Link each
+The original **individual slice** trials used archived diagnostic sources, with
+`cpp -DRAC5_WITNESS_PADDING`, `cc1 -quiet -O2 -G0`, then `as`. These are historical
+instructions, not the current contribution route; use `boot_trial_gate.py` for
+the present public sources. The earlier trials linked each
 resulting object with SN `ld -T config/boot/witness-*.ld`, matching
 the C source and linker script names. Keep every object and ELF in ignored
 `build/`. The `cc1` source and object must reside on the Linux filesystem if

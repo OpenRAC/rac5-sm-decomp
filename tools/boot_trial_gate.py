@@ -17,7 +17,6 @@ import sys
 from pathlib import Path
 
 from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path
-from boot_witness_boundaries import WITNESS_NAMES
 from compile_boot_trial import PROFILE, compile_objects
 from elf import inspect_elf
 
@@ -25,6 +24,15 @@ ROOT = Path(__file__).resolve().parent.parent
 EXPORT = ROOT / "build/boot-compiled-objects"
 REPORT = ROOT / "build/boot-trial-gate/report.json"
 ACCEPTED_NAME = "MEMCARD_Busy__Fv"
+
+
+def witness_count() -> int:
+    """Linked C witness bodies, from the catalogue boot_witness_boundaries writes."""
+    catalogue = ROOT / "config/boot/witness_boundaries.tsv"
+    with catalogue.open(encoding="utf-8", newline="") as file:
+        rows = csv.DictReader((line for line in file if not line.startswith("#")),
+                              delimiter="\t")
+        return sum(1 for _ in rows)
 
 
 def accepted_body_bytes() -> int:
@@ -38,6 +46,12 @@ def accepted_body_bytes() -> int:
         matches = [row for row in rows if row["symbol"] == ACCEPTED_NAME]
     if len(matches) != 1 or int(matches[0]["body_bytes"]) != 16:
         raise ValueError("accepted boot function extent differs from reviewed 16 bytes")
+    row = matches[0]
+    owners = [item for item in REPLACEMENTS if item.name == "memcard_busy"]
+    if (len(owners) != 1
+            or (owners[0].start, owners[0].end) != (int(row["start"], 16), int(row["body_end"], 16))
+            or int(row["zero_padding_bytes"]) != 0 or row["exit"] != "jr_ra"):
+        raise ValueError("accepted body requires its complete C substitution, not assembly fallback")
     return 16
 
 
@@ -92,7 +106,7 @@ def main() -> None:
         "profile": profile["id"],
         "boot_sha256": reference["sha256"],
         "candidate_objects": len(REPLACEMENTS),
-        "candidate_functions": len(WITNESS_NAMES),
+        "candidate_functions": witness_count(),
         "entry": candidate["entry"],
         "raw_load_size": program["file_size"],
         "raw_load_sha256": hashlib.sha256(raw).hexdigest(),
@@ -110,7 +124,7 @@ def main() -> None:
     REPORT.write_text(json.dumps(report, indent=2) + "\n",
                       encoding="utf-8", newline="\n")
     print(f"boot gate passed: {len(REPLACEMENTS)} exact objects, "
-          f"{len(WITNESS_NAMES)} C witnesses, {program['file_size']} exact raw "
+          f"{witness_count()} C witnesses, {program['file_size']} exact raw "
           f"load bytes and complete ELF exact; one boot-only match ({accepted_bytes} bytes)")
 
 

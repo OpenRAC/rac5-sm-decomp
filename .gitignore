@@ -4,6 +4,8 @@
 /asm/
 /toolchain/
 /work/
+/scratch/
+**/_scratch*/
 /assets/
 __pycache__/
 *.py[cod]

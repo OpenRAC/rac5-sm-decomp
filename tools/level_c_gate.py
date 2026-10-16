@@ -13,6 +13,7 @@ import json
 import shutil
 import struct
 from pathlib import Path
+from c_source_policy import require_c_source
 
 from boot_symbols import read_boot
 from compile_boot_trial import digest, normalized_digest, require_private_output, run
@@ -72,10 +73,13 @@ def compile_sources(profile: dict, sources: list[dict], cpp: Path, cc1: Path,
     flags = json.loads(BASE_PROFILE.read_text(encoding="utf-8"))["flags"]
     for row in sources:
         source = ROOT / row["source"]
+        require_c_source(source.read_text(encoding="utf-8"), row["source"])
         stem = source.stem
         (output / source.name).write_bytes(source.read_bytes())
         run([str(cpp.resolve()), source.name], output, output / f"{stem}.cpp.log",
             output / f"{stem}.i")
+        require_c_source((output / f"{stem}.i").read_text(encoding="utf-8"),
+                         f"{row['source']} preprocessed input")
         run([str(cc1.resolve()), *flags["cc1"], f"{stem}.i", "-o", f"{stem}.s"],
             output, output / f"{stem}.cc1.log")
         run([str(gnu_as.resolve()), "-o", f"{stem}.o", f"{stem}.s"],

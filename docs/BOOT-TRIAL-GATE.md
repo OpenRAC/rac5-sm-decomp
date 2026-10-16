@@ -5,8 +5,21 @@ locally reconstructed GNU EE `cpp`/`cc1`/`as` binaries by SHA-256, the
 RAC5-only short-loop patch, and the exact `-O2 -G0` flags. It is accepted
 **only for one reviewed boot placement** under the full loaded-byte criterion
 ([scope](BOOT-MATCH-SCOPE.md)); the original compiler is not identified.
-`MEMCARD_Busy__Fv` is in `src/boot/`. The other nineteen functions remain
-under `nonmatching/`.
+`MEMCARD_Busy__Fv` is in `src/boot/`. Every other body remains under
+`nonmatching/`.
+
+The current campaign contains 342 compiler-produced C objects. Its verified
+catalogue records 325 global function bodies (9,912 bytes plus 576 zero alignment
+bytes); 20 object spans without usable global-function extents remain uncatalogued.
+These counts are distinct from the one accepted 16-byte boot placement.
+
+Both original and preprocessed C inputs must pass `tools/c_source_policy.py`:
+no instruction assembly, fixed registers or raw instruction words. The standalone
+linking campaign also checks its source inputs. Hybrid experiments are kept
+privately and excluded from the C substitutions; their original intervals stay
+in the assembly baseline. C may still call platform services normally. A PC port
+will need platform-specific service implementations, a separate task from proving
+the original PS2 bytes.
 
 With your own lawful copy of the pinned USA boot and matching local tools,
 run this in WSL from the repository checkout. The compiler intermediates must
@@ -22,15 +35,18 @@ python3 tools/boot_trial_gate.py baserom/SCUS_976.15 \
 ```
 
 The command checks the patch and tool identities, copies each public C source
-to the Linux work directory, compiles **17 objects**, and requires their
-object hashes to match the measured campaign. It exports only the objects to
+to the Linux work directory, compiles **every campaign object**, and requires
+their object hashes to match the measured campaign. It exports only the objects to
 ignored `build/boot-compiled-objects/`, then checks the committed boot symbol
 and DVP metadata, links the objects into the complete private boot assembly,
-and rechecks the twenty candidate body boundaries. It requires exact boot
+and rechecks every candidate body boundary the catalogue records. It requires exact boot
 `.text` (**498,900/498,900**), raw `PT_LOAD` (**809,872/809,872**), entry,
 program header and BSS placement. It then regenerates the ELF container from
 [`config/boot/elf_layout.json`](../config/boot/elf_layout.json) and the DVP
 catalogue, and requires exact full-file SHA-256 (**856,120/856,120 bytes**).
+Witness counts come from the verified boundary catalogue, not a second frozen
+compiler-profile counter. The `exit` column records the observed terminal transfer:
+`call` does not establish that its callee never returns or qualify a function boundary.
 The non-code loaded sections still come
 from the user's pinned boot; generated game-derived material and tool binaries
 are never committed.
@@ -63,6 +79,6 @@ The isolated emulator was stopped afterward.
 The first acceptance is `MEMCARD_Busy__Fv`: one measured boot placement,
 a 16-byte C body, no trailing alignment and an exact complete boot ELF.
 Its acceptance rationale and rollback rule are in
-[`BOOT-MATCH-SCOPE.md`](BOOT-MATCH-SCOPE.md). The other nineteen linked C
+[`BOOT-MATCH-SCOPE.md`](BOOT-MATCH-SCOPE.md). The other linked C
 bodies remain provisional until each receives its own boundary and scope
 review, even though they participate in this exact load-image build.
