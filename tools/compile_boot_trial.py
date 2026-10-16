@@ -16,7 +16,8 @@ import subprocess
 from pathlib import Path
 
 import cflags
-from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path, validate_replacements
+from boot_c_campaign import (ACCEPTED_SOURCES, REPLACEMENTS, accepted_replacements,
+                             source_path, validate_replacements)
 from r5900_assembly import ASSEMBLER_SHA256, LINKER_SHA256
 from c_source_policy import require_c_source
 
@@ -42,12 +43,13 @@ def require_private_output(path: Path) -> Path:
 
 def check_profile(cpp: Path, cc1: Path, assembler: Path) -> dict[str, object]:
     validate_replacements()
+    accepted_replacements()
     profile = json.loads(PROFILE.read_text(encoding="utf-8"))
+    accepted_paths = sorted(source_path(name).relative_to(ROOT).as_posix()
+                            for name in ACCEPTED_SOURCES)
     if (profile["status"] != "qualified_boot_only"
             or profile["expected_objects"] != len(REPLACEMENTS)
-            or profile["accepted_function"] != "MEMCARD_Busy__Fv"
-            or profile["accepted_source"] != "src/boot/memcard_busy.c"
-            or ACCEPTED_SOURCES != frozenset({"memcard_busy"})):
+            or profile["accepted_sources"] != accepted_paths):
         raise ValueError("compiler trial catalogue no longer matches the measured scope")
     if "expected_function_witnesses" in profile:
         raise ValueError("witness counts come from the verified boundary catalogue, not the compiler profile")
@@ -126,7 +128,8 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
             shutil.copyfile(output / f"{item.name}.o", export / f"{item.name}.o")
         shutil.copyfile(output / "trial_manifest.json", export / "trial_manifest.json")
     print(f"{len(REPLACEMENTS)} byte-identical objects for the pinned boot C "
-          "campaign, one accepted under the boot-only profile", flush=True)
+          f"campaign, {len(ACCEPTED_SOURCES)} accepted under the boot-only "
+          "profile", flush=True)
 
 
 def main() -> None:

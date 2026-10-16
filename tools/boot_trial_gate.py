@@ -1,59 +1,60 @@
 #!/usr/bin/env python3
 """Run the pinned complete-boot C gate with private inputs.
 
-This checks compiler/object identities and the linked retail load image for
-one boot-only accepted match. It does not identify the original compiler or
-publish a ByteMatch report.
+This checks compiler/object identities and the linked retail load image for the
+explicitly accepted boot placements. It does not identify the original compiler
+or publish a ByteMatch report.
 """
 
 from __future__ import annotations
 
 import argparse
-import csv
 import hashlib
 import json
 import subprocess
 import sys
 from pathlib import Path
 
-from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path
-from boot_promotion_audit import input_fingerprint
+from boot_c_campaign import REPLACEMENTS, accepted_replacements
+from boot_promotion_audit import catalogue_rows, input_fingerprint
 from compile_boot_trial import PROFILE, compile_objects
 from elf import inspect_elf
 
 ROOT = Path(__file__).resolve().parent.parent
 EXPORT = ROOT / "build/boot-compiled-objects"
 REPORT = ROOT / "build/boot-trial-gate/report.json"
-ACCEPTED_NAME = "MEMCARD_Busy__Fv"
 
 
 def witness_count() -> int:
     """Linked C witness bodies, from the catalogue boot_witness_boundaries writes."""
-    catalogue = ROOT / "config/boot/witness_boundaries.tsv"
-    with catalogue.open(encoding="utf-8", newline="") as file:
-        rows = csv.DictReader((line for line in file if not line.startswith("#")),
-                              delimiter="\t")
-        return sum(1 for _ in rows)
+    return len(catalogue_rows())
+
+
+def accepted_matches() -> list[dict]:
+    """One catalogued body per accepted source, filling its owned range exactly.
+
+    The counted bytes come from each source's owned placement, so an accepted
+    source that covers only a prefix, leaves alignment padding or ends in
+    something other than a normal return keeps no acceptance.
+    """
+    rows = catalogue_rows()
+    matches = []
+    for owner in accepted_replacements():
+        span = [row for row in rows if owner.start <= row["start"] < owner.end]
+        if (len(span) != 1
+                or span[0]["start"] != owner.start
+                or span[0]["body_end"] != owner.end
+                or span[0]["zero_padding_bytes"] != 0
+                or span[0]["exit"] != "jr_ra"):
+            raise ValueError("accepted body requires its complete C substitution, "
+                             f"not assembly fallback: {owner.name}")
+        matches.append({"owner": owner.name, "symbol": span[0]["symbol"],
+                        "body_bytes": span[0]["body_bytes"]})
+    return matches
 
 
 def accepted_body_bytes() -> int:
-    if (ACCEPTED_SOURCES != frozenset({"memcard_busy"})
-            or not source_path("memcard_busy").is_file()):
-        raise ValueError("accepted boot source is missing or scope changed")
-    catalogue = ROOT / "config/boot/witness_boundaries.tsv"
-    with catalogue.open(encoding="utf-8", newline="") as file:
-        rows = csv.DictReader((line for line in file if not line.startswith("#")),
-                              delimiter="\t")
-        matches = [row for row in rows if row["symbol"] == ACCEPTED_NAME]
-    if len(matches) != 1 or int(matches[0]["body_bytes"]) != 16:
-        raise ValueError("accepted boot function extent differs from reviewed 16 bytes")
-    row = matches[0]
-    owners = [item for item in REPLACEMENTS if item.name == "memcard_busy"]
-    if (len(owners) != 1
-            or (owners[0].start, owners[0].end) != (int(row["start"], 16), int(row["body_end"], 16))
-            or int(row["zero_padding_bytes"]) != 0 or row["exit"] != "jr_ra"):
-        raise ValueError("accepted body requires its complete C substitution, not assembly fallback")
-    return 16
+    return sum(row["body_bytes"] for row in accepted_matches())
 
 
 def run_tool(name: str, *arguments: str) -> None:
@@ -89,7 +90,8 @@ def main() -> None:
              "--linker", str(args.linker.resolve()))
     linked = ROOT / "build/boot-c-campaign/boot_multi.elf"
     run_tool("boot_witness_boundaries.py", str(boot), str(linked))
-    accepted_bytes = accepted_body_bytes()
+    matches = accepted_matches()
+    accepted_bytes = sum(row["body_bytes"] for row in matches)
     run_tool("boot_elf_pack.py", "catalogue", str(boot))
     run_tool("boot_elf_pack.py", "build", str(boot), "--linked", str(linked))
     packed = ROOT / "build/boot-elf-pack/boot_exact.elf"
@@ -116,9 +118,9 @@ def main() -> None:
         "whole_elf_exact": complete["sha256"] == reference["sha256"],
         "whole_elf_size": complete["file_size"],
         "whole_elf_sha256": complete["sha256"],
-        "counted_matches": 1,
+        "counted_matches": len(matches),
         "counted_bytes": accepted_bytes,
-        "accepted_functions": [ACCEPTED_NAME],
+        "accepted_functions": [row["symbol"] for row in matches],
         "note": "full ELF metadata was regenerated from the pinned numeric catalogue; non-code loaded data came from retail; original compiler identity and full gameplay remain unverified",
     }
     if not report["raw_load_and_header_exact"] or not report["whole_elf_exact"]:
@@ -127,7 +129,8 @@ def main() -> None:
                       encoding="utf-8", newline="\n")
     print(f"boot gate passed: {len(REPLACEMENTS)} exact objects, "
           f"{witness_count()} C witnesses, {program['file_size']} exact raw "
-          f"load bytes and complete ELF exact; one boot-only match ({accepted_bytes} bytes)")
+          f"load bytes and complete ELF exact; {len(matches)} boot-only matches "
+          f"({accepted_bytes} bytes)")
 
 
 if __name__ == "__main__":

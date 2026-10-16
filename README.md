@@ -60,8 +60,8 @@ zero alignment bytes. Fifty-five object spans do not expose a global function
 symbol with a usable extent and remain explicitly uncatalogued. Each catalogued
 body records its compiled extent and observed terminal transfer in the generated
 [`config/boot/witness_boundaries.tsv`](config/boot/witness_boundaries.tsv)
-catalogue. One reviewed 16-byte boot function lives in `src/boot/`; the others
-remain provisional in `nonmatching/`. The
+catalogue. Thirty-one reviewed boot functions (1,064 accepted bytes) live in
+`src/boot/`; the others remain provisional in `nonmatching/`. The
 [boot-only acceptance scope](docs/BOOT-MATCH-SCOPE.md) explains why exact loaded
 bytes can be assessed separately from ELF packaging.
 Inline/global assembly, fixed-register bindings and raw instruction injection do
@@ -70,7 +70,7 @@ private and their original intervals remain in the assembly baseline. Declaratio
 labels that only name an ELF symbol are allowed; they emit no instructions.
 The [boot gate](docs/BOOT-TRIAL-GATE.md) rebuilds every C object from pinned
 local tools, verifies the entire load image in one private run, and counts
-**one boot-only match** after a successful gate.
+**31 reviewed boot-only placements** after a successful gate.
 The [VU overlay audit](docs/DVP-OVERLAYS.md) also reproduces the boot's 31
 non-loaded DVP sections privately. The new
 [ELF packaging gate](docs/BOOT-TRIAL-GATE.md) reconstructs the complete
@@ -216,9 +216,9 @@ Only a qualified toolchain reproducing the **complete retail program bytes at
 every applicable placement** can establish a match. Compiling successfully,
 matching a few instructions, or comparing masked bytes cannot. The
 [reproducible boot gate](docs/BOOT-TRIAL-GATE.md) checks candidate objects and
-all loaded boot bytes and accepts only `MEMCARD_Busy__Fv` (16 bytes). It is a
-boot-only match, not a qualified game-wide percentage. RAC2's compiler
-configuration alone is not evidence for this game
+all loaded boot bytes and accepts 31 reviewed boot C placements (1,064 bytes,
+an explicit enumerated set). It is a boot-only scope, not a qualified game-wide
+percentage. RAC2's compiler configuration alone is not evidence for this game
 ([compiler status](docs/COMPILER-STATUS.md)).
 
 ## Repository layout
@@ -228,7 +228,7 @@ configuration alone is not evidence for this game
 | `config/target.json` | Verified identity of the complete USA input |
 | `config/boot/`, `config/levels/` | Generated metadata and the pinned boot-only trial profile |
 | `tools/`, `tests/` | ISO9660, ELF, SNR2 and local relocation tools, repository guard and synthetic tests |
-| `src/` | Accepted authored C/C++ definitions; currently one boot-only function |
+| `src/` | Accepted authored C/C++ definitions (31 boot functions, two shared level functions) |
 | `nonmatching/` | Provisional C attempts, including exact slices awaiting acceptance review |
 | `progress/` | Reserved for generated game-wide progress after catalogue and build qualification |
 | `baserom/`, `asm/`, `build/`, `toolchain/` | Local-only game inputs and outputs |

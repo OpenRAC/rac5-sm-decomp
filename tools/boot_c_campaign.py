@@ -23,12 +23,65 @@ from r5900_assembly import (ASSEMBLER_SHA256, LINKER_SHA256, check_tool,
 from c_source_policy import require_c_source
 
 OUTPUT = ROOT / "build/boot-c-campaign"
-ACCEPTED_SOURCES = frozenset({"memcard_busy"})
+
+# Explicit, enumerated accepted set: one entry per promoted boot definition, in
+# boot address order. A name here is a reviewed placement whose own compiled
+# body fills the owner's range (one definition per function, no padding to the
+# assembly baseline). Adding or removing an entry changes the counted scope and
+# must be accompanied by a fresh complete-boot gate receipt and profile update.
+ACCEPTED_SOURCES = frozenset({
+    "memcard_busy",
+    "MEMCARD_GetHardcoreModeBit__FUi",
+    "MEMCARD_GetSlotHeaderDetail__FUi",
+    "MEMCARD_InitStateNode__FP19tMEMCARD_STATE_NODE",
+    "MEMCARD_Test__Fi",
+    "_GLOBAL_$I$SYSTEMS_memcard_ps2.cppBRcaaa",
+    "_GLOBAL_$I$CORE_cmdline.cpptJcaaa",
+    "MCPI_CreateMsgBoxes__Fv",
+    "MCPI_PowerLock__Fv",
+    "MCPI_PowerUnlock__Fv",
+    "__t5Stack2Z19tMEMCARD_STATE_NODEUi8",
+    "__t5Queue2Z14tHUDPROMQ_NODEUi8",
+    "_GLOBAL_$I$CORE_mcpclient.cppgvcaaa",
+    "_GLOBAL_$D$CORE_mcpclient.cppmQeaaa",
+    "UMD_checkState__Fb",
+    "UMD_Init__Fv",
+    "UMD_Deinit__Fv",
+    "_GLOBAL_$I$CORE_umd.cppOWbaaa",
+    "__8HIGMutex",
+    "_$_8HIGMutex",
+    "_GLOBAL_$I$CORE_heroSkin.cppMzcaaa",
+    "_GLOBAL_$I$MCP_mcp.cppbFbaaa",
+    "_GLOBAL_$I$MCP_mcpupdate.cppcKbaaa",
+    "_GLOBAL_$I$MCP_mcputil.cpplxcaaa",
+    "MCPHUD_UpdateViewTransform__FUiP11tHUD_OFFSET",
+    "MCP_GetFontPage__FUc",
+    "MCP_DrawRectangleSimpleArea__FssssUi",
+    "GetCenterX__17HUD_BoundingBox16",
+    "_GLOBAL_$I$MCP_mcpfont.cpp9Icaaa",
+    "CAMERA_SetFov__Ff",
+    "_GLOBAL_$I$CORE_camera.cppyGcaaa",
+})
 
 
 def source_path(name: str) -> Path:
     folder = "src/boot" if name in ACCEPTED_SOURCES else "nonmatching/boot"
     return ROOT / folder / f"{name}.c"
+
+
+def accepted_replacements() -> tuple[Replacement, ...]:
+    """Resolve the accepted set to campaign owners, in boot address order."""
+    owners = tuple(item for item in REPLACEMENTS if item.name in ACCEPTED_SOURCES)
+    missing = sorted(ACCEPTED_SOURCES - {item.name for item in owners})
+    if missing:
+        raise ValueError(f"accepted boot source has no campaign owner: {missing}")
+    for item in owners:
+        if not source_path(item.name).is_file():
+            raise ValueError(f"accepted boot source is missing: {item.name}")
+        if (ROOT / "nonmatching/boot" / f"{item.name}.c").exists():
+            raise ValueError(
+                f"accepted boot source is still staged in nonmatching/: {item.name}")
+    return owners
 
 
 BSS_START = 0x01F28100
@@ -135,7 +188,7 @@ REPLACEMENTS = (
                 "de8021a49d88358863d99b2eb647f49c090b1de5c598eccdad55a8d38ed59fee",
                 "e7c317a4e16b66c4ce271516df8f69b472543653b96e5b53e244ac59fc1491a1"),
     Replacement("UMD_checkState__Fb", 0x01E65400, 0x01E65408,
-                "449d91a2771a38880fec6b22330197a2ba23689462de0fddb45e1e3db43192d7",
+                "589c54b86a0d6936a1c183b62ce7a8946ec330e4abce8b5b30024a029fda33d3",
                 "36fe9c83106404e7582d9250cceaa0cddfd2819cf0c3ef634eba37c3bcffa47e"),
     Replacement("UMD_Init__Fv", 0x01E65408, 0x01E65410,
                 "71d381ceefd37839b6984084607041967aa4d2f4dd32a56d0600f3f5e6c4e5a0",
@@ -162,7 +215,7 @@ REPLACEMENTS = (
                 "5ee45e2ed62e21cc8407387a3131d044211e4f10507e3c4645f518cb8103c2f5",
                 "f9482ee2e54699e879587965ad341101449fc59f659f973ecb2c269ef7bc48e6"),
     Replacement("__8HIGMutex", 0x01E65988, 0x01E659C8,
-                "56de004ff12c1154f628df65e6ac50528f2d4b31932ded9c6aa40b5f6a345b97",
+                "5d30ff283a53b00cbc88ec04bc007f1e7a95599888a22447ae58439bd1e288b7",
                 "4d6aab7ac443a3ea8e725bfa4c5825677dafacfe22410350173c509ae9be81e0"),
     Replacement("_$_8HIGMutex", 0x01E659C8, 0x01E65A18,
                 "0bd3df0ac47ebd173bf4362bfafe9c8d5cfebeb6f3bbec9562572cae4645b6ea",
@@ -201,7 +254,7 @@ REPLACEMENTS = (
                 "5c7e709dcf63e7b1df2d6ec901a3c9445cec6a8e8c1e1cde8951717f6485c1ad",
                 "ed30b48b4e25e55ac17c6b0a3d067ff9670c5694f9bd5e1d46ca8c089bd5efb4"),
     Replacement("GetCenterX__17HUD_BoundingBox16", 0x01E68478, 0x01E684A8,
-                "ba142d62c7569a1415bdf7b014553b6c766b1458afa46add57f3ca45fe46f58f",
+                "e4b79cf479a7d310d3ca524447a9cac115371eb2d181be2f8eff24824caa717d",
                 "0768c8756524bc2e36ad71fa825f0b26796a0f2ff4973399735ff4943afeefd7"),
     Replacement("GetWidth__17HUD_BoundingBox16", 0x01E684A8, 0x01E684C0,
                 "011e48ae206708aca697bb2104cc17cc160e8237c51565da1ae09e471fcfca03",

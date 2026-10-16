@@ -9,6 +9,8 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+import boot_c_campaign  # noqa: E402
+from boot_c_campaign import accepted_replacements  # noqa: E402
 from progress_status import OUTPUT, snapshot  # noqa: E402
 
 
@@ -18,7 +20,12 @@ class ProgressStatusTests(unittest.TestCase):
         self.assertEqual(snapshot(report["evidence"]), report)
         self.assertIsNone(report["overall_percent"])
         self.assertFalse(report["bytematch_objdiff_ready"])
-        self.assertEqual(report["boot"]["accepted_c_bytes"], 16)
+        self.assertEqual(report["boot"]["accepted_c_bytes"],
+                         sum(item.end - item.start
+                             for item in accepted_replacements()))
+        self.assertEqual(report["boot"]["accepted_functions"][0], "MEMCARD_Busy__Fv")
+        self.assertEqual(len(report["boot"]["accepted_functions"]),
+                         len(boot_c_campaign.ACCEPTED_SOURCES))
         self.assertEqual(report["levels"]["accepted_c_bytes_per_unique_source"], 80)
         self.assertEqual(report["levels"]["accepted_c_bytes_by_placement"], 1600)
         self.assertEqual(report["levels"]["accepted_shared_functions"],

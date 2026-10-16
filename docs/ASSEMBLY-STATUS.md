@@ -75,9 +75,11 @@ code intervals for **all 21 SNR2 placements**
 ([campaign evidence](SNR2-ASSEMBLY-CAMPAIGN.md)). Those bytes are counted by
 placement, not as unique code or C progress.
 
-A [provisional C integration witness](BOOT-C-WITNESS.md) has also replaced
-the 16-byte boot body `MEMCARD_Busy__Fv` with a linked GNU EE C object while
-preserving the entire boot `.text`. Its retail `PT_LOAD` header and raw
-809,872-byte file-backed segment now also match. It is still under
-`nonmatching/` because the remaining compiler, complete ELF metadata,
-catalogue and runtime gates have not been completed.
+A [C integration witness](BOOT-C-WITNESS.md) has also replaced boot bodies with
+linked GNU EE C objects while preserving the entire boot `.text`. Its retail
+`PT_LOAD` header and raw 809,872-byte file-backed segment now also match, and the
+[campaign gate](BOOT-TRIAL-GATE.md) additionally requires the complete
+856,120-byte ELF to be exact. Thirty-one reviewed placements (1,064 bytes) are
+accepted in `src/boot/`; the other linked bodies remain in `nonmatching/` until
+their own boundary and scope reviews are done, even though they participate in
+the same exact load-image build.

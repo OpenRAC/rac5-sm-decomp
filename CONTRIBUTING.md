@@ -2,7 +2,8 @@
 
 Start with the complete [README contribution walkthrough](README.md#start-contributing)
 and [LEGAL.md](LEGAL.md). The pinned USA input and SNR2/boot metadata are
-verified, with one narrowly accepted boot function. The level compiler
+verified, with 31 narrowly accepted boot placements (1,064 bytes) and two
+shared level functions. The level compiler
 profiles, complete function catalogue and game-wide progress build remain
 open. Run the synthetic tests first. For a game-derived
 finding, verify your own lawful USA disc against `config/target.json` and

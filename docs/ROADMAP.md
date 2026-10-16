@@ -93,8 +93,8 @@
    Different callee implementations can fill the same call role; validate
    source identity and all remaining function boundaries before using that
    scenario as a game-wide denominator.
-6. **Start scoped C/C++ matching.** `MEMCARD_Busy__Fv` is the first
-   accepted 16-byte boot placement. The
+6. **Start scoped C/C++ matching.** The boot scope accepts 31 reviewed
+   placements (1,064 bytes), starting with `MEMCARD_Busy__Fv`. The
    [shared level witness](LEVEL-C-WITNESS.md) accepts two authored C functions,
    8 and 72 bytes, at twenty level placements. Other functions still need reviewed
    boundaries, compiler profiles and placement
