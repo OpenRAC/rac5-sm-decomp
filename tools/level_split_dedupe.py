@@ -51,7 +51,8 @@ def split_parent(row: dict[str, str], code_functions: dict[int, dict[str, str]],
                  entries: list[int], data: bytes,
                  relocation_sites: list[int]) -> list[tuple[int, int, int]] | None:
     """Select only corroborated returning spans; leave other parent bytes unique."""
-    if row["status"] != "bounded_candidate" or not row["body_end"]:
+    if (row["status"] not in ("bounded_candidate", "pointer_only", "nonzero_tail")
+            or not row["body_end"]):
         return None
     start, end = int(row["start"], 16), int(row["body_end"], 16)
     if ghidra_confirmed(row, code_functions):

@@ -77,8 +77,8 @@
    including 21 newly called entries and 229 linear cases without recovered
    indirect references. Confirm real ownership and embedded data before
    accepting function boundaries.
-   A stricter two-analysis pass selects 4,369 returning code segments within
-   2,651 oversized candidate intervals. Internal gaps must be zero; 187,276
+   A stricter two-analysis pass selects 6,245 returning code segments within
+   3,729 oversized candidate intervals. Internal gaps must be zero; 294,836
    surrounding bytes remain unique. These are shared-code review leads, not
    accepted function sizes or a game-wide denominator.
 6. **Start scoped C/C++ matching.** `MEMCARD_Busy__Fv` is the first

@@ -30,18 +30,18 @@ another body; **1,209** also have a direct branch or jump from that same body.
 A full-module pass classifies all 1,590 as review leads, including **21**
 newly called function entries and **229** contiguous cases without a recovered
 indirect reference. These remain candidate evidence, not counted C progress.
-The split-body audit selects **4,369** corroborated segments inside **2,651**
-oversized candidate intervals, leaving 187,276 surrounding bytes unique.
-Its **24,457,788-byte** result, including conditional target-graph matches
+The split-body audit selects **6,245** corroborated segments inside **3,729**
+oversized candidate intervals, leaving 294,836 surrounding body bytes unique.
+Its **23,446,344-byte** result, including conditional target-graph matches
 for zero-filled local data and placement-checked partial families, is a
 conditional deduplication scenario, not a verified unique-code denominator.
 An [optimistic masked-shape audit](../docs/LEVEL-FUNCTION-INVENTORY.md#optimistic-relocation-masked-shape-scenario)
-also measures **7,008,576 candidate bytes** when identical masked bodies are
+also measures **7,060,508 candidate bytes** when identical masked bodies are
 grouped across levels while repeated bodies inside one level stay separate.
 That is a useful aggressive research scenario, not an accepted progress total.
 An additional [context/data review](../docs/LEVEL-FUNCTION-INVENTORY.md#repeated-shapes-with-code-context-and-data-anchors)
-retains 3,713 repeated-shape families after global collision and final-callee
-checks and gives a **20,894,708-byte conditional
+retains 3,727 repeated-shape families after global collision and final-callee
+checks and gives a **19,872,400-byte conditional
 scenario**. This too remains a structural worklist, not counted C progress.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,
