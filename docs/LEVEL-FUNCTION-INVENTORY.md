@@ -264,15 +264,20 @@ compares a candidate's immediate preceding and following code shapes across
 modules, accepting a context only when it occurs once in each compared
 module. Both bodies need independently corroborated Ghidra boundaries and
 the same local-call shape; every external local callee must already have an
-accepted placement in both modules. Data targets require either the same
+accepted placement in both modules or be independently paired in the same
+context graph. A placement pair is admitted only after all of its callee pairs
+close, so a caller cannot borrow a callee from a different level. Data targets
+require either the same
 unique 64-byte window, an unambiguous accepted-family reference, or matching
 shifts bracketed within 64 KiB by two independent accepted families.
 
 Using level 01 as the reference against the other **18 retained numbered
-levels**, this closes **672 conditional families** spanning 1,160,936 bytes by
-placement. Unioning those links with exact and previously accepted structural
-groups avoids double counting. It adds **1,024,744 bytes of candidate savings**
-and reduces the conditional scenario from 24,457,788 to **23,433,044 bytes**.
+levels**, this closes **1,296 conditional families** spanning 3,189,168 bytes
+by placement. Of 26,695 context/data candidate pairs, 15,709 close; 7,258
+of those need a paired callee to close first. Unioning those links with exact
+and previously accepted structural groups avoids double counting. It adds
+**2,888,612 bytes of candidate savings** and reduces the conditional scenario
+from 24,457,788 to **21,569,176 bytes**.
 The private worklist and pinned ISO/Ghidra exports allow the pairings to be
 reproduced. Code context and data anchors still do not establish shared C
 source for every placement; this is not a qualified denominator.

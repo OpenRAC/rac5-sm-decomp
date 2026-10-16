@@ -357,6 +357,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
         },
         "context_structural_review": {
             "families": context["context_families"],
+            "dependency_closed_pairs": context["dependency_closed_pairs"],
             "additional_candidate_savings":
                 context["additional_candidate_savings"],
             "conditional_candidate_bytes":

@@ -250,9 +250,10 @@
     "qualified_unique_denominator": null
   },
   "context_structural_review": {
-    "families": 672,
-    "additional_candidate_savings": 1024744,
-    "conditional_candidate_bytes": 23433044,
+    "families": 1296,
+    "dependency_closed_pairs": 7258,
+    "additional_candidate_savings": 2888612,
+    "conditional_candidate_bytes": 21569176,
     "qualified_unique_denominator": null
   },
   "remaining_for_gamewide_report": [
@@ -522,6 +523,6 @@
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
     "level_split_dedupe": "69d1c00a431931fb24303865e8b1add5ab7636cdbd73b34880656c5a4e074d2d",
     "level_shape_scenario": "8730518ea150ad082f89a55b9f044f4043df944daa99490bd6fa37489c160c63",
-    "level_context_translation": "de8381567a67d3d9dd284191b83d86e92f4dd11336b5f79bbd45ac95dc1e390f"
+    "level_context_translation": "ccb2219f9f080a35f8dcb0bac959c923b5905061000f6bbb79c2750b1ce49c30"
   }
 }
