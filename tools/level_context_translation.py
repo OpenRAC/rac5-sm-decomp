@@ -151,7 +151,8 @@ def candidate_boundary(row: dict[str, str], code_functions: dict,
     if ghidra_confirmed(row, code_functions):
         return "code"
     start = int(row["start"], 16)
-    if (row["status"] == "bounded_candidate" and row["evidence"] == "call"
+    if (row["status"] in ("bounded_candidate", "nonzero_tail")
+            and row["evidence"] == "call"
             and start not in code_functions
             and ghidra_confirmed(row, full_functions)):
         return "full_call"
