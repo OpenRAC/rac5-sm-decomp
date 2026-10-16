@@ -13,8 +13,9 @@ only counts as matched after a byte-identical build. This repository does **not*
 yet have a general qualified compiler or a complete retail function catalogue.
 The [ByteMatch dashboard](https://bytematch.dev/OpenRAC/rac5-sm-decomp) uses a
 **provisional optimistic denominator** for level code; its displayed percentage
-is an estimate, not a qualified game-wide match rate. One boot function and two shared level functions
-have narrowly scoped private whole-program gates.
+is an estimate, not a qualified game-wide match rate. One boot function, two
+shared level functions and one frontend function have narrowly scoped private
+whole-program gates.
 
 ## What is established
 
@@ -43,9 +44,10 @@ placement**, not unique code or matched C. Their other module bytes and most
 runtime placements remain open. A new
 [complete-program gate for the frontend and level 01](docs/LEVEL-PROGRAM-GATE.md)
 checks their full modules and the two previously measured relocated-image
-hashes. A separate [shared-level C gate](docs/LEVEL-C-WITNESS.md) now accepts
-two authored functions (8 and 72 bytes) at all twenty numbered level placements; two
-additional C shapes are compiler controls only.
+hashes. A separate [level C gate](docs/LEVEL-C-WITNESS.md) now accepts two
+authored functions (8 and 72 bytes) at all twenty numbered level placements
+and one 476-byte frontend initializer. Two additional C shapes are compiler
+controls only.
 
 The boot's embedded labels also yield
 [1,315 generated code-label bounds](config/boot/code_intervals.tsv). These are
@@ -81,7 +83,7 @@ this is not a fully source-derived game build.
 No other C or C++ match is claimed. The original compiler identity and general level
 profiles, most function boundaries and full runtime behavior are still under
 investigation. The [scoped progress snapshot](progress/README.md) records the
-verified boot and shared-level matches. A separate, labelled ByteMatch estimate
+verified boot, shared-level and frontend matches. A separate, labelled ByteMatch estimate
 divides those verified C bytes by provisional candidate code bytes. The
 [21-module function audit](docs/LEVEL-FUNCTION-INVENTORY.md)
 separates bounded entries from uncertain pointer/table entries and identifies
@@ -228,7 +230,7 @@ configuration alone is not evidence for this game
 | `config/target.json` | Verified identity of the complete USA input |
 | `config/boot/`, `config/levels/` | Generated metadata and the pinned boot-only trial profile |
 | `tools/`, `tests/` | ISO9660, ELF, SNR2 and local relocation tools, repository guard and synthetic tests |
-| `src/` | Accepted authored C/C++ definitions; currently one boot-only function |
+| `src/` | Accepted authored C/C++ definitions in boot, shared levels and frontend |
 | `nonmatching/` | Provisional C attempts, including exact slices awaiting acceptance review |
 | `progress/` | Reserved for generated game-wide progress after catalogue and build qualification |
 | `baserom/`, `asm/`, `build/`, `toolchain/` | Local-only game inputs and outputs |

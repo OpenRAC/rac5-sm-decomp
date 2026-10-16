@@ -45,7 +45,7 @@
    [boot C-object integration witness](BOOT-C-WITNESS.md) preserves all
    raw retail `PT_LOAD` bytes and header. A combined trial now preserves them
    initially with twenty C functions linked together (`docs/BOOT-C-WITNESS.md`). The
-   current pure-C campaign recompiles 342 objects and catalogues 325 body extents;
+   current pure-C campaign recompiles 406 objects and catalogues 351 body extents;
    inline-assembly experiments are excluded. That
    evidence supports one narrow boot placement, not a general compiler or
    full runtime behavior. The later packaging gate rebuilds the entire ELF
@@ -95,8 +95,9 @@
    scenario as a game-wide denominator.
 6. **Start scoped C/C++ matching.** `MEMCARD_Busy__Fv` is the first
    accepted 16-byte boot placement. The
-   [shared level witness](LEVEL-C-WITNESS.md) accepts two authored C functions,
-   8 and 72 bytes, at twenty level placements. Other functions still need reviewed
+   [level C gate](LEVEL-C-WITNESS.md) accepts two authored C functions,
+   8 and 72 bytes, at twenty level placements, plus a 476-byte frontend
+   initializer. Other functions still need reviewed
    boundaries, compiler profiles and placement
    checks. The [scoped progress snapshot](../progress/README.md) records
    measured status without publishing a premature game-wide percentage.

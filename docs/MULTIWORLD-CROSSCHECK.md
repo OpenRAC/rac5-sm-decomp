@@ -26,6 +26,15 @@ applies to our boot. It does not validate the gate's runtime behavior or the
 rest of the address map. The `0x01E66414` site lies in boot `.text`; the
 boot symbol table does not name the containing function at that address.
 
+The public [Size Matters New Game hook](https://github.com/Panguu/Archipelago-RaCSM/blob/SM-Main/worlds/rac_size_matters/core/patches/starting_planet.py)
+also identifies `FRONTEND.REL` module offset `0x2F80` as an initializer and
+`0x3024` as a state-write site inside it. Its first 12 bytes agree with our
+pinned USA frontend module. An independent Ghidra pass identifies a contiguous
+476-byte candidate body at `0x2F80`; the [level C gate](LEVEL-C-WITNESS.md)
+checks independently authored C at that placement against the complete module
+and measured relocated-image hash. The external hook was a research lead;
+no patch instructions or Archipelago code are imported.
+
 MultiworldGG selects maps for US `SCUS-97615`, EU `SCES-55019`, and JP
 `SCPS-15120` in its [address-map selector](https://github.com/MultiworldGG/MultiworldGG/blob/c3a271b329e39e795a97927b7c155dc27511b101/worlds/rac_size_matters/core/address_maps/__init__.py).
 The other regions are useful comparisons, but our matching target remains the
