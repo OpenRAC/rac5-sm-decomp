@@ -46,6 +46,11 @@ retains 5,621 repeated-shape families, including reviewed split segments and
 62 switch-body families, after global collision and final-callee checks and
 gives a **16,876,088-byte conditional
 scenario**. This too remains a structural worklist, not counted C progress.
+The separate [site-paired role review](../docs/LEVEL-FUNCTION-INVENTORY.md#site-paired-code-role-review)
+retains 33,149 conditional pairs after global collision, code-role and
+dependency checks, giving a **10,955,612-byte normalized-code scenario**.
+Variant callees may have different source; this is not a qualified denominator
+or counted C progress.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,
 run the [boot gate](../docs/BOOT-TRIAL-GATE.md), the
@@ -70,6 +75,8 @@ python tools/level_shape_scenario.py --write baserom/SCUS_976.15.iso
 python tools/level_shape_scenario.py --check
 python tools/level_context_translation.py --write baserom/SCUS_976.15.iso --full-ghidra-dir build/level-functions/full-ghidra
 python tools/level_context_translation.py --check
+python tools/level_role_graph.py --write baserom/SCUS_976.15.iso --full-ghidra-dir build/level-functions/full-ghidra
+python tools/level_role_graph.py --check
 python tools/progress_status.py --write
 python tools/progress_status.py --check
 ```

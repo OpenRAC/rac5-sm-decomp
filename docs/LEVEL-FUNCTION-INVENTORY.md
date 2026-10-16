@@ -332,3 +332,34 @@ conditional until shared source and the full denominator are qualified.
 The private worklist and pinned ISO/Ghidra exports allow the pairings to be
 reproduced. Code context and data anchors still do not establish shared C
 source for every placement; this is not a qualified denominator.
+
+## Site-paired code-role review
+
+The [role-graph audit](../tools/level_role_graph.py) tests a broader form of
+structural sharing across the 20 retained modules, using levels 01, 16 and 08
+as independent references. Each proposed pair has the same relocation-masked
+body and an independently reviewed boundary. Its data targets require the
+previously accepted data witnesses; internal J/JAL targets must have identical
+body-relative offsets, and external code-relocation sites must correspond.
+Matched callees of the same body shape close recursively, including mutually
+dependent pairs. A callee with different code may occupy the same **call
+role** only when both boundaries are reviewed. Noncontiguous called roles need
+matching relative ranges and agreement between code-only and full-module
+Ghidra exports. Code pointers into an unresolved static interval must identify
+the same offset within a parent of the same masked shape.
+
+A global union rejects 96 pairs that would join two placements from one
+module. It then removes six pairs with ambiguous code-role mappings and 262
+callers whose dependencies lose their final component over seven rounds. The
+remaining **33,149 site-paired leads** add **5,920,476 bytes** of conditional
+candidate savings beyond the stricter context audit, yielding a
+**10,955,612-byte role-mapped scenario**. An independent private audit rehashes
+20,394 participating placements from the pinned modules and checks their data,
+code edges, roles and final union. The generated private worklist and public
+summary retain the input hashes for reproduction.
+
+These are normalized machine-code relationships, not proof that variant
+callees have the same source. The game-wide function catalogue, source
+equivalence and C gates remain incomplete. Neither this scenario nor the
+5,756,360-byte optimistic shape scenario is a qualified ByteMatch denominator
+or percentage.

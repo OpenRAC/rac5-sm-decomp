@@ -273,6 +273,19 @@
     "conditional_candidate_bytes": 16876088,
     "qualified_unique_denominator": null
   },
+  "role_mapped_structural_review": {
+    "reference_modules": [
+      "LEVEL_01.REL",
+      "LEVEL_16.REL",
+      "LEVEL_08.REL"
+    ],
+    "families_by_pair": 33149,
+    "variant_role_edges": 6631,
+    "scatter_role_edges": 622,
+    "additional_candidate_savings": 5920476,
+    "conditional_candidate_bytes": 10955612,
+    "qualified_unique_denominator": null
+  },
   "remaining_for_gamewide_report": [
     "review Ghidra-only and static-only entries and unbounded function spans",
     "validate masked code/data relocation target equivalence beyond the structural leads",
@@ -541,6 +554,7 @@
     "level_split_dedupe": "b3b2a6e5526b06be3b7fbf1405910f3fa42ba48b444301e1ecc1cf847a08bb85",
     "level_shape_scenario": "0b84a17077582c211603f07ef2a0cf8299774270499681112890d513cdc2fe47",
     "level_switch_body": "e5332627ffa1817ffa79178b85cd03a885c13eeb9721fbe1728d99330c32b0d3",
-    "level_context_translation": "7d0e745aa60a764ba5d6629aac3ea6141ea4332085ff98a9f5e913d1b9e37b6b"
+    "level_context_translation": "7d0e745aa60a764ba5d6629aac3ea6141ea4332085ff98a9f5e913d1b9e37b6b",
+    "level_role_graph": "8932f1d517eb273cab2006abff8654bf6ad05f3fc061ef7140be52fcdb06b9b0"
   }
 }
