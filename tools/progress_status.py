@@ -18,6 +18,7 @@ from pathlib import Path
 from boot_assembly import TEXT_SIZE
 from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path
 from level_context_translation import check_summary as check_context_summary
+from level_role_graph import check_summary as check_role_summary
 from level_program_gate import MEASURED_LOADS
 from level_shape_scenario import check_summary as check_shape_summary
 from level_switch_bodies import check_summary as check_switch_summary
@@ -40,6 +41,7 @@ SPLIT_DEDUPE = ROOT / "config/levels/split_dedupe_summary.json"
 SHAPE_SCENARIO = ROOT / "config/levels/shape_scenario_summary.json"
 SWITCH_BODY = ROOT / "config/levels/switch_body_summary.json"
 CONTEXT_TRANSLATION = ROOT / "config/levels/context_translation_summary.json"
+ROLE_GRAPH = ROOT / "config/levels/role_graph_summary.json"
 TARGET = ROOT / "config/target.json"
 ACCEPTED_SYMBOL = "MEMCARD_Busy__Fv"
 
@@ -198,6 +200,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
     check_switch_summary(switch)
     context = json.loads(CONTEXT_TRANSLATION.read_text(encoding="utf-8"))
     check_context_summary(context)
+    role = json.loads(ROLE_GRAPH.read_text(encoding="utf-8"))
+    check_role_summary(role)
     if (inventory["status"] != "candidate_inventory_only"
             or inventory["module_count"] != 21
             or inventory["candidate_code_bytes_by_placement"] !=
@@ -383,6 +387,15 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                 context["conditional_candidate_bytes"],
             "qualified_unique_denominator": None,
         },
+        "role_mapped_structural_review": {
+            "reference_modules": role["reference_modules"],
+            "families_by_pair": role["global_role_pairs"],
+            "variant_role_edges": role["variant_role_edges"],
+            "scatter_role_edges": role["scatter_role_edges"],
+            "additional_candidate_savings": role["additional_candidate_savings"],
+            "conditional_candidate_bytes": role["conditional_candidate_bytes"],
+            "qualified_unique_denominator": None,
+        },
         "remaining_for_gamewide_report": [
             "review Ghidra-only and static-only entries and unbounded function spans",
             "validate masked code/data relocation target equivalence beyond the structural leads",
@@ -407,6 +420,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "level_shape_scenario": digest(SHAPE_SCENARIO),
             "level_switch_body": digest(SWITCH_BODY),
             "level_context_translation": digest(CONTEXT_TRANSLATION),
+            "level_role_graph": digest(ROLE_GRAPH),
         },
     }
 
