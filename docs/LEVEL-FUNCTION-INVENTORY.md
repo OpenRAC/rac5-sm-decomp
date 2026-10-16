@@ -271,13 +271,15 @@ require either the same
 unique 64-byte window, an unambiguous accepted-family reference, or matching
 shifts bracketed within 64 KiB by two independent accepted families.
 
-Using level 01 as the reference against the other **18 retained numbered
-levels**, this closes **1,296 conditional families** spanning 3,189,168 bytes
-by placement. Of 26,695 context/data candidate pairs, 15,709 close; 7,258
-of those need a paired callee to close first. Unioning those links with exact
-and previously accepted structural groups avoids double counting. It adds
-**2,888,612 bytes of candidate savings** and reduces the conditional scenario
-from 24,457,788 to **21,569,176 bytes**.
+Using levels 01 and 16 as independent references across the **19 retained
+numbered levels**, this closes **2,596 conditional families** spanning
+5,353,824 bytes by placement. Of 45,543 context/data candidate pairs,
+26,530 close; 11,929 of those need a paired callee to close first. The data
+window cache is keyed by module as well as address, so reused offsets in
+different levels cannot share a signature accidentally. Unioning these links
+with exact and previously accepted structural groups avoids double counting.
+It adds **3,557,280 bytes of candidate savings** and reduces the conditional
+scenario from 24,457,788 to **20,900,508 bytes**.
 The private worklist and pinned ISO/Ghidra exports allow the pairings to be
 reproduced. Code context and data anchors still do not establish shared C
 source for every placement; this is not a qualified denominator.

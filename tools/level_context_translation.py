@@ -36,6 +36,7 @@ MODULES = ROOT / "config/levels/modules.tsv"
 CODE = ROOT / "config/levels/code_intervals.tsv"
 TARGET = ROOT / "config/target.json"
 REFERENCE = "LEVEL_01.REL"
+REFERENCES = (REFERENCE, "LEVEL_16.REL")
 MAX_ANCHOR_DISTANCE = 65536
 
 
@@ -61,7 +62,8 @@ def context_key(static: list[dict[str, str]], index: int) -> str:
                           .encode("ascii")).hexdigest()
 
 
-def anchored_target(source: int, target: int, anchors: dict,
+def anchored_target(source_module: str, target_module: str,
+                    source: int, target: int, anchors: dict,
                     reverse: dict, ordered: list[int],
                     source_data: bytes, target_data: bytes,
                     source_code_end: int, target_code_end: int,
@@ -75,13 +77,13 @@ def anchored_target(source: int, target: int, anchors: dict,
     if len(direct) == 1 and target in direct and reverse.get(target) == {source}:
         return True
     for module, address, data, code_end, payload_end in (
-            ("source", source, source_data, source_code_end, source_payload_end),
-            ("target", target, target_data, target_code_end, target_payload_end)):
+            (source_module, source, source_data, source_code_end, source_payload_end),
+            (target_module, target, target_data, target_code_end, target_payload_end)):
         if (module, address) not in windows:
             windows[module, address] = unique_data_window(
                 data, code_end, payload_end, address)
-    signature = windows["source", source]
-    if signature is not None and signature == windows["target", target]:
+    signature = windows[source_module, source]
+    if signature is not None and signature == windows[target_module, target]:
         return True
     index = bisect.bisect_left(ordered, source)
     if index == 0 or index == len(ordered):
@@ -224,64 +226,66 @@ def main_write(image: Path) -> dict[str, object]:
                    if len(member) == 1}
     candidate_pairs = {}
     windows = {}
-    for module in compared:
-        if module == REFERENCE:
-            continue
-        anchors = defaultdict(lambda: defaultdict(set))
-        for fingerprint, size, members in previous_members:
-            if REFERENCE not in members or module not in members:
+    for reference in REFERENCES:
+        for module in compared:
+            if module == reference:
                 continue
-            source = references(REFERENCE, members[REFERENCE], size)[1]
-            dest = references(module, members[module], size)[1]
-            if source is None or dest is None or source[0].keys() != dest[0].keys():
-                raise ValueError("accepted data-anchor references changed")
-            for site, address in source[0].items():
-                anchors[address][dest[0][site]].add(fingerprint)
-        ordered = sorted(anchors)
-        reverse = defaultdict(set)
-        for address, targets in anchors.items():
-            for other in targets:
-                reverse[other].add(address)
-        for context, originals in contexts[REFERENCE].items():
-            others = contexts[module].get(context, [])
-            if len(originals) != 1 or len(others) != 1:
-                continue
-            original, other = originals[0], others[0]
-            left_start, right_start = (int(original["start"], 16),
-                                       int(other["start"], 16))
-            size = int(original["body_bytes"])
-            if ((REFERENCE, left_start) in accepted_nodes and
-                    (module, right_start) in accepted_nodes):
-                continue
-            code_a, refs_a = references(REFERENCE, left_start, size)
-            code_b, refs_b = references(module, right_start, size)
-            if (code_a is None or code_a != code_b or refs_a is None or
-                    refs_b is None):
-                continue
-            hi_a, low_a = refs_a
-            hi_b, low_b = refs_b
-            if hi_a.keys() != hi_b.keys() or low_a.keys() != low_b.keys():
-                continue
-            source_end = HEADER.unpack_from(data[REFERENCE])[1]
-            dest_end = HEADER.unpack_from(data[module])[1]
-            if not all(anchored_target(
-                    address, hi_b[site], anchors, reverse, ordered,
-                    data[REFERENCE], data[module], code_ends[REFERENCE],
-                    code_ends[module], source_end, dest_end, windows)
-                    for site, address in hi_a.items()):
-                continue
-            shifts = {hi_b[site] - address for site, address in hi_a.items()}
-            if any(((low_b[site] - value) & 0xFFFF) not in
-                   {shift & 0xFFFF for shift in shifts}
-                   for site, value in low_a.items()):
-                continue
-            candidate_pairs[context, module] = (
-                size, original["masked_lead_sha256"], left_start, right_start)
+            anchors = defaultdict(lambda: defaultdict(set))
+            for fingerprint, size, members in previous_members:
+                if reference not in members or module not in members:
+                    continue
+                source = references(reference, members[reference], size)[1]
+                dest = references(module, members[module], size)[1]
+                if source is None or dest is None or source[0].keys() != dest[0].keys():
+                    raise ValueError("accepted data-anchor references changed")
+                for site, address in source[0].items():
+                    anchors[address][dest[0][site]].add(fingerprint)
+            ordered = sorted(anchors)
+            reverse = defaultdict(set)
+            for address, targets in anchors.items():
+                for other in targets:
+                    reverse[other].add(address)
+            for context, originals in contexts[reference].items():
+                others = contexts[module].get(context, [])
+                if len(originals) != 1 or len(others) != 1:
+                    continue
+                original, other = originals[0], others[0]
+                left_start, right_start = (int(original["start"], 16),
+                                           int(other["start"], 16))
+                size = int(original["body_bytes"])
+                if ((reference, left_start) in accepted_nodes and
+                        (module, right_start) in accepted_nodes):
+                    continue
+                code_a, refs_a = references(reference, left_start, size)
+                code_b, refs_b = references(module, right_start, size)
+                if (code_a is None or code_a != code_b or refs_a is None or
+                        refs_b is None):
+                    continue
+                hi_a, low_a = refs_a
+                hi_b, low_b = refs_b
+                if hi_a.keys() != hi_b.keys() or low_a.keys() != low_b.keys():
+                    continue
+                source_end = HEADER.unpack_from(data[reference])[1]
+                dest_end = HEADER.unpack_from(data[module])[1]
+                if not all(anchored_target(
+                        reference, module, address, hi_b[site],
+                        anchors, reverse, ordered,
+                        data[reference], data[module], code_ends[reference],
+                        code_ends[module], source_end, dest_end, windows)
+                        for site, address in hi_a.items()):
+                    continue
+                shifts = {hi_b[site] - address for site, address in hi_a.items()}
+                if any(((low_b[site] - value) & 0xFFFF) not in
+                       {shift & 0xFFFF for shift in shifts}
+                       for site, value in low_a.items()):
+                    continue
+                candidate_pairs[reference, context, module] = (
+                    size, original["masked_lead_sha256"], left_start, right_start)
 
     pending = {}
     invalid_pairs = 0
-    for (context, module), (size, _masked, left_start, right_start) in candidate_pairs.items():
-        source_calls = external_calls(REFERENCE, left_start, size)
+    for (reference, context, module), (size, _masked, left_start, right_start) in candidate_pairs.items():
+        source_calls = external_calls(reference, left_start, size)
         target_calls = external_calls(module, right_start, size)
         if source_calls.keys() != target_calls.keys():
             invalid_pairs += 1
@@ -289,26 +293,26 @@ def main_write(image: Path) -> dict[str, object]:
         dependencies = set()
         for site, source_target in source_calls.items():
             target = target_calls[site]
-            if ((REFERENCE, source_target) in accepted_nodes and
+            if ((reference, source_target) in accepted_nodes and
                     (module, target) in accepted_nodes):
                 continue
-            source_context = context_ids.get((REFERENCE, source_target))
+            source_context = context_ids.get((reference, source_target))
             target_context = context_ids.get((module, target))
             if (source_context is None or source_context != target_context or
-                    (source_context, module) not in candidate_pairs):
+                    (reference, source_context, module) not in candidate_pairs):
                 invalid_pairs += 1
                 break
-            dependencies.add((source_context, module))
+            dependencies.add((reference, source_context, module))
         else:
-            pending[context, module] = dependencies
+            pending[reference, context, module] = dependencies
     # A pair cannot depend on a candidate rejected by the call-target check.
     closed = close_context_dependencies(pending)
     family_groups = {}
-    for context, module in sorted(closed):
-        size, masked, left_start, right_start = candidate_pairs[context, module]
-        key = context, size, masked, left_start
+    for reference, context, module in sorted(closed):
+        size, masked, left_start, right_start = candidate_pairs[reference, context, module]
+        key = reference, context, size, masked, left_start
         family = family_groups.setdefault(key, {"body_bytes": size,
-            "placements": [(REFERENCE, left_start)]})
+            "placements": [(reference, left_start)]})
         family["placements"].append((module, right_start))
 
     exact = defaultdict(list)
@@ -330,15 +334,15 @@ def main_write(image: Path) -> dict[str, object]:
     _new_exact, new_combined = combined_dedupe_savings(
         exact, accepted + list(family_groups.values()), retained)
     review = ["# Conditional context/data structural leads only; no C match.",
-              "context_sha256\tbody_bytes\tplacements\tmembers"]
-    for (context, size, _masked, _start), family in sorted(family_groups.items()):
-        review.append(f"{context}\t{size}\t{len(family['placements'])}\t" +
+              "reference\tcontext_sha256\tbody_bytes\tplacements\tmembers"]
+    for (reference, context, size, _masked, _start), family in sorted(family_groups.items()):
+        review.append(f"{reference}\t{context}\t{size}\t{len(family['placements'])}\t" +
                       ";".join(f"{name}:0x{start:X}"
                                for name, start in family["placements"]))
     REVIEW.write_text("\n".join(review) + "\n", encoding="utf-8", newline="\n")
     summary = {
         "status": "context_translation_leads_only",
-        "reference_module": REFERENCE,
+        "reference_modules": list(REFERENCES),
         "compared_modules": len(compared),
         "context_pair_candidates": len(candidate_pairs),
         "rejected_call_target_pairs": invalid_pairs,
@@ -375,7 +379,7 @@ def main_write(image: Path) -> dict[str, object]:
 def check_summary(summary: dict[str, object]) -> None:
     split = json.loads(SPLIT.read_text(encoding="utf-8"))
     if (summary["status"] != "context_translation_leads_only"
-            or summary["reference_module"] != REFERENCE
+            or summary["reference_modules"] != list(REFERENCES)
             or summary["compared_modules"] != 19
             or not 0 <= summary["closed_context_pairs"] <=
             summary["context_pair_candidates"]
