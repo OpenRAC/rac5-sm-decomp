@@ -358,6 +358,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
         "context_structural_review": {
             "reference_modules": context["reference_modules"],
             "families": context["context_families"],
+            "full_module_call_placements":
+                context["full_module_call_placements"],
             "collision_rejected_families": context["collision_rejected_families"],
             "callee_removed_pairs": context["callee_removed_pairs"],
             "callee_prune_rounds": context["callee_prune_rounds"],

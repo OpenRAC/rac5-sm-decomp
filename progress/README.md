@@ -40,8 +40,9 @@ also measures **7,060,508 candidate bytes** when identical masked bodies are
 grouped across levels while repeated bodies inside one level stay separate.
 That is a useful aggressive research scenario, not an accepted progress total.
 An additional [context/data review](../docs/LEVEL-FUNCTION-INVENTORY.md#repeated-shapes-with-code-context-and-data-anchors)
-retains 4,247 repeated-shape families, including reviewed split segments,
-after global collision and final-callee checks and gives an **18,732,404-byte conditional
+retains 4,476 repeated-shape families, including reviewed split segments and
+full-module-only direct-call boundaries, after global collision and
+final-callee checks and gives an **18,682,012-byte conditional
 scenario**. This too remains a structural worklist, not counted C progress.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,
@@ -63,7 +64,7 @@ python tools/level_split_dedupe.py --write baserom/SCUS_976.15.iso --ghidra-dir 
 python tools/level_split_dedupe.py --check
 python tools/level_shape_scenario.py --write baserom/SCUS_976.15.iso
 python tools/level_shape_scenario.py --check
-python tools/level_context_translation.py --write baserom/SCUS_976.15.iso
+python tools/level_context_translation.py --write baserom/SCUS_976.15.iso --full-ghidra-dir build/level-functions/full-ghidra
 python tools/level_context_translation.py --check
 python tools/progress_status.py --write
 python tools/progress_status.py --check
