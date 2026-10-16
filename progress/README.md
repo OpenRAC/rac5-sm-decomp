@@ -35,6 +35,10 @@ oversized candidate intervals, leaving 187,276 surrounding bytes unique.
 Its **24,457,788-byte** result, including conditional target-graph matches
 for zero-filled local data and placement-checked partial families, is a
 conditional deduplication scenario, not a verified unique-code denominator.
+An [optimistic masked-shape audit](../docs/LEVEL-FUNCTION-INVENTORY.md#optimistic-relocation-masked-shape-scenario)
+also measures **7,008,576 candidate bytes** when identical masked bodies are
+grouped across levels while repeated bodies inside one level stay separate.
+That is a useful aggressive research scenario, not an accepted progress total.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,
 run the [boot gate](../docs/BOOT-TRIAL-GATE.md), the
@@ -53,6 +57,8 @@ python tools/level_full_module_flow.py --write baserom/SCUS_976.15.iso --ghidra-
 python tools/level_full_module_flow.py --check
 python tools/level_split_dedupe.py --write baserom/SCUS_976.15.iso --ghidra-dir build/level-functions/full-ghidra
 python tools/level_split_dedupe.py --check
+python tools/level_shape_scenario.py --write baserom/SCUS_976.15.iso
+python tools/level_shape_scenario.py --check
 python tools/progress_status.py --write
 python tools/progress_status.py --check
 ```

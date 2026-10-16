@@ -80,6 +80,9 @@ to review categories, including 21 newly called entry leads. A subsequent
 split review selects 4,369 corroborated code segments from 2,651 oversized
 candidate intervals, leaving all unselected bytes unique. None of these analyses
 turns unresolved function/data boundaries into a game-wide percentage.
+An [optimistic shape-only audit](docs/LEVEL-FUNCTION-INVENTORY.md#optimistic-relocation-masked-shape-scenario)
+finds a 7,008,576-byte scenario after relocation masking, but shared C source
+and data-object identities have not been established for those shapes.
 Names, symbol addresses and module hashes are research metadata, not proof of
 matching code. The [roadmap](docs/ROADMAP.md) tracks the remaining gates.
 

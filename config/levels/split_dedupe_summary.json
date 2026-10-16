@@ -35,6 +35,8 @@
   "full_flow_sha256": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
   "code_catalogue_sha256": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
   "module_catalogue_sha256": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
+  "split_review_sha256": "80253ec6b31a4db1650ba54dbe33b1613aca618de5161d1a4100b1dfa4c0413e",
+  "translation_review_sha256": "343e1306b0b375587882319fe1ea00b5adfc8763d13ddcbaf6423a354d2ecad7",
   "overall_percent": null,
   "bytematch_ready": false,
   "warning": "Selected Ghidra spans pass independent return and internal zero-gap checks. Unselected parent bytes remain unique. All shared-code links remain conditional review leads, not accepted retail function boundaries or a progress denominator.",

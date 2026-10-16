@@ -243,6 +243,12 @@
     "conditional_candidate_bytes": 24457788,
     "qualified_unique_denominator": null
   },
+  "optimistic_shape_scenario": {
+    "masked_max_per_module_bytes": 7008576,
+    "masked_one_per_shape_bytes": 6891240,
+    "unrepresented_bytes_kept_unique": 2846960,
+    "qualified_unique_denominator": null
+  },
   "remaining_for_gamewide_report": [
     "review Ghidra-only and static-only entries and unbounded function spans",
     "validate masked code/data relocation target equivalence beyond the structural leads",
@@ -508,6 +514,7 @@
     "level_translation_families": "2c77fa24f1617ded3c48b774b2b731e003bfc057e8d547a67fc1736d89e301b8",
     "level_flow_ranges": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8",
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
-    "level_split_dedupe": "96a203a6eb6dd68a15db2beb838e111e6496225c609d6aefcb7ba09495dc6e5c"
+    "level_split_dedupe": "69d1c00a431931fb24303865e8b1add5ab7636cdbd73b34880656c5a4e074d2d",
+    "level_shape_scenario": "8730518ea150ad082f89a55b9f044f4043df944daa99490bd6fa37489c160c63"
   }
 }
