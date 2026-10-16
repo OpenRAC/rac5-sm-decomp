@@ -75,12 +75,17 @@ def public_evidence(boot: dict[str, object], level: dict[str, object],
             or level.get("counted_matches") != 0
             or not isinstance(level.get("modules"), list)):
         raise ValueError("private level-program gate is incomplete")
-    if (level_c.get("status") != "passed_two_shared_functions"
+    if (level_c.get("status") != "passed_shared_and_frontend"
             or level_c.get("accepted_functions") !=
-            ["func_00000100", "func_shared_zero_buffer"]
-            or level_c.get("counted_matches") != 2
-            or level_c.get("unique_body_bytes") != 80
-            or level_c.get("matched_placement_bytes") != 1600
+            ["func_00000100", "func_shared_zero_buffer", "func_00002F80"]
+            or level_c.get("counted_matches") != 3
+            or level_c.get("unique_body_bytes") != 556
+            or level_c.get("matched_placement_bytes") != 2076
+            or level_c.get("frontend_accepted") != {
+                "module": "FRONTEND.REL", "offset": 0x2F80,
+                "body_bytes": 476, "direct_callers": 4,
+                "module_sha256": next(row["sha256"] for row in records(MODULE_CATALOGUE)
+                                      if row["path"] == "LVL/FRONTEND.REL")}
             or not isinstance(level_c.get("placements"), list)):
         raise ValueError("private shared-level C gate is incomplete")
     keys = ("module", "size", "sha256", "code_interval_bytes",
@@ -102,6 +107,7 @@ def public_evidence(boot: dict[str, object], level: dict[str, object],
         "level_c": {key: level_c[key] for key in
                     ("status", "profile", "accepted_functions", "counted_matches",
                      "unique_body_bytes", "matched_placement_bytes", "placements",
+                     "frontend_accepted",
                      "provisional_controls", "runtime_measured_placements")},
     }
 
@@ -135,14 +141,16 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
     level_source = ROOT / level_profile["accepted"]["source"]
     additional = level_profile["additional_accepted"]
     additional_source = ROOT / additional["source"]
-    if (level_c["status"] != "passed_two_shared_functions"
+    frontend_profile = level_profile["frontend_accepted"]
+    frontend_source = ROOT / frontend_profile["source"]
+    if (level_c["status"] != "passed_shared_and_frontend"
             or level_c["profile"] != level_profile["id"]
             or level_c["accepted_functions"] !=
-            ["func_00000100", "func_shared_zero_buffer"]
-            or level_c["counted_matches"] != 2
-            or level_c["unique_body_bytes"] != 80
-            or level_c["matched_placement_bytes"] != 1600
-            or level_profile["status"] != "qualified_two_shared_functions_only"
+            ["func_00000100", "func_shared_zero_buffer", "func_00002F80"]
+            or level_c["counted_matches"] != 3
+            or level_c["unique_body_bytes"] != 556
+            or level_c["matched_placement_bytes"] != 2076
+            or level_profile["status"] != "qualified_two_shared_functions_and_frontend_only"
             or level_profile["accepted"]["source"] !=
             "src/levels/shared/func_00000100.c"
             or normalized_source_digest(level_source) !=
@@ -151,7 +159,13 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "src/levels/shared/func_shared_zero_buffer.c"
             or additional["body_bytes"] != 72
             or normalized_source_digest(additional_source) !=
-            additional["source_sha256_lf"]):
+            additional["source_sha256_lf"]
+            or frontend_profile["source"] != "src/levels/frontend/func_00002F80.c"
+            or frontend_profile["module"] != "FRONTEND.REL"
+            or frontend_profile["offset"] != 0x2F80
+            or frontend_profile["body_bytes"] != 476
+            or normalized_source_digest(frontend_source) !=
+            frontend_profile["source_sha256_lf"]):
         raise ValueError("accepted level C evidence differs from pinned scope")
     intervals = records(CODE_CATALOGUE)
     modules = records(MODULE_CATALOGUE)
@@ -172,7 +186,12 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
         rows.append({"module": module, "module_sha256": by_name[module]["sha256"],
                      "candidate_code_bytes_by_placement": size,
                      "candidate_code_sha256": row["sha256"],
-                     "accepted_c_bytes": 80 if module.startswith("LEVEL_") else 0})
+                     "accepted_c_bytes": 80 if module.startswith("LEVEL_") else 476})
+    if level_c["frontend_accepted"] != {
+            "module": "FRONTEND.REL", "offset": 0x2F80,
+            "body_bytes": 476, "direct_callers": 4,
+            "module_sha256": by_name["FRONTEND.REL"]["sha256"]}:
+        raise ValueError("frontend C evidence differs from pinned placement")
     measured = {row["module"]: row for row in evidence["levels"]}
     if set(measured) != set(MEASURED_LOADS) or len(evidence["levels"]) != len(measured):
         raise ValueError("level gate receipt lacks the two measured placements")
@@ -282,6 +301,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                    "full_program_gates": sorted(measured),
                    "accepted_shared_functions": ["func_00000100",
                                                  "func_shared_zero_buffer"],
+                   "accepted_frontend_functions": ["func_00002F80"],
+                   "accepted_frontend_c_bytes": 476,
                    "accepted_c_bytes_per_unique_source": 80,
                    "accepted_c_bytes_by_placement": 1600,
                    "known_identical_full_intervals": duplicates},
@@ -413,6 +434,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "accepted_level_c_source_lf": level_profile["accepted"]["source_sha256_lf"],
             "accepted_shared_buffer_c_source_lf":
                 level_profile["additional_accepted"]["source_sha256_lf"],
+            "accepted_frontend_c_source_lf":
+                level_profile["frontend_accepted"]["source_sha256_lf"],
             "level_function_inventory": digest(FUNCTION_INVENTORY),
             "level_ghidra_crosscheck": digest(GHIDRA_CROSSCHECK),
             "level_translation_families": digest(TRANSLATION_FAMILIES),
@@ -446,8 +469,9 @@ def main() -> None:
         OUTPUT.write_text(content, encoding="utf-8", newline="\n")
     elif OUTPUT.read_text(encoding="utf-8") != content:
         raise ValueError("progress snapshot is stale; rerun private gates and --write")
-    print("scoped progress: boot 16/498900 C bytes; two shared level C "
-          "functions (8+72 bytes) at 20 placements; no game-wide percentage")
+    print("scoped progress: boot 16/498900 C bytes; frontend 476 bytes; "
+          "two shared level C functions (8+72 bytes) at 20 placements; "
+          "no qualified game-wide percentage")
 
 
 if __name__ == "__main__":

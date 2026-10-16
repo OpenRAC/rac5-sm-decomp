@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuild one shared level C function at all twenty exact SNR2 placements.
+"""Rebuild accepted shared-level and frontend C at their exact SNR2 placements.
 
 The two additional C sources are compiler controls only. All objects, linker
 outputs and reconstructed modules remain private under ignored build/.
@@ -19,7 +19,7 @@ import cflags
 from boot_symbols import read_boot
 from compile_boot_trial import digest, normalized_digest, require_private_output, run
 from disc import IsoDisc, verify_disc
-from elf import inspect_elf
+from elf import inspect_elf, read_global_functions
 from level_program_gate import MEASURED_LOADS, replace_range, sha
 from r5900_assembly import LINKER_SHA256, check_tool, run_tool
 from rel import (HEADER, RELOCATION, SYMBOL, iter_packed_relocations,
@@ -41,7 +41,8 @@ def profile_and_sources(cpp: Path, cc1: Path, gnu_as: Path) -> tuple[dict, list[
     accepted = profile["accepted"]
     controls = profile["provisional_controls"]
     additional = profile["additional_accepted"]
-    if (profile["status"] != "qualified_two_shared_functions_only"
+    frontend = profile["frontend_accepted"]
+    if (profile["status"] != "qualified_two_shared_functions_and_frontend_only"
             or profile["base_profile"] != "config/boot/compiler_trial.json"
             or base["status"] != "qualified_boot_only"
             or accepted["source"] != "src/levels/shared/func_00000100.c"
@@ -50,6 +51,10 @@ def profile_and_sources(cpp: Path, cc1: Path, gnu_as: Path) -> tuple[dict, list[
             "src/levels/shared/func_shared_zero_buffer.c"
             or additional["body_bytes"] != 72
             or len(additional["placements"]) != 20
+            or frontend["source"] != "src/levels/frontend/func_00002F80.c"
+            or frontend["module"] != "FRONTEND.REL"
+            or frontend["offset"] != 0x2F80
+            or frontend["body_bytes"] != 476
             or [row["source"] for row in controls] != [
                 "nonmatching/levels/func_00000190.c",
                 "nonmatching/levels/func_00002CD8.c"]
@@ -59,11 +64,11 @@ def profile_and_sources(cpp: Path, cc1: Path, gnu_as: Path) -> tuple[dict, list[
     for label, path in (("cpp", cpp), ("cc1", cc1), ("as", gnu_as)):
         if digest(path) != base["tools"][f"{label}_sha256"]:
             raise ValueError(f"{label} differs from pinned RAC5 compiler trial")
-    for row in (accepted, additional, *controls):
+    for row in (accepted, additional, frontend, *controls):
         source = ROOT / row["source"]
         if normalized_digest(source) != row["source_sha256_lf"]:
             raise ValueError(f"level C source differs from measured trial: {source.name}")
-    return profile, [accepted, additional, *controls]
+    return profile, [accepted, additional, frontend, *controls]
 
 
 def compile_sources(profile: dict, sources: list[dict], cpp: Path, cc1: Path,
@@ -109,6 +114,9 @@ def linked_body(row: dict, linker: Path) -> bytes:
     if (int(section["virtual_address"], 16) != row["offset"]
             or section["size"] != row["body_bytes"]):
         raise ValueError(f"linked C body has wrong offset or size: {stem}")
+    if (stem == "func_00002F80" and
+            read_global_functions(elf).get(stem) != (0x2F80, 476)):
+        raise ValueError("FRONTEND C body has no complete owned function symbol")
     data = elf.read_bytes()
     return data[section["file_offset"]:section["file_offset"] + section["size"]]
 
@@ -247,6 +255,56 @@ def shared_boundary(module: str, source: bytes, end: int) -> tuple[int, int]:
     return calls_100, calls_108
 
 
+def frontend_boundary(source: bytes, code_end: int) -> int:
+    """Guard the complete 0x2F80 frontend body and its four direct callers."""
+    import rabbitizer
+
+    start, end = 0x2F80, 0x315C
+    if (rabbitizer.__version__ != "1.16.2" or end > code_end
+            or WORD.unpack_from(source, end - 8)[0] != 0x03E00008):
+        raise ValueError("FRONTEND New Game C boundary differs")
+    head = HEADER.unpack_from(source)
+    named = []
+    for index in range(head[2]):
+        site, kind, symbol_index, addend = unpack_relocation(
+            source, head[1] + index * RELOCATION.size)
+        if start <= site < end:
+            name_at, address, *_ = SYMBOL.unpack_from(
+                source, head[3] + symbol_index * SYMBOL.size)
+            name = source[name_at:source.index(b"\0", name_at)].decode("ascii")
+            named.append((site - start, kind, name, address, addend))
+    if named != [
+            (0x4C, 4, "strncpy", 0, 0),
+            (0x60, 4, "memset", 0, 0),
+            (0x74, 4, "strncpy", 0, 0),
+            (0xE4, 4, "SND_GetGlobalMusicVolume__Fv", 0, 0),
+            (0x1B0, 5, "MCP_WideScreenMaster", 0, 0),
+            (0x1B8, 6, "MCP_WideScreenMaster", 0, 0)]:
+        raise ValueError("FRONTEND New Game imports differ")
+    local = [row for row in iter_packed_relocations(source, head[13], head[1])
+             if start <= row.site < end]
+    if (len(local) != 39 or local[0].site != start + 12
+            or local[0].kind != 1 or local[0].low_site != start + 36):
+        raise ValueError("FRONTEND New Game local fixups differ")
+
+    callers = 0
+    for site in range(CODE_START, code_end, 4):
+        word = WORD.unpack_from(source, site)[0]
+        if word >> 26 in (2, 3):
+            target = (word & 0x03FFFFFF) << 2
+            if not start <= site < end and start < target < end:
+                raise ValueError("direct jump enters FRONTEND C body interior")
+            callers += not start <= site < end and word >> 26 == 3 and target == start
+        if not start <= site < end:
+            instruction = rabbitizer.Instruction(word, site,
+                                                rabbitizer.InstrCategory.R5900)
+            if instruction.isBranch() and start < instruction.getBranchVramGeneric() < end:
+                raise ValueError("branch enters FRONTEND C body interior")
+    if callers != 4:
+        raise ValueError("FRONTEND New Game callers changed")
+    return callers
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("image", type=Path)
@@ -321,10 +379,18 @@ def main() -> None:
                             "shared_buffer_offset": start,
                             "shared_buffer_bytes": len(buffer_body)})
         frontend = disc.file_bytes("LVL/FRONTEND.REL")
+        if sha(frontend) != known["FRONTEND.REL"]:
+            raise ValueError("FRONTEND differs from pinned USA module")
+        callers = frontend_boundary(frontend, ends["FRONTEND.REL"])
         control = bodies["func_00002CD8"]
         if control != frontend[0x2CD8:0x2CD8 + len(control)]:
             raise ValueError("FRONTEND C store control differs")
         candidate = replace_range(frontend, control, 0x2CD8, 0x2CD8 + len(control))
+        frontend_row = profile["frontend_accepted"]
+        frontend_body = bodies["func_00002F80"]
+        if frontend_body != frontend[0x2F80:0x2F80 + 476]:
+            raise ValueError("FRONTEND New Game C body differs")
+        candidate = replace_range(candidate, frontend_body, 0x2F80, 0x2F80 + 476)
         if sha(candidate) != known["FRONTEND.REL"]:
             raise ValueError("FRONTEND complete control module differs")
         base, load_sha, missing = MEASURED_LOADS["FRONTEND.REL"]
@@ -332,18 +398,24 @@ def main() -> None:
                                                  base, addresses)
         if sha(relocated) != load_sha or unresolved != missing:
             raise ValueError("FRONTEND C-linked relocated image differs")
-    report = {"status": "passed_two_shared_functions", "profile": profile["id"],
-              "accepted_functions": ["func_00000100", "func_shared_zero_buffer"],
-              "counted_matches": 2,
-              "unique_body_bytes": 80, "matched_placement_bytes": 1600,
+    report = {"status": "passed_shared_and_frontend", "profile": profile["id"],
+              "accepted_functions": ["func_00000100", "func_shared_zero_buffer",
+                                     "func_00002F80"],
+              "counted_matches": 3,
+              "unique_body_bytes": 556, "matched_placement_bytes": 2076,
+              "frontend_accepted": {"module": "FRONTEND.REL",
+                                    "offset": frontend_row["offset"],
+                                    "body_bytes": len(frontend_body),
+                                    "direct_callers": callers,
+                                    "module_sha256": known["FRONTEND.REL"]},
               "placements": matched,
               "provisional_controls": ["LEVEL_01.REL:0x190:24",
                                        "FRONTEND.REL:0x2CD8:12"],
               "runtime_measured_placements": ["FRONTEND.REL", "LEVEL_01.REL"]}
     REPORT.write_text(json.dumps(report, indent=2) + "\n",
                       encoding="utf-8", newline="\n")
-    print("shared C functions: 8+72 bytes at all 20 level placements; "
-          "20/20 complete modules exact, two provisional controls exact")
+    print("shared C: 8+72 bytes at all 20 level placements; "
+          "FRONTEND New Game: 476 bytes; 21/21 complete modules exact")
 
 
 if __name__ == "__main__":
