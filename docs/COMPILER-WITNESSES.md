@@ -70,8 +70,8 @@ now links every authored body into the boot at once and preserves the exact raw
 ## Campaign expansion
 
 A later authoring campaign grew the same mechanism from twenty bodies to
-**342 compiler-produced C objects**, after hybrid instruction-assembly experiments
-were excluded. The catalogue identifies 325 global function bodies covering 9,912
+**405 compiler-produced C objects**, after hybrid instruction-assembly experiments
+were excluded. The catalogue identifies 350 global function bodies covering 14,808
 code bytes plus 576 zero alignment bytes; 20 object spans lack usable global
 function extents and remain uncatalogued. Objects can contain multiple bodies.
 Sources retain their retail ELF symbols, and the linked ELF must keep the complete

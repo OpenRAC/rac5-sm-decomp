@@ -12,7 +12,7 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **9,912 boot `.text` bytes in 325 C bodies**
+The current catalogue records **14,808 boot `.text` bytes in 350 C bodies**
 across several code areas with one locally reconstructed GNU EE chain and
 `-O2 -G0` ([witness evidence](COMPILER-WITNESSES.md)).
 All of them link together into the complete boot text while preserving the
@@ -24,7 +24,7 @@ transfer it ends in. The reviewed `MEMCARD_Busy__Fv` placement is in
 `src/boot/`; the other bodies remain in `nonmatching/` pending their own
 acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identity,
-rebuilds all 342 objects from authored C and checks that full link in one run;
+rebuilds all 405 objects from authored C and checks that full link in one run;
 its machine-readable report accepts one 16-byte boot-only match after passing.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
 `nop`. An [isolated RAC5 short-loop threshold trial](COMPILER-LOOP-TRIAL.md)
@@ -71,3 +71,54 @@ a similarity score, and never change emitted instructions to pass a gate.
 Qualification is scoped evidence, not a claim that this is the original compiler
 or that all future functions are supported. A failed control invalidates the
 proposed expansion; retain the previous accepted profile until repaired.
+
+## Measured limits of the pinned trial profile (2026-10-16)
+
+A second authoring pass over boot bodies of **65-160 bytes** (282 targets, after
+setting aside 22 handwritten-assembly ranges that no C source can supply) added
+110 more byte-exact intermediate bodies, and measured the following limits. Each
+one is a first-mismatch classification with a source-level cause, so a future
+profile change can be justified and controlled under the rules above. None of
+them is a claim that the pinned profile is wrong for the bodies it already
+reproduces.
+
+1. **R5900 register-save stride.** The pinned `cc1` carries the RAC2
+   neutralisation `if (0 && TARGET_MIPS5900) mips_reg_mode[0] = TImode;`
+   (`config/mips/mips.c`). `GET_MODE_SIZE(mips_reg_mode[0])` is the save-slot
+   stride used by `compute_frame_size` and `save_restore_insns`, so the pinned
+   chain allocates 8-byte callee-saved slots where retail uses 16-byte ones
+   (`sq $s0,0x10($sp)` or `sd $s1,0x10($sp)` beside `sd $ra,0x0($sp)`). The
+   detector is "two or more `$sp` saves at offsets that are multiples of 0x10";
+   looking only for `sq`/`lq` misses about half of them. **155 of the 304
+   candidates in the 65-160 byte range** are affected. Both conventions coexist
+   in the retail binary: `0x01E94128-0x01E95CB0` (dlib, sound) uses 8-byte
+   slots and matches the pinned chain, while `0x01ECF000-0x01EDA400` (Sony
+   prebuilt, libgcc, C++ runtime) and the EH tables use 16-byte slots. A body
+   like `sceCdSyncS` reproduces **96 of 108 bytes with an instruction-identical
+   body**, differing only in the prologue and epilogue. Any change here needs a
+   per-file opt-in, because a global switch would break the bodies that already
+   match with 8-byte slots.
+2. **Zero-division guard.** The pinned chain always emits
+   `beql $rt,$zero ; break 0,7` before `div` (`mips.md`, `divmodsi4`, under
+   `!TARGET_NO_CHECK_ZERO_DIV`). A sweep of the retail `.text` finds **104 of
+   111** `div`/`divu` sites unguarded, so the retail build used
+   `-mno-check-zero-division`. No body containing an integer division can match
+   under the current flags.
+3. **Sibling calls.** Retail emits a direct `j` for some tail calls; the pinned
+   chain never does (the reconstructed sources comment the option out as
+   "retail behaviour" for RAC2). A measured set of bodies ends in an
+   unguarded `j`.
+
+Non-profile limits, recorded for triage rather than for a profile change: bodies
+whose jump table lives in `.rodata` cannot be checked by the per-body harness
+(which places `.text` only); `va_start` from a wrapper needs the two lines of
+`gcc/ginclude/stdarg.h` copied in, and the pinned `cpp` has no include path; the
+retail lays forwarded stack arguments at 8-byte intervals where the pinned chain
+uses 4; and one unlabelled fragment of neighbouring code may follow a compiled
+body inside its next-label interval, which the catalogue records as an
+uncatalogued span rather than as part of the body.
+
+A span whose compiled object exposes no function symbol in the linked image is
+reported by the catalogue tool and left uncatalogued rather than counted; 55 of
+the 405 spans are in that state today, and the complete-program gate still
+checks their bytes. Investigating the cause is open work.
