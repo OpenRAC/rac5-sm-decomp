@@ -254,10 +254,11 @@
       "LEVEL_01.REL",
       "LEVEL_16.REL"
     ],
-    "families": 2596,
+    "families": 2513,
+    "collision_rejected_families": 83,
     "dependency_closed_pairs": 11929,
-    "additional_candidate_savings": 3557280,
-    "conditional_candidate_bytes": 20900508,
+    "additional_candidate_savings": 3520092,
+    "conditional_candidate_bytes": 20937696,
     "qualified_unique_denominator": null
   },
   "remaining_for_gamewide_report": [
@@ -527,6 +528,6 @@
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
     "level_split_dedupe": "69d1c00a431931fb24303865e8b1add5ab7636cdbd73b34880656c5a4e074d2d",
     "level_shape_scenario": "8730518ea150ad082f89a55b9f044f4043df944daa99490bd6fa37489c160c63",
-    "level_context_translation": "a6f92a5a9d06c0fc75ce801fdfb4dce17d69d32dd1677191b7a0251c907c7168"
+    "level_context_translation": "d09f77f3c4a721f198f1b72adf3a45fe065cb5d7df31cc283baddfa73ee8f18b"
   }
 }

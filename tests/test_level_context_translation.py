@@ -10,10 +10,23 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from level_context_translation import (OUTPUT, anchored_target, check_summary,
                                        close_context_dependencies,
-                                       context_key)  # noqa: E402
+                                       context_key,
+                                       select_noncolliding_families)  # noqa: E402
 
 
 class LevelContextTranslationTests(unittest.TestCase):
+    def test_global_union_rejects_same_module_collision(self) -> None:
+        large = {"body_bytes": 8, "placements": [("A", 0), ("B", 0), ("C", 0)]}
+        conflicting = {"body_bytes": 8, "placements": [("A", 8), ("B", 0)]}
+        selected, rejected = select_noncolliding_families(
+            {}, [], {"large": large, "conflicting": conflicting}, {"A", "B", "C"})
+        self.assertEqual(set(selected), {"large"})
+        self.assertEqual(rejected, 1)
+        selected, rejected = select_noncolliding_families(
+            {}, [large], {"conflicting": conflicting}, {"A", "B", "C"})
+        self.assertEqual(selected, {})
+        self.assertEqual(rejected, 1)
+
     def test_context_callgraph_needs_closed_callee_pair(self) -> None:
         callee = ("callee", "LEVEL_02.REL")
         caller = ("caller", "LEVEL_02.REL")

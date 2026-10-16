@@ -113,6 +113,80 @@ def close_context_dependencies(pending: dict[tuple[str, str], set]) -> set:
         closed.update(fresh)
 
 
+def select_noncolliding_families(exact: dict, accepted: list[dict],
+                                 candidates: dict, retained: set[str]
+                                 ) -> tuple[dict, int]:
+    """Never merge two distinct placements from the same module transitively."""
+    def evaluate(order: list) -> tuple[dict, int, int]:
+        parent = {}
+        modules = {}
+        sizes = {}
+
+        def root(node):
+            while parent[node] != node:
+                parent[node] = parent[parent[node]]
+                node = parent[node]
+            return node
+
+        def unite(placements: list[tuple[str, int]], size: int) -> bool:
+            nodes = [node for node in placements if node[0] in retained]
+            if len({module for module, _start in nodes}) != len(nodes):
+                return False
+            for node in nodes:
+                if node not in parent:
+                    parent[node] = node
+                    modules[node] = {node[0]}
+                    sizes[node] = size
+                elif sizes[node] != size:
+                    raise ValueError("candidate node has conflicting body sizes")
+            roots = list(dict.fromkeys(root(node) for node in nodes))
+            used = set()
+            for item in roots:
+                if used & modules[item]:
+                    return False
+                used |= modules[item]
+            if roots:
+                primary = roots[0]
+                for item in roots[1:]:
+                    parent[item] = primary
+                    modules[primary] |= modules[item]
+            return True
+
+        for (size, _hash), group in exact.items():
+            nodes = [(row["module"], int(row["start"], 16)) for row in group]
+            if len({module for module, _start in nodes if module in retained}) != sum(
+                    module in retained for module, _start in nodes):
+                continue  # Mirrors the exact-group repeat guard.
+            if not unite(nodes, size):
+                raise ValueError("exact candidate groups collide by module")
+        for family in accepted:
+            if not unite(family["placements"], family["body_bytes"]):
+                raise ValueError("previously accepted groups collide by module")
+
+        selected = {}
+        rejected = 0
+        gain = 0
+        for key in order:
+            family = candidates[key]
+            nodes = [node for node in family["placements"] if node[0] in retained]
+            before = len({root(node) for node in nodes if node in parent}) + sum(
+                node not in parent for node in nodes)
+            if unite(family["placements"], family["body_bytes"]):
+                selected[key] = family
+                gain += family["body_bytes"] * max(0, before - 1)
+            else:
+                rejected += 1
+        return selected, rejected, gain
+
+    keys = list(candidates)
+    weighted = sorted(keys, key=lambda key: (
+        -candidates[key]["body_bytes"] * (len(candidates[key]["placements"]) - 1),
+        key))
+    choices = (evaluate(weighted), evaluate(sorted(keys)))
+    selected, rejected, _gain = max(choices, key=lambda result: result[2])
+    return selected, rejected
+
+
 def main_write(image: Path) -> dict[str, object]:
     inventory = json.loads(INVENTORY.read_text(encoding="utf-8"))
     split = json.loads(SPLIT.read_text(encoding="utf-8"))
@@ -331,6 +405,9 @@ def main_write(image: Path) -> dict[str, object]:
     if (old_exact != split["split_aware_exact_candidate_savings"] or
             old_combined != split["combined_candidate_savings"]):
         raise ValueError("context audit does not reproduce split accounting")
+    raw_context_families = len(family_groups)
+    family_groups, collision_rejections = select_noncolliding_families(
+        exact, accepted, family_groups, retained)
     _new_exact, new_combined = combined_dedupe_savings(
         exact, accepted + list(family_groups.values()), retained)
     review = ["# Conditional context/data structural leads only; no C match.",
@@ -348,6 +425,8 @@ def main_write(image: Path) -> dict[str, object]:
         "rejected_call_target_pairs": invalid_pairs,
         "closed_context_pairs": len(closed),
         "dependency_closed_pairs": sum(bool(pending[key]) for key in closed),
+        "pre_union_context_families": raw_context_families,
+        "collision_rejected_families": collision_rejections,
         "context_families": len(family_groups),
         "placement_body_bytes": sum(item["body_bytes"] * len(item["placements"])
                                     for item in family_groups.values()),
@@ -387,6 +466,8 @@ def check_summary(summary: dict[str, object]) -> None:
             summary["closed_context_pairs"]
             or not 0 <= summary["rejected_call_target_pairs"] <=
             summary["context_pair_candidates"]
+            or summary["pre_union_context_families"] !=
+            summary["context_families"] + summary["collision_rejected_families"]
             or summary["context_families"] < 0
             or summary["placement_body_bytes"] < 0
             or summary["previous_combined_candidate_savings"] !=
