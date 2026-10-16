@@ -11,18 +11,34 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from level_context_translation import (OUTPUT, anchored_target, check_summary,
                                        close_context_dependencies,
                                        context_key,
+                                       prune_uncovered_calls,
                                        select_noncolliding_families)  # noqa: E402
 
 
 class LevelContextTranslationTests(unittest.TestCase):
+    def test_removed_callee_cascades_to_its_caller(self) -> None:
+        families = {
+            "caller": {"body_bytes": 8, "placements": [("A", 0), ("B", 0)]},
+            "callee": {"body_bytes": 8, "placements": [("A", 100), ("B", 100)]},
+        }
+
+        def calls(_module, start, _size):
+            return {4: 100} if start == 0 else {4: 200}
+
+        selected, removed, groups, rounds = prune_uncovered_calls(
+            families, {}, [], {"A", "B"}, calls)
+        self.assertEqual(selected, {})
+        self.assertEqual((removed, groups, rounds), (2, 2, 3))
+
     def test_global_union_rejects_same_module_collision(self) -> None:
         large = {"body_bytes": 8, "placements": [("A", 0), ("B", 0), ("C", 0)]}
         conflicting = {"body_bytes": 8, "placements": [("A", 8), ("B", 0)]}
-        selected, rejected = select_noncolliding_families(
+        selected, rejected, components = select_noncolliding_families(
             {}, [], {"large": large, "conflicting": conflicting}, {"A", "B", "C"})
         self.assertEqual(set(selected), {"large"})
         self.assertEqual(rejected, 1)
-        selected, rejected = select_noncolliding_families(
+        self.assertEqual(components["A", 0], components["B", 0])
+        selected, rejected, _components = select_noncolliding_families(
             {}, [large], {"conflicting": conflicting}, {"A", "B", "C"})
         self.assertEqual(selected, {})
         self.assertEqual(rejected, 1)

@@ -115,9 +115,9 @@ def close_context_dependencies(pending: dict[tuple[str, str], set]) -> set:
 
 def select_noncolliding_families(exact: dict, accepted: list[dict],
                                  candidates: dict, retained: set[str]
-                                 ) -> tuple[dict, int]:
+                                 ) -> tuple[dict, int, dict]:
     """Never merge two distinct placements from the same module transitively."""
-    def evaluate(order: list) -> tuple[dict, int, int]:
+    def evaluate(order: list) -> tuple[dict, int, int, dict]:
         parent = {}
         modules = {}
         sizes = {}
@@ -176,15 +176,57 @@ def select_noncolliding_families(exact: dict, accepted: list[dict],
                 gain += family["body_bytes"] * max(0, before - 1)
             else:
                 rejected += 1
-        return selected, rejected, gain
+        components = {node: root(node) for node in parent}
+        return selected, rejected, gain, components
 
     keys = list(candidates)
     weighted = sorted(keys, key=lambda key: (
         -candidates[key]["body_bytes"] * (len(candidates[key]["placements"]) - 1),
         key))
     choices = (evaluate(weighted), evaluate(sorted(keys)))
-    selected, rejected, _gain = max(choices, key=lambda result: result[2])
-    return selected, rejected
+    selected, rejected, _gain, components = max(
+        choices, key=lambda result: result[2])
+    return selected, rejected, components
+
+
+def prune_uncovered_calls(families: dict, exact: dict, accepted: list[dict],
+                          retained: set[str], external_calls
+                          ) -> tuple[dict, int, int, int]:
+    """Remove caller placements whose callee lost its final equivalence link."""
+    current = {key: {**family, "placements": list(family["placements"])}
+               for key, family in families.items()}
+    removed_pairs = removed_families = 0
+    for round_number in range(1, len(current) + 2):
+        _selected, rejected, components = select_noncolliding_families(
+            exact, accepted, current, retained)
+        if rejected:
+            raise ValueError("callee pruning received colliding context families")
+        next_groups = {}
+        changed = False
+        for key, family in current.items():
+            size = family["body_bytes"]
+            reference, ref_start = family["placements"][0]
+            reference_calls = external_calls(reference, ref_start, size)
+            kept = [(reference, ref_start)]
+            for module, start in family["placements"][1:]:
+                calls = external_calls(module, start, size)
+                if (calls.keys() == reference_calls.keys() and all(
+                        components.get((reference, ref_target)) is not None and
+                        components.get((reference, ref_target)) ==
+                        components.get((module, calls[site]))
+                        for site, ref_target in reference_calls.items())):
+                    kept.append((module, start))
+                else:
+                    removed_pairs += 1
+                    changed = True
+            if len(kept) > 1:
+                next_groups[key] = {**family, "placements": kept}
+            else:
+                removed_families += 1
+        if not changed:
+            return current, removed_pairs, removed_families, round_number
+        current = next_groups
+    raise ValueError("context callee pruning did not converge")
 
 
 def main_write(image: Path) -> dict[str, object]:
@@ -406,8 +448,11 @@ def main_write(image: Path) -> dict[str, object]:
             old_combined != split["combined_candidate_savings"]):
         raise ValueError("context audit does not reproduce split accounting")
     raw_context_families = len(family_groups)
-    family_groups, collision_rejections = select_noncolliding_families(
+    family_groups, collision_rejections, _components = select_noncolliding_families(
         exact, accepted, family_groups, retained)
+    family_groups, callee_removed_pairs, callee_removed_families, prune_rounds = (
+        prune_uncovered_calls(family_groups, exact, accepted, retained,
+                              external_calls))
     _new_exact, new_combined = combined_dedupe_savings(
         exact, accepted + list(family_groups.values()), retained)
     review = ["# Conditional context/data structural leads only; no C match.",
@@ -427,6 +472,9 @@ def main_write(image: Path) -> dict[str, object]:
         "dependency_closed_pairs": sum(bool(pending[key]) for key in closed),
         "pre_union_context_families": raw_context_families,
         "collision_rejected_families": collision_rejections,
+        "callee_removed_pairs": callee_removed_pairs,
+        "callee_removed_families": callee_removed_families,
+        "callee_prune_rounds": prune_rounds,
         "context_families": len(family_groups),
         "placement_body_bytes": sum(item["body_bytes"] * len(item["placements"])
                                     for item in family_groups.values()),
@@ -467,7 +515,10 @@ def check_summary(summary: dict[str, object]) -> None:
             or not 0 <= summary["rejected_call_target_pairs"] <=
             summary["context_pair_candidates"]
             or summary["pre_union_context_families"] !=
-            summary["context_families"] + summary["collision_rejected_families"]
+            summary["context_families"] + summary["collision_rejected_families"] +
+            summary["callee_removed_families"]
+            or summary["callee_removed_pairs"] < summary["callee_removed_families"]
+            or summary["callee_prune_rounds"] < 1
             or summary["context_families"] < 0
             or summary["placement_body_bytes"] < 0
             or summary["previous_combined_candidate_savings"] !=

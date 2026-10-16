@@ -274,15 +274,19 @@ shifts bracketed within 64 KiB by two independent accepted families.
 Using levels 01, 16 and 08 as independent references across the **19 retained
 numbered levels**, the callgraph closes 3,940 provisional context families.
 The global union rejects 124 that would connect two distinct placements from
-the same module, leaving **3,816 conditional families** spanning **8,390,528
-bytes by placement**. Of 72,135 context/data candidate pairs,
-41,797 close in the callgraph; 18,957 of those need a paired callee first. The data
+the same module. Removing those links can invalidate callers: four further
+passes remove 1,445 caller placements and 103 families whose callees no longer
+share a final component. The result is **3,713 conditional families** spanning
+**8,286,000 bytes by placement**. Independent audits find no remaining
+same-module collision or uncovered local callee. Of 72,135 context/data
+candidate pairs, 41,797 initially close in the callgraph; 18,957 of those
+need a paired callee first. The data
 window cache is keyed by module as well as address, so reused offsets in
 different levels cannot share a signature accidentally. Unioning these links
 with exact and previously accepted structural groups avoids double counting.
-It adds **3,607,720 bytes of candidate savings** and reduces the conditional
-scenario from 24,457,788 to **20,850,068 bytes**. The third reference accounts
-for 87,628 of that net reduction after overlap and collision checks.
+It adds **3,563,080 bytes of candidate savings** and reduces the conditional
+scenario from 24,457,788 to **20,894,708 bytes**. These links remain
+conditional until shared source and the full denominator are qualified.
 The private worklist and pinned ISO/Ghidra exports allow the pairings to be
 reproduced. Code context and data anchors still do not establish shared C
 source for every placement; this is not a qualified denominator.

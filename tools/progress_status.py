@@ -359,6 +359,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "reference_modules": context["reference_modules"],
             "families": context["context_families"],
             "collision_rejected_families": context["collision_rejected_families"],
+            "callee_removed_pairs": context["callee_removed_pairs"],
+            "callee_prune_rounds": context["callee_prune_rounds"],
             "dependency_closed_pairs": context["dependency_closed_pairs"],
             "additional_candidate_savings":
                 context["additional_candidate_savings"],
