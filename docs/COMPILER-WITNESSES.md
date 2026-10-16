@@ -6,10 +6,13 @@ intervals and each local candidate ELF were compared at the same virtual
 addresses, with no relocation masking. This is evidence that one **candidate**
 toolchain and `-O2 -G0` can produce these limited intervals. It does not
 identify the original compiler; the later full-boot gate supplies the
-separate loaded-byte evidence for one accepted placement.
+separate loaded-byte evidence for the accepted placements.
 The `MEMCARD_Busy__Fv` source has since moved to `src/boot/` under the
-[boot-only acceptance gate](BOOT-MATCH-SCOPE.md). The other nineteen functions
-remain in `nonmatching/` and contribute no accepted matches.
+[boot-only acceptance gate](BOOT-MATCH-SCOPE.md); a later review promoted 30
+further bodies to the same directory, so 31 accepted boot placements now supply
+their own compiled bytes. The remaining functions of this early table stay in
+`nonmatching/` and contribute no accepted matches unless they were among the
+reviewed 30.
 
 | Source | Boot interval | Functions | Exact slice | Candidate slice SHA-256 |
 | --- | --- | ---: | ---: | --- |
@@ -64,8 +67,8 @@ not qualify a whole-program match. A later
 `MEMCARD_Busy__Fv` C object into the entire boot assembly and kept the full
 file-backed bytes exact. A [combined integration witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)
 now links every authored body into the boot at once and preserves the exact raw
-`PT_LOAD` bytes, program header and ELF entry; it remains accepted only
-`MEMCARD_Busy__Fv` under the boot-only gate, and every other body is uncounted.
+`PT_LOAD` bytes, program header and ELF entry; linking stays provisional, and
+only the reviewed placements in the explicit gate set are counted.
 
 ## Campaign expansion
 
@@ -79,7 +82,10 @@ One body,
 `-mno-check-zero-division` recorded in
 [`config/cflags.txt`](../config/cflags.txt).
 Sources retain their retail ELF symbols, and the linked ELF must keep the complete
-856,120-byte boot byte-identical. The generated
+856,120-byte boot byte-identical. **31 of these bodies** have since completed
+[promotion review](BOOT-PROMOTION.md) and now live in `src/boot/`: together with
+`MEMCARD_Busy__Fv` they supply 1,064 boot `.text` bytes from their own compiled
+placements, while every other body remains an uncounted witness. The generated
 [`config/boot/witness_boundaries.tsv`](../config/boot/witness_boundaries.tsv)
 catalogue lists each identifiable linked body with its compiled extent, following zero
 alignment and the kind of control transfer it ends in (`jr_ra`, `jump`,

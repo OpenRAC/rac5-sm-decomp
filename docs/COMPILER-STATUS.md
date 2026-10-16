@@ -20,12 +20,13 @@ retail raw `PT_LOAD` bytes and program header
 ([combined witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)); the
 generated `config/boot/witness_boundaries.tsv` catalogue lists each linked body
 with its compiled extent, its following zero alignment and the kind of control
-transfer it ends in. The reviewed `MEMCARD_Busy__Fv` placement is in
-`src/boot/`; the other bodies remain in `nonmatching/` pending their own
-acceptance reviews.
+transfer it ends in. Thirty-one reviewed placements (1,064 bytes, starting with
+`MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
+`nonmatching/` pending their own acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identity,
 rebuilds all 406 objects from authored C and checks that full link in one run;
-its machine-readable report accepts one 16-byte boot-only match after passing.
+its machine-readable report accepts 31 boot-only placements (1,064 bytes) after
+passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
 `nop`. An [isolated RAC5 short-loop threshold trial](COMPILER-LOOP-TRIAL.md)
 now reproduces that function while leaving all earlier object hashes unchanged.
@@ -38,11 +39,13 @@ families still need controls before qualifying a general compiler profile.
 In particular, RAC2's reconstructed GNU EE-GCC game profile and its Sony SDK
 profile have **not** been qualified for Size Matters. The repository now has
 a [boot-only compiler profile](../config/boot/compiler_trial.json) accepted
-for one reviewed placement and one
+for its 31 reviewed placements and one
 [RAC5-only patch](../tools/compiler/patches/0001-rac5-short-loop-six.patch).
-It has no general `config/cflags.txt` or game-wide C/C++ percentage.
+Its per-source options live in
+[`config/cflags.txt`](../config/cflags.txt); it is not a game-wide C/C++
+qualification and publishes no game-wide percentage.
 
-To expand this beyond the accepted boot placement, establish complete
+To expand this beyond the accepted boot placements, establish complete
 assembly and loaded-program baselines for the applicable level modules, then
 compare candidate C++/C toolchains and flags with independent functions and
 controls across code families. A local slice alone does not qualify a match.
