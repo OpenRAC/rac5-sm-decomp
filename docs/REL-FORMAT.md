@@ -43,6 +43,15 @@ are 26-bit jump and 32-bit word fixups respectively. These interpretations
 were checked against the boot's relocation helper at `0x01E9AE08`; the
 catalogue **counts sites but never applies fixups**.
 
+The stream is **not sorted by site address**: absolute descriptors can move
+backward, and level 01 has 2,527 such decreases. The loader must retain stream
+order because HI16 looks ahead within that stream. Analyses that slice fixups
+by a function's address range instead sort a separate copy after decoding,
+preserving each HI16's original LO16 link. A packed-stream LO16 can therefore
+belong to a different function from its HI16; the context audit only substitutes
+a local low site when the instruction and relocation evidence proves the same
+immediate and effective target.
+
 All 21 modules have a stream at the end of their symbol table. The scanner
 reaches a terminator at the exact file end in each module, validates that
 every site is aligned and within the pre-relocation-table payload, and finds

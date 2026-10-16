@@ -17,10 +17,28 @@ from level_context_translation import (OUTPUT, anchored_target, check_summary,
                                        context_key, context_units,
                                        prune_uncovered_calls,
                                        select_noncolliding_families,
+                                       semantic_hi_pairs,
                                        unique_zero_run)  # noqa: E402
+from rel import PackedRelocation  # noqa: E402
 
 
 class LevelContextTranslationTests(unittest.TestCase):
+    def test_cross_body_hi_uses_identical_local_delay_slot_low(self) -> None:
+        data = bytearray(512)
+        struct.pack_into("<I", data, 0x90, 0x3C020000)
+        struct.pack_into("<I", data, 0x94, 0x10000074)
+        struct.pack_into("<I", data, 0x98, 0x24440180)
+        struct.pack_into("<I", data, 0xC8, 0x24440180)
+        fixups = [PackedRelocation(1, 0x90, 0xC8),
+                  PackedRelocation(0, 0x98)]
+        self.assertEqual(semantic_hi_pairs(data, fixups, 0x80, 0xC0, 0x100),
+                         {0x90: PackedRelocation(1, 0x90, 0x98)})
+        struct.pack_into("<I", data, 0xC8, 0x24440184)
+        self.assertEqual(semantic_hi_pairs(data, fixups, 0x80, 0xC0, 0x100), {})
+        struct.pack_into("<I", data, 0xC8, 0x24440180)
+        struct.pack_into("<I", data, 0x94, 0x24420100)
+        self.assertEqual(semantic_hi_pairs(data, fixups, 0x80, 0xC0, 0x100), {})
+
     def test_code_pointer_pair_requires_complete_local_pair(self) -> None:
         data = bytearray(0x200)
         struct.pack_into("<I", data, 0x90, 0x3C010000)

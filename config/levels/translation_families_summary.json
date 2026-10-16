@@ -1,24 +1,24 @@
 {
   "status": "structural_translation_leads",
   "module_count": 21,
-  "group_count": 2416,
-  "placement_body_bytes": 8150148,
-  "template_body_bytes": 687524,
-  "callgraph_resolved_groups": 959,
-  "callgraph_placement_body_bytes": 4167524,
+  "group_count": 2415,
+  "placement_body_bytes": 8146612,
+  "template_body_bytes": 687372,
+  "callgraph_resolved_groups": 958,
+  "callgraph_placement_body_bytes": 4166564,
   "groups_with_pointer_or_nonzero_tail": 496,
   "placement_bytes_with_pointer_or_nonzero_tail": 1198916,
   "unique_data_window_groups": 36,
   "unique_data_window_placement_bytes": 396016,
-  "extra_candidate_savings_beyond_exact": 5447924,
-  "template_lead_upper_bound_bytes": 27720968,
+  "extra_candidate_savings_beyond_exact": 5444816,
+  "template_lead_upper_bound_bytes": 27724076,
   "rejection_counts": {
     "boundary_disagreement": 433,
-    "code_relocation_or_unpaired_hi": 849,
-    "different_local_code_targets": 246,
-    "nonuniform_data_translation": 759,
+    "code_relocation_or_unpaired_hi": 855,
+    "different_local_code_targets": 243,
+    "nonuniform_data_translation": 755,
     "repeated_module": 281,
-    "unresolved_callgraph_dependencies": 1267
+    "unresolved_callgraph_dependencies": 1269
   },
   "largest_groups": [
     {

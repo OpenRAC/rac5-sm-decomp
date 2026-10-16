@@ -204,11 +204,11 @@
     "no_return_cross_limit_or_noncontiguous": 1634
   },
   "structural_shared_code_leads": {
-    "families": 2416,
-    "placement_body_bytes": 8150148,
-    "template_body_bytes": 687524,
-    "local_callgraph_resolved_families": 959,
-    "candidate_upper_bound_after_translation": 27720968,
+    "families": 2415,
+    "placement_body_bytes": 8146612,
+    "template_body_bytes": 687372,
+    "local_callgraph_resolved_families": 958,
+    "candidate_upper_bound_after_translation": 27724076,
     "qualified_unique_denominator": null
   },
   "flow_range_review": {
@@ -234,13 +234,13 @@
     "corroborated_segments": 6245,
     "selected_span_bytes": 6518180,
     "uncollapsed_parent_bytes": 294836,
-    "closed_structural_groups": 177,
-    "newly_closed_static_groups": 245,
-    "accepted_target_graph_groups": 81,
-    "accepted_target_graph_placement_bytes": 933244,
-    "closed_partial_groups": 33,
-    "closed_partial_placement_bytes": 469624,
-    "conditional_candidate_bytes": 23446344,
+    "closed_structural_groups": 176,
+    "newly_closed_static_groups": 243,
+    "accepted_target_graph_groups": 80,
+    "accepted_target_graph_placement_bytes": 915944,
+    "closed_partial_groups": 31,
+    "closed_partial_placement_bytes": 455924,
+    "conditional_candidate_bytes": 23471984,
     "qualified_unique_denominator": null
   },
   "optimistic_shape_scenario": {
@@ -261,15 +261,16 @@
       "LEVEL_16.REL",
       "LEVEL_08.REL"
     ],
-    "families": 5454,
+    "families": 5621,
     "full_module_call_placements": 2144,
-    "switch_context_families": 60,
+    "semantic_hi_sites": 38,
+    "switch_context_families": 62,
     "collision_rejected_families": 138,
-    "callee_removed_pairs": 1949,
+    "callee_removed_pairs": 1957,
     "callee_prune_rounds": 5,
-    "dependency_closed_pairs": 29426,
-    "additional_candidate_savings": 6347468,
-    "conditional_candidate_bytes": 17098876,
+    "dependency_closed_pairs": 31340,
+    "additional_candidate_savings": 6595896,
+    "conditional_candidate_bytes": 16876088,
     "qualified_unique_denominator": null
   },
   "remaining_for_gamewide_report": [
@@ -534,12 +535,12 @@
     "accepted_shared_buffer_c_source_lf": "8425fefc73b121bd3eb6ffc09e4c49bf6425958c0f5b63d638af3b11d6c6e387",
     "level_function_inventory": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
     "level_ghidra_crosscheck": "0f00587cd4f346955d8264343f93cde9259170ed8e0c61259cada3682b979f9d",
-    "level_translation_families": "2c77fa24f1617ded3c48b774b2b731e003bfc057e8d547a67fc1736d89e301b8",
+    "level_translation_families": "d0518db3488ffcf89c6baea26b7a8b5da474e6026301063f373df0ed0c0359be",
     "level_flow_ranges": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8",
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
-    "level_split_dedupe": "4878a743c9fce9feca0e47d881b3e1fa4475bc4724a71fbe563a936cc4a1fe4c",
-    "level_shape_scenario": "ec50eba848c3d0ac4fff65dce22db801e075bfa5e0af1362856131eb7aaa8ca4",
-    "level_switch_body": "071f25627fe9977ce8512d32210d5adbc894da42c596a449f5045ab6b3cd27e1",
-    "level_context_translation": "6fb624d176ca23ddcc6e113c370e5314e99fdd3fde1ca2373f53186d04e9455f"
+    "level_split_dedupe": "b3b2a6e5526b06be3b7fbf1405910f3fa42ba48b444301e1ecc1cf847a08bb85",
+    "level_shape_scenario": "0b84a17077582c211603f07ef2a0cf8299774270499681112890d513cdc2fe47",
+    "level_switch_body": "e5332627ffa1817ffa79178b85cd03a885c13eeb9721fbe1728d99330c32b0d3",
+    "level_context_translation": "7d0e745aa60a764ba5d6629aac3ea6141ea4332085ff98a9f5e913d1b9e37b6b"
   }
 }

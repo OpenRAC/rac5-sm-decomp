@@ -22,7 +22,7 @@ from level_switch_bodies import check_summary as check_switch_summary
 from level_translation_families import (combined_dedupe_savings, ghidra_confirmed,
                                         local_code_references, local_references,
                                         unique_data_window)
-from rel import HEADER, iter_packed_relocations
+from rel import HEADER, PackedRelocation, packed_relocations_by_site
 
 ROOT = Path(__file__).resolve().parent.parent
 WORK = ROOT / "build/level-functions"
@@ -102,6 +102,40 @@ def code_pointer_fixups(data: bytes, local: list, start: int, end: int,
             targets[item.site] = target
             paired_sites.update((item.site, item.low_site))
     return targets, paired_sites
+
+
+def semantic_hi_pairs(data: bytes, local: list, start: int, end: int,
+                      code_end: int) -> dict[int, PackedRelocation]:
+    """Resolve a cross-body loader HI/LO using a corroborated local delay-slot LO.
+
+    The packed stream can select a later LO in another function. This narrow
+    pattern proves the local ADDIU uses the same low immediate and register,
+    so replacing the lookup site does not change the loader's target value.
+    """
+    low_sites = {item.site for item in local if item.kind == 0}
+    resolved = {}
+    for item in local:
+        if (item.kind != 1 or item.low_site is None or
+                start <= item.low_site < end or item.site + 12 > end or
+                item.site + 8 not in low_sites):
+            continue
+        high, branch, low = (int.from_bytes(data[item.site + offset:
+                                                item.site + offset + 4], "little")
+                             for offset in (0, 4, 8))
+        high_register = (high >> 16) & 31
+        if (high >> 26 != 15 or (high >> 21) & 31 or not high_register or
+                branch >> 26 != 4 or (branch >> 21) & 31 or
+                (branch >> 16) & 31 or low >> 26 != 9 or
+                ((low >> 21) & 31) != high_register or
+                (low & 0xFFFF) !=
+                (int.from_bytes(data[item.low_site:item.low_site + 4],
+                                "little") & 0xFFFF)):
+            continue
+        signed_low = ((low & 0xFFFF) ^ 0x8000) - 0x8000
+        target = ((high & 0xFFFF) << 16) + signed_low
+        if code_end <= target < len(data):
+            resolved[item.site] = PackedRelocation(1, item.site, item.site + 8)
+    return resolved
 
 
 def context_units(static: list[dict[str, str]], split_by_parent: dict[int, list],
@@ -448,8 +482,8 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
             if hashlib.sha256(data[module]).hexdigest() != module_rows[module]["sha256"]:
                 raise ValueError(f"{module} differs from pinned module")
             head = HEADER.unpack_from(data[module])
-            fixups[module] = list(iter_packed_relocations(
-                data[module], head[13], head[1]))
+            fixups[module] = packed_relocations_by_site(
+                data[module], head[13], head[1])
             sites[module] = [item.site for item in fixups[module]]
             ghidra_path = WORK / f"{module}.code.bin.ghidra.tsv"
             if digest(ghidra_path) != ghidra_hashes[module]:
@@ -507,6 +541,7 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
                                  int(row["body_bytes"]), members))
 
     ref_cache = {}
+    semantic_hi_sites = set()
     def references(module: str, start: int, size: int):
         key = module, start, size
         if key not in ref_cache:
@@ -519,7 +554,10 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
             if any((module, target) not in known for target in pointers.values()):
                 ref_cache[key] = code, None, None
                 return ref_cache[key]
-            data_fixups = [item for item in local
+            semantic = semantic_hi_pairs(data[module], local, start, start + size,
+                                         code_ends[module])
+            semantic_hi_sites.update((module, site) for site in semantic)
+            data_fixups = [semantic.get(item.site, item) for item in local
                            if item.kind != 2 and item.site not in paired_sites]
             refs = local_references(data[module], start, start + size,
                                     code_ends[module], data_fixups,
@@ -693,6 +731,7 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
             for family in family_groups.values()),
         "full_module_call_placements": full_only_placements,
         "full_module_call_body_bytes": full_only_body_bytes,
+        "semantic_hi_sites": len(semantic_hi_sites),
         "placement_body_bytes": sum(item["body_bytes"] * len(item["placements"])
                                     for item in family_groups.values()),
         "previous_combined_candidate_savings": old_combined,
@@ -745,6 +784,7 @@ def check_summary(summary: dict[str, object]) -> None:
             summary["context_families"]
             or summary["full_module_call_placements"] < 0
             or summary["full_module_call_body_bytes"] < 0
+            or not 0 <= summary["semantic_hi_sites"] <= 1000
             or summary["placement_body_bytes"] < 0
             or summary["previous_combined_candidate_savings"] !=
             split["combined_candidate_savings"]

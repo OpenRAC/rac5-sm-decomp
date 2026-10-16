@@ -20,7 +20,7 @@ now records 124,356 possible entry intervals, 74,051 stronger bounded
 candidates and an exact-duplicate upper bound of 33,168,892 candidate bytes.
 Relocation-masked groups remain review leads, not counted progress.
 An independent R5900 Ghidra pass agrees with **91,350** of those candidate
-boundaries. The data-target and closed local-callgraph checks retain **2,416
+boundaries. The data-target and closed local-callgraph checks retain **2,415
 shared template leads**, including one 32,796-byte body across all twenty numbered
 levels. The [audit guide](../docs/LEVEL-FUNCTION-INVENTORY.md) explains why
 these are useful deduplication worklists but still not an exact unique-code
@@ -32,7 +32,7 @@ newly called function entries and **229** contiguous cases without a recovered
 indirect reference. These remain candidate evidence, not counted C progress.
 The split-body audit selects **6,245** corroborated segments inside **3,729**
 oversized candidate intervals, leaving 294,836 surrounding body bytes unique.
-Its **23,446,344-byte** result, including conditional target-graph matches
+Its **23,471,984-byte** result, including conditional target-graph matches
 for zero-filled local data and placement-checked partial families, is a
 conditional deduplication scenario, not a verified unique-code denominator.
 The [switch-body review](../docs/LEVEL-FUNCTION-INVENTORY.md#contiguous-switch-body-review)
@@ -42,9 +42,9 @@ also measures **5,756,360 candidate bytes** when identical masked bodies are
 grouped across levels while repeated bodies inside one level stay separate.
 That is a useful aggressive research scenario, not an accepted progress total.
 An additional [context/data review](../docs/LEVEL-FUNCTION-INVENTORY.md#repeated-shapes-with-code-context-and-data-anchors)
-retains 5,454 repeated-shape families, including reviewed split segments and
-60 switch-body families, after global collision and final-callee checks and
-gives a **17,098,876-byte conditional
+retains 5,621 repeated-shape families, including reviewed split segments and
+62 switch-body families, after global collision and final-callee checks and
+gives a **16,876,088-byte conditional
 scenario**. This too remains a structural worklist, not counted C progress.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,

@@ -371,6 +371,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "families": context["context_families"],
             "full_module_call_placements":
                 context["full_module_call_placements"],
+            "semantic_hi_sites": context["semantic_hi_sites"],
             "switch_context_families": context["switch_context_families"],
             "collision_rejected_families": context["collision_rejected_families"],
             "callee_removed_pairs": context["callee_removed_pairs"],
