@@ -299,27 +299,31 @@ close, so a caller cannot borrow a callee from a different level. Data targets
 encoded as local HI/LO pairs into code are treated as function dependencies:
 both halves must lie inside the body, the target must be a reviewed function
 entry, and the final global component must contain both target placements.
-Other HI/LO pairs are checked as data targets. Data targets
-require either the same
-unique 64-byte window, an unambiguous accepted-family reference, or matching
+Other HI/LO pairs are checked as data targets. An exact 64-byte window may be
+unique after the target or centered on it. A short zero run can be identified
+by its unique matching nonzero flanks and the target's offset inside it. For
+larger zero regions, two distinct accepted-family references within 1 KiB
+must uniquely map with the same shift, use at least two independent families,
+and have only zero bytes between each reference and the target in both modules.
+Otherwise, a target needs an unambiguous accepted-family reference or matching
 shifts bracketed within 64 KiB by two independent accepted families.
 
 Using levels 01, 16 and 08 as independent references across the **19 retained
-numbered levels**, the callgraph closes 5,209 provisional context families.
-The global union rejects 123 that would connect two distinct placements from
+numbered levels**, the callgraph closes 5,742 provisional context families.
+The global union rejects 138 that would connect two distinct placements from
 the same module. Removing those links can invalidate callers: five further
-passes remove 1,802 caller placements and 135 families whose callees no longer
-share a final component. The result is **4,951 conditional families**, of
-which 54 include reviewed switch bodies, spanning **15,665,984 bytes by
+passes remove 1,949 caller placements and 150 families whose callees no longer
+share a final component. The result is **5,454 conditional families**, of
+which 60 include reviewed switch bodies, spanning **18,135,040 bytes by
 placement**. Independent audits find no remaining same-module collision or
-uncovered local callee or code pointer. Of 91,808 context/data candidate pairs, 53,611
-initially close in the callgraph; 24,476 of those
+uncovered local callee or code pointer. Of 96,368 context/data candidate pairs, 60,675
+initially close in the callgraph; 29,426 of those
 need a paired callee first. The data
 window cache is keyed by module as well as address, so reused offsets in
 different levels cannot share a signature accidentally. Unioning these links
 with exact and previously accepted structural groups avoids double counting.
-It adds **5,538,284 bytes of candidate savings** and reduces the conditional
-scenario from 23,446,344 to **17,908,060 bytes**. These links remain
+It adds **6,347,468 bytes of candidate savings** and reduces the conditional
+scenario from 23,446,344 to **17,098,876 bytes**. These links remain
 conditional until shared source and the full denominator are qualified.
 The private worklist and pinned ISO/Ghidra exports allow the pairings to be
 reproduced. Code context and data anchors still do not establish shared C
