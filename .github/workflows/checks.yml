@@ -16,6 +16,8 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Check scoped progress snapshot
         run: python tools/progress_status.py --check
+      - name: Check boot promotion candidates
+        run: python tools/boot_promotion_audit.py --check
       - name: Generate labelled ByteMatch estimate
         run: |
           python tools/bytematch_estimate.py --write
