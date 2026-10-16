@@ -32,6 +32,7 @@ SPLIT = ROOT / "config/levels/split_dedupe_summary.json"
 SHAPE = ROOT / "config/levels/shape_scenario_summary.json"
 TRANSLATION = ROOT / "config/levels/translation_families_summary.json"
 GHIDRA = ROOT / "config/levels/ghidra_crosscheck_summary.json"
+FULL_FLOW = ROOT / "config/levels/full_module_flow_summary.json"
 MODULES = ROOT / "config/levels/modules.tsv"
 CODE = ROOT / "config/levels/code_intervals.tsv"
 TARGET = ROOT / "config/target.json"
@@ -96,6 +97,19 @@ def context_units(static: list[dict[str, str]], split_by_parent: dict[int, list]
                                data[cursor:limit]).hexdigest(),
                            "kind": "gap"})
     return result
+
+
+def candidate_boundary(row: dict[str, str], code_functions: dict,
+                       full_functions: dict) -> str | None:
+    """Accept a full-module-only function only with an independent call entry."""
+    if ghidra_confirmed(row, code_functions):
+        return "code"
+    start = int(row["start"], 16)
+    if (row["status"] == "bounded_candidate" and row["evidence"] == "call"
+            and start not in code_functions
+            and ghidra_confirmed(row, full_functions)):
+        return "full_call"
+    return None
 
 
 def anchored_target(source_module: str, target_module: str,
@@ -265,12 +279,13 @@ def prune_uncovered_calls(families: dict, exact: dict, accepted: list[dict],
     raise ValueError("context callee pruning did not converge")
 
 
-def main_write(image: Path) -> dict[str, object]:
+def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
     inventory = json.loads(INVENTORY.read_text(encoding="utf-8"))
     split = json.loads(SPLIT.read_text(encoding="utf-8"))
     shape = json.loads(SHAPE.read_text(encoding="utf-8"))
     translation = json.loads(TRANSLATION.read_text(encoding="utf-8"))
     ghidra_summary = json.loads(GHIDRA.read_text(encoding="utf-8"))
+    full_summary = json.loads(FULL_FLOW.read_text(encoding="utf-8"))
     target = json.loads(TARGET.read_text(encoding="utf-8"))
     if (digest(WORK / "split_boundary_review.tsv") != split["split_review_sha256"]
             or digest(WORK / "split_translation_review_leads.tsv") !=
@@ -290,6 +305,8 @@ def main_write(image: Path) -> dict[str, object]:
                  for row in rows(CODE)}
     ghidra_hashes = {row["module"]: row["ghidra_export_sha256"]
                      for row in ghidra_summary["modules"]}
+    full_hashes = {row["module"]: row["full_export_sha256"]
+                   for row in full_summary["modules"]}
     split_rows = rows(WORK / "split_boundary_review.tsv")
     parents = {(row["module"], int(row["parent_start"], 16))
                for row in split_rows}
@@ -298,6 +315,7 @@ def main_write(image: Path) -> dict[str, object]:
         split_by_module[row["module"]][int(row["parent_start"], 16)].append(row)
     data, fixups, sites, contexts, known = {}, {}, {}, {}, {}
     static_rows = {}
+    full_only_placements = full_only_body_bytes = 0
     with IsoDisc(image) as disc:
         verify_disc(disc, target)
         for module in compared:
@@ -312,6 +330,11 @@ def main_write(image: Path) -> dict[str, object]:
             if digest(ghidra_path) != ghidra_hashes[module]:
                 raise ValueError(f"{module} independent Ghidra export changed")
             ghidra = {int(row["entry"], 16): row for row in rows(ghidra_path)}
+            full_path = full_ghidra_dir / f"{module}.ghidra.tsv"
+            if digest(full_path) != full_hashes[module]:
+                raise ValueError(f"{module} full-module Ghidra export changed")
+            full_functions = {int(row["entry"], 16): row
+                              for row in rows(full_path)}
             static = rows(WORK / f"{module}.tsv")
             static_rows[module] = static
             contexts[module] = defaultdict(list)
@@ -320,11 +343,16 @@ def main_write(image: Path) -> dict[str, object]:
                 if not row["masked_lead_sha256"]:
                     continue
                 start = int(row["start"], 16)
-                confirmed = (row["kind"] == "split" or
-                    row["kind"] == "static" and row["status"] in (
-                    "bounded_candidate", "pointer_only", "nonzero_tail")
-                    and ghidra_confirmed(row, ghidra))
+                boundary = ("split" if row["kind"] == "split" else
+                    candidate_boundary(row, ghidra, full_functions)
+                    if row["kind"] == "static" and row["status"] in (
+                        "bounded_candidate", "pointer_only", "nonzero_tail")
+                    else None)
+                confirmed = boundary is not None
                 if confirmed:
+                    if boundary == "full_call":
+                        full_only_placements += 1
+                        full_only_body_bytes += int(row["body_bytes"])
                     key = (int(row["body_bytes"]), row["masked_lead_sha256"])
                     known[module, start] = key + (("split",) if row["kind"] == "split" else ())
                     contexts[module][context_key(units, index)].append(row)
@@ -519,6 +547,8 @@ def main_write(image: Path) -> dict[str, object]:
         "callee_removed_families": callee_removed_families,
         "callee_prune_rounds": prune_rounds,
         "context_families": len(family_groups),
+        "full_module_call_placements": full_only_placements,
+        "full_module_call_body_bytes": full_only_body_bytes,
         "placement_body_bytes": sum(item["body_bytes"] * len(item["placements"])
                                     for item in family_groups.values()),
         "previous_combined_candidate_savings": old_combined,
@@ -531,6 +561,7 @@ def main_write(image: Path) -> dict[str, object]:
         "shape_sha256": digest(SHAPE),
         "translation_sha256": digest(TRANSLATION),
         "ghidra_sha256": digest(GHIDRA),
+        "full_flow_sha256": digest(FULL_FLOW),
         "module_catalogue_sha256": digest(MODULES),
         "code_catalogue_sha256": digest(CODE),
         "overall_percent": None,
@@ -563,6 +594,8 @@ def check_summary(summary: dict[str, object]) -> None:
             or summary["callee_removed_pairs"] < summary["callee_removed_families"]
             or summary["callee_prune_rounds"] < 1
             or summary["context_families"] < 0
+            or summary["full_module_call_placements"] < 0
+            or summary["full_module_call_body_bytes"] < 0
             or summary["placement_body_bytes"] < 0
             or summary["previous_combined_candidate_savings"] !=
             split["combined_candidate_savings"]
@@ -580,6 +613,7 @@ def check_summary(summary: dict[str, object]) -> None:
             or summary["shape_sha256"] != digest(SHAPE)
             or summary["translation_sha256"] != digest(TRANSLATION)
             or summary["ghidra_sha256"] != digest(GHIDRA)
+            or summary["full_flow_sha256"] != digest(FULL_FLOW)
             or summary["module_catalogue_sha256"] != digest(MODULES)
             or summary["code_catalogue_sha256"] != digest(CODE)
             or summary["overall_percent"] is not None
@@ -592,8 +626,11 @@ def main() -> None:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--write", type=Path, metavar="PINNED_ISO")
     mode.add_argument("--check", action="store_true")
+    parser.add_argument("--full-ghidra-dir", type=Path,
+                        default=WORK / "full-ghidra",
+                        help="private pinned full-module Ghidra export directory")
     args = parser.parse_args()
-    summary = main_write(args.write) if args.write else json.loads(
+    summary = main_write(args.write, args.full_ghidra_dir) if args.write else json.loads(
         OUTPUT.read_text(encoding="utf-8"))
     check_summary(summary)
     print(f"context/data structural scenario: {summary['conditional_candidate_bytes']} "

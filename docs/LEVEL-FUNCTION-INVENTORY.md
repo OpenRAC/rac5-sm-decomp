@@ -264,8 +264,13 @@ examines functions whose masked instruction shape recurs within a level. It
 replaces reviewed split parents with their segments and exact-hash gap markers
 for unselected bytes, then compares a candidate's immediate preceding and
 following code shapes across modules. A context must occur once per module.
-Static bodies need corroborated Ghidra boundaries; split segments inherit the
-code-only and full-module Ghidra review. Both placements need
+Static bodies normally need the code-only Ghidra boundary. When that pass
+has no function at a direct-call entry, the audit also accepts a matching
+full-module Ghidra body; a contradictory code-only function still rejects the
+candidate. This hash-pinned second path admits 1,996 candidate placements
+(329,568 body bytes) across the retained modules before data and call checks.
+Split segments inherit the code-only and full-module Ghidra review. Both
+placements need
 the same local-call shape; every external local callee must already have an
 accepted placement in both modules or be independently paired in the same
 context graph. A placement pair is admitted only after all of its callee pairs
@@ -279,16 +284,16 @@ numbered levels**, the callgraph closes 4,484 provisional context families.
 The global union rejects 124 that would connect two distinct placements from
 the same module. Removing those links can invalidate callers: four further
 passes remove 1,592 caller placements and 113 families whose callees no longer
-share a final component. The result is **4,247 conditional families** spanning
-**13,763,536 bytes by placement**. Independent audits find no remaining
+share a final component. The result is **4,476 conditional families** spanning
+**13,986,292 bytes by placement**. Independent audits find no remaining
 same-module collision or uncovered local callee. Of 82,211 context/data
 candidate pairs, 46,584 initially close in the callgraph; 20,968 of those
 need a paired callee first. The data
 window cache is keyed by module as well as address, so reused offsets in
 different levels cannot share a signature accidentally. Unioning these links
 with exact and previously accepted structural groups avoids double counting.
-It adds **4,713,940 bytes of candidate savings** and reduces the conditional
-scenario from 23,446,344 to **18,732,404 bytes**. These links remain
+It adds **4,764,332 bytes of candidate savings** and reduces the conditional
+scenario from 23,446,344 to **18,682,012 bytes**. These links remain
 conditional until shared source and the full denominator are qualified.
 The private worklist and pinned ISO/Ghidra exports allow the pairings to be
 reproduced. Code context and data anchors still do not establish shared C

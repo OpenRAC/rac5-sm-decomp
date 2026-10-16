@@ -255,13 +255,14 @@
       "LEVEL_16.REL",
       "LEVEL_08.REL"
     ],
-    "families": 4247,
+    "families": 4476,
+    "full_module_call_placements": 1996,
     "collision_rejected_families": 124,
     "callee_removed_pairs": 1592,
     "callee_prune_rounds": 4,
-    "dependency_closed_pairs": 20968,
-    "additional_candidate_savings": 4713940,
-    "conditional_candidate_bytes": 18732404,
+    "dependency_closed_pairs": 21039,
+    "additional_candidate_savings": 4764332,
+    "conditional_candidate_bytes": 18682012,
     "qualified_unique_denominator": null
   },
   "remaining_for_gamewide_report": [
@@ -531,6 +532,6 @@
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
     "level_split_dedupe": "4878a743c9fce9feca0e47d881b3e1fa4475bc4724a71fbe563a936cc4a1fe4c",
     "level_shape_scenario": "dfa6e2b866fbe1f08d1ef8f9d58fdc402b215a005ca871f0af389a3419bc3c93",
-    "level_context_translation": "5b57aee9ae9bcc82065911196096a98553756d5a0471142a7d86a6a93294503f"
+    "level_context_translation": "68f7d3ff0f046d01da8f5be718129c6c3e11b013bbfa367fd246db7967c2d9d2"
   }
 }

@@ -9,6 +9,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from level_context_translation import (OUTPUT, anchored_target, check_summary,
+                                       candidate_boundary,
                                        close_context_dependencies,
                                        context_key, context_units,
                                        prune_uncovered_calls,
@@ -16,6 +17,19 @@ from level_context_translation import (OUTPUT, anchored_target, check_summary,
 
 
 class LevelContextTranslationTests(unittest.TestCase):
+    def test_full_only_boundary_needs_direct_call_and_no_code_conflict(self) -> None:
+        row = {"start": "0x80", "body_end": "0x90", "body_bytes": "16",
+               "status": "bounded_candidate", "evidence": "call"}
+        function = {"entry": "0x80", "min": "0x80", "max": "0x8F",
+                    "body_bytes": "16"}
+        self.assertEqual(candidate_boundary(row, {}, {0x80: function}), "full_call")
+        self.assertEqual(candidate_boundary(row, {0x80: function},
+                                            {0x80: function}), "code")
+        self.assertIsNone(candidate_boundary(
+            row, {0x80: {**function, "body_bytes": "12"}}, {0x80: function}))
+        self.assertIsNone(candidate_boundary(
+            {**row, "status": "pointer_only"}, {}, {0x80: function}))
+
     def test_split_context_preserves_exact_residual_gaps(self) -> None:
         static = [{"start": "0x80", "limit": "0xB0",
                    "body_bytes": "48", "masked_lead_sha256": "parent"}]
