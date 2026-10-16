@@ -285,8 +285,10 @@ following code shapes across modules. A context must occur once per module.
 Static bodies normally need the code-only Ghidra boundary. When that pass
 has no function at a direct-call entry, the audit also accepts a matching
 full-module Ghidra body; a contradictory code-only function still rejects the
-candidate. This hash-pinned second path admits 1,996 candidate placements
-(329,568 body bytes) across the retained modules before data and call checks.
+candidate. It also admits called `nonzero_tail` bodies when full-module Ghidra
+confirms the precise body, leaving their trailing bytes separate. This
+hash-pinned second path admits 2,144 candidate placements
+(356,256 body bytes) across the retained modules before data and call checks.
 Split segments and switch bodies inherit their separate code-flow and
 full-module Ghidra reviews. Both
 placements need
@@ -303,21 +305,21 @@ unique 64-byte window, an unambiguous accepted-family reference, or matching
 shifts bracketed within 64 KiB by two independent accepted families.
 
 Using levels 01, 16 and 08 as independent references across the **19 retained
-numbered levels**, the callgraph closes 5,181 provisional context families.
+numbered levels**, the callgraph closes 5,209 provisional context families.
 The global union rejects 123 that would connect two distinct placements from
 the same module. Removing those links can invalidate callers: five further
 passes remove 1,802 caller placements and 135 families whose callees no longer
-share a final component. The result is **4,923 conditional families**, of
-which 54 include reviewed switch bodies, spanning **15,613,376 bytes by
+share a final component. The result is **4,951 conditional families**, of
+which 54 include reviewed switch bodies, spanning **15,665,984 bytes by
 placement**. Independent audits find no remaining same-module collision or
-uncovered local callee or code pointer. Of 91,542 context/data candidate pairs, 53,419
-initially close in the callgraph; 24,440 of those
+uncovered local callee or code pointer. Of 91,808 context/data candidate pairs, 53,611
+initially close in the callgraph; 24,476 of those
 need a paired callee first. The data
 window cache is keyed by module as well as address, so reused offsets in
 different levels cannot share a signature accidentally. Unioning these links
 with exact and previously accepted structural groups avoids double counting.
-It adds **5,517,812 bytes of candidate savings** and reduces the conditional
-scenario from 23,446,344 to **17,928,532 bytes**. These links remain
+It adds **5,538,284 bytes of candidate savings** and reduces the conditional
+scenario from 23,446,344 to **17,908,060 bytes**. These links remain
 conditional until shared source and the full denominator are qualified.
 The private worklist and pinned ISO/Ghidra exports allow the pairings to be
 reproduced. Code context and data anchors still do not establish shared C

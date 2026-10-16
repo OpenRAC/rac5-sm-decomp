@@ -39,6 +39,9 @@ class LevelContextTranslationTests(unittest.TestCase):
         function = {"entry": "0x80", "min": "0x80", "max": "0x8F",
                     "body_bytes": "16"}
         self.assertEqual(candidate_boundary(row, {}, {0x80: function}), "full_call")
+        self.assertEqual(candidate_boundary(
+            {**row, "status": "nonzero_tail"}, {}, {0x80: function}),
+            "full_call")
         self.assertEqual(candidate_boundary(row, {0x80: function},
                                             {0x80: function}), "code")
         self.assertIsNone(candidate_boundary(
