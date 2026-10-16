@@ -100,6 +100,17 @@ def anchored_target(source: int, target: int, anchors: dict,
             and len(lower_values[lower_target] | upper_values[upper_target]) >= 2)
 
 
+def close_context_dependencies(pending: dict[tuple[str, str], set]) -> set:
+    """Close paired functions only after their paired callees have closed."""
+    closed = set()
+    while True:
+        fresh = {key for key, needs in pending.items()
+                 if key not in closed and needs <= closed | {key}}
+        if not fresh:
+            return closed
+        closed.update(fresh)
+
+
 def main_write(image: Path) -> dict[str, object]:
     inventory = json.loads(INVENTORY.read_text(encoding="utf-8"))
     split = json.loads(SPLIT.read_text(encoding="utf-8"))
@@ -194,19 +205,24 @@ def main_write(image: Path) -> dict[str, object]:
             ref_cache[key] = code, refs
         return ref_cache[key]
 
-    def covered_calls(module: str, start: int, size: int) -> bool:
+    def external_calls(module: str, start: int, size: int) -> dict[int, int]:
         local = fixups[module][bisect.bisect_left(sites[module], start):
                                bisect.bisect_left(sites[module], start + size)]
+        targets = {}
         for item in local:
             if item.kind != 2:
                 continue
             word = int.from_bytes(data[module][item.site:item.site + 4], "little")
             target = (word & 0x03FFFFFF) << 2
-            if not start <= target < start + size and (module, target) not in accepted_nodes:
-                return False
-        return True
+            if not start <= target < start + size:
+                targets[item.site - start] = target
+        return targets
 
-    family_groups = {}
+    context_ids = {(module, int(member[0]["start"], 16)): context
+                   for module in compared
+                   for context, member in contexts[module].items()
+                   if len(member) == 1}
+    candidate_pairs = {}
     windows = {}
     for module in compared:
         if module == REFERENCE:
@@ -240,8 +256,7 @@ def main_write(image: Path) -> dict[str, object]:
             code_a, refs_a = references(REFERENCE, left_start, size)
             code_b, refs_b = references(module, right_start, size)
             if (code_a is None or code_a != code_b or refs_a is None or
-                    refs_b is None or not covered_calls(REFERENCE, left_start, size)
-                    or not covered_calls(module, right_start, size)):
+                    refs_b is None):
                 continue
             hi_a, low_a = refs_a
             hi_b, low_b = refs_b
@@ -260,10 +275,41 @@ def main_write(image: Path) -> dict[str, object]:
                    {shift & 0xFFFF for shift in shifts}
                    for site, value in low_a.items()):
                 continue
-            key = context, size, original["masked_lead_sha256"], left_start
-            family = family_groups.setdefault(key, {"body_bytes": size,
-                "placements": [(REFERENCE, left_start)]})
-            family["placements"].append((module, right_start))
+            candidate_pairs[context, module] = (
+                size, original["masked_lead_sha256"], left_start, right_start)
+
+    pending = {}
+    invalid_pairs = 0
+    for (context, module), (size, _masked, left_start, right_start) in candidate_pairs.items():
+        source_calls = external_calls(REFERENCE, left_start, size)
+        target_calls = external_calls(module, right_start, size)
+        if source_calls.keys() != target_calls.keys():
+            invalid_pairs += 1
+            continue
+        dependencies = set()
+        for site, source_target in source_calls.items():
+            target = target_calls[site]
+            if ((REFERENCE, source_target) in accepted_nodes and
+                    (module, target) in accepted_nodes):
+                continue
+            source_context = context_ids.get((REFERENCE, source_target))
+            target_context = context_ids.get((module, target))
+            if (source_context is None or source_context != target_context or
+                    (source_context, module) not in candidate_pairs):
+                invalid_pairs += 1
+                break
+            dependencies.add((source_context, module))
+        else:
+            pending[context, module] = dependencies
+    # A pair cannot depend on a candidate rejected by the call-target check.
+    closed = close_context_dependencies(pending)
+    family_groups = {}
+    for context, module in sorted(closed):
+        size, masked, left_start, right_start = candidate_pairs[context, module]
+        key = context, size, masked, left_start
+        family = family_groups.setdefault(key, {"body_bytes": size,
+            "placements": [(REFERENCE, left_start)]})
+        family["placements"].append((module, right_start))
 
     exact = defaultdict(list)
     for module in retained:
@@ -294,6 +340,10 @@ def main_write(image: Path) -> dict[str, object]:
         "status": "context_translation_leads_only",
         "reference_module": REFERENCE,
         "compared_modules": len(compared),
+        "context_pair_candidates": len(candidate_pairs),
+        "rejected_call_target_pairs": invalid_pairs,
+        "closed_context_pairs": len(closed),
+        "dependency_closed_pairs": sum(bool(pending[key]) for key in closed),
         "context_families": len(family_groups),
         "placement_body_bytes": sum(item["body_bytes"] * len(item["placements"])
                                     for item in family_groups.values()),
@@ -312,8 +362,9 @@ def main_write(image: Path) -> dict[str, object]:
         "overall_percent": None,
         "bytematch_ready": False,
         "warning": ("Unique neighboring code shapes and independently corroborated "
-                    "data anchors support conditional pairing only. Caller placements "
-                    "must already be accepted. Neither source equivalence nor a game-wide "
+                    "data anchors support conditional pairing only. Callees must "
+                    "already be accepted or close in the same placement-paired "
+                    "callgraph. Neither source equivalence nor a game-wide "
                     "unique-code denominator is qualified."),
     }
     OUTPUT.write_text(json.dumps(summary, indent=2) + "\n",
@@ -326,6 +377,12 @@ def check_summary(summary: dict[str, object]) -> None:
     if (summary["status"] != "context_translation_leads_only"
             or summary["reference_module"] != REFERENCE
             or summary["compared_modules"] != 19
+            or not 0 <= summary["closed_context_pairs"] <=
+            summary["context_pair_candidates"]
+            or not 0 <= summary["dependency_closed_pairs"] <=
+            summary["closed_context_pairs"]
+            or not 0 <= summary["rejected_call_target_pairs"] <=
+            summary["context_pair_candidates"]
             or summary["context_families"] < 0
             or summary["placement_body_bytes"] < 0
             or summary["previous_combined_candidate_savings"] !=

@@ -9,10 +9,21 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from level_context_translation import (OUTPUT, anchored_target, check_summary,
+                                       close_context_dependencies,
                                        context_key)  # noqa: E402
 
 
 class LevelContextTranslationTests(unittest.TestCase):
+    def test_context_callgraph_needs_closed_callee_pair(self) -> None:
+        callee = ("callee", "LEVEL_02.REL")
+        caller = ("caller", "LEVEL_02.REL")
+        missing = ("missing", "LEVEL_02.REL")
+        self.assertEqual(close_context_dependencies({
+            callee: set(), caller: {callee}}), {callee, caller})
+        self.assertEqual(close_context_dependencies({
+            callee: set(), caller: {missing}}), {callee})
+        self.assertEqual(close_context_dependencies({caller: {caller}}), {caller})
+
     def test_unique_code_context_changes_with_neighbors(self) -> None:
         static = [{"body_bytes": "8", "masked_lead_sha256": str(index)}
                   for index in range(3)]
