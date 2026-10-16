@@ -9,10 +9,31 @@ from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-from level_split_dedupe import graph_target_shifts, split_parent  # noqa: E402
+from level_split_dedupe import (best_partial_family, close_callgraph_by_placement,
+                                graph_target_shifts, split_parent)  # noqa: E402
 
 
 class LevelSplitDedupeTests(unittest.TestCase):
+    def test_partial_family_closes_callers_only_at_covered_placements(self) -> None:
+        members = [{"module": name, "start": "0x100"} for name in ("A", "B", "C")]
+
+        def resolve(group):
+            if any(row["module"] == "C" for row in group):
+                return None
+            return ({"placements": [(row["module"], 0x100) for row in group]}, set())
+
+        self.assertEqual(best_partial_family(members, resolve)[0]["placements"],
+                         [("A", 0x100), ("B", 0x100)])
+        callee = (796, "shape")
+        pending = {
+            (9196, "caller_ab"): ({"placements": [("A", 0x200), ("B", 0x200)]},
+                                   {callee}),
+            (9196, "caller_ac"): ({"placements": [("A", 0x300), ("C", 0x300)]},
+                                   {callee}),
+        }
+        self.assertEqual(close_callgraph_by_placement(
+            pending, {callee: {"A", "B"}}), {(9196, "caller_ab")})
+
     def test_zero_data_needs_two_unique_incoming_anchors_and_same_layout(self) -> None:
         base, other = bytearray(512), bytearray(512)
         for data, target in ((base, 100), (other, 220)):
