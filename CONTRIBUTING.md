@@ -36,6 +36,10 @@ maintainer merges accepted PRs manually.
 
 ## Review and promotion
 
+For boot candidates, run the [promotion audit](docs/BOOT-PROMOTION.md) after the
+complete private gate. It explains each owner's mechanical blockers and creates
+a shortlist for semantic review; it never accepts a function automatically.
+
 Use the seven rules in `AGENTS.md` throughout a small, coherent change:
 
 - Identify the program, reference symbol and owned byte range before editing.

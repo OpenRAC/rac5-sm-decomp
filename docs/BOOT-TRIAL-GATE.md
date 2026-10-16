@@ -54,6 +54,9 @@ are never committed.
 The result is in ignored `build/boot-trial-gate/report.json`. A passing report
 has `status: "passed_boot_only"`, `raw_load_and_header_exact: true`,
 `whole_elf_exact: true`, `counted_matches: 1` and `counted_bytes: 16`.
+It also records a `promotion_input_sha256` fingerprint so the
+[per-body promotion audit](BOOT-PROMOTION.md) can reject an old receipt after
+source, owner, compiler-profile or boundary changes.
 Each run overwrites an old report with `status: "incomplete"` before checking
 tools, so a failed run cannot leave a stale pass. The packer also removes its
 old output before rebuilding. The original, unpatched `cc1` was rejected;

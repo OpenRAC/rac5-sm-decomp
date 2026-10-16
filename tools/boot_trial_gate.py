@@ -17,6 +17,7 @@ import sys
 from pathlib import Path
 
 from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path
+from boot_promotion_audit import input_fingerprint
 from compile_boot_trial import PROFILE, compile_objects
 from elf import inspect_elf
 
@@ -107,6 +108,7 @@ def main() -> None:
         "boot_sha256": reference["sha256"],
         "candidate_objects": len(REPLACEMENTS),
         "candidate_functions": witness_count(),
+        "promotion_input_sha256": input_fingerprint(),
         "entry": candidate["entry"],
         "raw_load_size": program["file_size"],
         "raw_load_sha256": hashlib.sha256(raw).hexdigest(),
