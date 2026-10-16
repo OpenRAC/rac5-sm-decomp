@@ -16,6 +16,17 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Check scoped progress snapshot
         run: python tools/progress_status.py --check
+      - name: Generate labelled ByteMatch estimate
+        run: |
+          python tools/bytematch_estimate.py --write
+          python tools/bytematch_estimate.py --check
+      - name: Upload ByteMatch report from master
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v4
+        with:
+          name: SCUS_976.15_report
+          path: build/bytematch/SCUS_976.15/report.json
+          if-no-files-found: error
       - name: Check level function inventory metadata
         run: python tools/level_function_inventory.py --check
       - name: Check independent boundaries and translation leads

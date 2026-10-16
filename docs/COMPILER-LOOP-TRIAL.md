@@ -74,4 +74,6 @@ controls. The GNU source, local compiler binaries,
 objects, generated assembly and linked ELF are not distributed here. Keep
 the three loop shapes under `nonmatching/`; they remain unaccepted. One
 different boot function, `MEMCARD_Busy__Fv`, has since passed the limited
-[boot-only gate](BOOT-MATCH-SCOPE.md). No ByteMatch report is published yet.
+[boot-only gate](BOOT-MATCH-SCOPE.md). The later
+[ByteMatch estimate](../progress/README.md) uses only accepted C bytes and a
+provisional code denominator; it does not count these loop trials.
