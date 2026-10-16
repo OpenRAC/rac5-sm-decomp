@@ -81,3 +81,45 @@ preserving the entire boot `.text`. Its retail `PT_LOAD` header and raw
 809,872-byte file-backed segment now also match. It is still under
 `nonmatching/` because the remaining compiler, complete ELF metadata,
 catalogue and runtime gates have not been completed.
+
+## Assembler inventory and equivalence (2026-10-16)
+
+The C objects and the assembly baseline do **not** use the same assembler, and
+that separation is now measured rather than assumed.
+
+**Objects.** Every campaign object is assembled by the pinned GNU `as`
+(`c71a15db…`, `gnu-ee-trial-20261015`). Eleven further assemblers from the local
+toolchains were compared on the same `.s` inputs: the full inventory is a private
+reproducible artifact, and the result is that the pinned binary is the only one
+of twelve that reproduces the retail bytes across all 411 campaign objects.
+Divergent objects per alternative: one behavioural twin with **0/411**
+(`cda1a4e4`, a useful second witness against a corrupted pin), one ProDG 2.0
+`ee-as.exe` and the recovered Sony `ee-as` with **1/411**, one ProDG 3.01
+`ee/bin/as.exe` with **2/411**, and the SN `Ps2EeAs` 1.8 and 1.9 with
+**194/411** and **201/411**. Two distinct binaries are both called `ee-as.exe`
+in local documentation; they differ (confirmed by hash) and they disagree on
+hazard insertion.
+
+**Assembly baseline.** The baseline is assembled by SN `Ps2EeAs` 2.0
+(`c839dd63…`, `ps2eeas 1.8.19.316`). The choice is forced, not preferred: the six
+GNU variants reject the file outright (`illegal operands 'padduw'` — they do not
+know the R5900 MMI mnemonics), and `Ps2EeAs` 3.01 emits 499,608 bytes instead of
+498,900 by inserting 177 hazard nops and shifting branch offsets. Only the pinned
+2.0 build reproduces the 498,900-byte `.text`.
+
+**Hazard `nop` insertion is an assembler property.** `cc1` writes its `#nop`
+markers as inert comments — an experiment with the marker, without it, and with
+an ordinary comment produces identical output for every assembler tried. The real
+`nop` is inserted by each assembler's own reorder-mode hazard analysis, and the
+rules differ per hazard class and per binary (for example `mtc1` before `swc1`,
+`mtc1` before `cvt.s.w`, and short backward branches).
+
+**Constant encoding.** The pinned `as` encodes 32-bit float literals faithfully:
+`0.05f` becomes `0x3D4CCCCD` and `0.050000004f` becomes `0x3D4CCCCE`, and three
+other assemblers produce the same two words, so no rounding is involved. For
+64-bit immediates, `dli` is expanded inline to `ori`/`dsll` (matching retail at
+`0x01E862D4`), while a multi-chunk `li.d` — which `cc1` emits for a `double`
+operand — goes through a literal pool under GNU `as` and is expanded inline by
+`Ps2EeAs`. That difference is a per-object assembler choice, not a wall: the
+retail bytes are reachable with the pinned chain whenever the value can be a
+64-bit integer rather than a `double`.
