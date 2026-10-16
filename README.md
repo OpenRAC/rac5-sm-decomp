@@ -74,7 +74,7 @@ separates bounded entries from uncertain pointer/table entries and identifies
 exact duplicates plus relocation-masked review leads. No ByteMatch report is
 published yet.
 The independent Ghidra pass corroborates 91,350 candidate level boundaries;
-2,416 masked families pass data-target and closed local-callgraph checks.
+2,415 masked families pass data-target and closed local-callgraph checks.
 A full-module flow pass assigns the 1,590 code-only inside-body disagreements
 to review categories, including 21 newly called entry leads. A subsequent
 split review selects 6,245 corroborated code segments from 3,729 oversized
@@ -84,7 +84,7 @@ An [optimistic shape-only audit](docs/LEVEL-FUNCTION-INVENTORY.md#optimistic-rel
 finds a 5,756,360-byte scenario after relocation masking, but shared C source
 and data-object identities have not been established for those shapes.
 A [code-context and data-anchor review](docs/LEVEL-FUNCTION-INVENTORY.md#repeated-shapes-with-code-context-and-data-anchors)
-narrows the separately validated structural scenario to 17,098,876 bytes
+narrows the separately validated structural scenario to 16,876,088 bytes
 after global collision and final-callee checks.
 Names, symbol addresses and module hashes are research metadata, not proof of
 matching code. The [roadmap](docs/ROADMAP.md) tracks the remaining gates.

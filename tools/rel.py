@@ -114,6 +114,20 @@ def iter_packed_relocations(data: bytes, start: int, payload_end: int) -> Iterat
         yield PackedRelocation(kind, site, low_site)
 
 
+def packed_relocations_by_site(data: bytes, start: int,
+                               payload_end: int) -> list[PackedRelocation]:
+    """Index fixups by address for interval queries, preserving stream HI/LO links.
+
+    The loader consumes stream order, which can move backward in file offsets;
+    only analysis code that slices by address should use this sorted view.
+    """
+    indexed = sorted(iter_packed_relocations(data, start, payload_end),
+                     key=lambda item: item.site)
+    if any(left.site == right.site for left, right in zip(indexed, indexed[1:])):
+        raise ValueError("duplicate packed relocation site")
+    return indexed
+
+
 def packed_relocation_types(data: bytes, start: int, payload_end: int) -> tuple[tuple[int, int], ...]:
     """Count packed local fixup operations without publishing program bytes."""
     counts = Counter(item.kind for item in iter_packed_relocations(data, start, payload_end))

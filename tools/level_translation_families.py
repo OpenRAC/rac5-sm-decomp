@@ -18,7 +18,7 @@ from pathlib import Path
 
 from disc import IsoDisc, verify_disc
 from level_ghidra_crosscheck import rows
-from rel import HEADER, iter_packed_relocations
+from rel import HEADER, packed_relocations_by_site
 
 ROOT = Path(__file__).resolve().parent.parent
 WORK = ROOT / "build/level-functions"
@@ -311,8 +311,8 @@ def main() -> None:
     for module in modules:
         head = HEADER.unpack_from(data[module])
         payload_ends[module] = head[1]
-        fixups[module] = list(iter_packed_relocations(
-            data[module], head[13], head[1]))
+        fixups[module] = packed_relocations_by_site(
+            data[module], head[13], head[1])
         fixup_sites[module] = [row.site for row in fixups[module]]
     for (size, fingerprint), group in bodies.items():
         if len(group) < 2:

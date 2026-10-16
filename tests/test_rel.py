@@ -8,7 +8,8 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-from rel import (HEADER, MAGIC, RELOCATION, SYMBOL, packed_relocation_types,
+from rel import (HEADER, MAGIC, RELOCATION, SYMBOL, iter_packed_relocations,
+                 packed_relocations_by_site, packed_relocation_types,
                  unpack_relocation,
                  parse_module, render_exports, render_modules)  # noqa: E402
 
@@ -79,6 +80,19 @@ class RelTests(unittest.TestCase):
         data[0x180:0x180 + len(stream)] = stream
         self.assertEqual(packed_relocation_types(bytes(data), 0x180, 0x180),
                          ((0, 1), (1, 1), (2, 1), (3, 1)))
+
+    def test_interval_index_sorts_backward_stream_without_changing_hi_pair(self) -> None:
+        data = bytearray(0x200)
+        stream = (b"\x01" + struct.pack("<I", 0x100) +
+                  b"\x00" + struct.pack("<I", 0x120) +
+                  b"\x02" + struct.pack("<I", 0x108) +
+                  b"\x00" + struct.pack("<I", 0))
+        data[0x180:0x180 + len(stream)] = stream
+        original = list(iter_packed_relocations(data, 0x180, 0x180))
+        indexed = packed_relocations_by_site(data, 0x180, 0x180)
+        self.assertEqual([item.site for item in original], [0x100, 0x120, 0x108])
+        self.assertEqual([item.site for item in indexed], [0x100, 0x108, 0x120])
+        self.assertEqual(indexed[0].low_site, 0x120)
 
     def test_packed_fixups_reject_bad_sites_and_unpaired_hi16(self) -> None:
         data = bytearray(0x190)

@@ -23,7 +23,7 @@ from level_translation_families import (combined_dedupe_savings,
                                         local_code_references, local_references,
                                         lows_follow_translation, uniform_translation,
                                         unique_data_window, unique_target_shifts)
-from rel import HEADER, iter_packed_relocations
+from rel import HEADER, packed_relocations_by_site
 
 ROOT = Path(__file__).resolve().parent.parent
 WORK = ROOT / "build/level-functions"
@@ -377,7 +377,8 @@ def main() -> None:
         indexed, _pointers = relocations(data[module], code_ends[module])
         relocation_sites = sorted(indexed)
         header = HEADER.unpack_from(data[module])
-        fixups[module] = list(iter_packed_relocations(data[module], header[13], header[1]))
+        fixups[module] = packed_relocations_by_site(
+            data[module], header[13], header[1])
         sites[module] = [item.site for item in fixups[module]]
         static = rows(WORK / f"{module}.tsv")
         parents, segments, placement_bytes, selected_bytes = 0, 0, 0, 0
