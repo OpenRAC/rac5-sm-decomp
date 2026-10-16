@@ -41,6 +41,7 @@ TARGET = ROOT / "config/target.json"
 REFERENCE = "LEVEL_01.REL"
 REFERENCES = (REFERENCE, "LEVEL_16.REL", "LEVEL_08.REL")
 MAX_ANCHOR_DISTANCE = 65536
+MAX_ZERO_RUN = 4096
 
 
 def digest(path: Path) -> str:
@@ -63,6 +64,26 @@ def context_key(static: list[dict[str, str]], index: int) -> str:
                     for j in range(index - 1, index + 2)]
     return hashlib.sha256(json.dumps(neighborhood, separators=(",", ":"))
                           .encode("ascii")).hexdigest()
+
+
+def unique_zero_run(data: bytes, code_end: int, payload_end: int,
+                    target: int) -> tuple[int, bytes] | None:
+    """Identify a short zero run by its exact unique nonzero flanks."""
+    if not code_end + 8 <= target < payload_end - 8 or data[target] != 0:
+        return None
+    left = target
+    while left > code_end + 8 and target - left <= MAX_ZERO_RUN and data[left - 1] == 0:
+        left -= 1
+    right = target
+    while right < payload_end - 8 and right - target <= MAX_ZERO_RUN and data[right] == 0:
+        right += 1
+    if not 64 <= right - left <= MAX_ZERO_RUN:
+        return None
+    signature = data[left - 8:right + 8]
+    if (data.find(signature, code_end, payload_end) != left - 8 or
+            data.find(signature, left - 7, payload_end) >= 0):
+        return None
+    return target - left, signature
 
 
 def code_pointer_fixups(data: bytes, local: list, start: int, end: int,
@@ -182,6 +203,55 @@ def anchored_target(source_module: str, target_module: str,
     signature = windows[source_module, source]
     if signature is not None and signature == windows[target_module, target]:
         return True
+    # A field near an object's end may have different following bytes across
+    # levels while its centered, unique local context remains byte-identical.
+    if (source >= source_code_end + 32 and target >= target_code_end + 32):
+        for module, address, data, code_end, payload_end in (
+                (source_module, source, source_data, source_code_end,
+                 source_payload_end),
+                (target_module, target, target_data, target_code_end,
+                 target_payload_end)):
+            key = module, address, "centered"
+            if key not in windows:
+                windows[key] = unique_data_window(
+                    data, code_end, payload_end, address - 32)
+        centered_source = windows[source_module, source, "centered"]
+        if (centered_source is not None and
+                centered_source == windows[target_module, target, "centered"]):
+            return True
+    if source_data[source] == target_data[target] == 0:
+        for module, address, data, code_end, payload_end in (
+                (source_module, source, source_data, source_code_end,
+                 source_payload_end),
+                (target_module, target, target_data, target_code_end,
+                 target_payload_end)):
+            key = module, address, "zero_run"
+            if key not in windows:
+                windows[key] = unique_zero_run(data, code_end, payload_end,
+                                               address)
+        zero_run = windows[source_module, source, "zero_run"]
+        if (zero_run is not None and
+                zero_run == windows[target_module, target, "zero_run"]):
+            return True
+    # Large zero-filled objects have no unique byte window. Two independent,
+    # uniquely mapped references can still fix a nearby zero target's offset.
+    if source_data[source] == target_data[target] == 0:
+        shift = target - source
+        nearby = ordered[bisect.bisect_left(ordered, source - 1024):
+                         bisect.bisect_right(ordered, source + 1024)]
+        witnesses = []
+        for anchor in nearby:
+            if anchor == source or len(anchors[anchor]) != 1:
+                continue
+            other, families = next(iter(anchors[anchor].items()))
+            if (other - anchor != shift or reverse.get(other) != {anchor} or
+                    any(source_data[min(anchor, source):max(anchor, source) + 1]) or
+                    any(target_data[min(other, target):max(other, target) + 1])):
+                continue
+            witnesses.append((anchor, families))
+        if (len({anchor for anchor, _families in witnesses}) >= 2 and
+                len(set().union(*(families for _anchor, families in witnesses))) >= 2):
+            return True
     index = bisect.bisect_left(ordered, source)
     if index == 0 or index == len(ordered):
         return False

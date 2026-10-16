@@ -16,7 +16,8 @@ from level_context_translation import (OUTPUT, anchored_target, check_summary,
                                        code_pointer_fixups,
                                        context_key, context_units,
                                        prune_uncovered_calls,
-                                       select_noncolliding_families)  # noqa: E402
+                                       select_noncolliding_families,
+                                       unique_zero_run)  # noqa: E402
 
 
 class LevelContextTranslationTests(unittest.TestCase):
@@ -146,6 +147,49 @@ class LevelContextTranslationTests(unittest.TestCase):
         anchors[320][420] = {"one"}
         self.assertFalse(anchored_target(
             "A", "B", 300, 400, anchors, reverse, [280, 320], *args))
+
+    def test_centered_unique_data_window_corroborates_object_end(self) -> None:
+        source, dest = bytearray(512), bytearray(512)
+        source[96:160] = bytes(range(64))
+        dest[208:272] = bytes(range(64))
+        source[160:192] = b"A" * 32
+        dest[272:304] = b"B" * 32
+        self.assertTrue(anchored_target(
+            "A", "B", 128, 240, {}, {}, [], bytes(source), bytes(dest),
+            64, 64, 512, 512, {}))
+
+    def test_two_independent_zero_neighbors_fix_offset(self) -> None:
+        data = bytes(512)
+        anchors = {280: {380: {"first"}}, 284: {384: {"second"}}}
+        reverse = {380: {280}, 384: {284}}
+        args = (data, data, 64, 64, 512, 512, {})
+        self.assertTrue(anchored_target(
+            "A", "B", 300, 400, anchors, reverse, [280, 284], *args))
+        anchors[284][384] = {"first"}
+        self.assertFalse(anchored_target(
+            "A", "B", 300, 400, anchors, reverse, [280, 284], *args))
+        anchors[284][384] = {"second"}
+        changed = bytearray(data)
+        changed[290] = 1
+        self.assertFalse(anchored_target(
+            "A", "B", 300, 400, anchors, reverse, [280, 284],
+            bytes(changed), data, 64, 64, 512, 512, {}))
+
+    def test_unique_zero_run_flanks_fix_interior_offset(self) -> None:
+        source, dest = bytearray(b"Q" * 512), bytearray(b"R" * 512)
+        for data, start in ((source, 100), (dest, 200)):
+            data[start - 8:start] = b"ABCDEFGH"
+            data[start:start + 80] = bytes(80)
+            data[start + 80:start + 88] = b"IJKLMNOP"
+        self.assertEqual(unique_zero_run(source, 64, 512, 140),
+                         unique_zero_run(dest, 64, 512, 240))
+        self.assertTrue(anchored_target(
+            "A", "B", 140, 240, {}, {}, [], bytes(source), bytes(dest),
+            64, 64, 512, 512, {}))
+        dest[270] = 1
+        self.assertFalse(anchored_target(
+            "A", "B", 140, 240, {}, {}, [], bytes(source), bytes(dest),
+            64, 64, 512, 512, {}))
 
     def test_window_cache_is_scoped_to_each_module(self) -> None:
         first, second, target = bytearray(512), bytearray(512), bytearray(512)
