@@ -39,6 +39,9 @@ An [optimistic masked-shape audit](../docs/LEVEL-FUNCTION-INVENTORY.md#optimisti
 also measures **7,008,576 candidate bytes** when identical masked bodies are
 grouped across levels while repeated bodies inside one level stay separate.
 That is a useful aggressive research scenario, not an accepted progress total.
+An additional [context/data review](../docs/LEVEL-FUNCTION-INVENTORY.md#repeated-shapes-with-code-context-and-data-anchors)
+closes 672 repeated-shape families and gives a **23,433,044-byte conditional
+scenario**. This too remains a structural worklist, not counted C progress.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,
 run the [boot gate](../docs/BOOT-TRIAL-GATE.md), the
@@ -59,6 +62,8 @@ python tools/level_split_dedupe.py --write baserom/SCUS_976.15.iso --ghidra-dir 
 python tools/level_split_dedupe.py --check
 python tools/level_shape_scenario.py --write baserom/SCUS_976.15.iso
 python tools/level_shape_scenario.py --check
+python tools/level_context_translation.py --write baserom/SCUS_976.15.iso
+python tools/level_context_translation.py --check
 python tools/progress_status.py --write
 python tools/progress_status.py --check
 ```

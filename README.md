@@ -83,6 +83,8 @@ turns unresolved function/data boundaries into a game-wide percentage.
 An [optimistic shape-only audit](docs/LEVEL-FUNCTION-INVENTORY.md#optimistic-relocation-masked-shape-scenario)
 finds a 7,008,576-byte scenario after relocation masking, but shared C source
 and data-object identities have not been established for those shapes.
+A [code-context and data-anchor review](docs/LEVEL-FUNCTION-INVENTORY.md#repeated-shapes-with-code-context-and-data-anchors)
+narrows the separately validated structural scenario to 23,433,044 bytes.
 Names, symbol addresses and module hashes are research metadata, not proof of
 matching code. The [roadmap](docs/ROADMAP.md) tracks the remaining gates.
 

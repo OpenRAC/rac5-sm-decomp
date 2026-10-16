@@ -255,3 +255,24 @@ contain uncertain boundaries or require distinct C definitions. The
 [`shape_scenario_summary.json`](../config/levels/shape_scenario_summary.json)
 is deliberately separate from the conditional structural review and from
 qualified C progress; none supplies a ByteMatch denominator yet.
+
+## Repeated shapes with code context and data anchors
+
+The [context-translation audit](../tools/level_context_translation.py)
+examines functions whose masked instruction shape recurs within a level. It
+compares a candidate's immediate preceding and following code shapes across
+modules, accepting a context only when it occurs once in each compared
+module. Both bodies need independently corroborated Ghidra boundaries and
+the same local-call shape; every external local callee must already have an
+accepted placement in both modules. Data targets require either the same
+unique 64-byte window, an unambiguous accepted-family reference, or matching
+shifts bracketed within 64 KiB by two independent accepted families.
+
+Using level 01 as the reference against the other **18 retained numbered
+levels**, this closes **672 conditional families** spanning 1,160,936 bytes by
+placement. Unioning those links with exact and previously accepted structural
+groups avoids double counting. It adds **1,024,744 bytes of candidate savings**
+and reduces the conditional scenario from 24,457,788 to **23,433,044 bytes**.
+The private worklist and pinned ISO/Ghidra exports allow the pairings to be
+reproduced. Code context and data anchors still do not establish shared C
+source for every placement; this is not a qualified denominator.
