@@ -46,6 +46,20 @@ class LevelContextTranslationTests(unittest.TestCase):
                          [16, 8, 8, 16])
         self.assertNotIn("parent", [row["masked_lead_sha256"] for row in units])
 
+    def test_switch_context_replaces_case_labels_and_keeps_tail(self) -> None:
+        static = [
+            {"start": "0x80", "limit": "0x90", "body_bytes": "0",
+             "masked_lead_sha256": "", "status": "no_return"},
+            {"start": "0x90", "limit": "0xB0", "body_bytes": "32",
+             "masked_lead_sha256": "case", "status": "pointer_only"},
+        ]
+        switch = [{"start": "0x80", "end": "0xA0", "body_bytes": "32",
+                   "masked_sha256": "whole"}]
+        units = context_units(static, {}, bytes(0x200), switch)
+        self.assertEqual([row["kind"] for row in units], ["switch", "gap"])
+        self.assertEqual([row["masked_lead_sha256"] for row in units][0], "whole")
+        self.assertEqual([int(row["body_bytes"]) for row in units], [32, 16])
+
     def test_removed_callee_cascades_to_its_caller(self) -> None:
         families = {
             "caller": {"body_bytes": 8, "placements": [("A", 0), ("B", 0)]},

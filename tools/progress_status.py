@@ -20,6 +20,7 @@ from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path
 from level_context_translation import check_summary as check_context_summary
 from level_program_gate import MEASURED_LOADS
 from level_shape_scenario import check_summary as check_shape_summary
+from level_switch_bodies import check_summary as check_switch_summary
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "progress/status.json"
@@ -37,6 +38,7 @@ FLOW_RANGES = ROOT / "config/levels/flow_range_summary.json"
 FULL_MODULE_FLOW = ROOT / "config/levels/full_module_flow_summary.json"
 SPLIT_DEDUPE = ROOT / "config/levels/split_dedupe_summary.json"
 SHAPE_SCENARIO = ROOT / "config/levels/shape_scenario_summary.json"
+SWITCH_BODY = ROOT / "config/levels/switch_body_summary.json"
 CONTEXT_TRANSLATION = ROOT / "config/levels/context_translation_summary.json"
 TARGET = ROOT / "config/target.json"
 ACCEPTED_SYMBOL = "MEMCARD_Busy__Fv"
@@ -192,6 +194,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
     split = json.loads(SPLIT_DEDUPE.read_text(encoding="utf-8"))
     shape = json.loads(SHAPE_SCENARIO.read_text(encoding="utf-8"))
     check_shape_summary(shape)
+    switch = json.loads(SWITCH_BODY.read_text(encoding="utf-8"))
+    check_switch_summary(switch)
     context = json.loads(CONTEXT_TRANSLATION.read_text(encoding="utf-8"))
     check_context_summary(context)
     if (inventory["status"] != "candidate_inventory_only"
@@ -355,11 +359,19 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                 shape["unrepresented_bytes_kept_unique"],
             "qualified_unique_denominator": None,
         },
+        "switch_body_review": {
+            "reviewed_placements": switch["reviewed_placements"],
+            "shared_masked_groups": switch["shared_masked_groups"],
+            "optimistic_shared_shape_savings":
+                switch["optimistic_shared_shape_savings"],
+            "qualified_unique_denominator": None,
+        },
         "context_structural_review": {
             "reference_modules": context["reference_modules"],
             "families": context["context_families"],
             "full_module_call_placements":
                 context["full_module_call_placements"],
+            "switch_context_families": context["switch_context_families"],
             "collision_rejected_families": context["collision_rejected_families"],
             "callee_removed_pairs": context["callee_removed_pairs"],
             "callee_prune_rounds": context["callee_prune_rounds"],
@@ -392,6 +404,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "level_full_module_flow": digest(FULL_MODULE_FLOW),
             "level_split_dedupe": digest(SPLIT_DEDUPE),
             "level_shape_scenario": digest(SHAPE_SCENARIO),
+            "level_switch_body": digest(SWITCH_BODY),
             "level_context_translation": digest(CONTEXT_TRANSLATION),
         },
     }

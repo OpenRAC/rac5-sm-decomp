@@ -81,6 +81,9 @@
    3,729 oversized candidate intervals. Internal gaps must be zero; 294,836
    surrounding bytes remain unique. These are shared-code review leads, not
    accepted function sizes or a game-wide denominator.
+   A separate full-module audit now identifies 1,117 contiguous switch bodies
+   split by pointer-only case labels; only 54 families survive later context,
+   data-target, callgraph and collision checks.
 6. **Start scoped C/C++ matching.** `MEMCARD_Busy__Fv` is the first
    accepted 16-byte boot placement. The
    [shared level witness](LEVEL-C-WITNESS.md) accepts two authored C functions,

@@ -244,9 +244,15 @@
     "qualified_unique_denominator": null
   },
   "optimistic_shape_scenario": {
-    "masked_max_per_module_bytes": 7060508,
-    "masked_one_per_shape_bytes": 6941800,
-    "unrepresented_bytes_kept_unique": 2946924,
+    "masked_max_per_module_bytes": 5756360,
+    "masked_one_per_shape_bytes": 5637892,
+    "unrepresented_bytes_kept_unique": 1420532,
+    "qualified_unique_denominator": null
+  },
+  "switch_body_review": {
+    "reviewed_placements": 1117,
+    "shared_masked_groups": 98,
+    "optimistic_shared_shape_savings": 1539908,
     "qualified_unique_denominator": null
   },
   "context_structural_review": {
@@ -255,14 +261,15 @@
       "LEVEL_16.REL",
       "LEVEL_08.REL"
     ],
-    "families": 4476,
+    "families": 4564,
     "full_module_call_placements": 1996,
-    "collision_rejected_families": 124,
-    "callee_removed_pairs": 1592,
+    "switch_context_families": 54,
+    "collision_rejected_families": 123,
+    "callee_removed_pairs": 1589,
     "callee_prune_rounds": 4,
-    "dependency_closed_pairs": 21039,
-    "additional_candidate_savings": 4764332,
-    "conditional_candidate_bytes": 18682012,
+    "dependency_closed_pairs": 21710,
+    "additional_candidate_savings": 4972968,
+    "conditional_candidate_bytes": 18473376,
     "qualified_unique_denominator": null
   },
   "remaining_for_gamewide_report": [
@@ -531,7 +538,8 @@
     "level_flow_ranges": "773140f4969dd1030cd12885075236faf9697201fe3ec11e51559ffbabdbfeb8",
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
     "level_split_dedupe": "4878a743c9fce9feca0e47d881b3e1fa4475bc4724a71fbe563a936cc4a1fe4c",
-    "level_shape_scenario": "dfa6e2b866fbe1f08d1ef8f9d58fdc402b215a005ca871f0af389a3419bc3c93",
-    "level_context_translation": "68f7d3ff0f046d01da8f5be718129c6c3e11b013bbfa367fd246db7967c2d9d2"
+    "level_shape_scenario": "ec50eba848c3d0ac4fff65dce22db801e075bfa5e0af1362856131eb7aaa8ca4",
+    "level_switch_body": "071f25627fe9977ce8512d32210d5adbc894da42c596a449f5045ab6b3cd27e1",
+    "level_context_translation": "9e34ebd0764a45d4869668c55669f52cc40ed872cb24c50312f8a62a34cb2bf1"
   }
 }
