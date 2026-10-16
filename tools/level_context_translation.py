@@ -62,6 +62,42 @@ def context_key(static: list[dict[str, str]], index: int) -> str:
                           .encode("ascii")).hexdigest()
 
 
+def context_units(static: list[dict[str, str]], split_by_parent: dict[int, list],
+                  data: bytes) -> list[dict[str, str]]:
+    """Replace each reviewed parent with its verified spans and exact gaps."""
+    result = []
+    for row in static:
+        parent = int(row["start"], 16)
+        spans = split_by_parent.get(parent)
+        if not spans:
+            result.append({**row, "kind": "static"})
+            continue
+        cursor = parent
+        limit = int(row["limit"], 16)
+        for span in sorted(spans, key=lambda item: int(item["start"], 16)):
+            left, right = int(span["start"], 16), int(span["end"], 16)
+            if not cursor <= left < right <= limit:
+                raise ValueError("split context span escapes or overlaps parent")
+            if left > cursor:
+                result.append({"start": f"0x{cursor:08X}",
+                               "body_bytes": str(left - cursor),
+                               "masked_lead_sha256": "gap:" + hashlib.sha256(
+                                   data[cursor:left]).hexdigest(),
+                               "kind": "gap"})
+            result.append({"start": span["start"],
+                           "body_bytes": span["span_bytes"],
+                           "masked_lead_sha256": span["masked_sha256"],
+                           "kind": "split"})
+            cursor = right
+        if cursor < limit:
+            result.append({"start": f"0x{cursor:08X}",
+                           "body_bytes": str(limit - cursor),
+                           "masked_lead_sha256": "gap:" + hashlib.sha256(
+                               data[cursor:limit]).hexdigest(),
+                           "kind": "gap"})
+    return result
+
+
 def anchored_target(source_module: str, target_module: str,
                     source: int, target: int, anchors: dict,
                     reverse: dict, ordered: list[int],
@@ -254,8 +290,12 @@ def main_write(image: Path) -> dict[str, object]:
                  for row in rows(CODE)}
     ghidra_hashes = {row["module"]: row["ghidra_export_sha256"]
                      for row in ghidra_summary["modules"]}
+    split_rows = rows(WORK / "split_boundary_review.tsv")
     parents = {(row["module"], int(row["parent_start"], 16))
-               for row in rows(WORK / "split_boundary_review.tsv")}
+               for row in split_rows}
+    split_by_module = defaultdict(lambda: defaultdict(list))
+    for row in split_rows:
+        split_by_module[row["module"]][int(row["parent_start"], 16)].append(row)
     data, fixups, sites, contexts, known = {}, {}, {}, {}, {}
     static_rows = {}
     with IsoDisc(image) as disc:
@@ -275,18 +315,19 @@ def main_write(image: Path) -> dict[str, object]:
             static = rows(WORK / f"{module}.tsv")
             static_rows[module] = static
             contexts[module] = defaultdict(list)
-            for index, row in enumerate(static):
+            units = context_units(static, split_by_module[module], data[module])
+            for index, row in enumerate(units):
                 if not row["masked_lead_sha256"]:
                     continue
                 start = int(row["start"], 16)
-                confirmed = (row["status"] in (
+                confirmed = (row["kind"] == "split" or
+                    row["kind"] == "static" and row["status"] in (
                     "bounded_candidate", "pointer_only", "nonzero_tail")
                     and ghidra_confirmed(row, ghidra))
                 if confirmed:
-                    known[module, start] = (int(row["body_bytes"]),
-                                            row["masked_lead_sha256"])
-                if confirmed and (module, start) not in parents:
-                    contexts[module][context_key(static, index)].append(row)
+                    key = (int(row["body_bytes"]), row["masked_lead_sha256"])
+                    known[module, start] = key + (("split",) if row["kind"] == "split" else ())
+                    contexts[module][context_key(units, index)].append(row)
 
     previous = rows(WORK / "translation_review_leads.tsv")
     if len(previous) != translation["group_count"]:
@@ -302,11 +343,13 @@ def main_write(image: Path) -> dict[str, object]:
         previous_members.append((row["fingerprint"], int(row["body_bytes"]),
                                  members))
     current = rows(WORK / "split_translation_review_leads.tsv")
-    for row in current:
+    for index, row in enumerate(current):
         members = member_map(row["members"], False)
         accepted_nodes.update(members.items())
         accepted.append({"body_bytes": int(row["body_bytes"]),
                          "placements": list(members.items())})
+        previous_members.append((f"split-reviewed:{index}",
+                                 int(row["body_bytes"]), members))
 
     ref_cache = {}
     def references(module: str, start: int, size: int):

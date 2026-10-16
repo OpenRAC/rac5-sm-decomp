@@ -261,9 +261,11 @@ qualified C progress; none supplies a ByteMatch denominator yet.
 
 The [context-translation audit](../tools/level_context_translation.py)
 examines functions whose masked instruction shape recurs within a level. It
-compares a candidate's immediate preceding and following code shapes across
-modules, accepting a context only when it occurs once in each compared
-module. Both bodies need independently corroborated Ghidra boundaries and
+replaces reviewed split parents with their segments and exact-hash gap markers
+for unselected bytes, then compares a candidate's immediate preceding and
+following code shapes across modules. A context must occur once per module.
+Static bodies need corroborated Ghidra boundaries; split segments inherit the
+code-only and full-module Ghidra review. Both placements need
 the same local-call shape; every external local callee must already have an
 accepted placement in both modules or be independently paired in the same
 context graph. A placement pair is admitted only after all of its callee pairs
@@ -273,20 +275,20 @@ unique 64-byte window, an unambiguous accepted-family reference, or matching
 shifts bracketed within 64 KiB by two independent accepted families.
 
 Using levels 01, 16 and 08 as independent references across the **19 retained
-numbered levels**, the callgraph closes 3,940 provisional context families.
+numbered levels**, the callgraph closes 4,484 provisional context families.
 The global union rejects 124 that would connect two distinct placements from
 the same module. Removing those links can invalidate callers: four further
-passes remove 1,445 caller placements and 103 families whose callees no longer
-share a final component. The result is **3,727 conditional families** spanning
-**8,300,500 bytes by placement**. Independent audits find no remaining
-same-module collision or uncovered local callee. Of 72,135 context/data
-candidate pairs, 41,797 initially close in the callgraph; 18,957 of those
+passes remove 1,592 caller placements and 113 families whose callees no longer
+share a final component. The result is **4,247 conditional families** spanning
+**13,763,536 bytes by placement**. Independent audits find no remaining
+same-module collision or uncovered local callee. Of 82,211 context/data
+candidate pairs, 46,584 initially close in the callgraph; 20,968 of those
 need a paired callee first. The data
 window cache is keyed by module as well as address, so reused offsets in
 different levels cannot share a signature accidentally. Unioning these links
 with exact and previously accepted structural groups avoids double counting.
-It adds **3,573,944 bytes of candidate savings** and reduces the conditional
-scenario from 23,446,344 to **19,872,400 bytes**. These links remain
+It adds **4,713,940 bytes of candidate savings** and reduces the conditional
+scenario from 23,446,344 to **18,732,404 bytes**. These links remain
 conditional until shared source and the full denominator are qualified.
 The private worklist and pinned ISO/Ghidra exports allow the pairings to be
 reproduced. Code context and data anchors still do not establish shared C

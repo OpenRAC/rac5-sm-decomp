@@ -10,12 +10,28 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from level_context_translation import (OUTPUT, anchored_target, check_summary,
                                        close_context_dependencies,
-                                       context_key,
+                                       context_key, context_units,
                                        prune_uncovered_calls,
                                        select_noncolliding_families)  # noqa: E402
 
 
 class LevelContextTranslationTests(unittest.TestCase):
+    def test_split_context_preserves_exact_residual_gaps(self) -> None:
+        static = [{"start": "0x80", "limit": "0xB0",
+                   "body_bytes": "48", "masked_lead_sha256": "parent"}]
+        split = {0x80: [
+            {"start": "0x80", "end": "0x90", "span_bytes": "16",
+             "masked_sha256": "first"},
+            {"start": "0x98", "end": "0xA0", "span_bytes": "8",
+             "masked_sha256": "second"},
+        ]}
+        units = context_units(static, split, bytes(0x200))
+        self.assertEqual([row["kind"] for row in units],
+                         ["split", "gap", "split", "gap"])
+        self.assertEqual([int(row["body_bytes"]) for row in units],
+                         [16, 8, 8, 16])
+        self.assertNotIn("parent", [row["masked_lead_sha256"] for row in units])
+
     def test_removed_callee_cascades_to_its_caller(self) -> None:
         families = {
             "caller": {"body_bytes": 8, "placements": [("A", 0), ("B", 0)]},
