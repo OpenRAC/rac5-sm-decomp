@@ -88,8 +88,23 @@ The Ghidra cross-check also requires private metadata exports; its
 without game data; it detects drift in the committed catalogues, accepted C
 source and reported evidence. CI does not repeat the proprietary-tool builds.
 
-This is **not an objdiff v2 report** and is not uploaded to ByteMatch. ByteMatch
-ingests an [objdiff report artifact from a successful default-branch push](https://github.com/Veradictus/ByteMatch/blob/master/docs/getting-started.md).
-Publishing a game-wide artifact now would imply a qualified function inventory
-and shared-code denominator that this project has not established. Those
-remain the next reporting gates.
+This scoped snapshot is **not an objdiff v2 report**. A separate
+[`tools/bytematch_estimate.py`](../tools/bytematch_estimate.py) builds a labelled
+objdiff v2 artifact for [ByteMatch](https://bytematch.dev/OpenRAC/rac5-sm-decomp)
+from this snapshot and the public optimistic shape audit. On successful pushes
+to `master`, CI uploads `SCUS_976.15_report/report.json`; ByteMatch reads that
+artifact as its progress graph. Its denominator combines **498,900 measured
+boot `.text` bytes**, **162,944 frontend candidate-code bytes**, and **5,756,360
+optimistically deduplicated level candidate bytes**, for **6,418,204 provisional
+code bytes**. The numerator is only **96 accepted C bytes**: 16 in boot and 80
+from two authored functions shared across twenty levels, counted once. The
+site rounds the resulting approximately **0.00150%** to **0.00%**.
+
+The dashboard's level unit and category both say **optimistic masked-shape
+estimate**. This denominator can rise when a presumed shared shape splits into
+distinct functions, or change as boundaries are corrected. It is not a
+qualified unique-code size or a verified game-wide matching percentage. The
+`overall_percent: null` and `bytematch_objdiff_ready: false` fields above remain
+the authoritative qualification status. Regenerate this separate artifact from
+public metadata with `python tools/bytematch_estimate.py --write`; CI checks it
+without uploading private game data.

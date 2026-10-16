@@ -68,7 +68,8 @@ limited boot-only profile and counts one match. The direct SN-linker file
 differs in section headers and non-loaded metadata, while the later packaging
 gate reconstructs the complete ELF exactly. The original
 compiler identity, complete runtime comparison and game-wide catalogue remain
-open. No ByteMatch progress report is published yet. The original compiler's
+open. The later [ByteMatch estimate](../progress/README.md) uses a provisional
+denominator and does not count the other boot witnesses. The original compiler's
 FOG loop mismatch motivated the
 [isolated RAC5 threshold trial](COMPILER-LOOP-TRIAL.md) below.
 

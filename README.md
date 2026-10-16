@@ -10,8 +10,10 @@ An early matching-decompilation workspace for the **USA PlayStation 2** version
 parts of [OpenRAC's RAC2 project](https://github.com/OpenRAC/rac2-gc-decomp):
 authored source belongs in `src/`, game-derived material stays local, and a function
 only counts as matched after a byte-identical build. This repository does **not**
-yet have a general qualified compiler, a complete retail function catalogue,
-or a ByteMatch progress report. One boot function and two shared level functions
+yet have a general qualified compiler or a complete retail function catalogue.
+The [ByteMatch dashboard](https://bytematch.dev/OpenRAC/rac5-sm-decomp) uses a
+**provisional optimistic denominator** for level code; its displayed percentage
+is an estimate, not a qualified game-wide match rate. One boot function and two shared level functions
 have narrowly scoped private whole-program gates.
 
 ## What is established
@@ -68,11 +70,11 @@ this is not a fully source-derived game build.
 No other C or C++ match is claimed. The original compiler identity and general level
 profiles, most function boundaries and full runtime behavior are still under
 investigation. The [scoped progress snapshot](progress/README.md) records the
-verified boot and shared-level matches without claiming a game-wide
-percentage. The [21-module function audit](docs/LEVEL-FUNCTION-INVENTORY.md)
+verified boot and shared-level matches. A separate, labelled ByteMatch estimate
+divides those verified C bytes by provisional candidate code bytes. The
+[21-module function audit](docs/LEVEL-FUNCTION-INVENTORY.md)
 separates bounded entries from uncertain pointer/table entries and identifies
-exact duplicates plus relocation-masked review leads. No ByteMatch report is
-published yet.
+exact duplicates plus relocation-masked review leads.
 The independent Ghidra pass corroborates 91,350 candidate level boundaries;
 2,415 masked families pass data-target and closed local-callgraph checks.
 A full-module flow pass assigns the 1,590 code-only inside-body disagreements
@@ -204,8 +206,8 @@ every applicable placement** can establish a match. Compiling successfully,
 matching a few instructions, or comparing masked bytes cannot. The
 [reproducible boot gate](docs/BOOT-TRIAL-GATE.md) checks candidate objects and
 all loaded boot bytes and accepts only `MEMCARD_Busy__Fv` (16 bytes). It is a
-boot-only match, not a complete game percentage or a published ByteMatch
-report. RAC2's compiler configuration alone is not evidence for this game
+boot-only match, not a qualified game-wide percentage. RAC2's compiler
+configuration alone is not evidence for this game
 ([compiler status](docs/COMPILER-STATUS.md)).
 
 ## Repository layout
