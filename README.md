@@ -81,10 +81,10 @@ split review selects 6,245 corroborated code segments from 3,729 oversized
 candidate intervals, leaving all unselected bytes unique. None of these analyses
 turns unresolved function/data boundaries into a game-wide percentage.
 An [optimistic shape-only audit](docs/LEVEL-FUNCTION-INVENTORY.md#optimistic-relocation-masked-shape-scenario)
-finds a 7,060,508-byte scenario after relocation masking, but shared C source
+finds a 5,756,360-byte scenario after relocation masking, but shared C source
 and data-object identities have not been established for those shapes.
 A [code-context and data-anchor review](docs/LEVEL-FUNCTION-INVENTORY.md#repeated-shapes-with-code-context-and-data-anchors)
-narrows the separately validated structural scenario to 18,682,012 bytes
+narrows the separately validated structural scenario to 18,473,376 bytes
 after global collision and final-callee checks.
 Names, symbol addresses and module hashes are research metadata, not proof of
 matching code. The [roadmap](docs/ROADMAP.md) tracks the remaining gates.

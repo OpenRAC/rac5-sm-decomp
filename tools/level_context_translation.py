@@ -18,6 +18,7 @@ from disc import IsoDisc, verify_disc
 from level_function_inventory import masked_body, relocations
 from level_ghidra_crosscheck import rows
 from level_shape_scenario import measured_units
+from level_switch_bodies import check_summary as check_switch_summary
 from level_translation_families import (combined_dedupe_savings, ghidra_confirmed,
                                         local_code_references, local_references,
                                         unique_data_window)
@@ -30,6 +31,7 @@ REVIEW = WORK / "context_translation_review.tsv"
 INVENTORY = ROOT / "config/levels/function_inventory_summary.json"
 SPLIT = ROOT / "config/levels/split_dedupe_summary.json"
 SHAPE = ROOT / "config/levels/shape_scenario_summary.json"
+SWITCH = ROOT / "config/levels/switch_body_summary.json"
 TRANSLATION = ROOT / "config/levels/translation_families_summary.json"
 GHIDRA = ROOT / "config/levels/ghidra_crosscheck_summary.json"
 FULL_FLOW = ROOT / "config/levels/full_module_flow_summary.json"
@@ -64,7 +66,8 @@ def context_key(static: list[dict[str, str]], index: int) -> str:
 
 
 def context_units(static: list[dict[str, str]], split_by_parent: dict[int, list],
-                  data: bytes) -> list[dict[str, str]]:
+                  data: bytes, switches: list[dict[str, str]] | None = None
+                  ) -> list[dict[str, str]]:
     """Replace each reviewed parent with its verified spans and exact gaps."""
     result = []
     for row in static:
@@ -96,7 +99,32 @@ def context_units(static: list[dict[str, str]], split_by_parent: dict[int, list]
                            "masked_lead_sha256": "gap:" + hashlib.sha256(
                                data[cursor:limit]).hexdigest(),
                            "kind": "gap"})
-    return result
+    if not switches:
+        return result
+    ordered = sorted(switches, key=lambda row: int(row["start"], 16))
+    starts = [int(row["start"], 16) for row in ordered]
+    merged = []
+    for row in result:
+        start = int(row["start"], 16)
+        index = bisect.bisect_right(starts, start) - 1
+        if index < 0 or start >= int(ordered[index]["end"], 16):
+            merged.append(row)
+            continue
+        switch = ordered[index]
+        end = int(switch["end"], 16)
+        if start == starts[index]:
+            merged.append({"start": switch["start"],
+                           "body_bytes": switch["body_bytes"],
+                           "masked_lead_sha256": switch["masked_sha256"],
+                           "kind": "switch"})
+        if row["kind"] == "static" and int(row["limit"], 16) > end:
+            limit = int(row["limit"], 16)
+            merged.append({"start": f"0x{end:08X}",
+                           "body_bytes": str(limit - end),
+                           "masked_lead_sha256": "gap:" + hashlib.sha256(
+                               data[end:limit]).hexdigest(),
+                           "kind": "gap"})
+    return merged
 
 
 def candidate_boundary(row: dict[str, str], code_functions: dict,
@@ -283,14 +311,17 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
     inventory = json.loads(INVENTORY.read_text(encoding="utf-8"))
     split = json.loads(SPLIT.read_text(encoding="utf-8"))
     shape = json.loads(SHAPE.read_text(encoding="utf-8"))
+    switch = json.loads(SWITCH.read_text(encoding="utf-8"))
+    check_switch_summary(switch)
     translation = json.loads(TRANSLATION.read_text(encoding="utf-8"))
     ghidra_summary = json.loads(GHIDRA.read_text(encoding="utf-8"))
     full_summary = json.loads(FULL_FLOW.read_text(encoding="utf-8"))
     target = json.loads(TARGET.read_text(encoding="utf-8"))
     if (digest(WORK / "split_boundary_review.tsv") != split["split_review_sha256"]
             or digest(WORK / "split_translation_review_leads.tsv") !=
-            split["translation_review_sha256"]):
-        raise ValueError("private split worklists differ from pinned audit")
+            split["translation_review_sha256"]
+            or digest(WORK / "switch_body_review.tsv") != switch["review_sha256"]):
+        raise ValueError("private split or switch worklists differ from pinned audit")
     _verified_units, retained_bytes, _residual = measured_units(image)
     if retained_bytes != shape["retained_candidate_interval_bytes"]:
         raise ValueError("optimistic shape input differs from retained intervals")
@@ -313,6 +344,11 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
     split_by_module = defaultdict(lambda: defaultdict(list))
     for row in split_rows:
         split_by_module[row["module"]][int(row["parent_start"], 16)].append(row)
+    switch_by_module = defaultdict(list)
+    switch_starts = set()
+    for row in rows(WORK / "switch_body_review.tsv"):
+        switch_by_module[row["module"]].append(row)
+        switch_starts.add((row["module"], int(row["start"], 16)))
     data, fixups, sites, contexts, known = {}, {}, {}, {}, {}
     static_rows = {}
     full_only_placements = full_only_body_bytes = 0
@@ -338,12 +374,13 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
             static = rows(WORK / f"{module}.tsv")
             static_rows[module] = static
             contexts[module] = defaultdict(list)
-            units = context_units(static, split_by_module[module], data[module])
+            units = context_units(static, split_by_module[module], data[module],
+                                  switch_by_module[module])
             for index, row in enumerate(units):
                 if not row["masked_lead_sha256"]:
                     continue
                 start = int(row["start"], 16)
-                boundary = ("split" if row["kind"] == "split" else
+                boundary = (row["kind"] if row["kind"] in ("split", "switch") else
                     candidate_boundary(row, ghidra, full_functions)
                     if row["kind"] == "static" and row["status"] in (
                         "bounded_candidate", "pointer_only", "nonzero_tail")
@@ -354,7 +391,8 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
                         full_only_placements += 1
                         full_only_body_bytes += int(row["body_bytes"])
                     key = (int(row["body_bytes"]), row["masked_lead_sha256"])
-                    known[module, start] = key + (("split",) if row["kind"] == "split" else ())
+                    known[module, start] = key + (
+                        (row["kind"],) if row["kind"] in ("split", "switch") else ())
                     contexts[module][context_key(units, index)].append(row)
 
     previous = rows(WORK / "translation_review_leads.tsv")
@@ -547,6 +585,10 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
         "callee_removed_families": callee_removed_families,
         "callee_prune_rounds": prune_rounds,
         "context_families": len(family_groups),
+        "switch_context_families": sum(
+            any((module, start) in switch_starts
+                for module, start in family["placements"])
+            for family in family_groups.values()),
         "full_module_call_placements": full_only_placements,
         "full_module_call_body_bytes": full_only_body_bytes,
         "placement_body_bytes": sum(item["body_bytes"] * len(item["placements"])
@@ -559,6 +601,7 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
         "inventory_sha256": digest(INVENTORY),
         "split_sha256": digest(SPLIT),
         "shape_sha256": digest(SHAPE),
+        "switch_sha256": digest(SWITCH),
         "translation_sha256": digest(TRANSLATION),
         "ghidra_sha256": digest(GHIDRA),
         "full_flow_sha256": digest(FULL_FLOW),
@@ -579,6 +622,8 @@ def main_write(image: Path, full_ghidra_dir: Path) -> dict[str, object]:
 
 def check_summary(summary: dict[str, object]) -> None:
     split = json.loads(SPLIT.read_text(encoding="utf-8"))
+    switch = json.loads(SWITCH.read_text(encoding="utf-8"))
+    check_switch_summary(switch)
     if (summary["status"] != "context_translation_leads_only"
             or summary["reference_modules"] != list(REFERENCES)
             or summary["compared_modules"] != 19
@@ -594,6 +639,8 @@ def check_summary(summary: dict[str, object]) -> None:
             or summary["callee_removed_pairs"] < summary["callee_removed_families"]
             or summary["callee_prune_rounds"] < 1
             or summary["context_families"] < 0
+            or not 0 <= summary["switch_context_families"] <=
+            summary["context_families"]
             or summary["full_module_call_placements"] < 0
             or summary["full_module_call_body_bytes"] < 0
             or summary["placement_body_bytes"] < 0
@@ -611,6 +658,7 @@ def check_summary(summary: dict[str, object]) -> None:
             or summary["inventory_sha256"] != digest(INVENTORY)
             or summary["split_sha256"] != digest(SPLIT)
             or summary["shape_sha256"] != digest(SHAPE)
+            or summary["switch_sha256"] != digest(SWITCH)
             or summary["translation_sha256"] != digest(TRANSLATION)
             or summary["ghidra_sha256"] != digest(GHIDRA)
             or summary["full_flow_sha256"] != digest(FULL_FLOW)

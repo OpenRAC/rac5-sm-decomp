@@ -35,14 +35,16 @@ oversized candidate intervals, leaving 294,836 surrounding body bytes unique.
 Its **23,446,344-byte** result, including conditional target-graph matches
 for zero-filled local data and placement-checked partial families, is a
 conditional deduplication scenario, not a verified unique-code denominator.
+The [switch-body review](../docs/LEVEL-FUNCTION-INVENTORY.md#contiguous-switch-body-review)
+identifies 1,117 contiguous function placements before data and call checks.
 An [optimistic masked-shape audit](../docs/LEVEL-FUNCTION-INVENTORY.md#optimistic-relocation-masked-shape-scenario)
-also measures **7,060,508 candidate bytes** when identical masked bodies are
+also measures **5,756,360 candidate bytes** when identical masked bodies are
 grouped across levels while repeated bodies inside one level stay separate.
 That is a useful aggressive research scenario, not an accepted progress total.
 An additional [context/data review](../docs/LEVEL-FUNCTION-INVENTORY.md#repeated-shapes-with-code-context-and-data-anchors)
-retains 4,476 repeated-shape families, including reviewed split segments and
-full-module-only direct-call boundaries, after global collision and
-final-callee checks and gives an **18,682,012-byte conditional
+retains 4,564 repeated-shape families, including reviewed split segments and
+54 switch-body families, after global collision and final-callee checks and
+gives an **18,473,376-byte conditional
 scenario**. This too remains a structural worklist, not counted C progress.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,
@@ -62,6 +64,8 @@ python tools/level_full_module_flow.py --write baserom/SCUS_976.15.iso --ghidra-
 python tools/level_full_module_flow.py --check
 python tools/level_split_dedupe.py --write baserom/SCUS_976.15.iso --ghidra-dir build/level-functions/full-ghidra
 python tools/level_split_dedupe.py --check
+python tools/level_switch_bodies.py --write baserom/SCUS_976.15.iso --full-ghidra-dir build/level-functions/full-ghidra
+python tools/level_switch_bodies.py --check
 python tools/level_shape_scenario.py --write baserom/SCUS_976.15.iso
 python tools/level_shape_scenario.py --check
 python tools/level_context_translation.py --write baserom/SCUS_976.15.iso --full-ghidra-dir build/level-functions/full-ghidra

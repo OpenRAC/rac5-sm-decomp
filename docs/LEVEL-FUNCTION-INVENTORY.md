@@ -234,22 +234,39 @@ a ByteMatch percentage. The compact
 [`split_dedupe_summary.json`](../config/levels/split_dedupe_summary.json)
 records counts and input hashes only.
 
+## Contiguous switch-body review
+
+Some statically labelled `no_return` entries are dispatchers for pointer-only
+case labels rather than separate tiny functions. The
+[`level_switch_bodies.py`](../tools/level_switch_bodies.py) audit accepts a
+contiguous full-module Ghidra body only when it starts at a direct-call entry,
+ends in `jr $ra` and its delay slot, contains only pointer-labelled static
+entries, and has no competing Ghidra function, external direct edge into an
+interior block, or overlap with a selected split parent. Any code-only Ghidra
+body at the start must agree on the full outer range. The pinned private pass
+finds **1,117 placements** comprising **1,784,320 body bytes**. Ninety-eight
+relocation-masked groups recur between modules, with 1,539,908 possible
+placement-byte savings before data and callgraph checks. Their private
+worklist is pinned by [`switch_body_summary.json`](../config/levels/switch_body_summary.json).
+This is function-ownership evidence, not a counted C match.
+
 ## Optimistic relocation-masked shape scenario
 
 The separate [`level_shape_scenario.py`](../tools/level_shape_scenario.py)
 audit answers how low the candidate-byte count could go if every body with
 the same relocation-masked instructions and fixup descriptors shared a code
-shape. It rehashes every static and selected split body directly from the
-pinned private ISO. A split parent is removed before its disjoint segments are
-added. Of **35,015,424** retained candidate-interval bytes, **32,068,500**
-are represented by 103,083 body units; the other **2,946,924** stay unique.
+shape. It rehashes every static, selected split and reviewed switch body
+directly from the pinned private ISO. A parent or switch case label is removed
+before its disjoint replacement is added. Of **35,015,424** retained
+candidate-interval bytes, **33,594,892** are represented by 103,037 body
+units; the other **1,420,532** stay unique.
 
-The 103,083 units yield **9,349 masked shapes**. Keeping as many instances of
+The 103,037 units yield **9,388 masked shapes**. Keeping as many instances of
 each shape as the maximum present in any one module gives an optimistic
-**7,060,508-byte scenario**. Counting only one instance per masked shape would
-give **6,941,800 bytes**, but 340 shapes repeat within a module, so that lower
+**5,756,360-byte scenario**. Counting only one instance per masked shape would
+give **5,637,892 bytes**, but 337 shapes repeat within a module, so that lower
 figure may collapse distinct placements. Using raw bytes instead of masked
-relocations gives 31,614,152 bytes under the same maximum-per-module rule.
+relocations gives 31,627,388 bytes under the same maximum-per-module rule.
 These are alternative *shape-counting assumptions*, not bounds that prove
 source equivalence. Matching masked code can still refer to different data,
 contain uncertain boundaries or require distinct C definitions. The
@@ -261,15 +278,17 @@ qualified C progress; none supplies a ByteMatch denominator yet.
 
 The [context-translation audit](../tools/level_context_translation.py)
 examines functions whose masked instruction shape recurs within a level. It
-replaces reviewed split parents with their segments and exact-hash gap markers
-for unselected bytes, then compares a candidate's immediate preceding and
+replaces reviewed split parents with their segments and contiguous switch
+bodies with one function unit, preserving exact-hash gap markers for unselected
+bytes, then compares a candidate's immediate preceding and
 following code shapes across modules. A context must occur once per module.
 Static bodies normally need the code-only Ghidra boundary. When that pass
 has no function at a direct-call entry, the audit also accepts a matching
 full-module Ghidra body; a contradictory code-only function still rejects the
 candidate. This hash-pinned second path admits 1,996 candidate placements
 (329,568 body bytes) across the retained modules before data and call checks.
-Split segments inherit the code-only and full-module Ghidra review. Both
+Split segments and switch bodies inherit their separate code-flow and
+full-module Ghidra reviews. Both
 placements need
 the same local-call shape; every external local callee must already have an
 accepted placement in both modules or be independently paired in the same
@@ -280,20 +299,21 @@ unique 64-byte window, an unambiguous accepted-family reference, or matching
 shifts bracketed within 64 KiB by two independent accepted families.
 
 Using levels 01, 16 and 08 as independent references across the **19 retained
-numbered levels**, the callgraph closes 4,484 provisional context families.
-The global union rejects 124 that would connect two distinct placements from
+numbered levels**, the callgraph closes 4,799 provisional context families.
+The global union rejects 123 that would connect two distinct placements from
 the same module. Removing those links can invalidate callers: four further
-passes remove 1,592 caller placements and 113 families whose callees no longer
-share a final component. The result is **4,476 conditional families** spanning
-**13,986,292 bytes by placement**. Independent audits find no remaining
-same-module collision or uncovered local callee. Of 82,211 context/data
-candidate pairs, 46,584 initially close in the callgraph; 20,968 of those
+passes remove 1,589 caller placements and 112 families whose callees no longer
+share a final component. The result is **4,564 conditional families**, of
+which 54 include reviewed switch bodies, spanning **14,392,048 bytes by
+placement**. Independent audits find no remaining same-module collision or
+uncovered local callee. Of 88,376 context/data candidate pairs, 50,143
+initially close in the callgraph; 21,710 of those
 need a paired callee first. The data
 window cache is keyed by module as well as address, so reused offsets in
 different levels cannot share a signature accidentally. Unioning these links
 with exact and previously accepted structural groups avoids double counting.
-It adds **4,764,332 bytes of candidate savings** and reduces the conditional
-scenario from 23,446,344 to **18,682,012 bytes**. These links remain
+It adds **4,972,968 bytes of candidate savings** and reduces the conditional
+scenario from 23,446,344 to **18,473,376 bytes**. These links remain
 conditional until shared source and the full denominator are qualified.
 The private worklist and pinned ISO/Ghidra exports allow the pairings to be
 reproduced. Code context and data anchors still do not establish shared C
