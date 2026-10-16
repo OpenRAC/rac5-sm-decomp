@@ -42,13 +42,13 @@ also measures **5,756,360 candidate bytes** when identical masked bodies are
 grouped across levels while repeated bodies inside one level stay separate.
 That is a useful aggressive research scenario, not an accepted progress total.
 An additional [context/data review](../docs/LEVEL-FUNCTION-INVENTORY.md#repeated-shapes-with-code-context-and-data-anchors)
-retains 5,621 repeated-shape families, including reviewed split segments and
+retains 5,631 repeated-shape families, including reviewed split segments and
 62 switch-body families, after global collision and final-callee checks and
-gives a **16,876,088-byte conditional
+gives a **16,857,360-byte conditional
 scenario**. This too remains a structural worklist, not counted C progress.
 The separate [site-paired role review](../docs/LEVEL-FUNCTION-INVENTORY.md#site-paired-code-role-review)
-retains 33,149 conditional pairs after global collision, code-role and
-dependency checks, giving a **10,955,612-byte normalized-code scenario**.
+retains 33,357 conditional pairs after global collision, code-role and
+dependency checks, giving a **10,788,740-byte normalized-code scenario**.
 Variant callees may have different source; this is not a qualified denominator
 or counted C progress.
 
