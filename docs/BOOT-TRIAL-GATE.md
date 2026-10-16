@@ -8,10 +8,13 @@ RAC5-only short-loop patch, and the exact `-O2 -G0` flags. It is accepted
 `MEMCARD_Busy__Fv` is in `src/boot/`. Every other body remains under
 `nonmatching/`.
 
-The current campaign contains 342 compiler-produced C objects. Its verified
-catalogue records 325 global function bodies (9,912 bytes plus 576 zero alignment
-bytes); 20 object spans without usable global-function extents remain uncatalogued.
+The current campaign contains 406 compiler-produced C objects. Its verified
+catalogue records 351 global function bodies (14,936 bytes plus 656 zero alignment
+bytes); 55 object spans without usable global-function extents remain uncatalogued.
 These counts are distinct from the one accepted 16-byte boot placement.
+Per-source options measured for one file are listed in
+[`config/cflags.txt`](../config/cflags.txt) and applied by the gate; the profile
+keeps its global flags.
 
 Both original and preprocessed C inputs must pass `tools/c_source_policy.py`:
 no instruction assembly, fixed registers or raw instruction words. The standalone

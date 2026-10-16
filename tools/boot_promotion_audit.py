@@ -22,6 +22,7 @@ from c_source_policy import require_c_source
 
 CATALOGUE = ROOT / "config/boot/witness_boundaries.tsv"
 PROFILE = ROOT / "config/boot/compiler_trial.json"
+CFLAGS = ROOT / "config/cflags.txt"
 GATE = ROOT / "build/boot-trial-gate/report.json"
 OUTPUT = ROOT / "build/boot-promotion-audit/report.json"
 
@@ -31,9 +32,10 @@ def _sha(data: bytes) -> str:
 
 
 def input_fingerprint() -> str:
-    """Bind a gate receipt to source bytes, owners, profile and body catalogue."""
+    """Bind a gate receipt to source bytes, owners, profile, per-source flags and catalogue."""
     inputs = {
         "profile_sha256": _sha(PROFILE.read_bytes()),
+        "cflags_sha256": _sha(CFLAGS.read_bytes()),
         "catalogue_sha256": _sha(CATALOGUE.read_bytes()),
         "owners": [
             {"name": item.name, "start": item.start, "end": item.end,

@@ -31,6 +31,7 @@ LEVEL_C_GATE = ROOT / "build/level-c-gate/report.json"
 CODE_CATALOGUE = ROOT / "config/levels/code_intervals.tsv"
 MODULE_CATALOGUE = ROOT / "config/levels/modules.tsv"
 PROFILE = ROOT / "config/boot/compiler_trial.json"
+CFLAGS = ROOT / "config/cflags.txt"
 LEVEL_PROFILE = ROOT / "config/levels/compiler_trial.json"
 FUNCTION_INVENTORY = ROOT / "config/levels/function_inventory_summary.json"
 GHIDRA_CROSSCHECK = ROOT / "config/levels/ghidra_crosscheck_summary.json"
@@ -404,6 +405,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
         "evidence": evidence,
         "public_inputs_sha256": {
             "target": digest(TARGET), "compiler_profile": digest(PROFILE),
+            "per_source_cflags": digest(CFLAGS),
             "level_code_catalogue": digest(CODE_CATALOGUE),
             "level_module_catalogue": digest(MODULE_CATALOGUE),
             "accepted_c_source_lf": accepted.source_sha256,
