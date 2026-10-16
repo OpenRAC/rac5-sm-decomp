@@ -194,7 +194,7 @@ Bytes outside selected sub-bodies are left unique even if they look similar.
 The pinned private pass found **2,651 parent intervals by placement**
 (5,134,376 bytes) with **4,369** qualifying segments spanning 4,947,100
 bytes; the other **187,276 bytes** stay uncollapsed. Reference/translation and
-callgraph checks closed **118** split-segment families plus **200** existing
+callgraph checks closed **133** split-segment families plus **236** existing
 static families whose calls now resolve to those segments. Another 107 raw-
 identical split groups served as target controls. Detailed addresses remain
 in ignored worklists.
@@ -205,17 +205,27 @@ need different evidence: a target within 32 bytes must have two distinct
 already accepted families pointing to it at the same relative sites in both
 modules, each edge must identify just one target per module, and the full
 span between target and anchor must remain zero. This additional conditional
-rule resolves **54 groups** spanning **322,432 placement bytes**. It uses
+rule resolves **76 groups** spanning **830,308 placement bytes**. It uses
 earlier structural families only as anchors; neither the anchors nor these
 new groups are certified source-level equivalents. The private
 `split_translation_review_leads.tsv` lists every newly closed family.
+
+When some placements in a masked family have different data objects, the
+audit tries a pairwise-compatible subgroup instead of rejecting all of them.
+The local-callgraph closure then requires the callee to be corroborated in
+**every module occupied by its caller**. Of 161 provisional subgroup leads,
+33 pass this closure, covering 464,272 placement bytes. One 796-byte family
+closes in 15 levels; its 9,196-byte caller closes in 13 of those levels. The
+other five callee placements remain outside that subgroup. This keeps the
+partial family from being treated as a shared source in levels where its data
+identity still differs.
 
 The audit removes each selected parent from exact duplicate grouping before
 adding its disjoint verified segments, while leaving the residual bytes
 unique. It then recomputes connected components of exact and structural links.
 Exact candidate savings rise from **1,846,532** to **2,550,912 bytes** and
-combined candidate savings from **7,294,456** to **9,893,460 bytes**. This
-yields a **25,121,964-byte conditional candidate scenario**, 2,599,004 bytes
+combined candidate savings from **7,294,456** to **10,557,636 bytes**. This
+yields a **24,457,788-byte conditional candidate scenario**, 3,263,180 bytes
 below the prior scenario. The calculation never counts a parent and its split
 segments at the same time. Ghidra-derived starts and structural equivalence
 remain review leads, so this is **not** a qualified unique-code denominator or

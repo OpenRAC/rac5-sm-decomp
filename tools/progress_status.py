@@ -332,6 +332,9 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "accepted_target_graph_groups": split["accepted_target_graph_groups"],
             "accepted_target_graph_placement_bytes":
                 split["accepted_target_graph_placement_bytes"],
+            "closed_partial_groups": split["closed_partial_groups"],
+            "closed_partial_placement_bytes":
+                split["closed_partial_placement_bytes"],
             "conditional_candidate_bytes": split["conditional_candidate_bytes"],
             "qualified_unique_denominator": None,
         },
