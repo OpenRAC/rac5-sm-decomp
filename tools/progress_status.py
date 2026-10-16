@@ -356,6 +356,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "qualified_unique_denominator": None,
         },
         "context_structural_review": {
+            "reference_modules": context["reference_modules"],
             "families": context["context_families"],
             "dependency_closed_pairs": context["dependency_closed_pairs"],
             "additional_candidate_savings":
