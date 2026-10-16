@@ -18,6 +18,14 @@ every applicable placement. The boot-only scope and its remaining caveats are
 documented in `docs/BOOT-MATCH-SCOPE.md`. Put unaccepted but useful bodies in
 `nonmatching/` and explain their remaining differences.
 
+The same source rule applies to accepted C and provisional witnesses: no inline or
+global assembly, fixed registers, raw instruction words or patched compiler output
+to force a match. Hybrid experiments stay private, and their original instructions
+remain in the assembly baseline with no C credit. A declaration may use an
+assembler-name label for a retail ELF symbol (including C++ names); this names a
+symbol and does not emit instructions. The repository and boot compiler gates
+enforce this distinction, including a check of preprocessed boot input.
+
 Use short, focused commits. Before a PR, run
 `python -m unittest discover -s tests -v` and
 `python tools/check_repository.py`, then review the staged diff. Include your

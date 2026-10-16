@@ -44,7 +44,9 @@
    compiler routing without witness functions and baseline controls. One
    [boot C-object integration witness](BOOT-C-WITNESS.md) preserves all
    raw retail `PT_LOAD` bytes and header. A combined trial now preserves them
-   with twenty C functions linked together (`docs/BOOT-C-WITNESS.md`). That
+   initially with twenty C functions linked together (`docs/BOOT-C-WITNESS.md`). The
+   current pure-C campaign recompiles 342 objects and catalogues 325 body extents;
+   inline-assembly experiments are excluded. That
    evidence supports one narrow boot placement, not a general compiler or
    full runtime behavior. The later packaging gate rebuilds the entire ELF
    file exactly from the linked load image and numeric metadata.
@@ -58,7 +60,7 @@
    recreates the pinned complete file exactly.
 5. **Catalogue functions.** The boot now has generated next-label bounds for
    1,315 distinct code addresses (`config/boot/code_intervals.tsv`). They are
-   search limits, not validated function sizes. Twenty linked C witnesses now
+   search limits, not validated function sizes. The linked C witnesses now
    also have verified candidate body/padding extents
    (`config/boot/witness_boundaries.tsv`). Review remaining boundaries,
    padding, aliases and placements before producing a retail function

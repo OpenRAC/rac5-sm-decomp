@@ -27,12 +27,15 @@ existing C witness bodies happen to occupy their full corresponding bounds,
 which checks this derivation for those intervals only. The file is generated
 from the hash-pinned boot and does not claim a matched function count.
 
-The twenty C candidates have a separate
+The linked C candidates have a separate
 [`witness_boundaries.tsv`](../config/boot/witness_boundaries.tsv). It records
-compiled C symbol extents and the measured zero padding to the next label,
+compiled C symbol extents and the measured zero padding within their replacement spans,
 after a complete raw boot-load comparison and a check for direct control-flow
 targets into that padding. These are stronger **candidate body** observations
-for those twenty placements, still not a qualified retail function catalogue.
+for those placements, still not a qualified retail function catalogue. The current
+catalogue has 325 bodies; object spans without usable global-function symbols are
+reported separately rather than assigned invented bounds. Terminal transfers are
+recorded as observed; a call does not prove a non-returning callee.
 
 The boot table has `lib_main__FiPPc` with address zero. Every level `.REL`
 exports that name with a nonzero module-relative offset, consistent with a

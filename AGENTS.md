@@ -13,6 +13,14 @@ compiler settings or level-format assumptions.
 - Keep one authored definition per function in `src/`, using C or C++ only
   after the corresponding compiler profile is measured. Put a useful but
   nonmatching attempt in `nonmatching/`; do not count it as a match.
+- C/C++ evidence must come from compiler-generated instructions: no inline or
+  global assembly, fixed-register bindings, raw instruction words, artificial
+  assembly barriers, or edits to compiler output. This also applies to provisional
+  witnesses and public `nonmatching/` attempts. Preserve hybrid experiments privately;
+  leave their retail intervals in the assembly baseline without C credit. Real
+  handwritten assembly requires separate evidence and maintainer classification,
+  never automatic C acceptance. File-scope assembler-name labels on declarations
+  are permitted solely to name retail ELF symbols; they must emit no instructions.
 - Do not infer this game's compiler, flags, function boundaries or level layout
   from RAC2. Record the evidence for each before changing the build.
 - A match requires the qualified toolchain to reproduce the complete retail

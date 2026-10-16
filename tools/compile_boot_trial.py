@@ -17,6 +17,7 @@ from pathlib import Path
 
 from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path
 from r5900_assembly import ASSEMBLER_SHA256, LINKER_SHA256
+from c_source_policy import require_c_source
 
 ROOT = Path(__file__).resolve().parent.parent
 PROFILE = ROOT / "config/boot/compiler_trial.json"
@@ -46,6 +47,8 @@ def check_profile(cpp: Path, cc1: Path, assembler: Path) -> dict[str, object]:
             or profile["accepted_source"] != "src/boot/memcard_busy.c"
             or ACCEPTED_SOURCES != frozenset({"memcard_busy"})):
         raise ValueError("compiler trial catalogue no longer matches the measured scope")
+    if "expected_function_witnesses" in profile:
+        raise ValueError("witness counts come from the verified boundary catalogue, not the compiler profile")
     patch = ROOT / profile["source"]["patch"]
     if normalized_digest(patch) != profile["source"]["patch_sha256_lf"]:
         raise ValueError("RAC5 compiler trial patch differs from pinned source")
@@ -86,6 +89,7 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
                 "objects": []}
     for item in REPLACEMENTS:
         source = source_path(item.name)
+        require_c_source(source.read_text(encoding="utf-8"), item.name)
         if normalized_digest(source) != item.source_sha256:
             raise ValueError(f"C source differs from measured trial: {item.name}")
         (output / source.name).write_bytes(source.read_bytes())
@@ -94,6 +98,7 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
         obj = output / f"{item.name}.o"
         run([str(cpp.resolve()), *profile["flags"]["cpp"], source.name], output,
             output / f"{item.name}.cpp.log", preprocessed)
+        require_c_source(preprocessed.read_text(encoding="utf-8"), f"{item.name} preprocessed input")
         run([str(cc1.resolve()), *profile["flags"]["cc1"], preprocessed.name,
              "-o", assembly.name], output, output / f"{item.name}.cc1.log")
         run([str(assembler.resolve()), "-o", obj.name, assembly.name], output,

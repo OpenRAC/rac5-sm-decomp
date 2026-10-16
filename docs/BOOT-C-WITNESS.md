@@ -75,7 +75,14 @@ FOG loop mismatch motivated the
 
 ## Combined provisional C witness
 
-The same full-boot link has now been repeated with **twenty authored C
+**Historical qualification:** the measurements in this section describe the initial
+20-body campaign. The current pure-C campaign links 342 objects and catalogues 325
+bodies; 20 object spans lack usable global-function extents. Its current counts and
+source policy are in [BOOT-TRIAL-GATE.md](BOOT-TRIAL-GATE.md). These are different
+measures: one object can contain more than one body. Inline-assembly experiments
+are excluded from the current campaign and retained privately.
+
+The initial full-boot link was repeated with **twenty authored C
 functions** from seventeen exact-slice source groups in
 [`COMPILER-WITNESSES.md`](COMPILER-WITNESSES.md). Compile these sources with
 the same pinned GNU EE `cpp`/`as` and the isolated
@@ -118,12 +125,16 @@ python tools/boot_witness_boundaries.py baserom/SCUS_976.15 \
   build/boot-c-campaign/boot_multi.elf
 ```
 
-For each witness it verifies the compiled symbol start/size, a final
+For each initial witness it verified the compiled symbol start/size, a final
 `jr $ra` with its delay slot inside the body, zero bytes up to the next boot
 label, and no **direct** boot branch or jump into that alignment. The result
 is 604 body bytes plus 44 zero alignment bytes. The compiled symbol size is
 the candidate's body extent; it does not prove the retail build used the
 same source or assigned exactly that function size.
+
+The current generator records the observed terminal transfer instead of assuming
+every body ends with `jr $ra`. A terminal call is recorded as `call`, without
+asserting that its callee cannot return; it is not independent boundary qualification.
 
 The direct SN-linked ELF still differs. The retail file has 31 VU `.DVP` sections outside
 its `PT_LOAD`. Their [metadata audit and private reproduction](DVP-OVERLAYS.md)
