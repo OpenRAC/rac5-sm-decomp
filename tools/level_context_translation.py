@@ -36,7 +36,7 @@ MODULES = ROOT / "config/levels/modules.tsv"
 CODE = ROOT / "config/levels/code_intervals.tsv"
 TARGET = ROOT / "config/target.json"
 REFERENCE = "LEVEL_01.REL"
-REFERENCES = (REFERENCE, "LEVEL_16.REL")
+REFERENCES = (REFERENCE, "LEVEL_16.REL", "LEVEL_08.REL")
 MAX_ANCHOR_DISTANCE = 65536
 
 
