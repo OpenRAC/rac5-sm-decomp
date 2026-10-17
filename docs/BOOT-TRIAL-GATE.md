@@ -52,7 +52,14 @@ python3 tools/boot_trial_gate.py baserom/SCUS_976.15 \
 
 The command checks the patch and tool identities, copies each public C source
 to the Linux work directory, compiles **every campaign object**, and requires
-their object hashes to match the measured campaign. `--extra-bin
+their object hashes to match the measured campaign. Six objects assembled by
+`as=ps2eeas` have two explicitly pinned whole-object SHA-256 values. A private
+comparison of all 543 freshly compiled objects with their previously pinned
+versions found exactly one differing byte per variant, always inside
+non-loadable `.mdebug`; `.text` and relocations are unchanged. Both full-object
+hashes for each affected source are listed in `config/boot/compiler_trial.json`,
+and any third value is rejected. No
+compiler output is edited or normalized to make this pass. `--extra-bin
 SELECTOR=DIRECTORY` gives the directory holding one pinned extra compiler,
 named by the selector that uses it and required exactly when the campaign's
 `config/cflags.txt` selects it; the gate checks that compiler's driver,
@@ -84,9 +91,11 @@ are never committed.
 The result is in ignored `build/boot-trial-gate/report.json`. A passing report
 has `status: "passed_boot_only"`, `raw_load_and_header_exact: true`,
 `whole_elf_exact: true`, `counted_matches: 263` and `counted_bytes: 19048`.
-The counted bytes come from each accepted source's owned placement, so an
-accepted source that covers only a prefix of its range, leaves alignment padding
-or ends in something other than a normal return keeps no acceptance.
+The counted bytes are each accepted source's compiled `body_bytes`. A complete
+body may have one following zero word supplied by the linker's `ALIGN(8)`;
+the boundary catalogue verifies the retail zeros and direct-flow/label safety,
+and that word earns no C credit. A source that covers only a prefix of the
+function or lacks a reviewed normal return keeps no acceptance.
 It also records a `promotion_input_sha256` fingerprint so the
 [per-body promotion audit](BOOT-PROMOTION.md) can reject an old receipt after
 source, owner, compiler-profile or boundary changes.

@@ -28,11 +28,15 @@ its status:
 
 - `blocked`: no usable catalogued body, a broken source pin/policy, or invalid
   ownership evidence. Fix the cause and rerun the complete gate.
-- `needs_review_or_gate`: the full gate is missing/stale, or padding, multiple
-  bodies or control flow require closer boundary review.
+- `needs_review_or_gate`: the full gate is missing/stale, or unverified padding,
+  multiple bodies or control flow require closer boundary review.
 - `ready_for_semantic_review`: current exact gate, pinned pure C source, one
-  catalogued body filling its owned range without padding, and a normal return.
-  This is a **shortlist**, not accepted progress.
+  catalogued body starting at its owner, a normal return, and either no trailing
+  gap or one verified zero word supplied by the linker's `ALIGN(8)`. The
+  generated catalogue checks that this gap is zero in retail and has no direct
+  branch, jump or named code-label target. This is a **shortlist**, not accepted
+  progress; indirect targets, aliases, behavior and the real retail function
+  boundary still need review.
 - `accepted_needs_gate` / `accepted`: a source already in the explicit accepted
   set; the former means this checkout lacks a current exact gate receipt.
 
@@ -42,10 +46,11 @@ data sizes and original behavior. A `jr $ra` and an exact compiled span do not
 prove these facts. Record the evidence in the PR. If it survives review, move
 the one source definition to `src/boot/`, add it to the explicit accepted set and
 gate/profile scope, regenerate progress, then rerun the complete private gate at
-the **final commit**. The counted bytes must come from that source's owned
-placement rather than assembly fallback. CI checks public metadata and source
+the **final commit**. Count only the compiled `body_bytes`, never an alignment
+word. The entire owner interval must still be rebuilt exactly without assembly
+fallback. CI checks public metadata and source
 policy, but cannot replace the private gate or semantic review.
 
 The audit never moves sources, changes accepted counts or publishes private
-bytes. The 20 current spans without global-function extents need a separate
-boundary investigation before they can become review candidates.
+bytes. Any span without a global-function extent needs a separate boundary
+investigation before it can become a review candidate.

@@ -34,7 +34,8 @@ from pathlib import Path
 
 import cflags
 from boot_c_campaign import (ACCEPTED_SOURCES, REPLACEMENTS, accepted_replacements,
-                             source_path, validate_replacements)
+                             object_digest_matches, source_path,
+                             validate_replacements)
 from r5900_assembly import ASSEMBLER_SHA256, LINKER_SHA256
 from c_source_policy import require_c_source
 
@@ -101,6 +102,18 @@ def check_profile(cpp: Path, cc1: Path, assembler: Path) -> dict[str, object]:
         raise ValueError("compiler trial catalogue no longer matches the measured scope")
     if "expected_function_witnesses" in profile:
         raise ValueError("witness counts come from the verified boundary catalogue, not the compiler profile")
+    variants = profile.get("object_sha256_alternates", {})
+    measured = {"sceKernelGetSystemTimeLow__Fv", "__srefill", "fflush",
+                "fread", "_multadd", "_calloc_r"}
+    if (set(variants) != measured
+            or any(not isinstance(variants[name], list)
+                   or len(variants[name]) != 1
+                   or not isinstance(variants[name][0], str)
+                   or len(variants[name][0]) != 64
+                   or any(char not in "0123456789abcdef"
+                          for char in variants[name][0])
+                   for name in measured)):
+        raise ValueError("unmeasured object-hash alternative")
     patch = ROOT / profile["source"]["patch"]
     if normalized_digest(patch) != profile["source"]["patch_sha256_lf"]:
         raise ValueError("RAC5 compiler trial patch differs from pinned source")
@@ -331,13 +344,15 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
                         else alt_assemblers[entry.assembler]["flags"]["as"])
         run([str(chosen.resolve()), *chosen_flags, "-o", obj.name,
              f"{item.name}.s"], output, output / f"{item.name}.as.log")
-        if digest(obj) != item.object_sha256:
+        observed_digest = digest(obj)
+        if not object_digest_matches(item, observed_digest, profile):
             raise ValueError(f"compiled object differs from measured trial: {item.name}")
         manifest["objects"].append({"name": item.name, "compiler": entry.compiler,
                                     "compiler_flags": flags,
                                     "assembler": entry.assembler,
                                     "source_sha256_lf": item.source_sha256,
-                                    "object_sha256": item.object_sha256})
+                                    "object_sha256": observed_digest,
+                                    "object_sha256_primary_pin": item.object_sha256})
     (output / "trial_manifest.json").write_text(
         json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
     if export is not None:

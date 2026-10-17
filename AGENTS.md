@@ -47,7 +47,9 @@ compiler settings or level-format assumptions.
    a complete function. Unknown extents remain provisional and uncounted.
 2. **Explicit promotion.** Count C only when the claimed body is actually linked
    at every reviewed placement and the complete-program gates pass. Assembly
-   fallback preserves the baseline but earns no C credit; promote separately.
+   fallback preserves the baseline but earns no C credit. One proven zero word
+   of linker alignment may follow a complete body, but count only compiled
+   body bytes after boundary and semantic review; promote separately.
 3. **Evidence-based profiles.** Compiler routes, options and patches require a
    measured cause, known provenance and regression controls. Do not select a
    compiler just because one sample matches. Requalify affected accepted bodies.

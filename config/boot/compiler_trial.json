@@ -390,5 +390,25 @@
       }
     }
   },
+  "object_sha256_alternates": {
+    "sceKernelGetSystemTimeLow__Fv": [
+      "e0a1df4d1b89732d35f2353787482bd849b5f46c16f3f70103259ea97d41d2d7"
+    ],
+    "__srefill": [
+      "5e5d74285bf9fd91fed643a799aa996e28c7cca7b46893b688f65b8f1ce58ef7"
+    ],
+    "fflush": [
+      "b29e6be38986f737a328f07af3153e3d0a618981a40019e59066c5eaf795ba7e"
+    ],
+    "fread": [
+      "328ef8016300efb81217923a3ca1affd5d064ce03b462db39dd923382f313fb8"
+    ],
+    "_multadd": [
+      "1bc576a8c105ac71bd58abc70765a83b22c11a5d76ff688ca6953e835c9a2098"
+    ],
+    "_calloc_r": [
+      "9de19e599766eadb98ea0c09327018a48f6856a130ba8388fff794e7e59717c1"
+    ]
+  },
   "expected_objects": 543
 }
