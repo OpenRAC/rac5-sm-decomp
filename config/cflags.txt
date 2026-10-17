@@ -30,7 +30,7 @@
 # identical SHA-256 (none of the 405 pre-existing objects contains a division);
 # dlib_displist_direct_end__FP13DLIB_DISPLIST is 128 bytes and byte-exact only
 # with the flag, and 136 bytes with the guard, which is the default.
-nonmatching/boot/dlib_displist_direct_end__FP13DLIB_DISPLIST.c  -mno-check-zero-division
+src/boot/dlib_displist_direct_end__FP13DLIB_DISPLIST.c  -mno-check-zero-division
 
 # Route P: the ps2fio/cdvdfs prebuilt bodies whose retail bytes come from SN
 # ProDG 3.01 rather than the pinned chain. The pinned chain reaches 66-140 of
