@@ -313,7 +313,11 @@ class CFlagsTests(unittest.TestCase):
         for selector, pinned in profile["extra_assemblers"].items():
             with self.subTest(selector=selector):
                 self.assertIn(pinned["host"], compile_boot_trial.HOSTS)
-                self.assertEqual(pinned["flags"], {"as": []})
+                # An assembler pin may carry flags of its own: they say how that
+                # binary was measured, so the shape is fixed and the values are
+                # flags, never free text.
+                self.assertEqual(set(pinned["flags"]), {"as"})
+                self.assertTrue(all(flag.startswith("-") for flag in pinned["flags"]["as"]))
                 self.assertTrue(pinned["id"].startswith("rac5-boot-"))
                 int(pinned["tools"]["assembler_sha256"], 16)
                 self.assertGreater(len(pinned["provenance"]), 80)
@@ -323,6 +327,10 @@ class CFlagsTests(unittest.TestCase):
         # be the same file the boot assembly base and the campaign linker pin.
         self.assertEqual(profile["extra_assemblers"][PS2_AS]["tools"]["assembler_sha256"],
                          profile["tools"]["sn_assembler_sha256"])
+        # The SDK `as` pools a `li.s` float in a GP-relative lit4 section unless
+        # it is run with -G0, and that section does not link in this campaign.
+        self.assertEqual(profile["extra_assemblers"][SDK_AS]["flags"]["as"], ["-G0"])
+        self.assertEqual(profile["extra_assemblers"][PS2_AS]["flags"]["as"], [])
         self.assertTrue(cflags.DEFAULT_ENTRY.assembler_pinned)
         self.assertFalse(cflags.Entry(cflags.DEFAULT_COMPILER, (), SDK_AS).assembler_pinned)
 
@@ -356,6 +364,15 @@ class CFlagsTests(unittest.TestCase):
             binary.unlink()
             with self.assertRaisesRegex(ValueError, "assembler is missing"):
                 compile_boot_trial.check_extra_assembler(profile, "unit", root)
+            # A pin's flags are flags, not free text, and the block is `as` only.
+            for broken in ({"as": ["-G0"], "cpp": []}, {"as": ["G0"]}, {"as": "-G0"}):
+                with self.subTest(flags=broken), \
+                     patch.object(compile_boot_trial, "digest", return_value="0" * 64):
+                    binary.write_text("tool\n")
+                    with self.assertRaisesRegex(ValueError, "flags differ"):
+                        compile_boot_trial.check_extra_assembler(
+                            {"extra_assemblers": {"unit": {**pin, "flags": broken}}},
+                            "unit", root)
 
     def test_gate_arguments_carry_an_assembler_directory(self) -> None:
         parser = argparse.ArgumentParser()
