@@ -18,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import cflags  # noqa: E402
 import compile_boot_trial  # noqa: E402
 
-MEASURED = "nonmatching/boot/dlib_displist_direct_end__FP13DLIB_DISPLIST.c"
+MEASURED = "src/boot/dlib_displist_direct_end__FP13DLIB_DISPLIST.c"
 ROUTE_P = "nonmatching/boot/ps2fioClose.c"
 ROUTE_Q = "nonmatching/boot/sceCdSyncS.c"
 ROUTE_R_DLI = "nonmatching/boot/__pack_d.c"
