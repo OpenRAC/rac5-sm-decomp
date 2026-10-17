@@ -169,3 +169,37 @@ nonmatching/boot/sceGsPutDrawEnv.c    sdk991111 -O2 -G0
 nonmatching/boot/sceGsResetGraph.c    sdk991111 -O2 -G0
 nonmatching/boot/sceGszbufaddr.c    sdk991111 -O2 -G0
 nonmatching/boot/sceScfGetTimeZone.c    sdk991111 -O2 -G0
+
+# Route Q, sixth batch: the memory-card RPC wrappers and the GS sync helper.
+# The SDK region of the retail boot carries 16-byte save slots (`sd $s0,0x0` /
+# `sd $ra,0x10`); the pinned chain has 8-byte slots and reproduces 73-140 of
+# these bytes, while the pinned Sony compiler fills their owned intervals
+# exactly. The memory-card RPC frames are reached through absolute SDK
+# addresses (`lui` + signed `addiu`, e.g. lui 0x1FE + addiu -0x2100 =
+# 0x01FDDF00), which each source declares through its .map sidecar.
+nonmatching/boot/sceMcOpen.c    sdk991111 -O2 -G0
+nonmatching/boot/sceMcDelete.c    sdk991111 -O2 -G0
+nonmatching/boot/sceMcRename.c    sdk991111 -O2 -G0
+nonmatching/boot/sceMcRead.c    sdk991111 -O2 -G0
+nonmatching/boot/sceMcWrite.c    sdk991111 -O2 -G0
+nonmatching/boot/sceMcGetInfo.c    sdk991111 -O2 -G0
+nonmatching/boot/sceMcGetDir.c    sdk991111 -O2 -G0
+nonmatching/boot/sceGsSyncV.c    sdk991111 -O2 -G0
+
+# Same batch: two libm entry points. floor reads its threshold from the shared
+# .rodata through three distinct aliases of the same address (the retail emits
+# three independent lui/ld pairs); rint loads TWO52 the same way.
+nonmatching/boot/floor.c    sdk991111 -O2 -G0
+nonmatching/boot/rint.c    sdk991111 -O2 -G0
+
+# Same batch: the kernel init body whose source comes from the SDK tree.
+nonmatching/boot/InitExecPS2.c    sdk991111 -O2 -G0
+
+# Wall E: two libm bodies that need both measured axes of the libm tree at once
+# -- the div.s pad of the sdk-divpad profile and the authentic -fno-builtin
+# (the retail libm calls fabsf instead of inlining abs.s; without the flag the
+# frame and the call disappear). Controls: atan2f 582/736 without -fno-builtin
+# and 563/736 without the pad; tanf 131/644 and 183/604. The flag leaves the
+# two libm bodies already exact under sdk-divpad byte-identical.
+nonmatching/boot/__ieee754_atan2f.c  sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/__kernel_tanf.c     sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
