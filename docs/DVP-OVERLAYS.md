@@ -60,6 +60,6 @@ so linked ELF metadata can affect the debugger even when loaded bytes agree.
 For C matching, keep the exact entry and loaded program-byte check separate
 from whole-file identity and tool behavior. The `.DVP` data can now be
 regenerated privately for the baseline. This metadata result alone does not
-count a C match. The [boot-only gate](BOOT-MATCH-SCOPE.md) now accepts 207
-reviewed boot placements (12,240 bytes) and requires the entire packaged ELF to
+count a C match. The [boot-only gate](BOOT-MATCH-SCOPE.md) now accepts 235
+reviewed boot placements (16,280 bytes) and requires the entire packaged ELF to
 match.

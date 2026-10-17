@@ -102,7 +102,7 @@ src/boot/fptodp.c    sdk991111 -O2 -G0
 src/boot/fptoui.c    sdk991111 -O2 -G0
 src/boot/litodp.c    sdk991111 -O2 -G0
 nonmatching/boot/ps2fioLseekPartition.c    sdk991111 -O2 -G0
-nonmatching/boot/sceDmaPutEnv.c    sdk991111 -O2 -G0
+src/boot/sceDmaPutEnv.c    sdk991111 -O2 -G0
 nonmatching/boot/sceSifSendCmd.c    sdk991111 -O2 -G0
 
 # Route R, second bench: the three libm bodies that are exact only when the
@@ -113,9 +113,9 @@ nonmatching/boot/sceSifSendCmd.c    sdk991111 -O2 -G0
 # __kernel_cosf reaches 344/344 and 264 bytes of __kernel_sinf 260/260 and
 # scalbnf 352/352, each filling its owned interval; without the assembler
 # selector the pinned chain reproduces only 281/344, 187/260 and 346/352.
-nonmatching/boot/__kernel_cosf.c        sdk991111 as=ee-sdk -O2 -G0
+src/boot/__kernel_cosf.c        sdk991111 as=ee-sdk -O2 -G0
 nonmatching/boot/__kernel_sinf.c        sdk991111 as=ee-sdk -O2 -G0
-nonmatching/boot/scalbnf.c             sdk991111 as=ee-sdk -O2 -G0
+src/boot/scalbnf.c             sdk991111 as=ee-sdk -O2 -G0
 
 # Route Q, third batch: the GCC 2.9 RTTI accessors. Each is byte-exact under
 # the pinned Sony compiler with the pinned GNU as; the pinned chain reaches
@@ -147,7 +147,7 @@ src/boot/__tf9type_info.c    sdk991111 -O2 -G0
 # __ieee754_expf fills 692 of its 696 bytes and __ieee754_fmodf all 592, both
 # exactly; without it the same sources score 560/676 and 175/576.
 nonmatching/boot/__ieee754_expf.c   sdk-divpad as=ee-sdk -O2 -G0
-nonmatching/boot/__ieee754_fmodf.c  sdk-divpad as=ee-sdk -O2 -G0
+src/boot/__ieee754_fmodf.c  sdk-divpad as=ee-sdk -O2 -G0
 
 # Wave 10, route A: two libm bodies whose constants the retail code loads from
 # the shared .rodata pool instead of materialising them in place. They are
@@ -162,12 +162,12 @@ nonmatching/boot/__kernel_sin.c     sdk991111 as=ee-sdk -O2 -G0
 # compiler; the pinned chain reproduces only part of them.
 nonmatching/boot/InitAlarm.c    sdk991111 -O2 -G0
 nonmatching/boot/sceCdGetError.c    sdk991111 -O2 -G0
-nonmatching/boot/sceDmaPause.c    sdk991111 -O2 -G0
+src/boot/sceDmaPause.c    sdk991111 -O2 -G0
 nonmatching/boot/sceDmaReset.c    sdk991111 -O2 -G0
-nonmatching/boot/sceDmaSend.c    sdk991111 -O2 -G0
-nonmatching/boot/sceGsPutDrawEnv.c    sdk991111 -O2 -G0
+src/boot/sceDmaSend.c    sdk991111 -O2 -G0
+src/boot/sceGsPutDrawEnv.c    sdk991111 -O2 -G0
 src/boot/sceGsResetGraph.c    sdk991111 -O2 -G0
-nonmatching/boot/sceGszbufaddr.c    sdk991111 -O2 -G0
+src/boot/sceGszbufaddr.c    sdk991111 -O2 -G0
 nonmatching/boot/sceScfGetTimeZone.c    sdk991111 -O2 -G0
 
 # Route Q, sixth batch: the memory-card RPC wrappers and the GS sync helper.
@@ -189,7 +189,7 @@ nonmatching/boot/sceGsSyncV.c    sdk991111 -O2 -G0
 # Same batch: two libm entry points. floor reads its threshold from the shared
 # .rodata through three distinct aliases of the same address (the retail emits
 # three independent lui/ld pairs); rint loads TWO52 the same way.
-nonmatching/boot/floor.c    sdk991111 -O2 -G0
+src/boot/floor.c    sdk991111 -O2 -G0
 nonmatching/boot/rint.c    sdk991111 -O2 -G0
 
 # Same batch: the kernel init body whose source comes from the SDK tree.
@@ -201,5 +201,5 @@ nonmatching/boot/InitExecPS2.c    sdk991111 -O2 -G0
 # frame and the call disappear). Controls: atan2f 582/736 without -fno-builtin
 # and 563/736 without the pad; tanf 131/644 and 183/604. The flag leaves the
 # two libm bodies already exact under sdk-divpad byte-identical.
-nonmatching/boot/__ieee754_atan2f.c  sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
+src/boot/__ieee754_atan2f.c  sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
 nonmatching/boot/__kernel_tanf.c     sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
