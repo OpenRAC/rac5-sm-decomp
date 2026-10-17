@@ -9,7 +9,7 @@ identify the original compiler; the later full-boot gate supplies the
 separate loaded-byte evidence for the accepted placements.
 The `MEMCARD_Busy__Fv` source has since moved to `src/boot/` under the
 [boot-only acceptance gate](BOOT-MATCH-SCOPE.md); two later reviews promoted 30
-bodies each to the same directory, so 151 accepted boot placements now supply
+bodies each to the same directory, so 179 accepted boot placements now supply
 their own compiled bytes. The remaining functions of this early table stay in
 `nonmatching/` and contribute no accepted matches unless they were among the
 reviewed 30.
@@ -87,7 +87,7 @@ further pinned compilers through the same file's selectors
 Sources retain their retail ELF symbols, and the linked ELF must keep the complete
 856,120-byte boot byte-identical. **61 of these bodies** have since completed
 [promotion review](BOOT-PROMOTION.md) and now live in `src/boot/`: together with
-`MEMCARD_Busy__Fv` they supply 7,784 boot `.text` bytes from their own compiled
+`MEMCARD_Busy__Fv` they supply 10,352 boot `.text` bytes from their own compiled
 placements, while every other body remains an uncounted witness. The generated
 [`config/boot/witness_boundaries.tsv`](../config/boot/witness_boundaries.tsv)
 catalogue lists each identifiable linked body with its compiled extent, following zero

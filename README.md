@@ -62,7 +62,7 @@ zero alignment bytes. Every compiled object exposes a global function symbol at
 its address, so none is left uncatalogued. Each catalogued
 body records its compiled extent and observed terminal transfer in the generated
 [`config/boot/witness_boundaries.tsv`](config/boot/witness_boundaries.tsv)
-catalogue. One hundred and fifty-one reviewed placements live in `src/boot/`;
+catalogue. One hundred and seventy-nine reviewed placements live in `src/boot/`;
 the others
 remain provisional in `nonmatching/`. The
 [boot-only acceptance scope](docs/BOOT-MATCH-SCOPE.md) explains why exact loaded
