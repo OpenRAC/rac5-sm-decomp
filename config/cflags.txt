@@ -1,20 +1,26 @@
-# Per-source compiler and flags measured against the retail boot (SCUS_976.15).
+# Per-source compiler, assembler and flags measured against the retail boot
+# (SCUS_976.15).
 #
-# One entry per line: a repository-relative campaign C source path, an optional
-# compiler selector, then the flags measured for that file. A source with no
-# entry compiles with the profile's global flags and its own chain, so its
-# pinned object stays valid; an entry is rejected when its path is missing,
-# duplicated, names no campaign source, names an unpinned compiler or carries
-# no flag. tools/cflags.py owns the format and the checks; compile_boot_trial.py,
-# boot_trial_gate.py and level_c_gate.py apply the entries they compile.
+# One entry per line: a repository-relative campaign C source path, optional
+# selectors, then the flags measured for that file. A source with no entry
+# compiles with the profile's global flags, its own chain and the pinned GNU
+# "as", so its pinned object stays valid; an entry is rejected when its path is
+# missing, duplicated, names no campaign source, names an unpinned compiler or
+# assembler, or says nothing at all. tools/cflags.py owns the format and the
+# checks; compile_boot_trial.py, boot_trial_gate.py and level_c_gate.py apply
+# the entries they compile.
 #
-# The selector is a bare token in front of the flags. Without one, the flags are
-# extra cc1 flags for the profile's pinned chain, on top of its global "-quiet
-# -O2 -G0". With one, the flags are the complete flag set for that compiler and
-# that file, so one line still says everything about how the object was built.
-# Pinned selectors, both in config/boot/compiler_trial.json: "prodg2953" is SN
-# ProDG 3.01 ee-gcc2953 (GCC 2.95.3) and "sdk991111" is the Sony EE SDK
+# The selectors are bare tokens in front of the flags, each at most once. A
+# plain token names a compiler. Without one, the flags are extra cc1 flags for
+# the profile's pinned chain, on top of its global "-quiet -O2 -G0"; with one,
+# the flags are the complete flag set for that compiler and that file. Pinned
+# compiler selectors, both in config/boot/compiler_trial.json: "prodg2953" is
+# SN ProDG 3.01 ee-gcc2953 (GCC 2.95.3) and "sdk991111" is the Sony EE SDK
 # compiler 2.9-ee-991111-01.
+#
+# "as=NAME" names an assembler from the profile's "extra_assemblers". An entry
+# may select one with no flag at all, since moving the object to another
+# assembler is then the whole content of the line.
 #
 # -mno-check-zero-division (GCC 2.9 mips.md, divmodsi4, under
 # !TARGET_NO_CHECK_ZERO_DIV): the pinned chain always emits
@@ -50,3 +56,28 @@ nonmatching/boot/read.c               sdk991111 -O2 -G0
 nonmatching/boot/write.c              sdk991111 -O2 -G0
 nonmatching/boot/sceSifSetDma.c       sdk991111 -O2 -G0
 nonmatching/boot/dpadd.c              sdk991111 -O2 -G0
+
+# Route R: the two boot bodies whose retail bytes come from another assembler,
+# the cc1 output being byte-right for them either way. The boot is not one
+# assembler build any more than it is one compiler build: its 64-bit `dli`
+# expands with `lui` first, while the pinned GNU `as` puts `ori` first, and a
+# 64-bit `li.d` of a double is inlined by Ps2EeAs where the pinned `as` loads it
+# from the .rdata pool. Neither pinned extra assembler covers the other's case,
+# so the assembler is selected per source exactly as the compiler is.
+#
+# __pack_d (304 bytes, 0x01E95FF0) reaches 249/304 under the pinned `as`: one
+# `dli 0x800FFFFFFFFFFFFF` expands to seven instructions instead of the retail
+# six, from byte 243. Under the Sony EE SDK assembler it is 300/300, and its
+# source is unchanged from the measured fp-bit.c body. Reassembling all 682
+# authored bodies under the same assembler leaves every other body's bytes
+# identical, so this line moves one object and no other.
+nonmatching/boot/__pack_d.c           as=ee-sdk
+
+# sceKernelGetSystemTimeLow__Fv (160 bytes, 0x01E86280) reaches 155/156 under
+# the pinned `as`: the two double constants are loaded from the .rdata pool in
+# two instructions where the retail inlines four. Under Ps2EeAs the same cc1
+# output is 160/160. That assembler is the pinned SN ProDG 2.0 one the boot
+# assembly base already uses; it is worse than the pinned GNU `as` on most of
+# the campaign (200 of 411 objects differ), which is why it is selected here for
+# one body rather than pinned as the chain.
+nonmatching/boot/sceKernelGetSystemTimeLow__Fv.c  as=ps2eeas

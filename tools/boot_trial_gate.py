@@ -83,7 +83,8 @@ def main() -> None:
                                   "counted_matches": 0}, indent=2) + "\n",
                       encoding="utf-8", newline="\n")
     compile_objects(args.cpp, args.cc1, args.gnu_as, args.output_dir, EXPORT,
-                    dict(args.extra_bin), dict(args.extra_stage))
+                    dict(args.extra_bin), dict(args.extra_stage),
+                    dict(args.as_bin))
     boot = args.boot.resolve()
     run_tool("boot_symbols.py", "code-intervals", str(boot))
     run_tool("boot_dvp.py", "catalogue", str(boot))

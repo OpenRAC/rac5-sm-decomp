@@ -1,7 +1,12 @@
-"""Per-source compiler selection and cc1 flags: format, validation and application."""
+"""Per-source toolchain selection: format, validation and application.
+
+One line may select a compiler, an assembler, both or neither, so the checks
+below cover each selector on its own, the two together, and the committed file.
+"""
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 import tempfile
@@ -16,8 +21,12 @@ import compile_boot_trial  # noqa: E402
 MEASURED = "nonmatching/boot/dlib_displist_direct_end__FP13DLIB_DISPLIST.c"
 ROUTE_P = "nonmatching/boot/ps2fioClose.c"
 ROUTE_Q = "nonmatching/boot/sceCdSyncS.c"
+ROUTE_R_DLI = "nonmatching/boot/__pack_d.c"
+ROUTE_R_FLOAT = "nonmatching/boot/sceKernelGetSystemTimeLow__Fv.c"
 SECOND = "prodg2953"
 SONY = "sdk991111"
+SDK_AS = "ee-sdk"
+PS2_AS = "ps2eeas"
 
 
 class CFlagsTests(unittest.TestCase):
@@ -237,6 +246,123 @@ class CFlagsTests(unittest.TestCase):
         self.assertIn("src/boot/memcard_busy.c", known)
         self.assertIn("src/levels/shared/func_00000100.c", known)
         self.assertNotIn("tools/cflags.py", known)
+
+    def test_committed_file_selects_a_measured_assembler_per_source(self) -> None:
+        entries = cflags.load()
+        # Route R: one body needs the SDK expansion of a 64-bit `dli`, the other
+        # needs Ps2EeAs to inline a `li.d` the pinned `as` loads from the pool.
+        # Both keep the pinned chain's compiler and its global flags.
+        self.assertEqual(entries.get(ROUTE_R_DLI),
+                         cflags.Entry(cflags.DEFAULT_COMPILER, (), SDK_AS))
+        self.assertEqual(entries.get(ROUTE_R_FLOAT),
+                         cflags.Entry(cflags.DEFAULT_COMPILER, (), PS2_AS))
+        for name, entry in entries.items():
+            with self.subTest(name=name):
+                self.assertIn(entry.assembler, cflags.pinned_assemblers())
+
+    def test_assembler_selector_parses_alone_and_beside_a_compiler(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "nonmatching/boot").mkdir(parents=True)
+            (root / "nonmatching/boot/unit.c").write_text("int f;\n")
+            file = root / "cflags.txt"
+            known = frozenset({"nonmatching/boot/unit.c"})
+            with patch.object(cflags, "ROOT", root), \
+                 patch.object(cflags, "campaign_sources", return_value=known):
+                # An assembler selector alone is a complete entry: it says the
+                # pinned chain keeps its global flags and another `as` runs.
+                file.write_text(f"nonmatching/boot/unit.c  as={SDK_AS}\n")
+                self.assertEqual(cflags.load(file),
+                                 {"nonmatching/boot/unit.c": cflags.Entry(
+                                     cflags.DEFAULT_COMPILER, (), SDK_AS)})
+                file.write_text(f"nonmatching/boot/unit.c  {SECOND} as={PS2_AS} -O2 -G0\n")
+                self.assertEqual(cflags.load(file),
+                                 {"nonmatching/boot/unit.c": cflags.Entry(
+                                     SECOND, ("-O2", "-G0"), PS2_AS)})
+                # The selector order inside the entry does not change its meaning.
+                file.write_text(f"nonmatching/boot/unit.c  as={PS2_AS} {SECOND} -O2 -G0\n")
+                self.assertEqual(cflags.load(file),
+                                 {"nonmatching/boot/unit.c": cflags.Entry(
+                                     SECOND, ("-O2", "-G0"), PS2_AS)})
+
+    def test_rejects_a_bad_assembler_selector(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "nonmatching/boot").mkdir(parents=True)
+            (root / "nonmatching/boot/unit.c").write_text("int f;\n")
+            file = root / "cflags.txt"
+            known = frozenset({"nonmatching/boot/unit.c"})
+            for line, message in (
+                ("nonmatching/boot/unit.c  as=nope\n", "unknown assembler selector"),
+                ("nonmatching/boot/unit.c  as=\n", "empty assembler selector"),
+                (f"nonmatching/boot/unit.c  as={SDK_AS} as={PS2_AS}\n",
+                 "duplicate assembler selector"),
+                (f"nonmatching/boot/unit.c  -O0 as={SDK_AS}\n", "not a flag"),
+                # A named compiler must state its own flags; only an assembler
+                # selector may be the whole content of a line.
+                (f"nonmatching/boot/unit.c  {SECOND} as={SDK_AS}\n", "no cc1 flags"),
+            ):
+                with self.subTest(line=line), patch.object(cflags, "ROOT", root), \
+                     patch.object(cflags, "campaign_sources", return_value=known):
+                    file.write_text(line)
+                    with self.assertRaisesRegex(ValueError, message):
+                        cflags.load(file)
+
+    def test_every_pinned_assembler_states_its_host_and_provenance(self) -> None:
+        profile = json.loads(cflags.PROFILE.read_text(encoding="utf-8"))
+        for selector, pinned in profile["extra_assemblers"].items():
+            with self.subTest(selector=selector):
+                self.assertIn(pinned["host"], compile_boot_trial.HOSTS)
+                self.assertEqual(pinned["flags"], {"as": []})
+                self.assertTrue(pinned["id"].startswith("rac5-boot-"))
+                int(pinned["tools"]["assembler_sha256"], 16)
+                self.assertGreater(len(pinned["provenance"]), 80)
+        self.assertEqual(cflags.pinned_assemblers(),
+                         (cflags.DEFAULT_ASSEMBLER, SDK_AS, PS2_AS))
+        # Ps2EeAs is one binary with one identity: the pin an entry selects must
+        # be the same file the boot assembly base and the campaign linker pin.
+        self.assertEqual(profile["extra_assemblers"][PS2_AS]["tools"]["assembler_sha256"],
+                         profile["tools"]["sn_assembler_sha256"])
+        self.assertTrue(cflags.DEFAULT_ENTRY.assembler_pinned)
+        self.assertFalse(cflags.Entry(cflags.DEFAULT_COMPILER, (), SDK_AS).assembler_pinned)
+
+    def test_an_unpinned_or_unprovided_assembler_is_rejected(self) -> None:
+        profile = json.loads(cflags.PROFILE.read_text(encoding="utf-8"))
+        with self.assertRaisesRegex(ValueError, "pins no assembler"):
+            compile_boot_trial.check_extra_assembler(profile, "not-pinned", Path("/nope"))
+        for selector in (SDK_AS, PS2_AS):
+            with self.subTest(selector=selector), \
+                 self.assertRaisesRegex(ValueError, f"--as-bin {selector}="):
+                compile_boot_trial.check_extra_assembler(profile, selector, None)
+
+    def test_checked_extra_assembler_verifies_the_pin(self) -> None:
+        pin = {"id": "rac5-boot-unit", "host": "linux", "provenance": "u" * 81,
+               "tools": {"assembler": "unit-as", "assembler_sha256": "0" * 64},
+               "flags": {"as": []}}
+        profile = {"extra_assemblers": {"unit": pin, "bad": {**pin, "host": "plan9"}}}
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            binary = root / "unit-as"
+            binary.write_text("tool\n")
+            with patch.object(compile_boot_trial, "digest", return_value="0" * 64):
+                checked = compile_boot_trial.check_extra_assembler(profile, "unit", root)
+                self.assertEqual(checked["binary"], binary)
+                self.assertEqual(checked["host"], "linux")
+            with patch.object(compile_boot_trial, "digest", return_value="1" * 64):
+                with self.assertRaisesRegex(ValueError, "differs from measured"):
+                    compile_boot_trial.check_extra_assembler(profile, "unit", root)
+            with self.assertRaisesRegex(ValueError, "is not one of"):
+                compile_boot_trial.check_extra_assembler(profile, "bad", root)
+            binary.unlink()
+            with self.assertRaisesRegex(ValueError, "assembler is missing"):
+                compile_boot_trial.check_extra_assembler(profile, "unit", root)
+
+    def test_gate_arguments_carry_an_assembler_directory(self) -> None:
+        parser = argparse.ArgumentParser()
+        compile_boot_trial.add_extra_arguments(parser)
+        parsed = parser.parse_args(["--as-bin", f"{SDK_AS}=/opt/sdk"])
+        self.assertEqual(parsed.as_bin, [(SDK_AS, Path("/opt/sdk"))])
+        self.assertEqual(parsed.extra_bin, [])
 
 
 if __name__ == "__main__":

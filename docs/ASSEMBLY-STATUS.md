@@ -132,10 +132,18 @@ reproducible, keep the twelve-binary comparison from being a blanket verdict:
 Those axes are independent: the SDK-family GNU binaries fix hazards and `dli`
 but pool floats, while `Ps2EeAs` inlines floats but differs on hazards. No
 single binary covers both, so the choice belongs **per object**, the same way
-the per-source flags in `config/cflags.txt` work — not as a global pin change. A
-non-regression pass over every campaign object is required before any such
-change, and one object (`__pack_d`, 300 bytes) is already byte-exact under five
-other binaries while reaching only 249/304 under the pinned one.
+the per-source flags in `config/cflags.txt` work — not as a global pin change.
+
+That selector now exists: `config/cflags.txt` takes `as=NAME` beside the
+compiler selector, and the profile pins the two extra binaries in
+`extra_assemblers` ([route R](COMPILER-STATUS.md#the-assembler-is-a-per-source-choice-too-route-r)).
+Two bodies use it, the 416 pre-existing objects are untouched, and the gate
+links 418 objects into the exact complete boot. The measurements that made it
+necessary: `__pack_d` (304 bytes) is 249/304 under the pinned `as` and 300/300
+under the SDK assembler, `sceKernelGetSystemTimeLow__Fv` (160 bytes) is 155/156
+under the pinned `as` and 160/160 under `Ps2EeAs`; of the 679 objects compared,
+the SDK assembler moves 19 and `Ps2EeAs` 313, which is why neither replaces the
+pinned chain.
 
 **Constant encoding.** The pinned `as` encodes 32-bit float literals faithfully:
 `0.05f` becomes `0x3D4CCCCD` and `0.050000004f` becomes `0x3D4CCCCE`, and three

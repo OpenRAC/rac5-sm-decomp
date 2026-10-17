@@ -103,5 +103,33 @@
       }
     }
   },
-  "expected_objects": 416
+  "extra_assemblers": {
+    "ee-sdk": {
+      "id": "rac5-boot-sony-ee-as-2.9-ee-991111",
+      "provenance": "GNU assembler 2.9-ee-991111 configured for target 'ee', recovered as a 32-bit Linux binary in the RAC1 workspace (/mnt/d/RAC1/work/toolchain-recupere/ee-as-sdk); its own strings carry the '/usr/local/sce/ee/gcc' install prefix of the Sony EE SDK. External binary, pinned per source, never rebuilt here and never committed.",
+      "status": "measured per source; boot-only",
+      "host": "linux",
+      "tools": {
+        "assembler": "ee-as-sdk",
+        "assembler_sha256": "296af123052ee39d175e5b3254102aafca105d4f6e975b351a13867f59b04019"
+      },
+      "flags": {
+        "as": []
+      }
+    },
+    "ps2eeas": {
+      "id": "rac5-boot-sn-ps2eeas-1.8.19.316",
+      "provenance": "SN Systems Ps2EeAs 1.8.19.316, the EE assembler of the pinned SN ProDG 2.0 distribution (D:/RAC2/master/toolchain/sn-prodg-2.0/ee/bin/Ps2EeAs.exe) -- the same binary the boot assembly base and the campaign linker already pin as sn_assembler_sha256. External binary, pinned per source, never rebuilt here and never committed.",
+      "status": "measured per source; boot-only",
+      "host": "windows",
+      "tools": {
+        "assembler": "Ps2EeAs.exe",
+        "assembler_sha256": "c839dd63facabe7b76573c114056be61eaa7b3aa2329dd546930ab8f98898c76"
+      },
+      "flags": {
+        "as": []
+      }
+    }
+  },
+  "expected_objects": 418
 }

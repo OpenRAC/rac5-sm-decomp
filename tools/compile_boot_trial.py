@@ -11,9 +11,15 @@ compiler is built by that compiler instead. Two are pinned so far: SN ProDG
 3.01 ``ee-gcc2953`` (GCC 2.95.3), a Windows driver that runs through WSL's
 Windows interop, and the Sony EE SDK compiler ``2.9-ee-991111``, a Linux
 driver the 32-bit toolchain can only read files from a Linux filesystem. Each
-pin states which host it runs on; either way its assembly is assembled by the
-same pinned GNU ``as``, so every object keeps one assembler and one object
-format.
+pin states which host it runs on.
+
+An entry may also name another pinned assembler with ``as=NAME``. The pinned
+GNU ``as`` expands a 64-bit ``dli`` with ``ori`` first and reads a static
+float literal from the pool, while the retail boot does neither, and no single
+assembler the project holds reproduces both the retail expansion and the
+pinned chain's hazard fill on every object -- so the assembler is measured per
+source exactly as the compiler is. Without a selector an object is assembled
+by the pinned ``as``, which is what every pre-existing entry does.
 """
 
 from __future__ import annotations
@@ -153,6 +159,37 @@ def check_extra_compiler(profile: dict, selector: str, bin_dir: Path | None,
             "flags": flags, "stage": require_private_output(stage)}
 
 
+def check_extra_assembler(profile: dict, selector: str,
+                          bin_dir: Path | None) -> dict[str, object]:
+    """Verify one pinned extra assembler and resolve the binary it names.
+
+    An extra assembler is a plain binary the project runs directly, so unlike a
+    routed compiler there is no driver, no staging and no libexec to resolve:
+    the pin names one file, the caller says which directory holds it, and the
+    measured flags say it is invoked the same way as the pinned GNU ``as``.
+    """
+    pinned = profile.get("extra_assemblers", {}).get(selector)
+    if pinned is None:
+        raise ValueError(f"config/boot/compiler_trial.json pins no assembler "
+                         f"named {selector}")
+    if bin_dir is None:
+        raise ValueError(f"source routed to {selector}; pass that assembler's "
+                         f"directory with --as-bin {selector}=DIRECTORY")
+    host = pinned["host"]
+    if host not in HOSTS:
+        raise ValueError(f"{selector} host {host!r} is not one of {', '.join(HOSTS)}")
+    tools = pinned["tools"]
+    binary = bin_dir / tools["assembler"]
+    if not binary.is_file():
+        raise ValueError(f"{selector} assembler is missing: {binary}")
+    if digest(binary) != tools["assembler_sha256"]:
+        raise ValueError(f"{selector} assembler differs from measured RAC5 trial")
+    if pinned["flags"] != {"as": []}:
+        raise ValueError(f"{selector} flags differ from measured build")
+    return {"id": pinned["id"], "host": host, "binary": binary,
+            "flags": pinned["flags"]}
+
+
 def cc1_flags(profile: dict, per_source: dict[str, cflags.Entry],
               source: Path) -> list[str]:
     """Pinned-chain cc1 flags for one source, plus the flags measured for that file.
@@ -232,7 +269,8 @@ def compile_extra(extra: dict, per_source: dict[str, cflags.Entry], source: Path
 def compile_objects(cpp: Path, cc1: Path, assembler: Path,
                     output_dir: Path, export_dir: Path | None,
                     extra_bins: dict[str, Path] | None = None,
-                    extra_stages: dict[str, Path] | None = None) -> None:
+                    extra_stages: dict[str, Path] | None = None,
+                    extra_as_bins: dict[str, Path] | None = None) -> None:
     profile = check_profile(cpp, cc1, assembler)
     output = require_private_output(output_dir)
     export = require_private_output(export_dir) if export_dir is not None else None
@@ -247,8 +285,15 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
               for name in sorted(selected)}
     for extra in extras.values():
         extra["stage"].mkdir(parents=True, exist_ok=True)
+    selected_as = {entry.assembler for entry in per_source.values()
+                   if not entry.assembler_pinned}
+    as_bins = extra_as_bins or {}
+    alt_assemblers = {name: check_extra_assembler(profile, name, as_bins.get(name))
+                      for name in sorted(selected_as)}
     manifest = {"profile": profile["id"], "status": "qualified_boot_only",
                 "compilers": {name: extra["id"] for name, extra in extras.items()},
+                "assemblers": {name: extra["id"]
+                               for name, extra in alt_assemblers.items()},
                 "objects": []}
     for item in REPLACEMENTS:
         source = source_path(item.name)
@@ -264,12 +309,15 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
         else:
             flags = compile_extra(extras[entry.compiler], per_source, source,
                                   output, item)
-        run([str(assembler.resolve()), "-o", obj.name, f"{item.name}.s"], output,
+        chosen = (assembler if entry.assembler_pinned
+                  else alt_assemblers[entry.assembler]["binary"])
+        run([str(chosen.resolve()), "-o", obj.name, f"{item.name}.s"], output,
             output / f"{item.name}.as.log")
         if digest(obj) != item.object_sha256:
             raise ValueError(f"compiled object differs from measured trial: {item.name}")
         manifest["objects"].append({"name": item.name, "compiler": entry.compiler,
                                     "compiler_flags": flags,
+                                    "assembler": entry.assembler,
                                     "source_sha256_lf": item.source_sha256,
                                     "object_sha256": item.object_sha256})
     (output / "trial_manifest.json").write_text(
@@ -281,10 +329,12 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
         shutil.copyfile(output / "trial_manifest.json", export / "trial_manifest.json")
     extra_count = sum(len([entry for entry in per_source.values()
                            if entry.compiler == name]) for name in extras)
+    as_count = sum(len([entry for entry in per_source.values()
+                        if entry.assembler == name]) for name in alt_assemblers)
     print(f"{len(REPLACEMENTS)} byte-identical objects for the pinned boot C "
           f"campaign, {len(ACCEPTED_SOURCES)} accepted under the boot-only "
-          f"profile, {extra_count} object(s) from another pinned compiler",
-          flush=True)
+          f"profile, {extra_count} object(s) from another pinned compiler, "
+          f"{as_count} assembled by another pinned assembler", flush=True)
 
 
 def add_extra_arguments(parser: argparse.ArgumentParser) -> None:
@@ -297,6 +347,11 @@ def add_extra_arguments(parser: argparse.ArgumentParser) -> None:
                         default=[], metavar="SELECTOR=DIRECTORY",
                         help="staging directory for that driver, when the pin "
                              "does not name one")
+    parser.add_argument("--as-bin", type=extra_option, action="append",
+                        default=[], metavar="SELECTOR=DIRECTORY",
+                        help="directory holding a pinned extra assembler's "
+                             "binary; required once a config/cflags.txt entry "
+                             "selects it with as=SELECTOR")
 
 
 def main() -> None:
@@ -310,7 +365,8 @@ def main() -> None:
     args = parser.parse_args()
     compile_objects(args.cpp, args.cc1, args.assembler,
                     args.output_dir, args.export_dir,
-                    dict(args.extra_bin), dict(args.extra_stage))
+                    dict(args.extra_bin), dict(args.extra_stage),
+                    dict(args.as_bin))
 
 
 if __name__ == "__main__":

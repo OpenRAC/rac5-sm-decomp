@@ -9,8 +9,8 @@ The 31 reviewed sources are in `src/boot/`, the profile lists them explicitly in
 `accepted_sources`, and the campaign enumerates the same set in
 `ACCEPTED_SOURCES`. Every other body remains under `nonmatching/`.
 
-The current campaign contains 416 compiler-produced C objects. Its verified
-catalogue records 361 global function bodies (16,036 bytes plus 684 zero alignment
+The current campaign contains 418 compiler-produced C objects. Its verified
+catalogue records 363 global function bodies (16,492 bytes plus 692 zero alignment
 bytes); 55 object spans without usable global-function extents remain uncatalogued.
 These counts are distinct from the 31 accepted boot placements (1,064 bytes).
 Per-source compiler and options measured for one file are listed in
