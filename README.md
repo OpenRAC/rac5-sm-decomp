@@ -62,7 +62,7 @@ zero alignment bytes. Fifty-five object spans do not expose a global function
 symbol with a usable extent and remain explicitly uncatalogued. Each catalogued
 body records its compiled extent and observed terminal transfer in the generated
 [`config/boot/witness_boundaries.tsv`](config/boot/witness_boundaries.tsv)
-catalogue. One reviewed 16-byte boot function lives in `src/boot/`; the others
+catalogue. Sixty-one reviewed placements live in `src/boot/`; the others
 remain provisional in `nonmatching/`. The
 [boot-only acceptance scope](docs/BOOT-MATCH-SCOPE.md) explains why exact loaded
 bytes can be assessed separately from ELF packaging.
