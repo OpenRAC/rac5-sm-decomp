@@ -245,3 +245,36 @@ nonmatching/boot/__eh_rtime_match.c    sdk991111 as=ee-sdk -O2 -G0
 nonmatching/boot/__throw_type_match.c    sdk991111 as=ee-sdk -O2 -G0
 nonmatching/boot/dcast__C16__user_type_infoRC9type_infoiPvPC9type_infoT3.c    sdk991111 as=ee-sdk -O2 -G0
 nonmatching/boot/isceSifSendCmd.c    sdk991111 as=ee-sdk -O2 -G0
+
+# Wave 11 Batch B: public Newlib 1.9.0/fdlibm sources adapted for the pinned
+# RAC5 boot. Each route was measured per body; the level and boot profiles stay
+# separate. Pool bodies are pre-linked at their recorded retail .rodata base.
+nonmatching/boot/acosf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/asinf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/atan2f.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/atanf.c    sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/ceilf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/copysignf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/cosf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/expf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/fabs.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/fabsf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/finitef.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/floorf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/fmodf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/isnan.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/isnanf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/logf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/sin.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/sinf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/sqrt.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/sqrtf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/tanf.c    sdk991111 as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/__kernel_rem_pio2.c    sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/__kernel_cos.c    sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/__kernel_rem_pio2f.c    sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/__ieee754_rem_pio2f.c    sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/__ieee754_rem_pio2.c    sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/__ieee754_sqrt.c    sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/__ieee754_sqrtf.c    sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/__ieee754_acosf.c    sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
