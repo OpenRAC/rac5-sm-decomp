@@ -8,8 +8,8 @@ toolchain and `-O2 -G0` can produce these limited intervals. It does not
 identify the original compiler; the later full-boot gate supplies the
 separate loaded-byte evidence for the accepted placements.
 The `MEMCARD_Busy__Fv` source has since moved to `src/boot/` under the
-[boot-only acceptance gate](BOOT-MATCH-SCOPE.md); a later review promoted 30
-further bodies to the same directory, so 31 accepted boot placements now supply
+[boot-only acceptance gate](BOOT-MATCH-SCOPE.md); two later reviews promoted 30
+bodies each to the same directory, so 61 accepted boot placements now supply
 their own compiled bytes. The remaining functions of this early table stay in
 `nonmatching/` and contribute no accepted matches unless they were among the
 reviewed 30.
@@ -85,9 +85,9 @@ further pinned compilers through the same file's selectors
 ([route P](COMPILER-STATUS.md#a-second-pinned-compiler-route-p),
 [route Q](COMPILER-STATUS.md#the-sony-sdk-compiler-route-q)).
 Sources retain their retail ELF symbols, and the linked ELF must keep the complete
-856,120-byte boot byte-identical. **31 of these bodies** have since completed
+856,120-byte boot byte-identical. **61 of these bodies** have since completed
 [promotion review](BOOT-PROMOTION.md) and now live in `src/boot/`: together with
-`MEMCARD_Busy__Fv` they supply 1,064 boot `.text` bytes from their own compiled
+`MEMCARD_Busy__Fv` they supply 2,304 boot `.text` bytes from their own compiled
 placements, while every other body remains an uncounted witness. The generated
 [`config/boot/witness_boundaries.tsv`](../config/boot/witness_boundaries.tsv)
 catalogue lists each identifiable linked body with its compiled extent, following zero
