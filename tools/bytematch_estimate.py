@@ -11,7 +11,7 @@ import argparse
 import json
 from pathlib import Path
 
-from boot_c_campaign import accepted_replacements
+from boot_trial_gate import accepted_body_bytes
 
 ROOT = Path(__file__).resolve().parents[1]
 STATUS = ROOT / "progress/status.json"
@@ -62,9 +62,8 @@ def report(status: dict, shape: dict) -> dict:
             ["func_00002F80"]):
         raise ValueError("frontend C scope changed")
     level_matched = status["levels"]["accepted_c_bytes_per_unique_source"]
-    # Each accepted boot source owns its complete reviewed range, so the counted
-    # bytes are the sum of the accepted owners' placements.
-    boot_accepted = sum(item.end - item.start for item in accepted_replacements())
+    # Linker alignment following a complete C body earns no matching credit.
+    boot_accepted = accepted_body_bytes()
     if boot_total != 498900 or boot_matched != boot_accepted:
         raise ValueError("accepted boot scope changed")
     if (shape["masked_max_per_module_bytes"]
