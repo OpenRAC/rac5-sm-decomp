@@ -55,7 +55,7 @@ nonmatching/boot/sceCdSyncS.c         sdk991111 -O2 -G0
 nonmatching/boot/read.c               sdk991111 -O2 -G0
 nonmatching/boot/write.c              sdk991111 -O2 -G0
 nonmatching/boot/sceSifSetDma.c       sdk991111 -O2 -G0
-nonmatching/boot/dpadd.c              sdk991111 -O2 -G0
+src/boot/dpadd.c              sdk991111 -O2 -G0
 
 # Route R: the two boot bodies whose retail bytes come from another assembler,
 # the cc1 output being byte-right for them either way. The boot is not one
@@ -88,19 +88,19 @@ nonmatching/boot/sceKernelGetSystemTimeLow__Fv.c  as=ps2eeas
 # same pinned GNU as. Same negative control: without the selector the pinned
 # chain reaches a fraction of each body (see qretry/sweep_sdk.tsv privately).
 nonmatching/boot/__fixunsdfdi.c    sdk991111 -O2 -G0
-nonmatching/boot/__floatdidf.c    sdk991111 -O2 -G0
-nonmatching/boot/__main.c    sdk991111 -O2 -G0
+src/boot/__floatdidf.c    sdk991111 -O2 -G0
+src/boot/__main.c    sdk991111 -O2 -G0
 nonmatching/boot/dpcmp.c    sdk991111 -O2 -G0
-nonmatching/boot/dpdiv.c    sdk991111 -O2 -G0
-nonmatching/boot/dpmul.c    sdk991111 -O2 -G0
+src/boot/dpdiv.c    sdk991111 -O2 -G0
+src/boot/dpmul.c    sdk991111 -O2 -G0
 nonmatching/boot/dpsub.c    sdk991111 -O2 -G0
 nonmatching/boot/dptofp.c    sdk991111 -O2 -G0
 nonmatching/boot/dptoli.c    sdk991111 -O2 -G0
-nonmatching/boot/dptoul.c    sdk991111 -O2 -G0
+src/boot/dptoul.c    sdk991111 -O2 -G0
 nonmatching/boot/exit.c    sdk991111 -O2 -G0
-nonmatching/boot/fptodp.c    sdk991111 -O2 -G0
-nonmatching/boot/fptoui.c    sdk991111 -O2 -G0
-nonmatching/boot/litodp.c    sdk991111 -O2 -G0
+src/boot/fptodp.c    sdk991111 -O2 -G0
+src/boot/fptoui.c    sdk991111 -O2 -G0
+src/boot/litodp.c    sdk991111 -O2 -G0
 nonmatching/boot/ps2fioLseekPartition.c    sdk991111 -O2 -G0
 nonmatching/boot/sceDmaPutEnv.c    sdk991111 -O2 -G0
 nonmatching/boot/sceSifSendCmd.c    sdk991111 -O2 -G0
@@ -124,7 +124,7 @@ nonmatching/boot/scalbnf.c             sdk991111 as=ee-sdk -O2 -G0
 # demangled ("bad_exception type_info node") in its diagnostics, but the
 # object names are the ordinary __ti*/STR_name spellings.
 nonmatching/boot/__tf10bad_typeid.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf13bad_exception.c    sdk991111 -O2 -G0
+src/boot/__tf13bad_exception.c    sdk991111 -O2 -G0
 nonmatching/boot/__tf14__si_type_info.c    sdk991111 -O2 -G0
 nonmatching/boot/__tf16__attr_type_info.c    sdk991111 -O2 -G0
 nonmatching/boot/__tf16__func_type_info.c    sdk991111 -O2 -G0
