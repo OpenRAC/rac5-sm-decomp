@@ -114,6 +114,29 @@ an ordinary comment produces identical output for every assembler tried. The rea
 rules differ per hazard class and per binary (for example `mtc1` before `swc1`,
 `mtc1` before `cvt.s.w`, and short backward branches).
 
+**The pinned `as` is not universal.** Three measured counter-examples, each
+reproducible, keep the twelve-binary comparison from being a blanket verdict:
+
+1. **A hazard rule.** The pinned `as` inserts a `nop` after `mfc1 $v0,$f12` when
+   the next instruction consumes the result, and retail does not; retail keeps
+   the `nop` only when the consumer is a branch. Two other binaries reproduce
+   retail here.
+2. **A `dli` expansion.** For `dli 0x800fffffffffffff` the pinned `as` emits seven
+   instructions (`ori` first) where retail emits six (`lui` first). The
+   `dli`-matches-retail result above therefore holds for the constants measured,
+   not for every 64-bit immediate.
+3. **A `static const float` load.** GNU `as` reads it from the literal pool (two
+   instructions) where retail inlines the value (`lui`/`ori`/`mtc1`, four
+   instructions); only SN `Ps2EeAs` inlines it.
+
+Those axes are independent: the SDK-family GNU binaries fix hazards and `dli`
+but pool floats, while `Ps2EeAs` inlines floats but differs on hazards. No
+single binary covers both, so the choice belongs **per object**, the same way
+the per-source flags in `config/cflags.txt` work — not as a global pin change. A
+non-regression pass over every campaign object is required before any such
+change, and one object (`__pack_d`, 300 bytes) is already byte-exact under five
+other binaries while reaching only 249/304 under the pinned one.
+
 **Constant encoding.** The pinned `as` encodes 32-bit float literals faithfully:
 `0.05f` becomes `0x3D4CCCCD` and `0.050000004f` becomes `0x3D4CCCCE`, and three
 other assemblers produce the same two words, so no rounding is involved. For
