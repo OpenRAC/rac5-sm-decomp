@@ -12,8 +12,9 @@
 # extra cc1 flags for the profile's pinned chain, on top of its global "-quiet
 # -O2 -G0". With one, the flags are the complete flag set for that compiler and
 # that file, so one line still says everything about how the object was built.
-# Pinned selectors: "prodg2953" is the second chain, SN ProDG 3.01 ee-gcc2953
-# (GCC 2.95.3), pinned in config/boot/compiler_trial.json.
+# Pinned selectors, both in config/boot/compiler_trial.json: "prodg2953" is SN
+# ProDG 3.01 ee-gcc2953 (GCC 2.95.3) and "sdk991111" is the Sony EE SDK
+# compiler 2.9-ee-991111-01.
 #
 # -mno-check-zero-division (GCC 2.9 mips.md, divmodsi4, under
 # !TARGET_NO_CHECK_ZERO_DIV): the pinned chain always emits
@@ -36,3 +37,16 @@ nonmatching/boot/ps2fioDopen.c        prodg2953 -O2 -G0
 nonmatching/boot/ps2fioGetStat.c      prodg2953 -O2 -G0
 nonmatching/boot/ps2fioFormatDevice.c prodg2953 -O2 -G0
 nonmatching/boot/cdvdfsFreeFS.c       prodg2953 -O2 -G0
+
+# Route Q: the libcd, fileio, sceSif and libgcc bodies whose retail bytes come
+# from the Sony EE SDK compiler. The pinned chain reaches 73-118 of their bytes
+# and its 8-byte save slots are the wrong frame shape; under 2.9-ee-991111 with
+# -O2 -G0 each fills its owned interval exactly. Measured per source by
+# tools/compile_boot_trial.py, which pins each object's SHA-256 in
+# tools/boot_c_campaign.py; the same sources without their selector stay
+# byte-inexact, which is this route's negative control.
+nonmatching/boot/sceCdSyncS.c         sdk991111 -O2 -G0
+nonmatching/boot/read.c               sdk991111 -O2 -G0
+nonmatching/boot/write.c              sdk991111 -O2 -G0
+nonmatching/boot/sceSifSetDma.c       sdk991111 -O2 -G0
+nonmatching/boot/dpadd.c              sdk991111 -O2 -G0

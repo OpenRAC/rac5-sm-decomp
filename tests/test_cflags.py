@@ -15,7 +15,9 @@ import compile_boot_trial  # noqa: E402
 
 MEASURED = "nonmatching/boot/dlib_displist_direct_end__FP13DLIB_DISPLIST.c"
 ROUTE_P = "nonmatching/boot/ps2fioClose.c"
+ROUTE_Q = "nonmatching/boot/sceCdSyncS.c"
 SECOND = "prodg2953"
+SONY = "sdk991111"
 
 
 class CFlagsTests(unittest.TestCase):
@@ -32,6 +34,8 @@ class CFlagsTests(unittest.TestCase):
                                       ("-mno-check-zero-division",)))
         self.assertEqual(entries.get(ROUTE_P),
                          cflags.Entry(SECOND, ("-O2", "-G0")))
+        self.assertEqual(entries.get(ROUTE_Q),
+                         cflags.Entry(SONY, ("-O2", "-G0")))
 
     def test_selector_names_a_pinned_second_compiler(self) -> None:
         profile = json.loads(cflags.PROFILE.read_text(encoding="utf-8"))
@@ -40,9 +44,24 @@ class CFlagsTests(unittest.TestCase):
         for key in ("driver_sha256", "cpp_sha256", "cc1_sha256"):
             self.assertEqual(len(pinned["tools"][key]), 64)
         self.assertEqual(cflags.pinned_compilers(),
-                         (cflags.DEFAULT_COMPILER, SECOND))
+                         (cflags.DEFAULT_COMPILER, SECOND, SONY))
         self.assertTrue(cflags.Entry(SECOND, ("-O2",)).compiler != cflags.DEFAULT_COMPILER)
         self.assertTrue(cflags.DEFAULT_ENTRY.pinned)
+
+    def test_every_pinned_compiler_states_its_host_and_provenance(self) -> None:
+        profile = json.loads(cflags.PROFILE.read_text(encoding="utf-8"))
+        for selector, pinned in profile["extra_compilers"].items():
+            with self.subTest(selector=selector):
+                # A routed object is built by a driver that must be found on the
+                # host the pin names, so an unstated host may not pass silently.
+                self.assertIn(pinned["host"], compile_boot_trial.HOSTS)
+                self.assertEqual(pinned["flags"], {"driver": ["-S"], "as": []})
+                self.assertTrue(pinned["id"].startswith("rac5-boot-"))
+                for key in ("driver_sha256", "cpp_sha256", "cc1_sha256"):
+                    int(pinned["tools"][key], 16)
+                self.assertGreater(len(pinned["provenance"]), 80)
+        self.assertEqual(profile["extra_compilers"][SECOND]["host"], "windows")
+        self.assertEqual(profile["extra_compilers"][SONY]["host"], "linux")
 
     def test_parses_comments_blanks_and_rejects_duplicates(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -159,8 +178,57 @@ class CFlagsTests(unittest.TestCase):
         profile = json.loads(compile_boot_trial.PROFILE.read_text(encoding="utf-8"))
         with self.assertRaisesRegex(ValueError, "pins no compiler"):
             compile_boot_trial.check_extra_compiler(profile, "not-pinned", Path("/nope"))
-        with self.assertRaisesRegex(ValueError, "--prodg-bin"):
-            compile_boot_trial.check_extra_compiler(profile, SECOND, None)
+        for selector in (SECOND, SONY):
+            with self.subTest(selector=selector), \
+                 self.assertRaisesRegex(ValueError, f"--extra-bin {selector}="):
+                compile_boot_trial.check_extra_compiler(profile, selector, None)
+
+    def test_extra_compiler_stage_comes_from_the_pin_or_the_output_dir(self) -> None:
+        def pin(host, **extra):
+            return {"id": "rac5-boot-unit", "host": host, "provenance": "u" * 81,
+                    "flags": {"driver": ["-S"], "as": []},
+                    "tools": {"driver": "d", "libexec": ".", "cpp": "c", "cc1": "x",
+                              "driver_sha256": "0" * 64, "cpp_sha256": "0" * 64,
+                              "cc1_sha256": "0" * 64}, **extra}
+
+        profile = {"extra_compilers": {"win": pin("windows", stage="build/stage-win"),
+                                       "lin": pin("linux"),
+                                       "bad": pin("plan9")}}
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "repo"
+            root.mkdir()
+            (root / "bin").mkdir()
+            for name in ("d", "c", "x"):
+                (root / "bin" / name).write_text("tool\n")
+            output = Path(directory) / "out"
+            with patch.object(compile_boot_trial, "ROOT", root), \
+                 patch.object(compile_boot_trial, "digest", return_value="0" * 64):
+                # A pin that names a stage keeps it; one that does not stages
+                # under --output-dir, the native Linux directory in a real run.
+                win = compile_boot_trial.check_extra_compiler(
+                    profile, "win", root / "bin", None, output)
+                lin = compile_boot_trial.check_extra_compiler(
+                    profile, "lin", root / "bin", None, output)
+                override = compile_boot_trial.check_extra_compiler(
+                    profile, "lin", root / "bin", root / "build/elsewhere", output)
+                self.assertEqual(win["stage"], root / "build/stage-win")
+                self.assertEqual(lin["stage"], output / "lin-stage")
+                self.assertEqual(override["stage"], root / "build/elsewhere")
+                with self.assertRaisesRegex(ValueError, "under ignored build/"):
+                    compile_boot_trial.check_extra_compiler(
+                        profile, "lin", root / "bin", root / "elsewhere", output)
+                self.assertEqual(lin["host"], "linux")
+                with self.assertRaisesRegex(ValueError, "is not one of"):
+                    compile_boot_trial.check_extra_compiler(
+                        profile, "bad", root / "bin", None, output)
+
+    def test_extra_bin_option_splits_a_selector_from_its_directory(self) -> None:
+        self.assertEqual(compile_boot_trial.extra_option("sdk991111=/opt/sdk"),
+                         ("sdk991111", Path("/opt/sdk")))
+        for value in ("sdk991111", "=/opt/sdk", "sdk991111="):
+            with self.subTest(value=value), \
+                 self.assertRaisesRegex(Exception, "SELECTOR=DIRECTORY"):
+                compile_boot_trial.extra_option(value)
 
     def test_campaign_sources_cover_owned_and_staged_sources(self) -> None:
         known = cflags.campaign_sources()

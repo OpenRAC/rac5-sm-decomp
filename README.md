@@ -54,8 +54,8 @@ next-label search limits, not validated function sizes or matches.
 A [boot C-object campaign](docs/BOOT-C-WITNESS.md#combined-provisional-c-witness)
 also keeps the complete boot `.text`, retail `PT_LOAD` header and raw
 file-backed bytes exact after linking authored C bodies together. The campaign
-now links **411 compiler-produced C objects**. The generated catalogue identifies
-**356 global function bodies**, covering **15,464 boot `.text` bytes** plus 672
+now links **416 compiler-produced C objects**. The generated catalogue identifies
+**361 global function bodies**, covering **16,036 boot `.text` bytes** plus 684
 zero alignment bytes. Fifty-five object spans do not expose a global function
 symbol with a usable extent and remain explicitly uncatalogued. Each catalogued
 body records its compiled extent and observed terminal transfer in the generated

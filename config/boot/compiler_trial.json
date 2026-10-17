@@ -63,6 +63,8 @@
       "id": "rac5-boot-sn-prodg-3.01-ee-gcc2953-2.95.3",
       "provenance": "SN Systems 'ProDG for PlayStation 2' 3.01 SDK distribution (github.com/AngheloAlf/SN-Systems-ProDG_for_PS2_3.01, commit d74f6fe); the driver reports GCC 2.95.3. Pinned per source, never rebuilt here and never committed.",
       "status": "measured per source; boot-only",
+      "host": "windows",
+      "stage": "build/boot-prodg-stage",
       "tools": {
         "driver": "ee-gcc2953.exe",
         "driver_sha256": "522d28f9d74ddfce89568437156c8ee323c806de525d99907f698050dee8d81e",
@@ -78,7 +80,28 @@
         ],
         "as": []
       }
+    },
+    "sdk991111": {
+      "id": "rac5-boot-sony-ee-gcc-2.9-ee-991111-01",
+      "provenance": "Sony EE-GCC 2.9-ee-991111-01, the EE compiler of the PlayStation 2 SDK, rebuilt unmodified from the public snapshot github.com/SSXModding/ps2-ee-toolchain at b595ded by RAC2's tools/compiler/sdk/build.py (32-bit host build; its bison-grammar patch only lets an old grammar parse under a modern bison and changes no generated code). The driver reports 2.9-ee-991111. Pinned per source, never rebuilt here and never committed.",
+      "status": "measured per source; boot-only",
+      "host": "linux",
+      "tools": {
+        "driver": "xgcc",
+        "driver_sha256": "4c8149cc96021253ac9863d670ada372e29f71af80ae91934c195cc4c6a3b2d6",
+        "libexec": ".",
+        "cpp": "cpp",
+        "cpp_sha256": "b73ad1bcfcdbd8826d231ec771471e92a6197adf2fc0e4674c3e5e1834cd2807",
+        "cc1": "cc1",
+        "cc1_sha256": "1305725c3b7e94410cb0b3ba85b64a990e94652a87db24631d6f9fa26edc5eb1"
+      },
+      "flags": {
+        "driver": [
+          "-S"
+        ],
+        "as": []
+      }
     }
   },
-  "expected_objects": 411
+  "expected_objects": 416
 }

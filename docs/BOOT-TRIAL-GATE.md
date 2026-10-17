@@ -9,14 +9,17 @@ The 31 reviewed sources are in `src/boot/`, the profile lists them explicitly in
 `accepted_sources`, and the campaign enumerates the same set in
 `ACCEPTED_SOURCES`. Every other body remains under `nonmatching/`.
 
-The current campaign contains 411 compiler-produced C objects. Its verified
-catalogue records 356 global function bodies (15,464 bytes plus 672 zero alignment
+The current campaign contains 416 compiler-produced C objects. Its verified
+catalogue records 361 global function bodies (16,036 bytes plus 684 zero alignment
 bytes); 55 object spans without usable global-function extents remain uncatalogued.
 These counts are distinct from the 31 accepted boot placements (1,064 bytes).
 Per-source compiler and options measured for one file are listed in
 [`config/cflags.txt`](../config/cflags.txt) and applied by the gate; the profile
-keeps its global flags. Five of its six entries hand their file to a second
-pinned compiler, SN ProDG 3.01 `ee-gcc2953` ([route P](COMPILER-STATUS.md#a-second-pinned-compiler-route-p)).
+keeps its global flags. Ten of its entries hand their file to another pinned
+compiler: five to SN ProDG 3.01 `ee-gcc2953`
+([route P](COMPILER-STATUS.md#a-second-pinned-compiler-route-p)) and five to the
+Sony SDK compiler `2.9-ee-991111`
+([route Q](COMPILER-STATUS.md#the-sony-sdk-compiler-route-q)).
 
 Both original and preprocessed C inputs must pass `tools/c_source_policy.py`:
 no instruction assembly, fixed registers or raw instruction words. The standalone
@@ -36,18 +39,28 @@ python3 tools/boot_trial_gate.py baserom/SCUS_976.15 \
   --cpp /path/to/cpp --cc1 /path/to/cc1 --as /path/to/as \
   --assembler /mnt/c/path/to/Ps2EeAs.exe \
   --linker /mnt/c/path/to/ld.exe \
-  --prodg-bin /mnt/c/path/to/ProDG/usr/local/sce/ee/gcc/bin \
+  --extra-bin prodg2953=/mnt/c/path/to/ProDG/usr/local/sce/ee/gcc/bin \
+  --extra-bin sdk991111=/home/you/rac5-sdk-compiler \
   --output-dir /home/you/rac5-boot-trial
 ```
 
 The command checks the patch and tool identities, copies each public C source
 to the Linux work directory, compiles **every campaign object**, and requires
-their object hashes to match the measured campaign. `--prodg-bin` is the
-directory holding the pinned second compiler (`ee-gcc2953.exe`); the gate
-checks its hash and its `cpp.exe`/`cc1.exe` companions, stages the routed
-sources in Windows-visible ignored `build/boot-prodg-stage/`, and assembles the
-driver's output with the same pinned GNU `as` as every other object, so one
-assembler still produces the whole campaign. It exports only the objects to
+their object hashes to match the measured campaign. `--extra-bin
+SELECTOR=DIRECTORY` gives the directory holding one pinned extra compiler,
+named by the selector that uses it and required exactly when the campaign's
+`config/cflags.txt` selects it; the gate checks that compiler's driver,
+`cpp` and `cc1` hashes and keeps every other object on the pinned chain. Each
+pin states the host its driver runs on. SN ProDG 3.01 (`prodg2953`) is a
+Windows driver: it is staged in the Windows-visible ignored
+`build/boot-prodg-stage/` and reached through WSL's Windows interop. The Sony
+`2.9-ee-991111` SDK compiler (`sdk991111`) is a Linux driver, and its 32-bit
+front end cannot stat a DrvFs path, so it is staged under `--output-dir`,
+which must therefore be on the Linux filesystem for either route; a pin may
+also name its own staging directory, or `--extra-stage SELECTOR=DIRECTORY`
+overrides it. Either driver's output is assembled by the same pinned GNU `as`
+as every other object, so one assembler still produces the whole campaign. It
+exports only the objects to
 ignored `build/boot-compiled-objects/`, then checks the committed boot symbol
 and DVP metadata, links the objects into the complete private boot assembly,
 and rechecks every candidate body boundary the catalogue records. It requires exact boot

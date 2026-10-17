@@ -7,11 +7,13 @@ not qualify matches or publish a progress report.
 
 Most sources compile with the profile's own GNU EE chain (``cpp``, ``cc1``,
 GNU ``as``). A source whose ``config/cflags.txt`` entry names another pinned
-compiler is built by that compiler instead. The one pinned extra compiler so
-far is SN ProDG 3.01 ``ee-gcc2953`` (GCC 2.95.3), a Windows driver: it runs
-through WSL's Windows interop from a staging directory the Windows side can
-open, and its assembly is then assembled by the same pinned GNU ``as``, so
-every object keeps one assembler and one object format.
+compiler is built by that compiler instead. Two are pinned so far: SN ProDG
+3.01 ``ee-gcc2953`` (GCC 2.95.3), a Windows driver that runs through WSL's
+Windows interop, and the Sony EE SDK compiler ``2.9-ee-991111``, a Linux
+driver the 32-bit toolchain can only read files from a Linux filesystem. Each
+pin states which host it runs on; either way its assembly is assembled by the
+same pinned GNU ``as``, so every object keeps one assembler and one object
+format.
 """
 
 from __future__ import annotations
@@ -32,7 +34,18 @@ from c_source_policy import require_c_source
 
 ROOT = Path(__file__).resolve().parent.parent
 PROFILE = ROOT / "config/boot/compiler_trial.json"
-STAGE = ROOT / "build/boot-prodg-stage"
+# The hosts an extra compiler may run on: "linux" for a native driver that reads
+# its inputs itself, "windows" for a driver reached through WSL's Windows
+# interop, whose staging directory therefore has to be Windows-visible.
+HOSTS = ("linux", "windows")
+
+
+def extra_option(value: str) -> tuple[str, Path]:
+    """One ``SELECTOR=DIRECTORY`` command-line value."""
+    selector, separator, directory = value.partition("=")
+    if not selector or not separator or not directory:
+        raise argparse.ArgumentTypeError(f"expected SELECTOR=DIRECTORY, got {value!r}")
+    return selector, Path(directory)
 
 
 def digest(path: Path) -> str:
@@ -96,8 +109,9 @@ def check_profile(cpp: Path, cc1: Path, assembler: Path) -> dict[str, object]:
     return profile
 
 
-def check_extra_compiler(profile: dict, selector: str,
-                         bin_dir: Path | None) -> dict[str, object]:
+def check_extra_compiler(profile: dict, selector: str, bin_dir: Path | None,
+                         stage_dir: Path | None = None,
+                         output: Path | None = None) -> dict[str, object]:
     """Verify one pinned extra compiler and resolve the paths it is run from."""
     pinned = profile.get("extra_compilers", {}).get(selector)
     if pinned is None:
@@ -105,7 +119,10 @@ def check_extra_compiler(profile: dict, selector: str,
                          f"named {selector}")
     if bin_dir is None:
         raise ValueError(f"source routed to {selector}; pass that compiler's "
-                         "directory with --prodg-bin")
+                         f"directory with --extra-bin {selector}=DIRECTORY")
+    host = pinned["host"]
+    if host not in HOSTS:
+        raise ValueError(f"{selector} host {host!r} is not one of {', '.join(HOSTS)}")
     tools = pinned["tools"]
     driver = bin_dir / tools["driver"]
     libexec = (bin_dir / tools["libexec"]).resolve()
@@ -119,10 +136,21 @@ def check_extra_compiler(profile: dict, selector: str,
     flags = pinned["flags"]
     if set(flags) != {"driver", "as"} or list(flags["driver"]) != ["-S"]:
         raise ValueError(f"{selector} flags differ from measured build")
+    # Where the routed source is staged for that driver. A pin may name its own
+    # directory; without one it stages under --output-dir, which is already a
+    # native Linux path, so a Linux driver can read its own inputs there.
+    if stage_dir is not None:
+        stage = stage_dir
+    elif "stage" in pinned:
+        stage = ROOT / pinned["stage"]
+    elif output is not None:
+        stage = output / f"{selector}-stage"
+    else:
+        raise ValueError(f"{selector} needs a staging directory")
     # The driver resolves cpp/cc1 itself through -B; they are checked above so a
     # swapped front end cannot hide behind a correct driver hash.
-    return {"id": pinned["id"], "driver": driver, "libexec": libexec,
-            "flags": flags}
+    return {"id": pinned["id"], "host": host, "driver": driver, "libexec": libexec,
+            "flags": flags, "stage": require_private_output(stage)}
 
 
 def cc1_flags(profile: dict, per_source: dict[str, cflags.Entry],
@@ -171,18 +199,23 @@ def compile_pinned(profile: dict, per_source: dict[str, cflags.Entry], source: P
 
 
 def compile_extra(extra: dict, per_source: dict[str, cflags.Entry], source: Path,
-                  output: Path, item, stage: Path) -> list[str]:
-    """A pinned extra compiler driver, staged where the Windows side can read it.
+                  output: Path, item) -> list[str]:
+    """A pinned extra compiler driver, staged where that driver can read it.
 
-    The preprocessed input is kept and checked exactly as the pinned chain's is,
-    so a macro from the driver's own include path cannot smuggle assembly into
-    a routed body either.
+    A Windows driver needs a Windows-visible directory and a Windows ``-B`` path;
+    a Linux driver reads a native path itself, and 32-bit ones can only read it
+    from a Linux filesystem. The preprocessed input is kept and checked exactly
+    as the pinned chain's is, so a macro from the driver's own include path
+    cannot smuggle assembly into a routed body either.
     """
+    stage = extra["stage"]
     staged = stage / item.name
     staged.mkdir(parents=True, exist_ok=True)
     (staged / source.name).write_bytes(source.read_bytes())
     assembly = staged / f"{item.name}.s"
-    prefix = [str(extra["driver"].resolve()), f"-B{windows_path(extra['libexec'])}/"]
+    libexec = (windows_path(extra["libexec"]) if extra["host"] == "windows"
+               else str(extra["libexec"]))
+    prefix = [str(extra["driver"].resolve()), f"-B{libexec}/"]
     run([*prefix, "-E", source.name], staged, output / f"{item.name}.cpp.log",
         output / f"{item.name}.i")
     require_c_source((output / f"{item.name}.i").read_text(encoding="utf-8"),
@@ -198,8 +231,8 @@ def compile_extra(extra: dict, per_source: dict[str, cflags.Entry], source: Path
 
 def compile_objects(cpp: Path, cc1: Path, assembler: Path,
                     output_dir: Path, export_dir: Path | None,
-                    prodg_bin: Path | None = None,
-                    stage_dir: Path | None = None) -> None:
+                    extra_bins: dict[str, Path] | None = None,
+                    extra_stages: dict[str, Path] | None = None) -> None:
     profile = check_profile(cpp, cc1, assembler)
     output = require_private_output(output_dir)
     export = require_private_output(export_dir) if export_dir is not None else None
@@ -208,11 +241,12 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
     output.mkdir(parents=True, exist_ok=True)
     per_source = cflags.load()
     selected = {entry.compiler for entry in per_source.values() if not entry.pinned}
-    extras = {name: check_extra_compiler(profile, name, prodg_bin)
+    bins, stages = extra_bins or {}, extra_stages or {}
+    extras = {name: check_extra_compiler(profile, name, bins.get(name),
+                                         stages.get(name), output)
               for name in sorted(selected)}
-    stage = require_private_output(stage_dir if stage_dir is not None else STAGE)
-    if selected:
-        stage.mkdir(parents=True, exist_ok=True)
+    for extra in extras.values():
+        extra["stage"].mkdir(parents=True, exist_ok=True)
     manifest = {"profile": profile["id"], "status": "qualified_boot_only",
                 "compilers": {name: extra["id"] for name, extra in extras.items()},
                 "objects": []}
@@ -229,7 +263,7 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
                                    cpp, cc1, item)
         else:
             flags = compile_extra(extras[entry.compiler], per_source, source,
-                                  output, item, stage)
+                                  output, item)
         run([str(assembler.resolve()), "-o", obj.name, f"{item.name}.s"], output,
             output / f"{item.name}.as.log")
         if digest(obj) != item.object_sha256:
@@ -245,11 +279,24 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
         for item in REPLACEMENTS:
             shutil.copyfile(output / f"{item.name}.o", export / f"{item.name}.o")
         shutil.copyfile(output / "trial_manifest.json", export / "trial_manifest.json")
-    extra_count = len(selected)
+    extra_count = sum(len([entry for entry in per_source.values()
+                           if entry.compiler == name]) for name in extras)
     print(f"{len(REPLACEMENTS)} byte-identical objects for the pinned boot C "
           f"campaign, {len(ACCEPTED_SOURCES)} accepted under the boot-only "
-          f"profile, {extra_count} object(s) from a second pinned compiler",
+          f"profile, {extra_count} object(s) from another pinned compiler",
           flush=True)
+
+
+def add_extra_arguments(parser: argparse.ArgumentParser) -> None:
+    """The pinned-extra-compiler options, shared with the complete boot gate."""
+    parser.add_argument("--extra-bin", type=extra_option, action="append",
+                        default=[], metavar="SELECTOR=DIRECTORY",
+                        help="directory holding a pinned extra compiler's driver; "
+                             "required once a config/cflags.txt entry selects it")
+    parser.add_argument("--extra-stage", type=extra_option, action="append",
+                        default=[], metavar="SELECTOR=DIRECTORY",
+                        help="staging directory for that driver, when the pin "
+                             "does not name one")
 
 
 def main() -> None:
@@ -259,14 +306,11 @@ def main() -> None:
     parser.add_argument("--as", dest="assembler", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--export-dir", type=Path)
-    parser.add_argument("--prodg-bin", type=Path,
-                        help="directory holding the pinned ee-gcc2953.exe driver")
-    parser.add_argument("--prodg-stage", type=Path, default=STAGE,
-                        help="Windows-visible staging directory for that driver")
+    add_extra_arguments(parser)
     args = parser.parse_args()
     compile_objects(args.cpp, args.cc1, args.assembler,
                     args.output_dir, args.export_dir,
-                    args.prodg_bin, args.prodg_stage)
+                    dict(args.extra_bin), dict(args.extra_stage))
 
 
 if __name__ == "__main__":
