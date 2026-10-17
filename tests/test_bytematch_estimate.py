@@ -24,11 +24,11 @@ class ByteMatchEstimateTests(unittest.TestCase):
         self.assertEqual(result["version"], 2)
         accepted = sum(item.end - item.start
                        for item in boot_c_campaign.accepted_replacements())
-        self.assertEqual(result["measures"]["matched_code"], str(accepted + 80))
+        self.assertEqual(result["measures"]["matched_code"], str(accepted + 556))
         self.assertEqual(result["measures"]["total_code"], "6418204")
         self.assertEqual(result["measures"]["total_units"], 3)
         self.assertEqual([u["measures"]["matched_code"] for u in result["units"]],
-                         [str(accepted), "0", "80"])
+                         [str(accepted), "476", "80"])
         self.assertIn("optimistic", result["units"][2]["name"])
         self.assertFalse(self.status["bytematch_objdiff_ready"])
 

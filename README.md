@@ -13,8 +13,9 @@ only counts as matched after a byte-identical build. This repository does **not*
 yet have a general qualified compiler or a complete retail function catalogue.
 The [ByteMatch dashboard](https://bytematch.dev/OpenRAC/rac5-sm-decomp) uses a
 **provisional optimistic denominator** for level code; its displayed percentage
-is an estimate, not a qualified game-wide match rate. One boot function and two shared level functions
-have narrowly scoped private whole-program gates.
+is an estimate, not a qualified game-wide match rate. One boot function, two
+shared level functions and one frontend function have narrowly scoped private
+whole-program gates.
 
 ## What is established
 
@@ -43,9 +44,10 @@ placement**, not unique code or matched C. Their other module bytes and most
 runtime placements remain open. A new
 [complete-program gate for the frontend and level 01](docs/LEVEL-PROGRAM-GATE.md)
 checks their full modules and the two previously measured relocated-image
-hashes. A separate [shared-level C gate](docs/LEVEL-C-WITNESS.md) now accepts
-two authored functions (8 and 72 bytes) at all twenty numbered level placements; two
-additional C shapes are compiler controls only.
+hashes. A separate [level C gate](docs/LEVEL-C-WITNESS.md) now accepts two
+authored functions (8 and 72 bytes) at all twenty numbered level placements
+and one 476-byte frontend initializer. Two additional C shapes are compiler
+controls only.
 
 The boot's embedded labels also yield
 [1,315 generated code-label bounds](config/boot/code_intervals.tsv). These are
@@ -55,13 +57,13 @@ A [boot C-object campaign](docs/BOOT-C-WITNESS.md#combined-provisional-c-witness
 also keeps the complete boot `.text`, retail `PT_LOAD` header and raw
 file-backed bytes exact after linking authored C bodies together. The campaign
 now links **416 compiler-produced C objects**. The generated catalogue identifies
-**361 global function bodies**, covering **16,036 boot `.text` bytes** plus 684
+**351 global function bodies**, covering **14,936 boot `.text` bytes** plus 656
 zero alignment bytes. Fifty-five object spans do not expose a global function
 symbol with a usable extent and remain explicitly uncatalogued. Each catalogued
 body records its compiled extent and observed terminal transfer in the generated
 [`config/boot/witness_boundaries.tsv`](config/boot/witness_boundaries.tsv)
-catalogue. Thirty-one reviewed boot functions (1,064 accepted bytes) live in
-`src/boot/`; the others remain provisional in `nonmatching/`. The
+catalogue. One reviewed 16-byte boot function lives in `src/boot/`; the others
+remain provisional in `nonmatching/`. The
 [boot-only acceptance scope](docs/BOOT-MATCH-SCOPE.md) explains why exact loaded
 bytes can be assessed separately from ELF packaging.
 Inline/global assembly, fixed-register bindings and raw instruction injection do
@@ -70,7 +72,7 @@ private and their original intervals remain in the assembly baseline. Declaratio
 labels that only name an ELF symbol are allowed; they emit no instructions.
 The [boot gate](docs/BOOT-TRIAL-GATE.md) rebuilds every C object from pinned
 local tools, verifies the entire load image in one private run, and counts
-**31 reviewed boot-only placements** after a successful gate.
+**one boot-only match** after a successful gate.
 The [VU overlay audit](docs/DVP-OVERLAYS.md) also reproduces the boot's 31
 non-loaded DVP sections privately. The new
 [ELF packaging gate](docs/BOOT-TRIAL-GATE.md) reconstructs the complete
@@ -81,7 +83,7 @@ this is not a fully source-derived game build.
 No other C or C++ match is claimed. The original compiler identity and general level
 profiles, most function boundaries and full runtime behavior are still under
 investigation. The [scoped progress snapshot](progress/README.md) records the
-verified boot and shared-level matches. A separate, labelled ByteMatch estimate
+verified boot, shared-level and frontend matches. A separate, labelled ByteMatch estimate
 divides those verified C bytes by provisional candidate code bytes. The
 [21-module function audit](docs/LEVEL-FUNCTION-INVENTORY.md)
 separates bounded entries from uncertain pointer/table entries and identifies
@@ -216,9 +218,9 @@ Only a qualified toolchain reproducing the **complete retail program bytes at
 every applicable placement** can establish a match. Compiling successfully,
 matching a few instructions, or comparing masked bytes cannot. The
 [reproducible boot gate](docs/BOOT-TRIAL-GATE.md) checks candidate objects and
-all loaded boot bytes and accepts 31 reviewed boot C placements (1,064 bytes,
-an explicit enumerated set). It is a boot-only scope, not a qualified game-wide
-percentage. RAC2's compiler configuration alone is not evidence for this game
+all loaded boot bytes and accepts only `MEMCARD_Busy__Fv` (16 bytes). It is a
+boot-only match, not a qualified game-wide percentage. RAC2's compiler
+configuration alone is not evidence for this game
 ([compiler status](docs/COMPILER-STATUS.md)).
 
 ## Repository layout
@@ -228,7 +230,7 @@ percentage. RAC2's compiler configuration alone is not evidence for this game
 | `config/target.json` | Verified identity of the complete USA input |
 | `config/boot/`, `config/levels/` | Generated metadata and the pinned boot-only trial profile |
 | `tools/`, `tests/` | ISO9660, ELF, SNR2 and local relocation tools, repository guard and synthetic tests |
-| `src/` | Accepted authored C/C++ definitions (31 boot functions, two shared level functions) |
+| `src/` | Accepted authored C/C++ definitions in boot, shared levels and frontend |
 | `nonmatching/` | Provisional C attempts, including exact slices awaiting acceptance review |
 | `progress/` | Reserved for generated game-wide progress after catalogue and build qualification |
 | `baserom/`, `asm/`, `build/`, `toolchain/` | Local-only game inputs and outputs |

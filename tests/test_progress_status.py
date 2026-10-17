@@ -28,6 +28,9 @@ class ProgressStatusTests(unittest.TestCase):
                          len(boot_c_campaign.ACCEPTED_SOURCES))
         self.assertEqual(report["levels"]["accepted_c_bytes_per_unique_source"], 80)
         self.assertEqual(report["levels"]["accepted_c_bytes_by_placement"], 1600)
+        self.assertEqual(report["levels"]["accepted_frontend_c_bytes"], 476)
+        self.assertEqual(report["levels"]["accepted_frontend_functions"],
+                         ["func_00002F80"])
         self.assertEqual(report["levels"]["accepted_shared_functions"],
                          ["func_00000100", "func_shared_zero_buffer"])
 
@@ -42,8 +45,12 @@ class ProgressStatusTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "pinned placement"):
             snapshot(changed)
         changed = copy.deepcopy(evidence)
-        changed["level_c"]["matched_placement_bytes"] = 1608
+        changed["level_c"]["matched_placement_bytes"] = 2084
         with self.assertRaisesRegex(ValueError, "level C evidence"):
+            snapshot(changed)
+        changed = copy.deepcopy(evidence)
+        changed["level_c"]["frontend_accepted"]["body_bytes"] = 472
+        with self.assertRaisesRegex(ValueError, "frontend C evidence|level C evidence"):
             snapshot(changed)
 
 

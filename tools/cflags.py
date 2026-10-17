@@ -20,7 +20,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parent.parent
 CFLAGS = ROOT / "config/cflags.txt"
@@ -58,6 +58,7 @@ def campaign_sources() -> frozenset[str]:
     level = json.loads((ROOT / "config/levels/compiler_trial.json")
                        .read_text(encoding="utf-8"))
     for row in (level["accepted"], level["additional_accepted"],
+                level["frontend_accepted"],
                 *level["provisional_controls"]):
         names.add(row["source"])
     for folder in CAMPAIGN_DIRS:
@@ -89,7 +90,8 @@ def load(path: Path = CFLAGS) -> dict[str, Entry]:
         if name in entries:
             problems.append(f"line {number}: {name}: duplicate entry")
             continue
-        if (Path(name).is_absolute() or ".." in Path(name).parts
+        if (PurePosixPath(name).is_absolute() or Path(name).is_absolute()
+                or ".." in PurePosixPath(name).parts
                 or not name.endswith(".c")):
             problems.append(f"line {number}: {name}: not a repository-relative C source")
             continue

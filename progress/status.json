@@ -49,7 +49,7 @@
         "module_sha256": "81f834bdf092587eb94e6a198fe2ab6181877dbd215f7124b405edda9b1a3daf",
         "candidate_code_bytes_by_placement": 162944,
         "candidate_code_sha256": "7a20f37eb7d3658d34f89fa56bb44d7263d8d7a9b3beb86cca577647d0309828",
-        "accepted_c_bytes": 0
+        "accepted_c_bytes": 476
       },
       {
         "module": "LEVEL_01.REL",
@@ -201,6 +201,10 @@
       "func_00000100",
       "func_shared_zero_buffer"
     ],
+    "accepted_frontend_functions": [
+      "func_00002F80"
+    ],
+    "accepted_frontend_c_bytes": 476,
     "accepted_c_bytes_per_unique_source": 80,
     "accepted_c_bytes_by_placement": 1600,
     "known_identical_full_intervals": [
@@ -406,15 +410,16 @@
       }
     ],
     "level_c": {
-      "status": "passed_two_shared_functions",
+      "status": "passed_shared_and_frontend",
       "profile": "rac5-level-shared-c-gnu-ee-trial-20261015",
       "accepted_functions": [
         "func_00000100",
-        "func_shared_zero_buffer"
+        "func_shared_zero_buffer",
+        "func_00002F80"
       ],
-      "counted_matches": 2,
-      "unique_body_bytes": 80,
-      "matched_placement_bytes": 1600,
+      "counted_matches": 3,
+      "unique_body_bytes": 556,
+      "matched_placement_bytes": 2076,
       "placements": [
         {
           "module": "LEVEL_01.REL",
@@ -597,6 +602,13 @@
           "shared_buffer_bytes": 72
         }
       ],
+      "frontend_accepted": {
+        "module": "FRONTEND.REL",
+        "offset": 12160,
+        "body_bytes": 476,
+        "direct_callers": 4,
+        "module_sha256": "81f834bdf092587eb94e6a198fe2ab6181877dbd215f7124b405edda9b1a3daf"
+      },
       "provisional_controls": [
         "LEVEL_01.REL:0x190:24",
         "FRONTEND.REL:0x2CD8:12"
@@ -614,9 +626,10 @@
     "level_code_catalogue": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
     "level_module_catalogue": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
     "accepted_boot_c_sources_lf": "546f5ff8f231d60c3e526a726dfab46de64c73a0d78163fd67b6fa25775cc6a2",
-    "level_compiler_profile": "ffe5779ab84620b23752ae8ecef1bb9422fc9af71ec3e8b834440def81e70194",
+    "level_compiler_profile": "62310e00596450a950542f209b41da4968ca3a72a176e894ff00482405bcea46",
     "accepted_level_c_source_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",
     "accepted_shared_buffer_c_source_lf": "8425fefc73b121bd3eb6ffc09e4c49bf6425958c0f5b63d638af3b11d6c6e387",
+    "accepted_frontend_c_source_lf": "bb1626a4f47d509dec32ee92d5b046051827bc94e7f93daf6e37bc5e44325749",
     "level_function_inventory": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
     "level_ghidra_crosscheck": "0f00587cd4f346955d8264343f93cde9259170ed8e0c61259cada3682b979f9d",
     "level_translation_families": "d0518db3488ffcf89c6baea26b7a8b5da474e6026301063f373df0ed0c0359be",

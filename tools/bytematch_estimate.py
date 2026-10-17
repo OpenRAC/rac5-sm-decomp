@@ -56,7 +56,10 @@ def report(status: dict, shape: dict) -> dict:
     frontend = next(row for row in status["levels"]["placements"]
                     if row["module"] == "FRONTEND.REL")
     frontend_total = frontend["candidate_code_bytes_by_placement"]
-    if frontend["accepted_c_bytes"] != 0:
+    frontend_matched = frontend["accepted_c_bytes"]
+    if (frontend_matched != status["levels"]["accepted_frontend_c_bytes"]
+            or status["levels"]["accepted_frontend_functions"] !=
+            ["func_00002F80"]):
         raise ValueError("frontend C scope changed")
     level_matched = status["levels"]["accepted_c_bytes_per_unique_source"]
     # Each accepted boot source owns its complete reviewed range, so the counted
@@ -69,12 +72,12 @@ def report(status: dict, shape: dict) -> dict:
         raise ValueError("optimistic level accounting does not close")
 
     boot = _measures(boot_total, boot_matched)
-    frontend_measures = _measures(frontend_total, 0)
+    frontend_measures = _measures(frontend_total, frontend_matched)
     levels = _measures(level_total, level_matched)
     units = [
         {"name": "Boot .text (measured scope)", "measures": boot,
          "metadata": {"progress_categories": ["boot_measured"]}},
-        {"name": "Frontend (candidate code interval)",
+        {"name": "Frontend (verified C; candidate code interval)",
          "measures": frontend_measures,
          "metadata": {"progress_categories": ["frontend_candidate"]}},
         {"name": "Levels (optimistic masked-shape estimate)",
@@ -84,13 +87,14 @@ def report(status: dict, shape: dict) -> dict:
     return {
         "version": 2,
         "measures": _measures(boot_total + frontend_total + level_total,
-                              boot_matched + level_matched, units=3),
+                              boot_matched + frontend_matched + level_matched,
+                              units=3),
         "units": units,
         "categories": [
             {"id": "boot_measured", "name": "Boot .text (measured scope)",
              "measures": boot},
             {"id": "frontend_candidate",
-             "name": "Frontend (candidate code interval)",
+             "name": "Frontend (verified C; candidate code interval)",
              "measures": frontend_measures},
             {"id": "levels_optimistic",
              "name": "Levels (optimistic masked-shape estimate)",
