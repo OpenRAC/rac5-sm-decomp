@@ -73,9 +73,9 @@ only the reviewed placements in the explicit gate set are counted.
 ## Campaign expansion
 
 A later authoring campaign grew the same mechanism from twenty bodies to
-**475 compiler-produced C objects**, after hybrid instruction-assembly experiments
-were excluded. The catalogue identifies 475 global function bodies covering 29,044
-code bytes plus 876 zero alignment bytes; every object span expands a global
+**477 compiler-produced C objects**, after hybrid instruction-assembly experiments
+were excluded. The catalogue identifies 477 global function bodies covering 30,316
+code bytes plus 884 zero alignment bytes; every object span expands a global
 function symbol. Objects can contain multiple bodies.
 One body,
 `dlib_displist_direct_end__FP13DLIB_DISPLIST`, carries the per-source option

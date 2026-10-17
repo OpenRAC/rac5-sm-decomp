@@ -174,6 +174,8 @@ def accepted_replacements() -> tuple[Replacement, ...]:
     return owners
 
 
+RODATA_ADDRESS, RODATA_SIZE = next(
+    (address, size) for name, address, size in DATA_SECTIONS if name == ".rodata")
 BSS_START = 0x01F28100
 BSS_SIZE = 817644
 TRAIL_SIZE = 20
@@ -187,6 +189,12 @@ class Replacement:
     end: int
     source_sha256: str
     object_sha256: str
+    # Base address of the object's own .rodata, for a body whose constants the
+    # retail code loads from the shared pool instead of materialising in place.
+    # The campaign supplies the retail data sections from boot_data.o and
+    # discards each replacement's .rodata, so such a body is pre-linked alone
+    # (see prelink_pool_body) and only its resolved .text joins the campaign.
+    pool: int | None = None
 
 
 REPLACEMENTS = (
@@ -1327,6 +1335,14 @@ REPLACEMENTS = (
     Replacement("__ieee754_fmodf", 0x01E9FCD8, 0x01E9FF28,
                 "eddcd1da274b055b3e36e311dfa7ade5b2f2240a7389f20001920d7ba19fc9c3",
                 "775c931fdbb8b9951cd82f23a455d4843de18802f4be71fad3375a4f2afdccae"),
+    Replacement("__ieee754_logf", 0x01E9FF28, 0x01EA0250,
+                "3fe13ebe3b7b206c2c786092681e3d7b5b3dcb68e5ffe6d68657d196309af5df",
+                "50c95c8709efb23abc032c1845d5371ee10ef1e371904ccec266768b8faac534",
+                0x01F210D8),
+    Replacement("__kernel_sin", 0x01EA1DB0, 0x01EA1F88,
+                "fd0b0ecf75ecde4570fe62d8ac786d94d1f768e9680d202dfaa91b9c16d2c425",
+                "48718adf936adeb9b8f5548141ee0559f0ec18a249ef1e676f1e6527331d8a6a",
+                0x01F21628),
     Replacement("__kernel_cosf", 0x01EA1F88, 0x01EA20E0,
                 "cd7bbedf2e885d0baae129d71ae355e5f57c7359633bb5df41eafd7f684f8ae5",
                 "37b013351cb60e1bd72e00daf8ae2f59f8615547ad80446cda1063617c1cc10d"),
@@ -2144,6 +2160,11 @@ def validate_replacements() -> None:
         raise ValueError("C intervals lie outside aligned boot text")
     if any(left.end > right.start for left, right in zip(REPLACEMENTS, REPLACEMENTS[1:])):
         raise ValueError("C intervals overlap or are out of order")
+    if any(item.pool is not None
+           and (type(item.pool) is not int or item.pool % 4
+                or not RODATA_ADDRESS <= item.pool < RODATA_ADDRESS + RODATA_SIZE)
+           for item in REPLACEMENTS):
+        raise ValueError("C interval pools must be 4-byte aligned inside the retail .rodata")
 
 
 def check_inputs(objects_dir: Path) -> None:
@@ -2199,11 +2220,84 @@ def split_assembly(assembly: str) -> tuple[str, str, list[str]]:
             skipped_labels)
 
 
+def boot_data_slice(boot: Path, address: int, size: int) -> bytes:
+    """Retail bytes at `address` inside the measured .rodata section."""
+    if not RODATA_ADDRESS <= address or address + size > RODATA_ADDRESS + RODATA_SIZE:
+        raise ValueError(f"pool range 0x{address:08X}+{size} lies outside retail .rodata")
+    report = inspect_elf(boot)
+    section = next(item for item in report["sections"] if item["name"] == ".rodata")
+    base = int(section["virtual_address"], 16)
+    offset = int(section["file_offset"]) + address - base
+    return boot.read_bytes()[offset:offset + size]
+
+
+def prelink_pool_body(item: Replacement, linker: Path, assembler: Path,
+                      boot: Path, output: Path) -> None:
+    """Resolve one pool body's `.text` alone, then emit it as data words.
+
+    The campaign takes the retail data sections from boot_data.o and discards
+    every replacement's `.rodata`. A body whose constants are loaded from that
+    pool therefore cannot be linked directly: its HI16/LO16 pairs would resolve
+    against address 0, silently. Linking the body alone at its retail address,
+    with `.rodata` pinned to the measured pool base, resolves those pairs to the
+    retail addresses; the resulting `.text` carries no relocation, so it can be
+    injected between the retail text segments as assembled words. The pool bytes
+    are checked against the pinned boot before the body is accepted, and the
+    function symbol keeps its compiled extent for the witness catalogue.
+    """
+    known: dict[str, str] = {}
+    for line in LINKER_SYMBOLS:
+        known[line.split(" = ")[0]] = line
+    for other in REPLACEMENTS:
+        line = f"{other.name} = 0x{other.start:08X};"
+        if other.name in known and known[other.name] != line:
+            raise ValueError(f"pool symbol disagrees with the linker script: {other.name}")
+        known[other.name] = line
+    script = [*known.values(), "SECTIONS {", f"  . = 0x{item.start:08X};",
+              f"  .text : {{ {item.name}.o(.text) }}",
+              f"  .rodata 0x{item.pool:08X} : {{ {item.name}.o(.rodata) }}", "}"]
+    (output / f"{item.name}.pool.ld").write_text("\n".join(script) + "\n",
+                                                 encoding="ascii", newline="\n")
+    run_tool([str(linker.resolve()), "-T", f"{item.name}.pool.ld", "-o",
+              f"{item.name}.prelink.elf", f"{item.name}.o"],
+             output, output / f"{item.name}.prelink.log")
+    # ld.exe reports some layout errors and still exits 0, so the output file
+    # and every address are checked instead of trusting the exit status.
+    elf = output / f"{item.name}.prelink.elf"
+    if not elf.is_file() or elf.stat().st_size == 0:
+        raise ValueError(f"{item.name}: the pool pre-link wrote no ELF")
+    report = inspect_elf(elf)
+    text = next(section for section in report["sections"] if section["name"] == ".text")
+    pool = next(section for section in report["sections"] if section["name"] == ".rodata")
+    if (int(text["virtual_address"], 16) != item.start
+            or int(pool["virtual_address"], 16) != item.pool
+            or text["size"] % 4 or text["size"] > item.end - item.start):
+        raise ValueError(f"{item.name}: pre-linked layout differs from the pinned interval")
+    image = elf.read_bytes()
+    pool_bytes = image[int(pool["file_offset"]):int(pool["file_offset"]) + pool["size"]]
+    if pool_bytes != boot_data_slice(boot, item.pool, pool["size"]):
+        raise ValueError(f"{item.name}: pre-linked pool differs from the pinned retail .rodata")
+    body = image[int(text["file_offset"]):int(text["file_offset"]) + text["size"]]
+    source = [".set noat", ".section .text", f".globl {item.name}",
+              f".ent {item.name}", f"{item.name}:"]
+    source += [f"    .word 0x{int.from_bytes(body[at:at + 4], 'little'):08X}"
+               for at in range(0, len(body), 4)]
+    source.append(f".end {item.name}")
+    (output / f"{item.name}.pooltext.s").write_text("\n".join(source) + "\n",
+                                                    encoding="ascii", newline="\n")
+    run_tool([str(assembler.resolve()), "-o", f"{item.name}.pooltext.o",
+              f"{item.name}.pooltext.s"], output, output / f"{item.name}.pooltext.log")
+    assembled = output / f"{item.name}.pooltext.o"
+    if not assembled.is_file() or assembled.stat().st_size == 0:
+        raise ValueError(f"{item.name}: the assembler wrote no pool object")
+
+
 def linker_script(skipped_labels: list[str]) -> str:
     parts = ["boot_prefix_align.o(.text.align)"]
     for index, item in enumerate(REPLACEMENTS):
-        parts += [f"boot_split_multi.o(.text.seg{index})", f"{item.name}.o(.text)",
-                  ". = ALIGN(8);"]
+        body = (f"{item.name}.pooltext.o(.text)" if item.pool is not None
+                else f"{item.name}.o(.text)")
+        parts += [f"boot_split_multi.o(.text.seg{index})", body, ". = ALIGN(8);"]
     parts.append(f"boot_split_multi.o(.text.seg{len(REPLACEMENTS)})")
     lines = [*LINKER_SYMBOLS,
              *(f"{label} = 0x{label[2:]};" for label in skipped_labels),
@@ -2218,7 +2312,10 @@ def linker_script(skipped_labels: list[str]) -> str:
     # (the fdlibm constants, which -G0 materialises inside the body instead), and
     # an orphan section would be placed on top of the retail `.rodata`. Discard
     # exactly those objects' sections so the retail data keeps its addresses.
-    discard = " ".join(f"{item.name}.o(.rodata)" for item in REPLACEMENTS)
+    # A pool body never joins the link as an object: only its pre-linked
+    # `.pooltext.o` does, and that object carries no data section.
+    discard = " ".join(f"{item.name}.o(.rodata)" for item in REPLACEMENTS
+                       if item.pool is None)
     lines.append(f"  /DISCARD/ : {{ {discard} }}")
     lines.append("}")
     return "\n".join(lines) + "\n"
@@ -2259,10 +2356,14 @@ def main() -> None:
                  "boot_bss", "boot_tail"):
         run_tool([str(args.assembler.resolve()), "-o", f"{stem}.o", f"{stem}.s"],
                  OUTPUT, OUTPUT / f"{stem}.log")
+    for item in REPLACEMENTS:
+        if item.pool is not None:
+            prelink_pool_body(item, args.linker, args.assembler, args.boot, OUTPUT)
     run_tool([str(args.linker.resolve()), "-N", "-e", "0x01E62508",
               "-T", "boot_multi.ld", "-o",
               "boot_multi.elf", "boot_prefix_align.o", "boot_split_multi.o",
-              *(f"{item.name}.o" for item in REPLACEMENTS),
+              *((f"{item.name}.pooltext.o" if item.pool is not None
+                 else f"{item.name}.o") for item in REPLACEMENTS),
               "boot_data.o", "boot_bss.o", "boot_tail.o"],
              OUTPUT, OUTPUT / "linker.log")
     candidate = OUTPUT / "boot_multi.elf"
