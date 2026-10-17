@@ -19,10 +19,10 @@ import cflags  # noqa: E402
 import compile_boot_trial  # noqa: E402
 
 MEASURED = "src/boot/dlib_displist_direct_end__FP13DLIB_DISPLIST.c"
-ROUTE_P = "nonmatching/boot/ps2fioClose.c"
-ROUTE_Q = "nonmatching/boot/sceCdSyncS.c"
-ROUTE_R_DLI = "nonmatching/boot/__pack_d.c"
-ROUTE_R_FLOAT = "nonmatching/boot/sceKernelGetSystemTimeLow__Fv.c"
+ROUTE_P = "src/boot/ps2fioClose.c"
+ROUTE_Q = "src/boot/sceCdSyncS.c"
+ROUTE_R_DLI = "src/boot/__pack_d.c"
+ROUTE_R_FLOAT = "src/boot/sceKernelGetSystemTimeLow__Fv.c"
 SECOND = "prodg2953"
 SONY = "sdk991111"
 DIVPAD = "sdk-divpad"
@@ -389,7 +389,7 @@ class CFlagsTests(unittest.TestCase):
         self.assertNotEqual(pin["tools"]["cc1_sha256"],
                             profile["extra_compilers"][SONY]["tools"]["cc1_sha256"])
         self.assertEqual(
-            cflags.load()["nonmatching/boot/__ieee754_expf.c"].compiler, DIVPAD)
+            cflags.load()["src/boot/__ieee754_expf.c"].compiler, DIVPAD)
 
     def test_a_pin_whose_patch_moved_no_longer_describes_its_binary(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
