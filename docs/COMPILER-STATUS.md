@@ -21,13 +21,13 @@ retail raw `PT_LOAD` bytes and program header
 ([combined witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)); the
 generated `config/boot/witness_boundaries.tsv` catalogue lists each linked body
 with its compiled extent, its following zero alignment and the kind of control
-transfer it ends in. One hundred and twenty-one reviewed placements (5,480 bytes,
+transfer it ends in. One hundred and fifty-one reviewed placements (7,784 bytes,
 starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
 rebuilds all 503 objects from authored C and checks that full link in one run;
-its machine-readable report accepts 121 boot-only placements (5,480 bytes) after
+its machine-readable report accepts 151 boot-only placements (7,784 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
 `nop`. An [isolated RAC5 short-loop threshold trial](COMPILER-LOOP-TRIAL.md)

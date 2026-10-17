@@ -1,4 +1,3 @@
-/* Candidate only: the full-program build and compiler profile are not qualified. */
 typedef struct SND_Positional {
     int field00;
     char _pad04[0x04];

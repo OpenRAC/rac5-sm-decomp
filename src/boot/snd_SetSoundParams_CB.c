@@ -1,4 +1,4 @@
-/* snd_SetSoundParams_CB 0x01E950E8..0x01E95170 */
+/* snd_SetSoundParams_CB 0x01E950E8..0x01E95130 */
 extern void snd_SendIOPCommandNoWait(int command, int length, void *data,
                                      int arg3, int arg4);
 
