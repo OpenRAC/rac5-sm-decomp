@@ -10,6 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
+import boot_c_campaign  # noqa: E402
 from bytematch_estimate import report  # noqa: E402
 
 
@@ -21,11 +22,13 @@ class ByteMatchEstimateTests(unittest.TestCase):
     def test_report_counts_verified_c_once_and_labels_estimate(self) -> None:
         result = report(self.status, self.shape)
         self.assertEqual(result["version"], 2)
-        self.assertEqual(result["measures"]["matched_code"], "572")
+        accepted = sum(item.end - item.start
+                       for item in boot_c_campaign.accepted_replacements())
+        self.assertEqual(result["measures"]["matched_code"], str(accepted + 556))
         self.assertEqual(result["measures"]["total_code"], "6418204")
         self.assertEqual(result["measures"]["total_units"], 3)
         self.assertEqual([u["measures"]["matched_code"] for u in result["units"]],
-                         ["16", "476", "80"])
+                         [str(accepted), "476", "80"])
         self.assertIn("optimistic", result["units"][2]["name"])
         self.assertFalse(self.status["bytematch_objdiff_ready"])
 

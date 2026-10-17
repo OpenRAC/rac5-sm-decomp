@@ -63,8 +63,9 @@ python tools/boot_c_witness.py baserom/SCUS_976.15 \
 ```
 
 This historical one-object witness alone was provisional. The later
-[full boot gate](BOOT-TRIAL-GATE.md) qualifies the 16-byte placement under a
-limited boot-only profile and counts one match. The direct SN-linker file
+[full boot gate](BOOT-TRIAL-GATE.md) qualifies the reviewed boot placements
+under a limited boot-only profile and counts 31 matches (1,064 bytes), starting
+with this first 16-byte body. The direct SN-linker file
 differs in section headers and non-loaded metadata, while the later packaging
 gate reconstructs the complete ELF exactly. The original
 compiler identity, complete runtime comparison and game-wide catalogue remain
@@ -149,9 +150,10 @@ smoke test is documented separately; it does not establish full gameplay.
 [RAC5 short-loop compiler trial](COMPILER-LOOP-TRIAL.md); the earlier sixteen
 retain their prior object hashes under that trial.
 
-The integration still does **not** accept all twenty functions. Only
-`MEMCARD_Busy__Fv` passes the boot-only acceptance review; the other nineteen
-remain provisional. Complete ELF metadata, runtime behavior and the game-wide
+The integration does **not** accept a body merely by linking it. Acceptance
+follows the [promotion review](BOOT-PROMOTION.md): 31 reviewed placements
+(1,064 bytes) are counted, and every other linked body remains provisional.
+Complete ELF metadata, runtime behavior and the game-wide
 catalogue remain open. The non-code sections still come from the pinned game
 image; this does not constitute a reconstructed game build or ByteMatch
 progress.

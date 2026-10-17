@@ -1,10 +1,41 @@
 {
   "id": "rac5-boot-gnu-ee-loop-six-trial-20261015",
+  "accepted_sources": [
+    "src/boot/CAMERA_SetFov__Ff.c",
+    "src/boot/GetCenterX__17HUD_BoundingBox16.c",
+    "src/boot/MCPHUD_UpdateViewTransform__FUiP11tHUD_OFFSET.c",
+    "src/boot/MCPI_CreateMsgBoxes__Fv.c",
+    "src/boot/MCPI_PowerLock__Fv.c",
+    "src/boot/MCPI_PowerUnlock__Fv.c",
+    "src/boot/MCP_DrawRectangleSimpleArea__FssssUi.c",
+    "src/boot/MCP_GetFontPage__FUc.c",
+    "src/boot/MEMCARD_GetHardcoreModeBit__FUi.c",
+    "src/boot/MEMCARD_GetSlotHeaderDetail__FUi.c",
+    "src/boot/MEMCARD_InitStateNode__FP19tMEMCARD_STATE_NODE.c",
+    "src/boot/MEMCARD_Test__Fi.c",
+    "src/boot/UMD_Deinit__Fv.c",
+    "src/boot/UMD_Init__Fv.c",
+    "src/boot/UMD_checkState__Fb.c",
+    "src/boot/_$_8HIGMutex.c",
+    "src/boot/_GLOBAL_$D$CORE_mcpclient.cppmQeaaa.c",
+    "src/boot/_GLOBAL_$I$CORE_camera.cppyGcaaa.c",
+    "src/boot/_GLOBAL_$I$CORE_cmdline.cpptJcaaa.c",
+    "src/boot/_GLOBAL_$I$CORE_heroSkin.cppMzcaaa.c",
+    "src/boot/_GLOBAL_$I$CORE_mcpclient.cppgvcaaa.c",
+    "src/boot/_GLOBAL_$I$CORE_umd.cppOWbaaa.c",
+    "src/boot/_GLOBAL_$I$MCP_mcp.cppbFbaaa.c",
+    "src/boot/_GLOBAL_$I$MCP_mcpfont.cpp9Icaaa.c",
+    "src/boot/_GLOBAL_$I$MCP_mcpupdate.cppcKbaaa.c",
+    "src/boot/_GLOBAL_$I$MCP_mcputil.cpplxcaaa.c",
+    "src/boot/_GLOBAL_$I$SYSTEMS_memcard_ps2.cppBRcaaa.c",
+    "src/boot/__8HIGMutex.c",
+    "src/boot/__t5Queue2Z14tHUDPROMQ_NODEUi8.c",
+    "src/boot/__t5Stack2Z19tMEMCARD_STATE_NODEUi8.c",
+    "src/boot/memcard_busy.c"
+  ],
   "status": "qualified_boot_only",
-  "accepted_function": "MEMCARD_Busy__Fv",
-  "accepted_source": "src/boot/memcard_busy.c",
   "scope": "SCUS_976.15 boot only",
-  "qualification": "one reviewed boot placement under exact full-ELF packaging gate; loaded non-code data originates from pinned retail boot; original compiler identity remains unknown",
+  "qualification": "31 reviewed boot placements under the exact full-ELF packaging gate; loaded non-code data originates from pinned retail boot; original compiler identity remains unknown",
   "source": {
     "mips_c_before_patch_sha256": "c76c0bec5b56c198381ab2a4fc60c161a4287e8312d7d1fdea3d1e6a0e1af614",
     "mips_h_sha256": "52f470a043ffbba535582e2f08a8353d23bbf6521b1b63e241847f464891d9e6",
@@ -27,5 +58,50 @@
     ],
     "as": []
   },
-  "expected_objects": 406
+  "extra_compilers": {
+    "prodg2953": {
+      "id": "rac5-boot-sn-prodg-3.01-ee-gcc2953-2.95.3",
+      "provenance": "SN Systems 'ProDG for PlayStation 2' 3.01 SDK distribution (github.com/AngheloAlf/SN-Systems-ProDG_for_PS2_3.01, commit d74f6fe); the driver reports GCC 2.95.3. Pinned per source, never rebuilt here and never committed.",
+      "status": "measured per source; boot-only",
+      "host": "windows",
+      "stage": "build/boot-prodg-stage",
+      "tools": {
+        "driver": "ee-gcc2953.exe",
+        "driver_sha256": "522d28f9d74ddfce89568437156c8ee323c806de525d99907f698050dee8d81e",
+        "libexec": "../lib/gcc-lib/ee/2.95.3",
+        "cpp": "cpp.exe",
+        "cpp_sha256": "b9c50aa66f9cf5dbd80b2affe9874ec7674b7328965c629476f6ad7c77943154",
+        "cc1": "cc1.exe",
+        "cc1_sha256": "0393bcd31f91a6b9f0255db97f1cc99eba78ee8fc003e9a04dfabed1ae1d522e"
+      },
+      "flags": {
+        "driver": [
+          "-S"
+        ],
+        "as": []
+      }
+    },
+    "sdk991111": {
+      "id": "rac5-boot-sony-ee-gcc-2.9-ee-991111-01",
+      "provenance": "Sony EE-GCC 2.9-ee-991111-01, the EE compiler of the PlayStation 2 SDK, rebuilt unmodified from the public snapshot github.com/SSXModding/ps2-ee-toolchain at b595ded by RAC2's tools/compiler/sdk/build.py (32-bit host build; its bison-grammar patch only lets an old grammar parse under a modern bison and changes no generated code). The driver reports 2.9-ee-991111. Pinned per source, never rebuilt here and never committed.",
+      "status": "measured per source; boot-only",
+      "host": "linux",
+      "tools": {
+        "driver": "xgcc",
+        "driver_sha256": "4c8149cc96021253ac9863d670ada372e29f71af80ae91934c195cc4c6a3b2d6",
+        "libexec": ".",
+        "cpp": "cpp",
+        "cpp_sha256": "b73ad1bcfcdbd8826d231ec771471e92a6197adf2fc0e4674c3e5e1834cd2807",
+        "cc1": "cc1",
+        "cc1_sha256": "1305725c3b7e94410cb0b3ba85b64a990e94652a87db24631d6f9fa26edc5eb1"
+      },
+      "flags": {
+        "driver": [
+          "-S"
+        ],
+        "as": []
+      }
+    }
+  },
+  "expected_objects": 416
 }

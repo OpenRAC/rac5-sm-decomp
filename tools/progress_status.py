@@ -16,7 +16,8 @@ from collections import defaultdict
 from pathlib import Path
 
 from boot_assembly import TEXT_SIZE
-from boot_c_campaign import ACCEPTED_SOURCES, REPLACEMENTS, source_path
+from boot_c_campaign import accepted_replacements, source_path
+from boot_trial_gate import accepted_matches
 from level_context_translation import check_summary as check_context_summary
 from level_role_graph import check_summary as check_role_summary
 from level_program_gate import MEASURED_LOADS
@@ -44,7 +45,6 @@ SWITCH_BODY = ROOT / "config/levels/switch_body_summary.json"
 CONTEXT_TRANSLATION = ROOT / "config/levels/context_translation_summary.json"
 ROLE_GRAPH = ROOT / "config/levels/role_graph_summary.json"
 TARGET = ROOT / "config/target.json"
-ACCEPTED_SYMBOL = "MEMCARD_Busy__Fv"
 
 
 def digest(path: Path) -> str:
@@ -64,13 +64,14 @@ def records(path: Path) -> list[dict[str, str]]:
 
 def public_evidence(boot: dict[str, object], level: dict[str, object],
                     level_c: dict[str, object]) -> dict[str, object]:
+    matches = accepted_matches()
     if (boot.get("status") != "passed_boot_only"
             or boot.get("raw_load_and_header_exact") is not True
             or boot.get("whole_elf_exact") is not True
-            or boot.get("counted_matches") != 1
-            or boot.get("counted_bytes") != 16
-            or boot.get("accepted_functions") != [ACCEPTED_SYMBOL]):
-        raise ValueError("private boot gate has no qualifying single-function result")
+            or boot.get("counted_matches") != len(matches)
+            or boot.get("counted_bytes") != sum(row["body_bytes"] for row in matches)
+            or boot.get("accepted_functions") != [row["symbol"] for row in matches]):
+        raise ValueError("private boot gate has no qualifying accepted result")
     if (level.get("status") != "passed_assembly_only"
             or level.get("counted_matches") != 0
             or not isinstance(level.get("modules"), list)):
@@ -117,6 +118,10 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
     profile = json.loads(PROFILE.read_text(encoding="utf-8"))
     level_profile = json.loads(LEVEL_PROFILE.read_text(encoding="utf-8"))
     boot = evidence["boot"]
+    accepted = accepted_replacements()
+    matches = accepted_matches()
+    accepted_paths = sorted(source_path(item.name).relative_to(ROOT).as_posix()
+                            for item in accepted)
     if (boot["status"] != "passed_boot_only"
             or boot["raw_load_and_header_exact"] is not True
             or boot["whole_elf_exact"] is not True
@@ -127,16 +132,15 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             or boot["raw_load_size"] != 809872
             or boot["raw_load_sha256"] !=
             "4f4fb8fe218317dbd7a2f65ca4e64934d743d03e673dbd75220937cfc6fd47fb"
-            or boot["counted_matches"] != 1 or boot["counted_bytes"] != 16
-            or boot["accepted_functions"] != [ACCEPTED_SYMBOL]
+            or boot["counted_matches"] != len(matches)
+            or boot["counted_bytes"] != sum(row["body_bytes"] for row in matches)
+            or boot["accepted_functions"] != [row["symbol"] for row in matches]
             or profile["status"] != "qualified_boot_only"
-            or ACCEPTED_SOURCES != frozenset({"memcard_busy"})):
+            or profile["accepted_sources"] != accepted_paths):
         raise ValueError("boot evidence differs from pinned qualified scope")
-    accepted = next(item for item in REPLACEMENTS if item.name == "memcard_busy")
-    source = source_path(accepted.name)
-    if (normalized_source_digest(source) != accepted.source_sha256
-            or accepted.end - accepted.start != 16):
-        raise ValueError("accepted C source or boundary changed")
+    for owner in accepted:
+        if normalized_source_digest(source_path(owner.name)) != owner.source_sha256:
+            raise ValueError("accepted C source changed")
     level_c = evidence["level_c"]
     level_source = ROOT / level_profile["accepted"]["source"]
     additional = level_profile["additional_accepted"]
@@ -292,9 +296,11 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
         "status": "partial_verified",
         "overall_percent": None,
         "bytematch_objdiff_ready": False,
-        "boot": {"code_bytes": TEXT_SIZE, "accepted_c_bytes": 16,
-                 "accepted_functions": [ACCEPTED_SYMBOL],
-                 "scoped_code_percent": round(100 * 16 / TEXT_SIZE, 8)},
+        "boot": {"code_bytes": TEXT_SIZE,
+                 "accepted_c_bytes": boot["counted_bytes"],
+                 "accepted_functions": boot["accepted_functions"],
+                 "scoped_code_percent":
+                     round(100 * boot["counted_bytes"] / TEXT_SIZE, 8)},
         "levels": {"placements": rows,
                    "candidate_code_bytes_by_placement": sum(
                        row["candidate_code_bytes_by_placement"] for row in rows),
@@ -429,7 +435,9 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "per_source_cflags": digest(CFLAGS),
             "level_code_catalogue": digest(CODE_CATALOGUE),
             "level_module_catalogue": digest(MODULE_CATALOGUE),
-            "accepted_c_source_lf": accepted.source_sha256,
+            "accepted_boot_c_sources_lf": hashlib.sha256(json.dumps(
+                {item.name: item.source_sha256 for item in accepted},
+                sort_keys=True).encode()).hexdigest(),
             "level_compiler_profile": digest(LEVEL_PROFILE),
             "accepted_level_c_source_lf": level_profile["accepted"]["source_sha256_lf"],
             "accepted_shared_buffer_c_source_lf":
@@ -469,8 +477,10 @@ def main() -> None:
         OUTPUT.write_text(content, encoding="utf-8", newline="\n")
     elif OUTPUT.read_text(encoding="utf-8") != content:
         raise ValueError("progress snapshot is stale; rerun private gates and --write")
-    print("scoped progress: boot 16/498900 C bytes; frontend 476 bytes; "
-          "two shared level C functions (8+72 bytes) at 20 placements; "
+    boot = json.loads(content)["boot"]
+    print(f"scoped progress: boot {boot['accepted_c_bytes']}/{TEXT_SIZE} C bytes "
+          f"in {len(boot['accepted_functions'])} accepted functions; frontend 476 "
+          "bytes; two shared level C functions (8+72 bytes) at 20 placements; "
           "no qualified game-wide percentage")
 
 

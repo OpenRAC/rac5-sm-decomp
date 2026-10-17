@@ -87,8 +87,12 @@ def compile_sources(profile: dict, sources: list[dict], cpp: Path, cc1: Path,
             output / f"{stem}.i")
         require_c_source((output / f"{stem}.i").read_text(encoding="utf-8"),
                          f"{row['source']} preprocessed input")
-        run([str(cc1.resolve()), *flags["cc1"],
-             *cflags.for_source(per_source, source), f"{stem}.i", "-o", f"{stem}.s"],
+        entry = cflags.for_source(per_source, source)
+        if not entry.pinned:
+            raise ValueError(f"level C source is routed to {entry.compiler}, which "
+                             f"the level trial does not pin: {row['source']}")
+        run([str(cc1.resolve()), *flags["cc1"], *entry.flags,
+             f"{stem}.i", "-o", f"{stem}.s"],
             output, output / f"{stem}.cc1.log")
         run([str(gnu_as.resolve()), "-o", f"{stem}.o", f"{stem}.s"],
             output, output / f"{stem}.as.log")

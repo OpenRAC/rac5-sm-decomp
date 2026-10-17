@@ -53,6 +53,7 @@ void f(void) { char brace = '}'; }
             def fake_cpp(command, cwd, log, stdout=None):
                 stdout.write_text('void f(void) { __asm__("nop"); }\n')
             with patch.object(boot, "check_profile", return_value=profile), \
+                 patch.object(boot.cflags, "load", return_value={}), \
                  patch.object(boot, "REPLACEMENTS", (item,)), \
                  patch.object(boot, "source_path", return_value=source), \
                  patch.object(boot, "run", side_effect=fake_cpp) as run:

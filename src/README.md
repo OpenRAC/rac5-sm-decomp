@@ -1,9 +1,13 @@
 # Authored matching source
 
-`boot/memcard_busy.c` is the first boot-only accepted C definition. Its pinned
-compiler, 16-byte body and complete boot load image are checked by
-`tools/boot_trial_gate.py` with a lawful local ELF. See
-`docs/BOOT-MATCH-SCOPE.md` for the exact acceptance scope and limitations.
+`boot/` holds the thirty-one accepted boot C definitions (1,064 bytes).
+`boot/memcard_busy.c` was the first; thirty further reviewed bodies were promoted
+from `nonmatching/boot/` in one documented review of their boundaries, symbols,
+callers and behaviour. Their pinned compiler, byte extents and complete boot load
+image are checked by `tools/boot_trial_gate.py` with a lawful local ELF. The
+accepted set is enumerated in `tools/boot_c_campaign.py` and pinned in
+`config/boot/compiler_trial.json`. See `docs/BOOT-MATCH-SCOPE.md` for the exact
+acceptance scope and limitations.
 Other candidates remain in `nonmatching/` until independently reviewed.
 `levels/frontend/func_00002F80.c` reconstructs one 476-byte frontend New Game
 initializer. The level C gate checks its complete SNR2 module and measured

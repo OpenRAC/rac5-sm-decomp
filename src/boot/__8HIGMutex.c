@@ -11,11 +11,11 @@ typedef struct {
 
 typedef struct {
     int semaphore;
-} tHIGMutex;
+} HIGMutex;
 
 extern int CreateSema(tSemaParam *param);
 
-void *__8HIGMutex(tHIGMutex *self) {
+void *__8HIGMutex(HIGMutex *self) {
     tSemaParam param;
     param.field08 = 1;
     param.field04 = 1;

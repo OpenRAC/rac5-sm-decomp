@@ -12,6 +12,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from compile_boot_trial import ROOT, require_private_output  # noqa: E402
+import boot_c_campaign  # noqa: E402
 import boot_trial_gate  # noqa: E402
 import compile_boot_trial  # noqa: E402
 from boot_c_campaign import source_path  # noqa: E402
@@ -19,13 +20,18 @@ from boot_c_campaign import source_path  # noqa: E402
 
 class CompileBootTrialTests(unittest.TestCase):
     def test_assembly_fallback_or_partial_owner_cannot_keep_c_acceptance(self) -> None:
-        rows = boot_trial_gate.REPLACEMENTS
-        for changed in (
-            tuple(row for row in rows if row.name != "memcard_busy"),
-            tuple(replace(row, end=row.end - 8) if row.name == "memcard_busy" else row for row in rows),
-        ):
-            with self.subTest(changed=len(changed)), patch.object(boot_trial_gate, "REPLACEMENTS", changed):
-                with self.assertRaisesRegex(ValueError, "complete C substitution"):
+        rows = boot_c_campaign.REPLACEMENTS
+        cases = (
+            (tuple(row for row in rows if row.name != "memcard_busy"),
+             "no campaign owner"),
+            (tuple(replace(row, end=row.end - 8) if row.name == "memcard_busy" else row
+                   for row in rows),
+             "complete C substitution"),
+        )
+        for changed, message in cases:
+            with self.subTest(changed=len(changed)), \
+                 patch.object(boot_c_campaign, "REPLACEMENTS", changed):
+                with self.assertRaisesRegex(ValueError, message):
                     boot_trial_gate.accepted_body_bytes()
 
     def test_failed_recompile_clears_a_previous_accepted_report(self) -> None:
@@ -67,10 +73,54 @@ class CompileBootTrialTests(unittest.TestCase):
                          ROOT / "src/boot/memcard_busy.c")
         self.assertEqual(source_path("fog_preupdate"),
                          ROOT / "nonmatching/boot/fog_preupdate.c")
-        self.assertEqual(boot_trial_gate.accepted_body_bytes(), 16)
-        with patch.object(boot_trial_gate, "ACCEPTED_SOURCES", frozenset()):
-            with self.assertRaisesRegex(ValueError, "scope changed"):
+        accepted = boot_c_campaign.accepted_replacements()
+        self.assertEqual({item.name for item in accepted},
+                         set(boot_c_campaign.ACCEPTED_SOURCES))
+        for item in accepted:
+            self.assertEqual(source_path(item.name),
+                             ROOT / "src/boot" / f"{item.name}.c")
+            self.assertFalse((ROOT / "nonmatching/boot" / f"{item.name}.c").exists())
+        # Counted bytes are the sum of the accepted owners' own placements, and
+        # every accepted owner has exactly one catalogued body filling it.
+        matches = boot_trial_gate.accepted_matches()
+        self.assertEqual(len(matches), len(accepted))
+        self.assertEqual([row["owner"] for row in matches],
+                         [item.name for item in accepted])
+        self.assertEqual(boot_trial_gate.accepted_body_bytes(),
+                         sum(item.end - item.start for item in accepted))
+
+    def test_an_accepted_name_without_a_campaign_owner_keeps_no_credit(self) -> None:
+        with patch.object(boot_c_campaign, "ACCEPTED_SOURCES",
+                          boot_c_campaign.ACCEPTED_SOURCES | {"not_a_body"}):
+            with self.assertRaisesRegex(ValueError, "no campaign owner"):
                 boot_trial_gate.accepted_body_bytes()
+
+    def test_a_promoted_source_cannot_stay_staged_in_nonmatching(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "src/boot").mkdir(parents=True)
+            (root / "nonmatching/boot").mkdir(parents=True)
+            for folder in ("src/boot", "nonmatching/boot"):
+                (root / folder / "unit.c").write_text("int f(void) { return 0; }\n")
+            owner = boot_c_campaign.Replacement("unit", 0x1000, 0x1008, "", "")
+            with patch.object(boot_c_campaign, "ROOT", root), \
+                 patch.object(boot_c_campaign, "REPLACEMENTS", (owner,)), \
+                 patch.object(boot_c_campaign, "ACCEPTED_SOURCES", frozenset({"unit"})):
+                with self.assertRaisesRegex(ValueError, "still staged"):
+                    boot_c_campaign.accepted_replacements()
+
+    def test_an_accepted_body_must_fill_its_whole_placement(self) -> None:
+        rows = boot_trial_gate.catalogue_rows()
+        index = next(i for i, row in enumerate(rows)
+                     if row["symbol"] == "MEMCARD_Busy__Fv")
+        for field, value in (("zero_padding_bytes", 4), ("exit", "call"),
+                             ("body_end", rows[index]["start"] + 8)):
+            changed = [dict(row) for row in rows]
+            changed[index][field] = value
+            with self.subTest(field=field), \
+                 patch.object(boot_trial_gate, "catalogue_rows", return_value=changed):
+                with self.assertRaisesRegex(ValueError, "complete C substitution"):
+                    boot_trial_gate.accepted_matches()
 
     def test_rejects_tracked_output_and_accepts_ignored_build(self) -> None:
         with self.assertRaisesRegex(ValueError, "ignored build"):
