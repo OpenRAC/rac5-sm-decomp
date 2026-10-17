@@ -12,7 +12,7 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **23,004 boot `.text` bytes in 400 C bodies**
+The current catalogue records **29,044 boot `.text` bytes in 475 C bodies**
 across several code areas, built by the locally reconstructed GNU EE chain and,
 for ten of them, by one of two further pinned compilers
 ([witness evidence](COMPILER-WITNESSES.md)).
@@ -25,7 +25,7 @@ transfer it ends in. Ninety-one reviewed placements (3,528 bytes, starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
-rebuilds all 455 objects from authored C and checks that full link in one run;
+rebuilds all 475 objects from authored C and checks that full link in one run;
 its machine-readable report accepts 91 boot-only placements (3,528 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
@@ -332,7 +332,7 @@ sections object by object, the SDK assembler moves 19 of 679 away from the
 pinned chain's bytes and Ps2EeAs 2.0 moves 313 of 675 — neither can replace the
 pinned `as` for the campaign. The pinned chain itself is untouched: a source
 with no entry is assembled exactly as before, all 416 pre-existing objects
-compile to their pinned SHA-256, and the requalified gate links 455 of them into
+compile to their pinned SHA-256, and the requalified gate links 475 of them into
 the same complete 856,120-byte boot.
 
 **A second bench on the same selector.** Three libm bodies (`__kernel_cosf`
@@ -380,6 +380,29 @@ called it, and an absolute definition leaves the linked image without a function
 symbol at that address — the state the 55 uncatalogued spans are in. The line is
 gone, since the compiled body now defines the symbol; the catalogue gained both
 bodies (361 → 363 witness bodies) and the uncatalogued count stayed at 55.
+
+## The backlog, and the end of the uncatalogued spans
+
+Twenty bodies that earlier waves had verified were never integrated — the kit
+carried them, the campaign did not. They are now: `MCP_Update`,
+`MCP_UpdateCameraCB`, `APP_Init`, three `SYSTEM_*` matrix queries, three
+`scee::Psp2Gu` setters, four `VEC_*` helpers, `__pack_f`, `__fpcmp_parts_d`,
+`copysign`, `_lo0bits`, `dlib_displist_base_offset_mscal`, `fiprintf` and
+`sprintf`. With them the catalogue grew from 400 to **475 bodies** and from
+23,004 to **29,044 compiled bytes** — the difference is larger than the twenty
+bodies because the same pass made 55 previously invisible spans visible.
+
+That is the same cause the earlier profile recorded as open work: an absolute
+`LINKER_SYMBOLS` entry for a name a compiled body already defines turns that
+symbol into `OBJECT ABS`, and the catalogue no longer sees a linked function at
+the span. The fifty-nine such entries are gone, the objects' own definitions
+take over at the same addresses, **no span is uncatalogued**, and the complete
+ELF is unchanged byte for byte.
+
+The rule is now mechanical in the private kit: a resolver reads the exported
+objects' undefined symbols directly — never `ld.exe`'s demangled diagnostics,
+which are what made the RTTI batch look impossible — refuses to define a name a
+compiled body owns, and removes an absolute line a body has taken over.
 
 ## Changing a compiler profile
 
@@ -472,8 +495,8 @@ body inside its next-label interval, which the catalogue records as an
 uncatalogued span rather than as part of the body.
 
 A span whose compiled object exposes no function symbol in the linked image is
-reported by the catalogue tool and left uncatalogued rather than counted; 55 of
-the 455 spans are in that state today, and the complete-program gate still
+reported by the catalogue tool and left uncatalogued rather than counted. No span
+is in that state today, and the complete-program gate still
 checks their bytes. They are the owners whose name is also listed in
 `LINKER_SYMBOLS` (`tools/boot_c_campaign.py`): the linker script definition is
 absolute, so the linked image keeps the address but exposes no function symbol

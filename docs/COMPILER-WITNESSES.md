@@ -73,10 +73,10 @@ only the reviewed placements in the explicit gate set are counted.
 ## Campaign expansion
 
 A later authoring campaign grew the same mechanism from twenty bodies to
-**455 compiler-produced C objects**, after hybrid instruction-assembly experiments
-were excluded. The catalogue identifies 400 global function bodies covering 23,004
-code bytes plus 724 zero alignment bytes; 55 object spans lack usable global
-function extents and remain uncatalogued. Objects can contain multiple bodies.
+**475 compiler-produced C objects**, after hybrid instruction-assembly experiments
+were excluded. The catalogue identifies 475 global function bodies covering 29,044
+code bytes plus 876 zero alignment bytes; every object span expands a global
+function symbol. Objects can contain multiple bodies.
 One body,
 `dlib_displist_direct_end__FP13DLIB_DISPLIST`, carries the per-source option
 `-mno-check-zero-division` recorded in
