@@ -13,7 +13,7 @@ only counts as matched after a byte-identical build. This repository does **not*
 yet have a general qualified compiler or a complete retail function catalogue.
 The [ByteMatch dashboard](https://bytematch.dev/OpenRAC/rac5-sm-decomp) uses a
 **provisional optimistic denominator** for level code; its displayed percentage
-is an estimate, not a qualified game-wide match rate. 263 reviewed boot functions, two
+is an estimate, not a qualified game-wide match rate. 267 reviewed boot functions, two
 shared level functions and one frontend function have narrowly scoped private
 whole-program gates.
 
@@ -62,7 +62,7 @@ zero alignment bytes. Every compiled object exposes a global function symbol at
 its address, so none is left uncatalogued. Each catalogued
 body records its compiled extent and observed terminal transfer in the generated
 [`config/boot/witness_boundaries.tsv`](config/boot/witness_boundaries.tsv)
-catalogue. Two hundred and sixty-three reviewed placements live in `src/boot/`;
+catalogue. Two hundred and sixty-seven reviewed placements live in `src/boot/`;
 the others
 remain provisional in `nonmatching/`. The
 [boot-only acceptance scope](docs/BOOT-MATCH-SCOPE.md) explains why exact loaded
@@ -73,7 +73,7 @@ private and their original intervals remain in the assembly baseline. Declaratio
 labels that only name an ELF symbol are allowed; they emit no instructions.
 The [boot gate](docs/BOOT-TRIAL-GATE.md) rebuilds every C object from pinned
 local tools, verifies the entire load image in one private run, and counts
-**263 boot-only matches** after a successful gate.
+**267 boot-only matches** after a successful gate.
 The [VU overlay audit](docs/DVP-OVERLAYS.md) also reproduces the boot's 31
 non-loaded DVP sections privately. The new
 [ELF packaging gate](docs/BOOT-TRIAL-GATE.md) reconstructs the complete

@@ -31,8 +31,12 @@ OUTPUT = ROOT / "build/boot-c-campaign"
 # the counted scope and
 # must be accompanied by a fresh complete-boot gate receipt and profile update.
 ACCEPTED_SOURCES = frozenset({
+    "MEMCARD_Idle__Fv",
     "memcard_busy",
+    "MEMCARD_GetDanSkinUnlocked__Fv",
     "MEMCARD_GetHardcoreModeBit__FUi",
+    "MEMCARD_SetWriteHeaderOnlyMode__Fb",
+    "MEMCARD_GetWriteHeaderOnlyModeStatus__Fv",
     "MEMCARD_GetSlotHeaderDetail__FUi",
     "MEMCARD_InitStateNode__FP19tMEMCARD_STATE_NODE",
     "MEMCARD_Test__Fi",
