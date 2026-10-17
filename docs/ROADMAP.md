@@ -45,7 +45,7 @@
    [boot C-object integration witness](BOOT-C-WITNESS.md) preserves all
    raw retail `PT_LOAD` bytes and header. A combined trial now preserves them
    initially with twenty C functions linked together (`docs/BOOT-C-WITNESS.md`). The
-   current pure-C campaign recompiles 418 objects and catalogues 363 body extents;
+   current pure-C campaign recompiles 435 objects and catalogues 380 body extents;
    inline-assembly experiments are excluded. That
    evidence supports one narrow boot placement, not a general compiler or
    full runtime behavior. The later packaging gate rebuilds the entire ELF
