@@ -156,3 +156,16 @@ nonmatching/boot/__ieee754_fmodf.c  sdk-divpad as=ee-sdk -O2 -G0
 # final link takes retail data from boot_data.o and discards object .rodata.
 nonmatching/boot/__ieee754_logf.c   sdk-divpad as=ee-sdk -O2 -G0
 nonmatching/boot/__kernel_sin.c     sdk991111 as=ee-sdk -O2 -G0
+
+# Route Q, fifth batch: the SDK library and libdma bodies whose sources live in
+# the lombyte-upstream SDK tree. Each is byte-exact under the pinned Sony
+# compiler; the pinned chain reproduces only part of them.
+nonmatching/boot/InitAlarm.c    sdk991111 -O2 -G0
+nonmatching/boot/sceCdGetError.c    sdk991111 -O2 -G0
+nonmatching/boot/sceDmaPause.c    sdk991111 -O2 -G0
+nonmatching/boot/sceDmaReset.c    sdk991111 -O2 -G0
+nonmatching/boot/sceDmaSend.c    sdk991111 -O2 -G0
+nonmatching/boot/sceGsPutDrawEnv.c    sdk991111 -O2 -G0
+nonmatching/boot/sceGsResetGraph.c    sdk991111 -O2 -G0
+nonmatching/boot/sceGszbufaddr.c    sdk991111 -O2 -G0
+nonmatching/boot/sceScfGetTimeZone.c    sdk991111 -O2 -G0

@@ -12,7 +12,7 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **30,316 boot `.text` bytes in 477 C bodies**
+The current catalogue records **30,792 boot `.text` bytes in 484 C bodies**
 across several code areas, built by the locally reconstructed GNU EE chain and,
 for ten of them, by one of two further pinned compilers
 ([witness evidence](COMPILER-WITNESSES.md)).
@@ -26,7 +26,7 @@ starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
-rebuilds all 477 objects from authored C and checks that full link in one run;
+rebuilds all 484 objects from authored C and checks that full link in one run;
 its machine-readable report accepts 121 boot-only placements (5,480 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
@@ -333,7 +333,7 @@ sections object by object, the SDK assembler moves 19 of 679 away from the
 pinned chain's bytes and Ps2EeAs 2.0 moves 313 of 675 — neither can replace the
 pinned `as` for the campaign. The pinned chain itself is untouched: a source
 with no entry is assembled exactly as before, all 416 pre-existing objects
-compile to their pinned SHA-256, and the requalified gate links 477 of them into
+compile to their pinned SHA-256, and the requalified gate links 484 of them into
 the same complete 856,120-byte boot.
 
 **A second bench on the same selector.** Three libm bodies (`__kernel_cosf`
