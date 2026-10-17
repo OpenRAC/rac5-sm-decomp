@@ -360,10 +360,8 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
         for item in REPLACEMENTS:
             shutil.copyfile(output / f"{item.name}.o", export / f"{item.name}.o")
         shutil.copyfile(output / "trial_manifest.json", export / "trial_manifest.json")
-    extra_count = sum(len([entry for entry in per_source.values()
-                           if entry.compiler == name]) for name in extras)
-    as_count = sum(len([entry for entry in per_source.values()
-                        if entry.assembler == name]) for name in alt_assemblers)
+    extra_count = sum(row["compiler"] != "pinned" for row in manifest["objects"])
+    as_count = sum(row["assembler"] != "pinned" for row in manifest["objects"])
     print(f"{len(REPLACEMENTS)} byte-identical objects for the pinned boot C "
           f"campaign, {len(ACCEPTED_SOURCES)} accepted under the boot-only "
           f"profile, {extra_count} object(s) from another pinned compiler, "
