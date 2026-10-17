@@ -53,3 +53,12 @@ The original source notice permits use, copying, modification and
 distribution provided that the Sun Microsystems notice is preserved.
 The files in this table are modified for the RAC5 ABI, symbols and pool
 placement; they are not verbatim copies of the upstream translation units.
+
+## Newlib mprec.c (one adapted helper)
+
+`nonmatching/boot/_i2b.c` adapts the `i2b` helper from public
+[Newlib 1.9.0 `newlib/libc/stdlib/mprec.c`](https://github.com/mirror/newlib-cygwin/blob/039e8a3c16964d02838b204b72bfdd4b7529107c/newlib/libc/stdlib/mprec.c).
+The relevant helper body is unchanged between that public release
+and the local research copy. The original David M. Gay / AT&T
+permission notice is retained in the adapted source. RAC5-specific
+structure offsets were checked against the pinned retail boot.

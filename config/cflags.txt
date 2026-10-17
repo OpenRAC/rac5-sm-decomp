@@ -278,3 +278,13 @@ nonmatching/boot/__ieee754_rem_pio2.c    sdk-divpad as=ee-sdk -O2 -G0 -fno-built
 nonmatching/boot/__ieee754_sqrt.c    sdk991111 as=ee-sdk -O2 -G0
 nonmatching/boot/__ieee754_sqrtf.c    sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
 nonmatching/boot/__ieee754_acosf.c    sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
+
+# Wave 11 e4: the already pinned ProDG 3.01 compiler with the already pinned
+# ProDG 2.0 Ps2EeAs reproduces these seven bodies; no new assembler pin.
+nonmatching/boot/_i2b.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/ps2fioChStat.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/ps2fioDclose.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/ps2fioRebootIop.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/ps2fioSync.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/ps2fioUmountPartition.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/ps2fioUnformatDevice.c    prodg2953 as=ps2eeas -O2 -G0

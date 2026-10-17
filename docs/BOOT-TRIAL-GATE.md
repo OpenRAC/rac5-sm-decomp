@@ -14,18 +14,18 @@ by a line feed, so a CRLF checkout turns it into `stray '\' in program` on any
 body with a macro continuation. `.gitattributes` pins `*.c` and `*.h` to LF for
 that reason; a Windows checkout without it cannot reproduce the gate.
 
-The current campaign contains 572 compiler-produced C objects. Its verified
-catalogue records 572 global function bodies (57,404 bytes plus 1,084 zero alignment
+The current campaign contains 579 compiler-produced C objects. Its verified
+catalogue records 579 global function bodies (57,996 bytes plus 1,108 zero alignment
 bytes); no object span is left without a usable global-function extent.
 These counts are distinct from the 263 accepted boot placements (19,048 bytes).
 Per-source compiler and options measured for one file are listed in
 [`config/cflags.txt`](../config/cflags.txt) and applied by the gate; the profile
-keeps its global flags. 127 entries hand their file to another pinned compiler:
-ten to SN ProDG 3.01 `ee-gcc2953`
+keeps its global flags. 134 entries hand their file to another pinned compiler:
+seventeen to SN ProDG 3.01 `ee-gcc2953`
 ([route P](COMPILER-STATUS.md#a-second-pinned-compiler-route-p)), 107 to the
 Sony SDK compiler `2.9-ee-991111`
 ([route Q](COMPILER-STATUS.md#the-sony-sdk-compiler-route-q)) and ten to its
-`div.s`-padded profile; 49 entries also select another pinned assembler.
+`div.s`-padded profile; 56 entries also select another pinned assembler.
 
 Both original and preprocessed C inputs must pass `tools/c_source_policy.py`:
 no instruction assembly, fixed registers or raw instruction words. The standalone
