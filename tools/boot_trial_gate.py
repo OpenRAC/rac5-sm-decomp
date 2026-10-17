@@ -16,7 +16,8 @@ import sys
 from pathlib import Path
 
 from boot_c_campaign import REPLACEMENTS, accepted_replacements
-from boot_promotion_audit import catalogue_rows, input_fingerprint
+from boot_promotion_audit import (catalogue_rows, input_fingerprint,
+                                  verified_linker_alignment)
 from compile_boot_trial import PROFILE, add_extra_arguments, compile_objects
 from elf import inspect_elf
 
@@ -34,8 +35,8 @@ def accepted_matches() -> list[dict]:
     """One catalogued body per accepted source, filling its owned range exactly.
 
     The counted bytes come from each source's owned placement, so an accepted
-    source that covers only a prefix, leaves alignment padding or ends in
-    something other than a normal return keeps no acceptance.
+    source that covers only a prefix or ends in something other than a normal
+    return keeps no acceptance. Verified linker alignment stays uncounted.
     """
     rows = catalogue_rows()
     matches = []
@@ -43,8 +44,7 @@ def accepted_matches() -> list[dict]:
         span = [row for row in rows if owner.start <= row["start"] < owner.end]
         if (len(span) != 1
                 or span[0]["start"] != owner.start
-                or span[0]["body_end"] != owner.end
-                or span[0]["zero_padding_bytes"] != 0
+                or not verified_linker_alignment(span[0], owner.end)
                 or span[0]["exit"] != "jr_ra"):
             raise ValueError("accepted body requires its complete C substitution, "
                              f"not assembly fallback: {owner.name}")

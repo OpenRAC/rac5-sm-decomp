@@ -74,6 +74,20 @@ def catalogue_rows() -> list[dict]:
     return rows
 
 
+def verified_linker_alignment(row: dict, owner_end: int) -> bool:
+    """Permit only the zero word inserted by the campaign's ALIGN(8).
+
+    The generated catalogue separately verifies retail zero bytes and rejects
+    direct control-flow targets in this gap. This predicate never counts the
+    gap as compiled C and does not replace semantic boundary review.
+    """
+    padding = row["zero_padding_bytes"]
+    return (padding in (0, 4)
+            and row["body_end"] + padding == owner_end
+            and row["next_label"] == owner_end
+            and padding == (-row["body_end"]) % 8)
+
+
 def gate_state(gate: dict | None, fingerprint: str,
                candidate_count: int, body_count: int,
                accepted: list[dict]) -> str:
@@ -131,7 +145,7 @@ def audit(gate: dict | None = None) -> dict:
             if (row["body_end"] > owner.end
                     or row["next_label"] != expected_next):
                 reasons.append("body_or_padding_outside_owner")
-            if row["zero_padding_bytes"]:
+            if not verified_linker_alignment(row, owner.end):
                 reasons.append("padding_needs_boundary_review")
             if row["exit"] != "jr_ra":
                 reasons.append("exit_needs_flow_review")

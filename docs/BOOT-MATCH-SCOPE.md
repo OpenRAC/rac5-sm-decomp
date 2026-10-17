@@ -14,8 +14,10 @@ and requalified by the complete private gate at the final commit. The accepted
 scope is therefore **263 boot placements covering 19,048 boot `.text` bytes**,
 listed in `tools/boot_c_campaign.py` and pinned by
 `config/boot/compiler_trial.json`. Each accepted source supplies its whole owned
-range: one catalogued body per owner, no internal alignment padding and a normal
-return, so no accepted byte comes from the retained assembly baseline. This is a
+range: one catalogued body per owner and a normal return. A reviewed body may
+be followed by one linker-generated zero word to align the next owner; that
+word is checked against retail and receives no C credit. No accepted byte comes
+from the retained assembly baseline. This is a
 reviewed placement set, not a complete retail function catalogue.
 
 The project qualifies the [hash-pinned compiler trial](../config/boot/compiler_trial.json)

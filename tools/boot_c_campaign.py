@@ -26,8 +26,9 @@ OUTPUT = ROOT / "build/boot-c-campaign"
 
 # Explicit, enumerated accepted set: one entry per promoted boot definition, in
 # boot address order. A name here is a reviewed placement whose own compiled
-# body fills the owner's range (one definition per function, no padding to the
-# assembly baseline). Adding or removing an entry changes the counted scope and
+# body supplies the complete function; only a verified ALIGN(8) zero word may
+# follow it, and that word earns no C credit. Adding or removing an entry changes
+# the counted scope and
 # must be accompanied by a fresh complete-boot gate receipt and profile update.
 ACCEPTED_SOURCES = frozenset({
     "memcard_busy",
@@ -337,6 +338,20 @@ class Replacement:
     # discards each replacement's .rodata, so such a body is pre-linked alone
     # (see prelink_pool_body) and only its resolved .text joins the campaign.
     pool: int | None = None
+
+
+def object_digest_matches(item: Replacement, observed: str,
+                          profile: dict[str, object]) -> bool:
+    """Accept only measured whole-object hashes, including a pinned SN variant.
+
+    Ps2EeAs has produced two otherwise identical objects for six sources. The
+    second hash differs by one byte in non-loadable `.mdebug`; both still need
+    the complete linked-program comparison before any C can count.
+    """
+    if observed == item.object_sha256:
+        return True
+    alternates = profile.get("object_sha256_alternates", {})
+    return observed in alternates.get(item.name, ())
 
 
 REPLACEMENTS = (
@@ -2637,6 +2652,8 @@ def validate_replacements() -> None:
 
 def check_inputs(objects_dir: Path) -> None:
     validate_replacements()
+    profile = json.loads((ROOT / "config/boot/compiler_trial.json").read_text(
+        encoding="utf-8"))
     for item in REPLACEMENTS:
         source = source_path(item.name)
         normalized = source.read_text(encoding="utf-8").replace("\r\n", "\n")
@@ -2644,7 +2661,8 @@ def check_inputs(objects_dir: Path) -> None:
         if hashlib.sha256(normalized.encode("utf-8")).hexdigest() != item.source_sha256:
             raise ValueError(f"{item.name} source differs from measured trial")
         obj = objects_dir / f"{item.name}.o"
-        if hashlib.sha256(obj.read_bytes()).hexdigest() != item.object_sha256:
+        if not object_digest_matches(
+                item, hashlib.sha256(obj.read_bytes()).hexdigest(), profile):
             raise ValueError(f"{item.name} object differs from measured GNU EE trial")
 
 

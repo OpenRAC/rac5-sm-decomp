@@ -19,6 +19,17 @@ from boot_c_campaign import source_path  # noqa: E402
 
 
 class CompileBootTrialTests(unittest.TestCase):
+    def test_only_measured_sn_debug_variant_is_allowed(self) -> None:
+        profile = json.loads(compile_boot_trial.PROFILE.read_text())
+        owner = next(item for item in boot_c_campaign.REPLACEMENTS
+                     if item.name == "sceKernelGetSystemTimeLow__Fv")
+        self.assertTrue(boot_c_campaign.object_digest_matches(
+            owner, owner.object_sha256, profile))
+        self.assertTrue(boot_c_campaign.object_digest_matches(
+            owner, profile["object_sha256_alternates"][owner.name][0], profile))
+        self.assertFalse(boot_c_campaign.object_digest_matches(
+            owner, "0" * 64, profile))
+
     def test_assembly_fallback_or_partial_owner_cannot_keep_c_acceptance(self) -> None:
         rows = boot_c_campaign.REPLACEMENTS
         cases = (
@@ -80,14 +91,25 @@ class CompileBootTrialTests(unittest.TestCase):
             self.assertEqual(source_path(item.name),
                              ROOT / "src/boot" / f"{item.name}.c")
             self.assertFalse((ROOT / "nonmatching/boot" / f"{item.name}.c").exists())
-        # Counted bytes are the sum of the accepted owners' own placements, and
-        # every accepted owner has exactly one catalogued body filling it.
+        # Counted bytes are compiled bodies only, excluding any linker padding.
         matches = boot_trial_gate.accepted_matches()
         self.assertEqual(len(matches), len(accepted))
         self.assertEqual([row["owner"] for row in matches],
                          [item.name for item in accepted])
         self.assertEqual(boot_trial_gate.accepted_body_bytes(),
-                         sum(item.end - item.start for item in accepted))
+                         sum(row["body_bytes"] for row in matches))
+
+    def test_verified_alignment_is_not_counted_as_c(self) -> None:
+        owner = boot_c_campaign.Replacement("unit", 0x1000, 0x1010, "", "")
+        row = {"symbol": "unit", "start": 0x1000, "body_end": 0x100C,
+               "next_label": 0x1010, "body_bytes": 12,
+               "zero_padding_bytes": 4, "exit": "jr_ra"}
+        with patch.object(boot_trial_gate, "accepted_replacements",
+                          return_value=(owner,)), \
+             patch.object(boot_trial_gate, "catalogue_rows",
+                          return_value=[row]):
+            self.assertEqual(boot_trial_gate.accepted_matches()[0]["body_bytes"], 12)
+            self.assertEqual(boot_trial_gate.accepted_body_bytes(), 12)
 
     def test_an_accepted_name_without_a_campaign_owner_keeps_no_credit(self) -> None:
         with patch.object(boot_c_campaign, "ACCEPTED_SOURCES",

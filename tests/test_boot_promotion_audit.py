@@ -13,6 +13,15 @@ import boot_promotion_audit as promotion  # noqa: E402
 
 
 class BootPromotionAuditTests(unittest.TestCase):
+    def test_only_verified_single_word_linker_gap_is_eligible(self) -> None:
+        row = {"body_end": 0x100C, "next_label": 0x1010,
+               "zero_padding_bytes": 4}
+        self.assertTrue(promotion.verified_linker_alignment(row, 0x1010))
+        self.assertFalse(promotion.verified_linker_alignment(
+            {**row, "zero_padding_bytes": 8}, 0x1014))
+        self.assertFalse(promotion.verified_linker_alignment(
+            {**row, "next_label": 0x1014}, 0x1010))
+
     def synthetic_current_gate(self) -> dict:
         rows = promotion.catalogue_rows()
         accepted = [row for row in rows for owner in promotion.REPLACEMENTS

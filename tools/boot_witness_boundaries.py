@@ -137,6 +137,7 @@ def verify(boot: Path, linked: Path) -> list[tuple[str, int, int, int, str]]:
         if insn.isJumpWithAddress():
             targets.add(insn.getInstrIndexAsVram())
     bounds = label_bounds()
+    label_starts = {start for start, _end in bounds.values()}
     rows: list[tuple[str, int, int, int, str]] = []
     for name, address, size, next_label in linked_bodies(linked):
         body_end = address + size
@@ -156,7 +157,9 @@ def verify(boot: Path, linked: Path) -> list[tuple[str, int, int, int, str]]:
         # boundaries. Record the transfer without inventing callee semantics.
         exit_kind = terminal_kind(terminal)
         padding = words[(body_end - TEXT_START) // 4:(next_label - TEXT_START) // 4]
-        if any(padding) or any(body_end <= target < next_label for target in targets):
+        if (any(padding)
+                or any(body_end <= target < next_label for target in targets)
+                or any(body_end <= label < next_label for label in label_starts)):
             raise ValueError(f"nonzero or targeted alignment after {name}")
         rows.append((name, address, body_end, next_label, exit_kind))
     return rows
