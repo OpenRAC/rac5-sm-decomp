@@ -138,7 +138,7 @@ That selector now exists: `config/cflags.txt` takes `as=NAME` beside the
 compiler selector, and the profile pins the two extra binaries in
 `extra_assemblers` ([route R](COMPILER-STATUS.md#the-assembler-is-a-per-source-choice-too-route-r)).
 Two bodies use it, the 416 pre-existing objects are untouched, and the gate
-links 435 objects into the exact complete boot. The measurements that made it
+links 453 objects into the exact complete boot. The measurements that made it
 necessary: `__pack_d` (304 bytes) is 249/304 under the pinned `as` and 300/300
 under the SDK assembler, `sceKernelGetSystemTimeLow__Fv` (160 bytes) is 155/156
 under the pinned `as` and 160/160 under `Ps2EeAs`; of the 679 objects compared,

@@ -12,7 +12,7 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **20,536 boot `.text` bytes in 383 C bodies**
+The current catalogue records **21,720 boot `.text` bytes in 398 C bodies**
 across several code areas, built by the locally reconstructed GNU EE chain and,
 for ten of them, by one of two further pinned compilers
 ([witness evidence](COMPILER-WITNESSES.md)).
@@ -25,7 +25,7 @@ transfer it ends in. Sixty-one reviewed placements (2,304 bytes, starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
-rebuilds all 438 objects from authored C and checks that full link in one run;
+rebuilds all 453 objects from authored C and checks that full link in one run;
 its machine-readable report accepts 61 boot-only placements (2,304 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
@@ -197,10 +197,23 @@ under `sdk991111 -O2 -G0`, and each scores a fraction of itself under the
 pinned chain. Two more measured exact, `isceSifSendCmd` and
 `sceSifRemoveCmdHandler`, are **not** integrated: a following function entry
 sits inside their interval's alignment padding, and the campaign only claims
-bytes a compiled body owns. The C++ RTTI accessors (`__tf*`) are exact as well
-and stay out for now — their external names are the demangled
-`... type_info node` spellings, which neither the retail symbol table nor the
-campaign's linker symbols carry.
+bytes a compiled body owns.
+
+**A third batch adds the 15 C++ RTTI accessors** (1,184 bytes). They looked
+unintegrable at first: `ld.exe` reports their missing externals as
+`bad_exception type_info node` and `type_info type_info function`, names that
+appear in no symbol table. Those names are **only a diagnostic** — the SN linker
+embeds a GCC 2.9 C++ demangler and prints `__ti13bad_exception` demangled. The
+objects reference ordinary `__ti*`/`__tf*`/`STR_name` names, and the fix is the
+one the model already gives: define those data symbols absolutely. Two rules
+follow from it. Never define absolutely a name a compiled body owns: the symbol
+becomes `OBJECT ABS`, the catalogue no longer sees a linked function at that
+span, and the body silently leaves the count. And `ld.exe` **exits zero without
+writing an ELF** when references are unresolved, so a caller must check the
+output file rather than the return code. `__tf9type_info` also needed one C
+correction: a `(const char *)` literal for its name argument produced `ori`
+where retail has `addiu`, and declaring that name as `extern const char
+STR_name[]` — a real object — fixes it.
 
 Controls for this route:
 
@@ -319,7 +332,7 @@ sections object by object, the SDK assembler moves 19 of 679 away from the
 pinned chain's bytes and Ps2EeAs 2.0 moves 313 of 675 — neither can replace the
 pinned `as` for the campaign. The pinned chain itself is untouched: a source
 with no entry is assembled exactly as before, all 416 pre-existing objects
-compile to their pinned SHA-256, and the requalified gate links 438 of them into
+compile to their pinned SHA-256, and the requalified gate links 453 of them into
 the same complete 856,120-byte boot.
 
 **A second bench on the same selector.** Three libm bodies (`__kernel_cosf`
@@ -439,7 +452,7 @@ uncatalogued span rather than as part of the body.
 
 A span whose compiled object exposes no function symbol in the linked image is
 reported by the catalogue tool and left uncatalogued rather than counted; 55 of
-the 438 spans are in that state today, and the complete-program gate still
+the 453 spans are in that state today, and the complete-program gate still
 checks their bytes. They are the owners whose name is also listed in
 `LINKER_SYMBOLS` (`tools/boot_c_campaign.py`): the linker script definition is
 absolute, so the linked image keeps the address but exposes no function symbol
