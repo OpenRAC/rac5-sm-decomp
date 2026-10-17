@@ -39,7 +39,7 @@ src/boot/dlib_displist_direct_end__FP13DLIB_DISPLIST.c  -mno-check-zero-division
 # object's SHA-256 in tools/boot_c_campaign.py; the same sources without their
 # selector stay byte-inexact, which is this route's negative control.
 nonmatching/boot/ps2fioClose.c        prodg2953 -O2 -G0
-nonmatching/boot/ps2fioDopen.c        prodg2953 -O2 -G0
+src/boot/ps2fioDopen.c        prodg2953 -O2 -G0
 nonmatching/boot/ps2fioGetStat.c      prodg2953 -O2 -G0
 nonmatching/boot/ps2fioFormatDevice.c prodg2953 -O2 -G0
 nonmatching/boot/cdvdfsFreeFS.c       prodg2953 -O2 -G0
@@ -54,7 +54,7 @@ nonmatching/boot/cdvdfsFreeFS.c       prodg2953 -O2 -G0
 nonmatching/boot/sceCdSyncS.c         sdk991111 -O2 -G0
 nonmatching/boot/read.c               sdk991111 -O2 -G0
 nonmatching/boot/write.c              sdk991111 -O2 -G0
-nonmatching/boot/sceSifSetDma.c       sdk991111 -O2 -G0
+src/boot/sceSifSetDma.c       sdk991111 -O2 -G0
 src/boot/dpadd.c              sdk991111 -O2 -G0
 
 # Route R: the two boot bodies whose retail bytes come from another assembler,
@@ -101,7 +101,7 @@ nonmatching/boot/exit.c    sdk991111 -O2 -G0
 src/boot/fptodp.c    sdk991111 -O2 -G0
 src/boot/fptoui.c    sdk991111 -O2 -G0
 src/boot/litodp.c    sdk991111 -O2 -G0
-nonmatching/boot/ps2fioLseekPartition.c    sdk991111 -O2 -G0
+src/boot/ps2fioLseekPartition.c    sdk991111 -O2 -G0
 src/boot/sceDmaPutEnv.c    sdk991111 -O2 -G0
 nonmatching/boot/sceSifSendCmd.c    sdk991111 -O2 -G0
 
@@ -161,7 +161,7 @@ nonmatching/boot/__kernel_sin.c     sdk991111 as=ee-sdk -O2 -G0
 # the lombyte-upstream SDK tree. Each is byte-exact under the pinned Sony
 # compiler; the pinned chain reproduces only part of them.
 nonmatching/boot/InitAlarm.c    sdk991111 -O2 -G0
-nonmatching/boot/sceCdGetError.c    sdk991111 -O2 -G0
+src/boot/sceCdGetError.c    sdk991111 -O2 -G0
 src/boot/sceDmaPause.c    sdk991111 -O2 -G0
 nonmatching/boot/sceDmaReset.c    sdk991111 -O2 -G0
 src/boot/sceDmaSend.c    sdk991111 -O2 -G0
@@ -177,11 +177,11 @@ nonmatching/boot/sceScfGetTimeZone.c    sdk991111 -O2 -G0
 # exactly. The memory-card RPC frames are reached through absolute SDK
 # addresses (`lui` + signed `addiu`, e.g. lui 0x1FE + addiu -0x2100 =
 # 0x01FDDF00), which each source declares through its .map sidecar.
-nonmatching/boot/sceMcOpen.c    sdk991111 -O2 -G0
+src/boot/sceMcOpen.c    sdk991111 -O2 -G0
 nonmatching/boot/sceMcDelete.c    sdk991111 -O2 -G0
-nonmatching/boot/sceMcRename.c    sdk991111 -O2 -G0
+src/boot/sceMcRename.c    sdk991111 -O2 -G0
 nonmatching/boot/sceMcRead.c    sdk991111 -O2 -G0
-nonmatching/boot/sceMcWrite.c    sdk991111 -O2 -G0
+src/boot/sceMcWrite.c    sdk991111 -O2 -G0
 nonmatching/boot/sceMcGetInfo.c    sdk991111 -O2 -G0
 nonmatching/boot/sceMcGetDir.c    sdk991111 -O2 -G0
 nonmatching/boot/sceGsSyncV.c    sdk991111 -O2 -G0
