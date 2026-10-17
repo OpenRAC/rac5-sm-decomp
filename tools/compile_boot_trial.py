@@ -142,6 +142,15 @@ def check_extra_compiler(profile: dict, selector: str, bin_dir: Path | None,
     flags = pinned["flags"]
     if set(flags) != {"driver", "as"} or list(flags["driver"]) != ["-S"]:
         raise ValueError(f"{selector} flags differ from measured build")
+    # A pin may carry a source patch. The binary it names is that build plus the
+    # patch, so the patch is part of the identity and is checked like a tool: a
+    # pin whose patch text moved no longer describes the binary it points at.
+    if "patch" in pinned:
+        patch = ROOT / pinned["patch"]["path"]
+        if not patch.is_file():
+            raise ValueError(f"{selector} patch is missing: {patch}")
+        if normalized_digest(patch) != pinned["patch"]["sha256_lf"]:
+            raise ValueError(f"{selector} patch differs from measured RAC5 trial")
     # Where the routed source is staged for that driver. A pin may name its own
     # directory; without one it stages under --output-dir, which is already a
     # native Linux path, so a Linux driver can read its own inputs there.

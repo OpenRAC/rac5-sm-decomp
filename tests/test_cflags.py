@@ -25,6 +25,7 @@ ROUTE_R_DLI = "nonmatching/boot/__pack_d.c"
 ROUTE_R_FLOAT = "nonmatching/boot/sceKernelGetSystemTimeLow__Fv.c"
 SECOND = "prodg2953"
 SONY = "sdk991111"
+DIVPAD = "sdk-divpad"
 SDK_AS = "ee-sdk"
 PS2_AS = "ps2eeas"
 
@@ -53,7 +54,7 @@ class CFlagsTests(unittest.TestCase):
         for key in ("driver_sha256", "cpp_sha256", "cc1_sha256"):
             self.assertEqual(len(pinned["tools"][key]), 64)
         self.assertEqual(cflags.pinned_compilers(),
-                         (cflags.DEFAULT_COMPILER, SECOND, SONY))
+                         (cflags.DEFAULT_COMPILER, SECOND, DIVPAD, SONY))
         self.assertTrue(cflags.Entry(SECOND, ("-O2",)).compiler != cflags.DEFAULT_COMPILER)
         self.assertTrue(cflags.DEFAULT_ENTRY.pinned)
 
@@ -373,6 +374,47 @@ class CFlagsTests(unittest.TestCase):
                         compile_boot_trial.check_extra_assembler(
                             {"extra_assemblers": {"unit": {**pin, "flags": broken}}},
                             "unit", root)
+
+    def test_a_pinned_compiler_may_carry_its_source_patch(self) -> None:
+        profile = json.loads(cflags.PROFILE.read_text(encoding="utf-8"))
+        pin = profile["extra_compilers"][DIVPAD]
+        patch = compile_boot_trial.ROOT / pin["patch"]["path"]
+        self.assertTrue(patch.is_file())
+        self.assertEqual(compile_boot_trial.normalized_digest(patch),
+                         pin["patch"]["sha256_lf"])
+        # The div pad is the whole difference from the unpatched SDK pin: same
+        # driver and preprocessor, a different cc1.
+        self.assertEqual(pin["tools"]["driver_sha256"],
+                         profile["extra_compilers"][SONY]["tools"]["driver_sha256"])
+        self.assertNotEqual(pin["tools"]["cc1_sha256"],
+                            profile["extra_compilers"][SONY]["tools"]["cc1_sha256"])
+        self.assertEqual(
+            cflags.load()["nonmatching/boot/__ieee754_expf.c"].compiler, DIVPAD)
+
+    def test_a_pin_whose_patch_moved_no_longer_describes_its_binary(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "repo"
+            (root / "bin").mkdir(parents=True)
+            (root / "tools/compiler/patches").mkdir(parents=True)
+            for name in ("d", "c", "x"):
+                (root / "bin" / name).write_text("tool\n")
+            (root / "tools/compiler/patches/unit.patch").write_text("--- a\n+++ b\n")
+            pin = {"id": "rac5-boot-unit", "host": "linux", "provenance": "u" * 81,
+                   "tools": {"driver": "d", "libexec": ".", "cpp": "c", "cc1": "x",
+                             "driver_sha256": "0" * 64, "cpp_sha256": "0" * 64,
+                             "cc1_sha256": "0" * 64},
+                   "patch": {"path": "tools/compiler/patches/unit.patch",
+                             "sha256_lf": "0" * 64},
+                   "flags": {"driver": ["-S"], "as": []}}
+            with patch.object(compile_boot_trial, "ROOT", root), \
+                 patch.object(compile_boot_trial, "digest", return_value="0" * 64):
+                with self.assertRaisesRegex(ValueError, "patch differs"):
+                    compile_boot_trial.check_extra_compiler(
+                        {"extra_compilers": {"unit": pin}}, "unit", root / "bin")
+                (root / "tools/compiler/patches/unit.patch").unlink()
+                with self.assertRaisesRegex(ValueError, "patch is missing"):
+                    compile_boot_trial.check_extra_compiler(
+                        {"extra_compilers": {"unit": pin}}, "unit", root / "bin")
 
     def test_gate_arguments_carry_an_assembler_directory(self) -> None:
         parser = argparse.ArgumentParser()

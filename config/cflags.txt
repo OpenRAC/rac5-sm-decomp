@@ -138,3 +138,13 @@ nonmatching/boot/__tf19__pointer_type_info.c    sdk991111 -O2 -G0
 nonmatching/boot/__tf8bad_cast.c    sdk991111 -O2 -G0
 nonmatching/boot/__tf9bad_alloc.c    sdk991111 -O2 -G0
 nonmatching/boot/__tf9type_info.c    sdk991111 -O2 -G0
+
+# Route Q, fourth batch: the two libm bodies whose only remaining difference was
+# the R5900 division pad. The retail pads every single-precision division with
+# two nops and never schedules one into a delay slot (208 COP1 sites measured);
+# the SDK compiler's cc1 does neither, so the profile pins a build of the same
+# Sony source with tools/compiler/patches/0002-rac5-div-pad.patch. With it
+# __ieee754_expf fills 692 of its 696 bytes and __ieee754_fmodf all 592, both
+# exactly; without it the same sources score 560/676 and 175/576.
+nonmatching/boot/__ieee754_expf.c   sdk-divpad as=ee-sdk -O2 -G0
+nonmatching/boot/__ieee754_fmodf.c  sdk-divpad as=ee-sdk -O2 -G0
