@@ -73,8 +73,8 @@ only the reviewed placements in the explicit gate set are counted.
 ## Campaign expansion
 
 A later authoring campaign grew the same mechanism from twenty bodies to
-**438 compiler-produced C objects**, after hybrid instruction-assembly experiments
-were excluded. The catalogue identifies 383 global function bodies covering 20,536
+**453 compiler-produced C objects**, after hybrid instruction-assembly experiments
+were excluded. The catalogue identifies 398 global function bodies covering 21,720
 code bytes plus 720 zero alignment bytes; 55 object spans lack usable global
 function extents and remain uncatalogued. Objects can contain multiple bodies.
 One body,
