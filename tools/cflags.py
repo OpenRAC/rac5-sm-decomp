@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
-"""Per-source compiler and cc1 flags measured against the retail boot.
+"""Per-source compiler, assembler and cc1 flags measured against the retail boot.
 
 ``config/cflags.txt`` holds one entry per line: the repository-relative path of
-a campaign C source, an optional compiler selector, then the flags measured for
-that file. A source without an entry compiles with the profile's global flags
-and the pinned chain, so its pinned object stays valid without requalification.
+a campaign C source, optional selectors, then the flags measured for that file.
+A source without an entry compiles with the profile's global flags and its own
+chain, so its pinned object stays valid without requalification.
 
-The selector is a bare token in the first flag position, in front of the flags,
-and names one of the compilers the boot profile pins besides its own chain.
-An entry without a selector extends the pinned chain's global flags; an entry
-with a selector carries the complete flag set for the selected compiler, so a
-reader never has to combine two places to know how that file was built. Every
-entry must name an existing C source of a repository compiler campaign and at
-least one flag, so a mistyped path, an unknown selector, a duplicate or a
-flag on a file no gate compiles fails instead of being ignored silently.
+Two selectors may precede the flags, each at most once and each a bare token in
+the first flag position. A plain token names one of the compilers the boot
+profile pins besides its own chain; ``as=NAME`` names one of the assemblers it
+pins besides the pinned GNU ``as``. An entry without a compiler selector extends
+the pinned chain's global flags; an entry with one carries the complete flag set
+for the selected compiler, so a reader never has to combine two places to know
+how that file was built. An entry must name an existing C source of a repository
+compiler campaign and must carry either a flag or an assembler selector, so a
+mistyped path, an unknown selector, a duplicate or a flag on a file no gate
+compiles fails instead of being ignored silently.
 """
 
 from __future__ import annotations
@@ -32,20 +34,27 @@ CAMPAIGN_DIRS = ("src/boot", "nonmatching/boot", "src/levels", "nonmatching/leve
 
 @dataclass(frozen=True)
 class Entry:
-    """One ``config/cflags.txt`` line: which compiler, which flags for that file."""
+    """One ``config/cflags.txt`` line: which toolchain, which flags for that file."""
 
     compiler: str
     flags: tuple[str, ...]
+    assembler: str = "pinned"
 
     @property
     def pinned(self) -> bool:
         """True when the entry asks for the profile's own compiler chain."""
         return self.compiler == DEFAULT_COMPILER
 
+    @property
+    def assembler_pinned(self) -> bool:
+        """True when the entry asks for the profile's own GNU assembler."""
+        return self.assembler == DEFAULT_ASSEMBLER
+
 
 # The profile's own chain. A source with no entry, and an entry with no
-# selector, both mean this compiler.
+# selector, both mean this compiler and this assembler.
 DEFAULT_COMPILER = "pinned"
+DEFAULT_ASSEMBLER = "pinned"
 DEFAULT_ENTRY = Entry(DEFAULT_COMPILER, ())
 
 
@@ -70,15 +79,22 @@ def campaign_sources() -> frozenset[str]:
 
 
 def pinned_compilers() -> tuple[str, ...]:
-    """Every selector a line may name: the profile chain and its pinned extras."""
+    """Every compiler selector a line may name: the profile chain and its extras."""
     profile = json.loads(PROFILE.read_text(encoding="utf-8"))
     return (DEFAULT_COMPILER, *sorted(profile.get("extra_compilers", {})))
+
+
+def pinned_assemblers() -> tuple[str, ...]:
+    """Every assembler selector a line may name: the pinned ``as`` and its extras."""
+    profile = json.loads(PROFILE.read_text(encoding="utf-8"))
+    return (DEFAULT_ASSEMBLER, *sorted(profile.get("extra_assemblers", {})))
 
 
 def load(path: Path = CFLAGS) -> dict[str, Entry]:
     """Parse and validate the per-source compiler/flag file."""
     known = campaign_sources()
     selectors = pinned_compilers()
+    assemblers = pinned_assemblers()
     entries: dict[str, Entry] = {}
     problems: list[str] = []
     for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
@@ -101,23 +117,48 @@ def load(path: Path = CFLAGS) -> dict[str, Entry]:
         if name not in known:
             problems.append(f"line {number}: {name}: not a campaign C source")
             continue
-        # A leading bare token is a compiler selector; flags always start with "-".
-        compiler = DEFAULT_COMPILER
-        if rest and not rest[0].startswith("-"):
-            compiler, rest = rest[0], rest[1:]
-            if compiler not in selectors:
-                problems.append(f"line {number}: {name}: unknown compiler selector "
-                                f"{compiler}; pinned selectors are "
-                                f"{', '.join(selectors)}")
-                continue
-        if not rest:
+        # Leading bare tokens are selectors -- "as=NAME" names an assembler, any
+        # other one names a compiler -- and flags always start with "-".
+        compiler, assembler = DEFAULT_COMPILER, DEFAULT_ASSEMBLER
+        problem = ""
+        while rest and not rest[0].startswith("-"):
+            token, rest = rest[0], rest[1:]
+            if token.startswith("as="):
+                chosen = token[len("as="):]
+                if not chosen:
+                    problem = "empty assembler selector"
+                elif assembler != DEFAULT_ASSEMBLER:
+                    problem = f"duplicate assembler selector {chosen}"
+                elif chosen not in assemblers:
+                    problem = (f"unknown assembler selector {chosen}; pinned "
+                               f"selectors are {', '.join(assemblers)}")
+                else:
+                    assembler = chosen
+            elif compiler != DEFAULT_COMPILER:
+                problem = f"duplicate compiler selector {token}"
+            elif token not in selectors:
+                problem = (f"unknown compiler selector {token}; pinned selectors "
+                           f"are {', '.join(selectors)}")
+            else:
+                compiler = token
+            if problem:
+                break
+        if problem:
+            problems.append(f"line {number}: {name}: {problem}")
+            continue
+        # An entry without a flag is meaningful only when an assembler selector
+        # is its whole content: moving the object to another `as` while the
+        # pinned chain keeps its global flags. Naming a compiler without a flag
+        # would claim that compiler's complete flag set is empty, which is a
+        # mistyped line rather than a measurement.
+        if not rest and (compiler != DEFAULT_COMPILER or assembler == DEFAULT_ASSEMBLER):
             problems.append(f"line {number}: {name}: no cc1 flags")
             continue
         if not all(flag.startswith("-") for flag in rest):
             problems.append(f"line {number}: {name}: not a flag: "
                             f"{next(f for f in rest if not f.startswith('-'))}")
             continue
-        entries[name] = Entry(compiler, tuple(rest))
+        entries[name] = Entry(compiler, tuple(rest), assembler)
     if problems:
         raise ValueError("config/cflags.txt: " + "; ".join(problems))
     return entries

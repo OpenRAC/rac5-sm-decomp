@@ -91,6 +91,10 @@ def compile_sources(profile: dict, sources: list[dict], cpp: Path, cc1: Path,
         if not entry.pinned:
             raise ValueError(f"level C source is routed to {entry.compiler}, which "
                              f"the level trial does not pin: {row['source']}")
+        if not entry.assembler_pinned:
+            raise ValueError(f"level C source is routed to the {entry.assembler} "
+                             f"assembler, which the level trial does not pin: "
+                             f"{row['source']}")
         run([str(cc1.resolve()), *flags["cc1"], *entry.flags,
              f"{stem}.i", "-o", f"{stem}.s"],
             output, output / f"{stem}.cc1.log")

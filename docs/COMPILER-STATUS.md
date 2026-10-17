@@ -12,7 +12,7 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **16,036 boot `.text` bytes in 361 C bodies**
+The current catalogue records **16,492 boot `.text` bytes in 363 C bodies**
 across several code areas, built by the locally reconstructed GNU EE chain and,
 for ten of them, by one of two further pinned compilers
 ([witness evidence](COMPILER-WITNESSES.md)).
@@ -25,7 +25,7 @@ transfer it ends in. Thirty-one reviewed placements (1,064 bytes, starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
-rebuilds all 416 objects from authored C and checks that full link in one run;
+rebuilds all 418 objects from authored C and checks that full link in one run;
 its machine-readable report accepts 31 boot-only placements (1,064 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
@@ -269,6 +269,53 @@ For level modules, a separate
 (8 and 72 bytes) at all twenty numbered placements, with a 24-byte level 01 and
 12-byte frontend control. It does not qualify a general level compiler.
 
+## The assembler is a per-source choice too (route R)
+
+The boot is not one assembler build any more than it is one compiler build. Two
+measured bodies show it, and the two fixes are mutually exclusive: the assembler
+that repairs one is hundreds of objects worse than the pinned `as` on the other.
+
+1. **64-bit `dli` expansion.** `__pack_d` (304 bytes, 0x01E95FF0) reaches
+   **249/304** under the pinned `as`, and the cc1 output is byte-right either
+   way. At byte 243 one `fraction |= QUIET_NAN` becomes a single
+   `dli 0x800FFFFFFFFFFFFF`, which the pinned `as` expands with `ori` first
+   (`ori; dsll; ori; dsll; ori; dsll; ori`, seven instructions) where retail
+   starts with `lui` and uses six. Under the Sony EE SDK assembler the same
+   source is **300/300** and fills its interval exactly.
+2. **`li.d` of a `double`.** `sceKernelGetSystemTimeLow__Fv` (160 bytes,
+   0x01E86280) reaches **155/156** under the pinned `as`: the two double
+   constants of the C are `li.d` pseudo-ops, which the pinned `as` loads from
+   the `.rdata` pool in two instructions where retail inlines four. Under SN
+   Ps2EeAs 2.0 — the pinned SN ProDG 2.0 assembler the boot assembly base
+   already uses — the same source is **160/160**.
+
+[`config/cflags.txt`](../config/cflags.txt) therefore carries `as=NAME` beside
+the compiler selector, and the profile pins the two extras in
+`extra_assemblers`. An entry may be nothing but an assembler selector:
+`nonmatching/boot/__pack_d.c  as=ee-sdk` says the pinned chain keeps its global
+flags and another `as` runs. Naming a compiler without a flag is still refused,
+because an empty complete flag set is not a measurement.
+
+**Why the selector is per source and not global.** A sweep of all 682 authored
+boot bodies through five assemblers found exactly these two whose equality with
+retail improves anywhere, and each needs the other binary. Comparing `.text`
+sections object by object, the SDK assembler moves 19 of 679 away from the
+pinned chain's bytes and Ps2EeAs 2.0 moves 313 of 675 — neither can replace the
+pinned `as` for the campaign. The pinned chain itself is untouched: a source
+with no entry is assembled exactly as before, all 416 pre-existing objects
+compile to their pinned SHA-256, and the requalified gate links 418 of them into
+the same complete 856,120-byte boot.
+
+**Controls.** Removing the two selectors makes `tools/cflags.py` refuse both
+lines ("no cc1 flags"), and the per-body harness prints 249/304 and 155/156 for
+the same sources under the pinned chain, which is what the trial compiler
+refuses against their pinned object hashes. `__pack_d` needed one more change:
+its name was also an absolute `LINKER_SYMBOLS` entry, added while `__make_dp`
+called it, and an absolute definition leaves the linked image without a function
+symbol at that address — the state the 55 uncatalogued spans are in. The line is
+gone, since the compiled body now defines the symbol; the catalogue gained both
+bodies (361 → 363 witness bodies) and the uncatalogued count stayed at 55.
+
 ## Changing a compiler profile
 
 A compiler-source patch is not an instruction patch or an artificial C shape.
@@ -291,12 +338,15 @@ and need no requalification. The same file carries the per-line compiler
 selector, for the same reason — a family that needs another compiler must not
 force one on the files that already match. `tools/cflags.py` owns the file and
 rejects an entry that is duplicated, names a missing or non-campaign path,
-names a selector the profile does not pin, or carries no flag;
-`compile_boot_trial.py` and `level_c_gate.py` apply the entries they compile,
-and the complete-gate receipt is bound to the file's bytes. A preview compiler
-is added by pinning its binaries in the profile's `extra_compilers`, with the
-host its driver runs on — never by rebuilding or patching an existing one, and
-never by widening the pinned chain's global flags to cover a family.
+names a selector the profile does not pin, or carries neither a flag nor an
+assembler selector; `compile_boot_trial.py` and `level_c_gate.py` apply the
+entries they compile, and the complete-gate receipt is bound to the file's
+bytes. A preview compiler is added by pinning its binaries in the profile's
+`extra_compilers`, with the host its driver runs on — never by rebuilding or
+patching an existing one, and never by widening the pinned chain's global flags
+to cover a family. An assembler is a pin of the same kind, in
+`extra_assemblers`, selected per source by `as=NAME`; the pin names one binary
+and its SHA-256, and the gate takes its directory with `--as-bin`.
 
 Qualification is scoped evidence, not a claim that this is the original compiler
 or that all future functions are supported. A failed control invalidates the
@@ -358,7 +408,7 @@ uncatalogued span rather than as part of the body.
 
 A span whose compiled object exposes no function symbol in the linked image is
 reported by the catalogue tool and left uncatalogued rather than counted; 55 of
-the 416 spans are in that state today, and the complete-program gate still
+the 418 spans are in that state today, and the complete-program gate still
 checks their bytes. They are the owners whose name is also listed in
 `LINKER_SYMBOLS` (`tools/boot_c_campaign.py`): the linker script definition is
 absolute, so the linked image keeps the address but exposes no function symbol
