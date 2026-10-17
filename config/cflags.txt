@@ -123,21 +123,21 @@ nonmatching/boot/scalbnf.c             sdk991111 as=ee-sdk -O2 -G0
 # absolute data symbols in the campaign linker script -- ld.exe prints them
 # demangled ("bad_exception type_info node") in its diagnostics, but the
 # object names are the ordinary __ti*/STR_name spellings.
-nonmatching/boot/__tf10bad_typeid.c    sdk991111 -O2 -G0
+src/boot/__tf10bad_typeid.c    sdk991111 -O2 -G0
 src/boot/__tf13bad_exception.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf14__si_type_info.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf16__attr_type_info.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf16__func_type_info.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf16__ptmd_type_info.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf16__ptmf_type_info.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf16__user_type_info.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf17__array_type_info.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf17__class_type_info.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf19__builtin_type_info.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf19__pointer_type_info.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf8bad_cast.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf9bad_alloc.c    sdk991111 -O2 -G0
-nonmatching/boot/__tf9type_info.c    sdk991111 -O2 -G0
+src/boot/__tf14__si_type_info.c    sdk991111 -O2 -G0
+src/boot/__tf16__attr_type_info.c    sdk991111 -O2 -G0
+src/boot/__tf16__func_type_info.c    sdk991111 -O2 -G0
+src/boot/__tf16__ptmd_type_info.c    sdk991111 -O2 -G0
+src/boot/__tf16__ptmf_type_info.c    sdk991111 -O2 -G0
+src/boot/__tf16__user_type_info.c    sdk991111 -O2 -G0
+src/boot/__tf17__array_type_info.c    sdk991111 -O2 -G0
+src/boot/__tf17__class_type_info.c    sdk991111 -O2 -G0
+src/boot/__tf19__builtin_type_info.c    sdk991111 -O2 -G0
+src/boot/__tf19__pointer_type_info.c    sdk991111 -O2 -G0
+src/boot/__tf8bad_cast.c    sdk991111 -O2 -G0
+src/boot/__tf9bad_alloc.c    sdk991111 -O2 -G0
+src/boot/__tf9type_info.c    sdk991111 -O2 -G0
 
 # Route Q, fourth batch: the two libm bodies whose only remaining difference was
 # the R5900 division pad. The retail pads every single-precision division with
@@ -166,7 +166,7 @@ nonmatching/boot/sceDmaPause.c    sdk991111 -O2 -G0
 nonmatching/boot/sceDmaReset.c    sdk991111 -O2 -G0
 nonmatching/boot/sceDmaSend.c    sdk991111 -O2 -G0
 nonmatching/boot/sceGsPutDrawEnv.c    sdk991111 -O2 -G0
-nonmatching/boot/sceGsResetGraph.c    sdk991111 -O2 -G0
+src/boot/sceGsResetGraph.c    sdk991111 -O2 -G0
 nonmatching/boot/sceGszbufaddr.c    sdk991111 -O2 -G0
 nonmatching/boot/sceScfGetTimeZone.c    sdk991111 -O2 -G0
 
