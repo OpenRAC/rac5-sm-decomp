@@ -184,10 +184,17 @@ def check_extra_assembler(profile: dict, selector: str,
         raise ValueError(f"{selector} assembler is missing: {binary}")
     if digest(binary) != tools["assembler_sha256"]:
         raise ValueError(f"{selector} assembler differs from measured RAC5 trial")
-    if pinned["flags"] != {"as": []}:
+    # An assembler pin may carry flags of its own: the SDK `as` puts a `li.s`
+    # float in a GP-relative lit4 pool unless it is run with -G0, and that pool
+    # does not link in this campaign's script. The flag belongs to the pin, not
+    # to a source line: it says how that binary was measured, not what one file
+    # needs.
+    flags = pinned["flags"]
+    if (set(flags) != {"as"} or any(not isinstance(flag, str)
+                                    or not flag.startswith("-")
+                                    for flag in flags["as"])):
         raise ValueError(f"{selector} flags differ from measured build")
-    return {"id": pinned["id"], "host": host, "binary": binary,
-            "flags": pinned["flags"]}
+    return {"id": pinned["id"], "host": host, "binary": binary, "flags": flags}
 
 
 def cc1_flags(profile: dict, per_source: dict[str, cflags.Entry],
@@ -311,8 +318,10 @@ def compile_objects(cpp: Path, cc1: Path, assembler: Path,
                                   output, item)
         chosen = (assembler if entry.assembler_pinned
                   else alt_assemblers[entry.assembler]["binary"])
-        run([str(chosen.resolve()), "-o", obj.name, f"{item.name}.s"], output,
-            output / f"{item.name}.as.log")
+        chosen_flags = (() if entry.assembler_pinned
+                        else alt_assemblers[entry.assembler]["flags"]["as"])
+        run([str(chosen.resolve()), *chosen_flags, "-o", obj.name,
+             f"{item.name}.s"], output, output / f"{item.name}.as.log")
         if digest(obj) != item.object_sha256:
             raise ValueError(f"compiled object differs from measured trial: {item.name}")
         manifest["objects"].append({"name": item.name, "compiler": entry.compiler,

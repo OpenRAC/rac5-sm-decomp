@@ -12,7 +12,7 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **19,580 boot `.text` bytes in 380 C bodies**
+The current catalogue records **20,536 boot `.text` bytes in 383 C bodies**
 across several code areas, built by the locally reconstructed GNU EE chain and,
 for ten of them, by one of two further pinned compilers
 ([witness evidence](COMPILER-WITNESSES.md)).
@@ -25,7 +25,7 @@ transfer it ends in. Sixty-one reviewed placements (2,304 bytes, starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
-rebuilds all 435 objects from authored C and checks that full link in one run;
+rebuilds all 438 objects from authored C and checks that full link in one run;
 its machine-readable report accepts 61 boot-only placements (2,304 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
@@ -319,8 +319,23 @@ sections object by object, the SDK assembler moves 19 of 679 away from the
 pinned chain's bytes and Ps2EeAs 2.0 moves 313 of 675 — neither can replace the
 pinned `as` for the campaign. The pinned chain itself is untouched: a source
 with no entry is assembled exactly as before, all 416 pre-existing objects
-compile to their pinned SHA-256, and the requalified gate links 418 of them into
+compile to their pinned SHA-256, and the requalified gate links 438 of them into
 the same complete 856,120-byte boot.
+
+**A second bench on the same selector.** Three libm bodies (`__kernel_cosf`
+344/344, `__kernel_sinf` 260/260, `scalbnf` 352/352) are exact only when the
+Sony compiler's output is assembled by the **SDK** `as` run with `-G0`. Without
+that flag the assembler lowers a `li.s` float to a GP-relative `lit4` entry and
+the link stops on `R_MIPS_LITERAL lit4`; with it the pseudo-op is inlined as the
+pinned `as` does. The flag belongs to the assembler pin
+(`extra_assemblers.ee-sdk.flags["as"]`), because it says how that binary was
+measured rather than what one file needs, so `config/cflags.txt` still carries
+one selector per line and no per-file assembler flags. The same three objects
+also emit an unreferenced `.rodata` — the fdlibm constants, which `-G0`
+materialises inside the body instead — and the campaign's linker script now
+discards the compiled objects' `.rodata` so the retail data keeps its
+addresses. The pinned chain reproduces 281/344, 187/260 and 346/352 of those
+three bodies, which is this bench's negative control.
 
 **Controls.** Removing the two selectors makes `tools/cflags.py` refuse both
 lines ("no cc1 flags"), and the per-body harness prints 249/304 and 155/156 for
@@ -424,7 +439,7 @@ uncatalogued span rather than as part of the body.
 
 A span whose compiled object exposes no function symbol in the linked image is
 reported by the catalogue tool and left uncatalogued rather than counted; 55 of
-the 435 spans are in that state today, and the complete-program gate still
+the 438 spans are in that state today, and the complete-program gate still
 checks their bytes. They are the owners whose name is also listed in
 `LINKER_SYMBOLS` (`tools/boot_c_campaign.py`): the linker script definition is
 absolute, so the linked image keeps the address but exposes no function symbol

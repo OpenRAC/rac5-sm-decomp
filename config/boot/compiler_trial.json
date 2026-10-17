@@ -144,7 +144,9 @@
         "assembler_sha256": "296af123052ee39d175e5b3254102aafca105d4f6e975b351a13867f59b04019"
       },
       "flags": {
-        "as": []
+        "as": [
+          "-G0"
+        ]
       }
     },
     "ps2eeas": {
@@ -161,5 +163,5 @@
       }
     }
   },
-  "expected_objects": 435
+  "expected_objects": 438
 }

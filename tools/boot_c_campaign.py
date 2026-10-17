@@ -1168,9 +1168,18 @@ REPLACEMENTS = (
     Replacement("sceDmaPutEnv", 0x01E9CEF0, 0x01E9D0C8,
                 "24e01ab9dd14bb9663dcbc7c787a5fbf6e3d0b93e29a8c46a6802770b1f9f627",
                 "99b9c9592321e02fdfaab8cebdd7577a757ab19eec2f166170b31d3840a5b85a"),
+    Replacement("__kernel_cosf", 0x01EA1F88, 0x01EA20E0,
+                "cd7bbedf2e885d0baae129d71ae355e5f57c7359633bb5df41eafd7f684f8ae5",
+                "37b013351cb60e1bd72e00daf8ae2f59f8615547ad80446cda1063617c1cc10d"),
+    Replacement("__kernel_sinf", 0x01EA2A30, 0x01EA2B38,
+                "bf47ee6bce38a900fd62ffd2888106a1fcc6b509b37688fe2eff1f8af46e0b6d",
+                "5181723e215bfd877601674c8c704bde082e4c0299d28bb99c6d954e513cf5af"),
     Replacement("matherr", 0x01EA2E40, 0x01EA2E68,
                 "4fce02b771676d37759d1632bb530f01d2c7b4c0f4b9de3e96cd1e1854c96ed1",
                 "36644bebe6a89fca92ea0cd62aa534a735c79c44aeaa1e0f88cde5c85aea8563"),
+    Replacement("scalbnf", 0x01EA3538, 0x01EA3698,
+                "431156a76e5e64aeba98685541af16bb8de9641448e4ca6304377b0e9896002d",
+                "d4e5665e6f2b9982a09464dc662f4b726053f43406338756f0bd2de9dfe1f6d7"),
     Replacement("popmalloctotal", 0x01EAB498, 0x01EAB4A8,
                 "aefb0936fa659a73d4b3f6561359114378737e2bab17f8ba7ed112a91c3faad5",
                 "1c7f54a009e5e3522f352756a70ac73b822bea5636b153e8eba37b9571b6c0e1"),
@@ -1445,6 +1454,7 @@ REPLACEMENTS = (
 
 
 
+
 # Addresses measured in the existing one-function linker witnesses.
 LINKER_SYMBOLS = (
     "ANIM_CreateOutputMatrices__FP16GDE_SkeletonInfoP18GDE_BoneComponents = 0x01E89CB0;",
@@ -1604,6 +1614,7 @@ LINKER_SYMBOLS = (
     "cdvdfs_fs = 0x01EFC6E8;",
     "clear_color = 0x01EF570C;",
     "completion_flag = 0x01EF037C;",
+    "copysignf = 0x01EA36E0;",
     "core_cmdline_ctor_1E64CE0 = 0x01E64CE0;",
     "core_heroskin_ctor_1E65C28 = 0x01E65C28;",
     "core_mcpclient_init_1E65248 = 0x01E65248;",
@@ -2022,7 +2033,15 @@ def linker_script(skipped_labels: list[str]) -> str:
     for name, address, _size in DATA_SECTIONS:
         lines.append(f"  . = 0x{address:08X}; {name} : {{ boot_data.o({name}) }}")
     lines += [f"  . = 0x{BSS_START:08X}; .bss : {{ boot_bss.o(.bss) }}",
-              "  .tail (NOLOAD) : { boot_tail.o(.tail) }", "}"]
+              "  .tail (NOLOAD) : { boot_tail.o(.tail) }"]
+    # A compiled body substitutes `.text` only: the retail's data sections come
+    # from boot_data.o. Three libm bodies still emit an unreferenced `.rodata`
+    # (the fdlibm constants, which -G0 materialises inside the body instead), and
+    # an orphan section would be placed on top of the retail `.rodata`. Discard
+    # exactly those objects' sections so the retail data keeps its addresses.
+    discard = " ".join(f"{item.name}.o(.rodata)" for item in REPLACEMENTS)
+    lines.append(f"  /DISCARD/ : {{ {discard} }}")
+    lines.append("}")
     return "\n".join(lines) + "\n"
 
 

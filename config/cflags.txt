@@ -104,3 +104,15 @@ nonmatching/boot/litodp.c    sdk991111 -O2 -G0
 nonmatching/boot/ps2fioLseekPartition.c    sdk991111 -O2 -G0
 nonmatching/boot/sceDmaPutEnv.c    sdk991111 -O2 -G0
 nonmatching/boot/sceSifSendCmd.c    sdk991111 -O2 -G0
+
+# Route R, second bench: the three libm bodies that are exact only when the
+# Sony compiler's output is assembled by the SDK `as` with -G0. That assembler
+# otherwise lowers a `li.s` float to a GP-relative lit4 entry, which the
+# campaign's linker script does not define (the link stops on `R_MIPS_LITERAL
+# lit4`); with -G0 the same pseudo-op is inlined like the pinned `as` does.
+# __kernel_cosf reaches 344/344 and 264 bytes of __kernel_sinf 260/260 and
+# scalbnf 352/352, each filling its owned interval; without the assembler
+# selector the pinned chain reproduces only 281/344, 187/260 and 346/352.
+nonmatching/boot/__kernel_cosf.c        sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/__kernel_sinf.c        sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/scalbnf.c             sdk991111 as=ee-sdk -O2 -G0
