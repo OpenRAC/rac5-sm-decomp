@@ -161,6 +161,31 @@
         ],
         "as": []
       }
+    },
+    "sdk-divpad": {
+      "id": "rac5-boot-sony-ee-gcc-2.9-ee-991111-divpad",
+      "provenance": "The same Sony EE-GCC 2.9-ee-991111-01 build as sdk991111 (public snapshot github.com/SSXModding/ps2-ee-toolchain at b595ded, RAC2's tools/compiler/sdk/build.py) with tools/compiler/patches/0002-rac5-div-pad.patch applied: four anchored edits make DIV/SQRT/RSQRT ineligible for a delay slot and insert two nops before every single-precision division. That is the retail rule measured over 208 COP1 sites -- each of the 22 sites in the SDK libm window carries exactly two nops, and no division is ever scheduled into a delay slot. The driver reports 2.9-ee-991111. Rebuilt deterministically from the patched source; pinned per source, never rebuilt here and never committed.",
+      "status": "measured per source; boot-only",
+      "host": "linux",
+      "patch": {
+        "path": "tools/compiler/patches/0002-rac5-div-pad.patch",
+        "sha256_lf": "6df73acbedd910a4edac12956bd51f827d557b9f731fd1303c00e99ba5cacfe4"
+      },
+      "tools": {
+        "driver": "xgcc",
+        "driver_sha256": "4c8149cc96021253ac9863d670ada372e29f71af80ae91934c195cc4c6a3b2d6",
+        "libexec": ".",
+        "cpp": "cpp",
+        "cpp_sha256": "b73ad1bcfcdbd8826d231ec771471e92a6197adf2fc0e4674c3e5e1834cd2807",
+        "cc1": "cc1",
+        "cc1_sha256": "11b995bdd4e0667bf477bba9bd7687261433ef126903ee2b9e32a2bc068bbda1"
+      },
+      "flags": {
+        "driver": [
+          "-S"
+        ],
+        "as": []
+      }
     }
   },
   "extra_assemblers": {
@@ -193,5 +218,5 @@
       }
     }
   },
-  "expected_objects": 453
+  "expected_objects": 455
 }

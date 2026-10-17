@@ -1243,6 +1243,12 @@ REPLACEMENTS = (
     Replacement("sceDmaPutEnv", 0x01E9CEF0, 0x01E9D0C8,
                 "24e01ab9dd14bb9663dcbc7c787a5fbf6e3d0b93e29a8c46a6802770b1f9f627",
                 "99b9c9592321e02fdfaab8cebdd7577a757ab19eec2f166170b31d3840a5b85a"),
+    Replacement("__ieee754_expf", 0x01E9FA20, 0x01E9FCD8,
+                "2e9b95dad764a3935ea2309de2d98d833dec12e7d982f302c82a83274aae160c",
+                "4f38f1047d8b6b216cebeacf3e8fc92df4020ce94c206d3b77b5e3a8e32a504d"),
+    Replacement("__ieee754_fmodf", 0x01E9FCD8, 0x01E9FF28,
+                "eddcd1da274b055b3e36e311dfa7ade5b2f2240a7389f20001920d7ba19fc9c3",
+                "775c931fdbb8b9951cd82f23a455d4843de18802f4be71fad3375a4f2afdccae"),
     Replacement("__kernel_cosf", 0x01EA1F88, 0x01EA20E0,
                 "cd7bbedf2e885d0baae129d71ae355e5f57c7359633bb5df41eafd7f684f8ae5",
                 "37b013351cb60e1bd72e00daf8ae2f59f8615547ad80446cda1063617c1cc10d"),
@@ -1531,6 +1537,7 @@ REPLACEMENTS = (
 
 
 
+
 # Addresses measured in the existing one-function linker witnesses.
 LINKER_SYMBOLS = (
     "ANIM_CreateOutputMatrices__FP16GDE_SkeletonInfoP18GDE_BoneComponents = 0x01E89CB0;",
@@ -1641,6 +1648,7 @@ LINKER_SYMBOLS = (
     "WAD_FindAssetsBySignature__FUi14WAD_ASSET_TYPEP10WAD_HEADER = 0x01E8D160;",
     "WAD_FindAssetsByType__F14WAD_ASSET_TYPEP10WAD_HEADER = 0x01E8D118;",
     "WAD_LoadInternal = 0x01E8CC10;",
+    "Zero = 0x01F210D0;",
     "_$_9type_info = 0x01E998B0;",
     "__add_d = 0x01E961C0;",
     "__assert_fmt = 0x01F26B90;",
@@ -1842,6 +1850,7 @@ LINKER_SYMBOLS = (
     "gu_state = 0x01F75380;",
     "gu_state_01F77900 = 0x01F77900;",
     "gu_stencil = 0x01F77444;",
+    "halF = 0x01F21080;",
     "hdddrvRegisterDevice = 0x01EBEA38;",
     "higIoClose__Fi = 0x01E65608;",
     "higIoLseek__Fiii = 0x01E65478;",
@@ -1853,6 +1862,7 @@ LINKER_SYMBOLS = (
     "hig_msgbox_name1 = 0x01F1C218;",
     "hig_msgbox_name2 = 0x01F1C228;",
     "hostdrvRegisterDevice = 0x01EC1018;",
+    "huge_huge = 0x01F210C0;",
     "iop_module_path_format = 0x01F1EF90;",
     "light_ambient = 0x01EF5870;",
     "light_ambient_color = 0x01EF5864;",
@@ -1861,6 +1871,8 @@ LINKER_SYMBOLS = (
     "light_frame_b = 0x01EF58B0;",
     "light_frame_c = 0x01EF58B4;",
     "light_specular = 0x01EF5878;",
+    "ln2HI = 0x01F21098;",
+    "ln2LO = 0x01F210A0;",
     "malloc = 0x01EC8400;",
     "material_current = 0x01EF590C;",
     "mcdrvRegisterDevices = 0x01EC0CA0;",

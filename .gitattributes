@@ -9,4 +9,5 @@
 # macro continuation only compiles from an LF tree.
 *.c text eol=lf
 *.h text eol=lf
+*.patch text eol=lf
 LICENSE text eol=lf

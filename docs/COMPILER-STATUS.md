@@ -12,7 +12,7 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **21,720 boot `.text` bytes in 398 C bodies**
+The current catalogue records **23,004 boot `.text` bytes in 400 C bodies**
 across several code areas, built by the locally reconstructed GNU EE chain and,
 for ten of them, by one of two further pinned compilers
 ([witness evidence](COMPILER-WITNESSES.md)).
@@ -25,7 +25,7 @@ transfer it ends in. Ninety-one reviewed placements (3,528 bytes, starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
-rebuilds all 453 objects from authored C and checks that full link in one run;
+rebuilds all 455 objects from authored C and checks that full link in one run;
 its machine-readable report accepts 91 boot-only placements (3,528 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
@@ -332,7 +332,7 @@ sections object by object, the SDK assembler moves 19 of 679 away from the
 pinned chain's bytes and Ps2EeAs 2.0 moves 313 of 675 — neither can replace the
 pinned `as` for the campaign. The pinned chain itself is untouched: a source
 with no entry is assembled exactly as before, all 416 pre-existing objects
-compile to their pinned SHA-256, and the requalified gate links 453 of them into
+compile to their pinned SHA-256, and the requalified gate links 455 of them into
 the same complete 856,120-byte boot.
 
 **A second bench on the same selector.** Three libm bodies (`__kernel_cosf`
@@ -349,6 +349,27 @@ materialises inside the body instead — and the campaign's linker script now
 discards the compiled objects' `.rodata` so the retail data keeps its
 addresses. The pinned chain reproduces 281/344, 187/260 and 346/352 of those
 three bodies, which is this bench's negative control.
+
+**A fourth batch needs a patched compiler, and the patch is measured.** The
+retail R5900 code pads every single-precision division with two nops and never
+schedules one into a delay slot: over 208 COP1 sites (158 `div.s`, 50 `sqrt.s`)
+136 carry exactly two nops, all 22 sites in the SDK libm window do, and **none**
+is scheduled into a delay slot. The assembler is not the cause — the
+`ee-as-sdk` family produces none of the 208 — so the padding comes from the
+compiler. `tools/compiler/patches/0002-rac5-div-pad.patch` carries four
+anchored edits to the Sony source (the `dslot` attribute makes DIV/SQRT/RSQRT
+ineligible, and a `mips.c` hook inserts the two nops before `shorten_branches`),
+and the profile pins that build as `sdk-divpad`: the same driver and
+preprocessor as `sdk991111`, a different `cc1` (SHA-256 `11b995bd…`) and the
+patch's own digest beside it, so a pin whose patch moved no longer describes the
+binary it names. With that profile `__ieee754_expf` is **692 of its 696 bytes
+exact** and `__ieee754_fmodf` **592/592**; without it the same sources score
+560/676 and 175/576. Non-regression: the 406 units of that build compile
+byte-identically with and without the patch (no unit contains a division), and
+the complete gate is unchanged. The `sqrt.s` half of the rule is a family
+extrapolation — no `sqrt.s` exists inside the SDK libm window — and three
+near-misses stay out of reach: `logf` 801/804 (what remains is the `.rodata`
+pool), `tanf` (missing frame) and `atan2f` (body eight bytes short).
 
 **Controls.** Removing the two selectors makes `tools/cflags.py` refuse both
 lines ("no cc1 flags"), and the per-body harness prints 249/304 and 155/156 for
@@ -452,7 +473,7 @@ uncatalogued span rather than as part of the body.
 
 A span whose compiled object exposes no function symbol in the linked image is
 reported by the catalogue tool and left uncatalogued rather than counted; 55 of
-the 453 spans are in that state today, and the complete-program gate still
+the 455 spans are in that state today, and the complete-program gate still
 checks their bytes. They are the owners whose name is also listed in
 `LINKER_SYMBOLS` (`tools/boot_c_campaign.py`): the linker script definition is
 absolute, so the linked image keeps the address but exposes no function symbol

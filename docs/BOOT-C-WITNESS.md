@@ -77,7 +77,7 @@ FOG loop mismatch motivated the
 ## Combined provisional C witness
 
 **Historical qualification:** the measurements in this section describe the initial
-20-body campaign. The current pure-C campaign links 453 objects and catalogues 398
+20-body campaign. The current pure-C campaign links 455 objects and catalogues 400
 bodies; 55 object spans lack usable global-function extents. Its current counts and
 source policy are in [BOOT-TRIAL-GATE.md](BOOT-TRIAL-GATE.md). These are different
 measures: one object can contain more than one body. Inline-assembly experiments
