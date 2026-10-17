@@ -1,4 +1,3 @@
-/* Candidate only: the full-program build and compiler profile are not qualified. */
 typedef struct {
     char _bytes[0x58];
 } SND_Positional;

@@ -1,4 +1,4 @@
-/* snd_PlayVAGStreamByLocEx_CB 0x01E959D0..0x01E95A50 */
+/* snd_PlayVAGStreamByLocEx_CB 0x01E959D0..0x01E95A40 */
 extern void snd_SendIOPCommandNoWait(int command, int length, void *data,
                                      int arg3, long long arg4);
 

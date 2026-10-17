@@ -1,4 +1,3 @@
-/* Candidate only: the full-program build and compiler profile are not qualified. */
 extern char snd_str_l_vag[];
 extern char snd_str_r_vag[];
 
