@@ -148,3 +148,11 @@ nonmatching/boot/__tf9type_info.c    sdk991111 -O2 -G0
 # exactly; without it the same sources score 560/676 and 175/576.
 nonmatching/boot/__ieee754_expf.c   sdk-divpad as=ee-sdk -O2 -G0
 nonmatching/boot/__ieee754_fmodf.c  sdk-divpad as=ee-sdk -O2 -G0
+
+# Wave 10, route A: two libm bodies whose constants the retail code loads from
+# the shared .rodata pool instead of materialising them in place. They are
+# measured under the neighbouring libm profiles; the campaign pre-links each one
+# alone with its pool pinned, then injects only the resolved .text, because the
+# final link takes retail data from boot_data.o and discards object .rodata.
+nonmatching/boot/__ieee754_logf.c   sdk-divpad as=ee-sdk -O2 -G0
+nonmatching/boot/__kernel_sin.c     sdk991111 as=ee-sdk -O2 -G0
