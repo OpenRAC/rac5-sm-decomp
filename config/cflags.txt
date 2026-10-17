@@ -203,3 +203,45 @@ nonmatching/boot/InitExecPS2.c    sdk991111 -O2 -G0
 # two libm bodies already exact under sdk-divpad byte-identical.
 src/boot/__ieee754_atan2f.c  sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
 nonmatching/boot/__kernel_tanf.c     sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
+
+# Wave 11, route P family: the libc/libm bodies whose 16-byte `sq` save slots
+# come from SN ProDG 3.01 (ee-gcc2953) with the pinned ProDG 2.0 assembler.
+# The pinned chain emits 8-byte `sd` slots and reproduces only part of each
+# body; the same sources under this chain fill their intervals exactly. This
+# also retires the wave-10 "sq wall" for the C-authored members of the family.
+nonmatching/boot/fread.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/fflush.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/__srefill.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/_multadd.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/_calloc_r.c    prodg2953 as=ps2eeas -O2 -G0
+
+# Wave 11, route Q continued: memory-card, libsif, libcd and sibling-call
+# bodies measured exact under the pinned Sony compiler. The SetT2/sn_* family
+# and sceSifSetRpcQueue are the sibling-call (`j`) forms the pinned chain
+# compiles with a frame and a `jal`.
+nonmatching/boot/sceMcClose.c    sdk991111 -O2 -G0
+nonmatching/boot/sceMcSeek.c    sdk991111 -O2 -G0
+nonmatching/boot/sceMcFormat.c    sdk991111 -O2 -G0
+nonmatching/boot/sceMcUnformat.c    sdk991111 -O2 -G0
+nonmatching/boot/sceMcFlush.c    sdk991111 -O2 -G0
+nonmatching/boot/sceMcGetSlotMax.c    sdk991111 -O2 -G0
+nonmatching/boot/sceMcEnd.c    sdk991111 -O2 -G0
+nonmatching/boot/sceSifAllocIopHeap.c    sdk991111 -O2 -G0
+nonmatching/boot/sceSifBindRpc.c    sdk991111 -O2 -G0
+nonmatching/boot/sceCdMmode.c    sdk991111 -O2 -G0
+nonmatching/boot/sceCdReadClock.c    sdk991111 -O2 -G0
+nonmatching/boot/sceSifInitRpc.c    sdk991111 -O2 -G0
+nonmatching/boot/sceClose.c    sdk991111 -O2 -G0
+nonmatching/boot/sceSifSetRpcQueue.c    sdk991111 -O2 -G0
+nonmatching/boot/SetT2_COUNT.c    sdk991111 -O2 -G0
+nonmatching/boot/SetT2_MODE.c    sdk991111 -O2 -G0
+nonmatching/boot/SetT2_COMP.c    sdk991111 -O2 -G0
+nonmatching/boot/sn_reg_frame.c    sdk991111 -O2 -G0
+nonmatching/boot/sn_dereg_frame.c    sdk991111 -O2 -G0
+
+# Wave 11, route Q with the SDK assembler: three C++ runtime helpers and the
+# sceSif command body that need the Sony cc1 and `ee-as-sdk -G0`.
+nonmatching/boot/__eh_rtime_match.c    sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/__throw_type_match.c    sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/dcast__C16__user_type_infoRC9type_infoiPvPC9type_infoT3.c    sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/isceSifSendCmd.c    sdk991111 as=ee-sdk -O2 -G0
