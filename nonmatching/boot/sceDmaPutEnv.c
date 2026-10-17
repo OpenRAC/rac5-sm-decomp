@@ -12,8 +12,12 @@
  * D_CTRL are volatile accesses kept for their side effect only, which is why
  * they survive as dead loads above the four range checks.
  *
- * Source: lombyte-depot src/sdk/dma/sce_dma_reset.c (sceDmaReset) plus the
- * matched body of the same routine in RAC2 (src/core/00127040.c), whose
+ * Research leads: Lombyte's GPL-3.0 sceDmaReset
+ * (https://github.com/lombyte-project/Lombyte/blob/main/src/sdk/dma/sce_dma_reset.c)
+ * and the matched RAC2 body
+ * (https://github.com/OpenRAC/rac2-gc-decomp/blob/master/src/core/00127040.c).
+ * The RAC5 body here was adapted and checked against this game's own bytes;
+ * the RAC2 routine's
  * sceDmaEnv layout and instruction stream this reproduces:
  *   sts/std/mfd/rcyc are the four bytes the tables translate,
  *   express + notify pack D_STAT, tqwc + sqwc pack D_PCR,

@@ -83,8 +83,8 @@ nonmatching/boot/__pack_d.c           as=ee-sdk
 nonmatching/boot/sceKernelGetSystemTimeLow__Fv.c  as=ps2eeas
 
 # Route Q, second batch: libgcc soft-float conversions and comparisons, the
-# C++ runtime type-info accessors, libc entry points and the libsif/libdma
-# bodies the sweep measured exact under the same pinned Sony compiler and the
+# libc entry points and the libsif/libdma bodies the sweep measured exact under
+# the same pinned Sony compiler and the
 # same pinned GNU as. Same negative control: without the selector the pinned
 # chain reaches a fraction of each body (see qretry/sweep_sdk.tsv privately).
 nonmatching/boot/__fixunsdfdi.c    sdk991111 -O2 -G0
