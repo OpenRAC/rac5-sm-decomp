@@ -61,5 +61,5 @@ For C matching, keep the exact entry and loaded program-byte check separate
 from whole-file identity and tool behavior. The `.DVP` data can now be
 regenerated privately for the baseline. This metadata result alone does not
 count a C match. The [boot-only gate](BOOT-MATCH-SCOPE.md) now accepts 61
-reviewed boot placements (2,304 bytes) and requires the entire packaged ELF to
+reviewed boot placements (3,528 bytes) and requires the entire packaged ELF to
 match.
