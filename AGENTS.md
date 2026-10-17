@@ -7,9 +7,15 @@ compiler settings or level-format assumptions.
 - Use only a legally obtained disc, public documentation, licensed code, and
   your own reverse engineering. Never use leaked or NDA source, Sony SDK
   source, samples or headers.
+- A compiler from an SDK may be used as a private build tool; that does not
+  authorize publishing source from the SDK. For reused public code, identify
+  the public upstream version and file, preserve its copyright, license and
+  exception notices, and describe local adaptations. A path into a local SDK
+  source tree is not public provenance. Verify any SDK-bundled GNU routine
+  against a public GNU release before importing it.
 - Never commit disc images, retail executables, extracted levels, disassembly,
-  assets, proprietary tools, build output or secrets. Keep them under the
-  ignored local directories.
+  assets, proprietary tools, build output or secrets. This includes instruction
+  listings inside C comments. Keep them under the ignored local directories.
 - Keep one authored definition per function in `src/`, using C or C++ only
   after the corresponding compiler profile is measured. Put a useful but
   nonmatching attempt in `nonmatching/`; do not count it as a match.

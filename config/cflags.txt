@@ -81,3 +81,26 @@ nonmatching/boot/__pack_d.c           as=ee-sdk
 # the campaign (200 of 411 objects differ), which is why it is selected here for
 # one body rather than pinned as the chain.
 nonmatching/boot/sceKernelGetSystemTimeLow__Fv.c  as=ps2eeas
+
+# Route Q, second batch: libgcc soft-float conversions and comparisons, the
+# libc entry points and the libsif/libdma bodies the sweep measured exact under
+# the same pinned Sony compiler and the
+# same pinned GNU as. Same negative control: without the selector the pinned
+# chain reaches a fraction of each body (see qretry/sweep_sdk.tsv privately).
+nonmatching/boot/__fixunsdfdi.c    sdk991111 -O2 -G0
+nonmatching/boot/__floatdidf.c    sdk991111 -O2 -G0
+nonmatching/boot/__main.c    sdk991111 -O2 -G0
+nonmatching/boot/dpcmp.c    sdk991111 -O2 -G0
+nonmatching/boot/dpdiv.c    sdk991111 -O2 -G0
+nonmatching/boot/dpmul.c    sdk991111 -O2 -G0
+nonmatching/boot/dpsub.c    sdk991111 -O2 -G0
+nonmatching/boot/dptofp.c    sdk991111 -O2 -G0
+nonmatching/boot/dptoli.c    sdk991111 -O2 -G0
+nonmatching/boot/dptoul.c    sdk991111 -O2 -G0
+nonmatching/boot/exit.c    sdk991111 -O2 -G0
+nonmatching/boot/fptodp.c    sdk991111 -O2 -G0
+nonmatching/boot/fptoui.c    sdk991111 -O2 -G0
+nonmatching/boot/litodp.c    sdk991111 -O2 -G0
+nonmatching/boot/ps2fioLseekPartition.c    sdk991111 -O2 -G0
+nonmatching/boot/sceDmaPutEnv.c    sdk991111 -O2 -G0
+nonmatching/boot/sceSifSendCmd.c    sdk991111 -O2 -G0

@@ -12,7 +12,7 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **16,492 boot `.text` bytes in 363 C bodies**
+The current catalogue records **19,580 boot `.text` bytes in 380 C bodies**
 across several code areas, built by the locally reconstructed GNU EE chain and,
 for ten of them, by one of two further pinned compilers
 ([witness evidence](COMPILER-WITNESSES.md)).
@@ -25,7 +25,7 @@ transfer it ends in. Sixty-one reviewed placements (2,304 bytes, starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
-rebuilds all 418 objects from authored C and checks that full link in one run;
+rebuilds all 435 objects from authored C and checks that full link in one run;
 its machine-readable report accepts 61 boot-only placements (2,304 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
@@ -185,6 +185,22 @@ libcd (`sceCdSyncS`), the SN libc tty layer (`read`, `write`), libsif
 (`sceSifSetDma`) and libgcc's soft-float entry `dpadd` — the last one is the
 body earlier batches had parked as unreachable from C because the pinned chain
 allocates 8-byte slots.
+
+**A second batch adds 17 more** (3,088 bytes), measured by sweeping every
+authored body through the pinned Sony compiler and the pinned GNU `as` rather
+than by assuming which families the layout predicts: libgcc's soft-float
+conversions and comparisons (`dpdiv`, `dpmul`, `dpcmp`, `dpsub`, `fptodp`,
+`fptoui`, `litodp`, `dptoli`, `dptoul`, `dptofp`), its 64-bit helpers
+(`__floatdidf`, `__fixunsdfdi`), the runtime entry points `__main` and `exit`,
+`ps2fioLseekPartition`, `sceSifSendCmd` and `sceDmaPutEnv`. Each is byte-exact
+under `sdk991111 -O2 -G0`, and each scores a fraction of itself under the
+pinned chain. Two more measured exact, `isceSifSendCmd` and
+`sceSifRemoveCmdHandler`, are **not** integrated: a following function entry
+sits inside their interval's alignment padding, and the campaign only claims
+bytes a compiled body owns. The C++ RTTI accessors (`__tf*`) are exact as well
+and stay out for now — their external names are the demangled
+`... type_info node` spellings, which neither the retail symbol table nor the
+campaign's linker symbols carry.
 
 Controls for this route:
 
@@ -408,7 +424,7 @@ uncatalogued span rather than as part of the body.
 
 A span whose compiled object exposes no function symbol in the linked image is
 reported by the catalogue tool and left uncatalogued rather than counted; 55 of
-the 418 spans are in that state today, and the complete-program gate still
+the 435 spans are in that state today, and the complete-program gate still
 checks their bytes. They are the owners whose name is also listed in
 `LINKER_SYMBOLS` (`tools/boot_c_campaign.py`): the linker script definition is
 absolute, so the linked image keeps the address but exposes no function symbol
