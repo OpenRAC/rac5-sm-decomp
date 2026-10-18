@@ -12,7 +12,7 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **72,700 boot `.text` bytes in 618 C bodies**
+The current catalogue records **75,532 boot `.text` bytes in 619 C bodies**
 across several code areas, built by the locally reconstructed GNU EE chain and,
 for 134 of them, by one of three further pinned compilers
 ([witness evidence](COMPILER-WITNESSES.md)).
@@ -26,7 +26,7 @@ starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
-rebuilds all 618 objects from authored C and checks that full link in one run;
+rebuilds all 619 objects from authored C and checks that full link in one run;
 its machine-readable report accepts 561 boot-only placements (57,420 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
@@ -527,5 +527,5 @@ directory is private (`/root/gnu-ee-trial-profile`), built by copying the
 pinned chain's `cpp`, the trial `cc1`, and the Sony SDK `xgcc` driver whose
 `-B` path selects them; it is not committed. Controls: the three sources fail
 under the pinned chain, the gate recompiles every other object with its
-declared chain and reproduces all 615 prior object pins unchanged, and the
+declared chain and reproduces all other object pins unchanged, and the
 complete ELF is byte-exact.

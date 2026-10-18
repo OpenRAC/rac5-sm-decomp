@@ -232,8 +232,21 @@ def cc1_flags(profile: dict, per_source: dict[str, cflags.Entry],
 
 def compiler_flags(extra: dict, per_source: dict[str, cflags.Entry],
                    source: Path) -> list[str]:
-    """Flags an extra compiler is run with for one source, in command order."""
-    return [*extra["flags"]["driver"], *cflags.for_source(per_source, source).flags]
+    """Flags an extra compiler is run with for one source, in command order.
+
+    A relative ``-I`` flag is resolved against the repository root: the driver
+    runs from a staging directory, so a repository-relative include path would
+    otherwise be looked up next to the staged source.
+    """
+    entry = cflags.for_source(per_source, source)
+    flags = []
+    for flag in entry.flags:
+        if flag.startswith("-I") and len(flag) > 2 and not Path(flag[2:]).is_absolute():
+            resolved = (ROOT / flag[2:]).resolve()
+            flag = "-I" + (windows_path(resolved)
+                           if extra["host"] == "windows" else str(resolved))
+        flags.append(flag)
+    return [*extra["flags"]["driver"], *flags]
 
 
 def run(command: list[str], cwd: Path, log: Path, stdout: Path | None = None) -> None:
@@ -282,11 +295,12 @@ def compile_extra(extra: dict, per_source: dict[str, cflags.Entry], source: Path
     libexec = (windows_path(extra["libexec"]) if extra["host"] == "windows"
                else str(extra["libexec"]))
     prefix = [str(extra["driver"].resolve()), f"-B{libexec}/"]
-    run([*prefix, "-E", source.name], staged, output / f"{item.name}.cpp.log",
+    flags = compiler_flags(extra, per_source, source)
+    pre = [flag for flag in flags if flag.startswith(("-I", "-D", "-U"))]
+    run([*prefix, *pre, "-E", source.name], staged, output / f"{item.name}.cpp.log",
         output / f"{item.name}.i")
     require_c_source((output / f"{item.name}.i").read_text(encoding="utf-8"),
                      f"{item.name} preprocessed input")
-    flags = compiler_flags(extra, per_source, source)
     run([*prefix, *flags, source.name, "-o", assembly.name], staged,
         output / f"{item.name}.driver.log")
     if not assembly.is_file():

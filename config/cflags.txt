@@ -319,7 +319,7 @@ nonmatching/boot/sceTtyInit.c    sdk991111 as=ee-sdk -O2 -G0
 
 # Wave 12 pools: the printf scanf body needs the ProDG 3.01 compiler with the
 # SDK assembler; its jump tables are placed by the campaign's pool prelink.
-nonmatching/boot/__svfscanf.c    prodg2953 as=ee-sdk -O2 -G0
+nonmatching/boot/__svfscanf.c    prodg2953 as=ee-sdk -O2 -G0 -Ithird_party/newlib-1.8.2/newlib/libc/include -Ithird_party/newlib-1.8.2/newlib/libc/stdio
 
 # Wave 12 pool .data: the wide-character state body carries both a .rodata
 # constant and its initialised .data tables; the campaign prelink now places

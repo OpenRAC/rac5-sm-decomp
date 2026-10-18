@@ -62,3 +62,18 @@ The relevant helper body is unchanged between that public release
 and the local research copy. The original David M. Gay / AT&T
 permission notice is retained in the adapted source. RAC5-specific
 structure offsets were checked against the pinned retail boot.
+
+## Vendored newlib 1.8.2 headers
+
+`third_party/newlib-1.8.2/` carries the public newlib 1.8.2 headers
+(`newlib/libc/include/`, the `newlib/libc/stdio/` private headers `local.h`,
+`floatio.h`, `fvwrite.h`) and the release's `COPYING.NEWLIB`, unmodified. The
+files come from the public release tarball
+`https://sourceware.org/pub/newlib/newlib-1.8.2.tar.gz`
+(SHA-256 `e52667ed78595dd1919f4a303f8b658b1d57b926e085e8021851b279143cf3ef`).
+
+`nonmatching/boot/__svfscanf.c` is the verbatim `newlib/libc/stdio/vfscanf.c`
+lines 20-801 from that release (diff empty against the public tarball); its
+file header records the equivalence and the MB_CAPABLE define the Sony EE libc
+was built with. The vendored headers are used only at preprocess time by the
+private boot gate through repository-relative `-I` flags.

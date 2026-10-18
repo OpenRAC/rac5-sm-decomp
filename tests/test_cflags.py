@@ -185,6 +185,16 @@ class CFlagsTests(unittest.TestCase):
         self.assertEqual(compile_boot_trial.compiler_flags(extra, entries, source),
                          ["-S", "-O2", "-G0"])
 
+    def test_repository_relative_include_flags_resolve_against_the_root(self) -> None:
+        source = cflags.ROOT / "nonmatching/boot/__svfscanf.c"
+        include = "third_party/newlib-1.8.2/newlib/libc/include"
+        entries = {source.relative_to(cflags.ROOT).as_posix():
+                   cflags.Entry(SECOND, ("-O2", "-I" + include))}
+        extra = {"host": "linux", "flags": {"driver": ["-S"], "as": []}}
+        self.assertEqual(
+            compile_boot_trial.compiler_flags(extra, entries, source),
+            ["-S", "-O2", "-I" + str((cflags.ROOT / include).resolve())])
+
     def test_an_unpinned_or_unprovided_second_compiler_is_rejected(self) -> None:
         profile = json.loads(compile_boot_trial.PROFILE.read_text(encoding="utf-8"))
         with self.assertRaisesRegex(ValueError, "pins no compiler"):

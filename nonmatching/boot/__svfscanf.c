@@ -1,7 +1,11 @@
 /* RAC5 boot SCUS_976.15 - __svfscanf @ 0x01EC7660 (2832 bytes).
- * Provenance: newlib 1.8.0 libc/stdio/vfscanf.c lines 20-801 (verbatim
- * __svfscanf body; __sccl and the file header comments excluded). Extracted
- * 2026-10-17 wave 11 lot b12 from the SDK compiler build tree.
+ * Provenance: newlib 1.8.2 libc/stdio/vfscanf.c lines 20-801 (verbatim
+ * __svfscanf body; __sccl and the file header comments excluded).
+ * Equivalence established 2026-10-18 against the public release tarball
+ * https://sourceware.org/pub/newlib/newlib-1.8.2.tar.gz
+ * (sha256 e52667ed78595dd1919f4a303f8b658b1d57b926e085e8021851b279143cf3ef):
+ * diff of this body against that file is empty. It is preprocessed with the
+ * vendored public headers under third_party/newlib-1.8.2 only.
  */
 /* The Sony EE libc is built with multibyte support; the retail body contains
  * the _mbtowc_r path of vfscanf.c (the non-MB variant is 64 bytes smaller).
