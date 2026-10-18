@@ -28,6 +28,7 @@ SONY = "sdk991111"
 DIVPAD = "sdk-divpad"
 SDK_AS = "ee-sdk"
 PS2_AS = "ps2eeas"
+SPAN5_AS = "span5"
 
 
 class CFlagsTests(unittest.TestCase):
@@ -334,7 +335,7 @@ class CFlagsTests(unittest.TestCase):
                 int(pinned["tools"]["assembler_sha256"], 16)
                 self.assertGreater(len(pinned["provenance"]), 80)
         self.assertEqual(cflags.pinned_assemblers(),
-                         (cflags.DEFAULT_ASSEMBLER, SDK_AS, PS2_AS))
+                         (cflags.DEFAULT_ASSEMBLER, SDK_AS, PS2_AS, SPAN5_AS))
         # Ps2EeAs is one binary with one identity: the pin an entry selects must
         # be the same file the boot assembly base and the campaign linker pin.
         self.assertEqual(profile["extra_assemblers"][PS2_AS]["tools"]["assembler_sha256"],
@@ -343,6 +344,10 @@ class CFlagsTests(unittest.TestCase):
         # it is run with -G0, and that section does not link in this campaign.
         self.assertEqual(profile["extra_assemblers"][SDK_AS]["flags"]["as"], ["-G0"])
         self.assertEqual(profile["extra_assemblers"][PS2_AS]["flags"]["as"], [])
+        # The span-5 assembler is the GNU EE as rebuilt with the retail R5900
+        # short-loop padding pass; like the SDK as it needs -G0 so a float
+        # immediate is inlined instead of pooled in a lit4 section.
+        self.assertEqual(profile["extra_assemblers"][SPAN5_AS]["flags"]["as"], ["-G0"])
         self.assertTrue(cflags.DEFAULT_ENTRY.assembler_pinned)
         self.assertFalse(cflags.Entry(cflags.DEFAULT_COMPILER, (), SDK_AS).assembler_pinned)
 

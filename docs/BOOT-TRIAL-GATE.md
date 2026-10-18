@@ -14,8 +14,8 @@ by a line feed, so a CRLF checkout turns it into `stray '\' in program` on any
 body with a macro continuation. `.gitattributes` pins `*.c` and `*.h` to LF for
 that reason; a Windows checkout without it cannot reproduce the gate.
 
-The current campaign contains 635 compiler-produced C objects. Its verified
-catalogue records 635 global function bodies (80,548 bytes plus 1,228 zero alignment
+The current campaign contains 651 compiler-produced C objects. Its verified
+catalogue records 651 global function bodies (85,500 bytes plus 1,276 zero alignment
 bytes); no object span is left without a usable global-function extent.
 These counts are distinct from the 621 accepted boot placements (79,776 bytes).
 Per-source compiler and options measured for one file are listed in

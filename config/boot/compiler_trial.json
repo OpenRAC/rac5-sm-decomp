@@ -767,6 +767,21 @@
       "flags": {
         "as": []
       }
+    },
+    "span5": {
+      "id": "rac5-boot-ee-as-span5-20261018",
+      "provenance": "The GNU EE assembler rebuilt from the GNU EE binutils source tree (gnu-ee-binutils-gcc-1.1, sha256 1f518043...) with the retail R5900 short-loop padding pass reimplemented locally (w14/A1/patch/0001-rac5-span5-source.patch, 194 lines): pads a short forward loop to a five-instruction target-to-branch span and inserts the load-to-base nop a branch target label needs. Its behaviour was measured against ee-as-sdk on the pinned corpus: 51 of 52 objects identical, the one difference a nop moved from 0x91C to 0x95C in __kernel_rem_pio2 (documented in w14/A1/RAPPORT.md). External binary, never rebuilt here and never committed.",
+      "status": "measured per source; boot-only",
+      "host": "linux",
+      "tools": {
+        "assembler": "as-rac5span5",
+        "assembler_sha256": "f6aab658cf04b7a4ecf1e14ad2a01b6551a8a913c6c3f13a0e847f73a1d24984"
+      },
+      "flags": {
+        "as": [
+          "-G0"
+        ]
+      }
     }
   },
   "object_sha256_alternates": {
@@ -789,5 +804,5 @@
       "9de19e599766eadb98ea0c09327018a48f6856a130ba8388fff794e7e59717c1"
     ]
   },
-  "expected_objects": 635
+  "expected_objects": 651
 }
