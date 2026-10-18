@@ -656,6 +656,27 @@
         ],
         "as": []
       }
+    },
+    "gnu-ee-trial": {
+      "id": "rac5-boot-gnu-ee-trial-20261015",
+      "provenance": "The same locally reconstructed GNU EE chain as the pinned compiler (compiler-no-pad-20261015, the GNU 2.9-ee build described in docs/COMPILER-STATUS.md), built WITHOUT the RAC2 'increasing callee-saved saves' patch that the pinned cc1 carries. Stage directory holds that build's cc1 (sha256 37704f48...), the pinned chain's cpp and the Sony SDK xgcc driver, whose -B path selects this cc1. External binaries; pinned per source, never rebuilt here and never committed.",
+      "status": "measured per source; boot-only",
+      "host": "linux",
+      "tools": {
+        "driver": "xgcc",
+        "driver_sha256": "4c8149cc96021253ac9863d670ada372e29f71af80ae91934c195cc4c6a3b2d6",
+        "libexec": ".",
+        "cpp": "cpp",
+        "cpp_sha256": "2ac3d8d3ca177e6705ac2cbdd1bd9e9a7181ac3e40f6230dea6875c3218ec155",
+        "cc1": "cc1",
+        "cc1_sha256": "37704f483fba7269791576879b3573445cd455ce0473e6d58a3bcceb45105f95"
+      },
+      "flags": {
+        "driver": [
+          "-S"
+        ],
+        "as": []
+      }
     }
   },
   "extra_assemblers": {
@@ -708,5 +729,5 @@
       "9de19e599766eadb98ea0c09327018a48f6856a130ba8388fff794e7e59717c1"
     ]
   },
-  "expected_objects": 613
+  "expected_objects": 618
 }

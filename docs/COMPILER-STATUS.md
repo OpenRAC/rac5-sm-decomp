@@ -12,7 +12,7 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **71,032 boot `.text` bytes in 613 C bodies**
+The current catalogue records **72,700 boot `.text` bytes in 618 C bodies**
 across several code areas, built by the locally reconstructed GNU EE chain and,
 for 134 of them, by one of three further pinned compilers
 ([witness evidence](COMPILER-WITNESSES.md)).
@@ -26,7 +26,7 @@ starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
-rebuilds all 613 objects from authored C and checks that full link in one run;
+rebuilds all 618 objects from authored C and checks that full link in one run;
 its machine-readable report accepts 561 boot-only placements (57,420 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
@@ -506,3 +506,26 @@ state and lost it again when its `LINKER_SYMBOLS` line was dropped, which is
 what placed it in the catalogue. Relabelling the remaining 55, and confirming
 that none of them is referenced only through that absolute definition, is open
 work.
+
+## A third GNU chain: the pre-patch trial cc1
+
+The three Gu rotation helpers (`RotateX`/`RotateY`/`RotateZ`, 260 bytes each)
+reproduce the retail **descending** callee-saved save order (`sd $s1,0x0` then
+`sd $ra,0x8` for the smallest frame) only with a second locally built GNU 2.9
+`cc1` (sha256 `37704f48…`) — the same reconstructed EE source tree as the
+pinned chain, built **without** the RAC2 "increasing callee-saved saves" patch
+that the pinned `cc1` (sha256 `9614ecee…`) carries. The measured cause is that
+patch: with it, `save_restore_insns` walks the save registers upward, and the
+prologues of these three functions come out in the opposite order (252/260,
+252/260 and 252/260 bytes equal). `RotateY` additionally needs its three
+product terms written `m0*s + m8*c`, which fixes the temporary order.
+
+The profile is a per-source selector (`gnu-ee-trial`, pinned in
+`config/boot/compiler_trial.json` with the driver, `cpp` and `cc1` SHA-256
+values) and only the three files carry a `config/cflags.txt` line. The stage
+directory is private (`/root/gnu-ee-trial-profile`), built by copying the
+pinned chain's `cpp`, the trial `cc1`, and the Sony SDK `xgcc` driver whose
+`-B` path selects them; it is not committed. Controls: the three sources fail
+under the pinned chain, the gate recompiles every other object with its
+declared chain and reproduces all 615 prior object pins unchanged, and the
+complete ELF is byte-exact.

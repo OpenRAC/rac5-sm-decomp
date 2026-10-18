@@ -54,7 +54,8 @@ class CFlagsTests(unittest.TestCase):
         for key in ("driver_sha256", "cpp_sha256", "cc1_sha256"):
             self.assertEqual(len(pinned["tools"][key]), 64)
         self.assertEqual(cflags.pinned_compilers(),
-                         (cflags.DEFAULT_COMPILER, SECOND, DIVPAD, SONY))
+                         (cflags.DEFAULT_COMPILER, "gnu-ee-trial", SECOND,
+                          DIVPAD, SONY))
         self.assertTrue(cflags.Entry(SECOND, ("-O2",)).compiler != cflags.DEFAULT_COMPILER)
         self.assertTrue(cflags.DEFAULT_ENTRY.pinned)
 

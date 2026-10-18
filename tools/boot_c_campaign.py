@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import struct
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -636,6 +637,10 @@ class Replacement:
     # discards each replacement's .rodata, so such a body is pre-linked alone
     # (see prelink_pool_body) and only its resolved .text joins the campaign.
     pool: int | None = None
+    # Same mechanism for a body that also carries initialised data (a table of
+    # wide-character state, for instance): the object's .data is placed at the
+    # measured retail base and its bytes are checked before the body is used.
+    data: int | None = None
 
 
 def object_digest_matches(item: Replacement, observed: str,
@@ -959,6 +964,9 @@ REPLACEMENTS = (
     Replacement("PAR_ReserveMemory__Fi", 0x01E7A360, 0x01E7A3A0,
                 "fe21d25fc848ffeb612dc2bf8a18405e4f550bc1b0a05f0aca9ef309b3fa0e36",
                 "be37d8ed70731e18f2a1a6298df600d25a6d4fdea8db24d92e702789a6dee2fe"),
+    Replacement("PAR_CreateSystemInternal__FP10PAR_SystemUiPFPviPC9PAR_GroupPC29PAR_UpdateAndTesselateContext_iiiiPFP9PAR_Group_v", 0x01E7A590, 0x01E7A5D0,
+                "d8c93341620ab920db357c0d1c5a646c233c55de78d40bb6540bf823e0d4d9f0",
+                "537b3744c9807a182f006b086f2839eeeb5aadbd1d58a00682eff4e15bffb681"),
     Replacement("PAR_ClearGroup__FP9PAR_Group", 0x01E7AED8, 0x01E7AFF8,
                 "c788f1c8e7b27c47f9f874c636df99c1052249168a3cc108fb487052cc061487",
                 "3c6d4edfcd68274c89088a3e9d3ebc2c22023caea505402f11bd51bce1cc5fa4"),
@@ -1100,6 +1108,15 @@ REPLACEMENTS = (
     Replacement("LoadMatrix__Q34scee3Psp3GumPC7MATRIX4", 0x01E81CB8, 0x01E81D58,
                 "ce7f57dc50c1f431a44df3ae66b85ad204e7aa25826847f1a0be9a5c53e3dea2",
                 "94c3601bc2c9ff5ca161d63a8ac48f57dd7ad79ba37b923bb48218cd33eaa630"),
+    Replacement("RotateX__Q34scee3Psp3Gumf", 0x01E81F58, 0x01E82060,
+                "a0dfb80228b76fc0f7c9a629256491a0aa09dfa8a3237236db4d56fb7a2d2efa",
+                "2ff9334cf3089afb113a11e0ba64b88e5835be6e414d7a80b454bb8572e0c1be"),
+    Replacement("RotateY__Q34scee3Psp3Gumf", 0x01E82060, 0x01E82168,
+                "1f040d431e43d2d42dce6a7bbb993ed49a1f6fe62c9c4fb24b78ce963f1ddecb",
+                "ca08efa957080d28a0a9a4b9e281eb502ac21ed4e5a92e20c987329abb2953ff"),
+    Replacement("RotateZ__Q34scee3Psp3Gumf", 0x01E82168, 0x01E82270,
+                "498c91d45efe2c5e07a78ebf93b5aa69c2847fcd3557761d73bcfc86957d6e30",
+                "19c7d61e30c4200b376d6eb8995918b5830fe7b7400f997d5b60318869769b74"),
     Replacement("Translate__Q34scee3Psp3GumPC14ScePspFVector3", 0x01E82270, 0x01E82350,
                 "52c322a7be165b79fd80c6308d4e47ea92a587bf41aebee09a8ba08647cce287",
                 "1007cc18239f1ea025e564435276e556624b876bb61fef4b54d2397746141a04"),
@@ -2292,6 +2309,10 @@ REPLACEMENTS = (
     Replacement("atoi", 0x01EC83D8, 0x01EC8400,
                 "c5a30378b7d88429f5334114cdf639cc2cf742ab57ba7863f105a67e3cb2c847",
                 "f71b668bc63142ea6b2e12c906b72b60b8e65b86aea337ff3056ed5bd4afd3bc"),
+    Replacement("_mbtowc_r", 0x01EC8498, 0x01EC87D8,
+                "a2736d107c3f0e410c80f9d84550912c96ba8a8cb973e761e4ad2d626c39ad81",
+                "f66a4ee130d088bae0e61887d08db7289299f31d2463d449f9f8201ee1bdd2f7",
+                0x01F26BC0, 0x01EFE730),
     Replacement("__malloc_unlock", 0x01EC8838, 0x01EC8878,
                 "6dff011bc5976a21e66ae512ca4e8eeda6b0b2da05d5795c912cfdf501217ce2",
                 "4cab41cb160877db21e36741f1b66b2d1ff069f79fe9b69de5f2c8a55db69474"),
@@ -2675,10 +2696,10 @@ LINKER_SYMBOLS = (
     "MatrixMode__Q34scee3Psp3GumQ44scee3Psp2Gu11EMatrixType = 0x01E81BD8;",
     "Memclr = 0x01E9CDB0;",
     "PAR_CreateGroup__FP9PAR_Groupi13PAR_BlockMode = 0x01E7AE80;",
-    "PAR_CreateSystemInternal__FP10PAR_SystemUiPFPviPC9PAR_GroupPC29PAR_UpdateAndTesselateContext_iiiiPFP9PAR_Group_v = 0x01E7A590;",
     "PAR_FreePool1 = 0x01E7B998;",
     "PAR_FreePool2 = 0x01E7BB20;",
     "PAR_RegisterSystem__FPC10PAR_System = 0x01E7A768;",
+    "PAR_defaultCallbacks = 0x01F1E968;",
     "PS2HEAP_Free__FPv = 0x01E8FBE8;",
     "PS2HEAP_Init__Fv = 0x01E8F970;",
     "PS2HEAP_Malloc__FUi = 0x01E8FA28;",
@@ -3362,15 +3383,37 @@ def split_assembly(assembly: str) -> tuple[str, str, list[str]]:
             skipped_labels)
 
 
-def boot_data_slice(boot: Path, address: int, size: int) -> bytes:
-    """Retail bytes at `address` inside the measured .rodata section."""
-    if not RODATA_ADDRESS <= address or address + size > RODATA_ADDRESS + RODATA_SIZE:
-        raise ValueError(f"pool range 0x{address:08X}+{size} lies outside retail .rodata")
+def boot_data_slice(boot: Path, section_name: str, address: int, size: int) -> bytes:
+    """Retail bytes at `address` inside a measured data section."""
     report = inspect_elf(boot)
-    section = next(item for item in report["sections"] if item["name"] == ".rodata")
+    section = next(item for item in report["sections"] if item["name"] == section_name)
     base = int(section["virtual_address"], 16)
+    if address < base or address + size > base + int(section["size"]):
+        raise ValueError(f"{section_name} range 0x{address:08X}+{size} lies outside "
+                         f"retail {section_name}")
     offset = int(section["file_offset"]) + address - base
     return boot.read_bytes()[offset:offset + size]
+
+
+def object_function_size(path: Path, name: str) -> int:
+    """Size of `name` in an ELF object's symbol table."""
+    data = path.read_bytes()
+    header = struct.Struct("<HHIIIIIHHHHHH")
+    section = struct.Struct("<IIIIIIIIII")
+    symbol = struct.Struct("<IIIBBH")
+    (_, _, _, _, _, shoff, _, _, _, _, shentsize, shnum, _) = header.unpack_from(data, 16)
+    headers = [section.unpack_from(data, shoff + index * shentsize)
+               for index in range(shnum)]
+    for _, kind, _, _, offset, size, link, _, _, entsize in headers:
+        if kind != 2 or entsize != symbol.size or link >= shnum or headers[link][1] != 3:
+            continue
+        strings = data[headers[link][4]:headers[link][4] + headers[link][5]]
+        for at in range(offset, offset + size, entsize):
+            name_at, _, value_size, info, _, section_index = symbol.unpack_from(data, at)
+            end = strings.index(b"\0", name_at)
+            if strings[name_at:end].decode("ascii", "replace") == name:
+                return value_size
+    raise ValueError(f"{name}: no function symbol in {path.name}")
 
 
 def prelink_pool_body(item: Replacement, linker: Path, assembler: Path,
@@ -3397,7 +3440,10 @@ def prelink_pool_body(item: Replacement, linker: Path, assembler: Path,
         known[other.name] = line
     script = [*known.values(), "SECTIONS {", f"  . = 0x{item.start:08X};",
               f"  .text : {{ {item.name}.o(.text) }}",
-              f"  .rodata 0x{item.pool:08X} : {{ {item.name}.o(.rodata) }}", "}"]
+              f"  .rodata 0x{item.pool:08X} : {{ {item.name}.o(.rodata) }}"]
+    if item.data is not None:
+        script.append(f"  .data 0x{item.data:08X} : {{ {item.name}.o(.data) }}")
+    script.append("}")
     (output / f"{item.name}.pool.ld").write_text("\n".join(script) + "\n",
                                                  encoding="ascii", newline="\n")
     run_tool([str(linker.resolve()), "-T", f"{item.name}.pool.ld", "-o",
@@ -3417,9 +3463,19 @@ def prelink_pool_body(item: Replacement, linker: Path, assembler: Path,
         raise ValueError(f"{item.name}: pre-linked layout differs from the pinned interval")
     image = elf.read_bytes()
     pool_bytes = image[int(pool["file_offset"]):int(pool["file_offset"]) + pool["size"]]
-    if pool_bytes != boot_data_slice(boot, item.pool, pool["size"]):
+    if pool_bytes != boot_data_slice(boot, ".rodata", item.pool, pool["size"]):
         raise ValueError(f"{item.name}: pre-linked pool differs from the pinned retail .rodata")
+    if item.data is not None:
+        data = next((section for section in report["sections"]
+                     if section["name"] == ".data"), None)
+        if data is None or int(data["virtual_address"], 16) != item.data:
+            raise ValueError(f"{item.name}: pre-linked .data missing or misplaced")
+        data_bytes = image[int(data["file_offset"]):int(data["file_offset"]) + data["size"]]
+        if data_bytes != boot_data_slice(boot, ".data", item.data, data["size"]):
+            raise ValueError(f"{item.name}: pre-linked .data differs from the pinned retail .data")
     body = image[int(text["file_offset"]):int(text["file_offset"]) + text["size"]]
+    body_size = object_function_size(output / f"{item.name}.o", item.name)
+    body = body[:body_size]
     source = [".set noat", ".section .text", f".globl {item.name}",
               f".ent {item.name}", f"{item.name}:"]
     source += [f"    .word 0x{int.from_bytes(body[at:at + 4], 'little'):08X}"

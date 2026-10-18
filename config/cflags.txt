@@ -320,3 +320,17 @@ nonmatching/boot/sceTtyInit.c    sdk991111 as=ee-sdk -O2 -G0
 # Wave 12 pools: the printf scanf body needs the ProDG 3.01 compiler with the
 # SDK assembler; its jump tables are placed by the campaign's pool prelink.
 nonmatching/boot/__svfscanf.c    prodg2953 as=ee-sdk -O2 -G0
+
+# Wave 12 pool .data: the wide-character state body carries both a .rodata
+# constant and its initialised .data tables; the campaign prelink now places
+# and checks both against the retail sections.
+nonmatching/boot/_mbtowc_r.c    prodg2953 as=ps2eeas -O2 -G0
+
+# Wave 12 compiler-profile study: the three Gu rotation helpers reproduce the
+# retail descending callee-saved save order only with the trial GNU 2.9 cc1
+# built without the RAC2 "increasing saves" patch; the pinned cc1 keeps that
+# patch and fails them (252/260 etc.). The profile is selected per source, so
+# no other body is affected; the complete gate rechecks every pin.
+nonmatching/boot/RotateX__Q34scee3Psp3Gumf.c    gnu-ee-trial as=ee-sdk -O2 -G0
+nonmatching/boot/RotateY__Q34scee3Psp3Gumf.c    gnu-ee-trial as=ee-sdk -O2 -G0
+nonmatching/boot/RotateZ__Q34scee3Psp3Gumf.c    gnu-ee-trial as=ee-sdk -O2 -G0
