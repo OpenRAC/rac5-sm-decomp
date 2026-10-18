@@ -52,7 +52,7 @@
    file exactly from the linked load image and numeric metadata.
    The [boot gate](BOOT-TRIAL-GATE.md) now rebuilds all C objects from
    SHA-pinned local tools and checks the complete load image reproducibly.
-   267 reviewed boot placements are accepted under this limited profile;
+   561 reviewed boot placements are accepted under this limited profile;
    level programs and the original compiler identity remain open.
    The [VU overlay audit](DVP-OVERLAYS.md) privately reproduces the 31 DVP
    sections while preserving the exact load segment. An older direct SN-linker
