@@ -8,7 +8,7 @@
  * Derived from the RAC1 decompilation (src/sdk/storage/cd_check_ncmd.c), which
  * is the same Sony libcdvd source under the same 2.9-ee compiler.  RAC5 drops
  * the ReferThreadStatus() bookkeeping that RAC1 keeps after the socket store,
- * and the retry spin is 0x10000 iterations, not 0x100000:
+ * and the retry spin is 0x100000 iterations, not 0x10000:
  *
  *   0x01EC289C  lui   $s0, 0x1F0 / lw $a0, -0x38D8($s0)   cd_sem
  *   0x01EC28B4  beq   $v1, $v0  (sem == PollSema(sem)) -> taken path
