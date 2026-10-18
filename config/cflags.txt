@@ -288,3 +288,31 @@ src/boot/ps2fioRebootIop.c    prodg2953 as=ps2eeas -O2 -G0
 src/boot/ps2fioSync.c    prodg2953 as=ps2eeas -O2 -G0
 src/boot/ps2fioUmountPartition.c    prodg2953 as=ps2eeas -O2 -G0
 src/boot/ps2fioUnformatDevice.c    prodg2953 as=ps2eeas -O2 -G0
+
+# Wave 12 backlog: the newlib/libm members whose 16-byte sq slots and short
+# loop padding come from SN ProDG 3.01 with the pinned ProDG 2.0 assembler.
+# qsort is exact only at -O3 (the retail build inlines med3/swapfunc).
+nonmatching/boot/_strtol_r.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/_strtoul_r.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/_b2d.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/_d2b.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/sn_floor.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/sn_log10.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/sn_log.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/qsort.c    prodg2953 as=ps2eeas -O3 -G0
+nonmatching/boot/_malloc_trim_r.c    prodg2953 as=ps2eeas -O2 -G0
+nonmatching/boot/ps2fioLoadExec.c    prodg2953 as=ps2eeas -O2 -G0
+
+# Wave 12 backlog: the libcd/sif/kernel bodies exact under the pinned Sony
+# compiler, and the libgcc throw helper that needs it too.
+nonmatching/boot/sceSifRebootIop.c    sdk991111 -O2 -G0
+nonmatching/boot/_InitSys.c    sdk991111 -O2 -G0
+nonmatching/boot/_sceCd_cd_callback.c    sdk991111 -O2 -G0
+nonmatching/boot/sceCdNcmdDiskReady.c    sdk991111 -O2 -G0
+nonmatching/boot/sceCdSync.c    sdk991111 -O2 -G0
+nonmatching/boot/sceOpen.c    sdk991111 -O2 -G0
+nonmatching/boot/__sjpopnthrow.c    sdk991111 -O2 -G0
+
+# Wave 12 backlog: the tty init body, exact under the Sony compiler with the
+# SDK assembler.
+nonmatching/boot/sceTtyInit.c    sdk991111 as=ee-sdk -O2 -G0
