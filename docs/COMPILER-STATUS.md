@@ -27,7 +27,7 @@ starting with
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
 rebuilds all 651 objects from authored C and checks that full link in one run;
-its machine-readable report accepts 621 boot-only placements (79,776 bytes) after
+its machine-readable report accepts 637 boot-only placements (84,728 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
 `nop`. An [isolated RAC5 short-loop threshold trial](COMPILER-LOOP-TRIAL.md)

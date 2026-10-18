@@ -6,7 +6,7 @@
  * the zero-division guard), the power loop uses its own y9 and the 5th argument
  * y is what lands in _x[0], then 9-digit chunks through _multadd(a2=10).
  * Retail: 0x01ECF9A0, interval 312 bytes. Toolchain: SN ProDG 3.01 ee-gcc2953
- * (GCC 2.95.3) -O2 -G0, Ps2EeAs.exe, SN ld.exe.
+ * (GCC 2.95.3) -O2 -G0, span5 assembler (-G0), SN ld.exe.
  */
 struct _reent;
 

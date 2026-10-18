@@ -1,6 +1,6 @@
 /* __mdiff -- David M. Gay mprec diff, SDK form (sdk/library/mdiff.c).
  * Provenance: newlib libc/stdlib/mprec.c `diff`; measured compiler SN ProDG
- * 3.01 ee-gcc2953 (GCC 2.95.3) + Ps2EeAs 2.0, -O2 -G0. */
+ * 3.01 ee-gcc2953 (GCC 2.95.3) + span5 assembler (-G0), -O2 -G0. */
 typedef signed char s8;
 typedef unsigned char u8;
 typedef short s16;
