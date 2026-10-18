@@ -334,14 +334,14 @@ src/boot/_mbtowc_r.c    prodg2953 as=ps2eeas -O2 -G0
 src/boot/RotateX__Q34scee3Psp3Gumf.c    gnu-ee-trial as=ee-sdk -O2 -G0
 src/boot/RotateY__Q34scee3Psp3Gumf.c    gnu-ee-trial as=ee-sdk -O2 -G0
 src/boot/RotateZ__Q34scee3Psp3Gumf.c    gnu-ee-trial as=ee-sdk -O2 -G0
-nonmatching/boot/_sceCd_ncmd_prechk.c    sdk991111 as=ee-sdk -O2 -G0
-nonmatching/boot/_sceCd_scmd_prechk.c    sdk991111 as=ee-sdk -O2 -G0
-nonmatching/boot/scePadSetActAlign.c    sdk991111 as=ee-sdk -O2 -G0
-nonmatching/boot/MCPTRANS_Fade_Init__Fv.c    gnu-ee-trial -O2 -G0
+src/boot/_sceCd_ncmd_prechk.c    sdk991111 as=ee-sdk -O2 -G0
+src/boot/_sceCd_scmd_prechk.c    sdk991111 as=ee-sdk -O2 -G0
+src/boot/scePadSetActAlign.c    sdk991111 as=ee-sdk -O2 -G0
+src/boot/MCPTRANS_Fade_Init__Fv.c    gnu-ee-trial -O2 -G0
 nonmatching/boot/__frame_state_for.c    sdk991111 -O2 -G0
 nonmatching/boot/scePadGetState.c    sdk991111 -O2 -G0
 nonmatching/boot/sceMcSync.c    sdk991111 -O2 -G0
-nonmatching/boot/powf.c    sdk991111 as=ee-sdk -O2 -G0
-nonmatching/boot/scalbn.c    sdk991111 as=ee-sdk -O2 -G0
+src/boot/powf.c    sdk991111 as=ee-sdk -O2 -G0
+src/boot/scalbn.c    sdk991111 as=ee-sdk -O2 -G0
 nonmatching/boot/__ieee754_asinf.c    sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
 nonmatching/boot/add_separators.c    prodg2953 as=ps2eeas -O2 -G0
