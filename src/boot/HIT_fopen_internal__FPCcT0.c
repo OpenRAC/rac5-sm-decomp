@@ -1,7 +1,7 @@
 /* w11/b01 — HIT_fopen_internal__FPCcT0
- * Reconstructed from the retail disassembly.  Mode strings at 0x01F1F548
- * (g_modeRT,g_modeWT,g_modeAT,"r","w","a"); two per-fd flag bytes at 0x01F7E638 and
- * 0x01F7E5F8.
+ * Reconstructed from the retail disassembly.  Mode strings at 0x01F1F548:
+ * "r+","w+","a+","r","w","a" (g_mode* aliases; callers pass "rb"); per-fd
+ * flags at 0x01F7E638 (g_text) and 0x01F7E5F8 (g_eof).
  */
 extern int strncasecmp(const char *a, const char *b, unsigned int n);
 extern char *strchr(const char *s, int c);

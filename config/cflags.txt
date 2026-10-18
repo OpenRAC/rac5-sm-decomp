@@ -292,45 +292,49 @@ src/boot/ps2fioUnformatDevice.c    prodg2953 as=ps2eeas -O2 -G0
 # Wave 12 backlog: the newlib/libm members whose 16-byte sq slots and short
 # loop padding come from SN ProDG 3.01 with the pinned ProDG 2.0 assembler.
 # qsort is exact only at -O3 (the retail build inlines med3/swapfunc).
-nonmatching/boot/_strtol_r.c    prodg2953 as=ps2eeas -O2 -G0
-nonmatching/boot/_strtoul_r.c    prodg2953 as=ps2eeas -O2 -G0
-nonmatching/boot/_b2d.c    prodg2953 as=ps2eeas -O2 -G0
-nonmatching/boot/_d2b.c    prodg2953 as=ps2eeas -O2 -G0
-nonmatching/boot/sn_floor.c    prodg2953 as=ps2eeas -O2 -G0
-nonmatching/boot/sn_log10.c    prodg2953 as=ps2eeas -O2 -G0
-nonmatching/boot/sn_log.c    prodg2953 as=ps2eeas -O2 -G0
-nonmatching/boot/qsort.c    prodg2953 as=ps2eeas -O3 -G0
-nonmatching/boot/_malloc_trim_r.c    prodg2953 as=ps2eeas -O2 -G0
-nonmatching/boot/ps2fioLoadExec.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_strtol_r.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_strtoul_r.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_b2d.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_d2b.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/sn_floor.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/sn_log10.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/sn_log.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/qsort.c    prodg2953 as=ps2eeas -O3 -G0
+src/boot/_malloc_trim_r.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/ps2fioLoadExec.c    prodg2953 as=ps2eeas -O2 -G0
 
 # Wave 12 backlog: the libcd/sif/kernel bodies exact under the pinned Sony
 # compiler, and the libgcc throw helper that needs it too.
-nonmatching/boot/sceSifRebootIop.c    sdk991111 -O2 -G0
+src/boot/sceSifRebootIop.c    sdk991111 -O2 -G0
 nonmatching/boot/_InitSys.c    sdk991111 -O2 -G0
-nonmatching/boot/_sceCd_cd_callback.c    sdk991111 -O2 -G0
-nonmatching/boot/sceCdNcmdDiskReady.c    sdk991111 -O2 -G0
-nonmatching/boot/sceCdSync.c    sdk991111 -O2 -G0
-nonmatching/boot/sceOpen.c    sdk991111 -O2 -G0
+src/boot/_sceCd_cd_callback.c    sdk991111 -O2 -G0
+src/boot/sceCdNcmdDiskReady.c    sdk991111 -O2 -G0
+src/boot/sceCdSync.c    sdk991111 -O2 -G0
+src/boot/sceOpen.c    sdk991111 -O2 -G0
 nonmatching/boot/__sjpopnthrow.c    sdk991111 -O2 -G0
 
 # Wave 12 backlog: the tty init body, exact under the Sony compiler with the
 # SDK assembler.
-nonmatching/boot/sceTtyInit.c    sdk991111 as=ee-sdk -O2 -G0
+src/boot/sceTtyInit.c    sdk991111 as=ee-sdk -O2 -G0
 
 # Wave 12 pools: the printf scanf body needs the ProDG 3.01 compiler with the
 # SDK assembler; its jump tables are placed by the campaign's pool prelink.
-nonmatching/boot/__svfscanf.c    prodg2953 as=ee-sdk -O2 -G0 -Ithird_party/newlib-1.8.2/newlib/libc/include -Ithird_party/newlib-1.8.2/newlib/libc/stdio
+src/boot/__svfscanf.c    prodg2953 as=ee-sdk -O2 -G0 -Ithird_party/newlib-1.8.2/newlib/libc/include -Ithird_party/newlib-1.8.2/newlib/libc/stdio
 
 # Wave 12 pool .data: the wide-character state body carries both a .rodata
 # constant and its initialised .data tables; the campaign prelink now places
 # and checks both against the retail sections.
-nonmatching/boot/_mbtowc_r.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_mbtowc_r.c    prodg2953 as=ps2eeas -O2 -G0
 
 # Wave 12 compiler-profile study: the three Gu rotation helpers reproduce the
 # retail descending callee-saved save order only with the trial GNU 2.9 cc1
 # built without the RAC2 "increasing saves" patch; the pinned cc1 keeps that
 # patch and fails them (252/260 etc.). The profile is selected per source, so
 # no other body is affected; the complete gate rechecks every pin.
-nonmatching/boot/RotateX__Q34scee3Psp3Gumf.c    gnu-ee-trial as=ee-sdk -O2 -G0
-nonmatching/boot/RotateY__Q34scee3Psp3Gumf.c    gnu-ee-trial as=ee-sdk -O2 -G0
-nonmatching/boot/RotateZ__Q34scee3Psp3Gumf.c    gnu-ee-trial as=ee-sdk -O2 -G0
+src/boot/RotateX__Q34scee3Psp3Gumf.c    gnu-ee-trial as=ee-sdk -O2 -G0
+src/boot/RotateY__Q34scee3Psp3Gumf.c    gnu-ee-trial as=ee-sdk -O2 -G0
+src/boot/RotateZ__Q34scee3Psp3Gumf.c    gnu-ee-trial as=ee-sdk -O2 -G0
+nonmatching/boot/_sceCd_ncmd_prechk.c    sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/_sceCd_scmd_prechk.c    sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/scePadSetActAlign.c    sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/MCPTRANS_Fade_Init__Fv.c    gnu-ee-trial -O2 -G0
