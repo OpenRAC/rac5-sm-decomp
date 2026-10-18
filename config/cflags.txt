@@ -316,3 +316,7 @@ nonmatching/boot/__sjpopnthrow.c    sdk991111 -O2 -G0
 # Wave 12 backlog: the tty init body, exact under the Sony compiler with the
 # SDK assembler.
 nonmatching/boot/sceTtyInit.c    sdk991111 as=ee-sdk -O2 -G0
+
+# Wave 12 pools: the printf scanf body needs the ProDG 3.01 compiler with the
+# SDK assembler; its jump tables are placed by the campaign's pool prelink.
+nonmatching/boot/__svfscanf.c    prodg2953 as=ee-sdk -O2 -G0
