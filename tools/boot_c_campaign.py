@@ -1158,6 +1158,9 @@ REPLACEMENTS = (
     Replacement("SetMatrix__Q34scee3Psp2GuQ44scee3Psp2Gu11EMatrixTypePC14ScePspFMatrix4", 0x01E819A8, 0x01E819C8,
                 "7565afb060eb13e57aa03817a773c580197dd0a5b309c81aa86f0c19e013100c",
                 "1f0233ef76b5415f55e266585cadf1dcb7c9d97660b498687b4e17848d36d407"),
+    Replacement("SetMatrixStack__Q34scee3Psp3GumP14ScePspFMatrix4UiUiUiUiUiUi", 0x01E81A78, 0x01E81BD8,
+                "0c67f7f63f651f52ea3fe94370a0c3bd4b847aa38f02a5054338c49ed60698b0",
+                "6770f95513aad20543c193155c697683b3aeac8c5c8b2c8dd5a31b6b13364d52"),
     Replacement("LoadIdentity__Q34scee3Psp3Gumv", 0x01E81C10, 0x01E81C78,
                 "79f75583faabec208cbf8058d04104712d3d61f8a8fc1d94205ea01ed82b7a46",
                 "507a0d12bd5b021f60000ba1b25d604c09367334b85c7634d3d08a863b70a0e3"),
@@ -1467,6 +1470,9 @@ REPLACEMENTS = (
     Replacement("SND_IsPlaying__FPC14SND_Positional", 0x01E91DF0, 0x01E91E10,
                 "e2ed550b4bed7ac3dbb391c1f5f81fa613aa01e2f823d76dbeaa8daa51efd8ac",
                 "55d73b2a4ac72052dcc101f1e318142ea6e07f40ce1c374338141c73cccda941"),
+    Replacement("SND_FixupSoundSignatures__FPUiPvPFP13WadLocationIDUi14WAD_ASSET_TYPE13WadLocationID_P15WAD_FILE_HEADER", 0x01E92018, 0x01E92130,
+                "7741623e9244401f3133ac992c1a7a59cde32906cbdb13d59d59411efcbba24f",
+                "7509ad4c22e51fd1574c3293ad13e0f556394c9e327c96dfd83a884f1d1a0b2f"),
     Replacement("SND_ResetSoundTimeStamps__FPUi", 0x01E92130, 0x01E92190,
                 "5294e8f409f14871827543e53583f1fb2069918b4ebd0258d5b0d05264d71511",
                 "afa38a80e979db6d46623ba6bd0e7d965d84e89cba78d7021c06f1556402cdec"),
@@ -2646,6 +2652,7 @@ REPLACEMENTS = (
 
 
 
+
 # Addresses measured in the existing one-function linker witnesses.
 LINKER_SYMBOLS = (
     "ANIM_CreateOutputMatrices__FP16GDE_SkeletonInfoP18GDE_BoneComponents = 0x01E89CB0;",
@@ -3165,6 +3172,7 @@ LINKER_SYMBOLS = (
     "global_wad = 0x01F4A740;",
     "global_wad_root = 0x01EF6984;",
     "gu_color = 0x01EF5668;",
+    "gu_screen_matrix_01EF5670 = 0x01EF5670;",
     "gu_state = 0x01F75380;",
     "gu_state_01F77900 = 0x01F77900;",
     "gu_stencil = 0x01F77444;",
@@ -3346,6 +3354,7 @@ LINKER_SYMBOLS = (
     "scmd_socket = 0x01EFC718;",
     "sif_cmd_buffer = 0x01FE3E98;",
     "sif_dma_busy = 0x01EFEF50;",
+    "snd_LoadBankCallback = 0x01E91EA8;",
     "snd_GotReturns = 0x01E94970;",
     "snd_SendIOPCommandAndWait = 0x01E95170;",
     "snd_SendIOPCommandNoWait = 0x01E953C8;",

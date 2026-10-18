@@ -1769,7 +1769,7 @@
   },
   "public_inputs_sha256": {
     "target": "043f3679a3a7f4e861986aeed303dd30e344c837c34303fc8591b71271a0f96f",
-    "compiler_profile": "9b9d47d78ff6b440a02d967dfd3ed5700a3b2a5f39c7d5554c17d0bcd92f1dc9",
+    "compiler_profile": "38e107c12bad73d8f12e306890b290e08e9e7711b9764d71976aea8e15440448",
     "per_source_cflags": "0eebb505b5b5ffd682a7f0db75b4c12225c1ae9da92744794b1d1f7d2fdb2aaf",
     "level_code_catalogue": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
     "level_module_catalogue": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
