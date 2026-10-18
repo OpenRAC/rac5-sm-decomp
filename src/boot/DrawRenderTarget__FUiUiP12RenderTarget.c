@@ -1,6 +1,6 @@
 /* w12/b21 — DrawRenderTarget__FUiUiP12RenderTarget
  * Reconstructed from the retail disassembly. Clears a render target with a
- * border, then blits it. Globals: g_displist pointer at 0x01F88BC4,
+ * border, then blits it. Globals: g_displist pointer at 0x01F78BC4,
  * gRT_BackBuffer 0x01EF69F8.
  */
 typedef struct RenderTarget {
@@ -12,7 +12,7 @@ typedef struct RenderTarget {
 
 typedef struct DLIB_DISPLIST DLIB_DISPLIST;
 
-extern DLIB_DISPLIST *g_displist;      /* 0x01F88BC4 */
+extern DLIB_DISPLIST *g_displist;      /* 0x01F78BC4 */
 extern RenderTarget gRT_BackBuffer;    /* 0x01EF69F8 */
 
 void VRAM_RenderFrom(RenderTarget *target, int flag);
