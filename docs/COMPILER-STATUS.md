@@ -12,9 +12,9 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **75,532 boot `.text` bytes in 619 C bodies**
+The current catalogue records **79,924 boot `.text` bytes in 633 C bodies**
 across several code areas, built by the locally reconstructed GNU EE chain and,
-for 134 of them, by one of three further pinned compilers
+for 163 of them, by one of four further pinned compilers
 ([witness evidence](COMPILER-WITNESSES.md)).
 All of them link together into the complete boot text while preserving the
 retail raw `PT_LOAD` bytes and program header
@@ -26,8 +26,8 @@ starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
-rebuilds all 619 objects from authored C and checks that full link in one run;
-its machine-readable report accepts 561 boot-only placements (57,420 bytes) after
+rebuilds all 633 objects from authored C and checks that full link in one run;
+its machine-readable report accepts 605 boot-only placements (74,760 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
 `nop`. An [isolated RAC5 short-loop threshold trial](COMPILER-LOOP-TRIAL.md)

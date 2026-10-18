@@ -338,3 +338,10 @@ nonmatching/boot/_sceCd_ncmd_prechk.c    sdk991111 as=ee-sdk -O2 -G0
 nonmatching/boot/_sceCd_scmd_prechk.c    sdk991111 as=ee-sdk -O2 -G0
 nonmatching/boot/scePadSetActAlign.c    sdk991111 as=ee-sdk -O2 -G0
 nonmatching/boot/MCPTRANS_Fade_Init__Fv.c    gnu-ee-trial -O2 -G0
+nonmatching/boot/__frame_state_for.c    sdk991111 -O2 -G0
+nonmatching/boot/scePadGetState.c    sdk991111 -O2 -G0
+nonmatching/boot/sceMcSync.c    sdk991111 -O2 -G0
+nonmatching/boot/powf.c    sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/scalbn.c    sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/__ieee754_asinf.c    sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
+nonmatching/boot/add_separators.c    prodg2953 as=ps2eeas -O2 -G0
