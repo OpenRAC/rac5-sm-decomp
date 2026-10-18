@@ -1681,8 +1681,8 @@
   },
   "public_inputs_sha256": {
     "target": "043f3679a3a7f4e861986aeed303dd30e344c837c34303fc8591b71271a0f96f",
-    "compiler_profile": "e4525049a46b368479bd3540a56876e1b71a8ee3168b5f848e9ccde38a44f7cf",
-    "per_source_cflags": "2929a700a982e3d7535f1d140493cf7e0c597f4d2966f8e3ff7e9c433d4b9315",
+    "compiler_profile": "f2a9a9a20878231a20e42eba5d6e9b7e3482d33392894ee32caad35508080856",
+    "per_source_cflags": "e361551bb78877f66379b9c993f0f8bc0a45dd9864f439d9485391e5e1c7f367",
     "level_code_catalogue": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
     "level_module_catalogue": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
     "accepted_boot_c_sources_lf": "0f0fe491f357b6cf7e2aee81440e755829fbf5658edc0783b9e5b8d31c3320f3",
