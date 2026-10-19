@@ -345,13 +345,13 @@ src/boot/powf.c    sdk991111 as=ee-sdk -O2 -G0
 src/boot/scalbn.c    sdk991111 as=ee-sdk -O2 -G0
 nonmatching/boot/__ieee754_asinf.c    sdk-divpad as=ee-sdk -O2 -G0 -fno-builtin
 nonmatching/boot/add_separators.c    prodg2953 as=ps2eeas -O2 -G0
-nonmatching/boot/scePadEnd.c    sdk991111 -O2 -G0
-nonmatching/boot/sceMkdir.c    sdk991111 as=ee-sdk -O2 -G0
-nonmatching/boot/sceGetstat.c    sdk991111 as=ee-sdk -O2 -G0
-nonmatching/boot/sceSync.c    sdk991111 as=ee-sdk -O2 -G0
-nonmatching/boot/sceSifResetIop.c    sdk991111 -O2 -G0
-nonmatching/boot/sceDread.c    sdk991111 -O2 -G0
-nonmatching/boot/ungetc.c    prodg2953 as=span5 -O2 -G0
-nonmatching/boot/_s2b.c    prodg2953 as=span5 -O2 -G0
-nonmatching/boot/_multiply.c    prodg2953 as=span5 -O2 -G0
-nonmatching/boot/__mdiff.c    prodg2953 as=span5 -O2 -G0
+src/boot/scePadEnd.c    sdk991111 -O2 -G0
+src/boot/sceMkdir.c    sdk991111 as=ee-sdk -O2 -G0
+src/boot/sceGetstat.c    sdk991111 as=ee-sdk -O2 -G0
+src/boot/sceSync.c    sdk991111 as=ee-sdk -O2 -G0
+src/boot/sceSifResetIop.c    sdk991111 -O2 -G0
+src/boot/sceDread.c    sdk991111 -O2 -G0
+src/boot/ungetc.c    prodg2953 as=span5 -O2 -G0
+src/boot/_s2b.c    prodg2953 as=span5 -O2 -G0
+src/boot/_multiply.c    prodg2953 as=span5 -O2 -G0
+src/boot/__mdiff.c    prodg2953 as=span5 -O2 -G0

@@ -1,4 +1,4 @@
-/* sceDread 0x01ED6CE0..0x01ED6E34 (344 bytes)
+/* sceDread 0x01ED6CE0..0x01ED6E34 (340 bytes)
  *
  * libfileio direct read: same RPC block as sceRead but always synchronous and
  * with no buffer write-back, since the direct path bypasses the queue.
@@ -41,7 +41,7 @@ struct SemaParam {
 };
 
 extern struct FsCall fs_call;          /* 0x01FE5940 */
-extern int fs_ready;                   /* 0x01F0EFDC */
+extern int fs_ready;                   /* 0x01EFEFDC */
 extern struct FsIob fs_iobs[];         /* 0x01FE6E40 */
 extern unsigned char fs_rpc_client[];  /* 0x01FE7040 */
 extern unsigned char fs_rpc_result[];  /* 0x01FE6580 */

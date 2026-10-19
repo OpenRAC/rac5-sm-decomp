@@ -1,7 +1,7 @@
 /* _multiply -- David M. Gay's dtoa/mprec multiply, SDK form (sdk/library),
  * adapted to bare types. Provenance: newlib libc/stdlib/mprec.c `mult`
  * (same body, ULong = 32-bit); measured compiler SN ProDG 3.01 ee-gcc2953
- * (GCC 2.95.3) + Ps2EeAs 2.0, -O2 -G0. */
+ * (GCC 2.95.3) + span5 assembler (-G0), -O2 -G0. */
 typedef signed char s8;
 typedef unsigned char u8;
 typedef short s16;
