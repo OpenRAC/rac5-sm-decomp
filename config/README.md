@@ -16,7 +16,7 @@ It follows the conventions of the OpenRAC RAC1 decompilation
 | Which level modules exist? | `levels/modules.tsv` | `overlays/` | twenty numbered modules plus the frontend |
 | Which bodies are known assembly? | `handwritten_asm.tsv` | `handwritten_asm.txt` | a measured verdict per function, with the wave that measured it |
 | What is the boot load image? | `boot/elf_layout.json`, `boot/dvp_overlays.tsv` | — | measured layout and the non-loaded DVP catalogue |
-| What are the accepted level C bodies? | `levels/bodies.tsv` (schema below) | per-overlay sources | one row per source, one placement column per module |
+| What are the accepted level C bodies? | `levels/bodies.tsv` (schema below) | per-overlay sources | one row per placement; a source shared across modules repeats its hashes |
 
 ## Conventions adopted from RAC1
 
@@ -50,3 +50,26 @@ module	offset	size	source	source_sha256_lf	object_sha256	profile	as
 One row per placement. A source that appears at several placements has one row
 per placement and one shared `source_sha256_lf` / `object_sha256`, the shape
 `levels/compiler_trial.json` already uses for the 72-byte shared function.
+
+- `offset` is hexadecimal (`0x00000100`); `size` is decimal bytes and a
+  multiple of four.
+- `source` is repository-relative. Wave-17 bodies live in `src/levels/bodies/`;
+  the already reviewed `0x100` body may point at
+  `src/levels/shared/func_00000100.c`.
+- `profile` is `pinned` (the `compiler-no-pad-20261015` cc1) or
+  `gnu-ee-trial` (the same GNU EE build without the increasing-callee-saved
+  patch, passed as `--extra-cc1 gnu-ee-trial=PATH`). `as` is the pinned GNU
+  `gnu-ee-trial-20261015` assembler for every row.
+- An external name must be a module import, a module export, or a name that
+  carries its address (`func_<addr>` / `D_<addr>`). The gate deliberately does
+  not resolve a name from the retail bytes it is proving; a source that needs
+  that fails with the unresolved names.
+- `object_sha256` covers the whole object file, so it depends on the source
+  basename (the ELF file symbol). Distinct lot sources that share a basename
+  are stored with a lot or module suffix; their object hash is the gate's
+  measurement for the stored name, not the lot's original hash.
+- `tools/level_c_gate.py --refresh-bodies` recomputes both hash columns after a
+  full pass. An ordinary run verifies them and fails on a stale row.
+- Placements must not overlap within a module. The `0x100` row may overlap the
+  already counted shared body because the gate checks the two byte strings are
+  identical before accepting the overlap.
