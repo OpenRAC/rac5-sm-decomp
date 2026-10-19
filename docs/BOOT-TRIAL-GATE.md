@@ -17,7 +17,7 @@ that reason; a Windows checkout without it cannot reproduce the gate.
 The current campaign contains 659 compiler-produced C objects. Its verified
 catalogue records 659 global function bodies (88,112 bytes plus 1,288 zero alignment
 bytes); no object span is left without a usable global-function extent.
-These counts are distinct from the 637 accepted boot placements (84,728 bytes).
+These counts are distinct from the 644 accepted boot placements (87,228 bytes).
 Per-source compiler and options measured for one file are listed in
 [`config/cflags.txt`](../config/cflags.txt) and applied by the gate; the profile
 keeps its global flags. 158 entries hand their file to another pinned compiler:
@@ -90,7 +90,7 @@ are never committed.
 
 The result is in ignored `build/boot-trial-gate/report.json`. A passing report
 has `status: "passed_boot_only"`, `raw_load_and_header_exact: true`,
-`whole_elf_exact: true`, `counted_matches: 637` and `counted_bytes: 84728`.
+`whole_elf_exact: true`, `counted_matches: 644` and `counted_bytes: 87228`.
 The counted bytes are each accepted source's compiled `body_bytes`. A complete
 body may have one following zero word supplied by the linker's `ALIGN(8)`;
 the boundary catalogue verifies the retail zeros and direct-flow/label safety,

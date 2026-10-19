@@ -9,7 +9,7 @@
  * `Zero' is the shared .rodata array at 0x01F272D0 (first referenced entry).
  *
  * Retail: 0x01ECE448, interval 1096 bytes. Toolchain: SN ProDG 3.01
- * ee-gcc2953 (GCC 2.95.3) -O2 -G0, Ps2EeAs.exe, SN ld.exe.
+ * ee-gcc2953 (GCC 2.95.3) -O2 -G0, span5b assembler (-G0), SN ld.exe.
  */
 typedef int __int32_t;
 typedef unsigned int __uint32_t;
