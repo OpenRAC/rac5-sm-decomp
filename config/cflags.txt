@@ -355,3 +355,6 @@ src/boot/ungetc.c    prodg2953 as=span5 -O2 -G0
 src/boot/_s2b.c    prodg2953 as=span5 -O2 -G0
 src/boot/_multiply.c    prodg2953 as=span5 -O2 -G0
 src/boot/__mdiff.c    prodg2953 as=span5 -O2 -G0
+nonmatching/boot/SND_Update__FPC7MATRIX4N30.c    as=ee-sdk
+nonmatching/boot/__tf9exception.c    sdk991111 as=ee-sdk -O2 -G0
+nonmatching/boot/sn_fmod.c    prodg2953 as=span5b -O2 -G0

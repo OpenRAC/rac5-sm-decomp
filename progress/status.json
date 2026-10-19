@@ -1833,8 +1833,8 @@
   },
   "public_inputs_sha256": {
     "target": "043f3679a3a7f4e861986aeed303dd30e344c837c34303fc8591b71271a0f96f",
-    "compiler_profile": "62e08b9f0f2a30a47c72ce97c1bf8dd903d1dcbecc93a2b7411f53e49a8fe924",
-    "per_source_cflags": "2541d302309a8f6fab57396dcb3277ec98cd41ef0d9ef0fcedff16360629da5f",
+    "compiler_profile": "374e9ca80b4cc356c141f71521e362d7ea5fb8965ba017fbacd433bdbc7104a2",
+    "per_source_cflags": "a165fe6b9fee9af87ecf493404e9870db472d4d546734e5be04738ce4f7abb7d",
     "level_code_catalogue": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
     "level_module_catalogue": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
     "accepted_boot_c_sources_lf": "37cb93def2dc81398b5b8879e74e4d18c46db231faf20555ff5e8342bbecc548",

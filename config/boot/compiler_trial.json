@@ -798,6 +798,21 @@
           "-G0"
         ]
       }
+    },
+    "span5b": {
+      "id": "rac5-boot-ee-as-span5b-20261018",
+      "provenance": "The span5 assembler with the two fixes the wave-15 P01 sweep measured: dli -1 must expand as addiu zero,-1 + dsrl32, the form Ps2EeAs and the retail use, and a jal target must not suppress the short-loop pad the retail keeps (r5900_branch_or_jump_p counted jal as a blocking jump). Both fixes are source patches composed on the wave-14 span-5 pass (w15/P01/dli_patch.py, w15/P01/pad_patch.py, rebuild scripted). Non-regression measured: the four bodies already pinned under span5 (ungetc, _s2b, _multiply, __mdiff) reproduce byte-exact with this binary. External binary, never committed.",
+      "status": "measured per source; boot-only",
+      "host": "linux",
+      "tools": {
+        "assembler": "as-rac5span5b",
+        "assembler_sha256": "b00631d636de62b572fbc371a823be4faf28d74fa3239825ea57fc83b105072c"
+      },
+      "flags": {
+        "as": [
+          "-G0"
+        ]
+      }
     }
   },
   "object_sha256_alternates": {
@@ -820,5 +835,5 @@
       "9de19e599766eadb98ea0c09327018a48f6856a130ba8388fff794e7e59717c1"
     ]
   },
-  "expected_objects": 651
+  "expected_objects": 655
 }
