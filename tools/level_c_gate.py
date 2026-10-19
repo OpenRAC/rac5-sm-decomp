@@ -10,8 +10,10 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import shutil
 import struct
+from collections import defaultdict
 from pathlib import Path
 from c_source_policy import require_c_source
 
@@ -20,6 +22,8 @@ from boot_symbols import read_boot
 from compile_boot_trial import digest, normalized_digest, require_private_output, run
 from disc import IsoDisc, verify_disc
 from elf import inspect_elf, read_global_functions
+from level_body_link import (BodyLinkError, defined_functions, read_object,
+                             resolve_symbols)
 from level_program_gate import MEASURED_LOADS, replace_range, sha
 from r5900_assembly import LINKER_SHA256, check_tool, run_tool
 from rel import (HEADER, RELOCATION, SYMBOL, iter_packed_relocations,
@@ -30,9 +34,16 @@ from snr2_assembly import CODE_START, pinned_modules
 ROOT = Path(__file__).resolve().parent.parent
 PROFILE = ROOT / "config/levels/compiler_trial.json"
 BASE_PROFILE = ROOT / "config/boot/compiler_trial.json"
+BODIES = ROOT / "config/levels/bodies.tsv"
 OUTPUT = ROOT / "build/level-c-gate"
 REPORT = OUTPUT / "report.json"
 WORD = struct.Struct("<I")
+BODY_HEADER = ["module", "offset", "size", "source", "source_sha256_lf",
+               "object_sha256", "profile", "as"]
+BODY_PROFILES = ("pinned", "gnu-ee-trial")
+BODY_ASSEMBLER = "gnu-ee-trial"
+BODY_PREFIX = "src/levels/bodies/"
+SHARED_0100 = "src/levels/shared/func_00000100.c"
 
 
 def profile_and_sources(cpp: Path, cc1: Path, gnu_as: Path) -> tuple[dict, list[dict]]:
@@ -127,6 +138,198 @@ def linked_body(row: dict, linker: Path) -> bytes:
         raise ValueError("FRONTEND C body has no complete owned function symbol")
     data = elf.read_bytes()
     return data[section["file_offset"]:section["file_offset"] + section["size"]]
+
+
+def module_symbols(source: bytes) -> tuple[dict[str, int], dict[str, int]]:
+    """Return the SNR2 module's (imports, exports) by name.
+
+    Import symbols carry address 0 in the table; every other declared symbol is
+    an export whose value is its module-relative address.
+    """
+    head = HEADER.unpack_from(source)
+    imports: dict[str, int] = {}
+    exports: dict[str, int] = {}
+    for index in range(head[4]):
+        name_at, address, _aux, _kind, _flags = SYMBOL.unpack_from(
+            source, head[3] + index * SYMBOL.size)
+        end = source.index(b"\0", name_at)
+        name = source[name_at:end].decode("ascii", "replace")
+        if not name:
+            continue
+        if address:
+            exports.setdefault(name, address)
+        else:
+            imports.setdefault(name, 0)
+    return imports, exports
+
+
+def read_bodies(path: Path, known: dict[str, str],
+                ends: dict[str, int]) -> list[dict]:
+    """Read and validate ``config/levels/bodies.tsv``."""
+    with path.open(encoding="utf-8", newline="") as file:
+        reader = csv.DictReader((line for line in file if not line.startswith("#")),
+                                delimiter="\t")
+        if reader.fieldnames != BODY_HEADER:
+            raise ValueError(f"{path.name}: header differs from the documented schema")
+        rows: list[dict] = []
+        for number, raw in enumerate(reader, 2):
+            module = raw["module"]
+            if module not in known:
+                raise ValueError(f"{path.name}:{number}: unknown module {module}")
+            try:
+                offset, size = int(raw["offset"], 0), int(raw["size"])
+            except ValueError as error:
+                raise ValueError(f"{path.name}:{number}: bad offset or size") from error
+            if (offset < CODE_START or size <= 0 or size % 4
+                    or offset + size > ends[module]):
+                raise ValueError(f"{path.name}:{number}: placement outside the module code")
+            source = raw["source"].replace("\\", "/")
+            if not (source.startswith(BODY_PREFIX) or source == SHARED_0100):
+                raise ValueError(f"{path.name}:{number}: source outside the level body tree")
+            if raw["profile"] not in BODY_PROFILES:
+                raise ValueError(f"{path.name}:{number}: unknown profile {raw['profile']}")
+            if raw["as"] != BODY_ASSEMBLER:
+                raise ValueError(f"{path.name}:{number}: assembler is not {BODY_ASSEMBLER}")
+            for key in ("source_sha256_lf", "object_sha256"):
+                if re.fullmatch(r"[0-9a-f]{64}", raw[key]) is None:
+                    raise ValueError(f"{path.name}:{number}: {key} is not 64 hex digits")
+            rows.append({"module": module, "offset": offset, "size": size,
+                         "source": source, "source_sha256_lf": raw["source_sha256_lf"],
+                         "object_sha256": raw["object_sha256"],
+                         "profile": raw["profile"], "as": raw["as"]})
+    seen: set[tuple[str, int]] = set()
+    spans: dict[str, list[tuple[int, int, str]]] = defaultdict(list)
+    by_source: dict[str, dict] = {}
+    for row in rows:
+        key = (row["module"], row["offset"])
+        if key in seen:
+            raise ValueError(f"{path.name}: duplicate placement {key}")
+        seen.add(key)
+        spans[row["module"]].append((row["offset"], row["offset"] + row["size"],
+                                      row["source"]))
+        prior = by_source.setdefault(row["source"], row)
+        if (prior["profile"] != row["profile"]
+                or prior["source_sha256_lf"] != row["source_sha256_lf"]
+                or prior["object_sha256"] != row["object_sha256"]
+                or prior["size"] != row["size"]):
+            raise ValueError(f"{path.name}: source columns disagree: {row['source']}")
+    for module, items in spans.items():
+        items.sort()
+        for left, right in zip(items, items[1:]):
+            if left[1] > right[0]:
+                raise ValueError(f"{path.name}: overlapping placements in {module}")
+    return rows
+
+
+def extra_cc1_paths(items: list[str]) -> dict[str, Path]:
+    """Parse repeated ``--extra-cc1 NAME=PATH`` arguments."""
+    table: dict[str, Path] = {}
+    for item in items:
+        name, separator, value = item.partition("=")
+        if not separator or not name or not value:
+            raise ValueError(f"--extra-cc1 expects NAME=PATH, got {item!r}")
+        if name in table:
+            raise ValueError(f"duplicate --extra-cc1 selector: {name}")
+        table[name] = Path(value)
+    return table
+
+
+def compile_body_sources(rows: list[dict], args, extra_cc1: dict[str, Path],
+                         base_profile: dict) -> dict[str, tuple[Path, dict, str]]:
+    """Compile one object per bodies.tsv source and verify its two hashes."""
+    output = require_private_output(args.output_dir)
+    output.mkdir(parents=True, exist_ok=True)
+    OUTPUT.mkdir(parents=True, exist_ok=True)
+    flags = base_profile["flags"]["cc1"]
+    objects: dict[str, tuple[Path, dict, str]] = {}
+    by_source = {row["source"]: row for row in rows}
+    for source_path, row in sorted(by_source.items()):
+        source = ROOT / source_path
+        if not source.is_file():
+            raise ValueError(f"level body source is missing: {source_path}")
+        require_c_source(source.read_text(encoding="utf-8"), source_path)
+        if (not args.refresh_bodies
+                and normalized_digest(source) != row["source_sha256_lf"]):
+            raise ValueError(f"level body source differs from bodies.tsv: {source_path}")
+        profile = row["profile"]
+        cc1 = args.cc1 if profile == "pinned" else extra_cc1.get(profile)
+        if cc1 is None:
+            raise ValueError(f"profile {profile} needs --extra-cc1 {profile}=PATH")
+        work = output / "bodies" / source.name
+        work.mkdir(parents=True, exist_ok=True)
+        (work / source.name).write_bytes(source.read_bytes())
+        stem = source.stem
+        run([str(args.cpp.resolve()), source.name], work, work / f"{stem}.cpp.log",
+            work / f"{stem}.i")
+        require_c_source((work / f"{stem}.i").read_text(encoding="utf-8"),
+                         f"{source_path} preprocessed input")
+        run([str(cc1.resolve()), *flags, f"{stem}.i", "-o", f"{stem}.s"],
+            work, work / f"{stem}.cc1.log")
+        run([str(args.gnu_as.resolve()), "-o", f"{stem}.o", f"{stem}.s"],
+            work, work / f"{stem}.as.log")
+        obj = work / f"{stem}.o"
+        if not any(value == 0 for value, _size
+                   in defined_functions(read_object(obj)).values()):
+            raise ValueError(f"level body has no global function at offset 0: {source_path}")
+        object_digest = digest(obj)
+        if not args.refresh_bodies and object_digest != row["object_sha256"]:
+            raise ValueError(f"level body object differs from bodies.tsv: {source_path}")
+        published = OUTPUT / f"body_{stem}.o"
+        shutil.copyfile(obj, published)
+        objects[source_path] = (published, read_object(published), object_digest)
+    return objects
+
+
+def link_level_body(row: dict, obj: Path, mapping: dict[str, int],
+                    linker: Path) -> bytes:
+    """Link one body at its placement and return the linked ``.text`` bytes."""
+    name = f"body_{row['module'].replace('.', '_')}_{row['offset']:06X}"
+    symbols = "\n".join(f"{symbol} = 0x{value:08X};"
+                        for symbol, value in sorted(mapping.items()))
+    script = (f"{symbols}\nSECTIONS {{ . = 0x{row['offset']:08X}; "
+              f".text : {{ {obj.name}(.text) }} }}\n")
+    (OUTPUT / f"{name}.ld").write_text(script, encoding="ascii", newline="\n")
+    run_tool([str(linker.resolve()), "-T", f"{name}.ld", "-o", f"{name}.elf",
+              obj.name], OUTPUT, OUTPUT / f"{name}.link.log")
+    elf = OUTPUT / f"{name}.elf"
+    section = next(item for item in inspect_elf(elf)["sections"]
+                   if item["name"] == ".text")
+    if (int(section["virtual_address"], 16) != row["offset"]
+            or section["size"] != row["size"]):
+        raise ValueError(f"linked level body has wrong offset or size: {name}")
+    data = elf.read_bytes()
+    return data[section["file_offset"]:section["file_offset"] + section["size"]]
+
+
+def place_body(rebuilt: bytes, body: bytes, start: int, end: int,
+               claimed: list[tuple[int, int]]) -> bytes:
+    """Place a proved body, allowing an overlap only when the bytes agree."""
+    for left, right in claimed:
+        if start < right and left < end:
+            if rebuilt[start:end] != body:
+                raise ValueError(f"overlapping level bodies differ at 0x{start:06X}")
+            return rebuilt
+    claimed.append((start, end))
+    return replace_range(rebuilt, body, start, end)
+
+
+def write_bodies(rows: list[dict],
+                 objects: dict[str, tuple[Path, dict, str]]) -> None:
+    """Rewrite the two hash columns after a full, proved pass."""
+    source_sha = {row["source"]: normalized_digest(ROOT / row["source"])
+                  for row in rows}
+    object_sha = {source: value[2] for source, value in objects.items()}
+    lines = BODIES.read_text(encoding="utf-8").splitlines()
+    output = []
+    for line in lines:
+        if not line or line.startswith("#") or line.startswith("module\t"):
+            output.append(line)
+            continue
+        fields = line.split("\t")
+        fields[4] = source_sha[fields[3]]
+        fields[5] = object_sha[fields[3]]
+        output.append("\t".join(fields))
+    BODIES.write_text("\n".join(output) + "\n", encoding="utf-8", newline="\n")
 
 
 def shared_buffer_targets(module: str, source: bytes, start: int,
@@ -323,22 +526,42 @@ def main() -> None:
     parser.add_argument("--linker", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True,
                         help="native Linux directory for compiler intermediates")
+    parser.add_argument("--extra-cc1", action="append", default=[],
+                        metavar="NAME=PATH",
+                        help="extra pinned cc1 by profile selector (gnu-ee-trial)")
+    parser.add_argument("--refresh-bodies", action="store_true",
+                        help="rewrite config/levels/bodies.tsv hashes after a full pass")
     args = parser.parse_args()
     OUTPUT.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps({"status": "incomplete", "counted_matches": 0},
                                  indent=2) + "\n", encoding="utf-8", newline="\n")
     check_tool(args.linker, LINKER_SHA256)
     profile, sources = profile_and_sources(args.cpp, args.cc1, args.gnu_as)
+    base_profile = json.loads(BASE_PROFILE.read_text(encoding="utf-8"))
+    extra_cc1 = extra_cc1_paths(args.extra_cc1)
+    for selector, path in extra_cc1.items():
+        entry = base_profile.get("extra_compilers", {}).get(selector)
+        if entry is None:
+            raise ValueError(f"unknown --extra-cc1 selector: {selector}")
+        if digest(path) != entry["tools"]["cc1_sha256"]:
+            raise ValueError(f"{selector} cc1 differs from the pinned compiler trial")
     compile_sources(profile, sources, args.cpp, args.cc1, args.gnu_as,
                     args.output_dir)
     bodies = {Path(row["source"]).stem: linked_body(row, args.linker)
               for row in sources if "offset" in row}
+    known, ends = pinned_modules(), code_ends()
+    body_rows = read_bodies(BODIES, known, ends)
+    body_objects = compile_body_sources(body_rows, args, extra_cc1, base_profile)
+    bodies_by_module: dict[str, list[dict]] = defaultdict(list)
+    for row in body_rows:
+        bodies_by_module[row["module"]].append(row)
+    for rows in bodies_by_module.values():
+        rows.sort(key=lambda row: row["offset"])
     target = json.loads((ROOT / "config/target.json").read_text(encoding="utf-8"))
     boot, boot_symbols = read_boot(args.boot)
     if boot["sha256"] != target["boot_sha256"]:
         raise ValueError("boot differs from pinned USA target")
     addresses = {symbol.name: symbol.address for symbol in boot_symbols}
-    known, ends = pinned_modules(), code_ends()
     names = [name for name in sorted(known) if name.startswith("LEVEL_")]
     additional = profile["additional_accepted"]
     if len(names) != 20 or set(additional["placements"]) != set(names):
@@ -373,6 +596,21 @@ def main() -> None:
                 if control != source[0x190:0x190 + len(control)]:
                     raise ValueError("LEVEL_01 C array-get control differs")
                 rebuilt = replace_range(rebuilt, control, 0x190, 0x190 + len(control))
+            claimed = [(0x100, 0x108), (start, start + 72)]
+            if name == "LEVEL_01.REL":
+                claimed.append((0x190, 0x190 + len(control)))
+            for row in bodies_by_module.get(name, []):
+                obj_path, obj, _object_sha = body_objects[row["source"]]
+                try:
+                    mapping, _origin = resolve_symbols(obj, *module_symbols(source))
+                except BodyLinkError as error:
+                    raise ValueError(f"{name} 0x{row['offset']:06X}: {error}") from error
+                placed = link_level_body(row, obj_path, mapping, args.linker)
+                if placed != source[row["offset"]:row["offset"] + row["size"]]:
+                    raise ValueError(
+                        f"{name} level body differs at 0x{row['offset']:06X}")
+                rebuilt = place_body(rebuilt, placed, row["offset"],
+                                     row["offset"] + row["size"], claimed)
             if sha(rebuilt) != known[name]:
                 raise ValueError(f"{name} complete C-linked module differs")
             if name == "LEVEL_01.REL":
@@ -399,6 +637,20 @@ def main() -> None:
         if frontend_body != frontend[0x2F80:0x2F80 + 476]:
             raise ValueError("FRONTEND New Game C body differs")
         candidate = replace_range(candidate, frontend_body, 0x2F80, 0x2F80 + 476)
+        claimed = [(0x2CD8, 0x2CD8 + len(control)), (0x2F80, 0x2F80 + 476)]
+        for row in bodies_by_module.get("FRONTEND.REL", []):
+            obj_path, obj, _object_sha = body_objects[row["source"]]
+            try:
+                mapping, _origin = resolve_symbols(obj, *module_symbols(frontend))
+            except BodyLinkError as error:
+                raise ValueError(
+                    f"FRONTEND.REL 0x{row['offset']:06X}: {error}") from error
+            placed = link_level_body(row, obj_path, mapping, args.linker)
+            if placed != frontend[row["offset"]:row["offset"] + row["size"]]:
+                raise ValueError(
+                    f"FRONTEND.REL level body differs at 0x{row['offset']:06X}")
+            candidate = place_body(candidate, placed, row["offset"],
+                                   row["offset"] + row["size"], claimed)
         if sha(candidate) != known["FRONTEND.REL"]:
             raise ValueError("FRONTEND complete control module differs")
         base, load_sha, missing = MEASURED_LOADS["FRONTEND.REL"]
@@ -406,7 +658,32 @@ def main() -> None:
                                                  base, addresses)
         if sha(relocated) != load_sha or unresolved != missing:
             raise ValueError("FRONTEND C-linked relocated image differs")
-    report = {"status": "passed_shared_and_frontend", "profile": profile["id"],
+    body_sizes: dict[str, int] = {}
+    for row in body_rows:
+        body_sizes.setdefault(row["source"], row["size"])
+    body_summary = {
+        "table": "config/levels/bodies.tsv",
+        "table_sha256": digest(BODIES),
+        "placements": len(body_rows),
+        "unique_sources": len(body_sizes),
+        "placement_bytes": sum(row["size"] for row in body_rows),
+        "unique_source_bytes": sum(body_sizes.values()),
+        "profiles": {selector: sum(1 for row in body_rows
+                                   if row["profile"] == selector)
+                     for selector in sorted({row["profile"] for row in body_rows})},
+        "cc1_sha256": {
+            "pinned": base_profile["tools"]["cc1_sha256"],
+            "gnu-ee-trial":
+                base_profile["extra_compilers"]["gnu-ee-trial"]["tools"]["cc1_sha256"]},
+        "modules": sorted(bodies_by_module),
+        "module_sha256": {module: known[module]
+                          for module in sorted(bodies_by_module)},
+    }
+    if args.refresh_bodies:
+        write_bodies(body_rows, body_objects)
+        body_summary["table_sha256"] = digest(BODIES)
+    report = {"status": "passed_shared_frontend_and_level_bodies",
+              "profile": profile["id"],
               "accepted_functions": ["func_00000100", "func_shared_zero_buffer",
                                      "func_00002F80"],
               "counted_matches": 3,
@@ -419,11 +696,16 @@ def main() -> None:
               "placements": matched,
               "provisional_controls": ["LEVEL_01.REL:0x190:24",
                                        "FRONTEND.REL:0x2CD8:12"],
-              "runtime_measured_placements": ["FRONTEND.REL", "LEVEL_01.REL"]}
+              "runtime_measured_placements": ["FRONTEND.REL", "LEVEL_01.REL"],
+              "bodies": body_summary}
     REPORT.write_text(json.dumps(report, indent=2) + "\n",
                       encoding="utf-8", newline="\n")
     print("shared C: 8+72 bytes at all 20 level placements; "
           "FRONTEND New Game: 476 bytes; 21/21 complete modules exact")
+    print(f"level bodies: {body_summary['placements']} placements in "
+          f"{body_summary['unique_sources']} sources, "
+          f"{body_summary['placement_bytes']} placement bytes; "
+          "21/21 complete modules exact")
 
 
 if __name__ == "__main__":
