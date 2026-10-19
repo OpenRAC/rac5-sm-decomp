@@ -361,3 +361,4 @@ nonmatching/boot/sn_fmod.c    prodg2953 as=span5b -O2 -G0
 nonmatching/boot/sceGsSetDefDrawEnv.c    sdk991111sync -O2 -G0
 nonmatching/boot/VSync.c    sdk991111sync -O2 -G0
 nonmatching/boot/VSync2.c    sdk991111sync -O2 -G0
+nonmatching/boot/asyncPs2fioLseek.c    prodg2953 as=ee-sdk -O2 -G0

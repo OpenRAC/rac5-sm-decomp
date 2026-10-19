@@ -2352,6 +2352,9 @@ REPLACEMENTS = (
     Replacement("ps2fioLoadExec", 0x01EBD248, 0x01EBD2B8,
                 "69e6a8bf1f1ea29a2576187953ff4782e6eb8a3802fb3f32887d78bf5143f7b6",
                 "7c324fb6894f024b355cf9edb9e24f05037450dc38a4997e73417106da05ffc7"),
+    Replacement("asyncPs2fioLseek", 0x01EBD9F0, 0x01EBDA60,
+                "db940e7faaf2db0f746abb45e0dc3088b94dd434695ade177e3df5611f4cfde6",
+                "fb3c03ee40e890cfe3514fbffec366933d1c45f8cf4b73c54e445851d7509271"),
     Replacement("cdvdfsFreeFS", 0x01EC2218, 0x01EC2268,
                 "b479d30632cbebe6c30b640f47b4fc785cce030d49aa449dd19f07cc3105e9a4",
                 "dd6868dfbf191da666e57d60ca5f7e19c033e07e85e2632b02aa821966b1e6ad"),
@@ -2733,6 +2736,7 @@ REPLACEMENTS = (
                 "d7f777ff7482dc094869279115518e228d772785b2ca3ebe06b76b8809429fba",
                 "868db793aa0291d8ae2b00eab0c70b1379e9a2fc7ac876062e06c889fc1b51ce"),
 )
+
 
 
 
@@ -3422,13 +3426,16 @@ LINKER_SYMBOLS = (
     "positional_sounds_locked = 0x01EF69B4;",
     "printf = 0x01EC7138;",
     "ps2fioAllocHandle = 0x01EBB920;",
+    "ps2fioBglock = 0x01EBD2C0;",
     "ps2fioBuildFilesystem = 0x01EBD060;",
     "ps2fioFreeHandle = 0x01EBB960;",
     "ps2fioInitializeDevice = 0x01EBBA30;",
+    "ps2fio_ctx = 0x01FD4240;",
     "ps2fio_dev_table = 0x01FD4170;",
     "ps2fio_drv_list = 0x01FD4168;",
     "ps2fio_get_handle = 0x01EBB8C0;",
     "ps2fio_handles = 0x01FD4170;",
+    "ps2fio_sema = 0x01FD4C6C;",
     "ps2heap_max_free_mem_size = 0x01FD0830;",
     "ptmd_type_info_vtable = 0x01F20B18;",
     "ptmf_type_info_vtable = 0x01F20B28;",
