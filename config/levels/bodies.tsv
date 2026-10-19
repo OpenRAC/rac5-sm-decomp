@@ -1,0 +1,3 @@
+# Accepted level C bodies, one row per placement (schema in config/README.md).
+# module<TAB>offset<TAB>size<TAB>source<TAB>source_sha256_lf<TAB>object_sha256<TAB>profile<TAB>as
+module	offset	size	source	source_sha256_lf	object_sha256	profile	as

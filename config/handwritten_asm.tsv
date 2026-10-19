@@ -1,0 +1,34 @@
+# Functions whose retail body is handwritten assembly, not compiler output from C.
+# One entry per line: symbol <TAB> address <TAB> class <TAB> reason <TAB> evidence.
+# Classes:
+#   mmi          R5900 MMI/vector instructions no available C form emits
+#   cop0         privileged coprocessor-0 access (mfc0/mtc0/eret)
+#   syscall      syscall-trampoline stubs
+#   sync         memory barrier with no pure-C form in the pinned chains
+#   gp-store     writes the $gp register itself
+#   vu0          inline VU0 microcode emitted by the retail macro
+# A name here is a measured verdict, not a guess: it records that the listed
+# waves tried C and the harness never reached the exact body. Reopening one
+# needs a new tool (a compiler builtin or a policy decision), not another C
+# source form.
+symbol	address	class	reason	evidence
+strcat	0x01EC63AC	mmi	handwritten r5900 string routine (lq/pcpyld/psubb)	w15/T07, w13/R10
+strchr	0x01EC64DC	mmi	handwritten r5900 string routine	w15/T07, w13/R10
+strcmp	0x01EC667C	mmi	handwritten r5900 string routine	w15/T07, w13/R10
+strcpy	0x01EC67C8	mmi	handwritten r5900 string routine	w15/T07, w13/R10
+strlen	0x01EC68E0	mmi	handwritten r5900 string routine	w15/T07, w13/R10
+strncat	0x01EC6A28	mmi	handwritten r5900 string routine	w15/T07, w13/R10
+strncmp	0x01EC6BE0	mmi	handwritten r5900 string routine	w15/T07, w13/R10
+strncpy	0x01EC6DA8	mmi	handwritten r5900 string routine	w15/T07, w13/R10
+isceSifSendCmd	0x01ED3B50	mmi	64-bit manual loop, not expressible in C	w10/b1
+VEC_MultiplyMatrix4__FP7MATRIX4PC7MATRIX4T1	0x01E76FE0	vu0	38 VU0 ops (sceVu0MulMatrix macro)	w13/C4, w14/T03, w15/T02
+MultMatrix__Q34scee3Psp3GumPC14ScePspFMatrix4	0x01E81DE8	vu0	38 VU0 ops	w14/T03, w14/R04
+LookAt__Q34scee3Psp3GumPC14ScePspFVector3N21	0x01E82410	vu0	38 VU0 ops	w14/T03, w14/R04
+customGsSyncPath__FiUs	0x01E847A0	vu0	cfc2.ni $vi29, no VU builtin in any pinned cc1	w14/T06
+dlib_displist_send_dma__FP13DLIB_DISPLISTi	0x01E93B08	sync	barrier plus manual DMA packet stores	w15/W-SYNC, w15/T04
+ENTRYPOINT	0x01E62508	cop0	crt0: padduw, mthi/mtlo/mtsah, mtc1 f0-f31, sync.p, ctc1, ei	w15/T01
+_kExitTLBHandler	0x01EDA7C0	cop0	eret/mtc0, $k0 only	w15/T10, w13/R11
+GetOsdConfigParam	0x01ED0D10	syscall	29 addiu/syscall/jr stubs	w15/H1
+EnableDmac	0x01ED17A0	cop0	mfc0 Status plus sync	w15/F01, w13/R10
+iSetTimerHandler	0x01ED9CB0	gp-store	stores $gp itself in 0x2C(s0)	w15/T10, w13/R11
+scePadSetDmaCallback	0x01EA4408	gp-store	writes $gp, no C spelling	w14/T06
