@@ -52,6 +52,48 @@ extent, the six named imports, local fixups, complete FRONTEND.REL file and the
 previously measured relocated-image hash. This qualifies that **one frontend
 placement**, not a general frontend compiler profile or gameplay equivalence.
 
+## Wave-17 level bodies
+
+`config/levels/bodies.tsv` records **210 placements** (13,128 module bytes)
+carried by **158 sources**: 157 author files under
+[`src/levels/bodies/`](../src/levels/bodies) plus the shared
+`func_00000100.c`. The placements cover all 21 modules (the frontend and the
+twenty numbered levels). Eight wave-17 lots measured them; three placements
+proved independently by two lots (`LEVEL_02.REL` `0x3EE08`, `0x23A28`,
+`0x7F4A0`) appear once in the table.
+
+Each row is one placement: module, offset, size, source, source SHA-256 (LF),
+object SHA-256, compiler profile and assembler. The gate compiles every source
+once, links it at each placement, compares every body byte with the pinned
+retail module, replaces the body in the complete module, and then requires the
+pinned module SHA-256. All 21 complete module hashes and the two previously
+measured relocated images still match.
+
+Two compiler profiles are declared. `pinned` is the
+`compiler-no-pad-20261015` cc1 already used by the boot trial. `gnu-ee-trial`
+is the same GNU EE build without the RAC2 increasing-callee-saved-saves patch
+(cc1 SHA-256 `37704f48…`); 11 placements need it because the retail prologue
+saves `$ra` before a floating-point register. Every row uses the pinned GNU
+`gnu-ee-trial-20261015` assembler.
+
+Symbol resolution is deliberately narrower than the wave-17 harness. An
+undefined name resolves from the module import table (address 0), the module
+export table (its measured offset), or the name itself
+(`func_/D_<address>`). The gate never reads a symbol address from the retail
+bytes it is proving. Forty-three placements (26 lot sources) used placeholder
+names (`level_data_a`, `sub_target`, …) that the harness had resolved from
+retail relocation sites; those bodies were renamed once into address-carrying
+names, with one file per placement where the address differs, and the original
+lot source is named in a header comment. The byte comparison proves each
+renamed source exactly like the others.
+
+The three pre-existing accepted functions and two controls keep their original
+scope: **556 unique C body bytes** (8 + 72 shared, 476 frontend) and **2,076
+placement bytes**. The wave-17 bodies are a separate scope: **210 placements**,
+**13,128 placement bytes**, and **10,560 bytes** of distinct source (a source
+counted once). Do not add the scopes together: 20 wave-17 rows are the already
+counted `0x100` eight-byte body, re-proved from the lots' own sources.
+
 The rest of each module is supplied by the pinned retail input. No game bytes,
 compiler binaries or linked outputs are committed.
 
@@ -62,13 +104,19 @@ python3 tools/level_c_gate.py baserom/SCUS_976.15.iso \
   --boot baserom/SCUS_976.15 \
   --cpp /path/to/cpp --cc1 /path/to/cc1 --as /path/to/as \
   --linker /mnt/c/path/to/ld.exe \
+  --extra-cc1 gnu-ee-trial=/path/to/gnu-ee-trial/cc1 \
   --output-dir /home/you/rac5-level-c-trial
 ```
 
+`--refresh-bodies` rewrites the two hash columns of `bodies.tsv` after a full
+pass. Keep it out of ordinary runs: a stale hash must fail, not be repaired
+silently.
+
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
-matches on every run. Only a full pass reports three accepted functions:
-**556 unique C body bytes** (8 + 72 shared, 476 frontend) and **2,076
-placement bytes** (1,600 across twenty levels, 476 in frontend). These are
-scoped matches, not a qualified game-wide percentage. More functions require
-their own boundaries, compiler controls and complete-program checks before
-their C bytes can be counted.
+matches on every run. A full pass reports the original scope (three accepted
+functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
+wave-17 scope (**210 placements** in **158 sources**, **13,128 placement
+bytes**, **10,560 distinct-source bytes**). These are scoped matches, not a
+qualified game-wide percentage. More functions require their own boundaries,
+compiler controls and complete-program checks before their C bytes can be
+counted.
