@@ -785,6 +785,31 @@
         "path": "tools/compiler/rac5-sync/rac5-sync-cc1.patch",
         "sha256_lf": "ae5280c73c0650fc6f6338d1d9e36a227ac97159c7e9030ffc2c5f598fa2a4e9"
       }
+    },
+    "sdk991111sq": {
+      "id": "rac5-boot-sony-ee-gcc-2.9-ee-991111-01-rac5-sq",
+      "provenance": "Sony EE-GCC 2.9-ee-991111-01 rebuilt with the RAC2 recipe, plus the RAC5 quad-save patch: $s0-$s7 are saved as 16-byte sq slots while $ra keeps an 8-byte sd, which is the shape the retail prologues use (718 sq for $s* against 2723 sd, and $ra sd 1154 times against one sq). The literal Lombyte rule -- every GPR in TImode -- was measured and rejected because it turns $ra into sq too and then matches no non-leaf prologue. Driver and cpp are the pinned sdk991111 binaries byte for byte; only cc1 differs. Non-regression: the ten bodies already routed to the pinned compilers reproduce their object hashes, and the 131 SDK-routed sources were compared, so this is a per-source profile, never a replacement.",
+      "status": "measured per source; boot-only",
+      "host": "linux",
+      "tools": {
+        "driver": "xgcc",
+        "driver_sha256": "4c8149cc96021253ac9863d670ada372e29f71af80ae91934c195cc4c6a3b2d6",
+        "libexec": ".",
+        "cpp": "cpp",
+        "cpp_sha256": "b73ad1bcfcdbd8826d231ec771471e92a6197adf2fc0e4674c3e5e1834cd2807",
+        "cc1": "cc1",
+        "cc1_sha256": "d6209263960a9b81bfd32b26de3454e37b583fc2fb0c474584dfd7ba4213fbec"
+      },
+      "flags": {
+        "driver": [
+          "-S"
+        ],
+        "as": []
+      },
+      "patch": {
+        "path": "tools/compiler/rac5-sq/0001b-rac5-sregs-quad-and-order.patch",
+        "sha256_lf": "a6bdf03cb4f9782cfd18bcebe035d166dd78da286679a74e413d11142582173b"
+      }
     }
   },
   "extra_assemblers": {
@@ -867,5 +892,5 @@
       "9de19e599766eadb98ea0c09327018a48f6856a130ba8388fff794e7e59717c1"
     ]
   },
-  "expected_objects": 659
+  "expected_objects": 664
 }

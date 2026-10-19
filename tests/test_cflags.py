@@ -27,6 +27,7 @@ SECOND = "prodg2953"
 SONY = "sdk991111"
 DIVPAD = "sdk-divpad"
 SYNC = "sdk991111sync"
+SQ = "sdk991111sq"
 SDK_AS = "ee-sdk"
 PS2_AS = "ps2eeas"
 SPAN5_AS = "span5"
@@ -58,7 +59,7 @@ class CFlagsTests(unittest.TestCase):
             self.assertEqual(len(pinned["tools"][key]), 64)
         self.assertEqual(cflags.pinned_compilers(),
                          (cflags.DEFAULT_COMPILER, "gnu-ee-trial", SECOND,
-                          DIVPAD, SONY, SYNC))
+                          DIVPAD, SONY, SQ, SYNC))
         self.assertTrue(cflags.Entry(SECOND, ("-O2",)).compiler != cflags.DEFAULT_COMPILER)
         self.assertTrue(cflags.DEFAULT_ENTRY.pinned)
 

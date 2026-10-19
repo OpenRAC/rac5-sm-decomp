@@ -1,0 +1,34 @@
+diff --git a/ee/gcc/config/mips/mips.c b/ee/gcc/config/mips/mips.c
+index ead57073..c319e946 100644
+--- a/ee/gcc/config/mips/mips.c
++++ b/ee/gcc/config/mips/mips.c
+@@ -4668,9 +4668,16 @@ override_options ()
+     }
+ 
+   /* Saves/restores of general purpose registers on the r5900 use
+-     a mode wider than word_mode.  */
++     a mode wider than word_mode.  ASTRA P1: widen every GPR so the
++     prologue/epilogue emit sq/lq like the retail/SN R5900 code.  */
+   if (TARGET_MIPS5900)
+-    mips_reg_mode[0] = TImode;
++    {
++      /* RAC5: 16-byte callee-saved slots ($s0-$s7 in TImode) while the
++	 area stride stays the TImode size recorded on $zero, as retail.  */
++      mips_reg_mode[0] = TImode;
++      for (regno = GP_REG_FIRST + 16; regno <= GP_REG_FIRST + 23; regno++)
++	mips_reg_mode[regno] = TImode;
++    }
+ 
+   /* CYGNUS LOCAL law */
+   {
+@@ -6177,7 +6184,9 @@ save_restore_insns (store_p, large_reg, large_offset, file)
+ 	  && large_offset <= 32767)
+ 	base_offset += current_function_outgoing_args_size;
+ 
+-      for (regno = GP_REG_LAST; regno >= GP_REG_FIRST; regno--)
++      /* RAC5: retail lays the callee-saved area out with ascending register
++	 numbers from the top of the frame; iterate the mask the same way.  */
++      for (regno = GP_REG_FIRST; regno <= GP_REG_LAST; regno++)
+ 	if (BITSET_P (mask, regno - GP_REG_FIRST))
+ 	  {
+ 	    if (file == 0)

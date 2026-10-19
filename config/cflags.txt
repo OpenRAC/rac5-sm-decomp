@@ -362,3 +362,4 @@ src/boot/sceGsSetDefDrawEnv.c    sdk991111sync -O2 -G0
 src/boot/VSync.c    sdk991111sync -O2 -G0
 src/boot/VSync2.c    sdk991111sync -O2 -G0
 nonmatching/boot/asyncPs2fioLseek.c    prodg2953 as=ee-sdk -O2 -G0
+nonmatching/boot/snDllLoaded.c    sdk991111sq as=ps2eeas -O2 -G0
