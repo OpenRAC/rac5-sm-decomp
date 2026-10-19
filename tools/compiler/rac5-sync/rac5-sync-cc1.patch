@@ -1,0 +1,81 @@
+--- a/gcc/tree.h
++++ b/gcc/tree.h
+@@ -127,6 +127,12 @@
+   BUILT_IN_EXPECT,
+   /* END CYGNUS LOCAL -- branch prediction */
+ 
++  /* RAC5: EE memory-barrier builtins.  They emit one instruction at the call
++     site and have no library meaning; a source that never names them compiles
++     exactly as before.  */
++  BUILT_IN_RAC5_SYNC,
++  BUILT_IN_RAC5_SYNC_P,
++
+   /* Upper bound on non-language-specific builtins. */
+   END_BUILTINS
+ };
+--- a/gcc/c-decl.c
++++ b/gcc/c-decl.c
+@@ -3546,6 +3546,16 @@
+ 		    build_function_type (void_type_node, endlink),
+ 		    BUILT_IN_TRAP, NULL_PTR);
+ 
++  /* RAC5: EE memory barriers.  `__builtin_rac5_sync ()` emits the MIPS II
++     `sync' and `__builtin_rac5_sync_p ()` the R5900 `sync.p'; both are void
++     and expand in place, so they add one instruction and nothing else.  */
++  builtin_function ("__builtin_rac5_sync",
++		    build_function_type (void_type_node, endlink),
++		    BUILT_IN_RAC5_SYNC, NULL_PTR);
++  builtin_function ("__builtin_rac5_sync_p",
++		    build_function_type (void_type_node, endlink),
++		    BUILT_IN_RAC5_SYNC_P, NULL_PTR);
++
+   /* In an ANSI C program, it is okay to supply built-in meanings
+      for these functions, since applications cannot validly use them
+      with any other meaning.
+--- a/gcc/expr.c
++++ b/gcc/expr.c
+@@ -9738,6 +9738,14 @@
+       emit_barrier ();
+       return const0_rtx;
+ 
++    case BUILT_IN_RAC5_SYNC:
++      emit_insn (gen_rac5_sync ());
++      return const0_rtx;
++
++    case BUILT_IN_RAC5_SYNC_P:
++      emit_insn (gen_rac5_sync_p ());
++      return const0_rtx;
++
+       /* Various hooks for the DWARF 2 __throw routine.  */
+     case BUILT_IN_UNWIND_INIT:
+       expand_builtin_unwind_init ();
+--- a/gcc/config/mips/mips.md
++++ b/gcc/config/mips/mips.md
+@@ -10240,6 +10240,27 @@
+ ;; profiling call to mcount can use various registers that aren't
+ ;; saved or used to pass arguments.
+ 
++;; RAC5: EE memory barriers, reachable only through the
++;; __builtin_rac5_sync* builtins.  The unspec_volatile numbers 19 and 20 are
++;; private to these patterns; UNSPEC_VOLATILE makes each insn a full
++;; scheduling barrier (sched.c clobbers every register and memory), which is
++;; what `sync' means.
++(define_insn "rac5_sync"
++  [(unspec_volatile [(const_int 0)] 19)]
++  ""
++  "sync"
++  [(set_attr "type"	"unknown")
++   (set_attr "mode"	"none")
++   (set_attr "length"	"1")])
++
++(define_insn "rac5_sync_p"
++  [(unspec_volatile [(const_int 0)] 20)]
++  "TARGET_MIPS5900"
++  "sync.p"
++  [(set_attr "type"	"unknown")
++   (set_attr "mode"	"none")
++   (set_attr "length"	"1")])
++
+ (define_insn "blockage"
+   [(unspec_volatile [(const_int 0)] 0)]
+   ""

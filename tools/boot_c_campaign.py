@@ -2028,6 +2028,9 @@ REPLACEMENTS = (
     Replacement("sceGszbufaddr", 0x01E9C958, 0x01E9CA20,
                 "bb66eeeda84046f22cb5eabf4801afa0ca47988c78c133539a7b9c62fa12d646",
                 "bc4fe4660cbb270416686596b2e6ce1a559fe1b5eafb2ddaff6ecc770649b780"),
+    Replacement("sceGsSetDefDrawEnv", 0x01E9CA20, 0x01E9CC08,
+                "7161f1468a81fa2dc20c2a4c3ff165d74dca2fedabc13c388fda55de35903990",
+                "7f087f16ecf7261fe5a3f90a0ccabfa382c2d38862be642a7fba43536dd541d6"),
     Replacement("sceDmaGetChan", 0x01E9CDE8, 0x01E9CE10,
                 "9b496906e5a48fb38b455647740d23442ccf20b605315bba8405e1871a343ffe",
                 "a7869bf061f8362e9a32bd855a4c79b2f68136443f60d610aa8a4c4e069f2970"),
@@ -2582,6 +2585,12 @@ REPLACEMENTS = (
     Replacement("sceResetttyinit", 0x01ED10E0, 0x01ED10F0,
                 "e51c75ae32f0389487f4a8b1ca54bfa4dc35305c74fd38e792798514593694dd",
                 "bbd03672808b7adccb1998277172d5dc5c85d7f69795269b556734bc272bc49b"),
+    Replacement("VSync", 0x01ED10F0, 0x01ED1180,
+                "349109e2d1c954adb37d5c1e17d48365700224eaabcdc4b073d06570b566c3c6",
+                "0bf4039915febcd6cd749756abb8ef4795d5cfd02845eb4861b9002d46a6c5af"),
+    Replacement("VSync2", 0x01ED1180, 0x01ED1228,
+                "e955643410704d8e940d3768af87704dc885023e7f36a3e8b13166dfd039a9ea",
+                "55d372be3663cc6bb69df99d6c55cc54c51ff1a30521e70934303d3c7d91edf0"),
     Replacement("write", 0x01ED1228, 0x01ED12A8,
                 "68154e0470081d752e3a4f6724ba45e542801a9e8f7a1f7f612fd1d089f92b3e",
                 "0cf269b6bc7392ff742274c5a7e05a02e8289ebd6c299c9405d21c116f18f61c"),
@@ -2724,6 +2733,7 @@ REPLACEMENTS = (
                 "d7f777ff7482dc094869279115518e228d772785b2ca3ebe06b76b8809429fba",
                 "868db793aa0291d8ae2b00eab0c70b1379e9a2fc7ac876062e06c889fc1b51ce"),
 )
+
 
 
 
@@ -2972,6 +2982,7 @@ LINKER_SYMBOLS = (
     "SetMatrix = 0x01E819A8;",
     "SetMatrixStack = 0x01E81A78;",
     "SetT2 = 0x01ED9240;",
+    "SetVSyncFlag = 0x01ED0FD0;",
     "SignalSema = 0x01ED0C80;",
     "SpiralSphere_RegisterSystem__F10DRAW_Layeri15DRAW_ZWriteMode17DRAW_ColorKeyMode14DRAW_BloomMode14DRAW_BlendMode = 0x01E761F8;",
     "Spiral_Stop__FP12Spiral_Group = 0x01E755D8;",
@@ -2996,8 +3007,6 @@ LINKER_SYMBOLS = (
     "VRAM_RenderTo = 0x01E93568;",
     "VRAM_SetOffset = 0x01E93838;",
     "VRAM_SetViewport = 0x01E93888;",
-    "VSync = 0x01ED10F0;",
-    "VSync2 = 0x01ED1180;",
     "V_01F207F0 = 0x01F207F0;",
     "V_01F20808 = 0x01F20808;",
     "V_01F20910 = 0x01F20910;",

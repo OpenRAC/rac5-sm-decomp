@@ -753,6 +753,31 @@
         ],
         "as": []
       }
+    },
+    "sdk991111sync": {
+      "id": "rac5-boot-sony-ee-gcc-2.9-ee-991111-01-rac5-sync",
+      "provenance": "Sony EE-GCC 2.9-ee-991111-01, rebuilt from the public snapshot github.com/SSXModding/ps2-ee-toolchain at b595ded with the exact recipe of extra_compilers.sdk991111 (RAC2 tools/compiler/sdk/build.py: i686 32-bit host build, bison 1.28, bison-grammar.patch), plus the RAC5 memory-barrier patch named below: two builtins, __builtin_rac5_sync () emitting `sync' and __builtin_rac5_sync_p () emitting `sync.p', each expanded in place as one UNSPEC_VOLATILE insn and nothing else. The driver xgcc and cpp are the pinned sdk991111 binaries byte for byte; only cc1 differs. Measured 2026-10-18 against SCUS_976.15: the three sync bodies below are byte-exact and the ten boot objects already routed to sdk991111 keep their exact object SHA-256. Pinned per source; the patch text and the cc1 hash jointly identify the binary.",
+      "status": "measured per source; boot-only",
+      "host": "linux",
+      "tools": {
+        "driver": "xgcc",
+        "driver_sha256": "4c8149cc96021253ac9863d670ada372e29f71af80ae91934c195cc4c6a3b2d6",
+        "libexec": ".",
+        "cpp": "cpp",
+        "cpp_sha256": "b73ad1bcfcdbd8826d231ec771471e92a6197adf2fc0e4674c3e5e1834cd2807",
+        "cc1": "cc1",
+        "cc1_sha256": "eaf94d2a0ca4f6ba7f8a2a20974940ea8a0bdd7868e3ec0aa6081b1b32a91250"
+      },
+      "flags": {
+        "driver": [
+          "-S"
+        ],
+        "as": []
+      },
+      "patch": {
+        "path": "tools/compiler/rac5-sync/rac5-sync-cc1.patch",
+        "sha256_lf": "ae5280c73c0650fc6f6338d1d9e36a227ac97159c7e9030ffc2c5f598fa2a4e9"
+      }
     }
   },
   "extra_assemblers": {
@@ -835,5 +860,5 @@
       "9de19e599766eadb98ea0c09327018a48f6856a130ba8388fff794e7e59717c1"
     ]
   },
-  "expected_objects": 655
+  "expected_objects": 658
 }
