@@ -820,6 +820,37 @@
     "accepted_frontend_c_bytes": 476,
     "accepted_c_bytes_per_unique_source": 80,
     "accepted_c_bytes_by_placement": 1600,
+    "accepted_level_body_placements": 210,
+    "accepted_level_body_unique_sources": 158,
+    "accepted_level_body_placement_bytes": 13128,
+    "accepted_level_body_unique_source_bytes": 10560,
+    "accepted_level_body_profiles": {
+      "gnu-ee-trial": 11,
+      "pinned": 199
+    },
+    "accepted_level_body_modules": [
+      "FRONTEND.REL",
+      "LEVEL_01.REL",
+      "LEVEL_02.REL",
+      "LEVEL_03.REL",
+      "LEVEL_04.REL",
+      "LEVEL_05.REL",
+      "LEVEL_06.REL",
+      "LEVEL_07.REL",
+      "LEVEL_08.REL",
+      "LEVEL_09.REL",
+      "LEVEL_10.REL",
+      "LEVEL_15.REL",
+      "LEVEL_16.REL",
+      "LEVEL_17.REL",
+      "LEVEL_18.REL",
+      "LEVEL_19.REL",
+      "LEVEL_20.REL",
+      "LEVEL_21.REL",
+      "LEVEL_22.REL",
+      "LEVEL_23.REL",
+      "LEVEL_24.REL"
+    ],
     "known_identical_full_intervals": [
       [
         "LEVEL_15.REL",
@@ -1636,7 +1667,7 @@
       }
     ],
     "level_c": {
-      "status": "passed_shared_and_frontend",
+      "status": "passed_shared_frontend_and_level_bodies",
       "profile": "rac5-level-shared-c-gnu-ee-trial-20261015",
       "accepted_functions": [
         "func_00000100",
@@ -1834,6 +1865,68 @@
         "body_bytes": 476,
         "direct_callers": 4,
         "module_sha256": "81f834bdf092587eb94e6a198fe2ab6181877dbd215f7124b405edda9b1a3daf"
+      },
+      "bodies": {
+        "table": "config/levels/bodies.tsv",
+        "table_sha256": "7a650e8ed5898719df368cc325562d5fe942f8fc2c4e8530633c3e38245ae97a",
+        "placements": 210,
+        "unique_sources": 158,
+        "placement_bytes": 13128,
+        "unique_source_bytes": 10560,
+        "profiles": {
+          "gnu-ee-trial": 11,
+          "pinned": 199
+        },
+        "cc1_sha256": {
+          "pinned": "9614eceecbcb1f7a64cf3a4ad3c827b3e257ab6b1f934e42fcbc4ded0f0584d6",
+          "gnu-ee-trial": "37704f483fba7269791576879b3573445cd455ce0473e6d58a3bcceb45105f95"
+        },
+        "modules": [
+          "FRONTEND.REL",
+          "LEVEL_01.REL",
+          "LEVEL_02.REL",
+          "LEVEL_03.REL",
+          "LEVEL_04.REL",
+          "LEVEL_05.REL",
+          "LEVEL_06.REL",
+          "LEVEL_07.REL",
+          "LEVEL_08.REL",
+          "LEVEL_09.REL",
+          "LEVEL_10.REL",
+          "LEVEL_15.REL",
+          "LEVEL_16.REL",
+          "LEVEL_17.REL",
+          "LEVEL_18.REL",
+          "LEVEL_19.REL",
+          "LEVEL_20.REL",
+          "LEVEL_21.REL",
+          "LEVEL_22.REL",
+          "LEVEL_23.REL",
+          "LEVEL_24.REL"
+        ],
+        "module_sha256": {
+          "FRONTEND.REL": "81f834bdf092587eb94e6a198fe2ab6181877dbd215f7124b405edda9b1a3daf",
+          "LEVEL_01.REL": "cbf4a983935a05b64bf0234889c663bd1522dc4366581837a74d8b42812c726c",
+          "LEVEL_02.REL": "1b1a3575a778bb30549d7e72e66c86bbf66a807a9256f727c13647df473e3553",
+          "LEVEL_03.REL": "5c4ddc627f23b8eadef8bbb521e73dd238bbedbf1fe2192e5deb563d68ae6812",
+          "LEVEL_04.REL": "f24c3a97e423db89c9522acfc4c672544324b289759a568af57be077f1a4b01e",
+          "LEVEL_05.REL": "b956430a51947de0223b17086efc2d2aeddec6d8a6da5062e83ac91d931e0b89",
+          "LEVEL_06.REL": "b34c9c408b27c5beba821c7b89cf34d237fe40b906c1accdbb43df75709a5132",
+          "LEVEL_07.REL": "f7fd6d1b6bec4e26e92becc985046322a13bf6647a964c6328b0e8f4fd366626",
+          "LEVEL_08.REL": "ead7fbddcc61e12482b181a4ad664129903d150804c07d66124eb60c4f208f67",
+          "LEVEL_09.REL": "e9888c908bbd0c75559e2eb85cec3dfac785625bec74183fa9af96b05bfc8ea0",
+          "LEVEL_10.REL": "b921faf0b35919d1546956384117b3547f6a7df87e0dd282902d280a4ff08757",
+          "LEVEL_15.REL": "bb023a3579661fbc42a6991bab31b4a3a0fda7512031fb23309c773040f824c2",
+          "LEVEL_16.REL": "aec04b4edae65162543c0d64283d8c13660ee5197cce00be153108d06a90e0a0",
+          "LEVEL_17.REL": "1473d503cecb37732c8239f20a52b1f9d1170752b26f504e9edc53df8ca9076b",
+          "LEVEL_18.REL": "da74b9be8e26076fcc195a5d266c56c7e6976abdfc76fa4fa279f510d768d923",
+          "LEVEL_19.REL": "8d10d5c1c0b9176dc325a0a0e40e7650b08f5b99987096019e9fcac9877023fe",
+          "LEVEL_20.REL": "924d2d6a8a4baec9146ceb6c083c2d0910484cb5e2aded2f2dd873d35ad11cfd",
+          "LEVEL_21.REL": "0056955efa9243428aa33ab32705392967b79939e2b626280c60c79e6b00917a",
+          "LEVEL_22.REL": "fe9f0e92531f9bb89dd76202bd81d81ef00294eded0dcd7e23f0fc88cf3b6f35",
+          "LEVEL_23.REL": "5c7d4dadde75ed48caa0683854dff4ca6f9bf705dd3343f721e7ee5c77ba1db0",
+          "LEVEL_24.REL": "2feea61ac6fc1dd9b6bdb343b4c0cd1cebcce51b9472ebc8b048dcead6f0ca6e"
+        }
       },
       "provisional_controls": [
         "LEVEL_01.REL:0x190:24",

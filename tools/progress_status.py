@@ -29,6 +29,7 @@ OUTPUT = ROOT / "progress/status.json"
 BOOT_GATE = ROOT / "build/boot-trial-gate/report.json"
 LEVEL_GATE = ROOT / "build/level-program-gate/report.json"
 LEVEL_C_GATE = ROOT / "build/level-c-gate/report.json"
+BODIES = ROOT / "config/levels/bodies.tsv"
 CODE_CATALOGUE = ROOT / "config/levels/code_intervals.tsv"
 MODULE_CATALOGUE = ROOT / "config/levels/modules.tsv"
 PROFILE = ROOT / "config/boot/compiler_trial.json"
@@ -76,7 +77,7 @@ def public_evidence(boot: dict[str, object], level: dict[str, object],
             or level.get("counted_matches") != 0
             or not isinstance(level.get("modules"), list)):
         raise ValueError("private level-program gate is incomplete")
-    if (level_c.get("status") != "passed_shared_and_frontend"
+    if (level_c.get("status") != "passed_shared_frontend_and_level_bodies"
             or level_c.get("accepted_functions") !=
             ["func_00000100", "func_shared_zero_buffer", "func_00002F80"]
             or level_c.get("counted_matches") != 3
@@ -87,7 +88,8 @@ def public_evidence(boot: dict[str, object], level: dict[str, object],
                 "body_bytes": 476, "direct_callers": 4,
                 "module_sha256": next(row["sha256"] for row in records(MODULE_CATALOGUE)
                                       if row["path"] == "LVL/FRONTEND.REL")}
-            or not isinstance(level_c.get("placements"), list)):
+            or not isinstance(level_c.get("placements"), list)
+            or not isinstance(level_c.get("bodies"), dict)):
         raise ValueError("private shared-level C gate is incomplete")
     keys = ("module", "size", "sha256", "code_interval_bytes",
             "code_interval_sha256", "measured_base", "relocated_sha256",
@@ -108,7 +110,7 @@ def public_evidence(boot: dict[str, object], level: dict[str, object],
         "level_c": {key: level_c[key] for key in
                     ("status", "profile", "accepted_functions", "counted_matches",
                      "unique_body_bytes", "matched_placement_bytes", "placements",
-                     "frontend_accepted",
+                     "frontend_accepted", "bodies",
                      "provisional_controls", "runtime_measured_placements")},
     }
 
@@ -147,7 +149,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
     additional_source = ROOT / additional["source"]
     frontend_profile = level_profile["frontend_accepted"]
     frontend_source = ROOT / frontend_profile["source"]
-    if (level_c["status"] != "passed_shared_and_frontend"
+    if (level_c["status"] != "passed_shared_frontend_and_level_bodies"
             or level_c["profile"] != level_profile["id"]
             or level_c["accepted_functions"] !=
             ["func_00000100", "func_shared_zero_buffer", "func_00002F80"]
@@ -196,6 +198,32 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "body_bytes": 476, "direct_callers": 4,
             "module_sha256": by_name["FRONTEND.REL"]["sha256"]}:
         raise ValueError("frontend C evidence differs from pinned placement")
+    body_rows = records(BODIES)
+    body_sizes: dict[str, int] = {}
+    body_profiles: dict[str, int] = {}
+    for row in body_rows:
+        body_sizes.setdefault(row["source"], int(row["size"]))
+        body_profiles[row["profile"]] = body_profiles.get(row["profile"], 0) + 1
+        if not (ROOT / row["source"]).is_file():
+            raise ValueError(f"level body source is missing: {row['source']}")
+    body_modules = sorted({row["module"] for row in body_rows})
+    body_summary = level_c["bodies"]
+    if (body_summary["table"] != "config/levels/bodies.tsv"
+            or body_summary["table_sha256"] != digest(BODIES)
+            or body_summary["placements"] != len(body_rows)
+            or body_summary["unique_sources"] != len(body_sizes)
+            or body_summary["placement_bytes"] !=
+            sum(int(row["size"]) for row in body_rows)
+            or body_summary["unique_source_bytes"] != sum(body_sizes.values())
+            or body_summary["profiles"] != body_profiles
+            or body_summary["cc1_sha256"] != {
+                "pinned": profile["tools"]["cc1_sha256"],
+                "gnu-ee-trial":
+                    profile["extra_compilers"]["gnu-ee-trial"]["tools"]["cc1_sha256"]}
+            or body_summary["modules"] != body_modules
+            or body_summary["module_sha256"] !=
+            {module: by_name[module]["sha256"] for module in body_modules}):
+        raise ValueError("level body evidence differs from bodies.tsv")
     measured = {row["module"]: row for row in evidence["levels"]}
     if set(measured) != set(MEASURED_LOADS) or len(evidence["levels"]) != len(measured):
         raise ValueError("level gate receipt lacks the two measured placements")
@@ -311,6 +339,14 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                    "accepted_frontend_c_bytes": 476,
                    "accepted_c_bytes_per_unique_source": 80,
                    "accepted_c_bytes_by_placement": 1600,
+                   "accepted_level_body_placements": body_summary["placements"],
+                   "accepted_level_body_unique_sources": body_summary["unique_sources"],
+                   "accepted_level_body_placement_bytes":
+                       body_summary["placement_bytes"],
+                   "accepted_level_body_unique_source_bytes":
+                       body_summary["unique_source_bytes"],
+                   "accepted_level_body_profiles": body_summary["profiles"],
+                   "accepted_level_body_modules": body_summary["modules"],
                    "known_identical_full_intervals": duplicates},
         "function_inventory": {
             "candidate_entry_intervals": inventory["entry_intervals"],
@@ -481,6 +517,7 @@ def main() -> None:
     print(f"scoped progress: boot {boot['accepted_c_bytes']}/{TEXT_SIZE} C bytes "
           f"in {len(boot['accepted_functions'])} accepted functions; frontend 476 "
           "bytes; two shared level C functions (8+72 bytes) at 20 placements; "
+          "wave-17 level bodies counted separately; "
           "no qualified game-wide percentage")
 
 
