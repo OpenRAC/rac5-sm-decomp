@@ -97,7 +97,43 @@ counted `0x100` eight-byte body, re-proved from the lots' own sources.
 The rest of each module is supplied by the pinned retail input. No game bytes,
 compiler binaries or linked outputs are committed.
 
-With your own lawful pinned USA disc and matching local tools, run in WSL:
+## Wave-18 level bodies
+
+`config/levels/bodies.tsv` now records **3,571 placements** (54,472 module
+bytes) carried by **177 sources**, on top of the wave-17 ones, and all 21
+complete module hashes still match.
+
+The wave-18 campaign worked the levels again with a wider queue: 601 bounded
+candidates over the 21 modules, taken from the same
+`level_function_inventory` bounds, ranked by the number of placements that
+carry the same raw body. Fourteen translation lots produced the bodies, and
+the shared families were then expanded: for every accepted body, the 21
+modules were searched for the candidate placements that carry the same body
+bytes, and each one was proved on its own by compiling the same source,
+linking it at that offset and comparing every byte with the retail module.
+Nothing is counted on the strength of matching bytes alone.
+
+Most of the added placements belong to a small number of shared families:
+eight-byte accessors and stubs (`jr $ra` with the useful instruction in the
+delay slot), the `base + index * stride` selectors, the angle-wrapping
+helper and the `memset`-plus-counter ring buffer. One authored source
+therefore carries many placements, which is why the placement count grows
+much faster than the number of sources.
+
+The wave-18 scope is separate from the wave-17 one: **3,571 placements**,
+**54,472 placement bytes** and **11,068 bytes** of distinct source (a source
+counted once). The two scopes are not added together: the 210 wave-17 rows
+are part of the 3,571, and 20 of them are the already counted `0x100`
+eight-byte body re-proved from the lots' own sources.
+
+Three hundred and forty bodies in the wave-18 queue are larger than 412
+bytes, a band the wave-17 campaign never attempted. Most of that band stays
+unmatched: the instruction sequence of those bodies is right, but GCC 2.9
+allocates the floating-point registers differently from the retail code.
+That is an allocator difference, not a source difference, and it is parked
+with its first difference and a reopening condition rather than counted.
+
+## With your own lawful pinned USA disc and matching local tools, run in WSL:
 
 ```sh
 python3 tools/level_c_gate.py baserom/SCUS_976.15.iso \
@@ -115,8 +151,8 @@ silently.
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-wave-17 scope (**210 placements** in **158 sources**, **13,128 placement
-bytes**, **10,560 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**3,571 placements** in **177 sources**, **54,472 placement
+bytes**, **11,068 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
