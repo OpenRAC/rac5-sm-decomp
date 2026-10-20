@@ -84,6 +84,128 @@ register of the walls. It is a research ledger, not a bug tracker.
   up to date. The comments are the per-contributor records, and a closed wall
   keeps its comment as the account of how it was lifted.
 
+## Coordinating work between contributors
+
+All contributors actively matching bodies must coordinate through the shared
+GitHub issue:
+
+https://github.com/OpenRAC/rac5-sm-decomp/issues/99
+
+The purpose of this issue is to prevent contributors and their AI agents from
+duplicating work.
+
+This is a lightweight coordination noticeboard only. It is **not** a task
+queue, campaign register, reservation database, match proof or source of truth
+for completed work. The repository and `master` remain authoritative.
+
+### Every active contributor must have one comment
+
+Each contributor working on the project must have exactly **one persistent
+coordination comment** in issue #99.
+
+If you are beginning work and do not already have your own comment in that
+issue, you are **required to create one before starting matching work**.
+
+Each contributor edits only their own comment. Do not modify another
+contributor's comment.
+
+Do not create a new comment every time work changes. Update your existing
+comment in place.
+
+AI agents acting on behalf of a contributor must verify that their
+contributor has a coordination comment before beginning or assigning matching
+work. If no comment exists, create one before continuing.
+
+### Describe only your own reservations
+
+List only your own current reservations in your comment. Do not copy other
+contributors' claims, add lists of scopes you promise not to touch, or state
+that another contributor still reserves a scope. Those copies become stale
+when its owner finishes or releases the work.
+
+Before choosing work, check the other contributors' current comments for
+overlap. Each contributor's own comment is the reference for that
+contributor's active reservations; another person's comment does not reserve
+work on their behalf. Update your own comment when you finish, release or
+replace your scope.
+
+### Scope selection and reservation limit
+
+Reserve a manageable amount of work that you intend to attempt next. Prefer
+small, clearly defined scopes rather than entire modules.
+
+Each contributor may reserve a maximum of **500 unfinished bodies at one
+time**, counted across all their active scopes, branches, worktrees and AI
+agents combined. This is a per-contributor limit, not a per-agent or
+per-comment limit.
+
+Count each distinct retail body once, whatever the number of placements it
+has: the 416-byte `Quat_Slerp` body is one body at twenty placements. Bodies
+already accepted on current `origin/master` do not count toward the limit.
+
+A scope may be a level module, an authored body file, a compiler profile, or
+an explicit list of bodies, provided its total does not exceed the
+contributor's remaining allowance. If a module holds too many unfinished
+bodies, reserve a smaller sub-scope or list the specific bodies being
+reserved.
+
+Do not reserve additional bodies indirectly through broad module claims,
+multiple comments, alternate branches or additional AI agents.
+
+### Bringing existing reservations within the limit
+
+Contributors currently reserving more than 500 unfinished bodies must update
+their existing coordination comment to retain no more than 500 and explicitly
+release the remainder. This requirement applies to existing reservations as
+well as new ones.
+
+Until an oversized reservation is narrowed, other contributors must request
+coordination rather than assume which bodies have been released. The
+contributor holding the oversized reservation must identify the retained scope
+clearly; a maintainer should resolve any dispute or lack of response.
+
+### Updating a reservation
+
+Contributors may request additional bodies at any time, provided the
+resulting active reservation never exceeds 500 unfinished bodies.
+
+Before adding or replacing reserved bodies:
+
+1. Fetch `origin/master` and check which bodies remain unfinished.
+2. Read the current comments in issue #99 and check for overlapping
+   reservations.
+3. Release enough existing bodies if necessary to remain within the limit.
+4. Update your one persistent coordination comment with the retained,
+   released and newly reserved scopes.
+5. Re-check for overlap before starting work.
+
+A body remains reserved until its implementation reaches `origin/master` or
+the contributor explicitly releases it. Local matches, local commits and open
+pull requests still count toward the limit while the body remains unfinished
+upstream.
+
+### Active scopes are exclusive
+
+Do not work inside another contributor's active scope without their explicit
+agreement. Module and file claims include their unfinished bodies, subject to
+the 500-body limit.
+
+An individual-body reservation does not reserve the surrounding source file.
+Coordinate edits when contributors work on different bodies in the same file.
+
+AI agents must verify their contributor's current scope and combined
+reservation count before beginning or assigning matching work. Agents must
+not expand a reservation beyond 500 bodies or modify another contributor's
+comment.
+
+Contributors with oversized reservations must narrow them before starting or
+assigning further matching attempts. They may finish attempts already in
+progress, but must not start new ones until their reservation complies with
+the limit.
+
+These rules apply to all matching work, including AI-assisted work and
+matches carried from another OpenRAC decompilation.
+
 See [CONTRIBUTING.md](CONTRIBUTING.md#review-and-promotion) for the review steps.
 Checks enforce structural invariants, not semantic truth: names/types, patch
 justification, intent and original behavior still require evidence and review.

@@ -9,8 +9,10 @@ open. Run the synthetic tests first. For a game-derived
 finding, verify your own lawful USA disc against `config/target.json` and
 identify the exact program, address, method and uncertainty. Share a measured
 hypothesis in an issue or a focused change to the tools or documentation.
-Check open issues and PRs before choosing a scope; no reservation queue exists
-yet. Do not add guessed function matches or claim progress from symbol names.
+Check open issues and PRs before choosing a scope, and keep one comment in the
+[coordination issue](https://github.com/OpenRAC/rac5-sm-decomp/issues/99)
+that lists your own reservations; there is no automated queue. Do not add
+guessed function matches or claim progress from symbol names.
 
 Once the applicable compiler, program format and function boundary are
 qualified, write matching C or C++ in `src/`, with one definition per function.

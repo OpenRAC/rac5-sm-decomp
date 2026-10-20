@@ -186,8 +186,14 @@ proprietary compiler. Read [LEGAL.md](LEGAL.md) and
    available for its one placement).
 
 4. Before starting substantial research, check open issues and pull requests
-   and state your intended scope in an issue or draft PR. There is **no
-   reservation or automated matching queue yet**. Current useful work includes
+   and state your intended scope in an issue or draft PR. Contributors
+   coordinate their scopes in the
+   [coordination issue](https://github.com/OpenRAC/rac5-sm-decomp/issues/99),
+   where each of them keeps one comment listing its own reservations; there
+   is **no automated matching queue**. The walls met while matching are
+   tracked in the
+   [wall register](https://github.com/OpenRAC/rac5-sm-decomp/issues/98).
+   Current useful work includes
    documenting the boot loader and SNR2 relocation behavior, establishing a
    complete assembly rebuild, identifying compiler profiles with multiple
    witnesses, reviewing function boundaries, and improving independent tools
