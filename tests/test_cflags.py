@@ -28,6 +28,7 @@ SONY = "sdk991111"
 DIVPAD = "sdk-divpad"
 SYNC = "sdk991111sync"
 SQ = "sdk991111sq"
+LEVEL_DIVPAD = "gnu-ee-trial-divpad"
 SDK_AS = "ee-sdk"
 PS2_AS = "ps2eeas"
 SPAN5_AS = "span5"
@@ -58,8 +59,8 @@ class CFlagsTests(unittest.TestCase):
         for key in ("driver_sha256", "cpp_sha256", "cc1_sha256"):
             self.assertEqual(len(pinned["tools"][key]), 64)
         self.assertEqual(cflags.pinned_compilers(),
-                         (cflags.DEFAULT_COMPILER, "gnu-ee-trial", SECOND,
-                          DIVPAD, SONY, SQ, SYNC))
+                         (cflags.DEFAULT_COMPILER, "gnu-ee-trial", LEVEL_DIVPAD,
+                          SECOND, DIVPAD, SONY, SQ, SYNC))
         self.assertTrue(cflags.Entry(SECOND, ("-O2",)).compiler != cflags.DEFAULT_COMPILER)
         self.assertTrue(cflags.DEFAULT_ENTRY.pinned)
 
@@ -71,7 +72,8 @@ class CFlagsTests(unittest.TestCase):
                 # host the pin names, so an unstated host may not pass silently.
                 self.assertIn(pinned["host"], compile_boot_trial.HOSTS)
                 self.assertEqual(pinned["flags"], {"driver": ["-S"], "as": []})
-                self.assertTrue(pinned["id"].startswith("rac5-boot-"))
+                self.assertTrue(pinned["id"].startswith(("rac5-boot-",
+                                                         "rac5-level-")))
                 for key in ("driver_sha256", "cpp_sha256", "cc1_sha256"):
                     int(pinned["tools"][key], 16)
                 self.assertGreater(len(pinned["provenance"]), 80)

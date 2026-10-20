@@ -97,10 +97,10 @@ counted `0x100` eight-byte body, re-proved from the lots' own sources.
 The rest of each module is supplied by the pinned retail input. No game bytes,
 compiler binaries or linked outputs are committed.
 
-## Wave-18 level bodies
+## Wave-19 level bodies
 
-`config/levels/bodies.tsv` now records **3,571 placements** (54,472 module
-bytes) carried by **177 sources**, on top of the wave-17 ones, and all 21
+`config/levels/bodies.tsv` now records **3,591 placements** (62,792 module
+bytes) carried by **178 sources**, on top of the wave-17 ones, and all 21
 complete module hashes still match.
 
 The wave-18 campaign worked the levels again with a wider queue: 601 bounded
@@ -120,11 +120,30 @@ helper and the `memset`-plus-counter ring buffer. One authored source
 therefore carries many placements, which is why the placement count grows
 much faster than the number of sources.
 
-The wave-18 scope is separate from the wave-17 one: **3,571 placements**,
-**54,472 placement bytes** and **11,068 bytes** of distinct source (a source
+The wave-19 scope is separate from the wave-17 one: **3,591 placements**,
+**62,792 placement bytes** and **11,484 bytes** of distinct source (a source
 counted once). The two scopes are not added together: the 210 wave-17 rows
-are part of the 3,571, and 20 of them are the already counted `0x100`
+are part of the 3,591, and 20 of them are the already counted `0x100`
 eight-byte body re-proved from the lots' own sources.
+
+### The `Quat_Slerp` body and a fourth compiler
+
+The 416-byte `Quat_Slerp__FP4QUATPC4QUATT1f` body is carried at **twenty
+placements** by one source. It is byte-identical to the boot routine of the
+same name, which gives it a prototype the levels do not have on their own.
+
+Its measurement produced a fourth compiler chain. The reconstruction matched
+the retail for the first fifty-one instructions and then differed only by two
+register numbers, and the prologue was wrong in the same way: the retail saves
+the general purpose registers before the floating point ones. The pinned chain
+carries the RAC2 "increasing callee-saved saves" patch, which walks the save
+registers upward, and the chain that matches reverts it. On top of the
+project's own division padding patch, two anchored edits are collected in
+`tools/compiler/patches/0003-rac5-upstream-saves-divpad.patch`; the profile is
+pinned per source as `gnu-ee-trial-divpad` and
+[described in the compiler status](COMPILER-STATUS.md). The change is
+additive: the 177 level bodies accepted before it recompile to byte-identical
+objects under the new `cc1`.
 
 Three hundred and forty bodies in the wave-18 queue are larger than 412
 bytes, a band the wave-17 campaign never attempted. Most of that band stays

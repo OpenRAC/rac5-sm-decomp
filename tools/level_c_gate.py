@@ -40,7 +40,7 @@ REPORT = OUTPUT / "report.json"
 WORD = struct.Struct("<I")
 BODY_HEADER = ["module", "offset", "size", "source", "source_sha256_lf",
                "object_sha256", "profile", "as"]
-BODY_PROFILES = ("pinned", "gnu-ee-trial")
+BODY_PROFILES = ("pinned", "gnu-ee-trial", "gnu-ee-trial-divpad")
 BODY_ASSEMBLER = "gnu-ee-trial"
 BODY_PREFIX = "src/levels/bodies/"
 SHARED_0100 = "src/levels/shared/func_00000100.c"

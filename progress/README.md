@@ -5,11 +5,11 @@ after the private boot and level-program gates pass. It records **644 accepted
 boot C functions (87,228 bytes) in the 498,900-byte boot `.text`**, **one 476-byte C
 function in `FRONTEND.REL`**, plus **two shared C functions (8 + 72 bytes)
 at twenty numbered level placements** and, counted separately, the
-**3,571 level-body placements** of the wave-18 campaign (54,472 placement
-bytes carried by 177 sources, 11,068 distinct-source bytes). The shared pair
-counts as two authored functions, not forty independent matches, and the
-level bodies are a scope of their own: one authored source can carry many
-placements. Two other exact C shapes remain
+**3,591 level-body placements** of the wave-18 and wave-19 campaigns
+(62,792 placement bytes carried by 178 sources, 11,484 distinct-source
+bytes). The shared pair counts as two authored functions, not forty
+independent matches, and the level bodies are a scope of their own: one
+authored source can carry many placements. Two other exact C shapes remain
 provisional controls. `FRONTEND.REL` and `LEVEL_01.REL` have exact complete-file assembly
 replacement and measured relocated-image baselines. Their original non-code
 bytes are still inputs, and assembly equality is not C progress.
