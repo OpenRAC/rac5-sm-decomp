@@ -56,9 +56,11 @@ per placement and one shared `source_sha256_lf` / `object_sha256`, the shape
 - `source` is repository-relative. Wave-17 and wave-18 bodies live in
   `src/levels/bodies/`; the already reviewed `0x100` body may point at
   `src/levels/shared/func_00000100.c`.
-- `profile` is `pinned` (the `compiler-no-pad-20261015` cc1) or
-  `gnu-ee-trial` (the same GNU EE build without the increasing-callee-saved
-  patch, passed as `--extra-cc1 gnu-ee-trial=PATH`). `as` is the pinned GNU
+- `profile` is `pinned` (the `compiler-no-pad-20261015` cc1), `gnu-ee-trial`
+  (the same GNU EE build without the increasing-callee-saved patch, passed as
+  `--extra-cc1 gnu-ee-trial=PATH`) or `gnu-ee-trial-divpad` (the same build
+  with the upstream save order and the R5900 division padding, passed as
+  `--extra-cc1 gnu-ee-trial-divpad=PATH`). `as` is the pinned GNU
   `gnu-ee-trial-20261015` assembler for every row.
 - An external name must be a module import, a module export, or a name that
   carries its address (`func_<addr>` / `D_<addr>`). The gate deliberately does

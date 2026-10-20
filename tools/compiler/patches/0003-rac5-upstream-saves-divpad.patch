@@ -1,0 +1,37 @@
+--- a/gcc/config/mips/mips.h
++++ b/gcc/config/mips/mips.h
+@@ -4850,7 +4850,9 @@
+    single-precision division-family instruction is preceded by two nops and is
+    never left in a branch delay slot.  Runs after delayed-branch scheduling,
+    before branch shortening.  */
+-#define MACHINE_DEPENDENT_REORG_AFTER_DBR(X) mips_r5900_pad_divisions (X)
++#define MACHINE_DEPENDENT_REORG_AFTER_DBR(X) mips_r5900_pad_loops (X)
++extern void mips_r5900_pad_loops ();
++#define MACHINE_DEPENDENT_REORG_AFTER_DBR_3(X) mips_r5900_pad_divisions (X)
+ extern void mips_r5900_pad_divisions ();
+ 
+ /* We need to use a special set of functions to handle hard floating
+--- a/gcc/toplev.c
++++ b/gcc/toplev.c
+@@ -4426,6 +4426,10 @@
+ #define MACHINE_DEPENDENT_REORG_AFTER_DBR_2(X)
+ #endif
+   MACHINE_DEPENDENT_REORG_AFTER_DBR_2 (insns);
++#ifndef MACHINE_DEPENDENT_REORG_AFTER_DBR_3
++#define MACHINE_DEPENDENT_REORG_AFTER_DBR_3(X)
++#endif
++  MACHINE_DEPENDENT_REORG_AFTER_DBR_3 (insns);
+ 
+   /* RAC5: pad single-precision divisions after delay-slot scheduling.  */
+ #ifdef MACHINE_DEPENDENT_REORG_AFTER_DBR
+--- a/gcc/config/mips/mips.c
++++ b/gcc/config/mips/mips.c
+@@ -6193,7 +6193,7 @@
+     base_offset = 0;
+     for (rac2_save_pass = 0; rac2_save_pass < 2; rac2_save_pass++)
+       {
+-        if ((store_p != 0) == (rac2_save_pass == 0))
++        if (rac2_save_pass == 1)   /* w19: ordre amont -- bloc GPR d'abord */
+           {
+             /* Save floating point registers if needed.  */
+             if (fmask)

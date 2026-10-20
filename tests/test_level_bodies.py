@@ -73,7 +73,8 @@ class LevelBodyTests(unittest.TestCase):
                 self.assertEqual(source_digest(path), row["source_sha256_lf"])
                 self.assertRegex(row["source_sha256_lf"], r"^[0-9a-f]{64}$")
                 self.assertRegex(row["object_sha256"], r"^[0-9a-f]{64}$")
-                self.assertIn(row["profile"], ("pinned", "gnu-ee-trial"))
+                self.assertIn(row["profile"], ("pinned", "gnu-ee-trial",
+                                               "gnu-ee-trial-divpad"))
                 self.assertEqual(row["as"], "gnu-ee-trial")
                 prior = by_source.setdefault(source, row)
                 self.assertEqual(prior["profile"], row["profile"])

@@ -810,6 +810,31 @@
         "path": "tools/compiler/rac5-sq/0001b-rac5-sregs-quad-and-order.patch",
         "sha256_lf": "a6bdf03cb4f9782cfd18bcebe035d166dd78da286679a74e413d11142582173b"
       }
+    },
+    "gnu-ee-trial-divpad": {
+      "id": "rac5-level-gnu-ee-trial-upstream-saves-divpad-20261020",
+      "provenance": "The locally reconstructed GNU EE chain of the pinned compiler (compiler-no-pad-20261015, the GNU 2.9-ee build described in docs/COMPILER-STATUS.md) with two anchored edits on top of the project's own tools/compiler/patches/0002-rac5-div-pad.patch, collected in tools/compiler/patches/0003-rac5-upstream-saves-divpad.patch: the division padding hook no longer overwrites the tree's own loop padding hook (the two hooks are separated, AFTER_DBR keeps the loops and AFTER_DBR_3 does the divisions), and the RAC2 'increasing callee-saved saves' option is reverted so the prologue saves the general purpose registers before the floating point ones, which is the order the retail uses. The measured cause is the Quat_Slerp body of the levels: its prologue differs from the retail only by that order, and the first fifty-one instructions then match. The change is additive: the 177 accepted level bodies and their object hashes are unchanged by it. Pinned per source, never rebuilt here and never committed.",
+      "status": "measured per source; level-only",
+      "host": "linux",
+      "patch": {
+        "path": "tools/compiler/patches/0003-rac5-upstream-saves-divpad.patch",
+        "sha256_lf": "426505d381cd85a1f715c0034ef310bd486d0b0d2c504597b2bcc06c3ef8965a"
+      },
+      "tools": {
+        "driver": "xgcc",
+        "driver_sha256": "4c8149cc96021253ac9863d670ada372e29f71af80ae91934c195cc4c6a3b2d6",
+        "libexec": ".",
+        "cpp": "cpp",
+        "cpp_sha256": "2ac3d8d3ca177e6705ac2cbdd1bd9e9a7181ac3e40f6230dea6875c3218ec155",
+        "cc1": "cc1",
+        "cc1_sha256": "d7f3fb64a496b231c0539d26666b90fb1916f6f4da1432bb649f0646fb758186"
+      },
+      "flags": {
+        "driver": [
+          "-S"
+        ],
+        "as": []
+      }
     }
   },
   "extra_assemblers": {
