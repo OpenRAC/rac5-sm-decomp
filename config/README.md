@@ -53,8 +53,8 @@ per placement and one shared `source_sha256_lf` / `object_sha256`, the shape
 
 - `offset` is hexadecimal (`0x00000100`); `size` is decimal bytes and a
   multiple of four.
-- `source` is repository-relative. Wave-17 bodies live in `src/levels/bodies/`;
-  the already reviewed `0x100` body may point at
+- `source` is repository-relative. Wave-17 and wave-18 bodies live in
+  `src/levels/bodies/`; the already reviewed `0x100` body may point at
   `src/levels/shared/func_00000100.c`.
 - `profile` is `pinned` (the `compiler-no-pad-20261015` cc1) or
   `gnu-ee-trial` (the same GNU EE build without the increasing-callee-saved
