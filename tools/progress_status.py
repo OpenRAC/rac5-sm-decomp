@@ -514,10 +514,12 @@ def main() -> None:
     elif OUTPUT.read_text(encoding="utf-8") != content:
         raise ValueError("progress snapshot is stale; rerun private gates and --write")
     boot = json.loads(content)["boot"]
+    levels = json.loads(content)["levels"]
     print(f"scoped progress: boot {boot['accepted_c_bytes']}/{TEXT_SIZE} C bytes "
           f"in {len(boot['accepted_functions'])} accepted functions; frontend 476 "
           "bytes; two shared level C functions (8+72 bytes) at 20 placements; "
-          "wave-17 level bodies counted separately; "
+          f"{levels['accepted_level_body_placements']} wave-18 level body "
+          "placements counted separately; "
           "no qualified game-wide percentage")
 
 
