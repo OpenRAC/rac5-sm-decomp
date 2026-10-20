@@ -529,3 +529,39 @@ pinned chain's `cpp`, the trial `cc1`, and the Sony SDK `xgcc` driver whose
 under the pinned chain, the gate recompiles every other object with its
 declared chain and reproduces all other object pins unchanged, and the
 complete ELF is byte-exact.
+
+## A fourth chain: upstream save order with the division padding
+
+The level bodies above 412 bytes were blocked by a single measured cause: the
+instruction sequence of the reconstruction was right and only the **register
+numbers** differed, the prologue included. The retail saves the general
+purpose registers before the floating point ones; the pinned chain carries the
+RAC2 "increasing callee-saved saves" patch, which walks the save registers
+upward, and the `gnu-ee-trial` chain of the previous section is the same tree
+without it.
+
+The `Quat_Slerp__FP4QUATPC4QUATT1f` body of the levels (416 bytes, twenty
+placements) is the measurement: under the pinned chain the first difference
+is at byte 8, under `gnu-ee-trial` it jumps to byte 204, where the first
+fifty-one instructions match word for word.
+
+Two anchored edits on top of the project's own
+`tools/compiler/patches/0002-rac5-div-pad.patch` produce the chain that
+matches, collected in
+`tools/compiler/patches/0003-rac5-upstream-saves-divpad.patch`:
+
+1. the division padding hook no longer overwrites the tree's own loop
+   padding hook (the two hooks are separated: `AFTER_DBR` keeps the loops,
+   `AFTER_DBR_3` does the divisions);
+2. the "increasing callee-saved saves" option is reverted, so the prologue
+   saves the general purpose registers first.
+
+The profile is pinned per source as `gnu-ee-trial-divpad` in
+`config/boot/compiler_trial.json` (stage
+`/root/essai-rac5/gnu-ee-trial-divpad-20261020`, private), and the level
+bodies name it in the `profile` column of `config/levels/bodies.tsv`.
+
+Controls: the change is **additive**. The 177 level bodies accepted before
+it are recompiled with the new `cc1` and produce **byte-identical objects**,
+so no accepted body is disturbed. The boot campaign keeps its own profiles;
+the new chain is selected per source, like the others.

@@ -518,7 +518,7 @@ def main() -> None:
     print(f"scoped progress: boot {boot['accepted_c_bytes']}/{TEXT_SIZE} C bytes "
           f"in {len(boot['accepted_functions'])} accepted functions; frontend 476 "
           "bytes; two shared level C functions (8+72 bytes) at 20 placements; "
-          f"{levels['accepted_level_body_placements']} wave-18 level body "
+          f"{levels['accepted_level_body_placements']} level body "
           "placements counted separately; "
           "no qualified game-wide percentage")
 
