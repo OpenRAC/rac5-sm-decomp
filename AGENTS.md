@@ -67,6 +67,23 @@ compiler settings or level-format assumptions.
    reports private. Index useful alternatives by function in `nonmatching/`.
    Reusable tools belong in `tools/` with tests; public text is English.
 
+## The wall register
+
+The places where a body is understood but its bytes still differ are tracked in
+[issue #98](https://github.com/OpenRAC/rac5-sm-decomp/issues/98), the living
+register of the walls. It is a research ledger, not a bug tracker.
+
+- When you meet a wall, post a comment there: the body, the placement, the
+  first difference, the profiles you tried, and what you concluded. **Each
+  contributor keeps one comment**, and edits that comment when they learn
+  more; nobody edits another contributor's.
+- A wall that is not written down is a wall the next campaign measures again
+  from scratch. Name the class of the mismatch, not only the body that showed
+  it.
+- The issue body holds the current state of the register and the root keeps it
+  up to date. The comments are the per-contributor records, and a closed wall
+  keeps its comment as the account of how it was lifted.
+
 See [CONTRIBUTING.md](CONTRIBUTING.md#review-and-promotion) for the review steps.
 Checks enforce structural invariants, not semantic truth: names/types, patch
 justification, intent and original behavior still require evidence and review.
