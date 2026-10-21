@@ -125,12 +125,13 @@ For more documentation:
 
 Contributions are warmly welcome! Whether you are interested in decompiling functions, researching engine quirks, or improving documentation:
 
-- Read [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md) first; they hold the rules.
-- Check open issues and pull requests, and state your intended scope in an issue or a draft PR. Contributors coordinate their scopes in the [coordination issue](https://github.com/OpenRAC/rac5-sm-decomp/issues/99), where each of them keeps one comment listing its own reservations; there is **no automated matching queue**. The walls met while matching are tracked in the [wall register](https://github.com/OpenRAC/rac5-sm-decomp/issues/98).
-- Keep one authored definition per function in `src/`, and put a useful but unaccepted attempt in `nonmatching/`. Only a qualified toolchain reproducing the **complete retail program bytes at every applicable placement** counts as a match.
-- Make one focused, reviewable change. Regenerate metadata and progress with the relevant tool; never edit generated tables or progress claims by hand.
-- Never publish ISO/ELF/REL/WAD bytes, extracted assets, assembly listings, memory dumps, proprietary tools, SDK files, secrets or personal disc paths. See [`LEGAL.md`](LEGAL.md).
-- Join our **[Discord Community](https://discord.gg/Sfd2B54PDG)** to discuss progress, ask questions, and collaborate!
+- **Set up** your environment and verify your own copy of the disc ([Quick Start](#quick-start)).
+- **Choose a scope** and reserve it in the [coordination issue](https://github.com/OpenRAC/rac5-sm-decomp/issues/99), where each contributor keeps one comment listing its own reservations. The walls met while matching are tracked in the [wall register](https://github.com/OpenRAC/rac5-sm-decomp/issues/98).
+- **Match** one function at a time: one authored definition in `src/`, a useful but unaccepted attempt in `nonmatching/`. Only a qualified toolchain reproducing the **complete retail program bytes at every applicable placement** counts as a match.
+- **Check** with `python -m unittest discover -s tests -v`, `python tools/check_repository.py` and `python tools/progress_status.py --check`. Regenerate metadata and progress with the relevant tool; never edit generated tables or progress claims by hand.
+- **Open a pull request** against `master` from a branch of your fork, with the target identity, evidence, commands and remaining limitations in the description. **The maintainer merges manually.**
+
+Read [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md) first; they hold the rules, the sources you may use and the review steps. Never publish ISO/ELF/REL/WAD bytes, extracted assets, assembly listings, memory dumps, proprietary tools, SDK files, secrets or personal disc paths; see [`LEGAL.md`](LEGAL.md). Join our **[Discord Community](https://discord.gg/Sfd2B54PDG)** to discuss progress, ask questions, and collaborate!
 
 ---
 
