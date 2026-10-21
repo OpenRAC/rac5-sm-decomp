@@ -115,8 +115,8 @@ compiler binaries or linked outputs are committed.
 
 ## Wave-19 level bodies
 
-`config/levels/bodies.tsv` now records **4,300 placements** (97,380 module
-bytes) carried by **345 sources**, on top of the wave-17 ones, and all 21
+`config/levels/bodies.tsv` now records **4,340 placements** (99,604 module
+bytes) carried by **385 sources**, on top of the wave-17 ones, and all 21
 complete module hashes still match.
 
 The wave-18 campaign worked the levels again with a wider queue: 601 bounded
@@ -136,10 +136,10 @@ helper and the `memset`-plus-counter ring buffer. One authored source
 therefore carries many placements, which is why the placement count grows
 much faster than the number of sources.
 
-The wave-20 scope is separate from the wave-17 one: **4,300 placements**,
-**97,380 placement bytes** and **18,624 bytes** of distinct source (a source
+The wave-20 scope is separate from the wave-17 one: **4,340 placements**,
+**99,604 placement bytes** and **20,848 bytes** of distinct source (a source
 counted once). The two scopes are not added together: the 210 wave-17 rows
-are part of the 4,300, and 20 of them are the already counted `0x100`
+are part of the 4,340, and 20 of them are the already counted `0x100`
 eight-byte body re-proved from the lots' own sources.
 
 ### The `Quat_Slerp` body and a fourth compiler
