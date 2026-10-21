@@ -35,12 +35,14 @@ ROOT = Path(__file__).resolve().parent.parent
 PROFILE = ROOT / "config/levels/compiler_trial.json"
 BASE_PROFILE = ROOT / "config/boot/compiler_trial.json"
 BODIES = ROOT / "config/levels/bodies.tsv"
+BODY_SOURCES = ROOT / "config/levels/body_sources.tsv"
 OUTPUT = ROOT / "build/level-c-gate"
 REPORT = OUTPUT / "report.json"
 WORD = struct.Struct("<I")
-BODY_HEADER = ["module", "offset", "size", "source", "source_sha256_lf",
-               "object_sha256", "profile", "as"]
-BODY_PROFILES = ("pinned", "gnu-ee-trial", "gnu-ee-trial-divpad")
+BODY_HEADER = ["module", "offset", "size", "source"]
+SOURCE_HEADER = ["source", "source_sha256_lf", "object_sha256", "profile", "as"]
+BODY_PROFILES = ("pinned", "gnu-ee-trial", "gnu-ee-trial-divpad",
+                 "sdk991111", "sdk991111sync")
 BODY_ASSEMBLER = "gnu-ee-trial"
 BODY_PREFIX = "src/levels/bodies/"
 SHARED_0100 = "src/levels/shared/func_00000100.c"
@@ -163,9 +165,44 @@ def module_symbols(source: bytes) -> tuple[dict[str, int], dict[str, int]]:
     return imports, exports
 
 
-def read_bodies(path: Path, known: dict[str, str],
+def read_bodies(path: Path, sources_path: Path, known: dict[str, str],
                 ends: dict[str, int]) -> list[dict]:
-    """Read and validate ``config/levels/bodies.tsv``."""
+    """Read and validate the placement table and the source table it names.
+
+    A placement row carries only what belongs to a placement: where the body
+    sits and which source fills it.  The two hashes, the compiler profile and
+    the assembler belong to the *source*, so they live once per source in
+    ``config/levels/body_sources.tsv``; a source carried by hundreds of
+    placements does not repeat them hundreds of times.
+    """
+    sources: dict[str, dict] = {}
+    with sources_path.open(encoding="utf-8", newline="") as file:
+        reader = csv.DictReader((line for line in file if not line.startswith("#")),
+                                delimiter="\t")
+        if reader.fieldnames != SOURCE_HEADER:
+            raise ValueError(
+                f"{sources_path.name}: header differs from the documented schema")
+        for number, raw in enumerate(reader, 2):
+            source = raw["source"].replace("\\", "/")
+            if not (source.startswith(BODY_PREFIX) or source == SHARED_0100):
+                raise ValueError(
+                    f"{sources_path.name}:{number}: source outside the level body tree")
+            if raw["profile"] not in BODY_PROFILES:
+                raise ValueError(
+                    f"{sources_path.name}:{number}: unknown profile {raw['profile']}")
+            if raw["as"] != BODY_ASSEMBLER:
+                raise ValueError(
+                    f"{sources_path.name}:{number}: assembler is not {BODY_ASSEMBLER}")
+            for key in ("source_sha256_lf", "object_sha256"):
+                if re.fullmatch(r"[0-9a-f]{64}", raw[key]) is None:
+                    raise ValueError(
+                        f"{sources_path.name}:{number}: {key} is not 64 hex digits")
+            if source in sources:
+                raise ValueError(f"{sources_path.name}: duplicate source {source}")
+            sources[source] = {"source": source,
+                               "source_sha256_lf": raw["source_sha256_lf"],
+                               "object_sha256": raw["object_sha256"],
+                               "profile": raw["profile"], "as": raw["as"]}
     with path.open(encoding="utf-8", newline="") as file:
         reader = csv.DictReader((line for line in file if not line.startswith("#")),
                                 delimiter="\t")
@@ -184,22 +221,15 @@ def read_bodies(path: Path, known: dict[str, str],
                     or offset + size > ends[module]):
                 raise ValueError(f"{path.name}:{number}: placement outside the module code")
             source = raw["source"].replace("\\", "/")
-            if not (source.startswith(BODY_PREFIX) or source == SHARED_0100):
-                raise ValueError(f"{path.name}:{number}: source outside the level body tree")
-            if raw["profile"] not in BODY_PROFILES:
-                raise ValueError(f"{path.name}:{number}: unknown profile {raw['profile']}")
-            if raw["as"] != BODY_ASSEMBLER:
-                raise ValueError(f"{path.name}:{number}: assembler is not {BODY_ASSEMBLER}")
-            for key in ("source_sha256_lf", "object_sha256"):
-                if re.fullmatch(r"[0-9a-f]{64}", raw[key]) is None:
-                    raise ValueError(f"{path.name}:{number}: {key} is not 64 hex digits")
+            if source not in sources:
+                raise ValueError(
+                    f"{path.name}:{number}: source is not in {sources_path.name}")
             rows.append({"module": module, "offset": offset, "size": size,
-                         "source": source, "source_sha256_lf": raw["source_sha256_lf"],
-                         "object_sha256": raw["object_sha256"],
-                         "profile": raw["profile"], "as": raw["as"]})
+                         **sources[source]})
     seen: set[tuple[str, int]] = set()
     spans: dict[str, list[tuple[int, int, str]]] = defaultdict(list)
-    by_source: dict[str, dict] = {}
+    sizes: dict[str, int] = {}
+    used: set[str] = set()
     for row in rows:
         key = (row["module"], row["offset"])
         if key in seen:
@@ -207,17 +237,17 @@ def read_bodies(path: Path, known: dict[str, str],
         seen.add(key)
         spans[row["module"]].append((row["offset"], row["offset"] + row["size"],
                                       row["source"]))
-        prior = by_source.setdefault(row["source"], row)
-        if (prior["profile"] != row["profile"]
-                or prior["source_sha256_lf"] != row["source_sha256_lf"]
-                or prior["object_sha256"] != row["object_sha256"]
-                or prior["size"] != row["size"]):
-            raise ValueError(f"{path.name}: source columns disagree: {row['source']}")
+        used.add(row["source"])
+        prior = sizes.setdefault(row["source"], row["size"])
+        if prior != row["size"]:
+            raise ValueError(f"{path.name}: source sizes disagree: {row['source']}")
     for module, items in spans.items():
         items.sort()
         for left, right in zip(items, items[1:]):
             if left[1] > right[0]:
                 raise ValueError(f"{path.name}: overlapping placements in {module}")
+    for source in sorted(set(sources) - used):
+        raise ValueError(f"{sources_path.name}: source is carried by no placement: {source}")
     return rows
 
 
@@ -315,21 +345,25 @@ def place_body(rebuilt: bytes, body: bytes, start: int, end: int,
 
 def write_bodies(rows: list[dict],
                  objects: dict[str, tuple[Path, dict, str]]) -> None:
-    """Rewrite the two hash columns after a full, proved pass."""
+    """Rewrite the measured hashes of the source table after a full pass.
+
+    The placement table holds no measurement, so it is left alone; the two
+    hash columns of the source table are the measured ones.
+    """
     source_sha = {row["source"]: normalized_digest(ROOT / row["source"])
                   for row in rows}
     object_sha = {source: value[2] for source, value in objects.items()}
-    lines = BODIES.read_text(encoding="utf-8").splitlines()
     output = []
-    for line in lines:
-        if not line or line.startswith("#") or line.startswith("module\t"):
+    for line in BODY_SOURCES.read_text(encoding="utf-8").splitlines():
+        if not line or line.startswith("#") or line.startswith("source\t"):
             output.append(line)
             continue
         fields = line.split("\t")
-        fields[4] = source_sha[fields[3]]
-        fields[5] = object_sha[fields[3]]
+        source = fields[0]
+        fields[1] = source_sha[source]
+        fields[2] = object_sha[source]
         output.append("\t".join(fields))
-    BODIES.write_text("\n".join(output) + "\n", encoding="utf-8", newline="\n")
+    BODY_SOURCES.write_text("\n".join(output) + "\n", encoding="utf-8", newline="\n")
 
 
 def shared_buffer_targets(module: str, source: bytes, start: int,
@@ -550,7 +584,7 @@ def main() -> None:
     bodies = {Path(row["source"]).stem: linked_body(row, args.linker)
               for row in sources if "offset" in row}
     known, ends = pinned_modules(), code_ends()
-    body_rows = read_bodies(BODIES, known, ends)
+    body_rows = read_bodies(BODIES, BODY_SOURCES, known, ends)
     body_objects = compile_body_sources(body_rows, args, extra_cc1, base_profile)
     bodies_by_module: dict[str, list[dict]] = defaultdict(list)
     for row in body_rows:
@@ -664,6 +698,8 @@ def main() -> None:
     body_summary = {
         "table": "config/levels/bodies.tsv",
         "table_sha256": digest(BODIES),
+        "sources_table": "config/levels/body_sources.tsv",
+        "sources_table_sha256": digest(BODY_SOURCES),
         "placements": len(body_rows),
         "unique_sources": len(body_sizes),
         "placement_bytes": sum(row["size"] for row in body_rows),
@@ -682,6 +718,7 @@ def main() -> None:
     if args.refresh_bodies:
         write_bodies(body_rows, body_objects)
         body_summary["table_sha256"] = digest(BODIES)
+        body_summary["sources_table_sha256"] = digest(BODY_SOURCES)
     report = {"status": "passed_shared_frontend_and_level_bodies",
               "profile": profile["id"],
               "accepted_functions": ["func_00000100", "func_shared_zero_buffer",

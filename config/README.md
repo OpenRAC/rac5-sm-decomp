@@ -16,7 +16,7 @@ It follows the conventions of the OpenRAC RAC1 decompilation
 | Which level modules exist? | `levels/modules.tsv` | `overlays/` | twenty numbered modules plus the frontend |
 | Which bodies are known assembly? | `handwritten_asm.tsv` | `handwritten_asm.txt` | a measured verdict per function, with the wave that measured it |
 | What is the boot load image? | `boot/elf_layout.json`, `boot/dvp_overlays.tsv` | — | measured layout and the non-loaded DVP catalogue |
-| What are the accepted level C bodies? | `levels/bodies.tsv` (schema below) | per-overlay sources | one row per placement; a source shared across modules repeats its hashes |
+| What are the accepted level C bodies? | `levels/bodies.tsv` (schema below) | per-overlay sources | one row per placement; the source's own facts live in `levels/body_sources.tsv` |
 
 ## Conventions adopted from RAC1
 
@@ -44,12 +44,21 @@ It follows the conventions of the OpenRAC RAC1 decompilation
 ## levels/bodies.tsv schema
 
 ```
-module	offset	size	source	source_sha256_lf	object_sha256	profile	as
+module	offset	size	source
 ```
 
-One row per placement. A source that appears at several placements has one row
-per placement and one shared `source_sha256_lf` / `object_sha256`, the shape
-`levels/compiler_trial.json` already uses for the 72-byte shared function.
+One row per placement: where a body sits and which source fills it. The
+measured facts of a source — its two hashes, its compiler profile and its
+assembler — belong to the source, not to the placement, so they are written
+once per source in `levels/body_sources.tsv`:
+
+```
+source	source_sha256_lf	object_sha256	profile	as
+```
+
+A source carried by hundreds of placements therefore costs one row in the
+source table, and the placement table stays small enough for the repository's
+one megabyte guard on tracked files.
 
 - `offset` is hexadecimal (`0x00000100`); `size` is decimal bytes and a
   multiple of four.
@@ -58,10 +67,12 @@ per placement and one shared `source_sha256_lf` / `object_sha256`, the shape
   `src/levels/shared/func_00000100.c`.
 - `profile` is `pinned` (the `compiler-no-pad-20261015` cc1), `gnu-ee-trial`
   (the same GNU EE build without the increasing-callee-saved patch, passed as
-  `--extra-cc1 gnu-ee-trial=PATH`) or `gnu-ee-trial-divpad` (the same build
+  `--extra-cc1 gnu-ee-trial=PATH`), `gnu-ee-trial-divpad` (the same build
   with the upstream save order and the R5900 division padding, passed as
-  `--extra-cc1 gnu-ee-trial-divpad=PATH`). `as` is the pinned GNU
-  `gnu-ee-trial-20261015` assembler for every row.
+  `--extra-cc1 gnu-ee-trial-divpad=PATH`), or one of the two Sony EE-GCC
+  builds the boot campaign already pins, `sdk991111` and `sdk991111sync`
+  (`--extra-cc1 sdk991111=PATH`, `--extra-cc1 sdk991111sync=PATH`). `as` is
+  the pinned GNU `gnu-ee-trial-20261015` assembler for every row.
 - An external name must be a module import, a module export, or a name that
   carries its address (`func_<addr>` / `D_<addr>`). The gate deliberately does
   not resolve a name from the retail bytes it is proving; a source that needs
@@ -70,8 +81,12 @@ per placement and one shared `source_sha256_lf` / `object_sha256`, the shape
   basename (the ELF file symbol). Distinct lot sources that share a basename
   are stored with a lot or module suffix; their object hash is the gate's
   measurement for the stored name, not the lot's original hash.
-- `tools/level_c_gate.py --refresh-bodies` recomputes both hash columns after a
-  full pass. An ordinary run verifies them and fails on a stale row.
+- `tools/level_c_gate.py --refresh-bodies` recomputes both hash columns of the
+  source table after a full pass. An ordinary run verifies them and fails on a
+  stale row.
+- A placement must name a source the source table declares, and a source the
+  table declares must be carried by at least one placement; the gate refuses
+  an orphan on either side.
 - Placements must not overlap within a module. The `0x100` row may overlap the
   already counted shared body because the gate checks the two byte strings are
   identical before accepting the overlap.

@@ -559,7 +559,7 @@ matches, collected in
 The profile is pinned per source as `gnu-ee-trial-divpad` in
 `config/boot/compiler_trial.json` (stage
 `/root/essai-rac5/gnu-ee-trial-divpad-20261020`, private), and the level
-bodies name it in the `profile` column of `config/levels/bodies.tsv`.
+bodies name it in the `profile` column of `config/levels/body_sources.tsv`.
 
 Controls: the change is **additive**. The 177 level bodies accepted before
 it are recompiled with the new `cc1` and produce **byte-identical objects**,

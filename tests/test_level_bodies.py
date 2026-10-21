@@ -14,12 +14,15 @@ from c_source_policy import policy_errors  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 BODIES = ROOT / "config/levels/bodies.tsv"
+BODY_SOURCES = ROOT / "config/levels/body_sources.tsv"
 MODULES = ROOT / "config/levels/modules.tsv"
 INTERVALS = ROOT / "config/levels/code_intervals.tsv"
 BODY_PREFIX = "src/levels/bodies/"
 SHARED_0100 = "src/levels/shared/func_00000100.c"
-HEADER = ["module", "offset", "size", "source", "source_sha256_lf",
-          "object_sha256", "profile", "as"]
+HEADER = ["module", "offset", "size", "source"]
+SOURCE_HEADER = ["source", "source_sha256_lf", "object_sha256", "profile", "as"]
+PROFILES = ("pinned", "gnu-ee-trial", "gnu-ee-trial-divpad",
+            "sdk991111", "sdk991111sync")
 
 
 def records(path: Path) -> list[dict[str, str]]:
@@ -37,6 +40,8 @@ class LevelBodyTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.rows = records(BODIES)
+        cls.source_rows = records(BODY_SOURCES)
+        cls.sources = {row["source"]: row for row in cls.source_rows}
         cls.modules = {Path(row["path"]).name: row for row in records(MODULES)}
         cls.ends = {row["module"]: int(row["end_exclusive"], 16)
                     for row in records(INTERVALS)}
@@ -63,8 +68,16 @@ class LevelBodyTests(unittest.TestCase):
                                      f"overlapping placements in {module}")
 
     def test_sources_and_hashes(self) -> None:
-        by_source: dict[str, dict[str, str]] = {}
+        self.assertEqual(list(self.source_rows[0]), SOURCE_HEADER)
+        sizes: dict[str, int] = {}
         for row in self.rows:
+            source = row["source"]
+            with self.subTest(source=source):
+                self.assertIn(source, self.sources,
+                              "placement names a source the source table lacks")
+                prior = sizes.setdefault(source, int(row["size"]))
+                self.assertEqual(prior, int(row["size"]))
+        for row in self.source_rows:
             source = row["source"]
             with self.subTest(source=source):
                 self.assertTrue(source.startswith(BODY_PREFIX) or source == SHARED_0100)
@@ -73,14 +86,10 @@ class LevelBodyTests(unittest.TestCase):
                 self.assertEqual(source_digest(path), row["source_sha256_lf"])
                 self.assertRegex(row["source_sha256_lf"], r"^[0-9a-f]{64}$")
                 self.assertRegex(row["object_sha256"], r"^[0-9a-f]{64}$")
-                self.assertIn(row["profile"], ("pinned", "gnu-ee-trial",
-                                               "gnu-ee-trial-divpad"))
+                self.assertIn(row["profile"], PROFILES)
                 self.assertEqual(row["as"], "gnu-ee-trial")
-                prior = by_source.setdefault(source, row)
-                self.assertEqual(prior["profile"], row["profile"])
-                self.assertEqual(prior["size"], row["size"])
-                self.assertEqual(prior["source_sha256_lf"], row["source_sha256_lf"])
-                self.assertEqual(prior["object_sha256"], row["object_sha256"])
+                self.assertIn(source, sizes,
+                              "source table carries a source no placement uses")
 
     def test_every_body_file_is_referenced(self) -> None:
         referenced = {row["source"] for row in self.rows}

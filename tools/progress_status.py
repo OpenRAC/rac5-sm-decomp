@@ -30,6 +30,7 @@ BOOT_GATE = ROOT / "build/boot-trial-gate/report.json"
 LEVEL_GATE = ROOT / "build/level-program-gate/report.json"
 LEVEL_C_GATE = ROOT / "build/level-c-gate/report.json"
 BODIES = ROOT / "config/levels/bodies.tsv"
+BODY_SOURCES = ROOT / "config/levels/body_sources.tsv"
 CODE_CATALOGUE = ROOT / "config/levels/code_intervals.tsv"
 MODULE_CATALOGUE = ROOT / "config/levels/modules.tsv"
 PROFILE = ROOT / "config/boot/compiler_trial.json"
@@ -198,18 +199,26 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "body_bytes": 476, "direct_callers": 4,
             "module_sha256": by_name["FRONTEND.REL"]["sha256"]}:
         raise ValueError("frontend C evidence differs from pinned placement")
+    source_rows = {row["source"]: row for row in records(BODY_SOURCES)}
     body_rows = records(BODIES)
     body_sizes: dict[str, int] = {}
     body_profiles: dict[str, int] = {}
     for row in body_rows:
+        source = source_rows.get(row["source"])
+        if source is None:
+            raise ValueError(
+                f"level body source is not in the source table: {row['source']}")
         body_sizes.setdefault(row["source"], int(row["size"]))
-        body_profiles[row["profile"]] = body_profiles.get(row["profile"], 0) + 1
+        selector = source["profile"]
+        body_profiles[selector] = body_profiles.get(selector, 0) + 1
         if not (ROOT / row["source"]).is_file():
             raise ValueError(f"level body source is missing: {row['source']}")
     body_modules = sorted({row["module"] for row in body_rows})
     body_summary = level_c["bodies"]
     if (body_summary["table"] != "config/levels/bodies.tsv"
             or body_summary["table_sha256"] != digest(BODIES)
+            or body_summary["sources_table"] != "config/levels/body_sources.tsv"
+            or body_summary["sources_table_sha256"] != digest(BODY_SOURCES)
             or body_summary["placements"] != len(body_rows)
             or body_summary["unique_sources"] != len(body_sizes)
             or body_summary["placement_bytes"] !=
