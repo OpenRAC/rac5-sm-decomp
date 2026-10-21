@@ -19,7 +19,7 @@ candidate code intervals, not verified function sizes or unique game code.
 `LEVEL_15.REL` and `LEVEL_21.REL` already have identical complete interval
 hashes; smaller shared functions may occur elsewhere. `overall_percent` is
 therefore `null`. The only percentage in the snapshot is explicitly scoped to
-the boot `.text`: 19,120 / 498,900 bytes (3.83243%).
+the boot `.text`: 87,228 / 498,900 bytes (17.48406%).
 The [function-boundary and deduplication audit](../docs/LEVEL-FUNCTION-INVENTORY.md)
 now records 124,356 possible entry intervals, 74,051 stronger bounded
 candidates and an exact-duplicate upper bound of 33,168,892 candidate bytes.
@@ -101,10 +101,10 @@ to `master`, CI uploads `SCUS_976.15_report/report.json`; ByteMatch reads that
 artifact as its progress graph. Its denominator combines **498,900 measured
 boot `.text` bytes**, **162,944 frontend candidate-code bytes**, and **5,756,360
 optimistically deduplicated level candidate bytes**, for **6,418,204 provisional
-code bytes**. The numerator is **57,976 accepted C bytes**: 57,420 in boot, 476 in
+code bytes**. The numerator is **87,784 accepted C bytes**: 87,228 in boot, 476 in
 frontend and 80 from two authored functions shared across twenty levels,
-counted once. The site rounds the resulting approximately **0.30657%** to
-**0.31%**.
+counted once. The site rounds the resulting approximately **1.36773%** to
+**1.37%**.
 
 The dashboard's level unit and category both say **optimistic masked-shape
 estimate**. This denominator can rise when a presumed shared shape splits into

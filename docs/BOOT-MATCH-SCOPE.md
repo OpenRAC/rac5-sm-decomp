@@ -6,12 +6,12 @@ placement. The reviewed linked symbol is 16 bytes, ends with `jr $ra` and its
 delay slot inside that extent, has no trailing alignment bytes, and has no
 direct branch or jump target into its interval.
 
-Thirty further boot bodies were promoted the same way under the
+The further boot bodies were promoted the same way under the
 [promotion protocol](BOOT-PROMOTION.md): each was reviewed for its complete
 retail boundary, symbol mangling, callers, callees and behaviour, then moved
 from `nonmatching/boot/` to `src/boot/`, added to the enumerated accepted set,
 and requalified by the complete private gate at the final commit. The accepted
-scope is therefore **561 boot placements covering 57,420 boot `.text` bytes**,
+scope is therefore **644 boot placements covering 87,228 boot `.text` bytes**,
 listed in `tools/boot_c_campaign.py` and pinned by
 `config/boot/compiler_trial.json`. Each accepted source supplies its whole owned
 range: one catalogued body per owner and a normal return. A reviewed body may
@@ -50,8 +50,8 @@ candidate and reached the frontend's `SNR2` header. The original compiler
 executable and all level compiler profiles remain unidentified.
 
 The gate writes a private `build/boot-trial-gate/report.json` only after every
-check succeeds, with `counted_matches: 561`, `counted_bytes: 57420`, and
-`accepted_functions` listing the 561 accepted retail symbols. It initializes the
+check succeeds, with `counted_matches: 644`, `counted_bytes: 87228`, and
+`accepted_functions` listing the 644 accepted retail symbols. It initializes the
 report as `incomplete` with zero matches before checking anything. This report is
 evidence for the accepted boot placements; no game-wide percentage or ByteMatch
 report has been published. If a source, compiler, linker, boundary or boot

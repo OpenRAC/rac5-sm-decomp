@@ -4,6 +4,9 @@
 The public snapshot contains metadata, hashes and qualified C coverage only.
 It is not an objdiff/ByteMatch report: level function boundaries and unique
 shared-code accounting are not yet qualified.
+
+The same snapshot renders the progress table of README.md, so the README never
+states a number the snapshot does not hold.
 """
 
 from __future__ import annotations
@@ -18,6 +21,7 @@ from pathlib import Path
 from boot_assembly import TEXT_SIZE
 from boot_c_campaign import accepted_replacements, source_path
 from boot_trial_gate import accepted_matches
+from bytematch_estimate import report as bytematch_report
 from level_context_translation import check_summary as check_context_summary
 from level_role_graph import check_summary as check_role_summary
 from level_program_gate import MEASURED_LOADS
@@ -26,6 +30,9 @@ from level_switch_bodies import check_summary as check_switch_summary
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "progress/status.json"
+README = ROOT / "README.md"
+PROGRESS_BEGIN = "<!-- progress:begin (tools/progress_status.py --write-readme) -->"
+PROGRESS_END = "<!-- progress:end -->"
 BOOT_GATE = ROOT / "build/boot-trial-gate/report.json"
 LEVEL_GATE = ROOT / "build/level-program-gate/report.json"
 LEVEL_C_GATE = ROOT / "build/level-c-gate/report.json"
@@ -503,10 +510,69 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
     }
 
 
+def readme_block(status: dict[str, object]) -> str:
+    """Render the scoped progress table of README.md.
+
+    The table restates the generated snapshot and the labelled ByteMatch
+    estimate; it never claims more than either of them holds.
+    """
+    boot = status["boot"]
+    levels = status["levels"]
+    frontend = next(row for row in levels["placements"]
+                    if row["module"] == "FRONTEND.REL")
+    shape = json.loads(SHAPE_SCENARIO.read_text(encoding="utf-8"))
+    estimate = bytematch_report(status, shape)["measures"]
+    return "\n".join([
+        "| Scope | Code scope | Accepted C | Accepted functions |",
+        "| --- | --- | ---: | ---: |",
+        f"| Boot `.text` | {boot['code_bytes']:,} bytes measured "
+        f"| {boot['accepted_c_bytes']:,} bytes "
+        f"({boot['scoped_code_percent']:.2f}%) "
+        f"| {len(boot['accepted_functions']):,} |",
+        f"| Frontend (`FRONTEND.REL`) "
+        f"| {frontend['candidate_code_bytes_by_placement']:,} candidate bytes "
+        f"| {frontend['accepted_c_bytes']:,} bytes "
+        f"| {len(levels['accepted_frontend_functions']):,} |",
+        f"| Levels (20 `LEVEL_*.REL`) "
+        f"| {levels['candidate_code_bytes_by_placement']:,} candidate bytes by placement "
+        f"| {levels['accepted_c_bytes_per_unique_source']:,} bytes "
+        f"({levels['accepted_c_bytes_by_placement']:,} by placement) "
+        f"| {len(levels['accepted_shared_functions']):,} |",
+        f"| Level bodies (counted separately) "
+        f"| {levels['accepted_level_body_unique_source_bytes']:,} unique source bytes "
+        f"| {levels['accepted_level_body_placement_bytes']:,} bytes by placement "
+        f"| {levels['accepted_level_body_unique_sources']:,} |",
+        "",
+        f"The ByteMatch estimate divides the **{int(estimate['matched_code']):,}** "
+        f"accepted C bytes by a provisional "
+        f"**{int(estimate['total_code']):,}**-byte denominator: "
+        f"**{estimate['matched_code_percent']:.2f}%**. That denominator combines "
+        f"the {boot['code_bytes']:,} measured boot `.text` bytes, the "
+        f"{frontend['candidate_code_bytes_by_placement']:,} frontend candidate-code "
+        f"bytes and the "
+        f"{status['optimistic_shape_scenario']['masked_max_per_module_bytes']:,} "
+        "optimistically deduplicated level candidate bytes. It is an estimate over "
+        "candidate code intervals, not a qualified unique-code size; the "
+        "snapshot's `overall_percent` stays `null`.",
+    ])
+
+
+def replace_progress_block(text: str, block: str) -> str:
+    """Return the README text with the generated progress block in place."""
+    start = text.find(PROGRESS_BEGIN)
+    end = text.find(PROGRESS_END)
+    if start < 0 or end < start:
+        raise ValueError("README progress markers are missing")
+    return (text[:start + len(PROGRESS_BEGIN)] + "\n" + block + "\n" +
+            text[end:])
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--write", action="store_true", help="use private local gate receipts")
+    mode.add_argument("--write-readme", action="store_true",
+                      help="refresh the README progress table from the committed snapshot")
     mode.add_argument("--check", action="store_true", help="check committed snapshot metadata")
     args = parser.parse_args()
     if args.write:
@@ -517,11 +583,22 @@ def main() -> None:
     else:
         current = json.loads(OUTPUT.read_text(encoding="utf-8"))
         evidence = current["evidence"]
-    content = json.dumps(snapshot(evidence), indent=2) + "\n"
+    status = snapshot(evidence)
+    content = json.dumps(status, indent=2) + "\n"
+    readme = README.read_text(encoding="utf-8")
+    updated = replace_progress_block(readme, readme_block(status))
     if args.write:
         OUTPUT.write_text(content, encoding="utf-8", newline="\n")
-    elif OUTPUT.read_text(encoding="utf-8") != content:
-        raise ValueError("progress snapshot is stale; rerun private gates and --write")
+        if updated != readme:
+            README.write_text(updated, encoding="utf-8", newline="\n")
+    elif args.write_readme:
+        if updated != readme:
+            README.write_text(updated, encoding="utf-8", newline="\n")
+    else:
+        if OUTPUT.read_text(encoding="utf-8") != content:
+            raise ValueError("progress snapshot is stale; rerun private gates and --write")
+        if updated != readme:
+            raise ValueError("README progress table is stale; rerun --write-readme")
     boot = json.loads(content)["boot"]
     levels = json.loads(content)["levels"]
     print(f"scoped progress: boot {boot['accepted_c_bytes']}/{TEXT_SIZE} C bytes "

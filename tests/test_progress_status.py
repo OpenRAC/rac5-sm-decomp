@@ -11,7 +11,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import boot_c_campaign  # noqa: E402
 from boot_trial_gate import accepted_body_bytes  # noqa: E402
-from progress_status import OUTPUT, snapshot  # noqa: E402
+from progress_status import (  # noqa: E402
+    OUTPUT, PROGRESS_BEGIN, PROGRESS_END, README, readme_block,
+    replace_progress_block, snapshot)
 
 
 class ProgressStatusTests(unittest.TestCase):
@@ -32,6 +34,18 @@ class ProgressStatusTests(unittest.TestCase):
                          ["func_00002F80"])
         self.assertEqual(report["levels"]["accepted_shared_functions"],
                          ["func_00000100", "func_shared_zero_buffer"])
+
+    def test_readme_progress_block_is_generated_from_the_snapshot(self) -> None:
+        report = json.loads(OUTPUT.read_text(encoding="utf-8"))
+        readme = README.read_text(encoding="utf-8")
+        block = readme_block(report)
+        self.assertIn(PROGRESS_BEGIN, readme)
+        self.assertIn(PROGRESS_END, readme)
+        self.assertIn(block, readme)
+        self.assertEqual(replace_progress_block(readme, block), readme)
+        self.assertIn(f"{report['boot']['accepted_c_bytes']:,}", block)
+        self.assertIn(f"{report['levels']['accepted_frontend_c_bytes']:,}", block)
+        self.assertIn("`overall_percent` stays `null`", block)
 
     def test_rejects_unproven_match_and_relocated_image(self) -> None:
         evidence = json.loads(OUTPUT.read_text(encoding="utf-8"))["evidence"]

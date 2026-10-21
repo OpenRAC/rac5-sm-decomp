@@ -21,7 +21,7 @@ retail raw `PT_LOAD` bytes and program header
 ([combined witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)); the
 generated `config/boot/witness_boundaries.tsv` catalogue lists each linked body
 with its compiled extent, its following zero alignment and the kind of control
-transfer it ends in. Five hundred and sixty-one reviewed placements (57,420 bytes,
+transfer it ends in. Six hundred and forty-four reviewed placements (87,228 bytes,
 starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.

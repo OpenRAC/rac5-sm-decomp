@@ -45,14 +45,14 @@
    [boot C-object integration witness](BOOT-C-WITNESS.md) preserves all
    raw retail `PT_LOAD` bytes and header. A combined trial now preserves them
    initially with twenty C functions linked together (`docs/BOOT-C-WITNESS.md`). The
-   current pure-C campaign recompiles 619 objects and catalogues 619 body extents;
+   current pure-C campaign recompiles 664 objects and catalogues 664 body extents;
    inline-assembly experiments are excluded. That
    evidence supports a reviewed boot placement set, not a general compiler or
    full runtime behavior. The later packaging gate rebuilds the entire ELF
    file exactly from the linked load image and numeric metadata.
    The [boot gate](BOOT-TRIAL-GATE.md) now rebuilds all C objects from
    SHA-pinned local tools and checks the complete load image reproducibly.
-   561 reviewed boot placements are accepted under this limited profile;
+   644 reviewed boot placements are accepted under this limited profile;
    level programs and the original compiler identity remain open.
    The [VU overlay audit](DVP-OVERLAYS.md) privately reproduces the 31 DVP
    sections while preserving the exact load segment. An older direct SN-linker

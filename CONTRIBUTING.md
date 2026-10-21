@@ -1,8 +1,8 @@
 # Contributing
 
-Start with the complete [README contribution walkthrough](README.md#start-contributing)
+Start with the complete [README contribution walkthrough](README.md#contributing)
 and [LEGAL.md](LEGAL.md). The pinned USA input and SNR2/boot metadata are
-verified, with 31 narrowly accepted boot placements (1,064 bytes) and two
+verified, with 644 narrowly accepted boot placements (87,228 bytes) and two
 shared level functions. The level compiler
 profiles, complete function catalogue and game-wide progress build remain
 open. Run the synthetic tests first. For a game-derived
