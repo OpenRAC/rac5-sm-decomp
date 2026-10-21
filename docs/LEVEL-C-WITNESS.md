@@ -122,8 +122,8 @@ compiler binaries or linked outputs are committed.
 
 ## Wave-19 level bodies
 
-`config/levels/bodies.tsv` now records **5,280 placements** (174,156 module
-bytes) carried by **668 sources**, on top of the wave-17 ones, and all 21
+`config/levels/bodies.tsv` now records **7,643 placements** (351,976 module
+bytes) carried by **1,399 sources**, on top of the wave-17 ones, and all 21
 complete module hashes still match. The placements name their source; the
 source's own two hashes, its compiler profile and its assembler live once per
 source in `config/levels/body_sources.tsv`, so a body carried by hundreds of
@@ -146,10 +146,10 @@ helper and the `memset`-plus-counter ring buffer. One authored source
 therefore carries many placements, which is why the placement count grows
 much faster than the number of sources.
 
-The wave-20 scope is separate from the wave-17 one: **5,280 placements**,
-**174,156 placement bytes** and **49,872 bytes** of distinct source (a source
+The wave-20 scope is separate from the wave-17 one: **7,643 placements**,
+**351,976 placement bytes** and **97,256 bytes** of distinct source (a source
 counted once). The two scopes are not added together: the 210 wave-17 rows
-are part of the 5,280, and 20 of them are the already counted `0x100`
+are part of the 7,643, and 20 of them are the already counted `0x100`
 eight-byte body re-proved from the lots' own sources.
 
 ### The `Quat_Slerp` body and a fourth compiler
@@ -260,6 +260,39 @@ Three things the retail does that the compiler does not remain the open
 part: reloading a global after each store (the aliasing of GCC 2.9 merges
 the reads), a 128-bit constant that is *computed* rather than literal (the
 pinned `cc1` refuses the conversion), and `movn`.
+
+### The wave-22 campaign, and the form of a float copy
+
+The float class is much larger than the sixteen byte one — **14,184
+families** at 18,068 placements — and twenty lots took the first 2,400 of
+them, ranked by the number of placements they carry. The root re-proved
+every claimed row itself, and the wave added **2,383 placements** plus
+**three of the twelve bodies** that had been parked for two campaigns
+because they are larger than 412 bytes.
+
+The form the campaign measured is the twin of the sixteen byte one. The
+float copy of the retail is an assignment **field by field**, in the
+retail's exact order; a structure assignment gives `ldl`/`ldr`, which is the
+*other* class. The order of the assignments is the order of the
+instructions, and it is a **rotation** of the source order — the retail
+writes `+0, +0xC, +4, +8` for four fields, so the source writes `f_00,
+f_0C, f_08, f_04`, because the compiler swaps the last two stores. The
+products of a matrix-vector product have to live in **named locals**, or the
+compiler recycles the registers and the body comes out shorter.
+
+The **polarity** of a branch is in the condition: `if (a1 == 0xFFFF)` gives
+the retail's inverted branch, and a float comparison written with `>` gives
+`c.lt.s` and `bc1tl`, where `<` gives `bc1fl`. A global whose address the
+retail spells with a **non canonical page** needs a symbol **at the page**
+with the offset in the expression. And to make the compiler **reload** a
+global pointer after a write, the global has to be a **structure**.
+
+One of the three parked bodies turned out to be a **profile** wall, not a
+source wall: the source the wave-19 campaign had written, unchanged, gives
+504 bytes under the pinned compiler and **512 exact bytes** under
+`gnu-ee-trial-divpad`. That is a correction to what the earlier waves
+concluded, and it is recorded in the
+[wall register](https://github.com/OpenRAC/rac5-sm-decomp/issues/98).
 
 ## With your own lawful pinned USA disc and matching local tools, run in WSL:
 
