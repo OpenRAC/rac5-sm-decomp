@@ -87,6 +87,22 @@ names, with one file per placement where the address differs, and the original
 lot source is named in a header comment. The byte comparison proves each
 renamed source exactly like the others.
 
+**A body that carries an absolute address is not portable.** The twelve-byte
+bodies of the shape `lui $v0,hi / jr $ra / sw $a0,lo($v0)` exist at dozens
+of placements, and the retail spells the address differently at each of them:
+`0x27E90` in the frontend, **`0` in all twenty levels**, then `0x2BE50`,
+`0x3E628` and `0x10BE50` elsewhere. One source per family is therefore only
+valid for a body that carries no address; the others need one file per
+placement, with the address the retail uses written into the symbol name. The
+immediate of a load or a store is signed, so the address read from the retail
+bytes is `(lui << 16) + sign_extended(offset)`.
+
+**A claim is a hypothesis, not a proof.** Two lots may produce different
+sources for the same placement, and the first one written is not necessarily
+the one that reproduces the retail bytes. Every candidate source of a
+placement is therefore replayed at that placement, and the row is dropped when
+none of them proves.
+
 The three pre-existing accepted functions and two controls keep their original
 scope: **556 unique C body bytes** (8 + 72 shared, 476 frontend) and **2,076
 placement bytes**. The wave-17 bodies are a separate scope: **210 placements**,
@@ -99,8 +115,8 @@ compiler binaries or linked outputs are committed.
 
 ## Wave-19 level bodies
 
-`config/levels/bodies.tsv` now records **3,591 placements** (62,792 module
-bytes) carried by **178 sources**, on top of the wave-17 ones, and all 21
+`config/levels/bodies.tsv` now records **4,300 placements** (97,380 module
+bytes) carried by **345 sources**, on top of the wave-17 ones, and all 21
 complete module hashes still match.
 
 The wave-18 campaign worked the levels again with a wider queue: 601 bounded
@@ -120,10 +136,10 @@ helper and the `memset`-plus-counter ring buffer. One authored source
 therefore carries many placements, which is why the placement count grows
 much faster than the number of sources.
 
-The wave-19 scope is separate from the wave-17 one: **3,591 placements**,
-**62,792 placement bytes** and **11,484 bytes** of distinct source (a source
+The wave-20 scope is separate from the wave-17 one: **4,300 placements**,
+**97,380 placement bytes** and **18,624 bytes** of distinct source (a source
 counted once). The two scopes are not added together: the 210 wave-17 rows
-are part of the 3,591, and 20 of them are the already counted `0x100`
+are part of the 4,300, and 20 of them are the already counted `0x100`
 eight-byte body re-proved from the lots' own sources.
 
 ### The `Quat_Slerp` body and a fourth compiler

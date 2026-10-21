@@ -820,14 +820,14 @@
     "accepted_frontend_c_bytes": 476,
     "accepted_c_bytes_per_unique_source": 80,
     "accepted_c_bytes_by_placement": 1600,
-    "accepted_level_body_placements": 3591,
-    "accepted_level_body_unique_sources": 178,
-    "accepted_level_body_placement_bytes": 62792,
-    "accepted_level_body_unique_source_bytes": 11484,
+    "accepted_level_body_placements": 4300,
+    "accepted_level_body_unique_sources": 345,
+    "accepted_level_body_placement_bytes": 97380,
+    "accepted_level_body_unique_source_bytes": 18624,
     "accepted_level_body_profiles": {
       "gnu-ee-trial": 11,
       "gnu-ee-trial-divpad": 20,
-      "pinned": 3560
+      "pinned": 4269
     },
     "accepted_level_body_modules": [
       "FRONTEND.REL",
@@ -1869,15 +1869,15 @@
       },
       "bodies": {
         "table": "config/levels/bodies.tsv",
-        "table_sha256": "3f47a41be2bf891240906c6735ff059d2a032e401b30a01085607cc78dbff8d2",
-        "placements": 3591,
-        "unique_sources": 178,
-        "placement_bytes": 62792,
-        "unique_source_bytes": 11484,
+        "table_sha256": "ec419a5254df41ec4fcb568555562949fd754142a231f95b6942d0f017e6fc3f",
+        "placements": 4300,
+        "unique_sources": 345,
+        "placement_bytes": 97380,
+        "unique_source_bytes": 18624,
         "profiles": {
           "gnu-ee-trial": 11,
           "gnu-ee-trial-divpad": 20,
-          "pinned": 3560
+          "pinned": 4269
         },
         "cc1_sha256": {
           "pinned": "9614eceecbcb1f7a64cf3a4ad3c827b3e257ab6b1f934e42fcbc4ded0f0584d6",
