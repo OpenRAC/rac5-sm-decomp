@@ -69,12 +69,19 @@ retail module, replaces the body in the complete module, and then requires the
 pinned module SHA-256. All 21 complete module hashes and the two previously
 measured relocated images still match.
 
-Two compiler profiles are declared. `pinned` is the
+Five compiler profiles are declared. `pinned` is the
 `compiler-no-pad-20261015` cc1 already used by the boot trial. `gnu-ee-trial`
 is the same GNU EE build without the RAC2 increasing-callee-saved-saves patch
 (cc1 SHA-256 `37704f48…`); 11 placements need it because the retail prologue
-saves `$ra` before a floating-point register. Every row uses the pinned GNU
-`gnu-ee-trial-20261015` assembler.
+saves `$ra` before a floating-point register. `gnu-ee-trial-divpad` reverts
+that option and adds the R5900 division padding, so that the prologue saves
+the general purpose registers first and every single-precision division is
+preceded by two nops (cc1 SHA-256 `d7f3fb64…`); 24 placements need it.
+`sdk991111` and `sdk991111sync` are the Sony EE-GCC 2.9-ee-991111 builds the
+boot campaign already pins (cc1 SHA-256 `1305725c…` and `eaf94d2a…`); a few
+level bodies only match under them — the game compiler of the sibling
+projects is a lever here too — and they are selected per source, never
+globally. Every row uses the pinned GNU `gnu-ee-trial-20261015` assembler.
 
 Symbol resolution is deliberately narrower than the wave-17 harness. An
 undefined name resolves from the module import table (address 0), the module
@@ -115,9 +122,12 @@ compiler binaries or linked outputs are committed.
 
 ## Wave-19 level bodies
 
-`config/levels/bodies.tsv` now records **4,340 placements** (99,604 module
-bytes) carried by **385 sources**, on top of the wave-17 ones, and all 21
-complete module hashes still match.
+`config/levels/bodies.tsv` now records **4,811 placements** (125,932 module
+bytes) carried by **400 sources**, on top of the wave-17 ones, and all 21
+complete module hashes still match. The placements name their source; the
+source's own two hashes, its compiler profile and its assembler live once per
+source in `config/levels/body_sources.tsv`, so a body carried by hundreds of
+placements does not repeat them hundreds of times.
 
 The wave-18 campaign worked the levels again with a wider queue: 601 bounded
 candidates over the 21 modules, taken from the same
@@ -136,10 +146,10 @@ helper and the `memset`-plus-counter ring buffer. One authored source
 therefore carries many placements, which is why the placement count grows
 much faster than the number of sources.
 
-The wave-20 scope is separate from the wave-17 one: **4,340 placements**,
-**99,604 placement bytes** and **20,848 bytes** of distinct source (a source
+The wave-20 scope is separate from the wave-17 one: **4,811 placements**,
+**125,932 placement bytes** and **22,732 bytes** of distinct source (a source
 counted once). The two scopes are not added together: the 210 wave-17 rows
-are part of the 4,340, and 20 of them are the already counted `0x100`
+are part of the 4,811, and 20 of them are the already counted `0x100`
 eight-byte body re-proved from the lots' own sources.
 
 ### The `Quat_Slerp` body and a fourth compiler
@@ -168,6 +178,53 @@ allocates the floating-point registers differently from the retail code.
 That is an allocator difference, not a source difference, and it is parked
 with its first difference and a reopening condition rather than counted.
 
+### The sixty-four byte copy, and what the sibling projects had already solved
+
+The `FRONTEND.REL:0x0061C0` body was parked for a whole wave: it copies
+sixty-four bytes, and the retail does it with four `lq` and four `sq` — the
+sixteen-byte moves of the R5900. Every attempt had tried `mode(TF)`,
+`aligned(16)` and `vector_size(16)` on their own and none of them produced
+those instructions.
+
+The sibling projects had already answered the question. Ratchet & Clank 1
+writes its sixteen-byte values as
+
+```c
+typedef unsigned int u128 __attribute__((mode(TI), aligned(16)));
+```
+
+and the machine description of the pinned compiler says when `lq` and `sq`
+come out: they are the `movti_internal` pattern, so they belong to a
+**scalar** of mode `TImode`. An assignment of an **aggregate** — a struct or
+an array — is not a scalar move: the compiler cuts it into eight-byte pieces
+and writes `ld`/`sd`. The retail's sixty-four bytes are therefore four
+separate quadwords, copied one at a time:
+
+```c
+    dst->q0 = src->q0;
+    dst->q1 = src->q1;
+    dst->q2 = src->q2;
+    dst->q3 = src->q3;
+```
+
+That produced the retail's instructions, one byte of difference left: the
+retail keeps the global's address in `$a1` and the pointer it loads in
+`$a2`, the attempt had them the other way round. The order in which the two
+registers are taken follows the order the source first needs them, and a
+pointer variable makes the *pointer* come first. Naming the global directly,
+twice, puts the global's address first:
+
+```c
+    Block *dst = D_0010EA90.dst;
+    ...
+    *(char *)((char *)&D_0010EA90 + D_0010EA90.off + 8) = 1;
+```
+
+The body is then byte-identical to the retail, all sixty-four bytes, and it
+is counted with the pinned compiler. The lesson is recorded for the next
+waves: `lq`/`sq` mean a **scalar** `TImode` value, and a register that is
+merely inverted is an order of creation, not an allocator difference.
+
 ## With your own lawful pinned USA disc and matching local tools, run in WSL:
 
 ```sh
@@ -179,8 +236,8 @@ python3 tools/level_c_gate.py baserom/SCUS_976.15.iso \
   --output-dir /home/you/rac5-level-c-trial
 ```
 
-`--refresh-bodies` rewrites the two hash columns of `bodies.tsv` after a full
-pass. Keep it out of ordinary runs: a stale hash must fail, not be repaired
+`--refresh-bodies` rewrites the two hash columns of `body_sources.tsv` after a
+full pass. Keep it out of ordinary runs: a stale hash must fail, not be repaired
 silently.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
