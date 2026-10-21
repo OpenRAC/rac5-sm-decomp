@@ -5,8 +5,8 @@ after the private boot and level-program gates pass. It records **644 accepted
 boot C functions (87,228 bytes) in the 498,900-byte boot `.text`**, **one 476-byte C
 function in `FRONTEND.REL`**, plus **two shared C functions (8 + 72 bytes)
 at twenty numbered level placements** and, counted separately, the
-**7,643 level-body placements** of the wave-18 to wave-22 campaigns
-(351,976 placement bytes carried by 1,399 sources, 97,256 distinct-source
+**7,997 level-body placements** of the wave-18 to wave-23 campaigns
+(384,676 placement bytes carried by 1,658 sources, 120,444 distinct-source
 bytes). The shared pair counts as two authored functions, not forty
 independent matches, and the level bodies are a scope of their own: one
 authored source can carry many placements. Two other exact C shapes remain
