@@ -14,7 +14,7 @@ yet have a general qualified compiler or a complete retail function catalogue.
 The [ByteMatch dashboard](https://bytematch.dev/OpenRAC/rac5-sm-decomp) uses a
 **provisional optimistic denominator** for level code; its displayed percentage
 is an estimate, not a qualified game-wide match rate. 644 reviewed boot functions, two
-shared level functions, one frontend function and 4,811 measured wave-20 level
+shared level functions, one frontend function and 5,280 measured wave-21 level
 body placements have narrowly scoped private whole-program gates.
 
 ## What is established
@@ -46,8 +46,8 @@ runtime placements remain open. A new
 checks their full modules and the two previously measured relocated-image
 hashes. A separate [level C gate](docs/LEVEL-C-WITNESS.md) now accepts two
 authored functions (8 and 72 bytes) at all twenty numbered level placements,
-one 476-byte frontend initializer, and 4,811 wave-20 level body placements
-(125,932 bytes) carried by 400 measured sources. Two additional C shapes are
+one 476-byte frontend initializer, and 5,280 wave-21 level body placements
+(174,156 bytes) carried by 668 measured sources. Two additional C shapes are
 compiler controls only.
 
 The boot's embedded labels also yield
