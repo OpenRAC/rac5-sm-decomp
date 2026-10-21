@@ -122,8 +122,8 @@ compiler binaries or linked outputs are committed.
 
 ## Wave-19 level bodies
 
-`config/levels/bodies.tsv` now records **4,811 placements** (125,932 module
-bytes) carried by **400 sources**, on top of the wave-17 ones, and all 21
+`config/levels/bodies.tsv` now records **5,280 placements** (174,156 module
+bytes) carried by **668 sources**, on top of the wave-17 ones, and all 21
 complete module hashes still match. The placements name their source; the
 source's own two hashes, its compiler profile and its assembler live once per
 source in `config/levels/body_sources.tsv`, so a body carried by hundreds of
@@ -146,10 +146,10 @@ helper and the `memset`-plus-counter ring buffer. One authored source
 therefore carries many placements, which is why the placement count grows
 much faster than the number of sources.
 
-The wave-20 scope is separate from the wave-17 one: **4,811 placements**,
-**125,932 placement bytes** and **22,732 bytes** of distinct source (a source
+The wave-20 scope is separate from the wave-17 one: **5,280 placements**,
+**174,156 placement bytes** and **49,872 bytes** of distinct source (a source
 counted once). The two scopes are not added together: the 210 wave-17 rows
-are part of the 4,811, and 20 of them are the already counted `0x100`
+are part of the 5,280, and 20 of them are the already counted `0x100`
 eight-byte body re-proved from the lots' own sources.
 
 ### The `Quat_Slerp` body and a fourth compiler
@@ -224,6 +224,42 @@ The body is then byte-identical to the retail, all sixty-four bytes, and it
 is counted with the pinned compiler. The lesson is recorded for the next
 waves: `lq`/`sq` mean a **scalar** `TImode` value, and a register that is
 merely inverted is an order of creation, not an allocator difference.
+
+### The wave-21 campaign, and the form of a float copy
+
+That lesson opened a whole class, and the class was measured before it was
+cut up: of the bounded candidates of the twenty-one modules, **1,089
+families** carry a sixteen byte move, at **1,511 placements**. Eighteen
+translation lots took them, and the root **re-proved every claimed row
+itself**, at its own placement and under its own profile, before anything
+entered the repository. The wave added **469 placements** and left **198
+measured failures**, each with its cause.
+
+The form the campaign measured is not "a copy of floats". The `ldl`/`ldr`
+pair is an **aggregate aligned on four bytes**, copied by a structure
+assignment, which the compiler cuts into **eight byte pieces** (`ldl` at
+base+7, `ldr` at base), plus one word when the rest is not a multiple of
+eight. The member types are irrelevant; the type's alignment decides
+between `ldl`/`ldr` and `ld`/`sd`. A contiguous copy is a **single**
+assignment: the retail loads every quadword before it stores any.
+
+The order of the assignments, and the order of the operands of a pointer
+arithmetic, decide the registers, and naming a global **directly** puts its
+address in the first register. The address of a global reads
+`(high << 16) + sext16(low)`, and a non canonical page needs a symbol **at
+the page**.
+
+What the wave also found is the sense the levels had stripped: the modules
+import the shared game code **by name** — `BinkOpen`, `LIGHT_BeginFrame__Fv`,
+`MBOX_Receive__FiPP12HigMsgPacketPUi`,
+`dlib_displist_add_data_ul64__FP13DLIB_DISPLISTUlUl` — and the relocation
+table says where each call is. That map anchored the candidates, and it is
+why a body could be written as game code instead of guessed.
+
+Three things the retail does that the compiler does not remain the open
+part: reloading a global after each store (the aliasing of GCC 2.9 merges
+the reads), a 128-bit constant that is *computed* rather than literal (the
+pinned `cc1` refuses the conversion), and `movn`.
 
 ## With your own lawful pinned USA disc and matching local tools, run in WSL:
 
