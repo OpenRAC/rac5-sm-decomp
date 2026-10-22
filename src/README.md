@@ -1,8 +1,8 @@
 # Authored matching source
 
-`boot/` holds the thirty-one accepted boot C definitions (1,064 bytes).
-`boot/memcard_busy.c` was the first; thirty further reviewed bodies were promoted
-from `nonmatching/boot/` in one documented review of their boundaries, symbols,
+`boot/` holds the 644 accepted boot C definitions (87,228 bytes).
+`boot/memcard_busy.c` was the first; the rest were promoted from
+`nonmatching/boot/` under the documented review of their boundaries, symbols,
 callers and behaviour. Their pinned compiler, byte extents and complete boot load
 image are checked by `tools/boot_trial_gate.py` with a lawful local ELF. The
 accepted set is enumerated in `tools/boot_c_campaign.py` and pinned in
