@@ -122,8 +122,8 @@ compiler binaries or linked outputs are committed.
 
 ## Wave-19 level bodies
 
-`config/levels/bodies.tsv` now records **7,643 placements** (351,976 module
-bytes) carried by **1,399 sources**, on top of the wave-17 ones, and all 21
+`config/levels/bodies.tsv` now records **7,997 placements** (384,676 module
+bytes) carried by **1,658 sources**, on top of the wave-17 ones, and all 21
 complete module hashes still match. The placements name their source; the
 source's own two hashes, its compiler profile and its assembler live once per
 source in `config/levels/body_sources.tsv`, so a body carried by hundreds of
@@ -146,10 +146,10 @@ helper and the `memset`-plus-counter ring buffer. One authored source
 therefore carries many placements, which is why the placement count grows
 much faster than the number of sources.
 
-The wave-20 scope is separate from the wave-17 one: **7,643 placements**,
-**351,976 placement bytes** and **97,256 bytes** of distinct source (a source
+The wave-20 scope is separate from the wave-17 one: **7,997 placements**,
+**384,676 placement bytes** and **120,444 bytes** of distinct source (a source
 counted once). The two scopes are not added together: the 210 wave-17 rows
-are part of the 7,643, and 20 of them are the already counted `0x100`
+are part of the 7,997, and 20 of them are the already counted `0x100`
 eight-byte body re-proved from the lots' own sources.
 
 ### The `Quat_Slerp` body and a fourth compiler
@@ -293,6 +293,30 @@ source wall: the source the wave-19 campaign had written, unchanged, gives
 `gnu-ee-trial-divpad`. That is a correction to what the earlier waves
 concluded, and it is recorded in the
 [wall register](https://github.com/OpenRAC/rac5-sm-decomp/issues/98).
+
+### The wave-23 campaign, and the form of a float copy
+
+The wave-23 campaign changed the way the work is divided: each agent proves
+a family at **one** placement, and the root extends it afterwards, proving
+every placement on its own bytes. Twenty lots took the first 2,400 of the
+remaining float families, and the root re-proved every claimed row itself.
+
+What the campaign measured, beyond what the wave-22 campaign had:
+
+- the **order of the assignments** is a **rotation** of the source order: for
+  the retail's `R1..Rn` the source writes `R1..R(n-2), Rn, R(n-1)`;
+- the **order of the parameters** decides the schedule: putting the float
+  first reproduces the retail where `(void *, void *, float)` does not;
+- a **local pointer to the global** (`float *dst = &D_00383770;`) makes the
+  global's page live across a call, so the compiler materialises it
+  **before** the call, in a callee-saved register, as the retail does;
+- the value written after a call must be **the return of the call**, not a
+  constant;
+- a global has **two addressing forms** in the retail — the page alone for
+  the access at offset zero, the materialised address for the others — and
+  a field at `+0x10` is often a **distinct symbol**;
+- the `jal` target of the retail reads `(imm26 << 2) | (PC & 0xF0000000)`,
+  not the PC-relative formula.
 
 ## With your own lawful pinned USA disc and matching local tools, run in WSL:
 

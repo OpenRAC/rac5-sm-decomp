@@ -11,7 +11,7 @@
 [![Source checks](https://github.com/OpenRAC/rac5-sm-decomp/actions/workflows/checks.yml/badge.svg)](https://github.com/OpenRAC/rac5-sm-decomp/actions/workflows/checks.yml)
 [![Code](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent)](https://bytematch.dev/OpenRAC/rac5-sm-decomp)
 
-A work-in-progress **matching decompilation** of *Ratchet & Clank: Size Matters* (Insomniac Games, 2007) for the PlayStation 2 (USA, `SCUS_976.15`), part of the **[OpenRAC](https://openrac.dev)** initiative.
+A work-in-progress **matching decompilation** of *Ratchet & Clank: Size Matters* (High Impact Games, 2008) for the USA PlayStation 2 release (`SCUS_976.15`, disc version `1.00`), part of the **[OpenRAC](https://openrac.dev)** initiative.
 
 The disc's programs are rebuilt from C and assembly until every byte equals retail:
 
@@ -21,7 +21,7 @@ The disc's programs are rebuilt from C and assembly until every byte equals reta
 | `LVL/FRONTEND.REL` | the front end (menus), an SNR2 module | 2,052,794 | `81f834bdf092587eb94e6a198fe2ab6181877dbd215f7124b405edda9b1a3daf` |
 | `LVL/LEVEL_*.REL` | 20 numbered level modules, SNR2 | 2,204,815 – 4,254,606 | see [`config/levels/modules.tsv`](config/levels/modules.tsv) |
 
-The objective is to produce C/C++ source code that, when compiled with the original toolchain, generates a byte-identical copy of the retail programs. Matched code is then refactored toward readable, idiomatic C with accurate types and naming, using matching builds as continuous regression tests.
+The objective is to recover readable C/C++ that reproduces retail bytes with measured, pinned compiler profiles at reviewed placements. Assembly and copied retail non-code data still support the build; only C/C++ that passes the relevant complete-program gates earns matching credit.
 
 > [!NOTE]
 > This repository contains **no game assets, retail executables, or disassembly**. To work on it, you must provide your own legally obtained copy of the game. Please review [`LEGAL.md`](LEGAL.md) before contributing.
@@ -42,7 +42,7 @@ Decompilation progress is tracked live on **[openrac.dev](https://openrac.dev)**
 | Boot `.text` | 498,900 bytes measured | 87,228 bytes (17.48%) | 644 |
 | Frontend (`FRONTEND.REL`) | 162,944 candidate bytes | 476 bytes | 1 |
 | Levels (20 `LEVEL_*.REL`) | 36,341,888 candidate bytes by placement | 80 bytes (1,600 by placement) | 2 |
-| Level bodies (counted separately) | 97,256 unique source bytes | 351,976 bytes by placement | 1,399 |
+| Level bodies (counted separately) | 120,444 unique source bytes | 384,676 bytes by placement | 1,658 |
 
 The ByteMatch estimate divides the **87,784** accepted C bytes by a provisional **6,418,204**-byte denominator: **1.37%**. That denominator combines the 498,900 measured boot `.text` bytes, the 162,944 frontend candidate-code bytes and the 5,756,360 optimistically deduplicated level candidate bytes. It is an estimate over candidate code intervals, not a qualified unique-code size; the snapshot's `overall_percent` stays `null`.
 <!-- progress:end -->
