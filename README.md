@@ -42,7 +42,7 @@ Decompilation progress is tracked live on **[openrac.dev](https://openrac.dev)**
 | Boot `.text` | 498,900 bytes measured | 87,228 bytes (17.48%) | 644 |
 | Frontend (`FRONTEND.REL`) | 162,944 candidate bytes | 476 bytes | 1 |
 | Levels (20 `LEVEL_*.REL`) | 36,341,888 candidate bytes by placement | 80 bytes (1,600 by placement) | 2 |
-| Level bodies (counted separately) | 256,644 unique source bytes | 532,788 bytes by placement | 4,150 |
+| Level bodies (counted separately) | 387,176 unique source bytes | 663,320 bytes by placement | 6,518 |
 
 The ByteMatch estimate divides the **87,784** accepted C bytes by a provisional **6,418,204**-byte denominator: **1.37%**. That denominator combines the 498,900 measured boot `.text` bytes, the 162,944 frontend candidate-code bytes and the 5,756,360 optimistically deduplicated level candidate bytes. It is an estimate over candidate code intervals, not a qualified unique-code size; the snapshot's `overall_percent` stays `null`.
 <!-- progress:end -->
