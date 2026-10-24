@@ -17,8 +17,9 @@ PRIVATE_SUFFIXES = (
 )
 # A few evidence tables legitimately grow with the accepted body count. They
 # keep the same textual format and stay far below any binary risk; the strict
-# one-megabyte default remains for every other tracked file.
-LARGE_TRACKED = {"config/levels/body_sources.tsv": 1_500_000}
+# one-megabyte default remains for every other tracked file. The source table
+# gains about 130 KB per accepted-body batch; split it when the campaign ends.
+LARGE_TRACKED = {"config/levels/body_sources.tsv": 3_000_000}
 
 
 def size_limit(name: str) -> int:

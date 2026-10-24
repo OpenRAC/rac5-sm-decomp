@@ -61,7 +61,9 @@ def report(status: dict, shape: dict) -> dict:
             or status["levels"]["accepted_frontend_functions"] !=
             ["func_00002F80"]):
         raise ValueError("frontend C scope changed")
-    level_matched = status["levels"]["accepted_c_bytes_per_unique_source"]
+    level_bodies = status["levels"]["accepted_level_body_unique_source_bytes"]
+    level_matched = (status["levels"]["accepted_c_bytes_per_unique_source"]
+                     + level_bodies)
     # Linker alignment following a complete C body earns no matching credit.
     boot_accepted = accepted_body_bytes()
     if boot_total != 498900 or boot_matched != boot_accepted:
@@ -79,7 +81,8 @@ def report(status: dict, shape: dict) -> dict:
         {"name": "Frontend (verified C; candidate code interval)",
          "measures": frontend_measures,
          "metadata": {"progress_categories": ["frontend_candidate"]}},
-        {"name": "Levels (optimistic masked-shape estimate)",
+        {"name": "Levels (optimistic masked-shape estimate; accepted bodies "
+                 "by unique source)",
          "measures": levels,
          "metadata": {"progress_categories": ["levels_optimistic"]}},
     ]
