@@ -9,7 +9,9 @@
 [![Website](https://img.shields.io/badge/Website-openrac.dev-ff8a00?logo=googlechrome&logoColor=white)](https://openrac.dev)
 [![Discord](https://img.shields.io/badge/Discord-Join%20Community-5865F2?logo=discord&logoColor=white)](https://discord.gg/Sfd2B54PDG)
 [![Source checks](https://github.com/OpenRAC/rac5-sm-decomp/actions/workflows/checks.yml/badge.svg)](https://github.com/OpenRAC/rac5-sm-decomp/actions/workflows/checks.yml)
+[![Progress report](https://github.com/OpenRAC/rac5-sm-decomp/actions/workflows/progress.yml/badge.svg)](https://github.com/OpenRAC/rac5-sm-decomp/actions/workflows/progress.yml)
 [![Code](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent)](https://bytematch.dev/OpenRAC/rac5-sm-decomp)
+[![Functions](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Functions&measure=matched_functions)](https://bytematch.dev/OpenRAC/rac5-sm-decomp)
 
 A work-in-progress **matching decompilation** of *Ratchet & Clank: Size Matters* (High Impact Games, 2008) for the USA PlayStation 2 release (`SCUS_976.15`, disc version `1.00`), part of the **[OpenRAC](https://openrac.dev)** initiative.
 
@@ -32,9 +34,10 @@ The objective is to recover readable C/C++ that reproduces retail bytes with mea
 
 Decompilation progress is tracked live on **[openrac.dev](https://openrac.dev)** and **[bytematch.dev/OpenRAC/rac5-sm-decomp](https://bytematch.dev/OpenRAC/rac5-sm-decomp)**.
 
-| Version | Region | Target ID | Code Matched |
-|---|---|---|---|
-| v1.00 | USA (En) | `SCUS_976.15` | [![](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent)](https://bytematch.dev/OpenRAC/rac5-sm-decomp) |
+| Version | Region | Target ID | Code Matched | Functions Matched |
+|---|---|---|---|---|
+| **v1.00** | NTSC-U (North America) | `SCUS_976.15` | [![](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent)](https://bytematch.dev/OpenRAC/rac5-sm-decomp) | [![](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Functions&measure=matched_functions)](https://bytematch.dev/OpenRAC/rac5-sm-decomp) |
+| **v1.00** | PAL (Europe) | `SCES_550.19` | [![](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent&version=SCES_550.19)](https://bytematch.dev/OpenRAC/rac5-sm-decomp/SCES_550.19) | [![](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Functions&measure=matched_functions&version=SCES_550.19)](https://bytematch.dev/OpenRAC/rac5-sm-decomp/SCES_550.19) |
 
 <!-- progress:begin (tools/progress_status.py --write-readme) -->
 | Scope | Code scope | Accepted C | Accepted functions |
@@ -54,6 +57,19 @@ level denominator is an optimistic deduplication scenario.
 [`docs/ROADMAP.md`](docs/ROADMAP.md) lists what is still open: the original
 compiler identity, most function boundaries, the level compiler profiles and
 full runtime behavior.
+
+---
+
+## Supported Versions
+
+This repository tracks both the North American and European releases:
+
+| Version | Region | Target ID / Serial | Video Mode | Modules | Status |
+|---|---|---|---|---|---|
+| **v1.00** | NTSC-U (North America) | `SCUS_976.15` | NTSC (60 Hz) | 21 SNR2 (`LVL/`) | **Primary** target |
+| **v1.00** | PAL (Europe) | `SCES_550.19` | PAL (50 Hz) | 21 SNR2 (`LVL/`) | Tracked |
+
+Use `python3 tools/versions.py` to inspect the version table, `python3 tools/versions.py check` to verify baserom dumps, or `python3 tools/version_check.py --version pal` for cross-version symbol and code comparisons.
 
 ---
 

@@ -1,0 +1,390 @@
+{
+  "sha256": "d8f1794a5b4f6bd7f70ca62ae11fb790d1c300c2a877ef1aef4c1855fd6575ac",
+  "file_size": 856120,
+  "entry": "0x01E62508",
+  "machine": "MIPS",
+  "elf_flags": "0x20924001",
+  "programs": [
+    {
+      "type": 1,
+      "file_offset": 128,
+      "virtual_address": "0x01E62500",
+      "physical_address": "0x01E62500",
+      "file_size": 809872,
+      "memory_size": 1627648,
+      "flags": 7,
+      "align": 128
+    }
+  ],
+  "sections": [
+    {
+      "name": "",
+      "type": 0,
+      "flags": 0,
+      "virtual_address": "0x00000000",
+      "file_offset": 0,
+      "size": 0,
+      "align": 0
+    },
+    {
+      "name": ".text",
+      "type": 1,
+      "flags": 6,
+      "virtual_address": "0x01E62500",
+      "file_offset": 128,
+      "size": 498900,
+      "align": 128
+    },
+    {
+      "name": ".reginfo",
+      "type": 1879048198,
+      "flags": 0,
+      "virtual_address": "0x00000000",
+      "file_offset": 810132,
+      "size": 24,
+      "align": 4
+    },
+    {
+      "name": ".data",
+      "type": 1,
+      "flags": 7,
+      "virtual_address": "0x01EDC200",
+      "file_offset": 499072,
+      "size": 191184,
+      "align": 128
+    },
+    {
+      "name": ".sndata",
+      "type": 1,
+      "flags": 3,
+      "virtual_address": "0x01F0AD00",
+      "file_offset": 690304,
+      "size": 70000,
+      "align": 128
+    },
+    {
+      "name": ".DVP.overlay..0x0.783535531.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 810156,
+      "size": 248,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.3796606075.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 810404,
+      "size": 1720,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.1729256283.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 812124,
+      "size": 1368,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.3796606011.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 813492,
+      "size": 1864,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.1973574491.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 815356,
+      "size": 696,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.1153043771.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 816052,
+      "size": 1128,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.317269259.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 817180,
+      "size": 2048,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x800.317269259.306.1",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 819228,
+      "size": 1072,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.810261627.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 820300,
+      "size": 1352,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.317269259.9.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 821652,
+      "size": 2048,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x800.317269259.299.1",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 823700,
+      "size": 1440,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.1955816811.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 825140,
+      "size": 4096,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x800.1955816811.302.1",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 829236,
+      "size": 1232,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.3607989675.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 830468,
+      "size": 376,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.1804438955.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 830844,
+      "size": 264,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.1659446539.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 831108,
+      "size": 2048,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x800.1659446539.307.1",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 833156,
+      "size": 1072,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.2374737019.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 834228,
+      "size": 904,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.1974229851.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 835132,
+      "size": 1336,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.3045825659.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 836468,
+      "size": 1336,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.3593375083.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 837804,
+      "size": 1112,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.1566530395.13.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 838916,
+      "size": 1480,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.2884344891.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 840396,
+      "size": 1208,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.2927109483.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 841604,
+      "size": 1304,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.4209583371.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 842908,
+      "size": 2048,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x800.4209583371.297.1",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 844956,
+      "size": 1712,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x800.1955816811.288.1",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 846668,
+      "size": 1872,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x0.2867406091.7.0",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 848540,
+      "size": 2048,
+      "align": 1
+    },
+    {
+      "name": ".DVP.overlay..0x800.2867406091.301.1",
+      "type": 2147480609,
+      "flags": 5,
+      "virtual_address": "0x00000000",
+      "file_offset": 850588,
+      "size": 1392,
+      "align": 1
+    },
+    {
+      "name": ".rodata",
+      "type": 1,
+      "flags": 2,
+      "virtual_address": "0x01F1BE80",
+      "file_offset": 760320,
+      "size": 49368,
+      "align": 128
+    },
+    {
+      "name": ".gcc_except_table",
+      "type": 1,
+      "flags": 3,
+      "virtual_address": "0x01F27F80",
+      "file_offset": 809728,
+      "size": 272,
+      "align": 128
+    },
+    {
+      "name": ".sbss",
+      "type": 8,
+      "flags": 268435459,
+      "virtual_address": "0x01F28100",
+      "file_offset": 810132,
+      "size": 0,
+      "align": 128
+    },
+    {
+      "name": ".DVP.ovlytab",
+      "type": 2147480608,
+      "flags": 1,
+      "virtual_address": "0x00000000",
+      "file_offset": 851980,
+      "size": 360,
+      "align": 4
+    },
+    {
+      "name": ".DVP.ovlystrtab",
+      "type": 3,
+      "flags": 0,
+      "virtual_address": "0x00000000",
+      "file_offset": 852340,
+      "size": 1036,
+      "align": 1
+    },
+    {
+      "name": ".bss",
+      "type": 8,
+      "flags": 3,
+      "virtual_address": "0x01F28100",
+      "file_offset": 810112,
+      "size": 817644,
+      "align": 128
+    },
+    {
+      "name": ".shstrtab",
+      "type": 3,
+      "flags": 0,
+      "virtual_address": "0x00000000",
+      "file_offset": 853376,
+      "size": 1102,
+      "align": 1
+    }
+  ]
+}
