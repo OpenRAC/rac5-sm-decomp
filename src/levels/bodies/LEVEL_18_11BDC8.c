@@ -1,0 +1,22 @@
+/* LEVEL_18.REL:0x11BDC8 -- resets the playback record D_002E1790: three int words
+   cleared and the float slot set to one, when the caller asks for it. */
+typedef struct {
+    int f_00;
+    int f_04;
+    int f_08;
+    float f_0C;
+} Rec;
+
+extern Rec D_002E1790;
+
+void func_11BDC8(int a0, int a1)
+{
+    if (a1 == 0xFFFF) {
+        if (a0 != 0) {
+            D_002E1790.f_00 = 0;
+            D_002E1790.f_0C = 1.0f;
+            D_002E1790.f_08 = 0;
+            D_002E1790.f_04 = 0;
+        }
+    }
+}
