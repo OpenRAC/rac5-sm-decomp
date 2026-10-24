@@ -291,8 +291,8 @@ One of the three parked bodies turned out to be a **profile** wall, not a
 source wall: the source the wave-19 campaign had written, unchanged, gives
 504 bytes under the pinned compiler and **512 exact bytes** under
 `gnu-ee-trial-divpad`. That is a correction to what the earlier waves
-concluded, and it is recorded in the
-[wall register](https://github.com/OpenRAC/rac5-sm-decomp/issues/98).
+concluded, and it is recorded in
+[`MATCHING-BLOCKERS.md`](MATCHING-BLOCKERS.md).
 
 ### The wave-23 campaign, and the form of a float copy
 

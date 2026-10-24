@@ -66,23 +66,46 @@ compiler settings or level-format assumptions.
 7. **Public hygiene.** Keep scratch directories, probes, generated lists and raw
    reports private. Index useful alternatives by function in `nonmatching/`.
    Reusable tools belong in `tools/` with tests; public text is English.
+   Do not commit campaign machinery or a document per batch of work: no
+   committed queues, lot registers, reservation databases, owner-local
+   publication routes or merge-queue scripts. Lasting knowledge belongs in
+   `docs/MATCHING-BLOCKERS.md` or an existing document; ephemeral notes belong
+   in the commit message. Do not use private working vocabulary (*wave*, *lot*,
+   *campaign*, *root*, *kit*) in repository text; describe a scope and a date.
 
-## The wall register
+## Shared blocker knowledge
 
-The places where a body is understood but its bytes still differ are tracked in
-[issue #98](https://github.com/OpenRAC/rac5-sm-decomp/issues/98), the living
-register of the walls. It is a research ledger, not a bug tracker.
+[`docs/MATCHING-BLOCKERS.md`](docs/MATCHING-BLOCKERS.md) is the shared reference for
+blockers, measured attempts and verified remedies. **Every contributor may edit any
+entry through a normal fork/topic branch and pull request**, including entries
+originally written by someone else. Maintainers review merges; they do not own all
+knowledge edits. A coding AI uses ordinary Markdown file edits and Git in this same
+repository; no wiki clone, browser automation or Computer Use is needed.
 
-- When you meet a wall, post a comment there: the body, the placement, the
-  first difference, the profiles you tried, and what you concluded. **Each
-  contributor keeps one comment**, and edits that comment when they learn
-  more; nobody edits another contributor's.
-- A wall that is not written down is a wall the next campaign measures again
-  from scratch. Name the class of the mismatch, not only the body that showed
-  it.
-- The issue body holds the current state of the register and the root keeps it
-  up to date. The comments are the per-contributor records, and a closed wall
-  keeps its comment as the account of how it was lifted.
+Before retrying a near miss, investigating a blocked family or changing the toolchain,
+read the relevant entry and retained source, and check cited fixes against current
+`origin/master`. Do not repeat recorded attempts without a new hypothesis or changed input.
+
+When you find a blocker, useful evidence or a solution, update the existing entry in
+`docs/MATCHING-BLOCKERS.md` in your branch and include it in the relevant PR. Keep it
+concise:
+
+- Identify the target/family, release, compiler/assembler profile and placement coverage.
+- Record the hypothesis, measured result, remaining difference and next useful experiment.
+  Keep negative results that establish a new constraint; do not duplicate unchanged trials.
+- Distinguish hypotheses, retained near misses, local matches, pending PRs and merged fixes.
+  Link the PR/commit and real checks; equal size alone is not a match. Reconcile an entry
+  when its fix lands, preserving superseded measurements as clearly dated history.
+- Keep useful C in `nonmatching/`; game data, trial objects, assembly and logs stay private.
+
+Discuss findings in the relevant code or documentation PR and incorporate the result in the
+shared file. [Issue #98](https://github.com/OpenRAC/rac5-sm-decomp/issues/98) is retired and
+retained only as historical provenance, not an active discussion hub or knowledge store.
+A personal persistent comment is not required for blocker knowledge. Preserve existing
+comments as historical sources; do not edit another person's comment. Do not create a
+parallel register, wiki knowledge copy or per-contributor/per-session file. The wiki is only
+a link to the same repository document. Reservations remain exclusively in #99; neither the
+document nor #98 reserves work.
 
 ## Coordinating work between contributors
 
