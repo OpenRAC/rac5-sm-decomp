@@ -13,8 +13,9 @@ Thanks for helping. The rules live in [`AGENTS.md`](AGENTS.md) and
 2. **Choose a scope.** Check the open issues and pull requests, and keep one
    comment in the [coordination issue](https://github.com/OpenRAC/rac5-sm-decomp/issues/99)
    that lists your own reservations; there is no automated matching queue. The
-   walls met while matching are tracked in the
-   [wall register](https://github.com/OpenRAC/rac5-sm-decomp/issues/98).
+   walls met while matching are tracked in
+   [`docs/MATCHING-BLOCKERS.md`](docs/MATCHING-BLOCKERS.md), the shared and
+   editable blocker register.
 3. **Match.** Once the applicable compiler, program format and function
    boundary are qualified, write matching C or C++ in `src/`, with one
    definition per function. Put an unaccepted but useful body in
