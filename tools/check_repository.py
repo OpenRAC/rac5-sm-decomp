@@ -15,6 +15,14 @@ PRIVATE_SUFFIXES = (
     ".dll", ".7z", ".zip", ".img", ".cnf", ".bik", ".vag",
     ".pss", ".o", ".a", ".map", ".log",
 )
+# A few evidence tables legitimately grow with the accepted body count. They
+# keep the same textual format and stay far below any binary risk; the strict
+# one-megabyte default remains for every other tracked file.
+LARGE_TRACKED = {"config/levels/body_sources.tsv": 1_500_000}
+
+
+def size_limit(name: str) -> int:
+    return LARGE_TRACKED.get(name.replace("\\", "/"), 1_000_000)
 
 
 def forbidden_reason(name: str) -> str | None:
@@ -45,7 +53,7 @@ def check() -> list[str]:
             continue
         path = ROOT / name
         if path.exists():
-            if path.stat().st_size > 1_000_000:
+            if path.stat().st_size > size_limit(name):
                 problems.append(f"{name}: unexpectedly large tracked file")
             elif path.read_bytes()[:4] == b"\x7fELF":
                 problems.append(f"{name}: ELF bytes in a tracked file")
