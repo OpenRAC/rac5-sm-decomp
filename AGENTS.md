@@ -66,6 +66,12 @@ compiler settings or level-format assumptions.
 7. **Public hygiene.** Keep scratch directories, probes, generated lists and raw
    reports private. Index useful alternatives by function in `nonmatching/`.
    Reusable tools belong in `tools/` with tests; public text is English.
+   Do not commit campaign machinery or a document per batch of work: no
+   committed queues, lot registers, reservation databases, owner-local
+   publication routes or merge-queue scripts. Lasting knowledge belongs in
+   `docs/MATCHING-BLOCKERS.md` or an existing document; ephemeral notes belong
+   in the commit message. Do not use private working vocabulary (*wave*, *lot*,
+   *campaign*, *root*, *kit*) in repository text; describe a scope and a date.
 
 ## Shared blocker knowledge
 
