@@ -1,0 +1,21 @@
+/* LEVEL_24.REL:0x139718 -- reset of the global record D_0035D878. */
+typedef struct {
+    int i_00;
+    int i_04;
+    int i_08;
+    float f_0C;
+} Rec;
+
+extern Rec D_0035D878;
+
+void func_24_139718(int a0, int a1)
+{
+    if (a1 == 0xFFFF) {
+        if (a0 != 0) {
+            D_0035D878.f_0C = 1.0f;
+            D_0035D878.i_00 = 0;
+            D_0035D878.i_08 = 0;
+            D_0035D878.i_04 = 0;
+        }
+    }
+}

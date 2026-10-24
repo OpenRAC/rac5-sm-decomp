@@ -1,0 +1,22 @@
+/* LEVEL_08.REL:0x154C58 -- resets the global record D_003E0B58 when the second
+   argument is 0xFFFF and the first is not null. */
+typedef struct {
+    int i0;
+    int i1;
+    int i2;
+    float f3;
+} Rec;
+
+extern Rec D_003E0B58;
+
+void func_154C58(Rec *a0, int a1)
+{
+    if (a1 == 0xFFFF) {
+        if (a0 != 0) {
+            D_003E0B58.i0 = 0;
+            D_003E0B58.f3 = 1.0f;
+            D_003E0B58.i2 = 0;
+            D_003E0B58.i1 = 0;
+        }
+    }
+}
