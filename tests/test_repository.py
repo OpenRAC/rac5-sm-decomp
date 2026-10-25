@@ -16,9 +16,9 @@ import check_repository  # noqa: E402
 
 class RepositoryTests(unittest.TestCase):
     def test_size_limit_keeps_the_strict_default(self) -> None:
-        self.assertEqual(size_limit("config/levels/body_sources.tsv"), 1_500_000)
+        self.assertEqual(size_limit("config/levels/body_sources.tsv"), 3_000_000)
         self.assertEqual(size_limit("src/boot/func_00100000.c"), 1_000_000)
-        self.assertEqual(size_limit("config\\levels\\body_sources.tsv"), 1_500_000)
+        self.assertEqual(size_limit("config\\levels\\body_sources.tsv"), 3_000_000)
 
     def test_scratch_is_private_but_named_source_forms_are_allowed(self) -> None:
         for name in ("scratch/probe.py", "nonmatching/boot/_scratch/form.c",

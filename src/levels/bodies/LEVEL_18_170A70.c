@@ -1,0 +1,13 @@
+typedef struct { int a; int b; int c; float d; } Rec;
+
+extern Rec D_002E5888;
+
+void func_170A70(void *p, int q)
+{
+    if (q == 0xFFFF && p != 0) {
+        D_002E5888.a = 0;
+        D_002E5888.d = 1.0f;
+        D_002E5888.c = 0;
+        D_002E5888.b = 0;
+    }
+}
