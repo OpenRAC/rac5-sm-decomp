@@ -1,0 +1,28 @@
+/* Quaternion (x, y, z, w) -> 3x3 rotation matrix with a four-float row
+   stride.  The nine products are kept in explicit locals. */
+void func_1233F0(float *m, float *q)
+{
+    float x = q[0];
+    float y = q[1];
+    float z = q[2];
+    float w = q[3];
+    float xx = x * x;
+    float yy = y * y;
+    float zz = z * z;
+    float xy = x * y;
+    float xz = x * z;
+    float xw = x * w;
+    float yz = y * z;
+    float yw = y * w;
+    float zw = z * w;
+
+    m[0] = 1.0f - 2.0f * (yy + zz);
+    m[1] = 2.0f * (xy + zw);
+    m[2] = 2.0f * (xz - yw);
+    m[4] = 2.0f * (xy - zw);
+    m[5] = 1.0f - 2.0f * (xx + zz);
+    m[6] = 2.0f * (yz + xw);
+    m[8] = 2.0f * (xz + yw);
+    m[9] = 2.0f * (yz - xw);
+    m[10] = 1.0f - 2.0f * (xx + yy);
+}

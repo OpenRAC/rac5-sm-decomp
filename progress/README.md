@@ -101,11 +101,11 @@ to `master`, CI uploads `SCUS_976.15_report/report.json`; ByteMatch reads that
 artifact as its progress graph. Its denominator combines **498,900 measured
 boot `.text` bytes**, **162,944 frontend candidate-code bytes**, and **5,756,360
 optimistically deduplicated level candidate bytes**, for **6,418,204 provisional
-code bytes**. The numerator is **601,244 accepted C bytes**: 87,228 in boot, 476
+code bytes**. The numerator is **618,320 accepted C bytes**: 87,228 in boot, 476
 in frontend, 80 from two authored functions shared across twenty levels, and
-513,460 unique source bytes of accepted level C bodies (each body counted once,
+530,536 unique source bytes of accepted level C bodies (each body counted once,
 however many placements carry it). The site rounds the resulting approximately
-**9.3678%** to **9.37%**.
+**9.6337%** to **9.63%**.
 
 The dashboard's level unit and category both say **optimistic masked-shape
 estimate**. This denominator can rise when a presumed shared shape splits into
