@@ -1,0 +1,4473 @@
+{
+ "version": 2,
+ "measures": {
+  "fuzzy_match_percent": 1.3677346497556013,
+  "total_code": "6418204",
+  "matched_code": "87784",
+  "matched_code_percent": 1.3677346497556013,
+  "total_functions": 669,
+  "matched_functions": 647,
+  "matched_functions_percent": 96.71150971599403,
+  "complete_code": "0",
+  "complete_code_percent": 0.0,
+  "total_units": 22,
+  "complete_units": 0
+ },
+ "units": [
+  {
+   "name": "boot/executable",
+   "measures": {
+    "fuzzy_match_percent": 17.484064942874323,
+    "total_code": "498900",
+    "matched_code": "87228",
+    "matched_code_percent": 17.484064942874323,
+    "total_functions": 645,
+    "matched_functions": 644,
+    "matched_functions_percent": 99.84496124031008,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "MEMCARD_Idle__Fv",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEMCARD_Busy__Fv",
+     "size": 16,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEMCARD_GetDanSkinUnlocked__Fv",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEMCARD_GetHardcoreModeBit__FUi",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEMCARD_SetWriteHeaderOnlyMode__Fb",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEMCARD_GetWriteHeaderOnlyModeStatus__Fv",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEMCARD_SetHeaderCreationDateDetail__FUi",
+     "size": 116,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEMCARD_GetSlotHeaderDetail__FUi",
+     "size": 24,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEMCARD_InitStateNode__FP19tMEMCARD_STATE_NODE",
+     "size": 24,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MC_SetError__Fi",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEMCARD_SetErrorIfWeStartedOperationFlow__Fv",
+     "size": 24,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEMCARD_Test__Fi",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEMCARD_SetMultiplayerSave__Fb",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$SYSTEMS_memcard_ps2.cppBRcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "CMD_ParseCommandLine__FiPPcPi",
+     "size": 588,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$CORE_cmdline.cpptJcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPI_SetGameId__Fi",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPI_GetGameId__Fv",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPI_ResetLoadProgress__Fv",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPI_GetLoadProgress__Fv",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPI_SendNewLevel__Fi",
+     "size": 60,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPI_CreateMsgBoxes__Fv",
+     "size": 112,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPI_HandleMessages__Fb",
+     "size": 280,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPI_PowerLock__Fv",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPI_PowerUnlock__Fv",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "Reset__t5Queue2Z14tHUDPROMQ_NODEUi8",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "Reset__t5Stack2Z19tMEMCARD_STATE_NODEUi8",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__t5Stack2Z19tMEMCARD_STATE_NODEUi8",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_t5Stack2Z19tMEMCARD_STATE_NODEUi8",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__t5Queue2Z14tHUDPROMQ_NODEUi8",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_t5Queue2Z14tHUDPROMQ_NODEUi8",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$CORE_mcpclient.cppgvcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$D$CORE_mcpclient.cppmQeaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "UMD_checkState__Fb",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "UMD_Init__Fv",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "UMD_Deinit__Fv",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "higIoInit__Fv",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "higIoShutdown__Fv",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "higIoLseek__Fiii",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "higIoReadAsync__FiPvUi",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "higIoWaitAsync__FiPUi",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$CORE_umd.cppOWbaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__8HIGMutex",
+     "size": 64,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_8HIGMutex",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "HEROSKIN_InitSinglePlayer__Fv",
+     "size": 68,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$CORE_heroSkin.cppMzcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "stopAndUnloadModules__Fv",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$MCP_mcp.cppbFbaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCP_UpdateCameraCB__FPfT014CameraSystemIDPv",
+     "size": 184,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCP_Update__Fv",
+     "size": 168,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCP_SetState__F10mcpState_t",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCP_GetState__Fv",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCP_HasLevelBeenSeen__FUi",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$MCP_mcpupdate.cppcKbaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCP_StartLevelModule__Fv",
+     "size": 320,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$MCP_mcputil.cpplxcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPHUD_UpdateViewTransform__FUiP11tHUD_OFFSET",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPFONT_FontStringPixelLength__FPCc",
+     "size": 68,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPFONT_SetColor__FUi",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCP_GetFontPage__FUc",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCP_DrawRectangleSimpleArea__FssssUi",
+     "size": 88,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "GetCenterX__17HUD_BoundingBox16",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "GetWidth__17HUD_BoundingBox16",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$MCP_mcpfont.cpp9Icaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "CAMERA_GetDisplayMatrix__Fv",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "CAMERA_CommitToDisplay__Fv",
+     "size": 328,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "CAMERA_SetFov__Ff",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$CORE_camera.cppyGcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "APP_Init__Fv",
+     "size": 176,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "FastMemCopy__FPvPCvUi",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPTRANS_GetLevel__Fv",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPTRANS_SetLevel__F16LEVEL_IDENTIFIER",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPTRANS_SetPrevLevel__F16LEVEL_IDENTIFIER",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPTRANS_SetLanding__Fb",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPTRANS_Fade_Init__Fv",
+     "size": 436,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPTRANS_Shutdown__Fv",
+     "size": 60,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPTRANS_TextTransition__Fv",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$MCP_mcptrans.cppRqcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPTRANS_SHRINK_Init__Fb",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPTRANS_SHRINK_Shutdown__Fv",
+     "size": 120,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$MCP_mcptrans_shrink.cppxlcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPTRANS_FALL_Animate__Ff",
+     "size": 128,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPTRANS_FALL_Shutdown__Fv",
+     "size": 72,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$MCP_mcptrans_fall.cpprQcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MCPTRANS_DREAM_Shutdown__Fv",
+     "size": 72,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$particles_SkyboardTransExhaust.cppB0caaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "GCSPAR_StreckRegisterParticleSystem__FUi",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "GCSPAR_StreckSetDragMotion__FRC4VEC3",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$particles_Ribbon.cppnTcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "Spiral_CreateGroup__FP12Spiral_Groupi",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$particles_Spiral.cppjdbaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ShrinkBeam_RegisterSystems__Fv",
+     "size": 60,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$mobys_ShrinkBeam_ShrinkBeam.cppoQaaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VEC_MultiplyMatrix3__FP7MATRIX3PC7MATRIX3T1",
+     "size": 348,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VEC_MulMat3Vec3__FP4VEC3PC7MATRIX3PC4VEC3",
+     "size": 156,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VEC_MulMat4Vec3ZeroW__FP4VEC3PC7MATRIX4PC4VEC3",
+     "size": 156,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VEC_MulMat4Vec3__FP4VEC3PC7MATRIX4PC4VEC3",
+     "size": 180,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VEC_SetVec3__FP4VEC3fff",
+     "size": 16,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VEC_MakeScaleMat__FP4VEC3N20fff",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VFPU_Slerp__FP4QUATPC4QUATT1f",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "Quat_ConvertToMatrix__FP7MATRIX4PC4QUAT",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VFPU_Quat_ConvertToMatrix__FP7MATRIX4PC4QUAT",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$SHARED_Math_quat.cppsFcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DRAW_Reset__Fv",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DRAW_EndUpdate__Fv",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DRAW_GetRenderContext__FUib",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DRAW_GetTextureSize__FPiT0i",
+     "size": 164,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$ENGINE_draw.cppBZbaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "PAR_Init__Fv",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "PAR_ReserveMemory__Fi",
+     "size": 64,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "PAR_CreateSystemInternal__FP10PAR_SystemUiPFPviPC9PAR_GroupPC29PAR_UpdateAndTesselateContext_iiiiPFP9PAR_Group_v",
+     "size": 60,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "PAR_ClearGroup__FP9PAR_Group",
+     "size": 288,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "PAR_DestroyGroup__FP9PAR_Group",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "PAR_Emit__FPiii",
+     "size": 56,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$ENGINE_particle.cppsJcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "TEXMGR_Soil__Fv",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "TEXMGR_SwizzleTexture__FP13SceGimPicture",
+     "size": 344,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "TEXMGR_LoadTextureFromMemory__FPCUcUibN22P29tTEXMGR_ALPHA_COLOR_TOLERANCE",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "TEXMGR_GetWidth__FUi",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "TEXMGR_GetHeight__FUi",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "float_to_k__Ff",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "FOG_SetProperties__FUiffUif",
+     "size": 68,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DrawRenderTarget__FUiUiP12RenderTarget",
+     "size": 316,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DrawPube__FP4PUBE",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DrawVLINE__FP6VLINES",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RENDEREFFECT_SaveScreenEffectsState__Fv",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RENDEREFFECT_RestoreScreenEffectsState__Fv",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RENDEREFFECT_DisableScreenEffects__Fv",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$ENGINE_rendereffect.cppO5aaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGimPictureCheckFileHeader__FPCvi",
+     "size": 88,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGimPictureGetChunk__FPCvii",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGimPictureGetRootChunk__FPCvi",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGimPictureFindChildChunk__FPC11SceGimChunkii",
+     "size": 108,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGimPictureReconfigure__FP13SceGimPicture",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGimPictureGetImage__FP13SceGimPicture",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGimPictureGetPalette__FP13SceGimPicture",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "Enable__Q34scee3Psp2GuQ44scee3Psp2Gu13EFunctionName",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "Disable__Q34scee3Psp2GuQ44scee3Psp2Gu13EFunctionName",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ClearStencil__Q34scee3Psp2GuUc",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DepthRange__Q34scee3Psp2GuUsUs",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DepthOffset__Q34scee3Psp2Gui",
+     "size": 44,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ColorMaterial__Q34scee3Psp2GuUi",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "Material__Q34scee3Psp2GuUiUi",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "Color__Q34scee3Psp2GuUi",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "TexFilter__Q34scee3Psp2GuQ44scee3Psp2Gu18ETextureFilterModeT1",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "TexFunc__Q34scee3Psp2GuQ44scee3Psp2Gu16ETextureFunctionQ44scee3Psp2Gu22ETextureColorComponent",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "TexWrap__Q34scee3Psp2GuQ44scee3Psp2Gu16ETextureWrapModeT1",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "TexOffset__Q34scee3Psp2Guff",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "Scissor__Q34scee3Psp2GuUsUsUsUs",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ColorFunc__Q34scee3Psp2GuQ44scee3Psp2Gu13ETestFunctionUiUi",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "AlphaFunc__Q34scee3Psp2GuQ44scee3Psp2Gu13ETestFunctionUcUc",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "StencilFunc__Q34scee3Psp2GuQ44scee3Psp2Gu13ETestFunctionUcUc",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "StencilOp__Q34scee3Psp2GuQ44scee3Psp2Gu17EStencilOperationN21",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DepthFunc__Q34scee3Psp2GuQ44scee3Psp2Gu13ETestFunction",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DepthMask__Q34scee3Psp2Gub",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "BlendFunc__Q34scee3Psp2GuQ44scee3Psp2Gu15EBlendOperationQ44scee3Psp2Gu14EBlendFunctionT2UiUi",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SetMatrix__Q34scee3Psp2GuQ44scee3Psp2Gu11EMatrixTypePC14ScePspFMatrix4",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SetMatrixStack__Q34scee3Psp3GumP14ScePspFMatrix4UiUiUiUiUiUi",
+     "size": 348,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "LoadIdentity__Q34scee3Psp3Gumv",
+     "size": 104,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "LoadMatrix__Q34scee3Psp3GumPC7MATRIX4",
+     "size": 160,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RotateX__Q34scee3Psp3Gumf",
+     "size": 260,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RotateY__Q34scee3Psp3Gumf",
+     "size": 260,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RotateZ__Q34scee3Psp3Gumf",
+     "size": 260,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "Translate__Q34scee3Psp3GumPC14ScePspFVector3",
+     "size": 220,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "Scale__Q34scee3Psp3GumPC14ScePspFVector3",
+     "size": 188,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "UpdateMatrix__Q34scee3Psp3Gumv",
+     "size": 308,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "BufferCacheInUse__Fv",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "AllocateBufferCache__FUi",
+     "size": 68,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceDisplayGetVcount__Fv",
+     "size": 16,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceDisplayWaitVblankStart__Fv",
+     "size": 72,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SYSTEM_LoadIOPModule__FPc",
+     "size": 64,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SYSTEM_InitializeMcp__Fi",
+     "size": 388,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SYSTEM_InitGraphicsMCP__Fi",
+     "size": 72,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SYSTEM_BeginFrame__Fb",
+     "size": 16,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SYSTEM_UpdateMatricies__Fv",
+     "size": 164,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SYSTEM_ThroughmodeMatrixIsDirty__Fv",
+     "size": 176,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SYSTEM_ScreenMatrixIsDirty__Fv",
+     "size": 176,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SYSTEM_SetBlendEnabled__Fb",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "Signal__Q34scee3Psp2GuUs",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "UTIL_SetupTextureState__Fv",
+     "size": 56,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceKernelGetSystemTimeLow__Fv",
+     "size": 156,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$ENGINE_UTIL_PS2System.cpp8ucaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "GDEMESH_GetMesh__FUi",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$ENGINE_alphasort.cppYGcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "LIGHT_BeginFrame__Fv",
+     "size": 56,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "LIGHT_Reset__Fv",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "LIGHT_SetAmbient__FUi",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "LIGHT_SetupLightsNearPoint__FPC4VEC314LIGHTING_MODELUiPC9NodeLight",
+     "size": 60,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$ENGINE_light.cppSacaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DISPLAY_SetViewMatrixFromCameraMatrix__FPC7MATRIX4",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DISPLAY_SetupProjection__Fffff",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DISPLAY_SetVisibilityPlanes__FP10ClipPlanes",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "DISPLAY_CommitView__Fv",
+     "size": 68,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$ENGINE_DeferredRender.cpppscaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ANIM_PostInit__Fv",
+     "size": 120,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ANIM_Begin__Fv",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ANIM_End__Fv",
+     "size": 44,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ANIM_GetBoneMatrix__FUib",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ANIM_SwapJointMatrixBuffers__Fi",
+     "size": 60,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$ENGINE_animation.cppw1caaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$ENGINE_skinmesh.cppXIcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MATERIAL_Init__Fv",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$HUD_hudQueuedPrompter.cppgPcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "STAT_CPU_DONE__Fv",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "STAT_GPU_DONE__FUi",
+     "size": 108,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "STAT_BeginFrame__Fv",
+     "size": 44,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "STAT_EndFrame__Fv",
+     "size": 132,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceKernelMaxFreeMemSize__Fv",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceKernelTotalFreeMemSize__Fv",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEM_DeinitializeMemory__Fv",
+     "size": 44,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEM_AddAssetUsage__F12MEMAssetTypeUi",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEM_malloc_uncached__FUi12MEMAssetTypePcUi",
+     "size": 64,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEM_PrintMemoryMap__FPc",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEM_malloc__FUi12MEMAssetTypePcUi",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "MEM_free__FPvPcUi",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "HIT_fopen_internal__FPCcT0",
+     "size": 344,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "HIT_fseek__FPii9SEEKPARAM",
+     "size": 72,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "HIT_fclose__FPi",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "WAD_OffsetsToPointers__FP10WAD_HEADER",
+     "size": 284,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "WAD_Load__FPCcPP10WAD_HEADERPPUc",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "WAD_Load__FPCcP10WAD_HEADER",
+     "size": 68,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "WAD_NextAssetByType__FP15WAD_FILE_HEADER",
+     "size": 56,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$SHARED_WAD_wadLoad.cppKFbaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$SHARED_tjzip.cppTHcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "CB_ARRAY_Init__FP14tCB_ARRAY_DATA",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "PLATSYS_HIGSYS_TranslateLanguageCommonParam__FUi",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$SYSTEMS_powerDownCbArray.cppeScaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "LOADER_FindAssetsBySignature__FUi14WAD_ASSET_TYPE",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "LOADER_LoadTexture__FUi14WAD_ASSET_TYPE",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$SHARED_WAD_loader.cppNOcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_GLOBAL_$I$SHARED_WAD_loadCharacter.cppXWcaaa",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "PS2HEAP_MaxFreeMemSize__Fv",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "PS2HEAP_TotalFreeMemSize__Fv",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "GLOBALWAD_UploadTransitionBank__Fv",
+     "size": 104,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "GLOBALWAD_GetTransitionBank__FUi",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "GLOBALWAD_GetTransitionBankIndex__FP15WAD_FILE_HEADER",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "GLOBALWAD_FindAssetsByType__F14WAD_ASSET_TYPE",
+     "size": 100,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "GLOBALWAD_ReleasePlayerWad__Fv",
+     "size": 144,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "GlobalWad_ResetLoadedFlags__Fv",
+     "size": 64,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "GLOBALWAD_FindSound__FUi",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_StartSoundThread__Fv",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_StopSoundThread__Fv",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_DMAtoIOP__FPvT0Ui",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_Shutdown__Fv",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_Update__FPC7MATRIX4N30",
+     "size": 272,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_PauseSoundsImmediate__Fv",
+     "size": 112,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_ContinueSoundsImmediate__Fv",
+     "size": 84,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_LockPositionalArray__Fv",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_GetNumPositionalSounds__Fv",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_GetPositionalSoundAt__FUi",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_SetGlobalVolume__Ff",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_SetGlobalMusicVolume__Ff",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_GetGlobalMusicVolume__Fv",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_SetVOVolume__Ff",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_SetGlobalSoundRegister__FUiScUi",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_SetOutputMode__Fi",
+     "size": 152,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_ConstructPositionalSound__FP14SND_PositionalP9GDE_SoundPP14SND_PositionalPC4VEC3bT4ffffffUc",
+     "size": 104,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_StopPositionalSound__FP14SND_Positionalb",
+     "size": 112,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_PausePositionalSound__FP14SND_Positionalb",
+     "size": 108,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_PausePositionalSounds__Fb",
+     "size": 96,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_IsLooping__FPC9GDE_Sound",
+     "size": 72,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_IsPlaying__FPC14SND_Positional",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_FixupSoundSignatures__FPUiPvPFP13WadLocationIDUi14WAD_ASSET_TYPE13WadLocationID_P15WAD_FILE_HEADER",
+     "size": 276,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_ResetSoundTimeStamps__FPUi",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_IsATRACPlaying__FP13ATRACInstance",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_IsATRACPlaying__FPCcPi",
+     "size": 156,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_StopAllATRAC__Fv",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_FadeATRACInstance__FP13ATRACInstanceff",
+     "size": 24,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_FadeAndStopATRACInstance__FP13ATRACInstanceff",
+     "size": 44,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_AtracOpen__FPCc",
+     "size": 152,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_PauseAtracResetLockId__Fv",
+     "size": 16,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_IsAllAtracPaused__Fv",
+     "size": 104,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "SND_PauseAndSyncATRAC__Fi",
+     "size": 124,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VRAM_Initialize__Fv",
+     "size": 68,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VRAM_SwapFrameBuffers__Fb",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VRAM_RenderFrom__FP12RenderTargetb",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VRAM_GetOffset__FPiT0",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VRAM_SetOffset__Fii",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VRAM_GetViewport__FPiN30",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VRAM_SetViewport__Fiiii",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_db_init__FP16DLIB_DISPLIST_DBi",
+     "size": 160,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_db_send_dma__FP16DLIB_DISPLIST_DB",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_direct_begin__FP13DLIB_DISPLIST",
+     "size": 124,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_direct_end__FP13DLIB_DISPLIST",
+     "size": 128,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_add_data_ul64__FP13DLIB_DISPLISTUlUl",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_mpg__FP13DLIB_DISPLISTP6QWdata",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_mscal__FP13DLIB_DISPLISTi",
+     "size": 132,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_base_offset_mscal__FP13DLIB_DISPLISTiii",
+     "size": 164,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_set_blend_state__FP13DLIB_DISPLISTUl",
+     "size": 72,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_set_tex_clamp__FP13DLIB_DISPLISTbT1",
+     "size": 96,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_cnt_unpack_begin__FP13DLIB_DISPLISTii",
+     "size": 60,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_cnt_unpack_end__FP13DLIB_DISPLIST",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_add_data_block__FP13DLIB_DISPLISTP6QWdatai",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_qw__FP13DLIB_DISPLISTiP6QWdatai",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_data_unpack_begin__FP13DLIB_DISPLISTii",
+     "size": 72,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dlib_displist_data_unpack_end__FP13DLIB_DISPLIST",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_FlushSoundCommands",
+     "size": 596,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_PrepareReturnBuffer",
+     "size": 100,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_BankLoadFromEE_CB",
+     "size": 304,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_BankLoadFromIOP_CB",
+     "size": 304,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_ResolveBankXREFS",
+     "size": 44,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_UnloadBank",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_SetMasterVolume",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_SetPlaybackMode",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_PlaySoundVolPanPMPB_CB",
+     "size": 72,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_StopSound",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_SetSFXGlobalReg",
+     "size": 60,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_PauseSound",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_ContinueSound",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_StopAllSounds",
+     "size": 44,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_PauseAllSoundsInGroup",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_SoundIsStillPlaying_CB",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_SetSoundVolPan",
+     "size": 60,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_SetSoundParams_A",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_SetSoundParams_CB",
+     "size": 72,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_PostMessage",
+     "size": 64,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_SendCurrentBatch",
+     "size": 336,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_PlayVAGStreamByLocEx_CB",
+     "size": 112,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_StreamSafeCheckCDIdle",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_StreamSafeCheckCDIdle_CB",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snd_GetLastLoadError",
+     "size": 60,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__main",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__fixunsdfdi",
+     "size": 236,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__floatdidf",
+     "size": 152,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__pack_d",
+     "size": 300,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__unpack_d",
+     "size": 156,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dpadd",
+     "size": 88,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dpsub",
+     "size": 100,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dpmul",
+     "size": 680,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dpdiv",
+     "size": 360,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__fpcmp_parts_d",
+     "size": 276,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dpcmp",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "litodp",
+     "size": 184,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dptoli",
+     "size": 148,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dptoul",
+     "size": 160,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__make_dp",
+     "size": 44,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dptofp",
+     "size": 84,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__pack_f",
+     "size": 268,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "fptoui",
+     "size": 152,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__make_fp",
+     "size": 44,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "fptodp",
+     "size": 64,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_init",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_fini",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__terminate",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__throw_type_match",
+     "size": 44,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__get_eh_context",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__get_eh_info",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__get_dynamic_handler_chain",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__eh_rtime_match",
+     "size": 72,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__get_eh_table_version",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__get_eh_table_language",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__unwinding_cleanup",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "set_terminate__FPFv_v",
+     "size": 16,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "set_unexpected__FPFv_v",
+     "size": 16,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__cp_exception_info",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__cp_eh_info",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__start_cp_handler",
+     "size": 56,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__eh_alloc",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__eh_free",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__uncatch_exception",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "uncaught_exception__Fv",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "what__C9exception",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_13bad_exception",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__13bad_exception",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf13bad_exception",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_9exception",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__9exception",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf9exception",
+     "size": 64,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__register_frame_info_table",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "set_new_handler__FPFv_v",
+     "size": 16,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__vn__FUiPv",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__nw__FUiPv",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "what__C9bad_alloc",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf9bad_alloc",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_9bad_alloc",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_9type_info",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__rtti_class",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__rtti_si",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__rtti_user",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "dcast__C16__user_type_infoRC9type_infoiPvPC9type_infoT3",
+     "size": 44,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__17__class_type_infoPCcPCQ217__class_type_info9base_infoUi",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf17__class_type_info",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_17__class_type_info",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__14__si_type_infoPCcRC16__user_type_info",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf14__si_type_info",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_14__si_type_info",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__16__user_type_infoPCc",
+     "size": 24,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf16__user_type_info",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_16__user_type_info",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_10bad_typeid",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__10bad_typeid",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf10bad_typeid",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_8bad_cast",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__8bad_cast",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf8bad_cast",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__ne__C9type_infoRC9type_info",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "name__C9type_info",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf9type_info",
+     "size": 64,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "before__C9type_infoRC9type_info",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__rtti_ptr",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__rtti_attr",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__rtti_func",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__rtti_ptmf",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__rtti_ptmd",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__rtti_array",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf17__array_type_info",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_17__array_type_info",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf16__ptmd_type_info",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_16__ptmd_type_info",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf16__ptmf_type_info",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_16__ptmf_type_info",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf16__func_type_info",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_16__func_type_info",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf19__builtin_type_info",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_19__builtin_type_info",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf16__attr_type_info",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_16__attr_type_info",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__tf19__pointer_type_info",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_$_19__pointer_type_info",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "snDllCacheFlush",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGsResetGraph",
+     "size": 400,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGsGetGParam",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGsPutDrawEnv",
+     "size": 232,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGsSyncV",
+     "size": 148,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGszbufaddr",
+     "size": 200,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGsSetDefDrawEnv",
+     "size": 484,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceDmaGetChan",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceDmaReset",
+     "size": 220,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceDmaPutEnv",
+     "size": 472,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceDmaSend",
+     "size": 104,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceDmaPause",
+     "size": 152,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "floor",
+     "size": 472,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sin",
+     "size": 244,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ceilf",
+     "size": 212,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "cosf",
+     "size": 232,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "floorf",
+     "size": 228,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sinf",
+     "size": 240,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "tanf",
+     "size": 136,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sqrt",
+     "size": 268,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "acosf",
+     "size": 252,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "asinf",
+     "size": 252,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "atan2f",
+     "size": 296,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "expf",
+     "size": 372,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "fmodf",
+     "size": 316,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "logf",
+     "size": 328,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "powf",
+     "size": 1288,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sqrtf",
+     "size": 276,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__ieee754_rem_pio2",
+     "size": 1308,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__ieee754_sqrt",
+     "size": 772,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__ieee754_acosf",
+     "size": 1072,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__ieee754_atan2f",
+     "size": 744,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__ieee754_expf",
+     "size": 692,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__ieee754_fmodf",
+     "size": 592,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__ieee754_logf",
+     "size": 804,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__ieee754_rem_pio2f",
+     "size": 992,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__ieee754_sqrtf",
+     "size": 312,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__kernel_cos",
+     "size": 588,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__kernel_rem_pio2",
+     "size": 2920,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__kernel_sin",
+     "size": 468,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__kernel_cosf",
+     "size": 344,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__kernel_rem_pio2f",
+     "size": 2380,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__kernel_sinf",
+     "size": 260,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__kernel_tanf",
+     "size": 660,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "fabs",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "isnan",
+     "size": 56,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "matherr",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "rint",
+     "size": 508,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "scalbn",
+     "size": 436,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "atanf",
+     "size": 680,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "fabsf",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "finitef",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "isnanf",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "scalbnf",
+     "size": 352,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "copysign",
+     "size": 68,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "copysignf",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "scePadEnd",
+     "size": 172,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "scePadSetActAlign",
+     "size": 216,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "BinkSetMemory",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "popmalloctotal",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RADSetMemory",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "radfree",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RADCB_allocate_handler",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RADCB_register_callback",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RADCB_unregister_2_callbacks",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RADCB_resume_handler",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RADCB_try_to_suspend_callback",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RADCB_suspend_callback",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RADCB_suspend_2_callbacks",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RADCB_resume_callback",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RADCB_idle_on_callbacks",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "FreeYUVGlobalMemory",
+     "size": 108,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "YUV_blit_32bpp",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "YUV_blit_16bpp",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "YUV_blit_16a1bpp",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "YUV_blit_32abpp",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "YUV_16_4x2_odd",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "YUV_32_4x2_odd",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "YUV_16a1_4x2_even",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "YUV_16a1_4x2_odd",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "YUV_32a_4x2_odd",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "RAD_IOPGetIOStatus",
+     "size": 16,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "BinkOpenRAD_IOP",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "BinkAudioDecompressClose",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "FastIDCT8x8",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "FastIDCT8x8d",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioInit",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioRegisterDevice",
+     "size": 64,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioRead",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioLseek",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioWrite",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioClose",
+     "size": 124,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioDopen",
+     "size": 160,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioDread",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioDclose",
+     "size": 124,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioGetStat",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioChStat",
+     "size": 108,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioFormatDevice",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioUnformatDevice",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioFlush",
+     "size": 104,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioSync",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioUmountPartition",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioReadPartition",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioWritePartition",
+     "size": 92,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioLseekPartition",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioFreeFilesystem",
+     "size": 68,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioRebootIop",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ps2fioLoadExec",
+     "size": 108,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "cdvdfsFreeFS",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "cdvdfsGetEntryFromIndex",
+     "size": 56,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_sceCd_cd_callback",
+     "size": 160,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_sceCd_ncmd_prechk",
+     "size": 344,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceCdNcmdDiskReady",
+     "size": 152,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceCdSync",
+     "size": 160,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceCdSyncS",
+     "size": 108,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_sceCd_scmd_prechk",
+     "size": 344,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceCdGetDiskType",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceCdGetError",
+     "size": 152,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceCdMmode",
+     "size": 208,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceCdReadClock",
+     "size": 188,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcEnd",
+     "size": 172,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcGetSlotMax",
+     "size": 192,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcOpen",
+     "size": 296,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcMkdir",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcClose",
+     "size": 188,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcSeek",
+     "size": 224,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcRead",
+     "size": 276,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcWrite",
+     "size": 376,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcGetInfo",
+     "size": 380,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcGetDir",
+     "size": 332,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcFormat",
+     "size": 204,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcDelete",
+     "size": 284,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcFlush",
+     "size": 188,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcRename",
+     "size": 344,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMcUnformat",
+     "size": 204,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceScfGetTimeZone",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceScfGetSummerTime",
+     "size": 104,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__errno",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_cleanup_r",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_cleanup",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__srefill",
+     "size": 360,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sprintf",
+     "size": 128,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__sclose",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__svfscanf",
+     "size": 2832,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "atof",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "atoi",
+     "size": 40,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_mbtowc_r",
+     "size": 828,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__malloc_unlock",
+     "size": 64,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "qsort",
+     "size": 2524,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "rand",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "strtod",
+     "size": 44,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_strtoul_r",
+     "size": 528,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "strtoul",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "vfprintf",
+     "size": 204,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "vfiprintf",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_malloc_trim_r",
+     "size": 364,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_strtol_r",
+     "size": 556,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "strtol",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_tolower",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_localeconv_r",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "localeconv",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sn_floor",
+     "size": 492,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sn_fmod",
+     "size": 1092,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sn_log",
+     "size": 1556,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sn_log10",
+     "size": 424,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "fflush",
+     "size": 268,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "fiprintf",
+     "size": 68,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "memcpyalpha",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "fread",
+     "size": 276,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "ungetc",
+     "size": 404,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_Bfree",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_multadd",
+     "size": 264,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_s2b",
+     "size": 308,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_hi0bits",
+     "size": 132,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_lo0bits",
+     "size": 192,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_i2b",
+     "size": 56,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_multiply",
+     "size": 520,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__mdiff",
+     "size": 396,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_b2d",
+     "size": 408,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_d2b",
+     "size": 380,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "_calloc_r",
+     "size": 188,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceResetttyinit",
+     "size": 12,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VSync",
+     "size": 144,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "VSync2",
+     "size": 164,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "write",
+     "size": 124,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "read",
+     "size": 116,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "close",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "lseek",
+     "size": 8,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "fstat",
+     "size": 20,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceTtyInit",
+     "size": 188,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifGetSreg",
+     "size": 24,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifSetDma",
+     "size": 136,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "isceSifSetDma",
+     "size": 56,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifExitCmd",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifSetCmdBuffer",
+     "size": 24,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifRemoveCmdHandler",
+     "size": 76,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifSendCmd",
+     "size": 60,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "isceSifSendCmd",
+     "size": 60,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifInitRpc",
+     "size": 412,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifBindRpc",
+     "size": 332,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifCheckStatRpc",
+     "size": 60,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceOpen",
+     "size": 656,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceClose",
+     "size": 376,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceRemove",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceMkdir",
+     "size": 440,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceRmdir",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceDread",
+     "size": 340,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceGetstat",
+     "size": 436,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSync",
+     "size": 428,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceUmount",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifAllocIopHeap",
+     "size": 112,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifLoadModuleBuffer",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifLoadModule",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifLoadStartModule",
+     "size": 28,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifResetIop",
+     "size": 340,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifSyncIop",
+     "size": 80,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceSifRebootIop",
+     "size": 272,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "InitExecPS2",
+     "size": 172,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "InitAlarm",
+     "size": 212,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceDeci2Open",
+     "size": 68,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceDeci2ReqSend",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceDeci2Poll",
+     "size": 36,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceDeci2ExRecv",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "sceDeci2ExSend",
+     "size": 52,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "InitTLB",
+     "size": 64,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__unmatched_boot_code",
+     "size": 411672,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "boot"
+    ]
+   }
+  },
+  {
+   "name": "levels/frontend",
+   "measures": {
+    "fuzzy_match_percent": 0.2921249018067557,
+    "total_code": "162944",
+    "matched_code": "476",
+    "matched_code_percent": 0.2921249018067557,
+    "total_functions": 2,
+    "matched_functions": 1,
+    "matched_functions_percent": 50.0,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00002F80",
+     "size": 476,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__frontend_unmatched_code",
+     "size": 162468,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "frontend",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level01_pokitaru",
+   "measures": {
+    "fuzzy_match_percent": 0.00394520893826537,
+    "total_code": "2027776",
+    "matched_code": "80",
+    "matched_code_percent": 0.00394520893826537,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level01_pokitaru_unmatched_code",
+     "size": 2027696,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level01_pokitaru",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level02_rykan_v",
+   "measures": {
+    "fuzzy_match_percent": 0.0037862724904585933,
+    "total_code": "2112896",
+    "matched_code": "80",
+    "matched_code_percent": 0.0037862724904585933,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level02_rykan_v_unmatched_code",
+     "size": 2112816,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level02_rykan_v",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level03_kalidon",
+   "measures": {
+    "fuzzy_match_percent": 0.0037598508091198943,
+    "total_code": "2127744",
+    "matched_code": "80",
+    "matched_code_percent": 0.0037598508091198943,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level03_kalidon_unmatched_code",
+     "size": 2127664,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level03_kalidon",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level04_metalis",
+   "measures": {
+    "fuzzy_match_percent": 0.0037548813457494745,
+    "total_code": "2130560",
+    "matched_code": "80",
+    "matched_code_percent": 0.0037548813457494745,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level04_metalis_unmatched_code",
+     "size": 2130480,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level04_metalis",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level05_medical_outpost",
+   "measures": {
+    "fuzzy_match_percent": 0.004083632799738647,
+    "total_code": "1959040",
+    "matched_code": "80",
+    "matched_code_percent": 0.004083632799738647,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level05_medical_outpost_unmatched_code",
+     "size": 1958960,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level05_medical_outpost",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level06_challax",
+   "measures": {
+    "fuzzy_match_percent": 0.004086035564853556,
+    "total_code": "1957888",
+    "matched_code": "80",
+    "matched_code_percent": 0.004086035564853556,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level06_challax_unmatched_code",
+     "size": 1957808,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level06_challax",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level07_dreamtime",
+   "measures": {
+    "fuzzy_match_percent": 0.0037906356137797186,
+    "total_code": "2110464",
+    "matched_code": "80",
+    "matched_code_percent": 0.0037906356137797186,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level07_dreamtime_unmatched_code",
+     "size": 2110384,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level07_dreamtime",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level08_dayni_moon",
+   "measures": {
+    "fuzzy_match_percent": 0.0034399251472287964,
+    "total_code": "2325632",
+    "matched_code": "80",
+    "matched_code_percent": 0.0034399251472287964,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level08_dayni_moon_unmatched_code",
+     "size": 2325552,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level08_dayni_moon",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level09_inside_clank",
+   "measures": {
+    "fuzzy_match_percent": 0.004129774018765693,
+    "total_code": "1937152",
+    "matched_code": "80",
+    "matched_code_percent": 0.004129774018765693,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level09_inside_clank_unmatched_code",
+     "size": 1937072,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level09_inside_clank",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level10_quodrona",
+   "measures": {
+    "fuzzy_match_percent": 0.003874767513949163,
+    "total_code": "2064640",
+    "matched_code": "80",
+    "matched_code_percent": 0.003874767513949163,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level10_quodrona_unmatched_code",
+     "size": 2064560,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level10_quodrona",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level15_giant_clank_metalis",
+   "measures": {
+    "fuzzy_match_percent": 0.006031072083373541,
+    "total_code": "1326464",
+    "matched_code": "80",
+    "matched_code_percent": 0.006031072083373541,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level15_giant_clank_metalis_unmatched_code",
+     "size": 1326384,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level15_giant_clank_metalis",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level16_multiplayer_01",
+   "measures": {
+    "fuzzy_match_percent": 0.004755383093662025,
+    "total_code": "1682304",
+    "matched_code": "80",
+    "matched_code_percent": 0.004755383093662025,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level16_multiplayer_01_unmatched_code",
+     "size": 1682224,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level16_multiplayer_01",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level17_multiplayer_02",
+   "measures": {
+    "fuzzy_match_percent": 0.0049061935787738445,
+    "total_code": "1630592",
+    "matched_code": "80",
+    "matched_code_percent": 0.0049061935787738445,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level17_multiplayer_02_unmatched_code",
+     "size": 1630512,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level17_multiplayer_02",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level18_multiplayer_03",
+   "measures": {
+    "fuzzy_match_percent": 0.004740594660194174,
+    "total_code": "1687552",
+    "matched_code": "80",
+    "matched_code_percent": 0.004740594660194174,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level18_multiplayer_03_unmatched_code",
+     "size": 1687472,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level18_multiplayer_03",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level19_multiplayer_04",
+   "measures": {
+    "fuzzy_match_percent": 0.004742753073303991,
+    "total_code": "1686784",
+    "matched_code": "80",
+    "matched_code_percent": 0.004742753073303991,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level19_multiplayer_04_unmatched_code",
+     "size": 1686704,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level19_multiplayer_04",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level20_multiplayer_lobby",
+   "measures": {
+    "fuzzy_match_percent": 0.007715096901617084,
+    "total_code": "1036928",
+    "matched_code": "80",
+    "matched_code_percent": 0.007715096901617084,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level20_multiplayer_lobby_unmatched_code",
+     "size": 1036848,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level20_multiplayer_lobby",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level21_giant_clank_space",
+   "measures": {
+    "fuzzy_match_percent": 0.006031072083373541,
+    "total_code": "1326464",
+    "matched_code": "80",
+    "matched_code_percent": 0.006031072083373541,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level21_giant_clank_space_unmatched_code",
+     "size": 1326384,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level21_giant_clank_space",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level22_skyboard_kalidon",
+   "measures": {
+    "fuzzy_match_percent": 0.0058427596522389455,
+    "total_code": "1369216",
+    "matched_code": "80",
+    "matched_code_percent": 0.0058427596522389455,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level22_skyboard_kalidon_unmatched_code",
+     "size": 1369136,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level22_skyboard_kalidon",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level23_skyboard_challax",
+   "measures": {
+    "fuzzy_match_percent": 0.004337265787647467,
+    "total_code": "1844480",
+    "matched_code": "80",
+    "matched_code_percent": 0.004337265787647467,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level23_skyboard_challax_unmatched_code",
+     "size": 1844400,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level23_skyboard_challax",
+     "level_code"
+    ]
+   }
+  },
+  {
+   "name": "levels/level24_treehouse",
+   "measures": {
+    "fuzzy_match_percent": 0.004361175075012211,
+    "total_code": "1834368",
+    "matched_code": "80",
+    "matched_code_percent": 0.004361175075012211,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   },
+   "functions": [
+    {
+     "name": "func_00000100",
+     "size": 48,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "func_shared_zero_buffer",
+     "size": 32,
+     "fuzzy_match_percent": 100.0
+    },
+    {
+     "name": "__level24_treehouse_unmatched_code",
+     "size": 1834288,
+     "fuzzy_match_percent": 0.0
+    }
+   ],
+   "metadata": {
+    "progress_categories": [
+     "level24_treehouse",
+     "level_code"
+    ]
+   }
+  }
+ ],
+ "categories": [
+  {
+   "id": "boot",
+   "name": "Boot Executable (SCUS_976.15)",
+   "measures": {
+    "fuzzy_match_percent": 17.484064942874323,
+    "total_code": "498900",
+    "matched_code": "87228",
+    "matched_code_percent": 17.484064942874323,
+    "total_functions": 645,
+    "matched_functions": 644,
+    "matched_functions_percent": 99.84496124031008,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level_code",
+   "name": "Level Modules (Combined Placements)",
+   "measures": {
+    "fuzzy_match_percent": 0.005712416482049584,
+    "total_code": "36341888",
+    "matched_code": "2076",
+    "matched_code_percent": 0.005712416482049584,
+    "total_functions": 62,
+    "matched_functions": 41,
+    "matched_functions_percent": 66.12903225806451,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "frontend",
+   "name": "Frontend (FRONTEND.REL) (FRONTEND.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.2921249018067557,
+    "total_code": "162944",
+    "matched_code": "476",
+    "matched_code_percent": 0.2921249018067557,
+    "total_functions": 2,
+    "matched_functions": 1,
+    "matched_functions_percent": 50.0,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level01_pokitaru",
+   "name": "Level 01: Pokitaru (Jowai Resort) (LEVEL_01.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.00394520893826537,
+    "total_code": "2027776",
+    "matched_code": "80",
+    "matched_code_percent": 0.00394520893826537,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level02_rykan_v",
+   "name": "Level 02: Rykan V (Lava Fields) (LEVEL_02.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.0037862724904585933,
+    "total_code": "2112896",
+    "matched_code": "80",
+    "matched_code_percent": 0.0037862724904585933,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level03_kalidon",
+   "name": "Level 03: Kalidon (Cerullean Sector) (LEVEL_03.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.0037598508091198943,
+    "total_code": "2127744",
+    "matched_code": "80",
+    "matched_code_percent": 0.0037598508091198943,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level04_metalis",
+   "name": "Level 04: Metalis (Junkyard) (LEVEL_04.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.0037548813457494745,
+    "total_code": "2130560",
+    "matched_code": "80",
+    "matched_code_percent": 0.0037548813457494745,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level05_medical_outpost",
+   "name": "Level 05: Medical Outpost Omega (LEVEL_05.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.004083632799738647,
+    "total_code": "1959040",
+    "matched_code": "80",
+    "matched_code_percent": 0.004083632799738647,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level06_challax",
+   "name": "Level 06: Challax (Technomite City) (LEVEL_06.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.004086035564853556,
+    "total_code": "1957888",
+    "matched_code": "80",
+    "matched_code_percent": 0.004086035564853556,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level07_dreamtime",
+   "name": "Level 07: Pokitaru Dreamtime (LEVEL_07.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.0037906356137797186,
+    "total_code": "2110464",
+    "matched_code": "80",
+    "matched_code_percent": 0.0037906356137797186,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level08_dayni_moon",
+   "name": "Level 08: Dayni Moon (Agricultural Planet) (LEVEL_08.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.0034399251472287964,
+    "total_code": "2325632",
+    "matched_code": "80",
+    "matched_code_percent": 0.0034399251472287964,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level09_inside_clank",
+   "name": "Level 09: Inside Clank (LEVEL_09.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.004129774018765693,
+    "total_code": "1937152",
+    "matched_code": "80",
+    "matched_code_percent": 0.004129774018765693,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level10_quodrona",
+   "name": "Level 10: Quodrona (Otto-Matic Factory) (LEVEL_10.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.003874767513949163,
+    "total_code": "2064640",
+    "matched_code": "80",
+    "matched_code_percent": 0.003874767513949163,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level15_giant_clank_metalis",
+   "name": "Level 15: Giant Clank (Metalis) (LEVEL_15.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.006031072083373541,
+    "total_code": "1326464",
+    "matched_code": "80",
+    "matched_code_percent": 0.006031072083373541,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level16_multiplayer_01",
+   "name": "Level 16: Multiplayer (Map 1) (LEVEL_16.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.004755383093662025,
+    "total_code": "1682304",
+    "matched_code": "80",
+    "matched_code_percent": 0.004755383093662025,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level17_multiplayer_02",
+   "name": "Level 17: Multiplayer (Map 2) (LEVEL_17.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.0049061935787738445,
+    "total_code": "1630592",
+    "matched_code": "80",
+    "matched_code_percent": 0.0049061935787738445,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level18_multiplayer_03",
+   "name": "Level 18: Multiplayer (Map 3) (LEVEL_18.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.004740594660194174,
+    "total_code": "1687552",
+    "matched_code": "80",
+    "matched_code_percent": 0.004740594660194174,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level19_multiplayer_04",
+   "name": "Level 19: Multiplayer (Map 4) (LEVEL_19.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.004742753073303991,
+    "total_code": "1686784",
+    "matched_code": "80",
+    "matched_code_percent": 0.004742753073303991,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level20_multiplayer_lobby",
+   "name": "Level 20: Multiplayer Lobby (LEVEL_20.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.007715096901617084,
+    "total_code": "1036928",
+    "matched_code": "80",
+    "matched_code_percent": 0.007715096901617084,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level21_giant_clank_space",
+   "name": "Level 21: Giant Clank (Space) (LEVEL_21.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.006031072083373541,
+    "total_code": "1326464",
+    "matched_code": "80",
+    "matched_code_percent": 0.006031072083373541,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level22_skyboard_kalidon",
+   "name": "Level 22: Skyboard Race (Kalidon) (LEVEL_22.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.0058427596522389455,
+    "total_code": "1369216",
+    "matched_code": "80",
+    "matched_code_percent": 0.0058427596522389455,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level23_skyboard_challax",
+   "name": "Level 23: Skyboard Race (Challax) (LEVEL_23.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.004337265787647467,
+    "total_code": "1844480",
+    "matched_code": "80",
+    "matched_code_percent": 0.004337265787647467,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  },
+  {
+   "id": "level24_treehouse",
+   "name": "Level 24: High Impact Games Treehouse (LEVEL_24.REL)",
+   "measures": {
+    "fuzzy_match_percent": 0.004361175075012211,
+    "total_code": "1834368",
+    "matched_code": "80",
+    "matched_code_percent": 0.004361175075012211,
+    "total_functions": 3,
+    "matched_functions": 2,
+    "matched_functions_percent": 66.66666666666667,
+    "complete_code": "0",
+    "complete_code_percent": 0.0,
+    "total_units": 0,
+    "complete_units": 0
+   }
+  }
+ ]
+}

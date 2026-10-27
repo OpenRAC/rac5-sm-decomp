@@ -160,9 +160,21 @@ class IsoDisc:
         }
 
 
-def extract_boot(disc: IsoDisc, output: Path, *, allow_short_image: bool) -> str:
+def load_target_for_disc(disc: IsoDisc, target_override: Path | None = None) -> dict[str, object]:
+    if target_override:
+        return json.loads(target_override.read_text(encoding="utf-8"))
     info = disc.inspect()
-    target = json.loads((ROOT / "config/target.json").read_text(encoding="utf-8"))
+    boot_name = info.get("boot_file")
+    if boot_name == "SCES_550.19" and (ROOT / "config/versions/pal/target.json").is_file():
+        return json.loads((ROOT / "config/versions/pal/target.json").read_text(encoding="utf-8"))
+    if (ROOT / "config/versions/us/target.json").is_file():
+        return json.loads((ROOT / "config/versions/us/target.json").read_text(encoding="utf-8"))
+    return json.loads((ROOT / "config/target.json").read_text(encoding="utf-8"))
+
+
+def extract_boot(disc: IsoDisc, output: Path, *, allow_short_image: bool, target: dict[str, object] | None = None) -> str:
+    info = disc.inspect()
+    target = target or load_target_for_disc(disc)
     if info["boot_file"] != target["boot_file"]:
         raise ValueError(f"wrong boot executable: {info['boot_file']}")
     if not allow_short_image:
@@ -193,7 +205,8 @@ def verify_disc(disc: IsoDisc, target: dict[str, object], info: dict[str, object
     info = info or disc.inspect()
     if info["boot_file"] != target["boot_file"] or info["version"] != target["system_cnf_version"]:
         raise ValueError("disc boot path/version differs from the pinned target")
-    if info["video_mode"] != "NTSC" or info["actual_size"] != info["declared_size"]:
+    expected_video = target.get("video_mode", "NTSC")
+    if info["video_mode"] != expected_video or info["actual_size"] != info["declared_size"]:
         raise ValueError("disc video mode or ISO9660 length differs from the pinned target")
     if info["actual_size"] != target["iso_size"] or not info["all_recorded_extents_present"]:
         raise ValueError("disc size or file extents differ from the pinned target")
@@ -210,18 +223,20 @@ def main() -> None:
     parser.add_argument("command", choices=("inspect", "verify", "extract-boot"))
     parser.add_argument("image", type=Path)
     parser.add_argument("--allow-short-image", action="store_true")
-    parser.add_argument("--out", type=Path, default=ROOT / "baserom/SCUS_976.15")
+    parser.add_argument("--target", type=Path, help="override target.json path")
+    parser.add_argument("--out", type=Path, default=None)
     args = parser.parse_args()
     with IsoDisc(args.image) as disc:
+        target = load_target_for_disc(disc, args.target)
         if args.command == "inspect":
             print(json.dumps(disc.inspect(), indent=2))
         elif args.command == "verify":
-            target = json.loads((ROOT / "config/target.json").read_text(encoding="utf-8"))
             verify_disc(disc, target)
             print(f"verified {target['serial']}: complete ISO and boot hashes match config/target.json")
         else:
-            digest = extract_boot(disc, args.out, allow_short_image=args.allow_short_image)
-            print(f"boot extracted locally: {args.out} (SHA-256 {digest})")
+            out_path = args.out or (ROOT / f"baserom/{target['boot_file']}")
+            digest = extract_boot(disc, out_path, allow_short_image=args.allow_short_image, target=target)
+            print(f"boot extracted locally: {out_path} (SHA-256 {digest})")
 
 
 if __name__ == "__main__":
