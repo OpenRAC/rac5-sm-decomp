@@ -122,7 +122,7 @@ compiler binaries or linked outputs are committed.
 
 ## Wave-19 level bodies
 
-`config/levels/bodies.tsv` now records **7,997 placements** (384,676 module
+At the October 2026 snapshot, `config/levels/bodies.tsv` recorded **7,997 placements** (384,676 module
 bytes) carried by **1,658 sources**, on top of the wave-17 ones, and all 21
 complete module hashes still match. The placements name their source; the
 source's own two hashes, its compiler profile and its assembler live once per
@@ -333,11 +333,16 @@ python3 tools/level_c_gate.py baserom/SCUS_976.15.iso \
 full pass. Keep it out of ordinary runs: a stale hash must fail, not be repaired
 silently.
 
+`--jobs N` links independently named body objects concurrently within each
+module; the default is one job, and the result is still checked in placement
+order against the complete module hash. A local comparison with four jobs
+reproduced the same 21 exact module hashes as the sequential pass.
+
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**3,571 placements** in **177 sources**, **54,472 placement
-bytes**, **11,068 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**15,634 placements** in **8,886 sources**, **855,216 placement
+bytes**, **530,784 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
