@@ -1,4 +1,4 @@
-/* Provisional candidate for the isolated RAC5 loop-threshold trial; uncounted. */
+/* Reset both fog entries before the next rendering update. */
 typedef struct {
     unsigned char enabled;
     unsigned char padding[15];

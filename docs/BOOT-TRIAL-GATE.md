@@ -14,18 +14,19 @@ by a line feed, so a CRLF checkout turns it into `stray '\' in program` on any
 body with a macro continuation. `.gitattributes` pins `*.c` and `*.h` to LF for
 that reason; a Windows checkout without it cannot reproduce the gate.
 
-The current campaign contains 664 compiler-produced C objects. Its verified
-catalogue records 664 global function bodies (89,924 bytes plus 1,308 zero alignment
-bytes); no object span is left without a usable global-function extent.
-These counts are distinct from the 644 accepted boot placements (87,228 bytes).
+The current campaign contains 713 compiler-produced C objects. Its verified
+catalogue records 713 bodies (91,644 compiled bytes plus 1,388 zero alignment
+bytes). Of these, 693 reviewed placements supply 88,948 accepted C bytes.
+`tools/progress_status.py` regenerates the accepted totals; an object match
+alone does not grant C credit.
 Per-source compiler and options measured for one file are listed in
 [`config/cflags.txt`](../config/cflags.txt) and applied by the gate; the profile
-keeps its global flags. 158 entries hand their file to another pinned compiler:
-twenty-nine to SN ProDG 3.01 `ee-gcc2953`
-([route P](COMPILER-STATUS.md#a-second-pinned-compiler-route-p)), 116 to the
-Sony SDK compiler `2.9-ee-991111`
-([route Q](COMPILER-STATUS.md#the-sony-sdk-compiler-route-q)) and ten to its
-`div.s`-padded profile, and three to the pre-patch GNU trial profile ([third chain](COMPILER-STATUS.md#a-third-gnu-chain-the-pre-patch-trial-cc1)); 72 entries also select another pinned assembler.
+keeps its global flags. Another pinned compiler handles 180 objects: 35 use
+SN ProDG 3.01 `ee-gcc2953` ([route P](COMPILER-STATUS.md#a-second-pinned-compiler-route-p)),
+127 use Sony SDK `2.9-ee-991111` ([route Q](COMPILER-STATUS.md#the-sony-sdk-compiler-route-q)),
+10 use its division-padding profile, four use the pre-patch GNU trial profile,
+three use the SDK synchronization profile and one uses the SDK quadword profile.
+Another pinned assembler handles 89 objects.
 
 Both original and preprocessed C inputs must pass `tools/c_source_policy.py`:
 no instruction assembly, fixed registers or raw instruction words. The standalone
@@ -47,17 +48,25 @@ python3 tools/boot_trial_gate.py baserom/SCUS_976.15 \
   --linker /mnt/c/path/to/ld.exe \
   --extra-bin prodg2953=/mnt/c/path/to/ProDG/usr/local/sce/ee/gcc/bin \
   --extra-bin sdk991111=/home/you/rac5-sdk-compiler \
+  --extra-bin sdk-divpad=/home/you/rac5-sdk-divpad \
+  --extra-bin sdk991111sync=/home/you/rac5-sdk-sync \
+  --extra-bin sdk991111sq=/home/you/rac5-sdk-quadword \
+  --extra-bin gnu-ee-trial=/home/you/rac5-gnu-trial \
+  --as-bin ee-sdk=/path/to/ee-sdk-assembler \
+  --as-bin ps2eeas=/mnt/c/path/to/ProDG/ee/bin \
+  --as-bin span5=/home/you/rac5-span5 \
+  --as-bin span5b=/home/you/rac5-span5b \
   --output-dir /home/you/rac5-boot-trial
 ```
 
 The command checks the patch and tool identities, copies each public C source
 to the Linux work directory, compiles **every campaign object**, and requires
-their object hashes to match the measured campaign. Six objects assembled by
-`as=ps2eeas` have two explicitly pinned whole-object SHA-256 values. A private
-comparison of all 543 freshly compiled objects with their previously pinned
-versions found exactly one differing byte per variant, always inside
-non-loadable `.mdebug`; `.text` and relocations are unchanged. Both full-object
-hashes for each affected source are listed in `config/boot/compiler_trial.json`,
+their object hashes to match the measured campaign. Twenty-five objects assembled by
+`as=ps2eeas` have two explicitly pinned whole-object SHA-256 values. The 19
+variants added in November 2026 were found in a private 670-object recompilation:
+each differs from its previously pinned object by one or two bytes exclusively
+inside non-loadable `.mdebug`; `.text` and relocations are unchanged. Both
+full-object hashes for each affected source are listed in `config/boot/compiler_trial.json`,
 and any third value is rejected. No
 compiler output is edited or normalized to make this pass. `--extra-bin
 SELECTOR=DIRECTORY` gives the directory holding one pinned extra compiler,
@@ -71,8 +80,8 @@ Windows driver: it is staged in the Windows-visible ignored
 front end cannot stat a DrvFs path, so it is staged under `--output-dir`,
 which must therefore be on the Linux filesystem for either route; a pin may
 also name its own staging directory, or `--extra-stage SELECTOR=DIRECTORY`
-overrides it. Either driver's output is assembled by the same pinned GNU `as`
-as every other object, so one assembler still produces the whole campaign. It
+overrides it. The pinned GNU assembler handles 624 objects; the remaining 89
+use their declared, hash-pinned per-source assembler. The compiler step
 exports only the objects to
 ignored `build/boot-compiled-objects/`, then checks the committed boot symbol
 and DVP metadata, links the objects into the complete private boot assembly,
@@ -90,7 +99,7 @@ are never committed.
 
 The result is in ignored `build/boot-trial-gate/report.json`. A passing report
 has `status: "passed_boot_only"`, `raw_load_and_header_exact: true`,
-`whole_elf_exact: true`, `counted_matches: 644` and `counted_bytes: 87228`.
+`whole_elf_exact: true`, `counted_matches: 693` and `counted_bytes: 88948`.
 The counted bytes are each accepted source's compiled `body_bytes`. A complete
 body may have one following zero word supplied by the linker's `ALIGN(8)`;
 the boundary catalogue verifies the retail zeros and direct-flow/label safety,

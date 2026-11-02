@@ -6,8 +6,8 @@ Thanks for helping. The rules live in [`AGENTS.md`](AGENTS.md) and
 1. **Set up.** Python 3.12 or newer, your own lawful copy of the pinned USA
    disc and, for the assembly and gate work, your own local toolchain
    ([README](README.md#quick-start)). The pinned USA input and the SNR2 and
-   boot metadata are verified: **644** narrowly accepted boot placements
-   (87,228 bytes), one 476-byte frontend function and two shared level
+   boot metadata are verified: **693** narrowly accepted boot placements
+   (88,948 bytes), one 476-byte frontend function and two shared level
    functions. The level compiler profiles, the complete function catalogue and
    the game-wide progress build remain open.
 2. **Choose a scope.** Check the open issues and pull requests, and keep one

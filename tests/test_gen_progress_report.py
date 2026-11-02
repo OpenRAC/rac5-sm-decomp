@@ -21,8 +21,8 @@ class GenProgressReportTests(unittest.TestCase):
         self.assertEqual(report["version"], 2)
         m = report["measures"]
         self.assertEqual(m["total_code"], "6418204")
-        self.assertEqual(m["matched_code"], "618320")
-        self.assertAlmostEqual(m["matched_code_percent"], 9.63385, places=4)
+        self.assertEqual(m["matched_code"], "620040")
+        self.assertAlmostEqual(m["matched_code_percent"], 9.66065, places=4)
         self.assertEqual(m["total_units"], 22)
         self.assertEqual((m["matched_functions"], m["total_functions"]), (0, 0))
 
@@ -56,9 +56,11 @@ class GenProgressReportTests(unittest.TestCase):
         self.assertEqual(report["version"], 2)
         m = report["measures"]
         self.assertEqual(m["total_code"], "6418460")
-        self.assertEqual(m["matched_code"], "87784")
-        self.assertAlmostEqual(m["matched_code_percent"], 1.36768, places=4)
+        self.assertEqual(m["matched_code"], "0")
+        self.assertEqual(m["matched_code_percent"], 0)
         self.assertEqual(m["total_units"], 22)
+        self.assertEqual((m["matched_functions"], m["total_functions"]), (0, 0))
+        self.assertTrue(all(u["measures"]["matched_code"] == "0" for u in report["units"]))
 
     def test_check_reports_passes(self) -> None:
         self.assertTrue(gen_progress_report.check_reports())
