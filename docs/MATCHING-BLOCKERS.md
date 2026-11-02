@@ -230,11 +230,16 @@ form in blocker 10. A missing two-`nop` pad is blocker 09, not this entry.
 
 Compiler profiles and their measured effects. The boot carries three compilers: the pinned
 reconstruction (8-byte save stride), a Sony 2.9-ee build (`sceCdSyncS`) and SN 2.95.3
-(`ps2fioDopen`). The level scope pins `pinned`, `gnu-ee-trial`, `gnu-ee-trial-divpad`,
-`sdk991111`, `sdk991111sync` and `sdk-divpad`; `astra` and `ee991111b` are trial trees.
-A profile option is chosen per source in `config/cflags.txt`, with its measured cause,
-provenance and a negative control. `progress/status.json` hashes that file: regenerate the
-snapshot after any edit.
+(`ps2fioDopen`). Accepted level sources select `pinned`, `gnu-ee-trial`,
+`gnu-ee-trial-divpad`, `sdk991111` or `sdk991111sync` in
+`config/levels/body_sources.tsv`; `sdk-divpad`, `astra` and `ee991111b` remain
+trial profiles. A compiler is chosen per source with measured cause and a
+complete-program check. On 2 November 2026, retained C for
+`LEVEL_03.REL:0x110C00` and `LEVEL_09.REL:0x0B04E0` became exact under
+`sdk991111` (the latter also needed its second call's third zero argument).
+The same profile left 498 other retained C bodies nonmatching in a 500-body
+comparison, so these two results do not justify a global compiler switch.
+Regenerate `progress/status.json` after changing source profiles.
 
 ### Blocker 18
 
@@ -266,7 +271,7 @@ stay in the assembly baseline and receive no C credit from that body.
 
 ## What is left
 
-The level scope is **15,632 measured placements** of 854,968 placement bytes carried by **8,884
+The level scope is **15,634 measured placements** of 855,216 placement bytes carried by **8,886
 sources**, and the bounded candidates that no accepted body covers still number more than sixty
 thousand. The boot keeps **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The 713 linked C bodies cover 93,032 bytes including alignment. The profile

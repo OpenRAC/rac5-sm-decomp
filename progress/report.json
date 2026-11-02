@@ -1,10 +1,10 @@
 {
  "version": 2,
  "measures": {
-  "fuzzy_match_percent": 9.6606464986155,
+  "fuzzy_match_percent": 9.664510507924023,
   "total_code": "6418204",
-  "matched_code": "620040",
-  "matched_code_percent": 9.6606464986155,
+  "matched_code": "620288",
+  "matched_code_percent": 9.664510507924023,
   "total_functions": 0,
   "matched_functions": 0,
   "matched_functions_percent": 0.0,
@@ -3637,10 +3637,10 @@
   {
    "name": "levels/level03_kalidon",
    "measures": {
-    "fuzzy_match_percent": 2.1273235878000363,
+    "fuzzy_match_percent": 2.134467304337364,
     "total_code": "2127744",
-    "matched_code": "45264",
-    "matched_code_percent": 2.1273235878000363,
+    "matched_code": "45416",
+    "matched_code_percent": 2.134467304337364,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -3662,12 +3662,12 @@
     },
     {
      "name": "__level03_kalidon_accepted_c_bodies_aggregate",
-     "size": 45184,
+     "size": 45336,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level03_kalidon_unmatched_code",
-     "size": 2082480,
+     "size": 2082328,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -3901,10 +3901,10 @@
   {
    "name": "levels/level09_inside_clank",
    "measures": {
-    "fuzzy_match_percent": 2.2389569842738206,
+    "fuzzy_match_percent": 2.243912713096339,
     "total_code": "1937152",
-    "matched_code": "43372",
-    "matched_code_percent": 2.2389569842738206,
+    "matched_code": "43468",
+    "matched_code_percent": 2.243912713096339,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -3926,12 +3926,12 @@
     },
     {
      "name": "__level09_inside_clank_accepted_c_bodies_aggregate",
-     "size": 43292,
+     "size": 43388,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level09_inside_clank_unmatched_code",
-     "size": 1893780,
+     "size": 1893684,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -4449,10 +4449,10 @@
    "id": "level_code",
    "name": "Level Modules (Combined Placements)",
    "measures": {
-    "fuzzy_match_percent": 2.3582814409642117,
+    "fuzzy_match_percent": 2.358963849098869,
     "total_code": "36341888",
-    "matched_code": "857044",
-    "matched_code_percent": 2.3582814409642117,
+    "matched_code": "857292",
+    "matched_code_percent": 2.358963849098869,
     "total_functions": 83,
     "matched_functions": 62,
     "matched_functions_percent": 74.6987951807229,
@@ -4517,10 +4517,10 @@
    "id": "level03_kalidon",
    "name": "Level 03: Kalidon (Cerullean Sector) (LEVEL_03.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.1273235878000363,
+    "fuzzy_match_percent": 2.134467304337364,
     "total_code": "2127744",
-    "matched_code": "45264",
-    "matched_code_percent": 2.1273235878000363,
+    "matched_code": "45416",
+    "matched_code_percent": 2.134467304337364,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4619,10 +4619,10 @@
    "id": "level09_inside_clank",
    "name": "Level 09: Inside Clank (LEVEL_09.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.2389569842738206,
+    "fuzzy_match_percent": 2.243912713096339,
     "total_code": "1937152",
-    "matched_code": "43372",
-    "matched_code_percent": 2.2389569842738206,
+    "matched_code": "43468",
+    "matched_code_percent": 2.243912713096339,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,

@@ -14,6 +14,7 @@ import re
 import shutil
 import struct
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from c_source_policy import require_c_source
 
@@ -565,7 +566,11 @@ def main() -> None:
                         help="extra pinned cc1 by profile selector (gnu-ee-trial)")
     parser.add_argument("--refresh-bodies", action="store_true",
                         help="rewrite config/levels/bodies.tsv hashes after a full pass")
+    parser.add_argument("--jobs", type=int, default=1,
+                        help="parallel body links per module (default: 1)")
     args = parser.parse_args()
+    if not 1 <= args.jobs <= 16:
+        parser.error("--jobs must be between 1 and 16")
     OUTPUT.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps({"status": "incomplete", "counted_matches": 0},
                                  indent=2) + "\n", encoding="utf-8", newline="\n")
@@ -633,18 +638,23 @@ def main() -> None:
             claimed = [(0x100, 0x108), (start, start + 72)]
             if name == "LEVEL_01.REL":
                 claimed.append((0x190, 0x190 + len(control)))
-            for row in bodies_by_module.get(name, []):
+            imports, exports = module_symbols(source)
+
+            def linked_row(row: dict) -> tuple[dict, bytes]:
                 obj_path, obj, _object_sha = body_objects[row["source"]]
                 try:
-                    mapping, _origin = resolve_symbols(obj, *module_symbols(source))
+                    mapping, _origin = resolve_symbols(obj, imports, exports)
                 except BodyLinkError as error:
                     raise ValueError(f"{name} 0x{row['offset']:06X}: {error}") from error
-                placed = link_level_body(row, obj_path, mapping, args.linker)
-                if placed != source[row["offset"]:row["offset"] + row["size"]]:
-                    raise ValueError(
-                        f"{name} level body differs at 0x{row['offset']:06X}")
-                rebuilt = place_body(rebuilt, placed, row["offset"],
-                                     row["offset"] + row["size"], claimed)
+                return row, link_level_body(row, obj_path, mapping, args.linker)
+
+            with ThreadPoolExecutor(max_workers=args.jobs) as pool:
+                for row, placed in pool.map(linked_row, bodies_by_module.get(name, [])):
+                    if placed != source[row["offset"]:row["offset"] + row["size"]]:
+                        raise ValueError(
+                            f"{name} level body differs at 0x{row['offset']:06X}")
+                    rebuilt = place_body(rebuilt, placed, row["offset"],
+                                         row["offset"] + row["size"], claimed)
             if sha(rebuilt) != known[name]:
                 raise ValueError(f"{name} complete C-linked module differs")
             if name == "LEVEL_01.REL":
