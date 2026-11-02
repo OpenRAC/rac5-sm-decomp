@@ -1,10 +1,10 @@
 {
  "version": 2,
  "measures": {
-  "fuzzy_match_percent": 11.624435745576177,
+  "fuzzy_match_percent": 11.745528811486826,
   "total_code": "6418204",
-  "matched_code": "746080",
-  "matched_code_percent": 11.624435745576177,
+  "matched_code": "753852",
+  "matched_code_percent": 11.745528811486826,
   "total_functions": 0,
   "matched_functions": 0,
   "matched_functions_percent": 0.0,
@@ -3549,10 +3549,10 @@
   {
    "name": "levels/level01_pokitaru",
    "measures": {
-    "fuzzy_match_percent": 2.7476407650549173,
+    "fuzzy_match_percent": 2.767958591086984,
     "total_code": "2027776",
-    "matched_code": "55716",
-    "matched_code_percent": 2.7476407650549173,
+    "matched_code": "56128",
+    "matched_code_percent": 2.767958591086984,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -3574,12 +3574,12 @@
     },
     {
      "name": "__level01_pokitaru_accepted_c_bodies_aggregate",
-     "size": 55636,
+     "size": 56048,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level01_pokitaru_unmatched_code",
-     "size": 1972060,
+     "size": 1971648,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -3593,10 +3593,10 @@
   {
    "name": "levels/level02_rykan_v",
    "measures": {
-    "fuzzy_match_percent": 2.5983294965772097,
+    "fuzzy_match_percent": 2.61839674077664,
     "total_code": "2112896",
-    "matched_code": "54900",
-    "matched_code_percent": 2.5983294965772097,
+    "matched_code": "55324",
+    "matched_code_percent": 2.61839674077664,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -3618,12 +3618,12 @@
     },
     {
      "name": "__level02_rykan_v_accepted_c_bodies_aggregate",
-     "size": 54820,
+     "size": 55244,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level02_rykan_v_unmatched_code",
-     "size": 2057996,
+     "size": 2057572,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -3637,10 +3637,10 @@
   {
    "name": "levels/level03_kalidon",
    "measures": {
-    "fuzzy_match_percent": 2.481689526559586,
+    "fuzzy_match_percent": 2.5063165493593216,
     "total_code": "2127744",
-    "matched_code": "52804",
-    "matched_code_percent": 2.481689526559586,
+    "matched_code": "53328",
+    "matched_code_percent": 2.5063165493593216,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -3662,12 +3662,12 @@
     },
     {
      "name": "__level03_kalidon_accepted_c_bodies_aggregate",
-     "size": 52724,
+     "size": 53248,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level03_kalidon_unmatched_code",
-     "size": 2074940,
+     "size": 2074416,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -3681,10 +3681,10 @@
   {
    "name": "levels/level04_metalis",
    "measures": {
-    "fuzzy_match_percent": 2.5474992490237307,
+    "fuzzy_match_percent": 2.567400120156203,
     "total_code": "2130560",
-    "matched_code": "54276",
-    "matched_code_percent": 2.5474992490237307,
+    "matched_code": "54700",
+    "matched_code_percent": 2.567400120156203,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -3706,12 +3706,12 @@
     },
     {
      "name": "__level04_metalis_accepted_c_bodies_aggregate",
-     "size": 54196,
+     "size": 54620,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level04_metalis_unmatched_code",
-     "size": 2076284,
+     "size": 2075860,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -3725,10 +3725,10 @@
   {
    "name": "levels/level05_medical_outpost",
    "measures": {
-    "fuzzy_match_percent": 2.6188337144723945,
+    "fuzzy_match_percent": 2.6404769683110096,
     "total_code": "1959040",
-    "matched_code": "51304",
-    "matched_code_percent": 2.6188337144723945,
+    "matched_code": "51728",
+    "matched_code_percent": 2.6404769683110096,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -3750,12 +3750,12 @@
     },
     {
      "name": "__level05_medical_outpost_accepted_c_bodies_aggregate",
-     "size": 51224,
+     "size": 51648,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level05_medical_outpost_unmatched_code",
-     "size": 1907736,
+     "size": 1907312,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -3769,10 +3769,10 @@
   {
    "name": "levels/level06_challax",
    "measures": {
-    "fuzzy_match_percent": 2.577266932531381,
+    "fuzzy_match_percent": 2.6040304654811717,
     "total_code": "1957888",
-    "matched_code": "50460",
-    "matched_code_percent": 2.577266932531381,
+    "matched_code": "50984",
+    "matched_code_percent": 2.6040304654811717,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -3794,12 +3794,12 @@
     },
     {
      "name": "__level06_challax_accepted_c_bodies_aggregate",
-     "size": 50380,
+     "size": 50904,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level06_challax_unmatched_code",
-     "size": 1907428,
+     "size": 1906904,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -3813,10 +3813,10 @@
   {
    "name": "levels/level07_dreamtime",
    "measures": {
-    "fuzzy_match_percent": 2.5440850921882583,
+    "fuzzy_match_percent": 2.559437166424066,
     "total_code": "2110464",
-    "matched_code": "53692",
-    "matched_code_percent": 2.5440850921882583,
+    "matched_code": "54016",
+    "matched_code_percent": 2.559437166424066,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -3838,12 +3838,12 @@
     },
     {
      "name": "__level07_dreamtime_accepted_c_bodies_aggregate",
-     "size": 53612,
+     "size": 53936,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level07_dreamtime_unmatched_code",
-     "size": 2056772,
+     "size": 2056448,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -3857,10 +3857,10 @@
   {
    "name": "levels/level08_dayni_moon",
    "measures": {
-    "fuzzy_match_percent": 2.500481589520612,
+    "fuzzy_match_percent": 2.523013099234961,
     "total_code": "2325632",
-    "matched_code": "58152",
-    "matched_code_percent": 2.500481589520612,
+    "matched_code": "58676",
+    "matched_code_percent": 2.523013099234961,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -3882,12 +3882,12 @@
     },
     {
      "name": "__level08_dayni_moon_accepted_c_bodies_aggregate",
-     "size": 58072,
+     "size": 58596,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level08_dayni_moon_unmatched_code",
-     "size": 2267480,
+     "size": 2266956,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -3901,10 +3901,10 @@
   {
    "name": "levels/level09_inside_clank",
    "measures": {
-    "fuzzy_match_percent": 2.6199286375049557,
+    "fuzzy_match_percent": 2.646978657327871,
     "total_code": "1937152",
-    "matched_code": "50752",
-    "matched_code_percent": 2.6199286375049557,
+    "matched_code": "51276",
+    "matched_code_percent": 2.646978657327871,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -3926,12 +3926,12 @@
     },
     {
      "name": "__level09_inside_clank_accepted_c_bodies_aggregate",
-     "size": 50672,
+     "size": 51196,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level09_inside_clank_unmatched_code",
-     "size": 1886400,
+     "size": 1885876,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -3945,10 +3945,10 @@
   {
    "name": "levels/level10_quodrona",
    "measures": {
-    "fuzzy_match_percent": 2.5215049597024177,
+    "fuzzy_match_percent": 2.546884686918785,
     "total_code": "2064640",
-    "matched_code": "52060",
-    "matched_code_percent": 2.5215049597024177,
+    "matched_code": "52584",
+    "matched_code_percent": 2.546884686918785,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -3970,12 +3970,12 @@
     },
     {
      "name": "__level10_quodrona_accepted_c_bodies_aggregate",
-     "size": 51980,
+     "size": 52504,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level10_quodrona_unmatched_code",
-     "size": 2012580,
+     "size": 2012056,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -3989,10 +3989,10 @@
   {
    "name": "levels/level15_giant_clank_metalis",
    "measures": {
-    "fuzzy_match_percent": 3.628292965357522,
+    "fuzzy_match_percent": 3.6358318054617387,
     "total_code": "1326464",
-    "matched_code": "48128",
-    "matched_code_percent": 3.628292965357522,
+    "matched_code": "48228",
+    "matched_code_percent": 3.6358318054617387,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4014,12 +4014,12 @@
     },
     {
      "name": "__level15_giant_clank_metalis_accepted_c_bodies_aggregate",
-     "size": 48048,
+     "size": 48148,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level15_giant_clank_metalis_unmatched_code",
-     "size": 1278336,
+     "size": 1278236,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -4033,10 +4033,10 @@
   {
    "name": "levels/level16_multiplayer_01",
    "measures": {
-    "fuzzy_match_percent": 2.7519401963022143,
+    "fuzzy_match_percent": 2.7771437266986227,
     "total_code": "1682304",
-    "matched_code": "46296",
-    "matched_code_percent": 2.7519401963022143,
+    "matched_code": "46720",
+    "matched_code_percent": 2.7771437266986227,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4058,12 +4058,12 @@
     },
     {
      "name": "__level16_multiplayer_01_accepted_c_bodies_aggregate",
-     "size": 46216,
+     "size": 46640,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level16_multiplayer_01_unmatched_code",
-     "size": 1636008,
+     "size": 1635584,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -4077,10 +4077,10 @@
   {
    "name": "levels/level17_multiplayer_02",
    "measures": {
-    "fuzzy_match_percent": 2.775924326870241,
+    "fuzzy_match_percent": 2.8019271528377425,
     "total_code": "1630592",
-    "matched_code": "45264",
-    "matched_code_percent": 2.775924326870241,
+    "matched_code": "45688",
+    "matched_code_percent": 2.8019271528377425,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4102,12 +4102,12 @@
     },
     {
      "name": "__level17_multiplayer_02_accepted_c_bodies_aggregate",
-     "size": 45184,
+     "size": 45608,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level17_multiplayer_02_unmatched_code",
-     "size": 1585328,
+     "size": 1584904,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -4121,10 +4121,10 @@
   {
    "name": "levels/level18_multiplayer_03",
    "measures": {
-    "fuzzy_match_percent": 2.678198953276699,
+    "fuzzy_match_percent": 2.703324104975728,
     "total_code": "1687552",
-    "matched_code": "45196",
-    "matched_code_percent": 2.678198953276699,
+    "matched_code": "45620",
+    "matched_code_percent": 2.703324104975728,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4146,12 +4146,12 @@
     },
     {
      "name": "__level18_multiplayer_03_accepted_c_bodies_aggregate",
-     "size": 45116,
+     "size": 45540,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level18_multiplayer_03_unmatched_code",
-     "size": 1642356,
+     "size": 1641932,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -4165,10 +4165,10 @@
   {
    "name": "levels/level19_multiplayer_04",
    "measures": {
-    "fuzzy_match_percent": 2.7346714220670814,
+    "fuzzy_match_percent": 2.7657364546972225,
     "total_code": "1686784",
-    "matched_code": "46128",
-    "matched_code_percent": 2.7346714220670814,
+    "matched_code": "46652",
+    "matched_code_percent": 2.7657364546972225,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4190,12 +4190,12 @@
     },
     {
      "name": "__level19_multiplayer_04_accepted_c_bodies_aggregate",
-     "size": 46048,
+     "size": 46572,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level19_multiplayer_04_unmatched_code",
-     "size": 1640656,
+     "size": 1640132,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -4209,10 +4209,10 @@
   {
    "name": "levels/level20_multiplayer_lobby",
    "measures": {
-    "fuzzy_match_percent": 3.424731514627824,
+    "fuzzy_match_percent": 3.4440192568818664,
     "total_code": "1036928",
-    "matched_code": "35512",
-    "matched_code_percent": 3.424731514627824,
+    "matched_code": "35712",
+    "matched_code_percent": 3.4440192568818664,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4234,12 +4234,12 @@
     },
     {
      "name": "__level20_multiplayer_lobby_accepted_c_bodies_aggregate",
-     "size": 35432,
+     "size": 35632,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level20_multiplayer_lobby_unmatched_code",
-     "size": 1001416,
+     "size": 1001216,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -4253,10 +4253,10 @@
   {
    "name": "levels/level21_giant_clank_space",
    "measures": {
-    "fuzzy_match_percent": 3.4419328379812795,
+    "fuzzy_match_percent": 3.4494716780854966,
     "total_code": "1326464",
-    "matched_code": "45656",
-    "matched_code_percent": 3.4419328379812795,
+    "matched_code": "45756",
+    "matched_code_percent": 3.4494716780854966,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4278,12 +4278,12 @@
     },
     {
      "name": "__level21_giant_clank_space_accepted_c_bodies_aggregate",
-     "size": 45576,
+     "size": 45676,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level21_giant_clank_space_unmatched_code",
-     "size": 1280808,
+     "size": 1280708,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -4297,10 +4297,10 @@
   {
    "name": "levels/level22_skyboard_kalidon",
    "measures": {
-    "fuzzy_match_percent": 2.860322987753576,
+    "fuzzy_match_percent": 2.8831097503973075,
     "total_code": "1369216",
-    "matched_code": "39164",
-    "matched_code_percent": 2.860322987753576,
+    "matched_code": "39476",
+    "matched_code_percent": 2.8831097503973075,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4322,12 +4322,12 @@
     },
     {
      "name": "__level22_skyboard_kalidon_accepted_c_bodies_aggregate",
-     "size": 39084,
+     "size": 39396,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level22_skyboard_kalidon_unmatched_code",
-     "size": 1330052,
+     "size": 1329740,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -4341,10 +4341,10 @@
   {
    "name": "levels/level23_skyboard_challax",
    "measures": {
-    "fuzzy_match_percent": 2.571564885496183,
+    "fuzzy_match_percent": 2.583058639833449,
     "total_code": "1844480",
-    "matched_code": "47432",
-    "matched_code_percent": 2.571564885496183,
+    "matched_code": "47644",
+    "matched_code_percent": 2.583058639833449,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4366,12 +4366,12 @@
     },
     {
      "name": "__level23_skyboard_challax_accepted_c_bodies_aggregate",
-     "size": 47352,
+     "size": 47564,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level23_skyboard_challax_unmatched_code",
-     "size": 1797048,
+     "size": 1796836,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -4385,10 +4385,10 @@
   {
    "name": "levels/level24_treehouse",
    "measures": {
-    "fuzzy_match_percent": 2.473876561300677,
+    "fuzzy_match_percent": 2.5024422580420067,
     "total_code": "1834368",
-    "matched_code": "45380",
-    "matched_code_percent": 2.473876561300677,
+    "matched_code": "45904",
+    "matched_code_percent": 2.5024422580420067,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4410,12 +4410,12 @@
     },
     {
      "name": "__level24_treehouse_accepted_c_bodies_aggregate",
-     "size": 45300,
+     "size": 45824,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__level24_treehouse_unmatched_code",
-     "size": 1788988,
+     "size": 1788464,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -4449,10 +4449,10 @@
    "id": "level_code",
    "name": "Level Modules (Combined Placements)",
    "measures": {
-    "fuzzy_match_percent": 2.7333417570380494,
+    "fuzzy_match_percent": 2.755002712022006,
     "total_code": "36341888",
-    "matched_code": "993348",
-    "matched_code_percent": 2.7333417570380494,
+    "matched_code": "1001220",
+    "matched_code_percent": 2.755002712022006,
     "total_functions": 83,
     "matched_functions": 62,
     "matched_functions_percent": 74.6987951807229,
@@ -4483,10 +4483,10 @@
    "id": "level01_pokitaru",
    "name": "Level 01: Pokitaru (Jowai Resort) (LEVEL_01.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.7476407650549173,
+    "fuzzy_match_percent": 2.767958591086984,
     "total_code": "2027776",
-    "matched_code": "55716",
-    "matched_code_percent": 2.7476407650549173,
+    "matched_code": "56128",
+    "matched_code_percent": 2.767958591086984,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4500,10 +4500,10 @@
    "id": "level02_rykan_v",
    "name": "Level 02: Rykan V (Lava Fields) (LEVEL_02.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.5983294965772097,
+    "fuzzy_match_percent": 2.61839674077664,
     "total_code": "2112896",
-    "matched_code": "54900",
-    "matched_code_percent": 2.5983294965772097,
+    "matched_code": "55324",
+    "matched_code_percent": 2.61839674077664,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4517,10 +4517,10 @@
    "id": "level03_kalidon",
    "name": "Level 03: Kalidon (Cerullean Sector) (LEVEL_03.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.481689526559586,
+    "fuzzy_match_percent": 2.5063165493593216,
     "total_code": "2127744",
-    "matched_code": "52804",
-    "matched_code_percent": 2.481689526559586,
+    "matched_code": "53328",
+    "matched_code_percent": 2.5063165493593216,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4534,10 +4534,10 @@
    "id": "level04_metalis",
    "name": "Level 04: Metalis (Junkyard) (LEVEL_04.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.5474992490237307,
+    "fuzzy_match_percent": 2.567400120156203,
     "total_code": "2130560",
-    "matched_code": "54276",
-    "matched_code_percent": 2.5474992490237307,
+    "matched_code": "54700",
+    "matched_code_percent": 2.567400120156203,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4551,10 +4551,10 @@
    "id": "level05_medical_outpost",
    "name": "Level 05: Medical Outpost Omega (LEVEL_05.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.6188337144723945,
+    "fuzzy_match_percent": 2.6404769683110096,
     "total_code": "1959040",
-    "matched_code": "51304",
-    "matched_code_percent": 2.6188337144723945,
+    "matched_code": "51728",
+    "matched_code_percent": 2.6404769683110096,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4568,10 +4568,10 @@
    "id": "level06_challax",
    "name": "Level 06: Challax (Technomite City) (LEVEL_06.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.577266932531381,
+    "fuzzy_match_percent": 2.6040304654811717,
     "total_code": "1957888",
-    "matched_code": "50460",
-    "matched_code_percent": 2.577266932531381,
+    "matched_code": "50984",
+    "matched_code_percent": 2.6040304654811717,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4585,10 +4585,10 @@
    "id": "level07_dreamtime",
    "name": "Level 07: Pokitaru Dreamtime (LEVEL_07.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.5440850921882583,
+    "fuzzy_match_percent": 2.559437166424066,
     "total_code": "2110464",
-    "matched_code": "53692",
-    "matched_code_percent": 2.5440850921882583,
+    "matched_code": "54016",
+    "matched_code_percent": 2.559437166424066,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4602,10 +4602,10 @@
    "id": "level08_dayni_moon",
    "name": "Level 08: Dayni Moon (Agricultural Planet) (LEVEL_08.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.500481589520612,
+    "fuzzy_match_percent": 2.523013099234961,
     "total_code": "2325632",
-    "matched_code": "58152",
-    "matched_code_percent": 2.500481589520612,
+    "matched_code": "58676",
+    "matched_code_percent": 2.523013099234961,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4619,10 +4619,10 @@
    "id": "level09_inside_clank",
    "name": "Level 09: Inside Clank (LEVEL_09.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.6199286375049557,
+    "fuzzy_match_percent": 2.646978657327871,
     "total_code": "1937152",
-    "matched_code": "50752",
-    "matched_code_percent": 2.6199286375049557,
+    "matched_code": "51276",
+    "matched_code_percent": 2.646978657327871,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4636,10 +4636,10 @@
    "id": "level10_quodrona",
    "name": "Level 10: Quodrona (Otto-Matic Factory) (LEVEL_10.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.5215049597024177,
+    "fuzzy_match_percent": 2.546884686918785,
     "total_code": "2064640",
-    "matched_code": "52060",
-    "matched_code_percent": 2.5215049597024177,
+    "matched_code": "52584",
+    "matched_code_percent": 2.546884686918785,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4653,10 +4653,10 @@
    "id": "level15_giant_clank_metalis",
    "name": "Level 15: Giant Clank (Metalis) (LEVEL_15.REL)",
    "measures": {
-    "fuzzy_match_percent": 3.628292965357522,
+    "fuzzy_match_percent": 3.6358318054617387,
     "total_code": "1326464",
-    "matched_code": "48128",
-    "matched_code_percent": 3.628292965357522,
+    "matched_code": "48228",
+    "matched_code_percent": 3.6358318054617387,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4670,10 +4670,10 @@
    "id": "level16_multiplayer_01",
    "name": "Level 16: Multiplayer (Map 1) (LEVEL_16.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.7519401963022143,
+    "fuzzy_match_percent": 2.7771437266986227,
     "total_code": "1682304",
-    "matched_code": "46296",
-    "matched_code_percent": 2.7519401963022143,
+    "matched_code": "46720",
+    "matched_code_percent": 2.7771437266986227,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4687,10 +4687,10 @@
    "id": "level17_multiplayer_02",
    "name": "Level 17: Multiplayer (Map 2) (LEVEL_17.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.775924326870241,
+    "fuzzy_match_percent": 2.8019271528377425,
     "total_code": "1630592",
-    "matched_code": "45264",
-    "matched_code_percent": 2.775924326870241,
+    "matched_code": "45688",
+    "matched_code_percent": 2.8019271528377425,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4704,10 +4704,10 @@
    "id": "level18_multiplayer_03",
    "name": "Level 18: Multiplayer (Map 3) (LEVEL_18.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.678198953276699,
+    "fuzzy_match_percent": 2.703324104975728,
     "total_code": "1687552",
-    "matched_code": "45196",
-    "matched_code_percent": 2.678198953276699,
+    "matched_code": "45620",
+    "matched_code_percent": 2.703324104975728,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4721,10 +4721,10 @@
    "id": "level19_multiplayer_04",
    "name": "Level 19: Multiplayer (Map 4) (LEVEL_19.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.7346714220670814,
+    "fuzzy_match_percent": 2.7657364546972225,
     "total_code": "1686784",
-    "matched_code": "46128",
-    "matched_code_percent": 2.7346714220670814,
+    "matched_code": "46652",
+    "matched_code_percent": 2.7657364546972225,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4738,10 +4738,10 @@
    "id": "level20_multiplayer_lobby",
    "name": "Level 20: Multiplayer Lobby (LEVEL_20.REL)",
    "measures": {
-    "fuzzy_match_percent": 3.424731514627824,
+    "fuzzy_match_percent": 3.4440192568818664,
     "total_code": "1036928",
-    "matched_code": "35512",
-    "matched_code_percent": 3.424731514627824,
+    "matched_code": "35712",
+    "matched_code_percent": 3.4440192568818664,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4755,10 +4755,10 @@
    "id": "level21_giant_clank_space",
    "name": "Level 21: Giant Clank (Space) (LEVEL_21.REL)",
    "measures": {
-    "fuzzy_match_percent": 3.4419328379812795,
+    "fuzzy_match_percent": 3.4494716780854966,
     "total_code": "1326464",
-    "matched_code": "45656",
-    "matched_code_percent": 3.4419328379812795,
+    "matched_code": "45756",
+    "matched_code_percent": 3.4494716780854966,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4772,10 +4772,10 @@
    "id": "level22_skyboard_kalidon",
    "name": "Level 22: Skyboard Race (Kalidon) (LEVEL_22.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.860322987753576,
+    "fuzzy_match_percent": 2.8831097503973075,
     "total_code": "1369216",
-    "matched_code": "39164",
-    "matched_code_percent": 2.860322987753576,
+    "matched_code": "39476",
+    "matched_code_percent": 2.8831097503973075,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4789,10 +4789,10 @@
    "id": "level23_skyboard_challax",
    "name": "Level 23: Skyboard Race (Challax) (LEVEL_23.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.571564885496183,
+    "fuzzy_match_percent": 2.583058639833449,
     "total_code": "1844480",
-    "matched_code": "47432",
-    "matched_code_percent": 2.571564885496183,
+    "matched_code": "47644",
+    "matched_code_percent": 2.583058639833449,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
@@ -4806,10 +4806,10 @@
    "id": "level24_treehouse",
    "name": "Level 24: High Impact Games Treehouse (LEVEL_24.REL)",
    "measures": {
-    "fuzzy_match_percent": 2.473876561300677,
+    "fuzzy_match_percent": 2.5024422580420067,
     "total_code": "1834368",
-    "matched_code": "45380",
-    "matched_code_percent": 2.473876561300677,
+    "matched_code": "45904",
+    "matched_code_percent": 2.5024422580420067,
     "total_functions": 4,
     "matched_functions": 3,
     "matched_functions_percent": 75.0,
