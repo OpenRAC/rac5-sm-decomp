@@ -38,6 +38,8 @@ import versions  # noqa: E402
 STATUS = ROOT / "progress/status.json"
 SHAPE = ROOT / "config/levels/shape_scenario_summary.json"
 CODE_INTERVALS = ROOT / "config/levels/code_intervals.tsv"
+BODY_PLACEMENTS = ROOT / "config/levels/bodies.tsv"
+BODY_SOURCES = ROOT / "config/levels/body_sources.tsv"
 
 LEVEL_NAMES: dict[str, tuple[str, str]] = {
     "FRONTEND.REL": ("frontend", "Frontend (FRONTEND.REL)"),
@@ -69,6 +71,35 @@ def read_tsv(path: Path) -> list[dict[str, str]]:
         return []
     with path.open(encoding="utf-8", newline="") as f:
         return list(csv.DictReader((line for line in f if not line.startswith("#")), delimiter="\t"))
+
+
+def accepted_us_level_bodies(status: dict) -> tuple[dict[str, int], int, int]:
+    """Measure placed bytes per module and distinct C bytes from the accepted tables."""
+    placements = read_tsv(BODY_PLACEMENTS)
+    source_rows = read_tsv(BODY_SOURCES)
+    sources = {row["source"] for row in source_rows}
+    if len(sources) != len(source_rows):
+        raise ValueError("duplicate accepted level body source")
+
+    by_module: dict[str, int] = {}
+    by_source: dict[str, int] = {}
+    for row in placements:
+        module, source, size = row["module"], row["source"], int(row["size"])
+        if module not in LEVEL_NAMES or source not in sources or size <= 0 or size % 4:
+            raise ValueError("invalid accepted level body placement")
+        if source in by_source and by_source[source] != size:
+            raise ValueError(f"inconsistent accepted body size: {source}")
+        by_source[source] = size
+        by_module[module] = by_module.get(module, 0) + size
+
+    level = status["levels"]
+    if (set(by_source) != sources
+            or len(placements) != level["accepted_level_body_placements"]
+            or len(by_source) != level["accepted_level_body_unique_sources"]
+            or sum(by_source.values()) != level["accepted_level_body_unique_source_bytes"]
+            or sum(by_module.values()) != level["accepted_level_body_placement_bytes"]):
+        raise ValueError("accepted level body tables disagree with the scoped snapshot")
+    return by_module, sum(by_source.values()), len(by_source)
 
 
 def make_measures(
@@ -108,6 +139,9 @@ def generate_report(v: versions.Version) -> dict[str, object]:
     boot_total_code = 498900 if is_us else 499156
     boot_matches = boot_trial_gate.accepted_matches()
     boot_matched_code = sum(m["body_bytes"] for m in boot_matches)
+    body_bytes_by_module, unique_body_bytes, _unique_body_sources = (
+        accepted_us_level_bodies(status) if is_us else ({}, 0, 0)
+    )
 
     units_list: list[dict[str, object]] = []
     categories_list: list[dict[str, object]] = []
@@ -166,14 +200,7 @@ def generate_report(v: versions.Version) -> dict[str, object]:
                 "size": fe_matched,
                 "fuzzy_match_percent": 100.0,
             })
-            unmatched = max(0, mod_total - fe_matched)
-            if unmatched > 0:
-                mod_items.append((unmatched, 0.0, False))
-                mod_funcs.append({
-                    "name": f"__{slug}_unmatched_code",
-                    "size": unmatched,
-                    "fuzzy_match_percent": 0.0,
-                })
+            known_bytes = fe_matched
         else:
             # Placed shared bodies
             f1_bytes = 48
@@ -190,14 +217,26 @@ def generate_report(v: versions.Version) -> dict[str, object]:
                 "size": f2_bytes,
                 "fuzzy_match_percent": 100.0,
             })
-            unmatched = max(0, mod_total - (f1_bytes + f2_bytes))
-            if unmatched > 0:
-                mod_items.append((unmatched, 0.0, False))
-                mod_funcs.append({
-                    "name": f"__{slug}_unmatched_code",
-                    "size": unmatched,
-                    "fuzzy_match_percent": 0.0,
-                })
+            known_bytes = f1_bytes + f2_bytes
+
+        placed_bytes = body_bytes_by_module.get(mod_name, 0)
+        if placed_bytes:
+            mod_items.append((placed_bytes, 100.0, True))
+            mod_funcs.append({
+                "name": f"__{slug}_accepted_c_bodies_aggregate",
+                "size": placed_bytes,
+                "fuzzy_match_percent": 100.0,
+            })
+        unmatched = mod_total - known_bytes - placed_bytes
+        if unmatched < 0:
+            raise ValueError(f"accepted C exceeds candidate code in {mod_name}")
+        if unmatched:
+            mod_items.append((unmatched, 0.0, False))
+            mod_funcs.append({
+                "name": f"__{slug}_unmatched_code",
+                "size": unmatched,
+                "fuzzy_match_percent": 0.0,
+            })
 
         mod_m = make_measures(mod_items)
         unit_name = f"levels/{slug}"
@@ -227,14 +266,17 @@ def generate_report(v: versions.Version) -> dict[str, object]:
     frontend_total = code_intervals.get("FRONTEND.REL", 162944)
     frontend_matched = 476
     level_dedup_total = shape["masked_max_per_module_scenario_bytes"]  # 5,756,360
-    level_dedup_matched = 80  # 48 + 32 unique source bytes
+    level_dedup_matched = 80 + unique_body_bytes if is_us else 80
 
     dedup_total_code = boot_total_code + frontend_total + level_dedup_total
     dedup_matched_code = boot_matched_code + frontend_matched + level_dedup_matched
     overall_pct = 100.0 * dedup_matched_code / dedup_total_code if dedup_total_code else 0.0
 
-    n_matched_functions = len(boot_matches) + 1 + 2  # boot + frontend + 2 level unique
-    n_total_functions = n_matched_functions + len(units_list)
+    # The optimistic byte denominator is not a reviewed function catalogue.
+    # Keep the PAL report unchanged; do not turn the US aggregate into a fake
+    # nearly-complete function percentage.
+    n_matched_functions = 0 if is_us else len(boot_matches) + 1 + 2
+    n_total_functions = 0 if is_us else n_matched_functions + len(units_list)
 
     overall_m = {
         "fuzzy_match_percent": overall_pct,

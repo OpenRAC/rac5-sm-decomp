@@ -21,9 +21,20 @@ class GenProgressReportTests(unittest.TestCase):
         self.assertEqual(report["version"], 2)
         m = report["measures"]
         self.assertEqual(m["total_code"], "6418204")
-        self.assertEqual(m["matched_code"], "87784")
-        self.assertAlmostEqual(m["matched_code_percent"], 1.36773, places=4)
+        self.assertEqual(m["matched_code"], "618320")
+        self.assertAlmostEqual(m["matched_code_percent"], 9.63385, places=4)
         self.assertEqual(m["total_units"], 22)
+        self.assertEqual((m["matched_functions"], m["total_functions"]), (0, 0))
+
+        # The accepted placement table drives each unit, while the headline
+        # counts shared C once per source and never copies US bodies to PAL.
+        by_module, unique_bytes, unique_sources = gen_progress_report.accepted_us_level_bodies(
+            json.loads(gen_progress_report.STATUS.read_text(encoding="utf-8"))
+        )
+        self.assertEqual(unique_bytes, 530536)
+        self.assertEqual(unique_sources, 8884)
+        level_01 = next(u for u in report["units"] if u["name"] == "levels/level01_pokitaru")
+        self.assertEqual(int(level_01["measures"]["matched_code"]), 80 + by_module["LEVEL_01.REL"])
 
         # Verify unit names and level slugs
         unit_names = [u["name"] for u in report["units"]]
