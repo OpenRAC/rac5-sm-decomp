@@ -21,14 +21,17 @@ from boot_c_campaign import source_path  # noqa: E402
 class CompileBootTrialTests(unittest.TestCase):
     def test_only_measured_sn_debug_variant_is_allowed(self) -> None:
         profile = json.loads(compile_boot_trial.PROFILE.read_text())
-        owner = next(item for item in boot_c_campaign.REPLACEMENTS
-                     if item.name == "sceKernelGetSystemTimeLow__Fv")
-        self.assertTrue(boot_c_campaign.object_digest_matches(
-            owner, owner.object_sha256, profile))
-        self.assertTrue(boot_c_campaign.object_digest_matches(
-            owner, profile["object_sha256_alternates"][owner.name][0], profile))
-        self.assertFalse(boot_c_campaign.object_digest_matches(
-            owner, "0" * 64, profile))
+        for name in ("sceKernelGetSystemTimeLow__Fv", "snDllLoaded",
+                     "ps2fioDclose", "_strtoul_r"):
+            with self.subTest(name=name):
+                owner = next(item for item in boot_c_campaign.REPLACEMENTS
+                             if item.name == name)
+                self.assertTrue(boot_c_campaign.object_digest_matches(
+                    owner, owner.object_sha256, profile))
+                self.assertTrue(boot_c_campaign.object_digest_matches(
+                    owner, profile["object_sha256_alternates"][name][0], profile))
+                self.assertFalse(boot_c_campaign.object_digest_matches(
+                    owner, "0" * 64, profile))
 
     def test_assembly_fallback_or_partial_owner_cannot_keep_c_acceptance(self) -> None:
         rows = boot_c_campaign.REPLACEMENTS

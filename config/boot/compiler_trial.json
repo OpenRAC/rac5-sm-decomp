@@ -1,9 +1,11 @@
 {
   "id": "rac5-boot-gnu-ee-loop-six-trial-20261015",
   "accepted_sources": [
+    "src/boot/ANIM_AllocJointMatrices.c",
     "src/boot/ANIM_Begin__Fv.c",
     "src/boot/ANIM_End__Fv.c",
     "src/boot/ANIM_GetBoneMatrix__FUib.c",
+    "src/boot/ANIM_GetBufferUsedSize__Fv.c",
     "src/boot/ANIM_PostInit__Fv.c",
     "src/boot/ANIM_SwapJointMatrixBuffers__Fi.c",
     "src/boot/APP_Init__Fv.c",
@@ -16,7 +18,9 @@
     "src/boot/BufferCacheInUse__Fv.c",
     "src/boot/CAMERA_CommitToDisplay__Fv.c",
     "src/boot/CAMERA_GetDisplayMatrix__Fv.c",
+    "src/boot/CAMERA_Init__Fv.c",
     "src/boot/CAMERA_SetFov__Ff.c",
+    "src/boot/CAMERA_StoreThisFrameLastUpdatedFov__Fv.c",
     "src/boot/CB_ARRAY_Init__FP14tCB_ARRAY_DATA.c",
     "src/boot/CMD_ParseCommandLine__FiPPcPi.c",
     "src/boot/ClearStencil__Q34scee3Psp2GuUc.c",
@@ -35,11 +39,13 @@
     "src/boot/DepthMask__Q34scee3Psp2Gub.c",
     "src/boot/DepthOffset__Q34scee3Psp2Gui.c",
     "src/boot/DepthRange__Q34scee3Psp2GuUsUs.c",
+    "src/boot/DirtyAllMatricies__Q34scee3Psp3Gumv.c",
     "src/boot/Disable__Q34scee3Psp2GuQ44scee3Psp2Gu13EFunctionName.c",
     "src/boot/DrawPube__FP4PUBE.c",
     "src/boot/DrawRenderTarget__FUiUiP12RenderTarget.c",
     "src/boot/DrawVLINE__FP6VLINES.c",
     "src/boot/Enable__Q34scee3Psp2GuQ44scee3Psp2Gu13EFunctionName.c",
+    "src/boot/FOG_PreUpdate__Fv.c",
     "src/boot/FOG_SetProperties__FUiffUif.c",
     "src/boot/FastIDCT8x8.c",
     "src/boot/FastIDCT8x8d.c",
@@ -47,17 +53,22 @@
     "src/boot/FreeYUVGlobalMemory.c",
     "src/boot/GCSPAR_StreckRegisterParticleSystem__FUi.c",
     "src/boot/GCSPAR_StreckSetDragMotion__FRC4VEC3.c",
+    "src/boot/GDEMESH_GetFreeMeshResourceHandle__Fv.c",
     "src/boot/GDEMESH_GetMesh__FUi.c",
     "src/boot/GLOBALWAD_FindAssetsByType__F14WAD_ASSET_TYPE.c",
+    "src/boot/GLOBALWAD_FindGlobalSound__FUi.c",
     "src/boot/GLOBALWAD_FindSound__FUi.c",
     "src/boot/GLOBALWAD_GetTransitionBankIndex__FP15WAD_FILE_HEADER.c",
     "src/boot/GLOBALWAD_GetTransitionBank__FUi.c",
     "src/boot/GLOBALWAD_ReleasePlayerWad__Fv.c",
     "src/boot/GLOBALWAD_UploadTransitionBank__Fv.c",
+    "src/boot/GetBufferCachePtr__Fv.c",
     "src/boot/GetCenterX__17HUD_BoundingBox16.c",
+    "src/boot/GetMatrix__Q34scee3Psp3GumQ44scee3Psp2Gu11EMatrixType.c",
     "src/boot/GetWidth__17HUD_BoundingBox16.c",
     "src/boot/GlobalWad_ResetLoadedFlags__Fv.c",
     "src/boot/HEROSKIN_InitSinglePlayer__Fv.c",
+    "src/boot/HEROSKIN_TermSinglePlayer__Fv.c",
     "src/boot/HIT_fclose__FPi.c",
     "src/boot/HIT_fopen_internal__FPCcT0.c",
     "src/boot/HIT_fseek__FPii9SEEKPARAM.c",
@@ -71,44 +82,57 @@
     "src/boot/LOADER_FindAssetsBySignature__FUi14WAD_ASSET_TYPE.c",
     "src/boot/LOADER_LoadTexture__FUi14WAD_ASSET_TYPE.c",
     "src/boot/LoadIdentity__Q34scee3Psp3Gumv.c",
+    "src/boot/LoadMatrix__Q34scee3Psp3GumPC14ScePspFMatrix4.c",
     "src/boot/LoadMatrix__Q34scee3Psp3GumPC7MATRIX4.c",
     "src/boot/MATERIAL_Init__Fv.c",
+    "src/boot/MCPFONT_FontStringLength__FPCc.c",
     "src/boot/MCPFONT_FontStringPixelLength__FPCc.c",
+    "src/boot/MCPFONT_GetFontPage__FUc.c",
     "src/boot/MCPFONT_SetColor__FUi.c",
     "src/boot/MCPHUD_UpdateViewTransform__FUiP11tHUD_OFFSET.c",
     "src/boot/MCPI_CreateMsgBoxes__Fv.c",
     "src/boot/MCPI_GetGameId__Fv.c",
     "src/boot/MCPI_GetLoadProgress__Fv.c",
+    "src/boot/MCPI_GetMyMsgBoxId__Fv.c",
+    "src/boot/MCPI_GetTheirMsgBoxId__Fv.c",
     "src/boot/MCPI_HandleMessages__Fb.c",
     "src/boot/MCPI_PowerLock__Fv.c",
     "src/boot/MCPI_PowerUnlock__Fv.c",
     "src/boot/MCPI_ResetLoadProgress__Fv.c",
     "src/boot/MCPI_SendNewLevel__Fi.c",
     "src/boot/MCPI_SetGameId__Fi.c",
+    "src/boot/MCPI_SetMyMsgBoxId__Fi.c",
+    "src/boot/MCPI_SetTheirMsgBoxId__Fi.c",
     "src/boot/MCPTRANS_DREAM_Shutdown__Fv.c",
     "src/boot/MCPTRANS_FALL_Animate__Ff.c",
     "src/boot/MCPTRANS_FALL_Shutdown__Fv.c",
     "src/boot/MCPTRANS_Fade_Init__Fv.c",
     "src/boot/MCPTRANS_GetLevel__Fv.c",
+    "src/boot/MCPTRANS_IsComplete__Fv.c",
     "src/boot/MCPTRANS_SHRINK_Init__Fb.c",
     "src/boot/MCPTRANS_SHRINK_Shutdown__Fv.c",
     "src/boot/MCPTRANS_SetLanding__Fb.c",
     "src/boot/MCPTRANS_SetLevel__F16LEVEL_IDENTIFIER.c",
     "src/boot/MCPTRANS_SetPrevLevel__F16LEVEL_IDENTIFIER.c",
+    "src/boot/MCPTRANS_ShouldFade__Fv.c",
     "src/boot/MCPTRANS_Shutdown__Fv.c",
     "src/boot/MCPTRANS_TextTransition__Fv.c",
     "src/boot/MCP_DrawRectangleSimpleArea__FssssUi.c",
+    "src/boot/MCP_FontStringLength__FPCc.c",
     "src/boot/MCP_GetFontPage__FUc.c",
     "src/boot/MCP_GetState__Fv.c",
     "src/boot/MCP_HasLevelBeenSeen__FUi.c",
     "src/boot/MCP_SetState__F10mcpState_t.c",
     "src/boot/MCP_StartLevelModule__Fv.c",
+    "src/boot/MCP_StateSystemInit__Fv.c",
     "src/boot/MCP_UpdateCameraCB__FPfT014CameraSystemIDPv.c",
     "src/boot/MCP_Update__Fv.c",
     "src/boot/MC_SetError__Fi.c",
     "src/boot/MEMCARD_GetDanSkinUnlocked__Fv.c",
     "src/boot/MEMCARD_GetHardcoreModeBit__FUi.c",
     "src/boot/MEMCARD_GetSlotHeaderDetail__FUi.c",
+    "src/boot/MEMCARD_GetSlotStatus__FUi.c",
+    "src/boot/MEMCARD_GetWideScreenFromMemcard__Fv.c",
     "src/boot/MEMCARD_GetWriteHeaderOnlyModeStatus__Fv.c",
     "src/boot/MEMCARD_Idle__Fv.c",
     "src/boot/MEMCARD_InitStateNode__FP19tMEMCARD_STATE_NODE.c",
@@ -124,6 +148,8 @@
     "src/boot/MEM_malloc__FUi12MEMAssetTypePcUi.c",
     "src/boot/MEM_malloc_uncached__FUi12MEMAssetTypePcUi.c",
     "src/boot/Material__Q34scee3Psp2GuUiUi.c",
+    "src/boot/MatrixMode__Q34scee3Psp3GumQ44scee3Psp2Gu11EMatrixType.c",
+    "src/boot/PART_Init__Fv.c",
     "src/boot/PAR_ClearGroup__FP9PAR_Group.c",
     "src/boot/PAR_CreateSystemInternal__FP10PAR_SystemUiPFPviPC9PAR_GroupPC29PAR_UpdateAndTesselateContext_iiiiPFP9PAR_Group_v.c",
     "src/boot/PAR_DestroyGroup__FP9PAR_Group.c",
@@ -133,6 +159,8 @@
     "src/boot/PLATSYS_HIGSYS_TranslateLanguageCommonParam__FUi.c",
     "src/boot/PS2HEAP_MaxFreeMemSize__Fv.c",
     "src/boot/PS2HEAP_TotalFreeMemSize__Fv.c",
+    "src/boot/PopMatrix__Q34scee3Psp3Gumv.c",
+    "src/boot/PushMatrix__Q34scee3Psp3Gumv.c",
     "src/boot/Quat_ConvertToMatrix__FP7MATRIX4PC4QUAT.c",
     "src/boot/RADCB_allocate_handler.c",
     "src/boot/RADCB_idle_on_callbacks.c",
@@ -146,6 +174,7 @@
     "src/boot/RADSetMemory.c",
     "src/boot/RAD_IOPGetIOStatus.c",
     "src/boot/RENDEREFFECT_DisableScreenEffects__Fv.c",
+    "src/boot/RENDEREFFECT_Reset__Fv.c",
     "src/boot/RENDEREFFECT_RestoreScreenEffectsState__Fv.c",
     "src/boot/RENDEREFFECT_SaveScreenEffectsState__Fv.c",
     "src/boot/Reset__t5Queue2Z14tHUDPROMQ_NODEUi8.c",
@@ -185,6 +214,7 @@
     "src/boot/SND_StopAllATRAC__Fv.c",
     "src/boot/SND_StopPositionalSound__FP14SND_Positionalb.c",
     "src/boot/SND_StopSoundThread__Fv.c",
+    "src/boot/SND_UnlockPositionalArray__Fv.c",
     "src/boot/SND_Update__FPC7MATRIX4N30.c",
     "src/boot/STAT_BeginFrame__Fv.c",
     "src/boot/STAT_CPU_DONE__Fv.c",
@@ -196,17 +226,21 @@
     "src/boot/SYSTEM_LoadIOPModule__FPc.c",
     "src/boot/SYSTEM_ScreenMatrixIsDirty__Fv.c",
     "src/boot/SYSTEM_SetBlendEnabled__Fb.c",
+    "src/boot/SYSTEM_SetClearColor__FUi.c",
     "src/boot/SYSTEM_ThroughmodeMatrixIsDirty__Fv.c",
     "src/boot/SYSTEM_UpdateMatricies__Fv.c",
     "src/boot/Scale__Q34scee3Psp3GumPC14ScePspFVector3.c",
     "src/boot/Scissor__Q34scee3Psp2GuUsUsUsUs.c",
     "src/boot/SetMatrixStack__Q34scee3Psp3GumP14ScePspFMatrix4UiUiUiUiUiUi.c",
     "src/boot/SetMatrix__Q34scee3Psp2GuQ44scee3Psp2Gu11EMatrixTypePC14ScePspFMatrix4.c",
+    "src/boot/SetMirroring__Q34scee3Psp3Gumb.c",
     "src/boot/ShrinkBeam_RegisterSystems__Fv.c",
     "src/boot/Signal__Q34scee3Psp2GuUs.c",
     "src/boot/Spiral_CreateGroup__FP12Spiral_Groupi.c",
+    "src/boot/Spiral_Stop__FP12Spiral_Group.c",
     "src/boot/StencilFunc__Q34scee3Psp2GuQ44scee3Psp2Gu13ETestFunctionUcUc.c",
     "src/boot/StencilOp__Q34scee3Psp2GuQ44scee3Psp2Gu17EStencilOperationN21.c",
+    "src/boot/StoreMatrix__Q34scee3Psp3GumP14ScePspFMatrix4.c",
     "src/boot/TEXMGR_GetHeight__FUi.c",
     "src/boot/TEXMGR_GetWidth__FUi.c",
     "src/boot/TEXMGR_LoadTextureFromMemory__FPCUcUibN22P29tTEXMGR_ALPHA_COLOR_TOLERANCE.c",
@@ -215,6 +249,7 @@
     "src/boot/TexFilter__Q34scee3Psp2GuQ44scee3Psp2Gu18ETextureFilterModeT1.c",
     "src/boot/TexFunc__Q34scee3Psp2GuQ44scee3Psp2Gu16ETextureFunctionQ44scee3Psp2Gu22ETextureColorComponent.c",
     "src/boot/TexOffset__Q34scee3Psp2Guff.c",
+    "src/boot/TexScale__Q34scee3Psp2Guff.c",
     "src/boot/TexWrap__Q34scee3Psp2GuQ44scee3Psp2Gu16ETextureWrapModeT1.c",
     "src/boot/Translate__Q34scee3Psp3GumPC14ScePspFVector3.c",
     "src/boot/UMD_Deinit__Fv.c",
@@ -276,33 +311,45 @@
     "src/boot/_GLOBAL_$I$CORE_camera.cppyGcaaa.c",
     "src/boot/_GLOBAL_$I$CORE_cmdline.cpptJcaaa.c",
     "src/boot/_GLOBAL_$I$CORE_heroSkin.cppMzcaaa.c",
+    "src/boot/_GLOBAL_$I$CORE_higPs2Heap.cppwBcaaa.c",
     "src/boot/_GLOBAL_$I$CORE_mcpclient.cppgvcaaa.c",
     "src/boot/_GLOBAL_$I$CORE_umd.cppOWbaaa.c",
+    "src/boot/_GLOBAL_$I$CORE_videoPlayer_App.cpppucaaa.c",
     "src/boot/_GLOBAL_$I$ENGINE_DeferredRender.cpppscaaa.c",
+    "src/boot/_GLOBAL_$I$ENGINE_SndScream.cppbycaaa.c",
     "src/boot/_GLOBAL_$I$ENGINE_UTIL_PS2System.cpp8ucaaa.c",
     "src/boot/_GLOBAL_$I$ENGINE_alphasort.cppYGcaaa.c",
     "src/boot/_GLOBAL_$I$ENGINE_animation.cppw1caaa.c",
     "src/boot/_GLOBAL_$I$ENGINE_draw.cppBZbaaa.c",
+    "src/boot/_GLOBAL_$I$ENGINE_gdemesh.cppyBcaaa.c",
     "src/boot/_GLOBAL_$I$ENGINE_light.cppSacaaa.c",
+    "src/boot/_GLOBAL_$I$ENGINE_material.cppNscaaa.c",
     "src/boot/_GLOBAL_$I$ENGINE_particle.cppsJcaaa.c",
     "src/boot/_GLOBAL_$I$ENGINE_rendereffect.cppO5aaaa.c",
     "src/boot/_GLOBAL_$I$ENGINE_skinmesh.cppXIcaaa.c",
     "src/boot/_GLOBAL_$I$HUD_hudQueuedPrompter.cppgPcaaa.c",
+    "src/boot/_GLOBAL_$I$LIBHIG_modulemgr.cppkdcaaa.c",
     "src/boot/_GLOBAL_$I$MCP_mcp.cppbFbaaa.c",
     "src/boot/_GLOBAL_$I$MCP_mcpfont.cpp9Icaaa.c",
     "src/boot/_GLOBAL_$I$MCP_mcptrans.cppRqcaaa.c",
+    "src/boot/_GLOBAL_$I$MCP_mcptrans_dream.cppvacaaa.c",
     "src/boot/_GLOBAL_$I$MCP_mcptrans_fall.cpprQcaaa.c",
     "src/boot/_GLOBAL_$I$MCP_mcptrans_shrink.cppxlcaaa.c",
     "src/boot/_GLOBAL_$I$MCP_mcpupdate.cppcKbaaa.c",
     "src/boot/_GLOBAL_$I$MCP_mcputil.cpplxcaaa.c",
     "src/boot/_GLOBAL_$I$SHARED_Math_quat.cppsFcaaa.c",
+    "src/boot/_GLOBAL_$I$SHARED_WAD_globalWad.cppkFcaaa.c",
     "src/boot/_GLOBAL_$I$SHARED_WAD_loadCharacter.cppXWcaaa.c",
     "src/boot/_GLOBAL_$I$SHARED_WAD_loader.cppNOcaaa.c",
     "src/boot/_GLOBAL_$I$SHARED_WAD_wadLoad.cppKFbaaa.c",
     "src/boot/_GLOBAL_$I$SHARED_tjzip.cppTHcaaa.c",
     "src/boot/_GLOBAL_$I$SYSTEMS_memcard_ps2.cppBRcaaa.c",
+    "src/boot/_GLOBAL_$I$SYSTEMS_platformSysHigSys.cppXNbaaa.c",
     "src/boot/_GLOBAL_$I$SYSTEMS_powerDownCbArray.cppeScaaa.c",
     "src/boot/_GLOBAL_$I$mobys_ShrinkBeam_ShrinkBeam.cppoQaaaa.c",
+    "src/boot/_GLOBAL_$I$particles_ClankTransExhaust.cppjScaaa.c",
+    "src/boot/_GLOBAL_$I$particles_GCS_STrek.cppZ5aaaa.c",
+    "src/boot/_GLOBAL_$I$particles_RatchetShipExhaust.cppcYbaaa.c",
     "src/boot/_GLOBAL_$I$particles_Ribbon.cppnTcaaa.c",
     "src/boot/_GLOBAL_$I$particles_SkyboardTransExhaust.cppB0caaa.c",
     "src/boot/_GLOBAL_$I$particles_Spiral.cppjdbaaa.c",
@@ -314,6 +361,7 @@
     "src/boot/__8HIGMutex.c",
     "src/boot/__8bad_cast.c",
     "src/boot/__9exception.c",
+    "src/boot/__9type_infoPCc.c",
     "src/boot/__cp_eh_info.c",
     "src/boot/__cp_exception_info.c",
     "src/boot/__eh_alloc.c",
@@ -469,6 +517,7 @@
     "src/boot/higIoInit__Fv.c",
     "src/boot/higIoLseek__Fiii.c",
     "src/boot/higIoReadAsync__FiPvUi.c",
+    "src/boot/higIoRead__FiPvUi.c",
     "src/boot/higIoShutdown__Fv.c",
     "src/boot/higIoWaitAsync__FiPUi.c",
     "src/boot/isceSifSendCmd.c",
@@ -915,7 +964,64 @@
     ],
     "_calloc_r": [
       "9de19e599766eadb98ea0c09327018a48f6856a130ba8388fff794e7e59717c1"
+    ],
+    "snDllLoaded": [
+      "d2693235bf219fb237fe9d6ca0b87ede2a5ee7cd367d57830809862e528dd9ab"
+    ],
+    "ps2fioDclose": [
+      "bc8e3aa98b723df50c8cd6cc5efa717aaccb97b0600d5c01e3a27ed2e984abc7"
+    ],
+    "ps2fioChStat": [
+      "9417fbf06e15c8966dc2727ce46ce0bb3ee49f96e6aa330ce666fed58351bc7e"
+    ],
+    "ps2fioUnformatDevice": [
+      "6b03378fc53d6ecd5496c5a929faf7a75e2fef6792b1a1c2a53ba7642d73f9f2"
+    ],
+    "ps2fioSync": [
+      "05f6bc13809c2d3417679ed1ed339c47fe3a74f80453df305f7cbc54d64eaf19"
+    ],
+    "ps2fioUmountPartition": [
+      "eb4f15f779b75c5400ad87d34d43a5599231dd7a60b03219afd748729d4a02f6"
+    ],
+    "ps2fioRebootIop": [
+      "ded5adce59c1a794bdb865d7450be12f231511e23d2e1a1f9eb348abf732349f"
+    ],
+    "ps2fioLoadExec": [
+      "10b4fecc2a6acec1bb0bf9cecc47d1616d8637f41ef0bcf09a59af929a609ed0"
+    ],
+    "_mbtowc_r": [
+      "4c97a5bbe3d7efe361ad7308457a76246ca2ecf4472f298b9114a5142b35f4a3"
+    ],
+    "qsort": [
+      "1c0b33abfbcdd3efff2e28cb533ac05a31d75949a0874e224fd39a9e98f19f69"
+    ],
+    "_strtoul_r": [
+      "92185005fe653bcf4f065481eefd190c4518118b7845097d2a67ac63743418e1"
+    ],
+    "_malloc_trim_r": [
+      "c9d6ac106e6278774a53bba881d21defe755ad7694c2b0123a573a0ee83203e6"
+    ],
+    "_strtol_r": [
+      "27096916efaa78621ff8d7746471422d699369c712b3b2e2c8d33192e24f6f06"
+    ],
+    "sn_floor": [
+      "9a366a7f01e4e303b1672566e6d2e2566fb0459d5b0cd4be45fba36af127d520"
+    ],
+    "sn_log": [
+      "2cd5b04eb90c5e6ab74c1fad52bd486d1fbbd3a7ae62f607d83ba83889c98128"
+    ],
+    "sn_log10": [
+      "0ed53165a0c1cbd1e81f5d78e7447bf97a14d311ab8f67c392e78dfafbb3b00f"
+    ],
+    "_i2b": [
+      "5f072a2403f4c6fc36f3634f6023d8513c60eabba2b2235b9141a17a0de8f166"
+    ],
+    "_b2d": [
+      "05948dcd622801811b9b1a4450c252085775736b83839bc0b7b06064206d5103"
+    ],
+    "_d2b": [
+      "729eddaa2d038baddf897a9c8c501d96a53b6443aa1179b194bacd474a522fbb"
     ]
   },
-  "expected_objects": 664
+  "expected_objects": 713
 }

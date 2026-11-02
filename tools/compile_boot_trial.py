@@ -103,8 +103,15 @@ def check_profile(cpp: Path, cc1: Path, assembler: Path) -> dict[str, object]:
     if "expected_function_witnesses" in profile:
         raise ValueError("witness counts come from the verified boundary catalogue, not the compiler profile")
     variants = profile.get("object_sha256_alternates", {})
-    measured = {"sceKernelGetSystemTimeLow__Fv", "__srefill", "fflush",
-                "fread", "_multadd", "_calloc_r"}
+    measured = {
+        "sceKernelGetSystemTimeLow__Fv", "__srefill", "fflush", "fread",
+        "_multadd", "_calloc_r", "snDllLoaded", "ps2fioDclose",
+        "ps2fioChStat", "ps2fioUnformatDevice", "ps2fioSync",
+        "ps2fioUmountPartition", "ps2fioRebootIop", "ps2fioLoadExec",
+        "_mbtowc_r", "qsort", "_strtoul_r", "_malloc_trim_r",
+        "_strtol_r", "sn_floor", "sn_log", "sn_log10", "_i2b",
+        "_b2d", "_d2b",
+    }
     if (set(variants) != measured
             or any(not isinstance(variants[name], list)
                    or len(variants[name]) != 1

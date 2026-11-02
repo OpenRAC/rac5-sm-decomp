@@ -137,7 +137,9 @@ def generate_report(v: versions.Version) -> dict[str, object]:
 
     is_us = (v.key == "us")
     boot_total_code = 498900 if is_us else 499156
-    boot_matches = boot_trial_gate.accepted_matches()
+    # The private boot gate and all accepted source placements target SCUS.
+    # The PAL catalogue has no matching gate yet, so it cannot inherit them.
+    boot_matches = boot_trial_gate.accepted_matches() if is_us else []
     boot_matched_code = sum(m["body_bytes"] for m in boot_matches)
     body_bytes_by_module, unique_body_bytes, _unique_body_sources = (
         accepted_us_level_bodies(status) if is_us else ({}, 0, 0)
@@ -192,7 +194,7 @@ def generate_report(v: versions.Version) -> dict[str, object]:
         mod_items: list[tuple[int, float, bool]] = []
         mod_funcs: list[dict[str, object]] = []
 
-        if mod_name == "FRONTEND.REL":
+        if mod_name == "FRONTEND.REL" and is_us:
             fe_matched = 476
             mod_items.append((fe_matched, 100.0, True))
             mod_funcs.append({
@@ -201,7 +203,7 @@ def generate_report(v: versions.Version) -> dict[str, object]:
                 "fuzzy_match_percent": 100.0,
             })
             known_bytes = fe_matched
-        else:
+        elif mod_name != "FRONTEND.REL" and is_us:
             # Placed shared bodies
             f1_bytes = 48
             f2_bytes = 32
@@ -218,6 +220,8 @@ def generate_report(v: versions.Version) -> dict[str, object]:
                 "fuzzy_match_percent": 100.0,
             })
             known_bytes = f1_bytes + f2_bytes
+        else:
+            known_bytes = 0
 
         placed_bytes = body_bytes_by_module.get(mod_name, 0)
         if placed_bytes:
@@ -264,19 +268,18 @@ def generate_report(v: versions.Version) -> dict[str, object]:
 
     # Overall project measures: deduplicated across candidate interval scenario
     frontend_total = code_intervals.get("FRONTEND.REL", 162944)
-    frontend_matched = 476
+    frontend_matched = 476 if is_us else 0
     level_dedup_total = shape["masked_max_per_module_scenario_bytes"]  # 5,756,360
-    level_dedup_matched = 80 + unique_body_bytes if is_us else 80
+    level_dedup_matched = 80 + unique_body_bytes if is_us else 0
 
     dedup_total_code = boot_total_code + frontend_total + level_dedup_total
     dedup_matched_code = boot_matched_code + frontend_matched + level_dedup_matched
     overall_pct = 100.0 * dedup_matched_code / dedup_total_code if dedup_total_code else 0.0
 
-    # The optimistic byte denominator is not a reviewed function catalogue.
-    # Keep the PAL report unchanged; do not turn the US aggregate into a fake
-    # nearly-complete function percentage.
-    n_matched_functions = 0 if is_us else len(boot_matches) + 1 + 2
-    n_total_functions = 0 if is_us else n_matched_functions + len(units_list)
+    # Neither version has a reviewed function denominator. PAL has no accepted
+    # C placements at all until its own complete-program gates are qualified.
+    n_matched_functions = 0
+    n_total_functions = 0
 
     overall_m = {
         "fuzzy_match_percent": overall_pct,

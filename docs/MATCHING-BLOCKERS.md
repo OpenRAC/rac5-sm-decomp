@@ -214,6 +214,10 @@ the retail on the boot objects (0 divergence on its twin, 1–2 on the others, a
 selector; `ee-sdk` needs `-G0` for libm, and `sceKernelGetSystemTimeLow__Fv` is exact only under
 `Ps2EeAs`. `li.d`/`dli` is chosen by `cc1` (`mips.c:2377/2383`), not by the assembler — the
 earlier "assembler gap" diagnosis is superseded.
+On 2 November 2026, a fresh full-object recompilation found 19 more pinned
+`Ps2EeAs` hash variants: each differs by one or two bytes only in non-loadable
+`.mdebug`, while `.text` and relocations are identical. The profile now names
+both complete hashes for 25 measured objects; it does not normalize object bytes.
 
 ### Blocker 16
 
@@ -239,6 +243,10 @@ interval does not prove a complete function. A body is measured on its declared 
 that runs into the next function's entry is not a witness for those bytes. An alignment word
 that the retail keeps (`ALIGN(8)`, one zero word) is admitted by the verified-alignment rule and
 is not counted as body bytes. Distinct-sized bodies on the same bytes are distinct entries.
+Fourteen boot bodies promoted on 2 November 2026 end before their next code label;
+each has a normal return, no direct branch from its body into the remaining
+interval and no direct edge from outside into its interior. The later bytes
+stay in the assembly baseline and receive no C credit from that body.
 
 ## Closed walls
 
@@ -258,11 +266,12 @@ is not counted as body bytes. Distinct-sized bodies on the same bytes are distin
 
 ## What is left
 
-The level scope is **7,997 measured placements** of 384,676 placement bytes carried by **1,658
+The level scope is **15,632 measured placements** of 854,968 placement bytes carried by **8,884
 sources**, and the bounded candidates that no accepted body covers still number more than sixty
-thousand. The boot keeps **644 accepted functions** over 498,900 bytes of `.text` (91,232 bytes
-covered by accepted bodies). The profile files and their patches are the only place where a
-toolchain change is allowed to move a body.
+thousand. The boot keeps **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
+The 713 linked C bodies cover 93,032 bytes including alignment. The profile
+files and their patches are the only place where a toolchain change is allowed
+to move a body.
 
 ## Provenance
 

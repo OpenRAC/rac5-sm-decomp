@@ -1,8 +1,5 @@
-/* scee::Psp3Gu::LoadMatrix(m) - copy a 64-byte matrix into the live matrix slot
-   and mark the active slot dirty.  Retail takes the source matrix in $a0 and
-   reads the slot number from the gu state, so only one register argument is
-   consumed.
-   The copy is four 128-bit moves (lq/sq), i.e. the EE u_long128 unit. */
+/* Copy a matrix into the active slot and mark it dirty. The matrix is moved
+   as four scalar 128-bit values, matching the target's alignment and size. */
 typedef unsigned int u_long128 __attribute__((mode(TI)));
 
 typedef struct {
@@ -21,11 +18,9 @@ struct GuState {
 };
 extern struct GuState gu_state_01F77900; /* 0x01F77900 */
 
-void LoadMatrix__Q34scee3Psp3GumPC14ScePspFMatrix4(const ScePspFMatrix4 *m,
-                                                   unsigned int unused) {
+void LoadMatrix__Q34scee3Psp3GumPC14ScePspFMatrix4(const ScePspFMatrix4 *m) {
     u_long128 *destination = (u_long128 *)gu_state_01F77900.current_matrix;
     const u_long128 *source = (const u_long128 *)m;
-    (void)unused;
     destination[0] = source[0];
     destination[1] = source[1];
     destination[2] = source[2];

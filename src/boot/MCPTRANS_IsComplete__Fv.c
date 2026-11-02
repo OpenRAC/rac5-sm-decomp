@@ -1,4 +1,3 @@
-/* Candidate only: the full-program build and compiler profile are not qualified. */
 extern unsigned char transition_active;
 extern unsigned char completion_flag;
 extern int transition_state;
