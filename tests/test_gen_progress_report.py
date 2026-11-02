@@ -21,8 +21,8 @@ class GenProgressReportTests(unittest.TestCase):
         self.assertEqual(report["version"], 2)
         m = report["measures"]
         self.assertEqual(m["total_code"], "6418204")
-        self.assertEqual(m["matched_code"], "753852")
-        self.assertAlmostEqual(m["matched_code_percent"], 11.74553, places=4)
+        self.assertEqual(m["matched_code"], "764148")
+        self.assertAlmostEqual(m["matched_code_percent"], 11.90595, places=4)
         self.assertEqual(m["total_units"], 22)
         self.assertEqual((m["matched_functions"], m["total_functions"]), (0, 0))
 
@@ -31,8 +31,8 @@ class GenProgressReportTests(unittest.TestCase):
         by_module, unique_bytes, unique_sources = gen_progress_report.accepted_us_level_bodies(
             json.loads(gen_progress_report.STATUS.read_text(encoding="utf-8"))
         )
-        self.assertEqual(unique_bytes, 664348)
-        self.assertEqual(unique_sources, 13116)
+        self.assertEqual(unique_bytes, 674644)
+        self.assertEqual(unique_sources, 13233)
         level_01 = next(u for u in report["units"] if u["name"] == "levels/level01_pokitaru")
         self.assertEqual(int(level_01["measures"]["matched_code"]), 80 + by_module["LEVEL_01.REL"])
 

@@ -278,10 +278,11 @@ stay in the assembly baseline and receive no C credit from that body.
 | Medium local-record and call forms | Six typed C forms with local records, two calls, masked arguments, stride-indexed data and return-after-call behavior reproduce 500 distinct bodies at 556 USA placements. A separate 112-byte packed-argument body remains uncounted after three register-allocation variants (2 November 2026) |
 | Argument shifts, stored results and conditional state initialization | Three C forms reproduce 158 further bodies at 165 USA placements. The 44-byte and 72-byte forms use the pinned compiler; the 80-byte state initializer is exact under the already qualified `sdk991111` profile, while the pinned and `gnu-ee-trial` profiles use a different stack frame (2 November 2026) |
 | Timer records and floating-point clamps | A 56-byte indexed timer record with a 16.667 ms to frame conversion, and a 0.01f threshold followed by a zero clamp, reproduce 74 further bodies at 75 USA placements. Both use the pinned compiler and follow source forms already accepted at other level placements (2 November 2026) |
+| Frontend state, on-demand init and halfword reads | Three accepted C forms extend to 117 additional USA bodies at 123 placements. The state transition and indexed halfword read use the pinned compiler; the 64-byte initializer is exact under the existing `sdk991111sync` profile, which supplies its frame size and call scheduling (2 November 2026) |
 
 ## What is left
 
-The level scope is **20,231 measured placements** of 999,144 placement bytes carried by **13,116
+The level scope is **20,354 measured placements** of 1,009,968 placement bytes carried by **13,233
 sources**, and the bounded candidates that no accepted body covers still number more than sixty
 thousand. The boot keeps **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The 713 linked C bodies cover 93,032 bytes including alignment. The profile
