@@ -341,8 +341,8 @@ reproduced the same 21 exact module hashes as the sequential pass.
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**16,162 placements** in **9,384 sources**, **861,552 placement
-bytes**, **536,760 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**16,839 placements** in **9,884 sources**, **878,384 placement
+bytes**, **548,760 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.

@@ -15,11 +15,13 @@ PRIVATE_SUFFIXES = (
     ".dll", ".7z", ".zip", ".img", ".cnf", ".bik", ".vag",
     ".pss", ".o", ".a", ".map", ".log",
 )
-# A few evidence tables legitimately grow with the accepted body count. They
-# keep the same textual format and stay far below any binary risk; the strict
-# one-megabyte default remains for every other tracked file. The source table
-# gains about 130 KB per accepted-body batch; split it when the campaign ends.
-LARGE_TRACKED = {"config/levels/body_sources.tsv": 3_000_000}
+# The two accepted-body tables grow with proved sources and placements. Their
+# schema and contents are checked separately; all other tracked files retain
+# the strict one-megabyte default.
+LARGE_TRACKED = {
+    "config/levels/body_sources.tsv": 3_000_000,
+    "config/levels/bodies.tsv": 3_000_000,
+}
 
 
 def size_limit(name: str) -> int:
