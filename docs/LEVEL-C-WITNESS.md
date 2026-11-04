@@ -333,10 +333,11 @@ python3 tools/level_c_gate.py baserom/SCUS_976.15.iso \
 full pass. Keep it out of ordinary runs: a stale hash must fail, not be repaired
 silently.
 
-`--jobs N` links independently named body objects concurrently within each
-module; the default is one job, and the result is still checked in placement
-order against the complete module hash. A local comparison with four jobs
-reproduced the same 21 exact module hashes as the sequential pass.
+`--jobs N` compiles independently named body sources concurrently and links
+their objects concurrently within each module. The default is one job; compiled
+source and object hashes are still checked, and linked placements are still
+checked in order against the complete module hash. A local comparison with
+four jobs reproduced the same 21 exact module hashes as the sequential pass.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
