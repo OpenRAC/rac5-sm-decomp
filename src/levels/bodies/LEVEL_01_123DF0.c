@@ -1,12 +1,13 @@
 /* LEVEL_01.REL:0x123DF0 -- builds the 4x4 rotation about X. */
 typedef struct { float m[16]; } MATRIX;
 
-extern float func_000000(float);
+extern float sinf(float);
+extern float cosf(float);
 
 void func_123DF0(MATRIX *m, float a)
 {
-    float s = func_000000(a);
-    float c = func_000000(a);
+    float s = sinf(a);
+    float c = cosf(a);
 
     m->m[0] = 1.0f;
     m->m[1] = 0.0f;

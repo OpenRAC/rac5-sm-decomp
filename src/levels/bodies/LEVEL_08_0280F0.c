@@ -8,7 +8,7 @@ typedef struct {
 extern struct { H *p; } D_0023CB2C;
 extern int D_0023CB34;
 
-extern void func_000000(float a);
+extern void func_000000(float a) __asm__("SND_SetGlobalVolume__Ff");
 
 void func_0280F0(float v)
 {

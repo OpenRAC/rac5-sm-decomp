@@ -12,7 +12,7 @@ typedef struct {
 } Obj;
 
 extern void func_0D0380(void *a0, void *a1, int a2);
-extern int func_000000(void);
+extern int rand(void);
 
 void func_13EA10(Obj *a0, char *a1, int a2, V *a3)
 {
@@ -37,5 +37,5 @@ void func_13EA10(Obj *a0, char *a1, int a2, V *a3)
     b[1] = n[1];
     b[2] = n[2];
     for (i = 0; i < 2; i++)
-        a0->r[i] = (float)func_000000() * 4.6566123e-10f;
+        a0->r[i] = (float)rand() * 4.6566123e-10f;
 }

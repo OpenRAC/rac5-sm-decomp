@@ -8,11 +8,11 @@
    meme pointeur que le second. */
 
 extern char D_001CDB60[];
-extern int func_000000(void *a0, void *a1, void *a2);
+extern int sscanf(const char *, const char *, ...);
 
 int func_0F7970(void *a0, float *a1, float v0, float v1)
 {
-    if (func_000000(a0, D_001CDB60, a1) != 1) {
+    if (sscanf(a0, D_001CDB60, a1) != 1) {
         return 0;
     }
     if (a1[0] < v0) {

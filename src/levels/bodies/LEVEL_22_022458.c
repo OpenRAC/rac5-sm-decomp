@@ -8,7 +8,7 @@ typedef struct {
 
 extern Obj *D_15332C;
 extern int D_153334;
-extern void func_000000(float v);
+extern void func_000000(float v) __asm__("SND_SetGlobalVolume__Ff");
 
 void func_022458(float scale)
 {

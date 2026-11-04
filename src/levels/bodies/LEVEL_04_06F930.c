@@ -9,7 +9,7 @@ extern Rec D_00253A78;
 extern float D_00253A88;
 extern float D_00253A8C;
 
-extern float func_000000(float a0, float a1);
+extern float powf(float a0, float a1);
 
 void func_06F930(void *a0, int a1)
 {
@@ -21,8 +21,8 @@ void func_06F930(void *a0, int a1)
             D_00253A78.f_04 = 0;
             D_00253A78.f_08 = 0;
             D_00253A78.f_0C = 1.0f;
-            *p = func_000000(0.98f, 1.0f);
-            *q = func_000000(0.98f, 1.0f);
+            *p = powf(0.98f, 1.0f);
+            *q = powf(0.98f, 1.0f);
         }
     }
 }

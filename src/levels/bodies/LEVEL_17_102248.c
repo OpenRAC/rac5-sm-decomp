@@ -7,13 +7,13 @@ typedef struct {
     float f_0C;
 } Vec;
 
-int func_18A428(float x);
-int func_000000(int a0);
-int func_18A138(int a0);
+extern double func_18A428(float value);
+extern double sqrt(double value);
+extern void func_18A138(double value);
 
 void func_102248(Vec *a0)
 {
-    func_18A138(func_000000(func_18A428(
+    func_18A138(sqrt(func_18A428(
         a0->f_0C * a0->f_0C + a0->f_00 * a0->f_00 +
         a0->f_04 * a0->f_04 + a0->f_08 * a0->f_08)));
 }

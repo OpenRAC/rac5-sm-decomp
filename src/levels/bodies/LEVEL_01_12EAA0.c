@@ -5,7 +5,7 @@ typedef struct {
     int f20;
 } Rec;
 
-int func_000000(char *a0, Rec *a1);
+extern int rand(void);
 
 void func_12EAA0(char *a0, Rec *a1, signed char a2)
 {
@@ -13,7 +13,7 @@ void func_12EAA0(char *a0, Rec *a1, signed char a2)
     int r;
 
     a1->f00 = 2.0000398f;
-    r = func_000000(a0, a1);
+    r = rand();
     a1->f20 = a2;
     a1->f1C = (float)r * 4.656612873077393e-10f * k;
 }

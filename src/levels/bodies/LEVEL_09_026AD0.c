@@ -9,7 +9,7 @@ typedef struct {
 
 extern Node *D_1DDDAC;
 extern int D_1DDDB4;
-extern void func_000000(float);
+extern void func_000000(float) __asm__("SND_SetGlobalVolume__Ff");
 
 void func_026AD0(float a0)
 {

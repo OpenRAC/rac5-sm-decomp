@@ -370,27 +370,32 @@ record layout has not been independently confirmed.
 
 ## Named import calls in accepted level bodies (4 November 2026)
 
-An audit of the previously accepted 15,873 body sources and 23,146 placements
-compared each compiled `R_MIPS_26` call relocation with the retail SNR2
-import name at that same site. It found **592 naming differences** in 496
-placements and 246 sources. All affected linked bodies remain byte-exact;
-several retail imports have address zero before loading, so equal call words
-alone cannot establish the C callee's identity. These source names require
-correction, not automatic revocation of byte-match evidence.
+An audit of the earlier accepted corpus found **592 wrong C import names**
+at named `R_MIPS_26` call sites in 496 placements and 246 sources. The
+linked bodies were byte-exact because several different SNR2 imports have
+address zero before loading; equal call words alone do not identify the
+callee. This was a source-naming problem, not evidence that the linked
+retail bytes differed.
 
-Of the 246 sources, 186 call only one retail import and are candidates for a
-measured one-to-one rename. One 28-byte source is shared across 146 placements
-whose retail call names span seven different imports; it needs separate C
-sources by import. The other 59 sources need call-site attribution and
-prototype review. Every correction must preserve the exact linked body at
-each affected placement and pass the complete-module gate. The newly
-integrated 127 placements were audited separately: their 419 named imported
-calls retain the retail names. The historical audit and migration plan are
-kept privately; this document records the verified scope and remedy.
+The 246 existing C sources now use the retail import names. One shared
+28-byte wrapper had served 146 placements spanning seven different imports;
+it was split into seven named C sources and 125 placement paths were
+reassigned. All **496/496** affected placements remain byte-exact after
+relinking. The strict level gate now checks every named imported call of
+accepted C, including the shared-level and frontend witnesses. Its normal
+complete-module run reports **2,779 body import sites + 24 witness sites,
+zero mismatches and 21/21 complete modules exact**.
+
+The split adds six authored source definitions and **168 bytes to the
+source-counted unique C total**, while adding no new covered retail bytes or
+placements. This small accounting increase is disclosed in the ByteMatch
+estimate; it is not new decompilation coverage. The historical audit and
+full per-site proof remain private, with names, counts and limits recorded
+here for contributors.
 
 ## What is left
 
-The level scope is **23,354 measured placements** of 1,436,868 placement bytes carried by **16,073
+The level scope is **23,354 measured placements** of 1,436,868 placement bytes carried by **16,079
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The 713 linked C bodies cover 93,032 bytes including alignment. The profile

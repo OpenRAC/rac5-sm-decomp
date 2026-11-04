@@ -9,7 +9,7 @@ typedef struct {
 extern Rec D_2F0A50;
 extern float D_2F0A60;
 
-extern float func_000000(float value);
+extern float expf(float value);
 
 void func_113F08(Rec *a0, int a1)
 {
@@ -22,7 +22,7 @@ void func_113F08(Rec *a0, int a1)
             D_2F0A50.i_08 = 0;
             D_2F0A50.i_04 = 0;
             pf = &D_2F0A60;
-            *pf = func_000000(-0.5f);
+            *pf = expf(-0.5f);
         }
     }
 }

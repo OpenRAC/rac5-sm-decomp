@@ -6,7 +6,7 @@ typedef struct {
     float f08;
 } Obj;
 
-extern int func_000000(void);
+extern int rand(void);
 
 float func_1BC6C8(void *a0)
 {
@@ -14,5 +14,5 @@ float func_1BC6C8(void *a0)
     float a = o->f04;
     float d = o->f08 - a;
 
-    return a + d * ((float)func_000000() * 4.6566129e-10f);
+    return a + d * ((float)rand() * 4.6566129e-10f);
 }

@@ -1,8 +1,8 @@
 /* LEVEL_22:0x0FC528 -- sums the squares of four floats of the record and
    pushes the result through three chained helpers. */
-extern void *func_14A6F8(float);
-extern void *func_000000(void *);
-extern void *func_14A408(void *);
+extern double func_14A6F8(float value);
+extern double sqrt(double value);
+extern void func_14A408(double value);
 
 void func_0FC528(void *a0)
 {
@@ -10,7 +10,7 @@ void func_0FC528(void *a0)
     float b = *(float *)((char *)a0 + 0x00);
     float c = *(float *)((char *)a0 + 0x04);
     float d = *(float *)((char *)a0 + 0x08);
-    void *r;
+    double r;
 
     a = a * a;
     b = b * b;
@@ -20,6 +20,6 @@ void func_0FC528(void *a0)
     a = a + c;
     a = a + d;
     r = func_14A6F8(a);
-    r = func_000000(r);
-    r = func_14A408(r);
+    r = sqrt(r);
+    func_14A408(r);
 }
