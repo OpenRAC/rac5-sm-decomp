@@ -287,6 +287,7 @@ stay in the assembly baseline and receive no C credit from that body.
 | Additional exact C forms | Existing typed forms extend to 629 more USA bodies at 675 placements. Each source's undefined symbols were checked against every target module before the complete gate; 46 extra placements share a byte-identical body and earn unique-source credit once (4 November 2026) |
 | Remaining known C forms | Previously accepted typed forms extend to 877 further USA bodies at 939 placements. All 62 extra placements of shared bodies are exact independently, and every new object resolves against its target modules before the complete gate (4 November 2026) |
 | Record initialization with `powf` | A new 472-byte C form reproduces 50 USA bodies at 51 placements. Keep the 16-byte head and the 64-byte record as separately named globals, and retain a pointer to the record across both `powf` calls; this reproduces the retail register lifetime and save order under `gnu-ee-trial`. The per-level colors and float constants are measured separately (4 November 2026) |
+| More record-initialization forms with `powf` | Four typed C forms of 308, 420, 436 and 464 bytes reproduce 55 further USA bodies at 55 placements (22,712 distinct-source bytes) under `gnu-ee-trial`. Each form uses a separately named head and record, initializes a local record and copies it after two `powf` calls. Within each structurally identical group, the varying head, record and optional data addresses were extracted per module; every linked placement and all 21 complete modules were checked (4 November 2026) |
 | Additional known C forms | Four previously accepted forms extend to 54 further USA bodies at 55 placements. Address-named and file-scope symbol aliases are retained only where the compiler produces the exact body and every target module resolves them (4 November 2026) |
 
 ## Retained level C attempts (4 November 2026)
@@ -300,6 +301,8 @@ been claimed.
 | Source and candidate extent | Profile and linked result | Next useful check |
 | --- | --- | --- |
 | [`0x01A398`](../nonmatching/levels/LEVEL_01_01A398.c), 244 bytes | Pinned GNU EE: 236 bytes; first difference at body byte 6. Both direct global indexing and local pointer spelling had this mismatch. | Review the global access and copy structure, including whether scalar float stores express the candidate body. |
+| [`0x033E58`](../nonmatching/levels/LEVEL_01_033E58.c), 536 bytes | `gnu-ee-trial-divpad`: 544 bytes; first difference at body byte 16 with a byte field at record offset `0x49`. Without that field assignment, the C linked 536 bytes and first differed at byte 332, where the candidate writes that byte before copying the record. | Reconcile the byte field with the register allocation and record-copy layout; review the decompiler's discarded control flow before promoting any placement. |
+| [`0x0532F8`](../nonmatching/levels/LEVEL_01_0532F8.c), 428 bytes | `gnu-ee-trial`: 428 bytes; first difference at body byte 48 in scheduling the head stores around `memset`. The retained head-field order reduces differing words from 15 to 13, but none of 24 equivalent orders matched. Aggregate initialization, local head pointer, call naming and prototype variants also remained different. | Change the source-level call-shape or qualified compiler hypothesis; another store-order permutation adds no evidence. |
 | [`0x0C0EB8`](../nonmatching/levels/LEVEL_01_0C0EB8.c), 148 bytes | Pinned GNU EE: 172 bytes; first difference at body byte 4. Three control-flow variants remained different. | Revisit nested search control flow, field widths and the candidate boundary before another compiler variant. |
 | [`0x11E790`](../nonmatching/levels/LEVEL_01_11E790.c), 536 bytes | `gnu-ee-trial-divpad`: 532 bytes; first difference at body byte 0. Pinned and local-array variants also differed. | Check local record layout, stack frame and parameter ABI before changing arithmetic spelling. |
 | [`0x1255B0`](../nonmatching/levels/LEVEL_01_1255B0.c), 544 bytes | Pinned GNU EE: 544 bytes; first difference at body byte 32. Equal length is not a match. | Review floating-point temporary lifetimes and save order against caller and callee evidence. |
@@ -307,7 +310,7 @@ been claimed.
 
 ## What is left
 
-The level scope is **23,091 measured placements** of 1,302,592 placement bytes carried by **15,818
+The level scope is **23,146 measured placements** of 1,325,304 placement bytes carried by **15,873
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The 713 linked C bodies cover 93,032 bytes including alignment. The profile
