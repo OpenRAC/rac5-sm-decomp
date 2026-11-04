@@ -1,0 +1,40 @@
+typedef struct {
+    float f[6];
+    int id;
+} Elem;
+
+typedef struct {
+    char pad[0xDC];
+    char *fDC;
+} Sub;
+
+typedef struct {
+    char pad[0x48];
+    Sub *f48;
+} Mid;
+
+typedef struct {
+    void *f0;
+    char pad[8];
+    char *fC;
+} Head;
+
+extern Elem D_00225DB0[1];
+extern int D_001E5444;
+extern char D_00074238[1];
+
+extern void func_075B80(void *a0, char *a1);
+
+void func_074090(Head *a0)
+{
+    func_075B80(a0->f0, &D_00074238);
+    if (((Mid *)a0->f0)->f48->fDC == &D_00074238) {
+        ((Mid *)a0->f0)->f48->fDC = a0->fC;
+    }
+    if (--D_001E5444) {
+        Elem *e = &D_00225DB0[D_001E5444];
+        if ((void *)a0 != (void *)e) {
+            *(Elem *)a0 = *e;
+        }
+    }
+}
