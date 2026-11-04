@@ -1,0 +1,17 @@
+struct Shorts {
+    short f00;
+    short p02;
+    short f04;
+    short p06;
+    short f08;
+    short p0A;
+    short f0C;
+};
+
+extern void func_0AB708(void *, short, short, short, short, int);
+
+void func_0AB820(void *first, struct Shorts *object, int extra)
+{
+    func_0AB708(first, object->f00, object->f04, object->f08, object->f0C,
+                extra);
+}
