@@ -18,8 +18,9 @@ Thanks for helping. The rules live in [`AGENTS.md`](AGENTS.md) and
    editable blocker register.
 3. **Match.** Once the applicable compiler, program format and function
    boundary are qualified, write matching C or C++ in `src/`, with one
-   definition per function. Put an unaccepted but useful body in
-   `nonmatching/` and explain its remaining differences.
+   definition per function. Before parking a function, commit its best useful,
+   publishable C/C++ body in `nonmatching/` and explain its measured difference
+   and reopening condition. A scratch-only copy is not the shared record.
 4. **Check.** Run `python -m unittest discover -s tests -v`,
    `python tools/check_repository.py` and `python tools/progress_status.py --check`.
    Regenerate metadata and progress with the relevant tool; never hand-edit

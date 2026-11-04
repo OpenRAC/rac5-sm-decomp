@@ -289,6 +289,22 @@ stay in the assembly baseline and receive no C credit from that body.
 | Record initialization with `powf` | A new 472-byte C form reproduces 50 USA bodies at 51 placements. Keep the 16-byte head and the 64-byte record as separately named globals, and retain a pointer to the record across both `powf` calls; this reproduces the retail register lifetime and save order under `gnu-ee-trial`. The per-level colors and float constants are measured separately (4 November 2026) |
 | Additional known C forms | Four previously accepted forms extend to 54 further USA bodies at 55 placements. Address-named and file-scope symbol aliases are retained only where the compiler produces the exact body and every target module resolves them (4 November 2026) |
 
+## Retained level C attempts (4 November 2026)
+
+These USA `LEVEL_01.REL` sources are useful hypotheses, retained in
+`nonmatching/levels/` without C credit. Each result is from an isolated linked
+comparison against the stated candidate extent. The complete-module gate has
+not accepted any of them, and equivalent placements in other levels have not
+been claimed.
+
+| Source and candidate extent | Profile and linked result | Next useful check |
+| --- | --- | --- |
+| [`0x01A398`](../nonmatching/levels/LEVEL_01_01A398.c), 244 bytes | Pinned GNU EE: 236 bytes; first difference at body byte 6. Both direct global indexing and local pointer spelling had this mismatch. | Review the global access and copy structure, including whether scalar float stores express the candidate body. |
+| [`0x0C0EB8`](../nonmatching/levels/LEVEL_01_0C0EB8.c), 148 bytes | Pinned GNU EE: 172 bytes; first difference at body byte 4. Three control-flow variants remained different. | Revisit nested search control flow, field widths and the candidate boundary before another compiler variant. |
+| [`0x11E790`](../nonmatching/levels/LEVEL_01_11E790.c), 536 bytes | `gnu-ee-trial-divpad`: 532 bytes; first difference at body byte 0. Pinned and local-array variants also differed. | Check local record layout, stack frame and parameter ABI before changing arithmetic spelling. |
+| [`0x1255B0`](../nonmatching/levels/LEVEL_01_1255B0.c), 544 bytes | Pinned GNU EE: 544 bytes; first difference at body byte 32. Equal length is not a match. | Review floating-point temporary lifetimes and save order against caller and callee evidence. |
+| [`0x19BFF0`](../nonmatching/levels/LEVEL_01_19BFF0.c), 520 bytes | Pinned GNU EE: 476 bytes; first difference at body byte 4. A decompiler also flagged an unreachable block. | Confirm the full boundary and original control flow; resolve the random factor's semantics before relying on this source. |
+
 ## What is left
 
 The level scope is **23,091 measured placements** of 1,302,592 placement bytes carried by **15,818
