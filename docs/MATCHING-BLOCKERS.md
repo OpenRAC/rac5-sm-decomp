@@ -345,6 +345,28 @@ excluded from its C size.
 | [`0x01F9A0`](../nonmatching/levels/FRONTEND_01F9A0.c), 984 bytes | Pinned GNU EE links 968 bytes, first difference at byte 12. | Recover the parameter and local-variable live ranges. |
 | [`0x024A70`](../nonmatching/levels/FRONTEND_024A70.c), 816 bytes | `sdk991111` links 760 bytes, first difference at byte 8; its frame agrees more closely than GNU's but the body is incomplete. | Reconstruct the packed node traversal and saved-value lifetimes. |
 
+## Further level C attempts (4 November 2026)
+
+These `LEVEL_01.REL` sources are retained hypotheses with **no C credit**.
+Each measurement below is a linked comparison of the representative body
+only. Structurally related level placements have not been accepted or
+credited. Source types and field roles remain provisional where a callee or
+record layout has not been independently confirmed.
+
+| Source and candidate extent | Measured result | Reopening condition |
+| --- | --- | --- |
+| [`0x006300`](../nonmatching/levels/LEVEL_01_006300.c), 1,172 bytes | `gnu-ee-trial-divpad` links 1,184 bytes, first difference at body byte 6; nine call targets remain in order. | Recover the global-address register choice and the missing source shape around the third square root. |
+| [`0x00C860`](../nonmatching/levels/LEVEL_01_00C860.c), 1,084 bytes | Pinned GNU EE links 1,052 bytes, first difference at byte 0; five calls retain their targets. | Revisit contiguous vector layout and persistent loop values before changing profiles. |
+| [`0x040F28`](../nonmatching/levels/LEVEL_01_040F28.c), 592 bytes | `gnu-ee-trial` links 592 bytes, first difference at byte 184 in scalar load/register scheduling; fourteen call targets stay in order. | Recover floating-point temporary lifetimes and the callback's source form. |
+| [`0x0537E0`](../nonmatching/levels/LEVEL_01_0537E0.c), 1,032 bytes | `gnu-ee-trial` links 1,028 bytes, first difference at byte 32. | Revisit floating-point save order and lifetime of the initial pointer. |
+| [`0x0694A0`](../nonmatching/levels/LEVEL_01_0694A0.c), 992 bytes | `gnu-ee-trial-divpad` links 996 bytes, first difference at byte 28; six calls keep their order. | Find the source ordering that removes the four surplus code bytes while preserving the measured frame. |
+| [`0x069BA0`](../nonmatching/levels/LEVEL_01_069BA0.c), 1,060 bytes | `gnu-ee-trial` links 968 bytes; first raw difference at byte 24 in a branch displacement, first other difference at byte 64 in FP register allocation. | Review the three-state interpolation record and local float lifetimes. |
+| [`0x0B6218`](../nonmatching/levels/LEVEL_01_0B6218.c), 1,156 bytes | `gnu-ee-trial-divpad` links 1,176 bytes, first difference at byte 64 in a branch displacement; the prologue before it is exact. | Review threshold selection and its floating-point live ranges. |
+| [`0x0DD328`](../nonmatching/levels/LEVEL_01_0DD328.c), 460 bytes | `gnu-ee-trial-divpad` links 460 bytes, first difference at byte 41 in allocation of call-argument registers. The six calls match in count. | Recover the live ranges around the allocation helper before expanding the 31 structural candidates. |
+| [`0x112B28`](../nonmatching/levels/LEVEL_01_112B28.c), 1,068 bytes | `gnu-ee-trial-divpad` links 1,052 bytes, first difference at byte 108 in the first square root's FP destination register. | Recover five local FP slots and fallback branches before testing siblings. |
+| [`0x1210A0`](../nonmatching/levels/LEVEL_01_1210A0.c), 1,084 bytes | `gnu-ee-trial-divpad` links 1,100 bytes, first difference at byte 60 in floating-point load order. | Review vector products, small-norm fallback and the extra frame words. |
+| [`0x129968`](../nonmatching/levels/LEVEL_01_129968.c), 1,056 bytes | Pinned GNU EE links 1,044 bytes; first difference at byte 76 is a branch displacement after an exact prologue. | Recover error-path lengths and allocation lifetime while keeping the observed calls. |
+
 ## Named import calls in accepted level bodies (4 November 2026)
 
 An audit of the previously accepted 15,873 body sources and 23,146 placements
