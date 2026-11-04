@@ -321,6 +321,30 @@ not been claimed.
 | [`0x1255B0`](../nonmatching/levels/LEVEL_01_1255B0.c), 544 bytes | Pinned GNU EE: 544 bytes; first difference at body byte 32. Equal length is not a match. | Review floating-point temporary lifetimes and save order against caller and callee evidence. |
 | [`0x19BFF0`](../nonmatching/levels/LEVEL_01_19BFF0.c), 520 bytes | Pinned GNU EE: 476 bytes; first difference at body byte 4. A decompiler also flagged an unreachable block. | Confirm the full boundary and original control flow; resolve the random factor's semantics before relying on this source. |
 
+## Further frontend C attempts (4 November 2026)
+
+The sources below preserve useful C hypotheses without match credit. Each
+number is an isolated linked comparison of the USA `FRONTEND.REL`
+representative. Other modules may share a structural shape, but each
+placement still needs its own boundary, source-identity and complete-module
+checks before promotion. A zero alignment word after a reviewed body is
+excluded from its C size.
+
+| Source and candidate extent | Measured result | Reopening condition |
+| --- | --- | --- |
+| [`0x006850`](../nonmatching/levels/FRONTEND_006850.c), 788 bytes | `sdk991111sync` links 784 bytes, first difference at byte 0; it supplies the required synchronization but its stack frame differs. | Find a qualified C compiler route that emits both the synchronization and the retail prologue. |
+| [`0x006B68`](../nonmatching/levels/FRONTEND_006B68.c), 768 bytes | `sdk991111sync` links 712 bytes, first difference at byte 0. Separate qualified routes reproduce the quadword save/restore or the synchronization, not both. | Establish a combined compiler profile with controls for both effects, then remeasure. |
+| [`0x0098C0`](../nonmatching/levels/FRONTEND_0098C0.c), 1,124 bytes | Pinned GNU EE links 1,108 bytes, first difference at byte 14. | Recover parameter live ranges and the 16-byte tag initialization. |
+| [`0x009D28`](../nonmatching/levels/FRONTEND_009D28.c), 1,064 bytes | Pinned GNU EE links 1,072 bytes, first difference at byte 28 in allocation of the alpha indicator. | Review the indicator's type and lifetime before trying another profile. |
+| [`0x00D298`](../nonmatching/levels/FRONTEND_00D298.c), 896 bytes | `gnu-ee-trial` links 872 bytes, first difference at byte 0; six call targets remain in order. | Recover the missing saved-register and branch structure. |
+| [`0x00D948`](../nonmatching/levels/FRONTEND_00D948.c), 744 bytes | `gnu-ee-trial-divpad` links 728 bytes, first difference at byte 16. | Resolve color-state register lifetime and glyph-unpacking schedule. |
+| [`0x00FC88`](../nonmatching/levels/FRONTEND_00FC88.c), 732 bytes | `gnu-ee-trial` links 736 bytes, first difference at byte 8. | Recover lifetimes of the module base, flags pointer and checksum. |
+| [`0x011AD8`](../nonmatching/levels/FRONTEND_011AD8.c), 744 bytes | `sdk991111sq` links 760 bytes, first difference at byte 0; its stack frame and final tail calls differ. | Find a measured source/profile that retains the retail quadword frame and call endings. |
+| [`0x0149D0`](../nonmatching/levels/FRONTEND_0149D0.c), 1,084 bytes | Pinned GNU EE links 1,064 bytes, first difference at byte 4; eleven calls retain their order but three branches are missing. | Recover the omitted control-flow paths and live ranges. |
+| [`0x016CD8`](../nonmatching/levels/FRONTEND_016CD8.c), 1,012 bytes | Pinned GNU EE links 1,012 bytes, first difference at byte 470; the remaining register allocation differs despite equal length. | Recover the C expression and temporary lifetime that select the retail general registers. |
+| [`0x01F9A0`](../nonmatching/levels/FRONTEND_01F9A0.c), 984 bytes | Pinned GNU EE links 968 bytes, first difference at byte 12. | Recover the parameter and local-variable live ranges. |
+| [`0x024A70`](../nonmatching/levels/FRONTEND_024A70.c), 816 bytes | `sdk991111` links 760 bytes, first difference at byte 8; its frame agrees more closely than GNU's but the body is incomplete. | Reconstruct the packed node traversal and saved-value lifetimes. |
+
 ## Named import calls in accepted level bodies (4 November 2026)
 
 An audit of the previously accepted 15,873 body sources and 23,146 placements
