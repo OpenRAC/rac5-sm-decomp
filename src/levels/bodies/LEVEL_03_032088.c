@@ -1,8 +1,3 @@
-/* USA LEVEL_01.REL:0x033E58. Retained C hypothesis, not a match.
- * The gnu-ee-trial-divpad profile links 544 bytes against a 536-byte
- * candidate body, first differing at body byte 16. An earlier version
- * omitted tag49 and linked 536 bytes with its first difference at byte 332.
- * See docs/MATCHING-BLOCKERS.md. */
 typedef struct {
     unsigned int color0;
     unsigned int color1;
@@ -34,20 +29,20 @@ typedef struct {
     float d;
 } Head;
 
-extern Head D_00233080;
-extern Record D_00233090;
+extern Head D_0024DF00;
+extern Record D_0024DF10;
 extern void *memset(void *dst, int value, unsigned int size);
 extern float powf(float value, float exponent);
 
-void func_033E58(void *object, int mode) {
+void func_032088(void *object, int mode) {
     Record local;
 
     if (mode == 0xFFFF && object != 0) {
-        Record *destination = &D_00233090;
-        D_00233080.a = 0;
-        D_00233080.b = 0;
-        D_00233080.c = 0;
-        D_00233080.d = 1.0f;
+        Record *destination = &D_0024DF10;
+        D_0024DF00.a = 0;
+        D_0024DF00.b = 0;
+        D_0024DF00.c = 0;
+        D_0024DF00.d = 1.0f;
         memset(&local, 0, sizeof local);
         local.color0 = 0x80353231u;
         local.color1 = 0x808A817Cu;

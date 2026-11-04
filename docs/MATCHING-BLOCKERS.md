@@ -288,6 +288,9 @@ stay in the assembly baseline and receive no C credit from that body.
 | Remaining known C forms | Previously accepted typed forms extend to 877 further USA bodies at 939 placements. All 62 extra placements of shared bodies are exact independently, and every new object resolves against its target modules before the complete gate (4 November 2026) |
 | Record initialization with `powf` | A new 472-byte C form reproduces 50 USA bodies at 51 placements. Keep the 16-byte head and the 64-byte record as separately named globals, and retain a pointer to the record across both `powf` calls; this reproduces the retail register lifetime and save order under `gnu-ee-trial`. The per-level colors and float constants are measured separately (4 November 2026) |
 | More record-initialization forms with `powf` | Four typed C forms of 308, 420, 436 and 464 bytes reproduce 55 further USA bodies at 55 placements (22,712 distinct-source bytes) under `gnu-ee-trial`. Each form uses a separately named head and record, initializes a local record and copies it after two `powf` calls. Within each structurally identical group, the varying head, record and optional data addresses were extracted per module; every linked placement and all 21 complete modules were checked (4 November 2026) |
+| Block-move loop count and larger record initializers | A source-specific `gnu-ee-trial-divpad-blockmove` compiler profile fixes an RTL short-loop count that inserted two unnecessary `nop` words in 32-byte aggregate copies. It reproduces 41 further USA C bodies on 42 placements (22,020 distinct-source bytes): the earlier 536-byte near miss at `LEVEL_01:0x033E58`, its 540-byte sibling family, and four 528/532-byte bodies. The old 536-byte C linked at 544 bytes with its first difference at byte 16 under the base divpad profile; with the measured patch it links exactly. The original compiler remains pinned, 140 prior divpad objects retain their hashes, and two complete 21-module gates pass (4 November 2026) |
+| Additional named record forms | Existing `gnu-ee-trial` compiles 44 further C sources at 45 USA placements (14,016 distinct-source bytes), including 252- and 268-byte records. Initial zero-address call placeholders were corrected to the retail `memset`, `cosf` and `sinf` import names before promotion; all 127 new placements passed an import-identity audit and both complete-module gates (4 November 2026) |
+| UI initialization families | Two related 1,120- and 924-byte C forms reproduce 38 further sources at 40 USA placements (38,836 distinct-source bytes) under `gnu-ee-trial-divpad`. A common callee's return type is `int`, supported by both retail return paths; correcting the 1,120-byte declarations preserves every exact object. LEVEL_15/21 share one source per form, each linked independently. Return/delay slots and following zero alignment words were reviewed separately (4 November 2026) |
 | Additional known C forms | Four previously accepted forms extend to 54 further USA bodies at 55 placements. Address-named and file-scope symbol aliases are retained only where the compiler produces the exact body and every target module resolves them (4 November 2026) |
 
 ## Retained module C attempts (4 November 2026)
@@ -304,7 +307,6 @@ not been claimed.
 | [`FRONTEND.REL:0x00DD40`](../nonmatching/levels/FRONTEND_00DD40.c), 1,896 bytes | Pinned GNU EE: 1,800 bytes; first difference at body byte 260, initially a branch displacement; first different code shape at byte 308. | Reconstruct text-wrap control flow and local variable lifetimes; confirm other module boundaries separately. |
 | [`FRONTEND.REL:0x016200`](../nonmatching/levels/FRONTEND_016200.c), 1,924 bytes | `gnu-ee-trial-divpad`: 1,736 bytes; first difference at body byte 92. The C retains the order of 74 call targets but only 18 of the reference's 21 branches. A separate zero alignment word follows each reviewed body and earns no C credit. | Recover the missing control-flow paths and floating-point live ranges; verify every placement before promotion. |
 | [`0x01A398`](../nonmatching/levels/LEVEL_01_01A398.c), 244 bytes | Pinned GNU EE: 236 bytes; first difference at body byte 6. Both direct global indexing and local pointer spelling had this mismatch. | Review the global access and copy structure, including whether scalar float stores express the candidate body. |
-| [`0x033E58`](../nonmatching/levels/LEVEL_01_033E58.c), 536 bytes | `gnu-ee-trial-divpad`: 544 bytes; first difference at body byte 16 with a byte field at record offset `0x49`. Without that field assignment, the C linked 536 bytes and first differed at byte 332, where the candidate writes that byte before copying the record. | Reconcile the byte field with the register allocation and record-copy layout; review the decompiler's discarded control flow before promoting any placement. |
 | [`0x0340B8`](../nonmatching/levels/LEVEL_01_0340B8.c), 1,192 bytes | Pinned GNU EE: 1,084 bytes; first difference at body byte 0. The candidate and reference have eight calls, but their stack frames and mask tests differ. | Reconstruct temporary groups and mask/control flow, then recheck the candidate bound and source identity. |
 | [`0x0532F8`](../nonmatching/levels/LEVEL_01_0532F8.c), 428 bytes | `gnu-ee-trial`: 428 bytes; first difference at body byte 48 in scheduling the head stores around `memset`. The retained head-field order reduces differing words from 15 to 13, but none of 24 equivalent orders matched. Aggregate initialization, local head pointer, call naming and prototype variants also remained different. | Change the source-level call-shape or qualified compiler hypothesis; another store-order permutation adds no evidence. |
 | [`0x0876B8`](../nonmatching/levels/LEVEL_01_0876B8.c), 1,840 bytes | Pinned GNU EE: 1,836 bytes; first difference at body byte 0. The source retains the pad API calls and 68-byte copy, but saves an extra register and uses a 64-byte rather than 48-byte stack frame. | Review the lifetime of the pad-mode return value and related register allocation; verify other family members only after this body matches. |
@@ -319,9 +321,29 @@ not been claimed.
 | [`0x1255B0`](../nonmatching/levels/LEVEL_01_1255B0.c), 544 bytes | Pinned GNU EE: 544 bytes; first difference at body byte 32. Equal length is not a match. | Review floating-point temporary lifetimes and save order against caller and callee evidence. |
 | [`0x19BFF0`](../nonmatching/levels/LEVEL_01_19BFF0.c), 520 bytes | Pinned GNU EE: 476 bytes; first difference at body byte 4. A decompiler also flagged an unreachable block. | Confirm the full boundary and original control flow; resolve the random factor's semantics before relying on this source. |
 
+## Named import calls in accepted level bodies (4 November 2026)
+
+An audit of the previously accepted 15,873 body sources and 23,146 placements
+compared each compiled `R_MIPS_26` call relocation with the retail SNR2
+import name at that same site. It found **592 naming differences** in 496
+placements and 246 sources. All affected linked bodies remain byte-exact;
+several retail imports have address zero before loading, so equal call words
+alone cannot establish the C callee's identity. These source names require
+correction, not automatic revocation of byte-match evidence.
+
+Of the 246 sources, 186 call only one retail import and are candidates for a
+measured one-to-one rename. One 28-byte source is shared across 146 placements
+whose retail call names span seven different imports; it needs separate C
+sources by import. The other 59 sources need call-site attribution and
+prototype review. Every correction must preserve the exact linked body at
+each affected placement and pass the complete-module gate. The newly
+integrated 127 placements were audited separately: their 419 named imported
+calls retain the retail names. The historical audit and migration plan are
+kept privately; this document records the verified scope and remedy.
+
 ## What is left
 
-The level scope is **23,146 measured placements** of 1,325,304 placement bytes carried by **15,873
+The level scope is **23,273 measured placements** of 1,403,024 placement bytes carried by **15,996
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The 713 linked C bodies cover 93,032 bytes including alignment. The profile

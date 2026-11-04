@@ -1,0 +1,38 @@
+--- a/gcc/config/mips/mips.c
++++ b/gcc/config/mips/mips.c
+@@ -9014,11 +9014,33 @@ mips_r5900_pad_loops (first)
+       if (code == INSN)
+ 	{
+ 	  enum rtx_code pat = GET_CODE (PATTERN (insn));
+ 
+ 	  if (pat == USE || pat == CLOBBER)
+ 	    continue;
+-	  /* Use the MD word count for a division-guard expansion. */
+-	  n += pat == TRAP_IF ? get_attr_length (insn) : 1;
++	  /* A 32-byte block move is one RTL insn but emits several words.
++	     Count its minimum emitted length before judging a backward branch.
++	     The final store lives in movstrsi_internal3 and is counted below.  */
++	  if (TARGET_64BIT && !TARGET_MIPS16
++	      && INSN_CODE (insn) == CODE_FOR_movstrsi_internal2
++	      && pat == PARALLEL
++	      && XVECLEN (PATTERN (insn), 0) == 8
++	      && GET_CODE (XVECEXP (PATTERN (insn), 0, 5)) == USE
++	      && GET_CODE (XEXP (XVECEXP (PATTERN (insn), 0, 5), 0))
++	         == CONST_INT
++	      && INTVAL (XEXP (XVECEXP (PATTERN (insn), 0, 5), 0)) == 32
++	      && GET_CODE (XVECEXP (PATTERN (insn), 0, 6)) == USE
++	      && GET_CODE (XEXP (XVECEXP (PATTERN (insn), 0, 6), 0))
++	         == CONST_INT)
++	    {
++	      int align = INTVAL (XEXP (XVECEXP (PATTERN (insn), 0, 6), 0));
++	      /* Four aligned loads and three stores; unaligned 64-bit
++	         accesses use two words per load and store.  */
++	      n += align >= 8 ? 7 : 15;
++	    }
++	  else if (pat == TRAP_IF)
++	    n += get_attr_length (insn);
++	  else
++	    n++;
+ 	}
+       else if (code == JUMP_INSN
+ 	       && (GET_CODE (PATTERN (insn)) == ADDR_VEC

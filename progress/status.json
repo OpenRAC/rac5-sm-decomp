@@ -869,13 +869,14 @@
     "accepted_frontend_c_bytes": 476,
     "accepted_c_bytes_per_unique_source": 80,
     "accepted_c_bytes_by_placement": 1600,
-    "accepted_level_body_placements": 23146,
-    "accepted_level_body_unique_sources": 15873,
-    "accepted_level_body_placement_bytes": 1325304,
-    "accepted_level_body_unique_source_bytes": 975916,
+    "accepted_level_body_placements": 23273,
+    "accepted_level_body_unique_sources": 15996,
+    "accepted_level_body_placement_bytes": 1403024,
+    "accepted_level_body_unique_source_bytes": 1050788,
     "accepted_level_body_profiles": {
-      "gnu-ee-trial": 318,
-      "gnu-ee-trial-divpad": 266,
+      "gnu-ee-trial": 363,
+      "gnu-ee-trial-divpad": 306,
+      "gnu-ee-trial-divpad-blockmove": 42,
       "pinned": 22376,
       "sdk991111": 144,
       "sdk991111sync": 42
@@ -1969,23 +1970,28 @@
       },
       "bodies": {
         "table": "config/levels/bodies.tsv",
-        "table_sha256": "f4282b54f327025fe6e87dbc10e7696ee6099d27c8570708394957342cd71dc5",
+        "table_sha256": "e20f570f0f9c57171953cfe5a923bcf8230208be48de3974c318c938824be536",
         "sources_table": "config/levels/body_sources.tsv",
-        "sources_table_sha256": "203e40fd0090e09b886d130c7a03d11e7ae02456d51a0f5cfc92dbfaae5bbd28",
-        "placements": 23146,
-        "unique_sources": 15873,
-        "placement_bytes": 1325304,
-        "unique_source_bytes": 975916,
+        "sources_table_sha256": "f895116cb7e3d55deb95dee95bc5b0e9f5b08e16bb6173202ab116fd97191805",
+        "placements": 23273,
+        "unique_sources": 15996,
+        "placement_bytes": 1403024,
+        "unique_source_bytes": 1050788,
         "profiles": {
-          "gnu-ee-trial": 318,
-          "gnu-ee-trial-divpad": 266,
+          "gnu-ee-trial": 363,
+          "gnu-ee-trial-divpad": 306,
+          "gnu-ee-trial-divpad-blockmove": 42,
           "pinned": 22376,
           "sdk991111": 144,
           "sdk991111sync": 42
         },
         "cc1_sha256": {
+          "gnu-ee-trial": "37704f483fba7269791576879b3573445cd455ce0473e6d58a3bcceb45105f95",
+          "gnu-ee-trial-divpad": "d7f3fb64a496b231c0539d26666b90fb1916f6f4da1432bb649f0646fb758186",
+          "gnu-ee-trial-divpad-blockmove": "e70f72fa18b579185a3467c235896413a329610814d7a6559b473d6acbf41adf",
           "pinned": "9614eceecbcb1f7a64cf3a4ad3c827b3e257ab6b1f934e42fcbc4ded0f0584d6",
-          "gnu-ee-trial": "37704f483fba7269791576879b3573445cd455ce0473e6d58a3bcceb45105f95"
+          "sdk991111": "1305725c3b7e94410cb0b3ba85b64a990e94652a87db24631d6f9fa26edc5eb1",
+          "sdk991111sync": "eaf94d2a0ca4f6ba7f8a2a20974940ea8a0bdd7868e3ec0aa6081b1b32a91250"
         },
         "modules": [
           "FRONTEND.REL",
@@ -2046,7 +2052,7 @@
   },
   "public_inputs_sha256": {
     "target": "043f3679a3a7f4e861986aeed303dd30e344c837c34303fc8591b71271a0f96f",
-    "compiler_profile": "8caf23338f8140495586f9da61e17f6ab9c62271c3d9c829ff79d365259e91a8",
+    "compiler_profile": "258e00c1b3fdcee488f31f9bde2c4c96382e5b02fc41b6811c169fd8632c25dd",
     "per_source_cflags": "9858afb36f530a984535373f896af4cb9a7b210b763d0b9a70a45d644eb50019",
     "level_code_catalogue": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
     "level_module_catalogue": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",

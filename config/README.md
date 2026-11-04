@@ -58,7 +58,7 @@ source	source_sha256_lf	object_sha256	profile	as
 
 A source carried by hundreds of placements therefore costs one row in the
 source table, and the placement table stays small enough for the repository's
-one megabyte guard on tracked files.
+targeted size guards on tracked files.
 
 - `offset` is hexadecimal (`0x00000100`); `size` is decimal bytes and a
   multiple of four.
@@ -69,7 +69,10 @@ one megabyte guard on tracked files.
   (the same GNU EE build without the increasing-callee-saved patch, passed as
   `--extra-cc1 gnu-ee-trial=PATH`), `gnu-ee-trial-divpad` (the same build
   with the upstream save order and the R5900 division padding, passed as
-  `--extra-cc1 gnu-ee-trial-divpad=PATH`), or one of the two Sony EE-GCC
+  `--extra-cc1 gnu-ee-trial-divpad=PATH`),
+  `gnu-ee-trial-divpad-blockmove` (an opt-in, SHA-pinned copy of that profile
+  with the 32-byte block-move loop count corrected, passed as
+  `--extra-cc1 gnu-ee-trial-divpad-blockmove=PATH`), or one of the two Sony EE-GCC
   builds the boot campaign already pins, `sdk991111` and `sdk991111sync`
   (`--extra-cc1 sdk991111=PATH`, `--extra-cc1 sdk991111sync=PATH`). `as` is
   the pinned GNU `gnu-ee-trial-20261015` assembler for every row.

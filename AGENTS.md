@@ -59,6 +59,10 @@ compiler settings or level-format assumptions.
 4. **Proven names and types.** Keep reference ELF symbols stable. Descriptive
    aliases, prototypes, field sizes, offsets and signedness need evidence from
    symbols, code, callers or data. Share definitions rather than inventing layouts.
+   In SNR2 modules, different named imports can all link to address zero before
+   loading. Preserve the import name at each call relocation: equal linked
+   instruction bytes do not justify a generic `func_000000` call or a
+   contradictory prototype.
 5. **Bounded experiments.** Change one hypothesis at a time. After three attempts
    with the same mismatch class, recover context, change approach or park the
    best source with its first difference and a concrete reopening condition.

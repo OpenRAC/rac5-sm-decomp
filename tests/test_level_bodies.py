@@ -22,7 +22,7 @@ SHARED_0100 = "src/levels/shared/func_00000100.c"
 HEADER = ["module", "offset", "size", "source"]
 SOURCE_HEADER = ["source", "source_sha256_lf", "object_sha256", "profile", "as"]
 PROFILES = ("pinned", "gnu-ee-trial", "gnu-ee-trial-divpad",
-            "sdk991111", "sdk991111sync")
+            "gnu-ee-trial-divpad-blockmove", "sdk991111", "sdk991111sync")
 
 
 def records(path: Path) -> list[dict[str, str]]:

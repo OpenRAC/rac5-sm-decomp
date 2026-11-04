@@ -233,9 +233,10 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             or body_summary["unique_source_bytes"] != sum(body_sizes.values())
             or body_summary["profiles"] != body_profiles
             or body_summary["cc1_sha256"] != {
-                "pinned": profile["tools"]["cc1_sha256"],
-                "gnu-ee-trial":
-                    profile["extra_compilers"]["gnu-ee-trial"]["tools"]["cc1_sha256"]}
+                selector: (profile["tools"]["cc1_sha256"]
+                           if selector == "pinned" else
+                           profile["extra_compilers"][selector]["tools"]["cc1_sha256"])
+                for selector in sorted(body_profiles)}
             or body_summary["modules"] != body_modules
             or body_summary["module_sha256"] !=
             {module: by_name[module]["sha256"] for module in body_modules}):
