@@ -339,6 +339,126 @@ def link_level_body(row: dict, obj: Path, mapping: dict[str, int],
     return data[section["file_offset"]:section["file_offset"] + section["size"]]
 
 
+def defined_global_names(obj: dict) -> set[str]:
+    """Names that would collide if two objects shared one linker invocation."""
+    return {symbol["name"] for symbol in obj["symbols"]
+            if symbol["bind"] == 1 and symbol["shndx"] not in (0, 0xFFF1)
+            and symbol["name"]}
+
+
+def plan_body_link_batches(items: list[dict], maximum: int) -> list[list[dict]]:
+    """Group only objects with compatible names and symbol assignments."""
+    groups: list[list[dict]] = []
+    for item in items:
+        if not item["batchable"]:
+            groups.append([item])
+            continue
+        target = None
+        for group in sorted(groups, key=len):
+            if len(group) >= maximum or not all(x["batchable"] for x in group):
+                continue
+            definitions = set().union(*(x["defined"] for x in group))
+            assignments = {name: value for x in group
+                           for name, value in x["mapping"].items()}
+            if (item["obj_path"].name in {x["obj_path"].name for x in group}
+                    or item["defined"] & definitions
+                    or item["defined"] & assignments.keys()
+                    or definitions & item["mapping"].keys()
+                    or any(name in assignments and assignments[name] != value
+                           for name, value in item["mapping"].items())):
+                continue
+            target = group
+            break
+        if target is None:
+            target = []
+            groups.append(target)
+        target.append(item)
+    return groups
+
+
+def batch_link_level_bodies(module: str, rows: list[dict],
+                            objects: dict[str, tuple[Path, dict, str]],
+                            imports: dict[str, int], exports: dict[str, int],
+                            linker: Path, maximum: int, jobs: int
+                            ) -> tuple[list[tuple[dict, bytes, dict[str, int]]], int]:
+    """Re-link every body, checking each output section's address and extent."""
+    prepared = []
+    for row in rows:
+        if row["module"] != module:
+            raise ValueError("batch contains a body from another module")
+        obj_path, obj, object_sha = objects[row["source"]]
+        if obj_path.parent != OUTPUT:
+            raise ValueError(f"level body object outside private output: {row['source']}")
+        try:
+            mapping, _origin = resolve_symbols(obj, imports, exports)
+        except BodyLinkError as error:
+            raise ValueError(f"{module} 0x{row['offset']:06X}: {error}") from error
+        definitions = defined_global_names(obj)
+        safe_name = re.fullmatch(r"[A-Za-z0-9_.-]+", obj_path.name) is not None
+        prepared.append({"row": row, "obj_path": obj_path,
+                         "object_sha": object_sha, "mapping": mapping,
+                         "defined": definitions,
+                         "batchable": safe_name and not definitions & mapping.keys()})
+    # Verify each distinct object once, in parallel. Batch links themselves are
+    # serialized: concurrent multi-object SN links contend on this toolchain.
+    unique_objects = {item["obj_path"]: item["object_sha"] for item in prepared}
+    def verify_object(pair: tuple[Path, str]) -> None:
+        path, expected_sha = pair
+        if path.is_symlink() or digest(path) != expected_sha:
+            raise ValueError(f"stale level body object: {path.name}")
+    with ThreadPoolExecutor(max_workers=jobs) as pool:
+        list(pool.map(verify_object, unique_objects.items()))
+    groups = plan_body_link_batches(prepared, maximum)
+
+    def link_group(numbered: tuple[int, list[dict]]) -> list[tuple[dict, bytes, dict]]:
+        number, group = numbered
+        if len(group) == 1:
+            item = group[0]
+            return [(item["row"], link_level_body(item["row"], item["obj_path"],
+                                                   item["mapping"], linker),
+                     item["mapping"])]
+        ordered = sorted(group, key=lambda item: item["row"]["offset"])
+        assignments = {name: value for item in ordered
+                       for name, value in item["mapping"].items()}
+        stem = f"body_batch_{module.replace('.', '_')}_{number:04d}"
+        lines = [*(f"{name} = 0x{value:08X};"
+                   for name, value in sorted(assignments.items())), "SECTIONS {"]
+        for index, item in enumerate(ordered):
+            section = f".body{index:03d}"
+            lines.extend((f"  . = 0x{item['row']['offset']:08X};",
+                          f"  {section} : {{ {item['obj_path'].name}(.text) }}"))
+        lines.extend(("}", ""))
+        (OUTPUT / f"{stem}.ld").write_text("\n".join(lines), encoding="ascii",
+                                            newline="\n")
+        run_tool([str(linker.resolve()), "-T", f"{stem}.ld", "-o",
+                  f"{stem}.elf", *(item["obj_path"].name for item in ordered)],
+                 OUTPUT, OUTPUT / f"{stem}.link.log")
+        elf = OUTPUT / f"{stem}.elf"
+        sections = inspect_elf(elf)["sections"]
+        data = elf.read_bytes()
+        result = []
+        for index, item in enumerate(ordered):
+            name = f".body{index:03d}"
+            found = [section for section in sections if section["name"] == name]
+            row = item["row"]
+            if (len(found) != 1 or int(found[0]["virtual_address"], 16) !=
+                    row["offset"] or found[0]["size"] != row["size"]):
+                raise ValueError(f"{module} 0x{row['offset']:06X}: batch section differs")
+            section = found[0]
+            body = data[section["file_offset"]:
+                        section["file_offset"] + section["size"]]
+            if len(body) != row["size"]:
+                raise ValueError(f"{module} 0x{row['offset']:06X}: short batch body")
+            result.append((row, body, item["mapping"]))
+        return result
+
+    by_offset: dict[int, tuple[bytes, dict[str, int]]] = {}
+    for numbered in enumerate(groups):
+        for row, body, mapping in link_group(numbered):
+            by_offset[row["offset"]] = body, mapping
+    return [(row, *by_offset[row["offset"]]) for row in rows], len(groups)
+
+
 def place_body(rebuilt: bytes, body: bytes, start: int, end: int,
                claimed: list[tuple[int, int]]) -> bytes:
     """Place a proved body, allowing an overlap only when the bytes agree."""
@@ -575,9 +695,13 @@ def main() -> None:
                         help="rewrite config/levels/bodies.tsv hashes after a full pass")
     parser.add_argument("--jobs", type=int, default=1,
                         help="parallel body compilations and links per module (default: 1)")
+    parser.add_argument("--batch-link-size", type=int, default=0,
+                        help="opt-in multi-object SN links; 0 disables, 2..25 limits objects per link")
     args = parser.parse_args()
     if not 1 <= args.jobs <= 16:
         parser.error("--jobs must be between 1 and 16")
+    if args.batch_link_size != 0 and not 2 <= args.batch_link_size <= 25:
+        parser.error("--batch-link-size must be 0 or between 2 and 25")
     OUTPUT.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps({"status": "incomplete", "counted_matches": 0},
                                  indent=2) + "\n", encoding="utf-8", newline="\n")
@@ -619,6 +743,7 @@ def main() -> None:
     if len(names) != 20 or set(additional["placements"]) != set(names):
         raise ValueError("expected twenty pinned numbered level modules")
     matched = []
+    batch_linker_invocations = 0
     body_import_sites = 0
     witness_import_sites = 0
     witness_placements_checked = 0
@@ -672,24 +797,40 @@ def main() -> None:
                 claimed.append((0x190, 0x190 + len(control)))
             imports, exports = module_symbols(source)
 
-            def linked_row(row: dict) -> tuple[dict, bytes, int]:
-                obj_path, obj, _object_sha = body_objects[row["source"]]
-                try:
-                    mapping, _origin = resolve_symbols(obj, imports, exports)
-                except BodyLinkError as error:
-                    raise ValueError(f"{name} 0x{row['offset']:06X}: {error}") from error
-                checked = check_import_call_identity(
-                    obj, retail_calls.within(row["offset"], row["size"]), row, mapping)
-                return row, link_level_body(row, obj_path, mapping, args.linker), checked
-
-            with ThreadPoolExecutor(max_workers=args.jobs) as pool:
-                for row, placed, checked in pool.map(linked_row, bodies_by_module.get(name, [])):
-                    body_import_sites += checked
+            if args.batch_link_size:
+                linked, invocations = batch_link_level_bodies(
+                    name, bodies_by_module.get(name, []), body_objects, imports,
+                    exports, args.linker, args.batch_link_size, args.jobs)
+                batch_linker_invocations += invocations
+                for row, placed, mapping in linked:
+                    obj = body_objects[row["source"]][1]
+                    body_import_sites += check_import_call_identity(
+                        obj, retail_calls.within(row["offset"], row["size"]),
+                        row, mapping)
                     if placed != source[row["offset"]:row["offset"] + row["size"]]:
                         raise ValueError(
                             f"{name} level body differs at 0x{row['offset']:06X}")
                     rebuilt = place_body(rebuilt, placed, row["offset"],
                                          row["offset"] + row["size"], claimed)
+            else:
+                def linked_row(row: dict) -> tuple[dict, bytes, int]:
+                    obj_path, obj, _object_sha = body_objects[row["source"]]
+                    try:
+                        mapping, _origin = resolve_symbols(obj, imports, exports)
+                    except BodyLinkError as error:
+                        raise ValueError(f"{name} 0x{row['offset']:06X}: {error}") from error
+                    checked = check_import_call_identity(
+                        obj, retail_calls.within(row["offset"], row["size"]), row, mapping)
+                    return row, link_level_body(row, obj_path, mapping, args.linker), checked
+
+                with ThreadPoolExecutor(max_workers=args.jobs) as pool:
+                    for row, placed, checked in pool.map(linked_row, bodies_by_module.get(name, [])):
+                        body_import_sites += checked
+                        if placed != source[row["offset"]:row["offset"] + row["size"]]:
+                            raise ValueError(
+                                f"{name} level body differs at 0x{row['offset']:06X}")
+                        rebuilt = place_body(rebuilt, placed, row["offset"],
+                                             row["offset"] + row["size"], claimed)
             if sha(rebuilt) != known[name]:
                 raise ValueError(f"{name} complete C-linked module differs")
             if name == "LEVEL_01.REL":
@@ -727,21 +868,39 @@ def main() -> None:
             raise ValueError("FRONTEND New Game C body differs")
         candidate = replace_range(candidate, frontend_body, 0x2F80, 0x2F80 + 476)
         claimed = [(0x2CD8, 0x2CD8 + len(control)), (0x2F80, 0x2F80 + 476)]
-        for row in bodies_by_module.get("FRONTEND.REL", []):
-            obj_path, obj, _object_sha = body_objects[row["source"]]
-            try:
-                mapping, _origin = resolve_symbols(obj, *module_symbols(frontend))
-            except BodyLinkError as error:
-                raise ValueError(
-                    f"FRONTEND.REL 0x{row['offset']:06X}: {error}") from error
-            body_import_sites += check_import_call_identity(
-                obj, frontend_calls.within(row["offset"], row["size"]), row, mapping)
-            placed = link_level_body(row, obj_path, mapping, args.linker)
-            if placed != frontend[row["offset"]:row["offset"] + row["size"]]:
-                raise ValueError(
-                    f"FRONTEND.REL level body differs at 0x{row['offset']:06X}")
-            candidate = place_body(candidate, placed, row["offset"],
-                                   row["offset"] + row["size"], claimed)
+        if args.batch_link_size:
+            imports, exports = module_symbols(frontend)
+            linked, invocations = batch_link_level_bodies(
+                "FRONTEND.REL", bodies_by_module.get("FRONTEND.REL", []),
+                body_objects, imports, exports, args.linker,
+                args.batch_link_size, args.jobs)
+            batch_linker_invocations += invocations
+            for row, placed, mapping in linked:
+                obj = body_objects[row["source"]][1]
+                body_import_sites += check_import_call_identity(
+                    obj, frontend_calls.within(row["offset"], row["size"]),
+                    row, mapping)
+                if placed != frontend[row["offset"]:row["offset"] + row["size"]]:
+                    raise ValueError(
+                        f"FRONTEND.REL level body differs at 0x{row['offset']:06X}")
+                candidate = place_body(candidate, placed, row["offset"],
+                                       row["offset"] + row["size"], claimed)
+        else:
+            for row in bodies_by_module.get("FRONTEND.REL", []):
+                obj_path, obj, _object_sha = body_objects[row["source"]]
+                try:
+                    mapping, _origin = resolve_symbols(obj, *module_symbols(frontend))
+                except BodyLinkError as error:
+                    raise ValueError(
+                        f"FRONTEND.REL 0x{row['offset']:06X}: {error}") from error
+                body_import_sites += check_import_call_identity(
+                    obj, frontend_calls.within(row["offset"], row["size"]), row, mapping)
+                placed = link_level_body(row, obj_path, mapping, args.linker)
+                if placed != frontend[row["offset"]:row["offset"] + row["size"]]:
+                    raise ValueError(
+                        f"FRONTEND.REL level body differs at 0x{row['offset']:06X}")
+                candidate = place_body(candidate, placed, row["offset"],
+                                       row["offset"] + row["size"], claimed)
         if sha(candidate) != known["FRONTEND.REL"]:
             raise ValueError("FRONTEND complete control module differs")
         base, load_sha, missing = MEASURED_LOADS["FRONTEND.REL"]
@@ -779,6 +938,9 @@ def main() -> None:
                             "total_sites": body_import_sites + witness_import_sites,
                             "mismatches": 0},
     }
+    if args.batch_link_size:
+        body_summary["batch_link_size"] = args.batch_link_size
+        body_summary["body_batch_linker_invocations"] = batch_linker_invocations
     if args.refresh_bodies:
         write_bodies(body_rows, body_objects)
         body_summary["table_sha256"] = digest(BODIES)
@@ -801,6 +963,9 @@ def main() -> None:
               "bodies": body_summary}
     REPORT.write_text(json.dumps(report, indent=2) + "\n",
                       encoding="utf-8", newline="\n")
+    if args.batch_link_size:
+        print(f"level body batch links: {batch_linker_invocations} invocations "
+              f"for {len(body_rows)} placements")
     print("shared C: 8+72 bytes at all 20 level placements; "
           "FRONTEND New Game: 476 bytes; 21/21 complete modules exact")
     print(f"level bodies: {body_summary['placements']} placements in "
