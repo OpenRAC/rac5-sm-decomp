@@ -333,11 +333,20 @@ python3 tools/level_c_gate.py baserom/SCUS_976.15.iso \
 full pass. Keep it out of ordinary runs: a stale hash must fail, not be repaired
 silently.
 
-`--jobs N` compiles independently named body sources concurrently and links
-their objects concurrently within each module. The default is one job; compiled
-source and object hashes are still checked, and linked placements are still
+`--jobs N` compiles independently named body sources concurrently and, in the
+default linking mode, links their objects concurrently within each module.
+The default is one job; compiled source and object hashes are still checked,
+and linked placements are still
 checked in order against the complete module hash. A local comparison with
 four jobs reproduced the same 21 exact module hashes as the sequential pass.
+
+`--batch-link-size 25` opts into multi-object SN links within each module;
+`0` keeps individual links. A batch excludes conflicting global symbols and
+repeated uses of one object, verifies each object hash before linking, then
+checks each output section's address, size, body bytes and named import calls.
+The complete module hash remains mandatory. The 25-object route reproduced
+all 21 USA modules and 23,606 accepted placements with 2,281 SN link invocations;
+batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
