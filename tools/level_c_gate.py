@@ -17,6 +17,7 @@ from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from c_source_policy import require_c_source
+from import_guard import check_import_call_identity, named_import_calls
 
 import cflags
 from boot_symbols import read_boot
@@ -592,6 +593,12 @@ def main() -> None:
             raise ValueError(f"{selector} cc1 differs from the pinned compiler trial")
     compile_sources(profile, sources, args.cpp, args.cc1, args.gnu_as,
                     args.output_dir)
+    accepted_object = read_object(
+        OUTPUT / f"{Path(profile['accepted']['source']).stem}.o")
+    additional_object = read_object(
+        OUTPUT / f"{Path(profile['additional_accepted']['source']).stem}.o")
+    frontend_object = read_object(
+        OUTPUT / f"{Path(profile['frontend_accepted']['source']).stem}.o")
     bodies = {Path(row["source"]).stem: linked_body(row, args.linker)
               for row in sources if "offset" in row}
     known, ends = pinned_modules(), code_ends()
@@ -612,6 +619,9 @@ def main() -> None:
     if len(names) != 20 or set(additional["placements"]) != set(names):
         raise ValueError("expected twenty pinned numbered level modules")
     matched = []
+    body_import_sites = 0
+    witness_import_sites = 0
+    witness_placements_checked = 0
     data_signatures = None
     with IsoDisc(args.image) as disc:
         verify_disc(disc, target)
@@ -619,10 +629,18 @@ def main() -> None:
             source = disc.file_bytes("LVL/" + name)
             if sha(source) != known[name]:
                 raise ValueError(f"{name} differs from pinned USA module")
+            retail_calls = named_import_calls(source)
             shared_boundary(name, source, ends[name])
             body = bodies["func_00000100"]
             if body != source[0x100:0x108]:
                 raise ValueError(f"shared C function differs in {name}")
+            return_row = {"module": name, "offset": 0x100,
+                          "size": profile["accepted"]["body_bytes"],
+                          "source": profile["accepted"]["source"]}
+            witness_import_sites += check_import_call_identity(
+                accepted_object, retail_calls.within(0x100, return_row["size"]),
+                return_row, profile["accepted"].get("linker_symbols", {}))
+            witness_placements_checked += 1
             rebuilt = replace_range(source, body, 0x100, 0x108)
             start = additional["placements"][name]
             target_a, target_b, signatures = shared_buffer_targets(
@@ -635,6 +653,14 @@ def main() -> None:
                 additional, name, start, (target_a, target_b), args.linker)
             if buffer_body != source[start:start + 72]:
                 raise ValueError(f"shared buffer C function differs in {name}")
+            witness_row = {"module": name, "offset": start,
+                           "size": additional["body_bytes"],
+                           "source": additional["source"]}
+            witness_import_sites += check_import_call_identity(
+                additional_object, retail_calls.within(start, additional["body_bytes"]),
+                witness_row, {"level_data_a": target_a, "level_data_b": target_b,
+                              "memset": 0})
+            witness_placements_checked += 1
             rebuilt = replace_range(rebuilt, buffer_body, start, start + 72)
             if name == "LEVEL_01.REL":
                 control = bodies["func_00000190"]
@@ -646,16 +672,19 @@ def main() -> None:
                 claimed.append((0x190, 0x190 + len(control)))
             imports, exports = module_symbols(source)
 
-            def linked_row(row: dict) -> tuple[dict, bytes]:
+            def linked_row(row: dict) -> tuple[dict, bytes, int]:
                 obj_path, obj, _object_sha = body_objects[row["source"]]
                 try:
                     mapping, _origin = resolve_symbols(obj, imports, exports)
                 except BodyLinkError as error:
                     raise ValueError(f"{name} 0x{row['offset']:06X}: {error}") from error
-                return row, link_level_body(row, obj_path, mapping, args.linker)
+                checked = check_import_call_identity(
+                    obj, retail_calls.within(row["offset"], row["size"]), row, mapping)
+                return row, link_level_body(row, obj_path, mapping, args.linker), checked
 
             with ThreadPoolExecutor(max_workers=args.jobs) as pool:
-                for row, placed in pool.map(linked_row, bodies_by_module.get(name, [])):
+                for row, placed, checked in pool.map(linked_row, bodies_by_module.get(name, [])):
+                    body_import_sites += checked
                     if placed != source[row["offset"]:row["offset"] + row["size"]]:
                         raise ValueError(
                             f"{name} level body differs at 0x{row['offset']:06X}")
@@ -677,6 +706,7 @@ def main() -> None:
         frontend = disc.file_bytes("LVL/FRONTEND.REL")
         if sha(frontend) != known["FRONTEND.REL"]:
             raise ValueError("FRONTEND differs from pinned USA module")
+        frontend_calls = named_import_calls(frontend)
         callers = frontend_boundary(frontend, ends["FRONTEND.REL"])
         control = bodies["func_00002CD8"]
         if control != frontend[0x2CD8:0x2CD8 + len(control)]:
@@ -684,6 +714,15 @@ def main() -> None:
         candidate = replace_range(frontend, control, 0x2CD8, 0x2CD8 + len(control))
         frontend_row = profile["frontend_accepted"]
         frontend_body = bodies["func_00002F80"]
+        witness_row = {"module": "FRONTEND.REL",
+                       "offset": frontend_row["offset"],
+                       "size": frontend_row["body_bytes"],
+                       "source": frontend_row["source"]}
+        witness_import_sites += check_import_call_identity(
+            frontend_object,
+            frontend_calls.within(frontend_row["offset"], frontend_row["body_bytes"]),
+            witness_row, frontend_row["linker_symbols"])
+        witness_placements_checked += 1
         if frontend_body != frontend[0x2F80:0x2F80 + 476]:
             raise ValueError("FRONTEND New Game C body differs")
         candidate = replace_range(candidate, frontend_body, 0x2F80, 0x2F80 + 476)
@@ -695,6 +734,8 @@ def main() -> None:
             except BodyLinkError as error:
                 raise ValueError(
                     f"FRONTEND.REL 0x{row['offset']:06X}: {error}") from error
+            body_import_sites += check_import_call_identity(
+                obj, frontend_calls.within(row["offset"], row["size"]), row, mapping)
             placed = link_level_body(row, obj_path, mapping, args.linker)
             if placed != frontend[row["offset"]:row["offset"] + row["size"]]:
                 raise ValueError(
@@ -708,6 +749,8 @@ def main() -> None:
                                                  base, addresses)
         if sha(relocated) != load_sha or unresolved != missing:
             raise ValueError("FRONTEND C-linked relocated image differs")
+    if witness_import_sites != 24 or witness_placements_checked != 41:
+        raise ValueError("accepted C witness import-call coverage differs")
     body_sizes: dict[str, int] = {}
     for row in body_rows:
         body_sizes.setdefault(row["source"], row["size"])
@@ -730,6 +773,11 @@ def main() -> None:
         "modules": sorted(bodies_by_module),
         "module_sha256": {module: known[module]
                           for module in sorted(bodies_by_module)},
+        "import_identity": {"body_row_sites": body_import_sites,
+                            "accepted_witness_sites": witness_import_sites,
+                            "accepted_witness_placements_checked": witness_placements_checked,
+                            "total_sites": body_import_sites + witness_import_sites,
+                            "mismatches": 0},
     }
     if args.refresh_bodies:
         write_bodies(body_rows, body_objects)

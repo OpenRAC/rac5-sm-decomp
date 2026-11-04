@@ -11,7 +11,7 @@ typedef struct {
     Rec *p54;
 } Obj;
 
-extern int func_000000();
+extern int rand(void);
 
 void func_16F9D8(Obj *a0)
 {
@@ -20,5 +20,5 @@ void func_16F9D8(Obj *a0)
 
     a0->b45 = 2;
     f = p->f10;
-    p->f0C = f * ((float)func_000000() * 4.6566128730773926e-10f);
+    p->f0C = f * ((float)rand() * 4.6566128730773926e-10f);
 }

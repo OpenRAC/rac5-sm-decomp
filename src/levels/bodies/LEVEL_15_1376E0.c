@@ -8,7 +8,7 @@ typedef struct {
 
 extern Timer D_002F4F70;
 extern float D_002F4F80;
-extern float func_000000(float x);
+extern float expf(float x);
 
 void func_1376E0(void *a0, int a1)
 {
@@ -20,7 +20,7 @@ void func_1376E0(void *a0, int a1)
             D_002F4F70.a = 0;
             D_002F4F70.c = 0;
             D_002F4F70.b = 0;
-            *q = func_000000(-0.33333334f);
+            *q = expf(-0.33333334f);
         }
     }
 }

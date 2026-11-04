@@ -6,7 +6,7 @@ typedef struct {
     float f26C;
 } Rec;
 
-int func_000000(void);
+extern int rand(void);
 
 void func_181B48(Rec *r)
 {
@@ -19,8 +19,8 @@ void func_181B48(Rec *r)
     r->a260 = 0;
     do {
         i++;
-        p[0] = (float)func_000000() * 4.6566124e-10f;
-        p[1] = (float)func_000000() * 4.6566124e-10f;
+        p[0] = (float)rand() * 4.6566124e-10f;
+        p[1] = (float)rand() * 4.6566124e-10f;
         p += 2;
     } while (i != n);
 }

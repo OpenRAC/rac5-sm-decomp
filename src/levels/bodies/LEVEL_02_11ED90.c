@@ -2,14 +2,14 @@
    limits, when the erased routine says the object is ready. */
 extern char D_0022C6A0[];
 
-extern int func_000000(void *a0, void *a1, void *a2);
+extern int sscanf(const char *, const char *, ...);
 
 int func_11ED90(void *a0, float *a1, float lo, float hi)
 {
     float l = lo;
     float h = hi;
 
-    if (func_000000(a0, D_0022C6A0, a1) != 1) {
+    if (sscanf(a0, D_0022C6A0, a1) != 1) {
         return 0;
     }
     if (l > a1[0]) {

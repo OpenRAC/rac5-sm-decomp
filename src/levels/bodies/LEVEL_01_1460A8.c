@@ -9,7 +9,7 @@ typedef struct {
 extern Rec D_391A08;
 extern float D_391A18;
 
-extern float func_000000(float alpha, float beta);
+extern float powf(float alpha, float beta);
 
 void func_1460A8(Rec *a0, int a1)
 {
@@ -22,7 +22,7 @@ void func_1460A8(Rec *a0, int a1)
             D_391A08.i_08 = 0;
             D_391A08.f_0C = 1.0f;
             pf = &D_391A18;
-            *pf = func_000000(0.98f, 1.0f);
+            *pf = powf(0.98f, 1.0f);
         }
     }
 }

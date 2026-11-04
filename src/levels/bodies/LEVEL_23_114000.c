@@ -5,14 +5,14 @@ typedef struct {
     float f0C;
 } V;
 
-void *func_1BE780(float v);
-void func_1BE490(void *p);
-void *func_000000(void *p);
+extern double func_1BE780(float value);
+extern void func_1BE490(double value);
+extern double sqrt(double value);
 
 void func_114000(V *p)
 {
     float d = p->f0C * p->f0C + p->f00 * p->f00 + p->f04 * p->f04
         + p->f08 * p->f08;
 
-    func_1BE490(func_000000(func_1BE780(d)));
+    func_1BE490(sqrt(func_1BE780(d)));
 }

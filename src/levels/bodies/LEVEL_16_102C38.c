@@ -7,9 +7,9 @@ typedef struct {
     float f_0C;
 } Vec;
 
-int func_196DE0(float x);
-int func_000000(int x);
-void func_196AF0(int x);
+extern double func_196DE0(float value);
+extern double sqrt(double value);
+extern void func_196AF0(double value);
 
 void func_102C38(Vec *a0)
 {
@@ -19,5 +19,5 @@ void func_102C38(Vec *a0)
     float c = a0->f_08 * a0->f_08;
     float s = d + a + b + c;
 
-    func_196AF0(func_000000(func_196DE0(s)));
+    func_196AF0(sqrt(func_196DE0(s)));
 }

@@ -1,11 +1,11 @@
 /* LEVEL_01:0x118A48 -- clamps the sample into the [low, high] window once the
    lookup accepts the request. */
 extern char D_00217720[];
-extern int func_000000(void *, void *, float *);
+extern int sscanf(const char *, const char *, ...);
 
 int func_118A48(void *a0, float *a1, float f12, float f13)
 {
-    if (func_000000(a0, D_00217720, a1) != 1) {
+    if (sscanf(a0, D_00217720, a1) != 1) {
         return 0;
     }
     if (*a1 < f12) {

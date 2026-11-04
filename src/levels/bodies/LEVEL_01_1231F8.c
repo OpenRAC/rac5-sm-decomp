@@ -5,9 +5,9 @@ typedef struct {
     float f0C;
 } V;
 
-int func_1EB340(float f12);
-int func_000000(int a0);
-void func_1EB050(int a0);
+extern double func_1EB340(float value);
+extern double sqrt(double value);
+extern void func_1EB050(double value);
 
 void func_1231F8(V *a0)
 {
@@ -19,5 +19,5 @@ void func_1231F8(V *a0)
 
     s = s + b;
     s = s + c;
-    func_1EB050(func_000000(func_1EB340(s)));
+    func_1EB050(sqrt(func_1EB340(s)));
 }

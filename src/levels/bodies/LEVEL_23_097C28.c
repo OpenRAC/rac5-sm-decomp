@@ -1,11 +1,11 @@
 int func_097C18(void);
-void func_000000(int);
+extern int DelayThread(int usec);
 
 void func_097C28(void)
 {
     int a = func_097C18();
 
     while (func_097C18() == a) {
-        func_000000(1000);
+        DelayThread(1000);
     }
 }

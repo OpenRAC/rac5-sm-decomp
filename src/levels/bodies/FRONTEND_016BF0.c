@@ -6,14 +6,14 @@ extern unsigned char D_0030540;
 extern int D_0030428;
 
 int func_001B20(int mode);
-int D_00000000(void);
+int PAUSEMODE_GetCurrentPauseScreen__Fv(void);
 void func_001AE0(int mode, int arg);
 
 void func_016BF0(void)
 {
     if (D_0030540 != 0) {
         if (func_001B20(6) != 0) {
-            if (D_00000000() == 0x38)
+            if (PAUSEMODE_GetCurrentPauseScreen__Fv() == 0x38)
                 return;
         }
     }

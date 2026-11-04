@@ -9,7 +9,7 @@ typedef struct {
 
 extern Rec *D_0020C62C;
 extern int D_0020C634;
-extern void func_000000(float f12);
+extern void func_000000(float f12) __asm__("SND_SetGlobalVolume__Ff");
 
 void func_0279A8(float f12)
 {

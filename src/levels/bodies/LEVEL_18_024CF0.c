@@ -7,7 +7,8 @@ typedef struct {
 
 extern Ctx *D_001A2F34;
 extern int D_001A2F60;
-extern void func_000000(float f);
+extern void SND_SetGlobalVolume__Ff(float volume);
+extern void SND_SetGlobalMusicVolume__Ff(float volume);
 
 void func_024CF0(float s)
 {
@@ -16,12 +17,12 @@ void func_024CF0(float s)
     p = D_001A2F34;
     if (p->i48 < 0)
         p->i48 = p->i1C;
-    func_000000((float)D_001A2F34->i1C / 255.0f * s);
+    SND_SetGlobalVolume__Ff((float)D_001A2F34->i1C / 255.0f * s);
 
     p = D_001A2F34;
     if (p->i4C < 0)
         p->i4C = p->i18;
-    func_000000((float)D_001A2F34->i18 / 255.0f * s);
+    SND_SetGlobalMusicVolume__Ff((float)D_001A2F34->i18 / 255.0f * s);
 
     D_001A2F60 = 5;
 }

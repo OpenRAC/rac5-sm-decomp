@@ -13,7 +13,7 @@ typedef struct {
 extern Holder D_001A2C34;
 extern int D_001A2C60;
 
-void func_000000(float a0);
+void func_000000(float a0) __asm__("SND_SetGlobalVolume__Ff");
 
 void func_025390(float a0)
 {

@@ -1,9 +1,9 @@
-extern float func_000000(float x);
+extern float cosf(float x);
 
 void f(float *out, float *in, float angle)
 {
     float h = angle * 0.5f;
-    float s = func_000000(h);
+    float s = cosf(h);
     float c = __builtin_sqrtf(1.0f - s * s);
 
     if (h < 0.0f)

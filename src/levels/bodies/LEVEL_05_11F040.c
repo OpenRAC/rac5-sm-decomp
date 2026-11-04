@@ -7,14 +7,14 @@ typedef struct {
     float f_0C;
 } Vec;
 
-extern void *func_1DA738(float f);
-extern void *func_000000(void *p);
-extern void func_1DA448(void *p);
+extern double func_1DA738(float value);
+extern double sqrt(double value);
+extern void func_1DA448(double value);
 
 void func_11F040(Vec *a0)
 {
     float len = a0->f_0C * a0->f_0C + a0->f_00 * a0->f_00
                 + a0->f_04 * a0->f_04 + a0->f_08 * a0->f_08;
 
-    func_1DA448(func_000000(func_1DA738(len)));
+    func_1DA448(sqrt(func_1DA738(len)));
 }

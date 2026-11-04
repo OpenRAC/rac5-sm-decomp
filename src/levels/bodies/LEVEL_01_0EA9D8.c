@@ -24,13 +24,13 @@ typedef struct {
     float f14;
 } Rec;
 
-extern int func_000000(void);
+extern int rand(void);
 
 void func_0EA9D8(Rec *p, float a, float b, float c, float d)
 {
-    p->f0 = (float)func_000000() * 0x1p-31f * 6.2831855f + -3.1415927f;
+    p->f0 = (float)rand() * 0x1p-31f * 6.2831855f + -3.1415927f;
     p->f4 = a;
-    p->f8 = (float)func_000000() * 0x1p-31f * 6.2831855f + -3.1415927f;
+    p->f8 = (float)rand() * 0x1p-31f * 6.2831855f + -3.1415927f;
     p->fC = d;
     p->f10 = (c + b) * 0.5f;
     p->f14 = (c - b) * 0.5f;

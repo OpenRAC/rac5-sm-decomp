@@ -1,7 +1,7 @@
-/* FRONTEND:0x002640 -- forwards to the shared import. */
-void func_000000(void);
+/* Forward to ps2fioRead. */
+extern int ps2fioRead(int fd, void *buffer, int size);
 
-void func_002640(void)
+int func_002640(int fd, void *buffer, int size)
 {
-    func_000000();
+    return ps2fioRead(fd, buffer, size);
 }

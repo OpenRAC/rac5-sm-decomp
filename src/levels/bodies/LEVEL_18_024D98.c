@@ -10,7 +10,7 @@ typedef struct {
 extern G *D_001A2F34;
 extern int D_001A2F60;
 
-extern void func_000000(float f);
+extern void func_000000(float f) __asm__("SND_SetGlobalVolume__Ff");
 
 void func_024D98(float f)
 {

@@ -2,7 +2,7 @@ typedef struct { char pad1C[0x1C]; int f1C; char pad20[0x28]; int f48; } Obj;
 typedef struct { Obj *p; } Holder;
 extern Holder D_001950B4;
 extern int D_001950E0;
-void func_000000(float a0);
+void func_000000(float a0) __asm__("SND_SetGlobalVolume__Ff");
 void func_025168(float a0)
 {
     Obj *o;
