@@ -272,9 +272,10 @@ def compile_body_sources(rows: list[dict], args, extra_cc1: dict[str, Path],
     output.mkdir(parents=True, exist_ok=True)
     OUTPUT.mkdir(parents=True, exist_ok=True)
     flags = base_profile["flags"]["cc1"]
-    objects: dict[str, tuple[Path, dict, str]] = {}
     by_source = {row["source"]: row for row in rows}
-    for source_path, row in sorted(by_source.items()):
+
+    def compile_one(item: tuple[str, dict]) -> tuple[str, tuple[Path, dict, str]]:
+        source_path, row = item
         source = ROOT / source_path
         if not source.is_file():
             raise ValueError(f"level body source is missing: {source_path}")
@@ -307,7 +308,12 @@ def compile_body_sources(rows: list[dict], args, extra_cc1: dict[str, Path],
             raise ValueError(f"level body object differs from bodies.tsv: {source_path}")
         published = OUTPUT / f"body_{stem}.o"
         shutil.copyfile(obj, published)
-        objects[source_path] = (published, read_object(published), object_digest)
+        return source_path, (published, read_object(published), object_digest)
+
+    objects: dict[str, tuple[Path, dict, str]] = {}
+    with ThreadPoolExecutor(max_workers=args.jobs) as pool:
+        for source_path, result in pool.map(compile_one, sorted(by_source.items())):
+            objects[source_path] = result
     return objects
 
 
@@ -567,7 +573,7 @@ def main() -> None:
     parser.add_argument("--refresh-bodies", action="store_true",
                         help="rewrite config/levels/bodies.tsv hashes after a full pass")
     parser.add_argument("--jobs", type=int, default=1,
-                        help="parallel body links per module (default: 1)")
+                        help="parallel body compilations and links per module (default: 1)")
     args = parser.parse_args()
     if not 1 <= args.jobs <= 16:
         parser.error("--jobs must be between 1 and 16")
