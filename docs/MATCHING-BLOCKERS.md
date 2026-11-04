@@ -283,10 +283,11 @@ stay in the assembly baseline and receive no C credit from that body.
 | Medium record, matrix, vector and effect forms | Four already accepted C forms extend to 72 additional USA bodies at 72 placements. The 208-byte effect setup requires the existing `gnu-ee-trial` compiler profile for the retail prologue and floating-point save order; the other forms use the pinned profile (2 November 2026) |
 | Larger matrix, callback, state-copy and vector-angle forms | Four accepted C forms extend to 73 further USA bodies at 74 placements. The vector-angle form uses the existing `gnu-ee-trial-divpad` profile for retail division padding; other forms use the pinned compiler (2 November 2026) |
 | Further state copies and vector midpoints | Two accepted C forms extend to 36 further USA bodies at 56 placements. The midpoint form is shared byte-for-byte across several levels; every placement is checked separately while the source earns unique-byte credit once (2 November 2026) |
+| Reused C forms across level modules | Existing typed C forms extend to 732 further USA bodies at 751 placements. Each new source and placement is checked independently; the complete-module gate catches named local calls that an isolated probe accepts. Thirty-eight such calls use their measured address-named target so the full linker can resolve them (4 November 2026) |
 
 ## What is left
 
-The level scope is **20,620 measured placements** of 1,071,376 placement bytes carried by **13,476
+The level scope is **21,371 measured placements** of 1,173,756 placement bytes carried by **14,208
 sources**, and the bounded candidates that no accepted body covers still number more than sixty
 thousand. The boot keeps **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The 713 linked C bodies cover 93,032 bytes including alignment. The profile
