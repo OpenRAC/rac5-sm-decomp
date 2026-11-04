@@ -4,6 +4,11 @@ Keep useful C/C++ hypotheses here until the compiler and complete-program byte
 gate accept them. Some local boot slices now reproduce their reference bytes
 (`docs/COMPILER-WITNESSES.md`), but their placement and acceptance reviews
 are not complete. These candidates do not count toward progress.
+Before parking a function or switching targets, commit its best useful,
+publishable C/C++ attempt here with the measured difference and a concrete
+reason to retry. Keeping that attempt only in a private scratch directory does
+not preserve it for other contributors. Scratch variants, raw reports and
+forbidden game or SDK material remain private.
 The accepted boot-only `MEMCARD_Busy__Fv` definition now lives in `src/boot/`.
 All other boot witnesses remain provisional here. Instruction assembly, raw encoded
 instructions and fixed-register bindings are excluded from public C attempts and

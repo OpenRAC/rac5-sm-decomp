@@ -17,8 +17,11 @@ compiler settings or level-format assumptions.
   assets, proprietary tools, build output or secrets. This includes instruction
   listings inside C comments. Keep them under the ignored local directories.
 - Keep one authored definition per function in `src/`, using C or C++ only
-  after the corresponding compiler profile is measured. Put a useful but
-  nonmatching attempt in `nonmatching/`; do not count it as a match.
+  after the corresponding compiler profile is measured. Before parking a
+  function or moving to another target, retain its best useful, publishable
+  C/C++ attempt in `nonmatching/` on the contribution branch, with its measured
+  difference and a reason to retry. A private scratch copy is not the shared
+  record. Do not count a retained attempt as a match.
 - C/C++ evidence must come from compiler-generated instructions: no inline or
   global assembly, fixed-register bindings, raw instruction words, artificial
   assembly barriers, or edits to compiler output. This also applies to provisional
@@ -64,7 +67,11 @@ compiler settings or level-format assumptions.
    PC platform adaptations belong in explicitly separate work and earn no PS2
    matching credit. This does not relax the strict no-instruction-assembly rule.
 7. **Public hygiene.** Keep scratch directories, probes, generated lists and raw
-   reports private. Index useful alternatives by function in `nonmatching/`.
+   reports private. Preserve the best useful, publishable C/C++ attempt for
+   each parked function in `nonmatching/`; keep distinct useful alternatives
+   under that area's `alternatives/` directory. Do not publish forbidden
+   material to satisfy this rule: rewrite it as legal C/C++ or describe the
+   blocker without including the private material.
    Reusable tools belong in `tools/` with tests; public text is English.
    Do not commit campaign machinery or a document per batch of work: no
    committed queues, lot registers, reservation databases, owner-local
