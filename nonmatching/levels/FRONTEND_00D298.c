@@ -20,8 +20,10 @@ extern u64 func_0000C190(u8, u8);
 extern void func_0000EA70(void *, s16, s16, s16, s16,
                           u8, u8, int, int, u32);
 
-void func_0000D298(float scale_x, float scale_y, s16 x, s16 y,
-                   const u8 *text)
+/* The retail ABI passes x/y/text in a0-a2 and scales in f12-f13.
+   The formal C parameter order remains provisional. */
+void func_00D298(s16 x, s16 y, const u8 *text,
+                 float scale_x, float scale_y)
 {
     u32 color = D_0002FDF0;
     if (text != 0) {

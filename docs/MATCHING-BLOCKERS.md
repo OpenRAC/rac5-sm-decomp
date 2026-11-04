@@ -337,7 +337,7 @@ excluded from its C size.
 | [`0x006B68`](../nonmatching/levels/FRONTEND_006B68.c), 768 bytes | `sdk991111sync` links 712 bytes, first difference at byte 0. Separate qualified routes reproduce the quadword save/restore or the synchronization, not both. | Establish a combined compiler profile with controls for both effects, then remeasure. |
 | [`0x0098C0`](../nonmatching/levels/FRONTEND_0098C0.c), 1,124 bytes | Pinned GNU EE links 1,108 bytes, first difference at byte 14. | Recover parameter live ranges and the 16-byte tag initialization. |
 | [`0x009D28`](../nonmatching/levels/FRONTEND_009D28.c), 1,064 bytes | Pinned GNU EE links 1,072 bytes, first difference at byte 28 in allocation of the alpha indicator. | Review the indicator's type and lifetime before trying another profile. |
-| [`0x00D298`](../nonmatching/levels/FRONTEND_00D298.c), 896 bytes | `gnu-ee-trial` links 872 bytes, first difference at byte 0; six call targets remain in order. | Recover the missing saved-register and branch structure. |
+| [`0x00D298`](../nonmatching/levels/FRONTEND_00D298.c), 896 bytes | `gnu-ee-trial` links 872 bytes, first difference at byte 0; six call targets remain in order. Its C signature now agrees with the exact 212-byte callers' register roles, while the original formal argument order remains unproved. | Recover the missing saved-register and branch structure. |
 | [`0x00D948`](../nonmatching/levels/FRONTEND_00D948.c), 744 bytes | `gnu-ee-trial-divpad` links 728 bytes, first difference at byte 16. | Resolve color-state register lifetime and glyph-unpacking schedule. |
 | [`0x00FC88`](../nonmatching/levels/FRONTEND_00FC88.c), 732 bytes | `gnu-ee-trial` links 736 bytes, first difference at byte 8. | Recover lifetimes of the module base, flags pointer and checksum. |
 | [`0x011AD8`](../nonmatching/levels/FRONTEND_011AD8.c), 744 bytes | `sdk991111sq` links 760 bytes, first difference at byte 0; its stack frame and final tail calls differ. | Find a measured source/profile that retains the retail quadword frame and call endings. |
@@ -367,6 +367,27 @@ record layout has not been independently confirmed.
 | [`0x112B28`](../nonmatching/levels/LEVEL_01_112B28.c), 1,068 bytes | `gnu-ee-trial-divpad` links 1,052 bytes, first difference at byte 108 in the first square root's FP destination register. | Recover five local FP slots and fallback branches before testing siblings. |
 | [`0x1210A0`](../nonmatching/levels/LEVEL_01_1210A0.c), 1,084 bytes | `gnu-ee-trial-divpad` links 1,100 bytes, first difference at byte 60 in floating-point load order. | Review vector products, small-norm fallback and the extra frame words. |
 | [`0x129968`](../nonmatching/levels/LEVEL_01_129968.c), 1,056 bytes | Pinned GNU EE links 1,044 bytes; first difference at byte 76 is a branch displacement after an exact prologue. | Recover error-path lengths and allocation lifetime while keeping the observed calls. |
+| [`0x08CDE0`](../nonmatching/levels/LEVEL_01_08CDE0.c), 188 bytes | Pinned GNU EE links 192 bytes, first difference at byte 14 in mask-register allocation; the 20 related placements have no exact result. | Confirm bitfield layout and aliasing, then relink the pilot before checking siblings. |
+| [`0x1D1248`](../nonmatching/levels/LEVEL_01_1D1248.c), 160 bytes | Pinned GNU EE links 160 bytes, first difference at byte 8 in saved-register allocation; all 26 related placements retain that mismatch. | Recover the lifetimes of the global base, output and input cursors, loop end and choice table. |
+
+## Corrected level-call hypotheses (4 November 2026)
+
+These C sources retain useful, nonmatching reconstructions. Each result is an
+isolated full-body linked comparison of USA `LEVEL_01.REL`; equal length does
+not establish a match. No C bytes are credited until the applicable placements
+and complete-module gates pass. The type and buffer limits below remain part
+of the hypothesis.
+
+| Source and retail body | Linked result | First difference | Reopen when | Type and bounds limit |
+| --- | --- | --- | --- | --- |
+| [`0x0B1D68`](../nonmatching/levels/LEVEL_01_0B1D68.c), 1,148 bytes | `gnu-ee-trial-divpad`: 1,124 bytes | Body byte 24; first difference beyond branch shape at 136 | Recover menu register lifetimes, color packing and branch layout. | `func_0AE708` has a retail-inferred `int(int, void *, float)` ABI; each output buffer is 16 bytes. |
+| [`0x0B1818`](../nonmatching/levels/LEVEL_01_0B1818.c), 1,120 bytes | `gnu-ee-trial-divpad`: 1,108 bytes | Body byte 48; first difference beyond branch shape at 200 | Recover menu register allocation and color-conversion order. | The retail-inferred `func_0AE708` ABI writes up to 16 output bytes. |
+| [`0x0D5668`](../nonmatching/levels/LEVEL_01_0D5668.c), 1,084 bytes | `gnu-ee-trial`: 1,104 bytes | Body byte 8 | Recover list layout and floating-point division schedule. | The bound for dynamic text passed to `sprintf` into 256 bytes remains unproved. |
+| [`0x0BF180`](../nonmatching/levels/LEVEL_01_0BF180.c), 1,188 bytes | `gnu-ee-trial`: 1,176 bytes | Body byte 4 | Recover menu register lifetimes and branch structure. | Its `UiSamples` output is 16 bytes under the retail-inferred `func_0AE708` ABI. |
+| [`0x0CC5D0`](../nonmatching/levels/LEVEL_01_0CC5D0.c), 584 bytes | Pinned GNU EE: 584 bytes | Body byte 12 | Recover menu-state register allocation without changing the 16-byte rectangle. | The fixed threshold table fits its four-byte text slots in the measured USA module. |
+| [`0x0D2408`](../nonmatching/levels/LEVEL_01_0D2408.c), 1,016 bytes | `gnu-ee-trial`: 1,016 bytes | Body byte 92 | Recover local pointer live ranges and recheck the full linked body. | Resource failure can leave later output bytes unwritten. |
+| [`0x083E38`](../nonmatching/levels/LEVEL_01_083E38.c), 1,068 bytes | `gnu-ee-trial-divpad`: 1,056 bytes | Body byte 60 | Resolve the first branch displacement, later register choices and division padding. | The accepted `func_125E78` uses 12/64/12-byte buffers. The trailing payload layout and outer item-array length remain runtime hypotheses. |
+| [`0x01EF20`](../nonmatching/levels/LEVEL_01_01EF20.c), 1,168 bytes | `gnu-ee-trial-divpad`: 1,168 bytes | Body byte 340 | Resolve the square-root padding class while preserving vector and matrix buffers. | The caller assumes a nonnegative count and readable 40-byte records. |
 
 ## Named import calls in accepted level bodies (4 November 2026)
 
@@ -395,9 +416,17 @@ here for contributors.
 
 ## What is left
 
-The level scope is **23,354 measured placements** of 1,436,868 placement bytes carried by **16,079
+The level scope is **23,606 measured placements** of 1,474,152 placement bytes carried by **16,320
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
+The eight newly accepted bounded families contribute 241 distinct C bodies
+and 252 placements (35,536 distinct-source bytes); their zero alignment tails
+are excluded. The 212-byte wrappers pass x/y/text and two scales in the
+retail registers, but the callee's original formal C parameter order is not
+uniquely recoverable from the ABI. The six pointer roles in the 68-byte helper
+family and some callee types in the 128-byte vector family remain provisional.
+The accepted 40-byte `LEVEL_01:0x123DC8` wrapper now passes its output pointer
+explicitly while retaining the same compiled object and retail bytes.
 The 713 linked C bodies cover 93,032 bytes including alignment. The profile
 files and their patches are the only place where a toolchain change is allowed
 to move a body.
