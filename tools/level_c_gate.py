@@ -43,7 +43,7 @@ WORD = struct.Struct("<I")
 BODY_HEADER = ["module", "offset", "size", "source"]
 SOURCE_HEADER = ["source", "source_sha256_lf", "object_sha256", "profile", "as"]
 BODY_PROFILES = ("pinned", "gnu-ee-trial", "gnu-ee-trial-divpad",
-                 "sdk991111", "sdk991111sync")
+                 "gnu-ee-trial-divpad-blockmove", "sdk991111", "sdk991111sync")
 BODY_ASSEMBLER = "gnu-ee-trial"
 BODY_PREFIX = "src/levels/bodies/"
 SHARED_0100 = "src/levels/shared/func_00000100.c"
@@ -724,9 +724,9 @@ def main() -> None:
                                    if row["profile"] == selector)
                      for selector in sorted({row["profile"] for row in body_rows})},
         "cc1_sha256": {
-            "pinned": base_profile["tools"]["cc1_sha256"],
-            "gnu-ee-trial":
-                base_profile["extra_compilers"]["gnu-ee-trial"]["tools"]["cc1_sha256"]},
+            selector: (base_profile["tools"]["cc1_sha256"] if selector == "pinned"
+                       else base_profile["extra_compilers"][selector]["tools"]["cc1_sha256"])
+            for selector in sorted({row["profile"] for row in body_rows})},
         "modules": sorted(bodies_by_module),
         "module_sha256": {module: known[module]
                           for module in sorted(bodies_by_module)},

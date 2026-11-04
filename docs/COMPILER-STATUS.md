@@ -565,3 +565,40 @@ Controls: the change is **additive**. The 177 level bodies accepted before
 it are recompiled with the new `cc1` and produce **byte-identical objects**,
 so no accepted body is disturbed. The boot campaign keeps its own profiles;
 the new chain is selected per source, like the others.
+
+## An opt-in correction for block-move loop counts
+
+The `gnu-ee-trial-divpad` compiler inserts one extra `nop` before each of
+two aggregate-copy loop branches in the 536- and 540-byte level record
+initializers. The words are already present in `cc1` assembly under
+`.set noreorder`; the assembler does not add them. A delayed-branch RTL dump
+places the branches directly after the pointer increments. The post-DBR
+`mips_r5900_pad_loops` pass counts a 32-byte `movstrsi_internal2` copy as
+one RTL instruction although it emits at least seven aligned or fifteen
+unaligned load/store words. The pass therefore mistakes these already-long
+loops for short ones.
+
+The [targeted source patch](../tools/compiler/patches/0004-rac5-blockmove-loopcount.patch)
+counts those emitted words only for this 32-byte block-move form. It is
+composed on a separate copy of the qualified `gnu-ee-trial-divpad` source;
+the existing compiler and every existing source routing stay unchanged.
+The opt-in selector `gnu-ee-trial-divpad-blockmove` pins the private `cc1`
+binary by SHA-256 in `config/boot/compiler_trial.json`.
+
+Isolated linked comparisons reproduce all 38 USA placements of the 536- and
+540-byte forms and four additional 528/532-byte record bodies. All 140
+previously accepted sources using `gnu-ee-trial-divpad` retain their pinned
+object SHA-256 and exact linked body at one representative placement each
+when compiled with the new `cc1`. These are profile controls. The accepted
+new sources also pass the complete USA module gate twice (hash refresh and
+normal hash-verifying run), **21/21 modules exact** on both passes. The
+compiler change is selected only on its measured source rows; the original
+`gnu-ee-trial-divpad` binary and source routing remain pinned.
+
+The patch is applied with `git apply` to the qualified source tree before
+building `cc1`; a separate rebuild reproduced its patched source hash and
+the pinned binary hash. The full ELF hash includes debug information and is
+sensitive to the absolute build directory. A reproducible build maps the
+working directory to the qualified build path with
+`-fdebug-prefix-map`; the emitted code and read-only data sections were
+identical even without that mapping. No compiler binary is committed.

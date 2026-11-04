@@ -884,6 +884,31 @@
         ],
         "as": []
       }
+    },
+    "gnu-ee-trial-divpad-blockmove": {
+      "id": "rac5-level-gnu-ee-trial-divpad-blockmove-loopcount-20261104",
+      "provenance": "Level-only opt-in copy of gnu-ee-trial-divpad (base cc1 SHA-256 d7f3fb64a496b231c0539d26666b90fb1916f6f4da1432bb649f0646fb758186). The project patch counts emitted load/store words of 32-byte R5900 block moves in the post-DBR short-loop pass instead of treating each RTL node as one word. Isolated linked comparisons reproduce 18/18 540-byte and 20/20 536-byte placements; all 140 previously accepted objects using the base divpad profile retain their pinned object SHA-256. Select this compiler only for individually measured level sources.",
+      "status": "measured per source; level-only",
+      "host": "linux",
+      "patch": {
+        "path": "tools/compiler/patches/0004-rac5-blockmove-loopcount.patch",
+        "sha256_lf": "26fc2d9b55a45b70137acb8bceb9d33006f0dd6351af6d42ed2c550d4e2067a1"
+      },
+      "tools": {
+        "driver": "xgcc",
+        "driver_sha256": "4c8149cc96021253ac9863d670ada372e29f71af80ae91934c195cc4c6a3b2d6",
+        "libexec": ".",
+        "cpp": "cpp",
+        "cpp_sha256": "2ac3d8d3ca177e6705ac2cbdd1bd9e9a7181ac3e40f6230dea6875c3218ec155",
+        "cc1": "cc1",
+        "cc1_sha256": "e70f72fa18b579185a3467c235896413a329610814d7a6559b473d6acbf41adf"
+      },
+      "flags": {
+        "driver": [
+          "-S"
+        ],
+        "as": []
+      }
     }
   },
   "extra_assemblers": {

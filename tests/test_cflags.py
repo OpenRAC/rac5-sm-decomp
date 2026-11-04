@@ -60,6 +60,7 @@ class CFlagsTests(unittest.TestCase):
             self.assertEqual(len(pinned["tools"][key]), 64)
         self.assertEqual(cflags.pinned_compilers(),
                          (cflags.DEFAULT_COMPILER, "gnu-ee-trial", LEVEL_DIVPAD,
+                          "gnu-ee-trial-divpad-blockmove",
                           SECOND, DIVPAD, SONY, SQ, SYNC))
         self.assertTrue(cflags.Entry(SECOND, ("-O2",)).compiler != cflags.DEFAULT_COMPILER)
         self.assertTrue(cflags.DEFAULT_ENTRY.pinned)
