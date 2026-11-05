@@ -9,12 +9,12 @@ typedef struct {
 
 extern double func_1DA738(float value);
 extern double sqrt(double value);
-extern void func_1DA448(double value);
+extern float func_1DA448(double value);
 
-void func_11F040(Vec *a0)
+float func_11F040(Vec *a0)
 {
     float len = a0->f_0C * a0->f_0C + a0->f_00 * a0->f_00
                 + a0->f_04 * a0->f_04 + a0->f_08 * a0->f_08;
 
-    func_1DA448(sqrt(func_1DA738(len)));
+    return func_1DA448(sqrt(func_1DA738(len)));
 }

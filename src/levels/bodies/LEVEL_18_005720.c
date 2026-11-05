@@ -5,13 +5,13 @@ typedef struct {
     float z;
 } V3;
 
-extern void func_0056B8(V3 *out, V3 *b);
+extern void func_0056B8(float *out, float *in, float s);
 
-void func_005720(V3 *a0, V3 *a1, V3 *a2)
+void func_005720(V3 *a0, V3 *a1, V3 *a2, float s)
 {
     V3 r;
 
-    func_0056B8(&r, a2);
+    func_0056B8((float *)(&r), (float *)(a2), s);
     a0->x = a1->x + r.x;
     a0->y = a1->y + r.y;
     a0->z = a1->z + r.z;

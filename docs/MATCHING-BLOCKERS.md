@@ -313,7 +313,12 @@ not been claimed.
 | [`0x0876B8`](../nonmatching/levels/LEVEL_01_0876B8.c), 1,840 bytes | Pinned GNU EE: 1,836 bytes; first difference at body byte 0. The source retains the pad API calls and 68-byte copy, but saves an extra register and uses a 64-byte rather than 48-byte stack frame. | Review the lifetime of the pad-mode return value and related register allocation; verify other family members only after this body matches. |
 | [`0x0AC5B8`](../nonmatching/levels/LEVEL_01_0AC5B8.c), 1,196 bytes | `gnu-ee-trial`: 1,200 bytes; first difference at body byte 12 in the saved-register sequence. The representative boundary excludes the following zero word. | Find a source/prototype with the required floating-point argument and five stack temporaries, then recheck the linked body. |
 | [`0x0C0F50`](../nonmatching/levels/LEVEL_01_0C0F50.c), 1,996 bytes | `gnu-ee-trial-divpad`: 2,020 bytes; first difference at byte 56 in a branch displacement, first different non-branch code at byte 376. Sixty call targets remain in the same order. | Review global index arithmetic and division padding before treating the structural family as one source identity. |
-| [`0x0C0EB8`](../nonmatching/levels/LEVEL_01_0C0EB8.c), 148 bytes | Pinned GNU EE: 172 bytes; first difference at body byte 4. Three control-flow variants remained different. | Revisit nested search control flow, field widths and the candidate boundary before another compiler variant. |
+| [`0x0C0EB8`](../nonmatching/levels/LEVEL_01_0C0EB8.c), 148 bytes | Pinned GNU EE links 160 bytes; first difference remains at body byte 4. The typed two-table search preserves the current pointer-key ABI and both local data targets, and raises the common word subsequence from 19 to 25 of 37 retail words. | Recover the shared zero-return branch and first-stage cursor register while preserving the two record strides and key comparisons. |
+| [`0x0588A8`](../nonmatching/levels/LEVEL_01_0588A8.c), 280 bytes | Pinned GNU EE links 276 bytes; first difference at body byte 25 changes the initial float register (`f3` retail, `f1` C). Both local calls keep their targets but occur four bytes early. All 20 structural placements differ. | Recover the state-field initialization order and float live ranges that add the missing instruction before the calls. |
+| [`0x094098`](../nonmatching/levels/LEVEL_01_094098.c), 280 bytes | Pinned GNU EE links 280 bytes; first difference at body byte 37 is the outer-loop index register. All 20 structural placements differ, while the named `g_MaterialHasBloomedThisFrame` import is retained. | Recover nested-loop register lifetimes and field-store scheduling before another family-wide linked comparison. |
+| [`0x098108`](../nonmatching/levels/LEVEL_01_098108.c), 236 bytes | Pinned GNU EE links 240 bytes; first difference at body byte 1 is list-owner register allocation. The compiler also adds a divide-by-zero check absent from retail. Only the representative is measured. | Qualify a compiler route for the retail `divu` shape and recover the entry register lifetimes before deriving placements. |
+| [`0x164708`](../nonmatching/levels/LEVEL_01_164708.c), 124 bytes | Pinned GNU EE links 124 bytes; first difference at body byte 0 loads `D_00207558` before the retail float constant. Only the representative is measured. | Recover the global-load and float-constant scheduling in pure C before deriving the 16 structural placements. |
+| [`0x11E9A8`](../nonmatching/levels/LEVEL_01_11E9A8.c), 264 bytes | Pinned GNU EE links 264 bytes; first difference at body byte 88 is a branch displacement. Both local calls keep their sites and targets; all 20 structural placements differ at byte 88. | Recover the float return-value lifetime and store/branch form after the second call while preserving the retail comparison's NaN behavior. |
 | [`0x0CD700`](../nonmatching/levels/LEVEL_01_0CD700.c), 1,880 bytes | `gnu-ee-trial`: 1,848 bytes; first difference at body byte 0 for the retained clean source. A structural probe moved the first difference to byte 72 but did not match the six-entry copy loop. | Verify loop register lifetimes, source ABI and the candidate boundary before testing another form. |
 | [`0x0FF2B8`](../nonmatching/levels/LEVEL_01_0FF2B8.c), 2,004 bytes | `gnu-ee-trial-divpad`: 2,048 bytes; first difference at body byte 0. Eight `memset` calls appear, but the stack frame is 400 bytes instead of the reference's 416. | Recover local variable lifetimes and frame layout while preserving the eight calls and reviewed return/delay slot. |
 | [`0x110D70`](../nonmatching/levels/LEVEL_01_110D70.c), 1,184 bytes | Pinned GNU EE: 1,092 bytes; first difference at body byte 0. The current geometry source differs substantially beyond the prologue. | Revisit prototypes, vertex-selection logic and temporaries before trying another compiler profile. |
@@ -334,7 +339,7 @@ excluded from its C size.
 | Source and candidate extent | Measured result | Reopening condition |
 | --- | --- | --- |
 | [`0x006850`](../nonmatching/levels/FRONTEND_006850.c), 788 bytes | `sdk991111sync` links 784 bytes, first difference at byte 0; it supplies the required synchronization but its stack frame differs. | Find a qualified C compiler route that emits both the synchronization and the retail prologue. |
-| [`0x006B68`](../nonmatching/levels/FRONTEND_006B68.c), 768 bytes | `sdk991111sync` links 712 bytes, first difference at byte 0. Separate qualified routes reproduce the quadword save/restore or the synchronization, not both. | Establish a combined compiler profile with controls for both effects, then remeasure. |
+| [`0x006B68`](../nonmatching/levels/FRONTEND_006B68.c), 768 bytes | Corrected C passes `&gRT_BackBuffer` to the late `func_0000A650` call, consistent with the retail relocation at that call. SHA-pinned `sdk991111sync` links 712 bytes and first differs at byte 0 with a 96-byte frame. An experimental per-source selective `$s0` quadword-save route links 712 bytes and first differs at byte 4 with a 64-byte frame, two `sq`, one `lq`, and five `sd`/`ld` pairs versus the retail six pairs. Neither is byte-exact. | Recover the source lifetimes that retain the incoming argument in `$s5`, the missing save/restore pair, and the original return path; then qualify the selective route with accepted controls and compare the complete linked body and module. |
 | [`0x0098C0`](../nonmatching/levels/FRONTEND_0098C0.c), 1,124 bytes | Pinned GNU EE links 1,108 bytes, first difference at byte 14. | Recover parameter live ranges and the 16-byte tag initialization. |
 | [`0x009D28`](../nonmatching/levels/FRONTEND_009D28.c), 1,064 bytes | Pinned GNU EE links 1,072 bytes, first difference at byte 28 in allocation of the alpha indicator. | Review the indicator's type and lifetime before trying another profile. |
 | [`0x00D298`](../nonmatching/levels/FRONTEND_00D298.c), 896 bytes | `gnu-ee-trial` links 872 bytes, first difference at byte 0; six call targets remain in order. Its C signature now agrees with the exact 212-byte callers' register roles, while the original formal argument order remains unproved. | Recover the missing saved-register and branch structure. |
@@ -345,6 +350,20 @@ excluded from its C size.
 | [`0x016CD8`](../nonmatching/levels/FRONTEND_016CD8.c), 1,012 bytes | Pinned GNU EE links 1,012 bytes, first difference at byte 470; the remaining register allocation differs despite equal length. | Recover the C expression and temporary lifetime that select the retail general registers. |
 | [`0x01F9A0`](../nonmatching/levels/FRONTEND_01F9A0.c), 984 bytes | Pinned GNU EE links 968 bytes, first difference at byte 12. | Recover the parameter and local-variable live ranges. |
 | [`0x024A70`](../nonmatching/levels/FRONTEND_024A70.c), 816 bytes | `sdk991111` links 760 bytes, first difference at byte 8; its frame agrees more closely than GNU's but the body is incomplete. | Reconstruct the packed node traversal and saved-value lifetimes. |
+
+## R5900 quad-save level prologues (4 November 2026)
+
+A bounded USA-level scan found **236 candidate placements in 14 normalized
+shapes** whose prologues save `$s0`–`$s7` and `$fp` with `sq`, then `$ra`
+with `sd`; none is accepted C. Pinned GNU EE and `sdk991111` use doubleword
+saves. The boot-only `sdk991111sq` route saves `$s0`–`$s7` as quadwords but
+leaves `$fp` doubleword and reverses the retail slot order. A private opt-in
+cc1 corrected the widths and slot order on a register-pressure witness, yet
+pure C for `LEVEL_01.REL:0x0A2630` linked **656/948 bytes**, first differing
+at byte 0. An accepted leaf control stayed exact; a nonleaf control regressed.
+This is not a qualified general replacement. Reopen with a C body and a
+measured per-source profile that match all 948 linked bytes, then prove its
+20 placements and the complete-module gates. No C bytes are credited.
 
 ## Further level C attempts (4 November 2026)
 
@@ -410,10 +429,13 @@ provisional where the retail callee has not established them.
 | [`LEVEL_01:0x068DB8`](../nonmatching/levels/LEVEL_01_068DB8.c), 912 bytes | Pinned GNU EE: 872 bytes; first difference at byte 282 in local float/register scheduling. Eight local calls retain their order. | Recover the two angle temporaries and record-tail pointer lifetime, then the later field stores. | The accepted angle helper's pointer roles are aligned; other record fields and helper prototypes remain provisional. |
 | [`LEVEL_01:0x08C960`](../nonmatching/levels/LEVEL_01_08C960.c), 924 bytes | Pinned GNU EE: 912 bytes; first difference at byte 0; the C frame is `0x120` against retail `0xE0`. Three named calls retain their order. | Recover display-list payload layout and register lifetimes before further placements. | Two payloads and the display-list packet structure remain layout hypotheses; named data imports are distinct from calls. |
 | [`LEVEL_01:0x098FD0`](../nonmatching/levels/LEVEL_01_098FD0.c), 852 bytes | Pinned GNU EE: 812 bytes; first difference at byte 4. Six local calls retain their order. | Recover record-base and slot-index live ranges and missing call-argument setup. | The unaligned 64-byte copy is expressed in C; the last callee prototype and record layout remain provisional. |
+| [`LEVEL_01:0x0B9E90`](../nonmatching/levels/LEVEL_01_0B9E90.c), 200 bytes | Pinned GNU EE with source-specific `-mno-check-zero-division`: 200 bytes, first difference at body byte 118, 46/50 words identical; without that flag the linked body is 208 bytes. | Recover the argument-register live ranges for `right - 16` and constant `2`, then reprove all 20 related placements. | The local helper's integer return is supported by retail arithmetic and preserves all 21 accepted helper poses; the UI record layout remains provisional. |
 | [`LEVEL_01:0x19CEB0`](../nonmatching/levels/LEVEL_01_19CEB0.c), 436 bytes | `gnu-ee-trial`: 428 bytes; first difference at byte 76 in the x-coordinate load. Four local calls are eight bytes early in the C. | Recover the x/y/z load-and-store order while preserving callee register flow. | The local callee's detailed prototype is an ABI hypothesis from retail register use. |
 | [`LEVEL_01:0x1B4330`](../nonmatching/levels/LEVEL_01_1B4330.c), 628 bytes | `gnu-ee-trial-divpad`: 588 bytes; first difference at byte 6 in register allocation. | Recover basis-local scheduling and record-search control flow before other placements. | One `sqrtf` import and two local calls are measured; record and service types remain provisional. |
 | [`LEVEL_01:0x1CAAE8`](../nonmatching/levels/LEVEL_01_1CAAE8.c), 296 bytes | Pinned GNU EE: 276 bytes; first difference at byte 1 in the object-pointer register (`t4` retail, `t2` compiled). | Recover the pointer and float-temporary lifetimes or copy shape, then relink the pilot. | No calls or imports; both lazy record initializations are retained but field roles are provisional. |
 | [`FRONTEND:0x0073B8`](../nonmatching/levels/FRONTEND_0073B8.c), 284 bytes | `gnu-ee-trial`: 284 bytes; first difference at byte 172 in UI-field load scheduling. | Recover the four UI-field register live ranges or qualify a new compiler profile. | Three named display-list calls and the two named data imports are retained; the local UI state is 20 bytes. |
+
+| [`LEVEL_01:0x001740`](../nonmatching/levels/LEVEL_01_001740.c), 260 bytes | Pinned GNU EE: 260 bytes; first difference at body byte 9 in float-register allocation. All 20 structural placements retain two named local calls but none matches. | Recover the float-register lifetime and field-store order while preserving the 64-byte copy and call identities. | Record field roles and the registration helper's return type remain provisional. |
 
 ## Named import calls in accepted level bodies (4 November 2026)
 
@@ -430,7 +452,7 @@ it was split into seven named C sources and 125 placement paths were
 reassigned. All **496/496** affected placements remain byte-exact after
 relinking. The strict level gate now checks every named imported call of
 accepted C, including the shared-level and frontend witnesses. Its normal
-complete-module run reports **2,913 body import sites + 24 witness sites,
+complete-module run reports **2,933 body import sites + 24 witness sites,
 zero mismatches and 21/21 complete modules exact**.
 
 The split adds six authored source definitions and **168 bytes to the
@@ -455,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **23,721 measured placements** of 1,517,508 placement bytes carried by **16,432
+The level scope is **23,794 measured placements** of 1,530,668 placement bytes carried by **16,502
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -472,6 +494,11 @@ zero alignment tails are excluded. Fifty-nine already accepted C definitions
 also now make implicit call arguments or returns explicit without changing
 their pinned objects or linked retail bytes. Other source-level ABI contracts
 remain under review even where the compiled bytes match.
+Four more bounded families (132, 100, 300 and 176 bytes) add **70 C sources,
+73 placements and 12,584 distinct-source bytes**. Their accepted C retains
+the measured data relocations and named `sqrtf` imports. Additional accepted
+wrappers now pass their consumed GPR and FPR arguments explicitly, without
+changing their pinned objects or linked retail bodies.
 The 713 linked C bodies cover 93,032 bytes including alignment. The profile
 files and their patches are the only place where a toolchain change is allowed
 to move a body.

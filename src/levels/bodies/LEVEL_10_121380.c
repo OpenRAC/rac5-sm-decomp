@@ -1,5 +1,7 @@
-extern void func_121758(void);
-
-void func_121380(void) {
-    func_121758();
+typedef struct { float m[9]; } Mat3;
+typedef struct { float x, y, z, w; } Quat;
+extern void func_121758(Mat3 *, const Quat *);
+void func_121380(Mat3 *dst, const Quat *source)
+{
+    func_121758(dst, source);
 }

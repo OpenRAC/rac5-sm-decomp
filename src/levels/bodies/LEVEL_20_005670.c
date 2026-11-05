@@ -7,13 +7,13 @@ typedef struct {
     float z;
 } Vec;
 
-extern void func_005608(Vec *out, void *ctx);
+extern void func_005608(float *out, float *in, float s);
 
-void func_005670(Vec *a0, Vec *a1, void *a2)
+void func_005670(Vec *a0, Vec *a1, void *a2, float s)
 {
     Vec t;
 
-    func_005608(&t, a2);
+    func_005608((float *)(&t), (float *)(a2), s);
     a0->x = a1->x + t.x;
     a0->y = a1->y + t.y;
     a0->z = a1->z + t.z;

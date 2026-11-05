@@ -8,14 +8,14 @@ typedef struct {
 
 extern struct { H *p; } D_001A570C;
 
-extern int func_079008(void);
+extern int func_079008(int value);
 extern int func_078DA8(float a, float b);
 
-int func_078E88(void)
+int func_078E88(int value)
 {
     int r;
 
-    if (func_079008())
+    if (func_079008(value))
         r = D_001A570C.p->f108 | func_078DA8(D_001A570C.p->f134,
                                               D_001A570C.p->f138);
     else

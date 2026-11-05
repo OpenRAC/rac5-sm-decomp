@@ -1,6 +1,6 @@
-extern void func_134290(void *value);
+extern void func_134290(float *m, float *q);
 
-void *func_134358(void *value) {
-    func_134290(value);
-    return value;
+float *func_134358(float *m, float *q) {
+    func_134290(m, q);
+    return m;
 }

@@ -1,6 +1,6 @@
-extern void func_0FC2E8(void *value);
+extern void func_0FC2E8(float *m, float *q);
 
-void *func_0FC3B0(void *value) {
-    func_0FC2E8(value);
-    return value;
+float *func_0FC3B0(float *m, float *q) {
+    func_0FC2E8(m, q);
+    return m;
 }
