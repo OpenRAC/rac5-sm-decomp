@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **24,725 measured placements** of 1,566,164 placement bytes carried by **16,576
+The level scope is **25,156 measured placements** of 1,571,720 placement bytes carried by **16,599
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -537,7 +537,7 @@ These candidate entries have source-level C retained under `nonmatching/levels/`
 
 ## Short raw-identical level-body candidates (5 November 2026)
 
-The following USA candidate bodies are raw-identical across the listed numbered levels and contain no body relocations. This is boundary and code-shape evidence only; each retained C source differs in an isolated linked trial and none of its placements earns C credit. Fifty reviewed families in this size range have passed the complete 21-module gate as accepted C. Eight new 16–32-byte forms cover 148 linked placements with 168 distinct-source bytes: a floating-point constant return, conditional field assignment, two unsigned range tests, a range-length accessor, a state store, a floating-point affine result and three field clears. Each source links exactly at all 12–20 of its reviewed placements.
+The following USA candidate bodies are raw-identical across the listed numbered levels and contain no body relocations. This is boundary and code-shape evidence only; each retained C source differs in an isolated linked trial and none of its placements earns C credit. Seventy-three reviewed families in this size range have passed the complete 21-module gate as accepted C. Eight 16–32-byte forms cover 148 linked placements with 168 distinct-source bytes: a floating-point constant return, conditional field assignment, two unsigned range tests, a range-length accessor, a state store, a floating-point affine result and three field clears. Another 23 source forms add 429 exact placements and 296 distinct-source bytes; two more placements reuse an existing qualified C source. Each new placement was linked independently before the complete-module gate.
 
 | Representative | Retail body | Candidate placements | Best isolated trial | Reopening condition |
 | --- | ---: | ---: | --- | --- |
@@ -558,3 +558,6 @@ The following USA candidate bodies are raw-identical across the listed numbered 
 | [`0x09FB18`](../nonmatching/levels/LEVEL_01_09FB18.c) | 36 B | 20 | pinned: 36 B, first difference +8 | Recover the self-linked node pointer-store order relative to the four zeroed fields. |
 | [`0x04B4C0`](../nonmatching/levels/LEVEL_01_04B4C0.c) | 32 B | 20 | pinned: 44 B, first difference +5 | The 64-bit clear mask materializes too long; test a natural source form or a narrowly qualified opt-in compiler remedy with prior-mask controls. |
 | [`0x06DDE8`](../nonmatching/levels/LEVEL_01_06DDE8.c) | 36 B | 13 | pinned: 44 B, first difference +20 | The compiler inserts a redundant zero-divisor trap before modulo by the constant 12; qualify a narrow source/compiler remedy with controls for accepted division users. |
+| [`0x036648`](../nonmatching/levels/LEVEL_01_036648.c) | 52 B | 20 | `gnu-ee-trial-divpad`: 56 B, first difference +40 | The profile inserts one more padding word before the second floating division; qualify a source-specific schedule with controls for accepted division users. |
+| [`0x0B91F0`](../nonmatching/levels/LEVEL_01_0B91F0.c) | 12 B | 20 | pinned: 12 B, first difference +0 | The compiler folds the unsigned constant comparison into a different instruction form; recover the original source or a narrow qualified profile. |
+| [`0x049780`](../nonmatching/levels/LEVEL_01_049780.c) | 12 B | 15 | pinned: 8 B, first difference +0 | The no-op C body drops retail's balanced stack frame; establish the frame's source-level cause or original compiler behavior. |
