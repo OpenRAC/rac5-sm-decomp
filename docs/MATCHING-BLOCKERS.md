@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **28,019 measured placements** of 1,649,864 placement bytes carried by **18,885
+The level scope is **28,245 measured placements** of 1,658,904 placement bytes carried by **19,089
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -690,6 +690,14 @@ other calls keep their local target. Callback pointers into code are kept
 distinct from level-data addresses. Measured byte fields, record offsets,
 signed literal width and store order account for the exact C forms. Eight
 identical sources were relinked at both sites before the 21-module gate passed.
+
+Another 226 reviewed 40-byte call bodies link exactly from 204 C sources
+(9,040 placement bytes, 8,160 distinct-source bytes). Thirteen imported
+`SignalSema` calls keep their exact name; the other calls retain their local
+target. The retail argument register use showed a forwarded semaphore ID,
+floating-point constants and a longer wrapper that inserts an argument into
+the outgoing register bank. Twenty-two identical sources were relinked at
+both sites before the 21-module gate passed.
 
 Four pointer-condition bodies remain nonmatching (for example,
 [`LEVEL_02:0x1D2090`](../nonmatching/levels/LEVEL_02_1D2090.c)). The retained

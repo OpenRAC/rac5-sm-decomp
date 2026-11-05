@@ -345,14 +345,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 28,019 accepted placements with 2,308 SN link invocations;
+all 21 USA modules and 28,245 accepted placements with 2,314 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**28,019 placements** in **18,885 sources**, **1,649,864 placement
-bytes**, **1,241,624 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**28,245 placements** in **19,089 sources**, **1,658,904 placement
+bytes**, **1,249,784 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -430,3 +430,10 @@ bytes). The 20 named `SND_FixupSoundSignaturesIOP` imports retain their exact
 identity, and local calls keep their measured targets. Eight identical
 sources were relinked at both sites. Every retail interval returns at byte
 28 with its delay slot at byte 32, and all 21 modules remain exact.
+
+Another 226 reviewed 40-byte call bodies link exactly from 204 C sources
+(9,040 placement bytes, 8,160 distinct-source bytes). Thirteen named
+`SignalSema` calls keep their import identity; the other calls keep their
+measured local targets. Twenty-two identical sources were relinked at a
+second placement. Every retail interval returns at byte 32 with its delay
+slot at byte 36, and all 21 modules remain exact.
