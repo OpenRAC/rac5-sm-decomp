@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **23,818 measured placements** of 1,531,872 placement bytes carried by **16,526
+The level scope is **23,955 measured placements** of 1,539,680 placement bytes carried by **16,533
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -534,3 +534,20 @@ These candidate entries have source-level C retained under `nonmatching/levels/`
 | [`0x024140`](../nonmatching/levels/FRONTEND_024140.c) | 64 B | pinned: 64 B, first difference +12 | Recover the local float store versus output-pointer setup around the first call. |
 | [`0x026878`](../nonmatching/levels/FRONTEND_026878.c) | 64 B | pinned: 48 B, first difference +0 | Recover the saved-register frame and comparison-result lifetime around the imported strcmp call. |
 | [`0x0275D0`](../nonmatching/levels/FRONTEND_0275D0.c) | 52 B | pinned: 52 B, first difference +2 | Recover the lazy-initialization pointer test and its address/register lifetimes without an artificial null check. |
+
+## Short raw-identical level-body candidates (5 November 2026)
+
+The following USA candidate bodies are raw-identical across the listed numbered levels and contain no body relocations. This is boundary and code-shape evidence only; each retained C source differs in an isolated linked trial and none of its placements earns C credit. Seven other reviewed families in this size range have passed the complete 21-module gate as accepted C.
+
+| Representative | Retail body | Candidate placements | Best isolated trial | Reopening condition |
+| --- | ---: | ---: | --- | --- |
+| [`0x0B9800`](../nonmatching/levels/LEVEL_01_0B9800.c) | 64 B | 20 | pinned: 64 B, first difference +24 | Recover the array-index shift before the record-stride multiply and their temporary-register lifetimes. |
+| [`0x058738`](../nonmatching/levels/LEVEL_01_058738.c) | 60 B | 20 | pinned: 60 B, first difference +15 | Recover the local zero-float and stack pointer selection after the initial field load. |
+| [`0x0BCBA0`](../nonmatching/levels/LEVEL_01_0BCBA0.c) | 60 B | 20 | pinned: 56 B, first difference +0 | Recover the owner-pointer lifetime and the two-stage count/output checks. |
+| [`0x129DF8`](../nonmatching/levels/LEVEL_01_129DF8.c) | 56 B | 20 | pinned: 56 B, first difference +8 | Recover the linked-list loop entry without the compiler shortening it to a branch-likely return. |
+| [`0x037238`](../nonmatching/levels/LEVEL_01_037238.c) | 52 B | 20 | pinned: 56 B, first difference +2 | Recover the insertion-loop entry and value truncation before the first comparison. |
+| [`0x03C0E8`](../nonmatching/levels/LEVEL_01_03C0E8.c) | 52 B | 20 | pinned: 56 B, first difference +9 | Recover the retail 64-bit clear-mask materialization and final field update. |
+| [`0x02E568`](../nonmatching/levels/LEVEL_01_02E568.c) | 48 B | 20 | pinned: 48 B, first difference +6 | Recover the three field-load lifetimes and subtraction register assignment. |
+| [`0x03BF08`](../nonmatching/levels/LEVEL_01_03BF08.c) | 48 B | 20 | pinned: 48 B, first difference +2 | Recover the child-pointer and flag temporary registers while keeping the short signed clear mask. |
+| [`0x03BF60`](../nonmatching/levels/LEVEL_01_03BF60.c) | 48 B | 20 | pinned: 48 B, first difference +2 | Recover the child-pointer and flag temporary registers while keeping the short signed clear mask. |
+| [`0x0A60C8`](../nonmatching/levels/LEVEL_01_0A60C8.c) | 48 B | 20 | pinned: 48 B, first difference +4 | Recover the packed high-byte extraction and alpha mask scheduling before field stores. |
