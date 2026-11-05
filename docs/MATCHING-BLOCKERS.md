@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **27,789 measured placements** of 1,641,584 placement bytes carried by **18,663
+The level scope is **28,019 measured placements** of 1,649,864 placement bytes carried by **18,885
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -682,6 +682,14 @@ from 179 C sources (6,696 placement bytes, 6,444 distinct-source bytes).
 Seven identical sources were relinked at their second placement before the
 complete 21-module gate passed. Signed bounds, natural branch direction and
 the arithmetic expression tree preserve the retail instruction order.
+
+Another 230 reviewed 36-byte placements with three to eight relocations
+link exactly from 222 C sources (8,280 placement bytes, 7,992 distinct-source
+bytes). The 20 named `SND_FixupSoundSignaturesIOP` imports keep their identity;
+other calls keep their local target. Callback pointers into code are kept
+distinct from level-data addresses. Measured byte fields, record offsets,
+signed literal width and store order account for the exact C forms. Eight
+identical sources were relinked at both sites before the 21-module gate passed.
 
 Four pointer-condition bodies remain nonmatching (for example,
 [`LEVEL_02:0x1D2090`](../nonmatching/levels/LEVEL_02_1D2090.c)). The retained
