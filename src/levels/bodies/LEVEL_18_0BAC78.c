@@ -1,0 +1,10 @@
+extern void func_10F990(void);
+extern void func_0946D8(void);
+extern void func_0A40A8(int);
+
+void func_0BAC78(void)
+{
+    func_10F990();
+    func_0946D8();
+    func_0A40A8(7);
+}
