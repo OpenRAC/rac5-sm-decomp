@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **27,169 measured placements** of 1,620,164 placement bytes carried by **18,087
+The level scope is **27,300 measured placements** of 1,624,356 placement bytes carried by **18,212
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -654,6 +654,22 @@ the measured targets, and 20 imported `memset` calls keep that exact name.
 The pointer and floating-point argument forms were confirmed by the retail
 register use; eight identical sources were relinked at their other placement
 before the complete 21-module gate passed.
+
+Another 131 reviewed 32-byte local-data placements with one HI16/LO16 pair
+link exactly from 125 C sources (4,192 placement bytes, 4,000 distinct-source
+bytes). Six identical sources were relinked at their second placement before
+the complete 21-module gate passed. Byte and record-field source forms retain
+the retail base and displacement where a flattened Ghidra address did not.
+
+Twenty halfword-mask bodies remain nonmatching (for example,
+[`LEVEL_01:0x027528`](../nonmatching/levels/LEVEL_01_027528.c)). The pinned C
+object is 32 bytes, but first differs at byte 6 because the mask and data
+pointer temporaries use the opposite registers. Reordering the operands,
+using local pointers, a typed field view and a separate bit-array base did
+not change the register assignment. Five other qualified `cc1` routes on
+the representative had the same difference. Reopen with a source-level
+lifetime that selects the retail registers or a narrowly qualified compiler
+remedy; all 20 retained C attempts remain uncounted.
 
 Twenty-one `asyncPs2fioLseek` wrappers remain nonmatching: the existing
 [`FRONTEND:0x002620`](../nonmatching/levels/FRONTEND_002620.c) attempt and
