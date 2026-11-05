@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **27,300 measured placements** of 1,624,356 placement bytes carried by **18,212
+The level scope is **27,394 measured placements** of 1,627,364 placement bytes carried by **18,302
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -660,6 +660,15 @@ link exactly from 125 C sources (4,192 placement bytes, 4,000 distinct-source
 bytes). Six identical sources were relinked at their second placement before
 the complete 21-module gate passed. Byte and record-field source forms retain
 the retail base and displacement where a flattened Ghidra address did not.
+
+Another 94 reviewed 32-byte placements with three, four or six relocations
+link exactly from 90 C sources (3,008 placement bytes, 2,880 distinct-source
+bytes). The imported `SND_Fixup` call retains its exact name at 20 sites; 21
+other sites retain local call targets. Code-pointer arguments are distinguished
+from level-data pointers using the measured code boundary. For the three-global
+store form, placing the two zero stores first in C yields the retail byte
+store first after compilation. Four identical sources were relinked at both
+sites before the complete 21-module gate passed.
 
 Twenty halfword-mask bodies remain nonmatching (for example,
 [`LEVEL_01:0x027528`](../nonmatching/levels/LEVEL_01_027528.c)). The pinned C
