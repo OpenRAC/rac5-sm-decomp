@@ -345,14 +345,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 29,281 accepted placements with 2,334 SN link invocations;
+all 21 USA modules and 29,396 accepted placements with 2,335 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**29,281 placements** in **20,086 sources**, **1,702,196 placement
-bytes**, **1,291,400 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**29,396 placements** in **20,195 sources**, **1,707,256 placement
+bytes**, **1,296,196 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -485,3 +485,12 @@ canonical file linked exactly at both sites. One further call wrapper has
 retained C under `nonmatching/levels/` without match credit. Every retail
 interval returns at byte 36 with its delay slot at byte 40, and all 21
 complete modules remain exact.
+
+Another 115 reviewed 44-byte placements with four relocations link exactly
+from 109 authored C sources (5,060 placement bytes and 4,796 distinct-source
+bytes). Six additional placements reuse an identical source after the
+canonical file linked exactly at both sites. The named
+`PS2HEAP_Free__FPv` import remains named at its 20 call placements. Twenty
+other reviewed C attempts stay in `nonmatching/levels/` without match credit.
+All 135 retail intervals return at byte 36 with their delay slot at byte 40;
+all 21 complete modules remain exact.
