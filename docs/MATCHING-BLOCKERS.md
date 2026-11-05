@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **28,592 measured placements** of 1,672,784 placement bytes carried by **19,436
+The level scope is **28,818 measured placements** of 1,681,824 placement bytes carried by **19,652
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -710,6 +710,26 @@ Another 91 reviewed 40-byte placements in levels 19–24 link exactly from
 40-byte placements remain nonmatching with retained C because they reproduce
 the signed-test or boolean-conversion differences documented below. The
 complete 21-module gate passes; the seven retained bodies earn no C credit.
+
+Another 226 reviewed 40-byte placements with three or more relocations link
+exactly from 216 C sources (9,040 placement bytes, 8,640 distinct-source
+bytes). Ten C sources each reproduce two placements in levels 15 and 21,
+independently recompiled and linked at both sites. The full 21-module gate
+passes. Fifteen other sites keep their C attempts in `nonmatching/levels/`
+without match credit:
+
+- Thirteen boolean-return bodies (for example,
+  [`LEVEL_01:0x0133C0`](../nonmatching/levels/LEVEL_01_0133C0.c)) link 36
+  bytes against the 40-byte retail body. The first difference is the branch
+  displacement at byte 12; the retail path retains an extra value transfer
+  before returning. Natural conditional forms and five qualified `cc1`
+  routes did not restore it. Reopen with evidence for the original value
+  lifetime or a qualified compiler route.
+- Two call wrappers (for example,
+  [`LEVEL_02:0x03FBD0`](../nonmatching/levels/LEVEL_02_03FBD0.c)) link the
+  correct 40 bytes but first differ at byte 8. The compiler swaps a parameter
+  move with local-address setup. Reopen with a natural source form or a
+  qualified compiler route that preserves the retail order.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C

@@ -1,0 +1,7 @@
+extern int D_001E6170;
+extern char D_001E6178[];
+
+int func_0B2118(int index)
+{
+    return (int)(D_001E6178 + D_001E6170 * 0x50 + index * 8);
+}
