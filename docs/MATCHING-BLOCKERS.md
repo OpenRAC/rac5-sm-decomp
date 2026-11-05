@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **29,396 measured placements** of 1,707,256 placement bytes carried by **20,195
+The level scope is **29,526 measured placements** of 1,712,976 placement bytes carried by **20,319
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -816,6 +816,15 @@ second global load are scheduled differently. Nested and typed conditions,
 five other qualified `cc1` routes and scoped flags did not restore the retail
 flow. Reopen with an evidenced source form or compiler route; they earn no C
 credit.
+
+All 130 reviewed 44-byte placements with five or six relocations link exactly
+from 124 C sources (5,720 placement bytes, 5,456 distinct-source bytes). Six
+additional placements reuse a source only after it linked exactly at both
+sites. For 80 two-global call wrappers, 60 require reading the second value
+before the call and 20 require direct arguments; this preserves the retail
+order of the two address setups. Twenty other bodies require 64-bit C values
+to reproduce the two quadword stores. All 21 complete modules pass; no new C
+attempt is parked for this scope.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C
