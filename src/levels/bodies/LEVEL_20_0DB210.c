@@ -1,6 +1,6 @@
-extern void func_0DB148(void *value);
+extern void func_0DB148(float *m, float *q);
 
-void *func_0DB210(void *value) {
-    func_0DB148(value);
-    return value;
+float *func_0DB210(float *m, float *q) {
+    func_0DB148(m, q);
+    return m;
 }

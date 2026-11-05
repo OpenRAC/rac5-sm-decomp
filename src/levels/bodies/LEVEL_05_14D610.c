@@ -7,14 +7,43 @@ typedef struct {
     float f_80;
 } Obj;
 
-extern char D_0037DC9C[];
-extern char D_0037D9F8[];
+typedef struct {
+    float x;
+    float y;
+    int z;
+} Sample;
 
-extern void func_02D290(void *a0, int a1, int a2, int a3, int a4);
+typedef struct {
+    char flag0;
+    char flag1;
+    unsigned short count;
+    Sample s1;
+    Sample s2;
+    float f1;
+    float f2;
+    float f3;
+} Out;
 
-void func_14D610(Obj *a0, int a1, int a2)
+typedef struct {
+    char pad[0x28];
+    unsigned short count;
+} In;
+
+typedef struct {
+    float pad[11];
+    float v2c;
+    float pad2[8];
+    float v50;
+} Flt;
+
+extern In D_0037DC9C[];
+extern Flt D_0037D9F8[];
+
+extern void func_02D290(Out *a0, In *a1, Flt *a2, Sample *a3, Sample *t0, float f1, float f2);
+
+void func_14D610(Obj *a0, Sample *a1, Sample *a2, float f1, float f2)
 {
     a0->h_00 = 0;
-    func_02D290((char *)a0 + 0x48, (int)D_0037DC9C, (int)D_0037D9F8, a1, a2);
+    func_02D290((Out *)((char *)a0 + 0x48), D_0037DC9C, D_0037D9F8, a1, a2, f1, f2);
     a0->f_80 = 60.0f;
 }

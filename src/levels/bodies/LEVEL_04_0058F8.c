@@ -4,13 +4,13 @@ typedef struct {
     float z;
 } V;
 
-extern void func_005890(V *out, V *in);
+extern void func_005890(float *out, float *in, float s);
 
-void func_0058F8(V *dst, V *src, V *out)
+void func_0058F8(V *dst, V *src, V *out, float s)
 {
     V t;
 
-    func_005890(&t, out);
+    func_005890((float *)(&t), (float *)(out), s);
     dst->x = src->x + t.x;
     dst->y = src->y + t.y;
     dst->z = src->z + t.z;

@@ -144,7 +144,7 @@ void func_00006B68(void *argument) {
     func_00007BF8();
     cur_MC = -1;
     D_0002B114++;
-    func_0000A650(0, 0);
+    func_0000A650(&gRT_BackBuffer, 0);
     func_00007830(1);
     func_000074D8(1, 1);
     func_000073B8(1, 0, 1);

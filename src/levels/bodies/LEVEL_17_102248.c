@@ -9,11 +9,11 @@ typedef struct {
 
 extern double func_18A428(float value);
 extern double sqrt(double value);
-extern void func_18A138(double value);
+extern float func_18A138(double value);
 
-void func_102248(Vec *a0)
+float func_102248(Vec *a0)
 {
-    func_18A138(sqrt(func_18A428(
+    return func_18A138(sqrt(func_18A428(
         a0->f_0C * a0->f_0C + a0->f_00 * a0->f_00 +
         a0->f_04 * a0->f_04 + a0->f_08 * a0->f_08)));
 }

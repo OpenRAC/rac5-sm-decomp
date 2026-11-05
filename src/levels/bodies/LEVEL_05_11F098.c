@@ -5,11 +5,11 @@ typedef struct {
     float fC;
 } S;
 
-extern float func_11F040(void);
+extern float func_11F040(S *source);
 
 void func_11F098(S *s0)
 {
-    float k = 1.0f / func_11F040();
+    float k = 1.0f / func_11F040(s0);
 
     s0->fC = s0->fC * k;
     s0->f0 = s0->f0 * k;

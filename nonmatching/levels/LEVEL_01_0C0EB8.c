@@ -1,60 +1,58 @@
-/* USA LEVEL_01.REL:0x0C0EB8. Retained C hypothesis, not a match.
- * The pinned profile links 172 bytes against a 148-byte candidate body;
- * the first difference is at body byte 4. See docs/MATCHING-BLOCKERS.md. */
-typedef struct {
-    char pad00[0x20];
+/* USA LEVEL_01.REL:0x0C0EB8. Search a two-level record table. */
+typedef struct Record34 {
+    char unused00[0x20];
     void *key;
-    char pad24[0x34 - 0x24];
-} SecondEntry;
+    char unused24[0x10];
+} Record34;
 
-typedef struct {
-    char pad00[4];
-    SecondEntry *second;
-    char pad08[0x24 - 8];
+typedef struct Record44 {
+    char unused00[4];
+    Record34 *children;
+    char unused08[0x1C];
     void *key;
-    char pad28[0x3C - 0x28];
-    unsigned char count;
-    char pad3D[0x44 - 0x3D];
-} FirstEntry;
+    char unused28[0x14];
+    unsigned char child_count;
+    char unused3D[7];
+} Record44;
 
-typedef struct {
-    char pad00[0x34];
-    FirstEntry *entries;
-    int count;
-} Manager;
+typedef struct Table {
+    char unused00[0x34];
+    Record44 *records;
+    int record_count;
+} Table;
 
-extern Manager *D_00206D90;
-extern SecondEntry *D_00329008;
+extern Table *D_00206D90;
+extern Record34 *D_00329008;
 
-int func_0C0EB8(void *first_key, void *second_key) {
-    FirstEntry *first;
-    FirstEntry *first_end;
-    SecondEntry *second;
-    SecondEntry *second_end;
+int func_0C0EB8(void *outer_key, void *inner_key)
+{
+    Record44 *record;
+    Record44 *record_end;
+    Record34 *child;
+    Record34 *child_end;
 
-    if (first_key == 0)
-        return 0;
+    if (outer_key != 0) {
+        record = D_00206D90->records;
+        record_end = record + D_00206D90->record_count;
+        while (record != record_end) {
+            if (record->key == outer_key)
+                break;
+            record++;
+        }
+        if (record == record_end)
+            return 0;
 
-    first = D_00206D90->entries;
-    first_end = first + D_00206D90->count;
-    while (first != first_end) {
-        if (first->key == first_key)
-            goto first_found;
-        first++;
+        child = record->children;
+        if (child == 0)
+            return 0;
+        child_end = child + record->child_count;
+        while (child != child_end) {
+            if (child->key == inner_key) {
+                D_00329008 = child;
+                return 1;
+            }
+            child++;
+        }
     }
     return 0;
-first_found:
-    second = first->second;
-    if (second == 0)
-        return 0;
-    second_end = second + first->count;
-    while (second != second_end) {
-        if (second->key == second_key)
-            goto second_found;
-        second++;
-    }
-    return 0;
-second_found:
-    D_00329008 = second;
-    return 1;
 }

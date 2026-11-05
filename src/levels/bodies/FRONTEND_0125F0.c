@@ -1,4 +1,5 @@
-char *func_0125F0(char *p)
+/* Returns the integral record width including its 16-unit margin. */
+int func_0125F0(const void *record)
 {
-    return *(char **)(p + 0x48) + 0x10;
+    return *(const int *)((const char *)record + 0x48) + 0x10;
 }
