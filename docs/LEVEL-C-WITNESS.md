@@ -345,14 +345,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 27,603 accepted placements with 2,302 SN link invocations;
+all 21 USA modules and 27,789 accepted placements with 2,305 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**27,603 placements** in **18,484 sources**, **1,634,888 placement
-bytes**, **1,227,188 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**27,789 placements** in **18,663 sources**, **1,641,584 placement
+bytes**, **1,233,632 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -415,3 +415,11 @@ after exact relinking at the other site. The floating-point, unsigned literal
 and output-pointer parameter forms reproduce the retail argument registers.
 Every retail interval returns at byte 28 with its delay slot at byte 32, and
 the complete 21-module gate remains exact.
+
+Another 186 reviewed 36-byte placements with two body relocations link
+exactly from 179 C sources (6,696 placement bytes, 6,444 distinct-source
+bytes). They include local data references and two-call forms. Seven identical
+sources were relinked at their other placements. All 190 reviewed retail
+intervals return at byte 28 with their delay slot at byte 32; four remaining
+pointer-condition bodies have retained C under `nonmatching/levels/` and
+receive no C credit.
