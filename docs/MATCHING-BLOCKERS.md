@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **25,975 measured placements** of 1,588,228 placement bytes carried by **16,954
+The level scope is **26,204 measured placements** of 1,592,808 placement bytes carried by **17,164
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -607,3 +607,21 @@ from `0x19BF98`, a complete 16-byte return interval with no tail, and no
 overlap. Its own linked C and the full module gate are exact. These are
 reviewed boundaries and placements, not a claim that all remaining short
 intervals are functions.
+
+Another 229 20-byte USA placements link exactly from 210 C sources (4,580
+placement bytes, 4,200 distinct-source bytes). Twenty levels share one
+[`ALPHASORT` reset source](../src/levels/bodies/LEVEL_01_08F2F8.c): its two
+named imports and their relocation roles are identical at every site. The
+other 209 sources use their own local data targets. The complete 21-module
+gate checks every linked placement and named import identity.
+
+Twenty 20-byte local global-copy bodies remain nonmatching despite one
+authored C source per site under `nonmatching/levels/` (for example,
+[`LEVEL_01:0x08CDC8`](../nonmatching/levels/LEVEL_01_08CDC8.c)).
+The pinned compiler emits the same 20-byte length but first differs at
+body byte 2 by exchanging the source-address and copied-word temporary
+registers. Typed pointers, arrays and a one-word structure, as well as
+the qualified SDK and GNU trial profiles on the representative, did not
+change this mismatch. The 20 candidate sites remain uncounted until a
+source-level lifetime or narrowly qualified compiler remedy reproduces
+all retail bytes and the complete modules.
