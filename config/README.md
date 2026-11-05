@@ -17,6 +17,7 @@ It follows the conventions of the OpenRAC RAC1 decompilation
 | Which bodies are known assembly? | `handwritten_asm.tsv` | `handwritten_asm.txt` | a measured verdict per function, with the wave that measured it |
 | What is the boot load image? | `boot/elf_layout.json`, `boot/dvp_overlays.tsv` | — | measured layout and the non-loaded DVP catalogue |
 | What are the accepted level C bodies? | `levels/bodies.tsv` (schema below) | per-overlay sources | one row per placement; the source's own facts live in `levels/body_sources.tsv` |
+| Which compiler-generated local calls are qualified? | `levels/local_link_symbols.tsv` | — | a reviewed module/source/object and helper fingerprint for a specific call-site set |
 
 ## Conventions adopted from RAC1
 
@@ -59,6 +60,13 @@ source	source_sha256_lf	object_sha256	profile	as
 A source carried by hundreds of placements therefore costs one row in the
 source table, and the placement table stays small enough for the repository's
 targeted size guards on tracked files.
+
+`levels/local_link_symbols.tsv` is an opt-in table for a compiler-generated
+`__muldi3` call that resolves to a measured helper in the same module. Each row
+pins the module, accepted C source, compiled object SHA, helper address, size,
+helper SHA and four call-site offsets. The level gate verifies the helper and
+object again before linking; it does not infer a call target from the retail
+caller bytes. Sources without a qualified row keep strict symbol resolution.
 
 - `offset` is hexadecimal (`0x00000100`); `size` is decimal bytes and a
   multiple of four.

@@ -6,13 +6,13 @@ typedef struct {
     float f_08;
 } V3;
 
-extern void func_00055B8(V3 *a0, V3 *a1);
+extern void func_00055B8(float *out, float *v, float s);
 
-void func_005620(V3 *a0, V3 *a1, V3 *a2)
+void func_005620(V3 *a0, V3 *a1, V3 *a2, float s)
 {
     V3 t;
 
-    func_00055B8(&t, a2);
+    func_00055B8((float *)&t, (float *)a2, s);
     a0->f_00 = a1->f_00 + t.f_00;
     a0->f_04 = a1->f_04 + t.f_04;
     a0->f_08 = a1->f_08 + t.f_08;

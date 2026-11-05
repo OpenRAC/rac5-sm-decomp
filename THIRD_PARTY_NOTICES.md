@@ -77,3 +77,47 @@ lines 20-801 from that release (diff empty against the public tarball); its
 file header records the equivalence and the MB_CAPABLE define the Sony EE libc
 was built with. The vendored headers are used only at preprocess time by the
 private boot gate through repository-relative `-I` flags.
+
+## GCC 2.95.3 `fp-bit.c` (software floating-point multiplication)
+
+The level and frontend C files listed below adapt the public Free Software
+Foundation source [`gcc/config/fp-bit.c` from GCC 2.95.3 at commit
+`7f236610e99c7a11fb18f056b6446b3c7c40979c`](https://github.com/gcc-mirror/gcc/blob/7f236610e99c7a11fb18f056b6446b3c7c40979c/gcc/config/fp-bit.c).
+The unmodified upstream file has SHA-256
+`9aa27be26b945edde2c6ef81d0289724d1d9ca1e756a1a98230ab58de46091eb`.
+It is licensed under GNU GPL version 2 or any later version and carries the
+file's original linking permissions and special exception. Each adapted C file
+preserves the complete upstream copyright, GPL, and exception notices.
+
+The adaptations retain the double-precision multiplication path, its active
+types and predicates, and the public `FINE_GRAINED_LIBRARIES`, `L_mul_df`,
+`FLOAT_BIT_ORDER_MISMATCH`, and `US_SOFTWARE_GOFAST` selections. They omit
+unrelated routines, declare the external unpack helper, replace the unpack,
+pack, and multiplication names with the reviewed module-local symbols, and
+refer to each module's existing NaN object rather than defining a new static
+one. The compiler emits `__muldi3` for 64-bit multiplications; that helper's
+module-local targets were checked privately. No Sony SDK source, headers, or
+samples are included in these adaptations.
+
+Adapted files:
+
+- `src/levels/bodies/FRONTEND_0238C8.c`
+- `src/levels/bodies/LEVEL_01_1EA948.c`
+- `src/levels/bodies/LEVEL_02_1FF5E0.c`
+- `src/levels/bodies/LEVEL_03_202FD8.c`
+- `src/levels/bodies/LEVEL_04_203B08.c`
+- `src/levels/bodies/LEVEL_05_1D9D40.c`
+- `src/levels/bodies/LEVEL_06_1D9890.c`
+- `src/levels/bodies/LEVEL_07_1FECC0.c`
+- `src/levels/bodies/LEVEL_08_2334D0.c`
+- `src/levels/bodies/LEVEL_09_1D47B0.c`
+- `src/levels/bodies/LEVEL_10_1F39A0.c`
+- `src/levels/bodies/LEVEL_15_13F640.c` (also placed in LEVEL_21)
+- `src/levels/bodies/LEVEL_16_1963E8.c`
+- `src/levels/bodies/LEVEL_17_189A30.c`
+- `src/levels/bodies/LEVEL_18_197888.c`
+- `src/levels/bodies/LEVEL_19_1975B0.c`
+- `src/levels/bodies/LEVEL_20_0F8B18.c`
+- `src/levels/bodies/LEVEL_22_149D00.c`
+- `src/levels/bodies/LEVEL_23_1BDD88.c`
+- `src/levels/bodies/LEVEL_24_1BB620.c`

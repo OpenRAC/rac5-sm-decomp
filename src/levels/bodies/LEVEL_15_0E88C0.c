@@ -13,14 +13,14 @@ typedef struct {
     float f3C;
 } Rec;
 
-extern void func_0E8C80(void);
+extern void func_0E8C80(float *m, float *q);
 
-void func_0E88C0(Rec *p)
+void func_0E88C0(Rec *p, float *q)
 {
     float zero;
     float one;
 
-    func_0E8C80();
+    func_0E8C80((float *)p, q);
     zero = 0.0f;
     one = 1.0f;
     p->f38 = zero;

@@ -25,7 +25,7 @@ from compile_boot_trial import digest, normalized_digest, require_private_output
 from disc import IsoDisc, verify_disc
 from elf import inspect_elf, read_global_functions
 from level_body_link import (BodyLinkError, defined_functions, read_object,
-                             resolve_symbols)
+                             resolve_symbols, undefined_symbols)
 from level_program_gate import MEASURED_LOADS, replace_range, sha
 from r5900_assembly import LINKER_SHA256, check_tool, run_tool
 from rel import (HEADER, RELOCATION, SYMBOL, iter_packed_relocations,
@@ -38,6 +38,7 @@ PROFILE = ROOT / "config/levels/compiler_trial.json"
 BASE_PROFILE = ROOT / "config/boot/compiler_trial.json"
 BODIES = ROOT / "config/levels/bodies.tsv"
 BODY_SOURCES = ROOT / "config/levels/body_sources.tsv"
+LOCAL_LIBCALLS = ROOT / "config/levels/local_link_symbols.tsv"
 OUTPUT = ROOT / "build/level-c-gate"
 REPORT = OUTPUT / "report.json"
 WORD = struct.Struct("<I")
@@ -48,6 +49,10 @@ BODY_PROFILES = ("pinned", "gnu-ee-trial", "gnu-ee-trial-divpad",
 BODY_ASSEMBLER = "gnu-ee-trial"
 BODY_PREFIX = "src/levels/bodies/"
 SHARED_0100 = "src/levels/shared/func_00000100.c"
+LOCAL_LIBCALL_FORMAT = "# format: rac5-local-libcall-v1"
+LOCAL_LIBCALL_HEADER = ["module", "source", "object_sha256", "symbol",
+                        "target", "helper_size", "helper_sha256", "reloc_offsets"]
+MULDI3_RELOC_OFFSETS = (0x110, 0x120, 0x130, 0x140)
 
 
 def profile_and_sources(cpp: Path, cc1: Path, gnu_as: Path) -> tuple[dict, list[dict]]:
@@ -253,6 +258,117 @@ def read_bodies(path: Path, sources_path: Path, known: dict[str, str],
     return rows
 
 
+def read_local_libcalls(path: Path, body_rows: list[dict]
+                        ) -> dict[tuple[str, str], dict]:
+    """Load reviewed module-local compiler targets; an empty table is valid."""
+    accepted = {(row["module"], row["source"]): row for row in body_rows}
+    found: dict[tuple[str, str], dict] = {}
+    with path.open(encoding="utf-8", newline="") as file:
+        if file.readline().rstrip("\r\n") != LOCAL_LIBCALL_FORMAT:
+            raise ValueError(f"{path.name}: unrecognized local-libcall format")
+        reader = csv.DictReader(
+            (line for line in file if not line.startswith("#")), delimiter="\t")
+        if reader.fieldnames != LOCAL_LIBCALL_HEADER:
+            raise ValueError(f"{path.name}: header differs from the documented schema")
+        for number, raw in enumerate(reader, 3):
+            module, source = raw["module"], raw["source"]
+            key = (module, source)
+            row = accepted.get(key)
+            if row is None or key in found:
+                raise ValueError(f"{path.name}:{number}: unknown or duplicate placement source")
+            if (raw["symbol"] != "__muldi3" or row["profile"] != "sdk991111"
+                    or row["size"] != 680):
+                raise ValueError(f"{path.name}:{number}: unqualified libcall or body")
+            if (raw["object_sha256"] != row["object_sha256"]
+                    or any(not isinstance(raw[key], str) or
+                           re.fullmatch(r"[0-9a-f]{64}", raw[key]) is None
+                           for key in ("object_sha256", "helper_sha256"))):
+                raise ValueError(f"{path.name}:{number}: invalid object/helper SHA")
+            if raw["reloc_offsets"] != "0x110,0x120,0x130,0x140":
+                raise ValueError(f"{path.name}:{number}: unreviewed libcall sites")
+            try:
+                target, helper_size = int(raw["target"], 0), int(raw["helper_size"])
+            except (TypeError, ValueError) as error:
+                raise ValueError(f"{path.name}:{number}: bad target or extent") from error
+            if helper_size != 96 or target < CODE_START or target % 4:
+                raise ValueError(f"{path.name}:{number}: invalid helper target or extent")
+            found[key] = {"module": module, "source": source,
+                          "object_sha256": raw["object_sha256"],
+                          "symbol": "__muldi3", "target": target,
+                          "helper_size": helper_size,
+                          "helper_sha256": raw["helper_sha256"],
+                          "reloc_offsets": MULDI3_RELOC_OFFSETS}
+    return found
+
+
+def module_relocation_sites(module: bytes) -> tuple[set[int], set[int]]:
+    """Get named and packed local fixup sites for helper identity checks."""
+    header = HEADER.unpack_from(module)
+    named = {unpack_relocation(
+        module, header[1] + index * RELOCATION.size)[0]
+        for index in range(header[2])}
+    local: set[int] = set()
+    for fixup in iter_packed_relocations(module, header[13], header[1]):
+        local.add(fixup.site)
+        if fixup.low_site is not None:
+            local.add(fixup.low_site)
+    return named, local
+
+
+def qualify_local_libcall(entry: dict, row: dict, obj: dict, object_sha: str,
+                          module: bytes, code_end: int,
+                          imports: dict[str, int], exports: dict[str, int],
+                          named_sites: set[int], local_sites: set[int]
+                          ) -> dict[str, int]:
+    """Validate a pinned __muldi3 object and helper without caller retail bytes."""
+    if (entry["module"] != row["module"] or entry["source"] != row["source"]
+            or entry["object_sha256"] != row["object_sha256"]
+            or object_sha != entry["object_sha256"]
+            or row["profile"] != "sdk991111" or row["size"] != 680):
+        raise ValueError("local libcall module, source, object or profile differs")
+    name, target, size = entry["symbol"], entry["target"], entry["helper_size"]
+    if name != "__muldi3" or name in imports or name in exports:
+        raise ValueError("local libcall name is unqualified or collides")
+    if (target % 4 or size != 96 or target < CODE_START
+            or target + size > code_end
+            or (target < row["offset"] + row["size"]
+                and row["offset"] < target + size)):
+        raise ValueError("local libcall helper extent is invalid")
+    helper = module[target:target + size]
+    if (len(helper) != size or sha(helper) != entry["helper_sha256"]
+            or module.count(helper) != 1):
+        raise ValueError("local libcall helper SHA or uniqueness differs")
+    if any(target <= site < target + size
+           for site in named_sites | local_sites):
+        raise ValueError("local libcall helper contains a relocation")
+    if sum(symbol["name"] == name for symbol in undefined_symbols(obj)) != 1:
+        raise ValueError("local libcall is not one undefined object symbol")
+    uses = sorted((reloc["offset"], reloc["type"]) for reloc in obj["relocs"]
+                  if obj["symbols"][reloc["sym"]]["name"] == name)
+    expected = [(offset, 4) for offset in entry["reloc_offsets"]]
+    if uses != expected:
+        raise ValueError("local libcall relocations differ")
+    return {name: target}
+
+
+def resolved_body_mapping(row: dict, obj: dict, object_sha: str,
+                          module: bytes, code_end: int,
+                          imports: dict[str, int], exports: dict[str, int],
+                          qualified: dict[tuple[str, str], dict]
+                          ) -> tuple[dict[str, int], dict[str, str]]:
+    """Keep the existing strict resolver unless a reviewed row applies."""
+    entry = qualified.get((row["module"], row["source"]))
+    if entry is None:
+        return resolve_symbols(obj, imports, exports)
+    if entry["symbol"] not in {symbol["name"] for symbol in undefined_symbols(obj)}:
+        raise ValueError("qualified local symbol is not referenced by object")
+    named_sites, local_sites = module_relocation_sites(module)
+    local = qualify_local_libcall(
+        entry, row, obj, object_sha, module, code_end,
+        imports, exports, named_sites, local_sites)
+    return resolve_symbols(obj, imports, exports, local)
+
+
 def extra_cc1_paths(items: list[str]) -> dict[str, Path]:
     """Parse repeated ``--extra-cc1 NAME=PATH`` arguments."""
     table: dict[str, Path] = {}
@@ -379,6 +495,8 @@ def plan_body_link_batches(items: list[dict], maximum: int) -> list[list[dict]]:
 def batch_link_level_bodies(module: str, rows: list[dict],
                             objects: dict[str, tuple[Path, dict, str]],
                             imports: dict[str, int], exports: dict[str, int],
+                            module_data: bytes, code_end: int,
+                            qualified: dict[tuple[str, str], dict],
                             linker: Path, maximum: int, jobs: int
                             ) -> tuple[list[tuple[dict, bytes, dict[str, int]]], int]:
     """Re-link every body, checking each output section's address and extent."""
@@ -390,8 +508,10 @@ def batch_link_level_bodies(module: str, rows: list[dict],
         if obj_path.parent != OUTPUT:
             raise ValueError(f"level body object outside private output: {row['source']}")
         try:
-            mapping, _origin = resolve_symbols(obj, imports, exports)
-        except BodyLinkError as error:
+            mapping, _origin = resolved_body_mapping(
+                row, obj, object_sha, module_data, code_end,
+                imports, exports, qualified)
+        except (BodyLinkError, ValueError) as error:
             raise ValueError(f"{module} 0x{row['offset']:06X}: {error}") from error
         definitions = defined_global_names(obj)
         safe_name = re.fullmatch(r"[A-Za-z0-9_.-]+", obj_path.name) is not None
@@ -727,6 +847,7 @@ def main() -> None:
               for row in sources if "offset" in row}
     known, ends = pinned_modules(), code_ends()
     body_rows = read_bodies(BODIES, BODY_SOURCES, known, ends)
+    local_libcalls = read_local_libcalls(LOCAL_LIBCALLS, body_rows)
     body_objects = compile_body_sources(body_rows, args, extra_cc1, base_profile)
     bodies_by_module: dict[str, list[dict]] = defaultdict(list)
     for row in body_rows:
@@ -800,7 +921,8 @@ def main() -> None:
             if args.batch_link_size:
                 linked, invocations = batch_link_level_bodies(
                     name, bodies_by_module.get(name, []), body_objects, imports,
-                    exports, args.linker, args.batch_link_size, args.jobs)
+                    exports, source, ends[name], local_libcalls,
+                    args.linker, args.batch_link_size, args.jobs)
                 batch_linker_invocations += invocations
                 for row, placed, mapping in linked:
                     obj = body_objects[row["source"]][1]
@@ -814,10 +936,12 @@ def main() -> None:
                                          row["offset"] + row["size"], claimed)
             else:
                 def linked_row(row: dict) -> tuple[dict, bytes, int]:
-                    obj_path, obj, _object_sha = body_objects[row["source"]]
+                    obj_path, obj, object_sha = body_objects[row["source"]]
                     try:
-                        mapping, _origin = resolve_symbols(obj, imports, exports)
-                    except BodyLinkError as error:
+                        mapping, _origin = resolved_body_mapping(
+                            row, obj, object_sha, source, ends[name],
+                            imports, exports, local_libcalls)
+                    except (BodyLinkError, ValueError) as error:
                         raise ValueError(f"{name} 0x{row['offset']:06X}: {error}") from error
                     checked = check_import_call_identity(
                         obj, retail_calls.within(row["offset"], row["size"]), row, mapping)
@@ -868,12 +992,13 @@ def main() -> None:
             raise ValueError("FRONTEND New Game C body differs")
         candidate = replace_range(candidate, frontend_body, 0x2F80, 0x2F80 + 476)
         claimed = [(0x2CD8, 0x2CD8 + len(control)), (0x2F80, 0x2F80 + 476)]
+        frontend_imports, frontend_exports = module_symbols(frontend)
         if args.batch_link_size:
-            imports, exports = module_symbols(frontend)
             linked, invocations = batch_link_level_bodies(
                 "FRONTEND.REL", bodies_by_module.get("FRONTEND.REL", []),
-                body_objects, imports, exports, args.linker,
-                args.batch_link_size, args.jobs)
+                body_objects, frontend_imports, frontend_exports,
+                frontend, ends["FRONTEND.REL"], local_libcalls,
+                args.linker, args.batch_link_size, args.jobs)
             batch_linker_invocations += invocations
             for row, placed, mapping in linked:
                 obj = body_objects[row["source"]][1]
@@ -887,10 +1012,12 @@ def main() -> None:
                                        row["offset"] + row["size"], claimed)
         else:
             for row in bodies_by_module.get("FRONTEND.REL", []):
-                obj_path, obj, _object_sha = body_objects[row["source"]]
+                obj_path, obj, object_sha = body_objects[row["source"]]
                 try:
-                    mapping, _origin = resolve_symbols(obj, *module_symbols(frontend))
-                except BodyLinkError as error:
+                    mapping, _origin = resolved_body_mapping(
+                        row, obj, object_sha, frontend, ends["FRONTEND.REL"],
+                        frontend_imports, frontend_exports, local_libcalls)
+                except (BodyLinkError, ValueError) as error:
                     raise ValueError(
                         f"FRONTEND.REL 0x{row['offset']:06X}: {error}") from error
                 body_import_sites += check_import_call_identity(
