@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **27,394 measured placements** of 1,627,364 placement bytes carried by **18,302
+The level scope is **27,603 measured placements** of 1,634,888 placement bytes carried by **18,484
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -669,6 +669,13 @@ from level-data pointers using the measured code boundary. For the three-global
 store form, placing the two zero stores first in C yields the retail byte
 store first after compilation. Four identical sources were relinked at both
 sites before the complete 21-module gate passed.
+
+Another 209 reviewed 36-byte call bodies link exactly from 182 C sources
+(7,524 placement bytes, 6,552 distinct-source bytes). All call relocations
+are local and retain their measured targets. Floating-point arguments,
+unsigned literal width and an output-pointer argument explain three
+otherwise incorrect call shapes. Twenty-seven identical sources were
+relinked at their other placements before the complete 21-module gate passed.
 
 Twenty halfword-mask bodies remain nonmatching (for example,
 [`LEVEL_01:0x027528`](../nonmatching/levels/LEVEL_01_027528.c)). The pinned C
