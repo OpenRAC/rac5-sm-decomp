@@ -389,6 +389,7 @@ def compile_body_sources(rows: list[dict], args, extra_cc1: dict[str, Path],
     output.mkdir(parents=True, exist_ok=True)
     OUTPUT.mkdir(parents=True, exist_ok=True)
     flags = base_profile["flags"]["cc1"]
+    per_source = cflags.load()
     by_source = {row["source"]: row for row in rows}
 
     def compile_one(item: tuple[str, dict]) -> tuple[str, tuple[Path, dict, str]]:
@@ -404,6 +405,10 @@ def compile_body_sources(rows: list[dict], args, extra_cc1: dict[str, Path],
         cc1 = args.cc1 if profile == "pinned" else extra_cc1.get(profile)
         if cc1 is None:
             raise ValueError(f"profile {profile} needs --extra-cc1 {profile}=PATH")
+        entry = cflags.for_source(per_source, source)
+        if not entry.pinned or not entry.assembler_pinned:
+            raise ValueError(f"level body tool selectors belong in body_sources.tsv: "
+                             f"{source_path}")
         work = output / "bodies" / source.name
         work.mkdir(parents=True, exist_ok=True)
         (work / source.name).write_bytes(source.read_bytes())
@@ -412,7 +417,8 @@ def compile_body_sources(rows: list[dict], args, extra_cc1: dict[str, Path],
             work / f"{stem}.i")
         require_c_source((work / f"{stem}.i").read_text(encoding="utf-8"),
                          f"{source_path} preprocessed input")
-        run([str(cc1.resolve()), *flags, f"{stem}.i", "-o", f"{stem}.s"],
+        run([str(cc1.resolve()), *flags, *entry.flags,
+             f"{stem}.i", "-o", f"{stem}.s"],
             work, work / f"{stem}.cc1.log")
         run([str(args.gnu_as.resolve()), "-o", f"{stem}.o", f"{stem}.s"],
             work, work / f"{stem}.as.log")

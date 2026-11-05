@@ -345,14 +345,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 28,818 accepted placements with 2,324 SN link invocations;
+all 21 USA modules and 28,926 accepted placements with 2,323 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**28,818 placements** in **19,652 sources**, **1,681,824 placement
-bytes**, **1,272,304 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**28,926 placements** in **19,748 sources**, **1,686,576 placement
+bytes**, **1,276,528 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -460,3 +460,12 @@ source bytes). Ten sources serve both levels 15 and 21; each source linked
 exactly at both sites before the complete 21-module gate. The 15 other
 reviewed placements retain C under `nonmatching/levels/` and earn no C credit.
 Every retail interval returns at byte 32 with its delay slot at byte 36.
+
+Another 108 reviewed 44-byte placements with one call relocation link exactly
+from 96 authored C sources (4,752 placement bytes and 4,224 distinct-source
+bytes). Twelve additional placements reuse an identical source after that
+source linked exactly at each site. Five integer-modulo bodies require the
+existing per-source `-mno-check-zero-division` flag; the level-body gate now
+applies these opted-in flags. The other 80 reviewed C attempts remain under
+`nonmatching/levels/` without match credit. Every retail interval returns at
+byte 36 with its delay slot at byte 40. All 21 complete modules remain exact.

@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **28,818 measured placements** of 1,681,824 placement bytes carried by **19,652
+The level scope is **28,926 measured placements** of 1,686,576 placement bytes carried by **19,748
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -730,6 +730,35 @@ without match credit:
   correct 40 bytes but first differ at byte 8. The compiler swaps a parameter
   move with local-address setup. Reopen with a natural source form or a
   qualified compiler route that preserves the retail order.
+
+Another 108 reviewed 44-byte one-call placements link exactly from 96 C
+sources (4,752 placement bytes, 4,224 distinct-source bytes). Twelve
+additional placements reuse a source only after it linked exactly at every
+site. Five integer-modulo bodies (including `rand` callers) were 52 bytes
+with the default zero-divisor guard and become exact at 44 bytes using the
+existing source-specific `-mno-check-zero-division` flag. The level-body gate
+now applies `config/cflags.txt` entries to accepted body sources, while
+`tools/cflags.py` recognizes their placement-table sources. All 21 complete
+modules pass; the flag is limited to the five measured bodies. Eighty other
+44-byte placements retain C without match credit:
+
+- Forty record-update wrappers (for example,
+  [`LEVEL_01:0x04DA70`](../nonmatching/levels/LEVEL_01_04DA70.c)) link at 40
+  rather than 44 bytes, first differing at byte 5 where the retail preserves
+  another input-register copy. Natural record layouts, value types and five
+  other qualified `cc1` routes did not restore it. Reopen with evidenced
+  input lifetimes or a qualified compiler route.
+- Twenty signed-condition wrappers (for example,
+  [`LEVEL_01:0x0035D0`](../nonmatching/levels/LEVEL_01_0035D0.c)) link at 44
+  bytes but first differ at byte 13: the signed comparison result uses a
+  different register. Natural early-return and typed forms and five other
+  qualified `cc1` routes did not select the retail register.
+- Twenty constant-comparison wrappers (for example,
+  [`LEVEL_01:0x0413E8`](../nonmatching/levels/LEVEL_01_0413E8.c)) link at 44
+  bytes but first differ at byte 6: the constant and field load use opposite
+  registers. Natural comparison forms and five other qualified `cc1` routes
+  did not select the retail allocation. Reopen both comparison families with
+  source or compiler evidence for their original value lifetimes.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C

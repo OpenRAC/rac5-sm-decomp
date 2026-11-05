@@ -1,0 +1,18 @@
+struct FourValues
+{
+    int first;
+    int second;
+    int third;
+    long long fourth;
+};
+extern void func_149830(struct FourValues *);
+
+void func_14A3D8(int first, int second, int third, long long fourth)
+{
+    struct FourValues values;
+    values.first = first;
+    values.second = second;
+    values.third = third;
+    values.fourth = fourth;
+    func_149830(&values);
+}
