@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **25,828 measured placements** of 1,586,048 placement bytes carried by **16,807
+The level scope is **25,975 measured placements** of 1,588,228 placement bytes carried by **16,954
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -597,3 +597,13 @@ sources express seven small data-access forms with the correct address for
 their own module. Byte similarity across levels alone does not justify a
 shared source. The complete 21-module gate verifies the linked addresses and
 retail bytes for all accepted placements.
+
+Another 147 site-specific 12- and 16-byte C bodies in USA levels 07–24 link
+exactly (2,180 distinct and placement bytes). They use 147 local HI16 and 149
+local LO16 relocations; two bodies read and clear the same byte through two
+LO16 sites. None has a named import. For `LEVEL_24:0x1A5B78`, Ghidra did not
+create a function label, but the candidate inventory records a direct call
+from `0x19BF98`, a complete 16-byte return interval with no tail, and no
+overlap. Its own linked C and the full module gate are exact. These are
+reviewed boundaries and placements, not a claim that all remaining short
+intervals are functions.
