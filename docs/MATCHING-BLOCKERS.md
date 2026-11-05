@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **23,794 measured placements** of 1,530,668 placement bytes carried by **16,502
+The level scope is **23,818 measured placements** of 1,531,872 placement bytes carried by **16,526
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -510,3 +510,27 @@ remain on GitHub as dated history, including the measurements that later entries
 document supersedes it as the active register. The maintainer imported the open and closed walls
 on 23 October 2026, added the measurements recorded up to that date, and keeps the counts above
 in step with `master`. Issue #99 remains the only reservation board.
+
+## Bounded frontend C attempts of 64 bytes or less (5 November 2026)
+
+These candidate entries have source-level C retained under `nonmatching/levels/`. The listed objects are isolated linked trials against the pinned USA frontend, not accepted matches. The 24 other bounded entries in this size group pass the complete 21-module gate as accepted C. Each retained source records a concrete next experiment; equal length alone earns no credit.
+
+| Candidate | Retail body | Best isolated trial | Reopening condition |
+| --- | ---: | --- | --- |
+| [`0x0004D8`](../nonmatching/levels/FRONTEND_0004D8.c) | 44 B | pinned: 44 B, first difference +2 | Recover the two-global test expression that assigns the retail value registers. |
+| [`0x002620`](../nonmatching/levels/FRONTEND_002620.c) | 28 B | pinned: 28 B, first difference +12 | Recover the second-argument ABI conversion that places a move in the imported lseek call delay slot. |
+| [`0x003600`](../nonmatching/levels/FRONTEND_003600.c) | 52 B | pinned: 48 B, first difference +6 | Recover the global flag store and imported-call argument register order. |
+| [`0x005618`](../nonmatching/levels/FRONTEND_005618.c) | 56 B | sdk991111: 56 B, first difference +22 | Recover the branch-dependent global-pointer load and selected field offset. |
+| [`0x006120`](../nonmatching/levels/FRONTEND_006120.c) | 56 B | pinned: 56 B, first difference +2 | Recover the state-table base and index register lifetimes across the three updates. |
+| [`0x00AB70`](../nonmatching/levels/FRONTEND_00AB70.c) | 56 B | pinned: 56 B, first difference +2 | Recover the record-stride multiply and argument-bank setup for the local call. |
+| [`0x01E380`](../nonmatching/levels/FRONTEND_01E380.c) | 60 B | pinned: 60 B, first difference +11 | Recover the masked-index register and final record comparison control flow. |
+| [`0x020698`](../nonmatching/levels/FRONTEND_020698.c) | 64 B | pinned: 60 B, first difference +8 | Recover the flag set/clear branch and the two pointer reload lifetimes. |
+| [`0x020918`](../nonmatching/levels/FRONTEND_020918.c) | 44 B | pinned: 40 B, first difference +2 | Recover the mask-expression order and the retail literal/register lifetimes. |
+| [`0x020968`](../nonmatching/levels/FRONTEND_020968.c) | 28 B | pinned: 24 B, first difference +4 | Find a source form that preserves the explicit high-bit mask instead of reducing it to a shift. |
+| [`0x0209B0`](../nonmatching/levels/FRONTEND_0209B0.c) | 48 B | pinned: 44 B, first difference +20 | Recover the conditional masked return without shortening away the retail conditional move. |
+| [`0x021188`](../nonmatching/levels/FRONTEND_021188.c) | 40 B | pinned: 40 B, first difference +28 | Recover the null-check and sign-test branch layout without the branch-likely shortening. |
+| [`0x021A00`](../nonmatching/levels/FRONTEND_021A00.c) | 44 B | pinned: 44 B, first difference +8 | Recover the bounds-failure branch and stride-calculation lifetime. |
+| [`0x021C40`](../nonmatching/levels/FRONTEND_021C40.c) | 52 B | sdk991111: 52 B, first difference +10 | Recover the bounds-failure branch while retaining the indexed comparison and SDK compiler route. |
+| [`0x024140`](../nonmatching/levels/FRONTEND_024140.c) | 64 B | pinned: 64 B, first difference +12 | Recover the local float store versus output-pointer setup around the first call. |
+| [`0x026878`](../nonmatching/levels/FRONTEND_026878.c) | 64 B | pinned: 48 B, first difference +0 | Recover the saved-register frame and comparison-result lifetime around the imported strcmp call. |
+| [`0x0275D0`](../nonmatching/levels/FRONTEND_0275D0.c) | 52 B | pinned: 52 B, first difference +2 | Recover the lazy-initialization pointer test and its address/register lifetimes without an artificial null check. |

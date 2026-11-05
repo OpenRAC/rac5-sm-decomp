@@ -1,6 +1,6 @@
 extern int D_00032814;
 
-int func_020890(void)
+int func_020890(int unused)
 {
     int *p = (int *)D_00032814;
 

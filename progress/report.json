@@ -1,10 +1,10 @@
 {
  "version": 2,
  "measures": {
-  "fuzzy_match_percent": 19.669926353229034,
+  "fuzzy_match_percent": 19.688685495194605,
   "total_code": "6418204",
-  "matched_code": "1262456",
-  "matched_code_percent": 19.669926353229034,
+  "matched_code": "1263660",
+  "matched_code_percent": 19.688685495194605,
   "total_functions": 0,
   "matched_functions": 0,
   "matched_functions_percent": 0.0,
@@ -3510,10 +3510,10 @@
   {
    "name": "levels/frontend",
    "measures": {
-    "fuzzy_match_percent": 11.201394344069127,
+    "fuzzy_match_percent": 11.940298507462687,
     "total_code": "162944",
-    "matched_code": "18252",
-    "matched_code_percent": 11.201394344069127,
+    "matched_code": "19456",
+    "matched_code_percent": 11.940298507462687,
     "total_functions": 3,
     "matched_functions": 2,
     "matched_functions_percent": 66.66666666666667,
@@ -3530,12 +3530,12 @@
     },
     {
      "name": "__frontend_accepted_c_bodies_aggregate",
-     "size": 17776,
+     "size": 18980,
      "fuzzy_match_percent": 100.0
     },
     {
      "name": "__frontend_unmatched_code",
-     "size": 144692,
+     "size": 143488,
      "fuzzy_match_percent": 0.0
     }
    ],
@@ -4449,10 +4449,10 @@
    "id": "level_code",
    "name": "Level Modules (Combined Placements)",
    "measures": {
-    "fuzzy_match_percent": 4.2175684433345895,
+    "fuzzy_match_percent": 4.220881424762522,
     "total_code": "36341888",
-    "matched_code": "1532744",
-    "matched_code_percent": 4.2175684433345895,
+    "matched_code": "1533948",
+    "matched_code_percent": 4.220881424762522,
     "total_functions": 83,
     "matched_functions": 62,
     "matched_functions_percent": 74.6987951807229,
@@ -4466,10 +4466,10 @@
    "id": "frontend",
    "name": "Frontend (FRONTEND.REL) (FRONTEND.REL)",
    "measures": {
-    "fuzzy_match_percent": 11.201394344069127,
+    "fuzzy_match_percent": 11.940298507462687,
     "total_code": "162944",
-    "matched_code": "18252",
-    "matched_code_percent": 11.201394344069127,
+    "matched_code": "19456",
+    "matched_code_percent": 11.940298507462687,
     "total_functions": 3,
     "matched_functions": 2,
     "matched_functions_percent": 66.66666666666667,
