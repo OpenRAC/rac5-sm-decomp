@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **26,842 measured placements** of 1,610,024 placement bytes carried by **17,773
+The level scope is **26,923 measured placements** of 1,612,292 placement bytes carried by **17,849
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -640,6 +640,13 @@ from 201 C sources (5,852 placement bytes, 5,628 distinct-source bytes).
 Local calls keep their measured targets; imported calls keep their symbol
 names. Eight identical sources were relinked at each placement before the
 complete 21-module gate passed.
+
+Another 81 reviewed 28-byte local-data placements with three or four local
+relocations link exactly from 76 C sources (2,268 placement bytes, 2,128
+distinct-source bytes). Seven ordinary C forms cover paired global reads,
+conditional updates, byte extraction, a pointer-based difference, bitmask
+updates and a global maximum. Five identical sources were relinked at their
+second level placement before the complete 21-module gate passed.
 
 Twenty-one `asyncPs2fioLseek` wrappers remain nonmatching: the existing
 [`FRONTEND:0x002620`](../nonmatching/levels/FRONTEND_002620.c) attempt and
