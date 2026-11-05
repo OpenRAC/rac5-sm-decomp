@@ -869,15 +869,15 @@
     "accepted_frontend_c_bytes": 476,
     "accepted_c_bytes_per_unique_source": 80,
     "accepted_c_bytes_by_placement": 1600,
-    "accepted_level_body_placements": 27603,
-    "accepted_level_body_unique_sources": 18484,
-    "accepted_level_body_placement_bytes": 1634888,
-    "accepted_level_body_unique_source_bytes": 1227188,
+    "accepted_level_body_placements": 27789,
+    "accepted_level_body_unique_sources": 18663,
+    "accepted_level_body_placement_bytes": 1641584,
+    "accepted_level_body_unique_source_bytes": 1233632,
     "accepted_level_body_profiles": {
       "gnu-ee-trial": 482,
       "gnu-ee-trial-divpad": 328,
       "gnu-ee-trial-divpad-blockmove": 45,
-      "pinned": 26349,
+      "pinned": 26535,
       "sdk991111": 357,
       "sdk991111sync": 42
     },
@@ -1970,18 +1970,18 @@
       },
       "bodies": {
         "table": "config/levels/bodies.tsv",
-        "table_sha256": "c774d9f72bb8aaf6567990b7b0d04e805e336514cf2888337b341bc22d0f1666",
+        "table_sha256": "adb2cea09ae3aef4bd2d9b1ed964f4f533d360a9d905313cb0e80f31388cd414",
         "sources_table": "config/levels/body_sources.tsv",
-        "sources_table_sha256": "64841ae56c0ad4f89c5960d70c77f71eac9a7f934e1072cc0bc983304cf4677d",
-        "placements": 27603,
-        "unique_sources": 18484,
-        "placement_bytes": 1634888,
-        "unique_source_bytes": 1227188,
+        "sources_table_sha256": "004054c0f539d880d26c13e2607f1c1d03d0deadb91c91e89308f72963ed3ed5",
+        "placements": 27789,
+        "unique_sources": 18663,
+        "placement_bytes": 1641584,
+        "unique_source_bytes": 1233632,
         "profiles": {
           "gnu-ee-trial": 482,
           "gnu-ee-trial-divpad": 328,
           "gnu-ee-trial-divpad-blockmove": 45,
-          "pinned": 26349,
+          "pinned": 26535,
           "sdk991111": 357,
           "sdk991111sync": 42
         },
@@ -2047,7 +2047,7 @@
           "mismatches": 0
         },
         "batch_link_size": 25,
-        "body_batch_linker_invocations": 2302
+        "body_batch_linker_invocations": 2305
       },
       "provisional_controls": [
         "LEVEL_01.REL:0x190:24",

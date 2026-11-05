@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **27,603 measured placements** of 1,634,888 placement bytes carried by **18,484
+The level scope is **27,789 measured placements** of 1,641,584 placement bytes carried by **18,663
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -676,6 +676,20 @@ are local and retain their measured targets. Floating-point arguments,
 unsigned literal width and an output-pointer argument explain three
 otherwise incorrect call shapes. Twenty-seven identical sources were
 relinked at their other placements before the complete 21-module gate passed.
+
+Another 186 reviewed 36-byte placements with two relocations link exactly
+from 179 C sources (6,696 placement bytes, 6,444 distinct-source bytes).
+Seven identical sources were relinked at their second placement before the
+complete 21-module gate passed. Signed bounds, natural branch direction and
+the arithmetic expression tree preserve the retail instruction order.
+
+Four pointer-condition bodies remain nonmatching (for example,
+[`LEVEL_02:0x1D2090`](../nonmatching/levels/LEVEL_02_1D2090.c)). The retained
+pinned C object has the correct 36-byte length but first differs at byte 2
+in the global-pointer and result registers. Nested conditionals, ternary and
+pointer-return forms did not select the retail registers; five other
+qualified `cc1` routes did not match the representative. Reopen with an
+evidenced source-level lifetime or narrowly qualified compiler remedy.
 
 Twenty halfword-mask bodies remain nonmatching (for example,
 [`LEVEL_01:0x027528`](../nonmatching/levels/LEVEL_01_027528.c)). The pinned C
