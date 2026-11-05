@@ -345,14 +345,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 26,923 accepted placements with 2,299 SN link invocations;
+all 21 USA modules and 27,169 accepted placements with 2,299 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**26,923 placements** in **17,849 sources**, **1,612,292 placement
-bytes**, **1,206,140 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**27,169 placements** in **18,087 sources**, **1,620,164 placement
+bytes**, **1,213,756 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -386,3 +386,10 @@ four local relocations cover paired global reads, conditional updates, byte
 extraction and a pointer-based difference. Five identical sources link at two
 level placements each. Every reviewed retail interval returns at byte 20 with
 its delay slot at byte 24, and all 21 complete modules remain exact.
+
+Another 246 reviewed 32-byte call wrappers link exactly from 238 C sources
+(7,872 placement bytes, 7,616 distinct-source bytes). The single call
+relocation at each site preserves its local target or the named `memset`
+import. Eight identical sources were relinked at a second placement. Every
+retail interval returns at byte 24 with its delay slot at byte 28; the full
+21-module gate remains exact.
