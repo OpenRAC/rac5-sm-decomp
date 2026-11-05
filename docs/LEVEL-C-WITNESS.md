@@ -345,14 +345,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 28,926 accepted placements with 2,323 SN link invocations;
+all 21 USA modules and 29,126 accepted placements with 2,332 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**28,926 placements** in **19,748 sources**, **1,686,576 placement
-bytes**, **1,276,528 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**29,126 placements** in **19,940 sources**, **1,695,376 placement
+bytes**, **1,284,976 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -469,3 +469,11 @@ existing per-source `-mno-check-zero-division` flag; the level-body gate now
 applies these opted-in flags. The other 80 reviewed C attempts remain under
 `nonmatching/levels/` without match credit. Every retail interval returns at
 byte 36 with its delay slot at byte 40. All 21 complete modules remain exact.
+
+Another 200 reviewed 44-byte placements with two relocations link exactly
+from 192 authored C sources (8,800 placement bytes and 8,448 distinct-source
+bytes). Eight additional placements reuse an identical source only after the
+canonical source linked exactly at both sites. The other 83 reviewed C
+attempts remain under `nonmatching/levels/` without match credit. Every
+retail interval returns at byte 36 with its delay slot at byte 40; all 21
+complete modules remain exact.
