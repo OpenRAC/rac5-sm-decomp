@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **28,245 measured placements** of 1,658,904 placement bytes carried by **19,089
+The level scope is **28,501 measured placements** of 1,669,144 placement bytes carried by **19,345
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -698,6 +698,27 @@ target. The retail argument register use showed a forwarded semaphore ID,
 floating-point constants and a longer wrapper that inserts an argument into
 the outgoing register bank. Twenty-two identical sources were relinked at
 both sites before the 21-module gate passed.
+
+Another 256 reviewed 40-byte placements with two relocations link exactly
+from 256 C sources (10,240 placement and distinct-source bytes). Eleven
+`g_bRenderPlayerShadow` data imports retain their exact name; other bodies
+retain local data references or both local call targets. All 21 complete
+modules remain exact.
+
+Fourteen sign-test bodies remain nonmatching (for example,
+[`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C
+links 40 bytes but first differs at byte 28: it reduces the retail signed
+comparison to a bit shift. A complemented-value expression and longer signed
+type did not match, nor did five other qualified `cc1` routes on the
+representative. Reopen with a natural source form or qualified compiler
+route that preserves the signed comparison.
+
+Four byte-conjunction bodies also remain nonmatching (for example,
+[`LEVEL_16:0x078A30`](../nonmatching/levels/LEVEL_16_078A30.c)). The retained
+40-byte C first differs at byte 24: a conditional move replaces the retail
+boolean conversion and register copies. Wide and local-return variants and
+five other qualified `cc1` routes did not match. Reopen with evidenced value
+lifetimes or a narrowly qualified compiler remedy.
 
 Four pointer-condition bodies remain nonmatching (for example,
 [`LEVEL_02:0x1D2090`](../nonmatching/levels/LEVEL_02_1D2090.c)). The retained
