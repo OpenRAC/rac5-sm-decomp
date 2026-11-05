@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **29,281 measured placements** of 1,702,196 placement bytes carried by **20,086
+The level scope is **29,396 measured placements** of 1,707,256 placement bytes carried by **20,195
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -803,6 +803,19 @@ global-address setup precedes forwarded argument copies. Natural argument
 types, five qualified `cc1` routes and scoped scheduling flags did not restore
 the retail order. Reopen with an evidenced source form or qualified compiler
 route; this retained C earns no match credit.
+
+Another 115 reviewed 44-byte four-relocation placements link exactly from
+109 C sources (5,060 placement bytes, 4,796 distinct-source bytes). Six
+additional placements reuse a source only after the canonical file linked
+exactly at both sites. The 20 named `PS2HEAP_Free__FPv` imports keep their
+retail name. All 21 complete modules pass. Twenty two-global zero queries
+remain nonmatching (for example,
+[`LEVEL_01:0x025580`](../nonmatching/levels/LEVEL_01_025580.c)): pinned C
+links 44 bytes but first differs at byte 8, where the first branch span and
+second global load are scheduled differently. Nested and typed conditions,
+five other qualified `cc1` routes and scoped flags did not restore the retail
+flow. Reopen with an evidenced source form or compiler route; they earn no C
+credit.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C
