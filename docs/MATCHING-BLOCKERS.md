@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **28,501 measured placements** of 1,669,144 placement bytes carried by **19,345
+The level scope is **28,592 measured placements** of 1,672,784 placement bytes carried by **19,436
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -704,6 +704,12 @@ from 256 C sources (10,240 placement and distinct-source bytes). Eleven
 `g_bRenderPlayerShadow` data imports retain their exact name; other bodies
 retain local data references or both local call targets. All 21 complete
 modules remain exact.
+
+Another 91 reviewed 40-byte placements in levels 19–24 link exactly from
+91 C sources (3,640 placement and distinct-source bytes). Seven further
+40-byte placements remain nonmatching with retained C because they reproduce
+the signed-test or boolean-conversion differences documented below. The
+complete 21-module gate passes; the seven retained bodies earn no C credit.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C

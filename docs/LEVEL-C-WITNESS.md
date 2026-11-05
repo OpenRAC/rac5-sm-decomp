@@ -345,14 +345,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 28,501 accepted placements with 2,318 SN link invocations;
+all 21 USA modules and 28,592 accepted placements with 2,321 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**28,501 placements** in **19,345 sources**, **1,669,144 placement
-bytes**, **1,260,024 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**28,592 placements** in **19,436 sources**, **1,672,784 placement
+bytes**, **1,263,664 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -445,3 +445,11 @@ They include local data, two-call bodies and 11 named
 return at byte 32 with their delay slot at byte 36. The 18 sign-test and
 boolean candidates retained under `nonmatching/levels/` receive no C credit;
 all 21 complete modules remain exact.
+
+Another 91 reviewed 40-byte placements in levels 19–24 link exactly from
+91 C sources (3,640 placement and distinct-source bytes). Their local data,
+two-call and named-data forms extend the preceding 40-byte evidence. Seven
+other reviewed placements have retained C attempts for the same signed-test
+and boolean-conversion differences and receive no C credit. All 98 retail
+intervals return at byte 32 with their delay slot at byte 36, and all 21
+complete modules remain exact.
