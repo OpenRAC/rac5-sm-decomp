@@ -7,7 +7,9 @@ symbol sources that do not depend on the bytes being proved:
 1. the module import table: a declared symbol with address 0 is an import;
 2. the module export table: a declared symbol with a non-zero address;
 3. the name itself: ``func_<address>`` / ``D_<address>`` carries the measured
-   module-relative address.
+   module-relative address;
+4. an opt-in, versioned table supplies a qualified module-local ``__muldi3``
+   target after object, helper and relocation identity checks.
 
 The retail module is the comparison target; it is never a symbol source. A
 source whose placeholder names need the retail relocation sites fails here
@@ -115,8 +117,18 @@ def defined_functions(obj: dict) -> dict[str, tuple[int, int]]:
 
 
 def resolve_symbols(obj: dict, imports: dict[str, int],
-                    exports: dict[str, int]) -> tuple[dict[str, int], dict[str, str]]:
-    """Resolve every undefined symbol from the module tables or its own name."""
+                    exports: dict[str, int],
+                    qualified_local: dict[str, int] | None = None
+                    ) -> tuple[dict[str, int], dict[str, str]]:
+    """Resolve imports, exports, address names and reviewed local compiler calls."""
+    qualified_local = qualified_local or {}
+    if set(qualified_local) - {"__muldi3"}:
+        raise BodyLinkError("unqualified local symbol name")
+    referenced = {symbol["name"] for symbol in undefined_symbols(obj)}
+    if set(qualified_local) - referenced:
+        raise BodyLinkError("qualified local symbol is not referenced by object")
+    if set(qualified_local) & (imports.keys() | exports.keys()):
+        raise BodyLinkError("qualified local symbol collides with import/export")
     values: dict[str, int] = {}
     origin: dict[str, str] = {}
     missing: list[str] = []
@@ -128,6 +140,8 @@ def resolve_symbols(obj: dict, imports: dict[str, int],
             values[name], origin[name] = exports[name], "export"
         elif (match := ADDRESS_IN_NAME.match(name)):
             values[name], origin[name] = int(match.group(1), 16), "name-address"
+        elif name in qualified_local:
+            values[name], origin[name] = qualified_local[name], "qualified-local-libcall"
         else:
             missing.append(name)
     if missing:

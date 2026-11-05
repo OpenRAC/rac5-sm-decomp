@@ -55,6 +55,31 @@ class BatchPlannerTests(unittest.TestCase):
             {"name": "common", "bind": 1, "shndx": 0xFFF1}]}
         self.assertEqual(gate.defined_global_names(obj), {"owned"})
 
+    def test_batch_uses_qualified_mapping_for_each_row(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            obj_path = output / "body_qualified.o"
+            blob = b"object"
+            obj_path.write_bytes(blob)
+            row = {"module": "LEVEL_01.REL", "offset": 0x200,
+                   "size": 4, "source": "src/levels/bodies/qualified.c"}
+            objects = {row["source"]: (obj_path, {"symbols": [], "relocs": []},
+                                       hashlib.sha256(blob).hexdigest())}
+            qualified = {(row["module"], row["source"]): {"symbol": "__muldi3"}}
+            with (patch.object(gate, "OUTPUT", output),
+                  patch.object(gate, "resolved_body_mapping",
+                               return_value=({"__muldi3": 0x100},
+                                             {"__muldi3": "qualified-local-libcall"})) as resolver,
+                  patch.object(gate, "link_level_body", return_value=b"body"),
+                  patch.object(gate, "resolve_symbols",
+                               side_effect=AssertionError("generic resolver bypass"))):
+                linked, count = gate.batch_link_level_bodies(
+                    row["module"], [row], objects, {}, {}, b"module", 0x1000,
+                    qualified, Path("ld.exe"), 25, 1)
+            self.assertEqual(count, 1)
+            self.assertEqual(linked[0][2]["__muldi3"], 0x100)
+            self.assertEqual(resolver.call_args.args[-1], qualified)
+
     def test_tampered_object_rejected_before_linker(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)
@@ -67,7 +92,8 @@ class BatchPlannerTests(unittest.TestCase):
             with patch.object(gate, "OUTPUT", output):
                 with self.assertRaisesRegex(ValueError, "stale level body object"):
                     gate.batch_link_level_bodies("LEVEL_01.REL", [row], objects,
-                                                 {}, {}, Path("ld.exe"), 25, 1)
+                                                 {}, {}, b"", 0, {},
+                                                 Path("ld.exe"), 25, 1)
 
 
 if __name__ == "__main__":

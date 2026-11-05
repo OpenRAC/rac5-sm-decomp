@@ -6,13 +6,13 @@ struct V3 {
     float z;
 };
 
-extern void func_005A60(struct V3 *out, void *arg);
+extern void func_005A60(float *out, float *arg, float s);
 
-void func_005B30(struct V3 *dst, struct V3 *src, void *arg)
+void func_005B30(struct V3 *dst, struct V3 *src, void *arg, float s)
 {
     struct V3 t;
 
-    func_005A60(&t, arg);
+    func_005A60((float *)&t, (float *)arg, s);
     dst->x = src->x - t.x;
     dst->y = src->y - t.y;
     dst->z = src->z - t.z;

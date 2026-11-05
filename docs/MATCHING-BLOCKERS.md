@@ -389,6 +389,32 @@ of the hypothesis.
 | [`0x083E38`](../nonmatching/levels/LEVEL_01_083E38.c), 1,068 bytes | `gnu-ee-trial-divpad`: 1,056 bytes | Body byte 60 | Resolve the first branch displacement, later register choices and division padding. | The accepted `func_125E78` uses 12/64/12-byte buffers. The trailing payload layout and outer item-array length remain runtime hypotheses. |
 | [`0x01EF20`](../nonmatching/levels/LEVEL_01_01EF20.c), 1,168 bytes | `gnu-ee-trial-divpad`: 1,168 bytes | Body byte 340 | Resolve the square-root padding class while preserving vector and matrix buffers. | The caller assumes a nonnegative count and readable 40-byte records. |
 
+## Additional retained near misses (4 November 2026)
+
+These C files are retained as hypotheses in `nonmatching/`. Each measurement
+below is an isolated full-body linked comparison with the USA retail module.
+No body is byte-exact or credited, and structural relatives are not accepted
+from these representative results. Field layouts and helper prototypes remain
+provisional where the retail callee has not established them.
+
+| Source and retail extent | Qualified linked result | Reopen when | Source-level limit |
+| --- | --- | --- | --- |
+| [`LEVEL_01:0x00A320`](../nonmatching/levels/LEVEL_01_00A320.c), 928 bytes | `gnu-ee-trial-divpad`: 876 bytes; first difference at body byte 18 in the global-pointer register. | Recover the missing float operations and pointer live range before rechecking the pilot and related placements. | The 36-byte matrix and 16-byte quaternion match the accepted local relay; the surrounding state layout remains a hypothesis. |
+| [`LEVEL_01:0x00AE08`](../nonmatching/levels/LEVEL_01_00AE08.c), 948 bytes | Pinned GNU EE: 952 bytes; first difference at byte 0 in the stack frame. Five local calls remain in order. | Recover the flag bitfield form and constant live ranges, then relink the pilot. | The motion record passed to the accepted five-argument callee has the measured field offsets; bitfields and caller aliasing remain provisional. |
+| [`LEVEL_01:0x018848`](../nonmatching/levels/LEVEL_01_018848.c), 868 bytes | `gnu-ee-trial`: 844 bytes; first difference at byte 14 in initial register allocation. The two `memcpy` imports remain. | Recover the missing copy and bound-test instructions without losing the measured unaligned moves. | Only the 64-byte block is packed; record layout and source strides remain hypotheses. |
+| [`LEVEL_01:0x01D1E0`](../nonmatching/levels/LEVEL_01_01D1E0.c), 712 bytes | `gnu-ee-trial-divpad`: 692 bytes; first difference at byte 22 in pointer-register allocation. | Recover pointer and floating-point live ranges, confirm the two local helper prototypes, then relink the pilot. | One `sqrtf` import and two local calls are measured; their record-field roles are provisional. |
+| [`LEVEL_01:0x02ED98`](../nonmatching/levels/LEVEL_01_02ED98.c), 880 bytes | `gnu-ee-trial-divpad`: 884 bytes; first difference at byte 0 in the stack frame. All four calls keep their order; 20 structural poses were linked and none matched. | Explain the extra 16 bytes of retail local frame and initial float lifetimes before retesting. | Vector fields and the local collision callee's role remain hypotheses. |
+| [`LEVEL_01:0x03EEE0`](../nonmatching/levels/LEVEL_01_03EEE0.c), 244 bytes | `gnu-ee-trial-divpad`: 232 bytes; first difference at byte 22 in address-register and vector-load scheduling. Twenty structural poses were linked and none matched. | Recover the scalar store order and local-vector layout that account for the missing 12 bytes. | The single named import is `sqrtf`; the local vector source form remains provisional. |
+| [`LEVEL_01:0x048F68`](../nonmatching/levels/LEVEL_01_048F68.c), 696 bytes | `gnu-ee-trial-divpad`: 656 bytes; first difference at byte 4 in floating-point zero materialization. | Recover vector aliasing and float live ranges, then relink the pilot before other placements. | Both named `sqrtf` calls are retained; the structural relatives remain unproved. |
+| [`LEVEL_01:0x064DF0`](../nonmatching/levels/LEVEL_01_064DF0.c), 152 bytes | Pinned GNU EE: 148 bytes; first difference at byte 8 is a branch displacement; first different non-branch code is at byte 32. | Recover the shared float condition and pointer selection for the clamp. | No calls or imports; actor fields and the global fade value remain inferred. |
+| [`LEVEL_01:0x068DB8`](../nonmatching/levels/LEVEL_01_068DB8.c), 912 bytes | Pinned GNU EE: 872 bytes; first difference at byte 282 in local float/register scheduling. Eight local calls retain their order. | Recover the two angle temporaries and record-tail pointer lifetime, then the later field stores. | The accepted angle helper's pointer roles are aligned; other record fields and helper prototypes remain provisional. |
+| [`LEVEL_01:0x08C960`](../nonmatching/levels/LEVEL_01_08C960.c), 924 bytes | Pinned GNU EE: 912 bytes; first difference at byte 0; the C frame is `0x120` against retail `0xE0`. Three named calls retain their order. | Recover display-list payload layout and register lifetimes before further placements. | Two payloads and the display-list packet structure remain layout hypotheses; named data imports are distinct from calls. |
+| [`LEVEL_01:0x098FD0`](../nonmatching/levels/LEVEL_01_098FD0.c), 852 bytes | Pinned GNU EE: 812 bytes; first difference at byte 4. Six local calls retain their order. | Recover record-base and slot-index live ranges and missing call-argument setup. | The unaligned 64-byte copy is expressed in C; the last callee prototype and record layout remain provisional. |
+| [`LEVEL_01:0x19CEB0`](../nonmatching/levels/LEVEL_01_19CEB0.c), 436 bytes | `gnu-ee-trial`: 428 bytes; first difference at byte 76 in the x-coordinate load. Four local calls are eight bytes early in the C. | Recover the x/y/z load-and-store order while preserving callee register flow. | The local callee's detailed prototype is an ABI hypothesis from retail register use. |
+| [`LEVEL_01:0x1B4330`](../nonmatching/levels/LEVEL_01_1B4330.c), 628 bytes | `gnu-ee-trial-divpad`: 588 bytes; first difference at byte 6 in register allocation. | Recover basis-local scheduling and record-search control flow before other placements. | One `sqrtf` import and two local calls are measured; record and service types remain provisional. |
+| [`LEVEL_01:0x1CAAE8`](../nonmatching/levels/LEVEL_01_1CAAE8.c), 296 bytes | Pinned GNU EE: 276 bytes; first difference at byte 1 in the object-pointer register (`t4` retail, `t2` compiled). | Recover the pointer and float-temporary lifetimes or copy shape, then relink the pilot. | No calls or imports; both lazy record initializations are retained but field roles are provisional. |
+| [`FRONTEND:0x0073B8`](../nonmatching/levels/FRONTEND_0073B8.c), 284 bytes | `gnu-ee-trial`: 284 bytes; first difference at byte 172 in UI-field load scheduling. | Recover the four UI-field register live ranges or qualify a new compiler profile. | Three named display-list calls and the two named data imports are retained; the local UI state is 20 bytes. |
+
 ## Named import calls in accepted level bodies (4 November 2026)
 
 An audit of the earlier accepted corpus found **592 wrong C import names**
@@ -404,7 +430,7 @@ it was split into seven named C sources and 125 placement paths were
 reassigned. All **496/496** affected placements remain byte-exact after
 relinking. The strict level gate now checks every named imported call of
 accepted C, including the shared-level and frontend witnesses. Its normal
-complete-module run reports **2,779 body import sites + 24 witness sites,
+complete-module run reports **2,913 body import sites + 24 witness sites,
 zero mismatches and 21/21 complete modules exact**.
 
 The split adds six authored source definitions and **168 bytes to the
@@ -414,9 +440,22 @@ estimate; it is not new decompilation coverage. The historical audit and
 full per-site proof remain private, with names, counts and limits recorded
 here for contributors.
 
+## Qualified compiler-generated local multiplication (5 November 2026)
+
+Twenty C sources adapted from the public GCC 2.95.3 `fp-bit.c` multiplication
+path reproduce **21 bounded 680-byte placements** (13,600 distinct-source
+bytes). Their provenance, original license and linking exception are recorded
+in [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md). The compiler emits
+four `__muldi3` calls per body. A versioned table qualifies only the pinned
+module/source/object pairs and four call sites, after verifying the unique
+96-byte helper and its SHA in each retail module. The strict resolver remains
+in force for every source without such a row. Both individual and batched
+complete-module gates reproduce all 21 USA modules; this is a measured local
+link target, not a general rule for unresolved compiler calls.
+
 ## What is left
 
-The level scope is **23,606 measured placements** of 1,474,152 placement bytes carried by **16,320
+The level scope is **23,721 measured placements** of 1,517,508 placement bytes carried by **16,432
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -427,6 +466,12 @@ uniquely recoverable from the ABI. The six pointer roles in the 68-byte helper
 family and some callee types in the 128-byte vector family remain provisional.
 The accepted 40-byte `LEVEL_01:0x123DC8` wrapper now passes its output pointer
 explicitly while retaining the same compiled object and retail bytes.
+Six further bounded families (120, 168, 780, 680, 228 and 864 bytes) add
+**112 C sources, 115 placements and 41,692 distinct-source bytes**; their
+zero alignment tails are excluded. Fifty-nine already accepted C definitions
+also now make implicit call arguments or returns explicit without changing
+their pinned objects or linked retail bytes. Other source-level ABI contracts
+remain under review even where the compiled bytes match.
 The 713 linked C bodies cover 93,032 bytes including alignment. The profile
 files and their patches are the only place where a toolchain change is allowed
 to move a body.
