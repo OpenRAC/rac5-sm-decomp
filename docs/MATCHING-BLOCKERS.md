@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **26,633 measured placements** of 1,604,172 placement bytes carried by **17,572
+The level scope is **26,842 measured placements** of 1,610,024 placement bytes carried by **17,773
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -634,6 +634,30 @@ and field offset where a flattened address changed the instructions. An
 unsigned bit test shortened the frontend mask body; the signed positive
 comparison above preserved its explicit mask. Fourteen source reuses were
 verified by relinking at each target before the 21-module gate passed.
+
+Another 209 reviewed 28-byte call wrappers with one relocation link exactly
+from 201 C sources (5,852 placement bytes, 5,628 distinct-source bytes).
+Local calls keep their measured targets; imported calls keep their symbol
+names. Eight identical sources were relinked at each placement before the
+complete 21-module gate passed.
+
+Twenty-one `asyncPs2fioLseek` wrappers remain nonmatching: the existing
+[`FRONTEND:0x002620`](../nonmatching/levels/FRONTEND_002620.c) attempt and
+20 additional retained level attempts. The pinned object has the correct
+28-byte length but first differs at byte 12: the retail call-delay slot has
+a 64-bit argument move, while the compiler emits a no-op. Wider, narrower,
+pointer and old-style parameter declarations did not recover that move on
+the frontend representative; five other qualified `cc1` routes had the
+same difference. Reopen with source-level ABI evidence or a narrowly
+qualified compiler remedy.
+
+The self-calling bodies at [`LEVEL_15:0x093E00`](../nonmatching/levels/LEVEL_15_093E00.c)
+and [`LEVEL_21:0x093E00`](../nonmatching/levels/LEVEL_21_093E00.c)
+also remain nonmatching. The retail has an explicit 28-byte call and return,
+while pinned C folds the recursive call to a 24-byte loop (first difference
+at byte 0). The available `cc1` rejects `-fno-optimize-sibling-calls`.
+Reopen with a natural source form or a qualified compiler profile that keeps
+the call without changing its behavior.
 
 Twenty 20-byte local global-copy bodies remain nonmatching despite one
 authored C source per site under `nonmatching/levels/` (for example,
