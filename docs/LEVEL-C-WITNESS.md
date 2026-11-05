@@ -345,14 +345,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 26,633 accepted placements with 2,296 SN link invocations;
+all 21 USA modules and 26,842 accepted placements with 2,296 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**26,633 placements** in **17,572 sources**, **1,604,172 placement
-bytes**, **1,198,384 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**26,842 placements** in **17,773 sources**, **1,610,024 placement
+bytes**, **1,204,012 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -371,3 +371,11 @@ a function at every entry. Fourteen placements reuse an identical
 source only after that source linked exactly at both sites. This includes
 `FRONTEND:0x020968`, whose signed positive mask comparison retains the
 retail instructions. All 21 complete USA modules remain exact.
+
+Another 209 reviewed 28-byte call wrappers link exactly from 201 C sources
+(5,852 placement bytes, 5,628 distinct-source bytes). Their single call
+relocation preserves the local target or the named import. Eight duplicate
+source placements were relinked at both sites before the complete-module
+gate. Every retail interval has a return at byte 20 and its delay slot at
+byte 24. The other 23 reviewed call bodies remain uncounted with C attempts
+under `nonmatching/levels/`.
