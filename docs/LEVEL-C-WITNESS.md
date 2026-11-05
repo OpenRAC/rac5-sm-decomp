@@ -345,14 +345,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 27,394 accepted placements with 2,301 SN link invocations;
+all 21 USA modules and 27,603 accepted placements with 2,302 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**27,394 placements** in **18,302 sources**, **1,627,364 placement
-bytes**, **1,220,636 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**27,603 placements** in **18,484 sources**, **1,634,888 placement
+bytes**, **1,227,188 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -407,3 +407,11 @@ distinct-source bytes). Twenty named `SND_Fixup` calls keep their import
 identity, and the local calls keep their measured targets. Four identical
 sources were relinked at both sites. Every retail interval returns at byte
 24 with its delay slot at byte 28, and all 21 modules remain exact.
+
+Another 209 reviewed 36-byte call bodies link exactly from 182 C sources
+(7,524 placement bytes, 6,552 distinct-source bytes). Their local calls keep
+the measured targets. Twenty-seven placements reuse an identical source only
+after exact relinking at the other site. The floating-point, unsigned literal
+and output-pointer parameter forms reproduce the retail argument registers.
+Every retail interval returns at byte 28 with its delay slot at byte 32, and
+the complete 21-module gate remains exact.
