@@ -38,9 +38,10 @@ SPAN5B_AS = "span5b"
 class CFlagsTests(unittest.TestCase):
     def test_committed_file_lists_campaign_sources_with_measured_flags(self) -> None:
         entries = cflags.load()
+        known = cflags.campaign_sources()
         for name, entry in entries.items():
             with self.subTest(name=name):
-                self.assertIn(name, cflags.campaign_sources())
+                self.assertIn(name, known)
                 self.assertTrue((cflags.ROOT / name).is_file())
                 self.assertTrue(all(flag.startswith("-") for flag in entry.flags))
                 self.assertIn(entry.compiler, cflags.pinned_compilers())

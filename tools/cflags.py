@@ -20,6 +20,7 @@ compiles fails instead of being ignored silently.
 
 from __future__ import annotations
 
+import csv
 import json
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
@@ -70,6 +71,11 @@ def campaign_sources() -> frozenset[str]:
                 level["frontend_accepted"],
                 *level["provisional_controls"]):
         names.add(row["source"])
+    body_sources = ROOT / "config/levels/body_sources.tsv"
+    if body_sources.is_file():
+        with body_sources.open(encoding="utf-8", newline="") as stream:
+            names.update(row["source"] for row in csv.DictReader(stream,
+                                                                   delimiter="\t"))
     for folder in CAMPAIGN_DIRS:
         base = ROOT / folder
         if base.is_dir():

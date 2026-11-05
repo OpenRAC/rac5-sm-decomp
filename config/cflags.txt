@@ -363,3 +363,10 @@ src/boot/VSync.c    sdk991111sync -O2 -G0
 src/boot/VSync2.c    sdk991111sync -O2 -G0
 nonmatching/boot/asyncPs2fioLseek.c    prodg2953 as=ee-sdk -O2 -G0
 nonmatching/boot/snDllLoaded.c    sdk991111sq as=ps2eeas -O2 -G0
+
+# Exact 44-byte level integer modulo bodies use the existing opt-in flag.
+src/levels/bodies/LEVEL_01_15D3A0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_03_12CF00.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_16_139FE0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_22_105888.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_23_11FB10.c  -mno-check-zero-division
