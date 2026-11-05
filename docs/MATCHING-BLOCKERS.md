@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **26,204 measured placements** of 1,592,808 placement bytes carried by **17,164
+The level scope is **26,366 measured placements** of 1,596,696 placement bytes carried by **17,319
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -614,6 +614,13 @@ placement bytes, 4,200 distinct-source bytes). Twenty levels share one
 named imports and their relocation roles are identical at every site. The
 other 209 sources use their own local data targets. The complete 21-module
 gate checks every linked placement and named import identity.
+
+The next 162 reviewed 24-byte local-data placements link exactly from 155 C
+sources (3,888 placement bytes, 3,720 distinct-source bytes). Seven pairs in
+levels 15 and 21 use one source per pair after verifying equal retail bodies,
+data targets, relocation roles and linked bytes at both sites. The other
+sources retain their site-specific data addresses. The complete 21-module
+gate verifies all linked placements.
 
 Twenty 20-byte local global-copy bodies remain nonmatching despite one
 authored C source per site under `nonmatching/levels/` (for example,
