@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **29,126 measured placements** of 1,695,376 placement bytes carried by **19,940
+The level scope is **29,281 measured placements** of 1,702,196 placement bytes carried by **20,086
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -790,6 +790,19 @@ keep useful C attempts under `nonmatching/levels/` without match credit:
   [`LEVEL_04:0x0B7C58`](../nonmatching/levels/LEVEL_04_0B7C58.c)) link at 40
   instead of 44 bytes, first differing at byte 4. Recover the original
   condition form before retrying.
+
+Another 155 reviewed 44-byte three-relocation placements link exactly from
+146 C sources (6,820 placement bytes, 6,424 distinct-source bytes). Nine
+extra placements reuse a source only after the canonical file linked exactly
+at both sites. The natural C for the 40 global-update wrappers also preserves
+the first local call's return value through the global store. All 21 complete
+modules pass. One call wrapper,
+[`LEVEL_10:0x0C5D98`](../nonmatching/levels/LEVEL_10_0C5D98.c), remains
+nonmatching: pinned C links 44 bytes but first differs at byte 4, where the
+global-address setup precedes forwarded argument copies. Natural argument
+types, five qualified `cc1` routes and scoped scheduling flags did not restore
+the retail order. Reopen with an evidenced source form or qualified compiler
+route; this retained C earns no match credit.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C
