@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **28,926 measured placements** of 1,686,576 placement bytes carried by **19,748
+The level scope is **29,126 measured placements** of 1,695,376 placement bytes carried by **19,940
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -759,6 +759,37 @@ modules pass; the flag is limited to the five measured bodies. Eighty other
   registers. Natural comparison forms and five other qualified `cc1` routes
   did not select the retail allocation. Reopen both comparison families with
   source or compiler evidence for their original value lifetimes.
+
+Another 200 reviewed 44-byte two-relocation placements link exactly from
+192 C sources (8,800 placement bytes, 8,448 distinct-source bytes). Eight
+extra placements reuse a source only after the canonical file linked exactly
+at both sites. All 21 complete modules pass. Eighty-three other placements
+keep useful C attempts under `nonmatching/levels/` without match credit:
+
+- Twenty pointer-table guards (for example,
+  [`LEVEL_01:0x024A38`](../nonmatching/levels/LEVEL_01_024A38.c)) link at 44
+  bytes but first differ at byte 0: the compiler folds a nonzero check and
+  upper bound into one adjusted unsigned range test. Nested conditions,
+  five qualified `cc1` routes and scoped flags did not preserve both checks.
+- Twenty-five byte-mask setters (for example,
+  [`LEVEL_01:0x027480`](../nonmatching/levels/LEVEL_01_027480.c)) link at 44
+  bytes but first differ at byte 4, where clear-mask normalization and
+  indexed-address setup are scheduled in the opposite order. Typed record
+  and operand-order forms and qualified compiler routes did not restore it.
+- Twenty boolean-return bodies (for example,
+  [`LEVEL_01:0x0639B8`](../nonmatching/levels/LEVEL_01_0639B8.c)) link at 40
+  instead of 44 bytes; the first difference at byte 8 is the branch span.
+  The retail retains an extra value transfer. A wider return reaches 44 bytes
+  but selects a different conditional move.
+- Fifteen flag-mask queries (for example,
+  [`LEVEL_01:0x132F48`](../nonmatching/levels/LEVEL_01_132F48.c)) link at 40
+  instead of 44 bytes, first differing at byte 2 in register allocation.
+  Direct C folds both masks into 28 bytes. Reopen these families with source
+  or compiler evidence for the original value lifetimes and scheduling.
+- Three isolated condition bodies (for example,
+  [`LEVEL_04:0x0B7C58`](../nonmatching/levels/LEVEL_04_0B7C58.c)) link at 40
+  instead of 44 bytes, first differing at byte 4. Recover the original
+  condition form before retrying.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C
