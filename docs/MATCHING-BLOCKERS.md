@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **25,617 measured placements** of 1,581,684 placement bytes carried by **16,683
+The level scope is **25,715 measured placements** of 1,583,512 placement bytes carried by **16,694
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -537,7 +537,7 @@ These candidate entries have source-level C retained under `nonmatching/levels/`
 
 ## Short raw-identical level-body candidates (5 November 2026)
 
-The following USA candidate bodies are raw-identical across the listed numbered levels and contain no body relocations. This is boundary and code-shape evidence only; each retained C source differs in an isolated linked trial and none of its placements earns C credit. In this short-body scope, 157 reviewed families have passed the complete 21-module gate as accepted C. Eight 16–32-byte forms cover 148 linked placements with 168 distinct-source bytes: a floating-point constant return, conditional field assignment, two unsigned range tests, a range-length accessor, a state store, a floating-point affine result and three field clears. Another 23 source forms add 429 exact placements and 296 distinct-source bytes; two more placements reuse an existing qualified C source. A further 38 source forms of 8–64 bytes add 340 exact placements and 924 distinct-source bytes. The next 46 short forms add 121 exact placements and 1,164 distinct-source bytes. Each new placement was linked independently before the complete-module gate.
+The following USA candidate bodies are raw-identical across the listed numbered levels and contain no body relocations. This is boundary and code-shape evidence only; each retained C source differs in an isolated linked trial and none of its placements earns C credit. In this short-body scope, 168 reviewed families have passed the complete 21-module gate as accepted C. Eight 16–32-byte forms cover 148 linked placements with 168 distinct-source bytes: a floating-point constant return, conditional field assignment, two unsigned range tests, a range-length accessor, a state store, a floating-point affine result and three field clears. Another 23 source forms add 429 exact placements and 296 distinct-source bytes; two more placements reuse an existing qualified C source. A further 38 source forms of 8–64 bytes add 340 exact placements and 924 distinct-source bytes. The next 46 short forms add 121 exact placements and 1,164 distinct-source bytes. Eleven more sources cover 98 exact placements, including repeated uses inside a module, while adding 204 distinct-source bytes. Each new placement was linked independently before the complete-module gate.
 
 | Representative | Retail body | Candidate placements | Best isolated trial | Reopening condition |
 | --- | ---: | ---: | --- | --- |
