@@ -345,14 +345,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 28,245 accepted placements with 2,314 SN link invocations;
+all 21 USA modules and 28,501 accepted placements with 2,318 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**28,245 placements** in **19,089 sources**, **1,658,904 placement
-bytes**, **1,249,784 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**28,501 placements** in **19,345 sources**, **1,669,144 placement
+bytes**, **1,260,024 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -437,3 +437,11 @@ Another 226 reviewed 40-byte call bodies link exactly from 204 C sources
 measured local targets. Twenty-two identical sources were relinked at a
 second placement. Every retail interval returns at byte 32 with its delay
 slot at byte 36, and all 21 modules remain exact.
+
+Another 256 reviewed 40-byte placements with two body relocations link
+exactly from 256 C sources (10,240 placement and distinct-source bytes).
+They include local data, two-call bodies and 11 named
+`g_bRenderPlayerShadow` data relocations. All 274 reviewed retail intervals
+return at byte 32 with their delay slot at byte 36. The 18 sign-test and
+boolean candidates retained under `nonmatching/levels/` receive no C credit;
+all 21 complete modules remain exact.
