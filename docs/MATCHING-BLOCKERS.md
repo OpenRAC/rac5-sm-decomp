@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **26,366 measured placements** of 1,596,696 placement bytes carried by **17,319
+The level scope is **26,633 measured placements** of 1,604,172 placement bytes carried by **17,572
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -513,7 +513,7 @@ in step with `master`. Issue #99 remains the only reservation board.
 
 ## Bounded frontend C attempts of 64 bytes or less (5 November 2026)
 
-These candidate entries have source-level C retained under `nonmatching/levels/`. The listed objects are isolated linked trials against the pinned USA frontend, not accepted matches. The 24 other bounded entries in this size group pass the complete 21-module gate as accepted C. Each retained source records a concrete next experiment; equal length alone earns no credit.
+These candidate entries have source-level C retained under `nonmatching/levels/`. The listed objects are isolated linked trials against the pinned USA frontend, not accepted matches. Accepted bounded frontend entries, including `0x020968`, pass the complete 21-module gate as C. Each retained source records a concrete next experiment; equal length alone earns no credit.
 
 | Candidate | Retail body | Best isolated trial | Reopening condition |
 | --- | ---: | --- | --- |
@@ -526,7 +526,6 @@ These candidate entries have source-level C retained under `nonmatching/levels/`
 | [`0x01E380`](../nonmatching/levels/FRONTEND_01E380.c) | 60 B | pinned: 60 B, first difference +11 | Recover the masked-index register and final record comparison control flow. |
 | [`0x020698`](../nonmatching/levels/FRONTEND_020698.c) | 64 B | pinned: 60 B, first difference +8 | Recover the flag set/clear branch and the two pointer reload lifetimes. |
 | [`0x020918`](../nonmatching/levels/FRONTEND_020918.c) | 44 B | pinned: 40 B, first difference +2 | Recover the mask-expression order and the retail literal/register lifetimes. |
-| [`0x020968`](../nonmatching/levels/FRONTEND_020968.c) | 28 B | pinned: 24 B, first difference +4 | Find a source form that preserves the explicit high-bit mask instead of reducing it to a shift. |
 | [`0x0209B0`](../nonmatching/levels/FRONTEND_0209B0.c) | 48 B | pinned: 44 B, first difference +20 | Recover the conditional masked return without shortening away the retail conditional move. |
 | [`0x021188`](../nonmatching/levels/FRONTEND_021188.c) | 40 B | pinned: 40 B, first difference +28 | Recover the null-check and sign-test branch layout without the branch-likely shortening. |
 | [`0x021A00`](../nonmatching/levels/FRONTEND_021A00.c) | 44 B | pinned: 44 B, first difference +8 | Recover the bounds-failure branch and stride-calculation lifetime. |
@@ -534,6 +533,12 @@ These candidate entries have source-level C retained under `nonmatching/levels/`
 | [`0x024140`](../nonmatching/levels/FRONTEND_024140.c) | 64 B | pinned: 64 B, first difference +12 | Recover the local float store versus output-pointer setup around the first call. |
 | [`0x026878`](../nonmatching/levels/FRONTEND_026878.c) | 64 B | pinned: 48 B, first difference +0 | Recover the saved-register frame and comparison-result lifetime around the imported strcmp call. |
 | [`0x0275D0`](../nonmatching/levels/FRONTEND_0275D0.c) | 52 B | pinned: 52 B, first difference +2 | Recover the lazy-initialization pointer test and its address/register lifetimes without an artificial null check. |
+
+The previous `FRONTEND:0x020968` attempt linked to 24 bytes and first differed at
+body byte 4 because the compiler reduced the high-bit mask to a shift. The
+accepted [C source](../src/levels/bodies/FRONTEND_020968.c) uses a signed
+`(flags & 0x40000) > 0` comparison. It links exactly at the frontend and 15
+level placements, and the complete 21-module gate passes (5 November 2026).
 
 ## Short raw-identical level-body candidates (5 November 2026)
 
@@ -621,6 +626,14 @@ levels 15 and 21 use one source per pair after verifying equal retail bodies,
 data targets, relocation roles and linked bytes at both sites. The other
 sources retain their site-specific data addresses. The complete 21-module
 gate verifies all linked placements.
+
+The subsequent 267 reviewed 28-byte placements with local HI16/LO16 pairs
+link exactly from 253 C sources (7,476 placement bytes, 7,084 distinct-source
+bytes). A typed field and a separate record pointer preserve the retail base
+and field offset where a flattened address changed the instructions. An
+unsigned bit test shortened the frontend mask body; the signed positive
+comparison above preserved its explicit mask. Fourteen source reuses were
+verified by relinking at each target before the 21-module gate passed.
 
 Twenty 20-byte local global-copy bodies remain nonmatching despite one
 authored C source per site under `nonmatching/levels/` (for example,

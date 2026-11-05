@@ -345,14 +345,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 26,366 accepted placements with 2,291 SN link invocations;
+all 21 USA modules and 26,633 accepted placements with 2,296 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**26,366 placements** in **17,319 sources**, **1,596,696 placement
-bytes**, **1,191,300 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**26,633 placements** in **17,572 sources**, **1,604,172 placement
+bytes**, **1,198,384 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -362,3 +362,12 @@ initial shared-level compiler trial. Later accepted bodies stay in
 `src/levels/bodies/` even when one source is linked at several placements. The
 placement table records that reuse, and the progress report counts each source
 once in its distinct-source byte total.
+
+Another 267 reviewed 28-byte placements link exactly from 253 C sources
+(7,476 placement bytes, 7,084 distinct-source bytes). Each has one local
+HI16 and one local LO16 relocation. Each retail interval ends with a return
+at body byte 20 and its delay-slot instruction at byte 24; Ghidra identified
+a function at every entry. Fourteen placements reuse an identical
+source only after that source linked exactly at both sites. This includes
+`FRONTEND:0x020968`, whose signed positive mask comparison retains the
+retail instructions. All 21 complete USA modules remain exact.
