@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **25,784 measured placements** of 1,585,384 placement bytes carried by **16,763
+The level scope is **25,828 measured placements** of 1,586,048 placement bytes carried by **16,807
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -587,3 +587,13 @@ The following USA candidate bodies are raw-identical across the listed numbered 
 | [`LEVEL_02:0x1D9670`](../nonmatching/levels/LEVEL_02_1D9670.c) | 40 B | 1 | pinned: 36 B, first difference +2 | Recover the indexed record's separate +4 subrecord address and output-register lifetime. |
 | [`LEVEL_16:0x1599E8`](../nonmatching/levels/LEVEL_16_1599E8.c) | 40 B | 1 | pinned: 32 B, first difference +2 | Recover the two independent stride calculations; the compiler shortens the conditional stride. |
 | [`LEVEL_16:0x177F60`](../nonmatching/levels/LEVEL_16_177F60.c) | 40 B | 1 | pinned: 40 B, first difference +2 | Recover the byte-counter load, clear store and limit-pointer register order. |
+
+## Short local data relocations (5 November 2026)
+
+Forty-four site-specific 12- and 16-byte C sources in USA levels 01–06 link
+exactly at their reviewed placements (664 distinct and placement bytes). Each
+body has one local HI16/LO16 relocation pair; none calls a named import. The
+sources express seven small data-access forms with the correct address for
+their own module. Byte similarity across levels alone does not justify a
+shared source. The complete 21-module gate verifies the linked addresses and
+retail bytes for all accepted placements.
