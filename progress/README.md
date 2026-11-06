@@ -5,8 +5,8 @@ after the private boot and level-program gates pass. It records **693 accepted
 boot C functions (88,948 bytes) in the 498,900-byte boot `.text`**, **one 476-byte C
 function in `FRONTEND.REL`**, plus **two shared C functions (8 + 72 bytes)
 at twenty numbered level placements** and, counted separately, the
-**32,677 accepted level-body placements**
-(1,913,564 placement bytes carried by 23,125 sources, 1,470,332 distinct-source
+**32,794 accepted level-body placements**
+(1,924,072 placement bytes carried by 23,237 sources, 1,480,400 distinct-source
 bytes). The shared pair counts as two authored functions, not forty
 independent matches, and the level bodies are a scope of their own: one
 authored source can carry many placements. Two other exact C shapes remain
@@ -101,20 +101,24 @@ to `master`, the progress workflow uploads `SCUS_976.15_report/report.json`;
 ByteMatch reads that artifact as its progress graph. Its denominator combines **498,900 measured
 boot `.text` bytes**, **162,944 frontend candidate-code bytes**, and **5,756,360
 optimistically deduplicated level candidate bytes**, for **6,418,204 provisional
-code bytes**. The numerator is **1,559,836 accepted C bytes**: 88,948 in boot, 476
+code bytes**. The numerator is **1,569,904 accepted C bytes**: 88,948 in boot, 476
 in frontend, 80 from two authored functions shared across twenty levels, and
-1,470,332 unique source bytes of accepted level C bodies (each body counted once,
+1,480,400 unique source bytes of accepted level C bodies (each body counted once,
 however many placements carry it). The site rounds the resulting approximately
-**24.3033%** to **24.30%**.
+**24.4602%** to **24.46%**.
 
 ByteMatch's overall **0/0 functions** means that a reviewed count of distinct
 functions is unavailable; it does not mean no C functions are accepted. The
 optimistic audit has 9,388 relocation-masked shape groups, but a masked shape
 can cover different data roles and C definitions. The level scope already has
-23,125 accepted C sources, so using that shape count as the function
+23,237 accepted C sources, so using that shape count as the function
 denominator would be inconsistent. A provisional function estimate would need
 its own boundary and cross-level identity audit, with matched and total counts
 computed under the same rule.
+Per-unit function counts are display aggregates as well: the boot's
+`__unmatched_boot_code` row represents all remaining boot code, and each level
+groups its accepted C bodies into one synthetic row. Those rows are not
+individual retail functions and cannot be summed into an overall denominator.
 
 The dashboard's level unit and category both say **optimistic masked-shape
 estimate**. This denominator can rise when a presumed shared shape splits into
