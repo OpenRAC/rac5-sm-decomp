@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **31,897 measured placements** of 1,840,700 placement bytes carried by **22,590
+The level scope is **32,143 measured placements** of 1,856,444 placement bytes carried by **22,828
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -1031,6 +1031,20 @@ Taken together, this review adds 131 exact placements from 124 C
 sources (7,796 placement bytes, 7,408 distinct-source bytes) while
 retaining 15 useful nonmatching C bodies. All 21 complete USA modules
 remain exact.
+
+A review of 485 candidate 64-byte intervals with relocations found 246
+exact placements from 238 C sources (15,744 placement bytes, 15,232
+distinct-source bytes). Eight placements reuse the same C after an
+independent exact link. The complete 21-module USA gate passes. Natural
+loop forms recovered the [array initializer](../src/levels/bodies/LEVEL_01_02A118.c)
+and the [table search](../src/levels/bodies/LEVEL_02_027F08.c); correcting
+the declared width of `g_bRenderPlayerShadow` recovered five more
+placements. Another 230 complete candidate bodies retain measured C in
+`nonmatching/`, with their first difference and reopening condition in
+the source comments. For example, the [flag update](../nonmatching/levels/LEVEL_01_132CD8.c)
+still differs in branch-likely scheduling. Nine candidate entries lacked
+a Ghidra function at their start; they receive neither C credit nor an
+invented boundary until reviewed further.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C
