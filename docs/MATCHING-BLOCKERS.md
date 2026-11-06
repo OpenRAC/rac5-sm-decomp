@@ -1491,3 +1491,28 @@ classes:
 One form needs a measured flag rather than new C: `LEVEL_02.REL:0x0C07A0`
 links 200 bytes only with `-mno-check-zero-division`. Two exact forms require
 the `gnu-ee-trial-divpad` profile (see `LEVEL-C-WITNESS.md`).
+
+Another 1,206 bounded USA candidates of 104–200 bytes were measured in two
+later scopes. Twenty forms reproduced 459 placements exactly; twenty-eight
+representative forms remain blocked and are retained under
+`nonmatching/levels/` with measured differences and reopening conditions. The
+new evidence adds four reusable facts:
+
+- **Assembler expansion of 64-bit constants.** The pinned GNU assembler
+  expands a `dli` as `ori`/`dsll16`; the retail uses `lui`/`ori`/`dsll3`/`ori`.
+  SN `Ps2EeAs` reproduces the retail expansion. It is now registered as the
+  per-source `ps2eeas` level-body assembler for the measured 18 placements;
+  its SHA-256 is the one already pinned for the boot reconstruction.
+- **Hazard nop after `mtc1`.** One 168-byte body is exact only with the same
+  `ee-frozen` assembler; the pinned GNU assembler omits the coprocessor hazard
+  nop, the `gnu-ee-trial` assembler emits 164 bytes.
+- **Adjacent-store swap.** GCC 2.9 exchanges two independent adjacent stores of
+  the same value. Writing the source stores in the opposite order restores the
+  retail order; `volatile` was measured as unnecessary and is not used.
+- **Conditional-move conversion.** GCC 2.9 converts a branch-based value
+  selection (`sltu`/`xori`/`beqz`/two `addiu`) into a conditional move in
+  `jump.c`; a real 0/1 boolean used as a value is the remaining hypothesis.
+
+Two forms need a different allocation behaviour rather than a new source form:
+`LEVEL_02.REL:0x0E3A10` and `LEVEL_03.REL:0x0B9E58` differ only in the register
+holding a live temporary, across all six qualified cc1 profiles.
