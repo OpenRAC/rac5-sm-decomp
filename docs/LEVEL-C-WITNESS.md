@@ -84,7 +84,8 @@ boot campaign already pins (cc1 SHA-256 `1305725c…` and `eaf94d2a…`); a few
 level bodies only match under them — the game compiler of the sibling
 projects is a lever here too — and they are selected per source, never
 globally. Most rows use the pinned GNU `gnu-ee-trial-20261015` assembler;
-one measured source selects the separately pinned `r5900-mfc1` route.
+two measured sources select separately pinned `r5900-mfc1` and `ee-frozen`
+routes.
 
 Symbol resolution is deliberately narrower than the wave-17 harness. An
 undefined name resolves from the module import table (address 0), the module
@@ -334,6 +335,7 @@ python3 tools/level_c_gate.py baserom/SCUS_976.15.iso \
   --extra-cc1 sdk991111=/path/to/sdk/cc1 \
   --extra-cc1 sdk991111sync=/path/to/sdk-sync/cc1 \
   --extra-as r5900-mfc1=/path/to/r5900-mfc1/as \
+  --extra-as ee-frozen=/path/to/ee-frozen/as \
   --output-dir /home/you/rac5-level-c-trial
 ```
 
@@ -353,14 +355,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 32,222 accepted placements with 2,371 SN link invocations;
+all 21 USA modules and 32,334 accepted placements with 2,374 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**32,222 placements** in **22,831 sources**, **1,866,356 placement
-bytes**, **1,439,572 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**32,334 placements** in **22,835 sources**, **1,878,264 placement
+bytes**, **1,439,960 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.

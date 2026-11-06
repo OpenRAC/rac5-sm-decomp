@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **32,222 measured placements** of 1,866,356 placement bytes carried by **22,831
+The level scope is **32,334 measured placements** of 1,878,264 placement bytes carried by **22,835
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -1090,6 +1090,31 @@ The [double classifier](../nonmatching/levels/FRONTEND_023528.c) has a
 candidate interval; no credit is claimed for that extra word or its
 unresolved ownership. Five qualified `cc1` routes did not resolve the
 other representative differences.
+
+Four new shared C sources and four existing sources cover 112 exact USA
+placements of 84–152 bytes (11,908 placement bytes, 388 new
+distinct-source bytes). Thirty-five placements reuse the existing sources
+after independent exact links. The new C sources cover a
+[100-byte float step](../src/levels/bodies/LEVEL_01_001940.c),
+[100-byte status count](../src/levels/bodies/LEVEL_01_07D1C8.c),
+[92-byte record write](../src/levels/bodies/LEVEL_01_0B9840.c) and
+[96-byte interpolation](../src/levels/bodies/LEVEL_01_12F218.c).
+The interpolation preserves the measured zero-valued polynomial terms;
+removing those floating-point operations would change NaN behavior.
+Only the float step selects the hash-pinned `ee-frozen` assembler;
+the default GNU assembler yields 96 bytes from the same C. All 21
+complete USA modules remain exact, and the previously accepted source
+and placement rows retain their original pins.
+
+Twelve other reviewed C hypotheses remain in `nonmatching/` with their
+first difference and reopening condition. For example, the
+[88-byte pointer-array removal](../nonmatching/levels/LEVEL_01_08BE18.c)
+still swaps one commutative address operand near its end. The
+[frontend table count](../nonmatching/levels/FRONTEND_025CC0.c) has a
+68-byte Ghidra body inside a 72-byte candidate interval; the following
+word is nonzero at all 21 placements and receives no C credit or assumed
+ownership. Five other qualified compiler routes and two alternate
+assemblers did not resolve the retained representative differences.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C

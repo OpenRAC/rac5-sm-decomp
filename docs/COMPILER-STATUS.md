@@ -625,3 +625,23 @@ qualification passes **21/21 USA modules exact**, with 2,371 SN batch links.
 The 22,829 previously accepted source rows and their object SHA-256 pins
 remain byte-for-byte unchanged. The gate receipt records both assembler
 hashes and rejects a missing or changed alternate binary.
+
+## Level-only EE floating-delay assembler route (2026-11-06)
+
+The 100-byte `LEVEL_01:0x001940` float-step body has a retail `mtc1`
+latency delay and a floating-branch delay slot that the default GNU EE
+assembler does not preserve together: it emits 96 bytes from the same C.
+A separately recovered private EE assembler emits the complete 100-byte
+retail body at all twenty numbered USA levels. Its binary SHA-256 is
+`d2f76ccfa6a7efcbe8605a6f52fe602354370b4d8dce55650c281dc95ebab9de`.
+This is a toolchain measurement, not evidence that the private binary may
+be redistributed or that it is the original game assembler.
+
+The level profile names this opt-in route `ee-frozen` and allows only
+`src/levels/bodies/LEVEL_01_001940.c` to select it. The gate requires
+an explicit hash-checked `--extra-as ee-frozen=PATH`; every other accepted
+source retains its existing assembler route. Complete-module qualification
+passes **21/21 USA modules exact**, with 2,374 SN batch links. The
+22,831 previously accepted source rows and their object SHA-256 pins are
+unchanged. The gate receipt records the hashes of the default,
+`r5900-mfc1` and `ee-frozen` assemblers.

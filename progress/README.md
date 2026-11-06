@@ -5,8 +5,8 @@ after the private boot and level-program gates pass. It records **693 accepted
 boot C functions (88,948 bytes) in the 498,900-byte boot `.text`**, **one 476-byte C
 function in `FRONTEND.REL`**, plus **two shared C functions (8 + 72 bytes)
 at twenty numbered level placements** and, counted separately, the
-**32,222 accepted level-body placements**
-(1,866,356 placement bytes carried by 22,831 sources, 1,439,572 distinct-source
+**32,334 accepted level-body placements**
+(1,878,264 placement bytes carried by 22,835 sources, 1,439,960 distinct-source
 bytes). The shared pair counts as two authored functions, not forty
 independent matches, and the level bodies are a scope of their own: one
 authored source can carry many placements. Two other exact C shapes remain
@@ -101,17 +101,17 @@ to `master`, the progress workflow uploads `SCUS_976.15_report/report.json`;
 ByteMatch reads that artifact as its progress graph. Its denominator combines **498,900 measured
 boot `.text` bytes**, **162,944 frontend candidate-code bytes**, and **5,756,360
 optimistically deduplicated level candidate bytes**, for **6,418,204 provisional
-code bytes**. The numerator is **1,529,076 accepted C bytes**: 88,948 in boot, 476
+code bytes**. The numerator is **1,529,464 accepted C bytes**: 88,948 in boot, 476
 in frontend, 80 from two authored functions shared across twenty levels, and
-1,439,572 unique source bytes of accepted level C bodies (each body counted once,
+1,439,960 unique source bytes of accepted level C bodies (each body counted once,
 however many placements carry it). The site rounds the resulting approximately
-**23.8240%** to **23.82%**.
+**23.8301%** to **23.83%**.
 
 ByteMatch's overall **0/0 functions** means that a reviewed count of distinct
 functions is unavailable; it does not mean no C functions are accepted. The
 optimistic audit has 9,388 relocation-masked shape groups, but a masked shape
 can cover different data roles and C definitions. The level scope already has
-22,831 accepted C sources, so using that shape count as the function
+22,835 accepted C sources, so using that shape count as the function
 denominator would be inconsistent. A provisional function estimate would need
 its own boundary and cross-level identity audit, with matched and total counts
 computed under the same rule.
