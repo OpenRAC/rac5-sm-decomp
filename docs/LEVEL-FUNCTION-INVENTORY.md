@@ -219,10 +219,17 @@ unique callee roles. One family requires a unique matching 64-byte data window
 at each placement; the other uses two matching target windows at fixed
 body-relative offsets, one independently unique per module.
 
-The resulting [placement map](../config/levels/reviewed_family_placements.tsv)
-has **two canonical source-role families at 29 placements**: a 64-byte body in
-13 modules with four accepted C controls, and a 96-byte body in 16 modules
-with fifteen accepted C controls. The
+The first two families cover **29 placements**: a 64-byte body in 13 modules
+with four accepted C controls, and a 96-byte body in 16 modules with fifteen
+accepted C controls. A further strict pass selected **150 families at 1,980
+placements** for which every masked-shape placement already has accepted C,
+the normalized C logic agrees, and no shape repeats within its module. Of
+those families, 92 have no local data target, 57 have independently unique
+matching data windows, and one meets the paired-target rule. The resulting
+[placement map](../config/levels/reviewed_family_placements.tsv) therefore
+contains **152 source-role identities under this explicit rule at 2,009
+placements**, with
+1,999 fixed accepted C controls. The
 [summary](../config/levels/family_identity_summary.json) pins the evidence
 without publishing game bytes. Callees are checked for role and boundary; the
 audit does not assert that each callee is itself one shared source function.

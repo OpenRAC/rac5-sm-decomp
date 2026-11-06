@@ -66,6 +66,8 @@ def common_unique_contexts(per_member: list[set[str]]) -> set[str]:
 
 def data_policy(mode: str, members: list[dict[int, tuple[str, bool, int]]]) -> bool:
     """Require stable target content and mode-specific independent anchors."""
+    if mode == "no_local_data":
+        return bool(members) and all(not member for member in members)
     if not members or not members[0]:
         return False
     sites = set(members[0])

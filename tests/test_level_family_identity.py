@@ -20,6 +20,8 @@ class FamilyIdentityTests(unittest.TestCase):
         self.assertNotEqual(normalized_control(first), normalized_control(swapped))
 
     def test_data_policy_requires_independent_target_identity(self) -> None:
+        self.assertTrue(data_policy("no_local_data", [{}, {}]))
+        self.assertFalse(data_policy("no_local_data", [{}, {0: ("unexpected", True, 0)}]))
         single = [{0: ("same", True, 12)}, {0: ("same", True, 28)}]
         self.assertTrue(data_policy("unique_data_window", single))
         self.assertFalse(data_policy("unique_data_window",
