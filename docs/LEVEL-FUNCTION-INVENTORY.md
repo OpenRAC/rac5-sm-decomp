@@ -226,15 +226,18 @@ placements** for which every masked-shape placement already has accepted C,
 the normalized C logic agrees, and no shape repeats within its module. Of
 those families, 92 have no local data target, 57 have independently unique
 matching data windows, and one meets the paired-target rule. The resulting
-[placement map](../config/levels/reviewed_family_placements.tsv) therefore
-contains **152 source-role identities under this explicit rule at 2,009
-placements**, with
-1,999 fixed accepted C controls. The
-[summary](../config/levels/family_identity_summary.json) pins the evidence
-without publishing game bytes. Callees are checked for role and boundary; the
-audit does not assert that each callee is itself one shared source function.
+[placement map](../config/levels/reviewed_family_placements.tsv) also admits
+**15 further families** whose 204 accepted C controls anchor 66 other
+placements with exact full-module Ghidra boundaries and the same caller,
+callee and data-role checks. Two candidate families with only three C controls
+were held back. The scoped map now contains **167 source-role identities under
+this explicit rule at 2,279 placements**, with 2,203 fixed accepted C
+controls. The [summary](../config/levels/family_identity_summary.json) pins
+the evidence without publishing game bytes. Callees are checked for role and
+boundary; the audit does not assert that each callee is itself one shared
+source function.
 
-These are only two reviewed identities, not a complete function catalogue.
+These are scoped identities, not a complete function catalogue.
 They add neither C credit nor a game-wide denominator; the overall function
 measure remains `0/0`. Future families need the same explicit source-role
 review, and masked shapes repeated inside one module remain excluded from

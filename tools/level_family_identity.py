@@ -64,6 +64,16 @@ def common_unique_contexts(per_member: list[set[str]]) -> set[str]:
     return set.intersection(*per_member)
 
 
+def enough_controls(total: int, controls: int) -> bool:
+    return controls >= 2 and (controls == total or controls >= 4)
+
+
+def ghidra_exact_boundary(row: dict | None, start: int, end: int) -> bool:
+    return bool(row and int(row["min"], 16) == start
+                and int(row["max"], 16) + 1 == end
+                and int(row["body_bytes"]) == end - start)
+
+
 def data_policy(mode: str, members: list[dict[int, tuple[str, bool, int]]]) -> bool:
     """Require stable target content and mode-specific independent anchors."""
     if mode == "no_local_data":
@@ -229,7 +239,7 @@ def generate(image: Path) -> tuple[list[dict[str, str]], dict]:
         if ref not in {(module, start) for module, start, _row in members}:
             raise ValueError(f"{family_id}: canonical reference is absent")
         control_rows = controls_by_family[family_id]
-        if len(control_rows) < 2:
+        if not enough_controls(len(members), len(control_rows)):
             raise ValueError(f"{family_id}: source-level controls are insufficient")
         control_sites = {(row["module"], int(row["start"], 16)): row for row in control_rows}
         if len(control_sites) != len(control_rows):
@@ -262,6 +272,8 @@ def generate(image: Path) -> tuple[list[dict[str, str]], dict]:
                 evidence = "accepted_C_control"
             elif boundary and int(boundary["end_exclusive"], 16) == end:
                 evidence = "relocation_backed_call"
+            elif ghidra_exact_boundary(facts[module]["ghidra"].get(start), start, end):
+                evidence = "full_module_ghidra_exact"
             else:
                 raise ValueError(f"{family_id}: member has no reviewed boundary")
             fingerprint, _ = masked_body(facts[module]["data"][start:end], start,
@@ -358,7 +370,8 @@ def check(summary: dict) -> None:
     for row in placements:
         if (row["family_id"] not in spec_ids
                 or row["boundary_evidence"] not in
-                ("accepted_C_control", "relocation_backed_call")
+                ("accepted_C_control", "relocation_backed_call",
+                 "full_module_ghidra_exact")
                 or int(row["end_exclusive"], 16) - int(row["start"], 16)
                 != int(row["body_bytes"])):
             raise ValueError("malformed reviewed family placement")
@@ -374,7 +387,9 @@ def check(summary: dict) -> None:
     controls_per_family = Counter(row["family_id"] for row in controls)
     for family in summary["families"]:
         if (family["placements"] != family_sizes[family["family_id"]]
-                or family["accepted_C_controls"] != controls_per_family[family["family_id"]]):
+                or family["accepted_C_controls"] != controls_per_family[family["family_id"]]
+                or not enough_controls(family["placements"],
+                                       family["accepted_C_controls"])):
             raise ValueError("reviewed family summary differs from placements or controls")
     source_hashes = {row["source"]: row["source_sha256_lf"]
                      for row in rows(SOURCES)}
