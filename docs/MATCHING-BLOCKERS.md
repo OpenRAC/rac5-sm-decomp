@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **29,984 measured placements** of 1,734,960 placement bytes carried by **20,759
+The level scope is **30,083 measured placements** of 1,739,712 placement bytes carried by **20,854
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -867,6 +867,36 @@ while retail materializes `0x40000` separately. Natural pointer, array and
 integer-base forms and scoped flags did not keep both additions. Reopen with
 evidence for the original data layout or a qualified compiler route; these
 two retained sources earn no match credit.
+
+Another 99 reviewed 48-byte placements with four or more relocations link
+exactly from 95 C sources (4,752 placement bytes, 4,560 distinct-source
+bytes). Four extra placements reuse a source only after it linked exactly
+at both sites. Fifty named `memset` imports retain their retail name, and
+all 21 complete modules pass. Forty-three sites retain useful C attempts
+without match credit:
+
+- Twenty two-global boolean tests (for example,
+  [`LEVEL_01:0x0A7330`](../nonmatching/levels/LEVEL_01_0A7330.c)) link 44
+  bytes against 48 retail bytes. The first difference is the branch span
+  at byte 12; retail keeps an additional boolean transfer. Wide-return and
+  local-result forms and five qualified `cc1` routes did not reproduce it.
+- Twenty table setters (for example,
+  [`LEVEL_01:0x0CB260`](../nonmatching/levels/LEVEL_01_0CB260.c)) link 48
+  bytes but first differ at byte 6 in stride, count and address registers.
+  The retained C models the entry pointer left in the retail result
+  register; typed records and five qualified `cc1` routes did not match.
+- Two floating-point condition bodies (for example,
+  [`LEVEL_22:0x0571F8`](../nonmatching/levels/LEVEL_22_0571F8.c)) link 44
+  bytes against 48 retail bytes and first differ at byte 4. Retail has a
+  scheduling gap after materializing floating-point zero before comparing;
+  five qualified `cc1` routes omit it. Reopen with a qualified, narrowly
+  tested compiler or assembler scheduling remedy.
+- One float-and-call body,
+  [`LEVEL_02:0x001410`](../nonmatching/levels/LEVEL_02_001410.c), links 44
+  bytes against 48 retail bytes and first differs at byte 12. Retail copies
+  the input float before its first call and stores that copy in the call's
+  delay slot. Reopen with source-value lifetime or qualified compiler
+  evidence. None of these 43 attempts earns C match credit.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C

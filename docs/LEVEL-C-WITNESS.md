@@ -345,14 +345,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 29,984 accepted placements with 2,339 SN link invocations;
+all 21 USA modules and 30,083 accepted placements with 2,339 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**29,984 placements** in **20,759 sources**, **1,734,960 placement
-bytes**, **1,322,772 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**30,083 placements** in **20,854 sources**, **1,739,712 placement
+bytes**, **1,327,332 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -522,3 +522,12 @@ relinks with the canonical file. Two other reviewed address forms retain C
 under `nonmatching/levels/` without match credit. Every retail interval
 returns at byte 40 with its delay slot at byte 44; all 21 complete modules
 remain exact.
+
+Another 99 reviewed 48-byte placements with four or more relocations link
+exactly from 95 authored C sources (4,752 placement bytes and 4,560
+distinct-source bytes). Four additional placements reuse an identical
+source only after it linked exactly at both sites. Fifty named `memset`
+imports retain their names. Forty-three other reviewed C attempts stay in
+`nonmatching/levels/` without match credit. Every retail interval returns
+at byte 40 with its delay slot at byte 44; all 21 complete modules remain
+exact.
