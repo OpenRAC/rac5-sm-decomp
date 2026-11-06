@@ -644,3 +644,16 @@ Forty-seven other representative C attempts remain under `nonmatching/levels/`
 with measured first differences and reopening conditions; the remaining
 candidate sites receive no match credit. All 21 complete USA modules remain
 exact.
+
+Another 1,206 bounded USA candidates of 104–200 bytes were selected in two
+later scopes (647 and 559 sites), each with Ghidra-corroborated body extents.
+Twenty forms reproduce **459 placements from 388 authored sources** (79,056
+placement bytes and 265,765 distinct-source bytes). One form uses the
+qualified `gnu-ee-trial` profile, one `gnu-ee-trial-divpad`, one the
+`-mno-check-zero-division` flag, and one the newly qualified `ps2eeas`
+assembler route; the rest use the pinned chain.
+
+Twenty-eight other representative C attempts remain under
+`nonmatching/levels/` with measured first differences and reopening
+conditions; the remaining candidate sites receive no match credit. All 21
+complete USA modules remain exact.
