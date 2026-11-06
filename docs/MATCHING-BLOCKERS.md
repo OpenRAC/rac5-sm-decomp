@@ -1296,3 +1296,28 @@ representatives, the qualified default, GNU trial, division-pad and SDK
 compiler routes did not resolve the mismatch. All 363 placements remain
 uncounted until the source reproduces each complete body and the full-module
 gate passes.
+
+Another 402 bounded USA relocation-bearing candidate sites of 76–80 bytes
+have Ghidra-corroborated complete body extents. Five pure C forms reproduce
+**122 placements from 107 authored sources** (9,512 placement bytes and 8,324
+distinct-source bytes) under the default pinned route. Fifteen placements
+reuse a canonical source after independent exact links and equal object
+hashes. The forms are a
+[four-call sequence](../src/levels/bodies/LEVEL_01_002570.c),
+[six-call sequence](../src/levels/bodies/LEVEL_01_01B630.c),
+[allocation and named `memset`](../src/levels/bodies/LEVEL_01_10F7D8.c),
+[callback wrapper](../src/levels/bodies/LEVEL_01_1EE858.c),
+[frontend state guard](../src/levels/bodies/FRONTEND_0032E8.c) and
+[frontend forwarding wrapper](../src/levels/bodies/FRONTEND_00ECF0.c).
+The prior source and placement pins remain unchanged.
+
+Fourteen other representative C attempts remain under `nonmatching/levels/`
+with measured first differences and reopening conditions. The
+[80-byte conditional call](../nonmatching/levels/LEVEL_01_0D7680.c)
+reached the correct length and matches through byte 33 after changing its
+source branch order, but its equality test still lowers differently. The
+[80-byte global table search](../nonmatching/levels/LEVEL_01_074D60.c)
+links 72 bytes and first differs at byte 18 in its end-pointer traversal.
+The other 280
+candidate sites receive no new match credit. A relocation-masked form remains
+a research lead until every claimed placement links exactly.

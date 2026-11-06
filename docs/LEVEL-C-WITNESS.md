@@ -355,14 +355,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 32,876 accepted placements with 2,385 SN link invocations;
+all 21 USA modules and 32,998 accepted placements with 2,386 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**32,876 placements** in **23,315 sources**, **1,939,564 placement
-bytes**, **1,495,136 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**32,998 placements** in **23,422 sources**, **1,949,076 placement
+bytes**, **1,503,460 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -551,3 +551,14 @@ effect state and guard a state transition. Sixteen other representative C
 attempts stay in `nonmatching/levels/` with measured first differences and
 reopening conditions; the other 327 candidate sites receive no C credit.
 All 21 complete USA modules remain exact.
+
+Another 122 reviewed relocation-bearing placements of 76–80 bytes link
+exactly from 107 authored pure C sources (9,512 placement bytes and 8,324
+distinct-source bytes). Fifteen placements reuse canonical C after an
+independent exact link and object-hash check. Six source forms cover a
+four-call sequence, a six-call sequence, allocation followed by the named
+`memset` import, a callback wrapper, a guarded frontend state update and a
+frontend forwarding wrapper with its stack argument. The other 14
+representative C attempts remain under `nonmatching/levels/` without match
+credit; 280 candidate sites remain unaccepted. All 21
+complete USA modules remain exact.
