@@ -1,0 +1,15 @@
+extern char db_dlist[];
+extern int D_001556D0;
+extern int D_001556D4;
+extern int D_001556CC;
+void func_07D918(void)
+{
+    char *list = *(char **)(db_dlist + 0x54);
+    int *slot = (int *)(list + 0x24);
+    int delta = 0x28000;
+    int value = *slot - delta;
+    *slot = value;
+    D_001556CC = value;
+    D_001556D0 = value;
+    D_001556D4 = delta;
+}

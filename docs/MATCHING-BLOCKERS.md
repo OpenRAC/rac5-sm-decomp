@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **31,147 measured placements** of 1,796,708 placement bytes carried by **21,874
+The level scope is **31,383 measured placements** of 1,809,924 placement bytes carried by **22,100
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -969,6 +969,25 @@ scans, float-argument calls and isolated field access or return-value
 differences. Their source comments record the measured first difference
 and a concrete reopening condition. New compiler or type hypotheses
 need an isolated exact link and the complete-module gate before promotion.
+
+Another 236 reviewed 56-byte placements with four or more relocations
+link exactly from 226 C sources (13,216 placement bytes, 12,656
+distinct-source bytes). Ten additional placements reuse a source only
+after an independent exact link at the target; all 21 complete USA
+modules pass. The [LEVEL_19:0x1515C8](../src/levels/bodies/LEVEL_19_1515C8.c)
+body has a verified complete return and one direct local caller despite
+having no Ghidra function entry; its linked C reproduces all 56 bytes.
+
+Forty more placements retain publishable C without match credit:
+twenty 36-byte-stride table clears (for example,
+[LEVEL_01:0x0744A0](../nonmatching/levels/LEVEL_01_0744A0.c))
+first differ at byte 2 in global and table register allocation; twenty
+two-global initializers (for example,
+[LEVEL_01:0x0D1800](../nonmatching/levels/LEVEL_01_0D1800.c))
+first differ at byte 6 in global address register and store scheduling.
+Each retained C links 56 bytes. Five other already qualified compiler
+routes failed both representatives. Reopen with evidenced table layout
+or initializer value lifetime before qualifying a source-specific remedy.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C

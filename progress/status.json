@@ -869,15 +869,15 @@
     "accepted_frontend_c_bytes": 476,
     "accepted_c_bytes_per_unique_source": 80,
     "accepted_c_bytes_by_placement": 1600,
-    "accepted_level_body_placements": 31147,
-    "accepted_level_body_unique_sources": 21874,
-    "accepted_level_body_placement_bytes": 1796708,
-    "accepted_level_body_unique_source_bytes": 1381980,
+    "accepted_level_body_placements": 31383,
+    "accepted_level_body_unique_sources": 22100,
+    "accepted_level_body_placement_bytes": 1809924,
+    "accepted_level_body_unique_source_bytes": 1394636,
     "accepted_level_body_profiles": {
       "gnu-ee-trial": 482,
       "gnu-ee-trial-divpad": 328,
       "gnu-ee-trial-divpad-blockmove": 45,
-      "pinned": 29893,
+      "pinned": 30129,
       "sdk991111": 357,
       "sdk991111sync": 42
     },
@@ -1970,18 +1970,18 @@
       },
       "bodies": {
         "table": "config/levels/bodies.tsv",
-        "table_sha256": "c7bd5c28f93acc4687c4d4f2775af84c1641897f70fd09d46a3a5639c21a224c",
+        "table_sha256": "d4df70139765f2fa31f69526d9ce06e9236846a6f184c7b774f01a7a18bda2cd",
         "sources_table": "config/levels/body_sources.tsv",
-        "sources_table_sha256": "85dc3dcbef372f25aeb7b3affabe1478ba90cc4d9f0d126f39afa4f733407f4a",
-        "placements": 31147,
-        "unique_sources": 21874,
-        "placement_bytes": 1796708,
-        "unique_source_bytes": 1381980,
+        "sources_table_sha256": "f9efe339a9a869aba75c6532991c216f455ee151dbe4fc79d75ae812c3a769c0",
+        "placements": 31383,
+        "unique_sources": 22100,
+        "placement_bytes": 1809924,
+        "unique_source_bytes": 1394636,
         "profiles": {
           "gnu-ee-trial": 482,
           "gnu-ee-trial-divpad": 328,
           "gnu-ee-trial-divpad-blockmove": 45,
-          "pinned": 29893,
+          "pinned": 30129,
           "sdk991111": 357,
           "sdk991111sync": 42
         },
@@ -2040,14 +2040,14 @@
           "LEVEL_24.REL": "2feea61ac6fc1dd9b6bdb343b4c0cd1cebcce51b9472ebc8b048dcead6f0ca6e"
         },
         "import_identity": {
-          "body_row_sites": 3233,
+          "body_row_sites": 3273,
           "accepted_witness_sites": 24,
           "accepted_witness_placements_checked": 41,
-          "total_sites": 3257,
+          "total_sites": 3297,
           "mismatches": 0
         },
         "batch_link_size": 25,
-        "body_batch_linker_invocations": 2353
+        "body_batch_linker_invocations": 2354
       },
       "provisional_controls": [
         "LEVEL_01.REL:0x190:24",
