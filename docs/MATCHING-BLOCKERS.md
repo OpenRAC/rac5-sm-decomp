@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **30,083 measured placements** of 1,739,712 placement bytes carried by **20,854
+The level scope is **30,384 measured placements** of 1,755,364 placement bytes carried by **21,144
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -897,6 +897,16 @@ without match credit:
   the input float before its first call and stores that copy in the call's
   delay slot. Reopen with source-value lifetime or qualified compiler
   evidence. None of these 43 attempts earns C match credit.
+
+Another 301 reviewed 52-byte placements with one relocation link exactly
+from 290 C sources (15,652 placement bytes, 15,080 distinct-source bytes).
+Eleven additional placements reuse a source only after an independent exact
+link at each target, and all 21 complete USA modules pass. The source forms
+include record and conditional-call wrappers, bounded loops, field updates
+and floating-point arguments. The linked register choices establish where a
+call receives the record pointer or a floating-point value; signed `-1`
+uses the retail single immediate instruction where an unsigned constant
+would expand to two. No candidate in this scope remains nonmatching.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C
