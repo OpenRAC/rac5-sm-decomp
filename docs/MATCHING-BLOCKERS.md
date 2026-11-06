@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **29,868 measured placements** of 1,729,392 placement bytes carried by **20,648
+The level scope is **29,984 measured placements** of 1,734,960 placement bytes carried by **20,759
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -854,6 +854,19 @@ passes. Eleven other sites retain useful C without match credit:
   expression and five qualified `cc1` routes did not select the retail
   register. Reopen these families with source-value lifetime or a qualified
   compiler route that explains the register and branch choices.
+
+Another 116 reviewed 48-byte placements with three relocations link exactly
+from 111 C sources (5,568 placement bytes, 5,328 distinct-source bytes).
+Five extra placements reuse a source only after it linked exactly at both
+sites, and all 21 complete modules pass. Two address-clear wrappers
+([`LEVEL_15:0x0F73A0`](../nonmatching/levels/LEVEL_15_0F73A0.c),
+[`LEVEL_21:0x0F73A0`](../nonmatching/levels/LEVEL_21_0F73A0.c)) remain
+nonmatching: pinned C links 36 bytes against 48 retail bytes and first
+differs at byte 16. It folds `base + 0x40000 + 0x4048` into one address,
+while retail materializes `0x40000` separately. Natural pointer, array and
+integer-base forms and scoped flags did not keep both additions. Reopen with
+evidence for the original data layout or a qualified compiler route; these
+two retained sources earn no match credit.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C

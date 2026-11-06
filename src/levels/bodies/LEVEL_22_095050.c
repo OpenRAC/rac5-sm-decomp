@@ -1,0 +1,9 @@
+extern int D_00155C60;
+extern int func_094FC8(void);
+
+int func_095050(void)
+{
+    if (func_094FC8() == 0)
+        return -1;
+    return D_00155C60;
+}
