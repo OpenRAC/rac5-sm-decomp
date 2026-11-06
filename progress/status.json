@@ -869,21 +869,21 @@
     "accepted_frontend_c_bytes": 476,
     "accepted_c_bytes_per_unique_source": 80,
     "accepted_c_bytes_by_placement": 1600,
-    "accepted_level_body_placements": 32334,
-    "accepted_level_body_unique_sources": 22835,
-    "accepted_level_body_placement_bytes": 1878264,
-    "accepted_level_body_unique_source_bytes": 1439960,
+    "accepted_level_body_placements": 32594,
+    "accepted_level_body_unique_sources": 23046,
+    "accepted_level_body_placement_bytes": 1901864,
+    "accepted_level_body_unique_source_bytes": 1459196,
     "accepted_level_body_profiles": {
       "gnu-ee-trial": 501,
       "gnu-ee-trial-divpad": 363,
       "gnu-ee-trial-divpad-blockmove": 45,
-      "pinned": 31026,
+      "pinned": 31286,
       "sdk991111": 357,
       "sdk991111sync": 42
     },
     "accepted_level_body_assembler_profiles": {
       "ee-frozen": 20,
-      "gnu-ee-trial": 32294,
+      "gnu-ee-trial": 32554,
       "r5900-mfc1": 20
     },
     "accepted_level_body_modules": [
@@ -1975,18 +1975,18 @@
       },
       "bodies": {
         "table": "config/levels/bodies.tsv",
-        "table_sha256": "5726720ae9ac7fa89002cc1b1d71d572489950c1bbcb4dfe4725c00e4be8ce0d",
+        "table_sha256": "f9f65afffdc25a7225a7c6690e4e1d811a9365749353a024dbf8706bd4498c7d",
         "sources_table": "config/levels/body_sources.tsv",
-        "sources_table_sha256": "9df18257e9ec084ff85d3c345931aac9577afd82fe1df30d629ad50446598b00",
-        "placements": 32334,
-        "unique_sources": 22835,
-        "placement_bytes": 1878264,
-        "unique_source_bytes": 1439960,
+        "sources_table_sha256": "6f0d9e91dac5e38643a911f5589a35eda3c21dbbaa429fbfae2ea9d6bf02a98c",
+        "placements": 32594,
+        "unique_sources": 23046,
+        "placement_bytes": 1901864,
+        "unique_source_bytes": 1459196,
         "profiles": {
           "gnu-ee-trial": 501,
           "gnu-ee-trial-divpad": 363,
           "gnu-ee-trial-divpad-blockmove": 45,
-          "pinned": 31026,
+          "pinned": 31286,
           "sdk991111": 357,
           "sdk991111sync": 42
         },
@@ -2000,7 +2000,7 @@
         },
         "assembler_profiles": {
           "ee-frozen": 20,
-          "gnu-ee-trial": 32294,
+          "gnu-ee-trial": 32554,
           "r5900-mfc1": 20
         },
         "as_sha256": {
@@ -2062,7 +2062,7 @@
           "mismatches": 0
         },
         "batch_link_size": 25,
-        "body_batch_linker_invocations": 2374
+        "body_batch_linker_invocations": 2375
       },
       "provisional_controls": [
         "LEVEL_01.REL:0x190:24",
