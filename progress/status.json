@@ -869,21 +869,21 @@
     "accepted_frontend_c_bytes": 476,
     "accepted_c_bytes_per_unique_source": 80,
     "accepted_c_bytes_by_placement": 1600,
-    "accepted_level_body_placements": 33620,
-    "accepted_level_body_unique_sources": 23999,
-    "accepted_level_body_placement_bytes": 2002988,
-    "accepted_level_body_unique_source_bytes": 1553764,
+    "accepted_level_body_placements": 33888,
+    "accepted_level_body_unique_sources": 24236,
+    "accepted_level_body_placement_bytes": 2047312,
+    "accepted_level_body_unique_source_bytes": 1592856,
     "accepted_level_body_profiles": {
       "gnu-ee-trial": 501,
-      "gnu-ee-trial-divpad": 363,
+      "gnu-ee-trial-divpad": 382,
       "gnu-ee-trial-divpad-blockmove": 45,
-      "pinned": 32291,
+      "pinned": 32540,
       "sdk991111": 378,
       "sdk991111sync": 42
     },
     "accepted_level_body_assembler_profiles": {
       "ee-frozen": 20,
-      "gnu-ee-trial": 33580,
+      "gnu-ee-trial": 33848,
       "r5900-mfc1": 20
     },
     "accepted_level_body_modules": [
@@ -1975,18 +1975,18 @@
       },
       "bodies": {
         "table": "config/levels/bodies.tsv",
-        "table_sha256": "f7e2b59aee43869f12319042514ee07b97d9f010e80658aeab6d7dca9bb214e5",
+        "table_sha256": "1babd99ab37113f6f725a96812cb249db121937bfee8320b96be99d4f50c7d8c",
         "sources_table": "config/levels/body_sources.tsv",
-        "sources_table_sha256": "0a884eeb3b8c3802599630694361ebc01e872a23389b72ffe2e38e0da2e29edd",
-        "placements": 33620,
-        "unique_sources": 23999,
-        "placement_bytes": 2002988,
-        "unique_source_bytes": 1553764,
+        "sources_table_sha256": "fa4f889d3bc7105c4f4cfbbacecf2482680e006c98ce98f29fb54dd23fc7b283",
+        "placements": 33888,
+        "unique_sources": 24236,
+        "placement_bytes": 2047312,
+        "unique_source_bytes": 1592856,
         "profiles": {
           "gnu-ee-trial": 501,
-          "gnu-ee-trial-divpad": 363,
+          "gnu-ee-trial-divpad": 382,
           "gnu-ee-trial-divpad-blockmove": 45,
-          "pinned": 32291,
+          "pinned": 32540,
           "sdk991111": 378,
           "sdk991111sync": 42
         },
@@ -2000,7 +2000,7 @@
         },
         "assembler_profiles": {
           "ee-frozen": 20,
-          "gnu-ee-trial": 33580,
+          "gnu-ee-trial": 33848,
           "r5900-mfc1": 20
         },
         "as_sha256": {
@@ -2055,14 +2055,14 @@
           "LEVEL_24.REL": "2feea61ac6fc1dd9b6bdb343b4c0cd1cebcce51b9472ebc8b048dcead6f0ca6e"
         },
         "import_identity": {
-          "body_row_sites": 3536,
+          "body_row_sites": 3635,
           "accepted_witness_sites": 24,
           "accepted_witness_placements_checked": 41,
-          "total_sites": 3560,
+          "total_sites": 3659,
           "mismatches": 0
         },
         "batch_link_size": 25,
-        "body_batch_linker_invocations": 2398
+        "body_batch_linker_invocations": 2405
       },
       "provisional_controls": [
         "LEVEL_01.REL:0x190:24",
@@ -2077,7 +2077,7 @@
   "public_inputs_sha256": {
     "target": "043f3679a3a7f4e861986aeed303dd30e344c837c34303fc8591b71271a0f96f",
     "compiler_profile": "258e00c1b3fdcee488f31f9bde2c4c96382e5b02fc41b6811c169fd8632c25dd",
-    "per_source_cflags": "29ac37c1f5ca61803f946f952dc687a352f92c0c43cf5a3d791b62dd28a7ea68",
+    "per_source_cflags": "eb5f2a7064d2e6a2c30436bcf80bc34d89ee46eddd6fe5d57beea98f8d772929",
     "level_code_catalogue": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
     "level_module_catalogue": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
     "accepted_boot_c_sources_lf": "8473cb1f3e41ffde4fe252d81d9068d72e957e61a716f83d508365329c62916e",

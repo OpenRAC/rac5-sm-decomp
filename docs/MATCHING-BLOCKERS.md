@@ -1440,3 +1440,27 @@ conditions. For example, the
 bytes but differs from the start of its prologue. The other 354 candidate
 sites receive no match credit. Previous source and placement pins remain
 unchanged.
+
+Another 410 bounded USA candidate sites of 129–175 bytes were measured in
+November 2026. Thirteen C forms reproduced 268 placements exactly; see
+`docs/LEVEL-C-WITNESS.md`. Seven representative forms remain blocked, each
+retained under `nonmatching/levels/` and none counted:
+
+- `FRONTEND.REL:0x014838` (168 B) matches its first 78 bytes. The retail and
+  the pinned chain disagree on the `high`/`found` registers, on duplicate
+  epilogues and on the loop rotation.
+- `LEVEL_01.REL:0x0B5868` (172 B) matches through body byte 84; four
+  instructions of the clamp block are ordered differently.
+- `FRONTEND.REL:0x01C9C0` (160 B) matches its first 32 bytes. The retail
+  computes `dst + len + 1` once and reuses it for the terminator store and the
+  return; the pinned chain materialises two addresses.
+- `LEVEL_01.REL:0x007AD8` (168 B) has an exact frame and prologue; the first
+  difference is the floating-point register that receives `D_00217E88[2]`.
+- `LEVEL_01.REL:0x029548` (168 B) links 168 bytes. The default chain differs
+  at body byte 4; `gnu-ee-trial-divpad` moves the difference to two swapped
+  delay slots at body byte 60.
+- `LEVEL_01.REL:0x02E488` (164 B) matches through body byte 70; only the
+  register of the second `addiu 0x1F` differs, and the rest follows from it.
+- `LEVEL_01.REL:0x036F58` (160 B) links 148 bytes. The loop body is identical
+  instruction by instruction, but the prologue loses a second `heap` register
+  and merges the guard's `end - heap` with the count's.

@@ -609,3 +609,23 @@ loop, UI state handling, named `sscanf`, guarded frees and two conditional
 calls. Fifteen other representative C attempts remain under
 `nonmatching/levels/` without match credit; 354 candidate sites remain
 unaccepted. All 21 complete USA modules remain exact.
+
+Another 410 bounded USA relocation-bearing candidate sites of 129–175 bytes
+have Ghidra-corroborated complete body extents: all 410 match the inventory.
+Thirteen pure C forms reproduce **268 placements from 237 authored sources**
+(44,324 placement bytes and 176,948 distinct-source bytes). One form is exact
+only under the qualified `gnu-ee-trial-divpad` profile, and one form uses the
+measured per-source `-mno-check-zero-division` flag. The forms include a
+one-element pool-alignment loop, a heap sift-down, a heap extraction pass, a
+state `switch`, a parameter decoder, an ordered-insertion loop, a 64-bit flag
+update with two calls, a dispatcher, a list insertion and destruction pair, a
+table loop and a sound-bank teardown.
+
+Seven other representative C attempts remain under `nonmatching/levels/` with
+measured first differences and reopening conditions; for example the
+[frontend range lookup](../nonmatching/levels/FRONTEND_014838.c) matches its
+first 78 bytes, the [lowercase copy](../nonmatching/levels/FRONTEND_01C9C0.c)
+matches its first 32, and the
+[heap extraction helper](../nonmatching/levels/LEVEL_01_036F58.c) links 148 of
+160 bytes. The other 142 candidate sites receive no match credit. All 21
+complete USA modules remain exact.
