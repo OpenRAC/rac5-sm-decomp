@@ -141,6 +141,39 @@ All complete REL files and detailed worklists remain private. The tracked
 contains only counts and hashes, never program bytes. See the
 [reproduction commands](../tools/ghidra/README.md#full-module-flow-review).
 
+### Boundary coverage before a function total
+
+The pinned full-module Ghidra export proposes **101,769 in-code function
+entries** across the 21 modules. The independent
+[`level_boundary_coverage.py`](../tools/level_boundary_coverage.py) pass checks
+those exports against the pinned code slices and counts owners for each byte.
+It finds **35,297,840 singly owned bytes** and **1,044,048 unowned bytes** in
+the 36,341,888-byte placement scope, with no overlapping Ghidra ranges.
+Among the unowned bytes, **555,123 are nonzero**, spread over **12,384 gaps**;
+89 of those gaps contain a static direct-call candidate and 3,544 contain a
+relocated-pointer candidate. These are review priorities, not 12,384 newly
+declared functions: embedded data and missed code both remain possible.
+
+The 21 `called_function_lead` cases illustrate why function entries and body
+ownership need separate decisions. In each module a 24-byte predecessor ends
+with an indirect call; its return reaches the following 32-byte segment, which
+also has an external direct call and a return. The code-only and full-module
+Ghidra passes partition that shared continuation differently. Neither
+partition alone proves the number of source functions. Likewise, at commit
+`d7f99c0b`, the 33,620 accepted C placements occupy only 1,649 masked static
+shapes. One 56-byte shape occurs 416 times in a single module, so one masked
+hash cannot stand for one distinct function.
+
+After regenerating the private candidate inventory and full-module Ghidra
+exports, run `python tools/level_boundary_coverage.py --write`; its detailed
+`build/level-functions/unowned_code_gaps.tsv` remains ignored. The tracked
+[`boundary_coverage_summary.json`](../config/levels/boundary_coverage_summary.json)
+contains only counts and input hashes, and CI runs the public `--check` mode.
+A game-wide function denominator still requires classifying the unresolved
+boundaries and code/data gaps, reviewing cross-level source identity and
+mapping accepted C to the same canonical identities. The ByteMatch function
+count remains `0/0` until that catalogue is qualified.
+
 ## Structural translation leads
 
 [`level_translation_families.py`](../tools/level_translation_families.py)
