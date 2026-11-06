@@ -1275,3 +1275,24 @@ the link-pointer lifetime. The
 and differs from its first byte; its separator scan remains unresolved.
 The other 327 candidate sites receive no new matching credit; masked
 structural similarity remains a research lead only.
+
+Another 363 bounded USA candidate placements of 104–196 bytes were reviewed
+without relocations. Twenty raw-identical groups each have matching Ghidra
+body extents and one normalized pseudocode form across their sites. This
+supports source-sharing experiments but does not qualify a shared C source.
+One pure C exemplar per group remains under `nonmatching/levels/` with its
+linked length, first difference and reopening condition. None is exact, so
+the accepted placement tables and progress reports are unchanged.
+
+The [matrix-vector calculation](../nonmatching/levels/LEVEL_01_126078.c)
+links to the correct 136-byte length but still differs at byte 8 after a
+source-level load-order change. The
+[bitfield decoder](../nonmatching/levels/FRONTEND_00B928.c) links to the
+correct 104-byte length but first differs at byte 1; unsigned byte input
+corrected the earlier 92-byte candidate. The
+[enumerated-type test](../nonmatching/levels/LEVEL_01_0374B8.c) links 128
+rather than 132 bytes and first differs at byte 2. For five close
+representatives, the qualified default, GNU trial, division-pad and SDK
+compiler routes did not resolve the mismatch. All 363 placements remain
+uncounted until the source reproduces each complete body and the full-module
+gate passes.
