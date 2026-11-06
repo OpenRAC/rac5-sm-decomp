@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **32,594 measured placements** of 1,901,864 placement bytes carried by **23,046
+The level scope is **32,677 measured placements** of 1,913,564 placement bytes carried by **23,125
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -1198,3 +1198,27 @@ each file. For example, the
 bytes but differs from its first byte. These receive no C credit. The
 relocation-masked shapes used to select the sites were research leads; they
 did not by themselves establish source sharing or match status.
+
+Another 424 relocation-bearing candidate sites of 104–152 bytes have
+Ghidra-corroborated complete body extents. Four pure C forms reproduce **83
+placements from 79 authored sources** (11,700 placement bytes and 11,136
+distinct-source bytes). Four placements reuse canonical C after independent
+exact links and equal object hashes. The forms are a
+[140-byte pool-slot search](../src/levels/bodies/FRONTEND_01E2F0.c),
+[136-byte indexed-object traversal](../src/levels/bodies/FRONTEND_022B48.c),
+[144-byte allocation](../src/levels/bodies/FRONTEND_025300.c) and
+[144-byte saved-flags callback](../src/levels/bodies/LEVEL_01_088A90.c).
+Only the allocation selects the already pinned `sdk991111` compiler route;
+the other three use the default profile. All 21 complete USA modules remain
+exact, with previous source and placement pins unchanged.
+
+Sixteen other representative C attempts remain in `nonmatching/levels/`,
+with measured first differences and specific reopening conditions. The
+[140-byte frontend division](../nonmatching/levels/FRONTEND_012600.c)
+requires the source-specific `-mno-check-zero-division` flag to reach the
+correct length but still differs at byte 36. The
+[108-byte float packet](../nonmatching/levels/LEVEL_01_1D1BD0.c) has a
+callee signature corroborated as float, float, pointer, pointer, int; its
+linked 112-byte C body first differs at byte 12. The other 341 candidate
+sites have no new matching credit from this review. Relocation-masked
+similarity alone still does not establish C source identity.
