@@ -1,0 +1,18 @@
+{
+  "status": "relocation_backed_called_boundary_witnesses",
+  "candidate_entries": 93,
+  "closed_return_entries": 92,
+  "open_entries": 1,
+  "relocation_backed_call_sites": 99,
+  "body_placement_bytes": 15456,
+  "module_count": 21,
+  "code_catalogue_sha256": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
+  "module_catalogue_sha256": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
+  "inventory_summary_sha256": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
+  "coverage_summary_sha256": "5c85606ff6054b83b19e7d482635ecb940432567f6731c68285eb411bbff1453",
+  "target_sha256": "043f3679a3a7f4e861986aeed303dd30e344c837c34303fc8591b71271a0f96f",
+  "private_review_sha256": "9e9326c20477d22cd4edee224457098c07e452189d83f9d40f1fecd20e75feae",
+  "qualified_function_denominator": false,
+  "warning": "A relocation-backed call and closed returning body support these entry boundaries. Cross-level source identity, other entries and the boot remain unreviewed; this is not a function denominator or a C match.",
+  "table_sha256": "4593c2cf165d6248910a783e0198f85cfa9d00da60222c36a2d8915bcfa504d7"
+}
