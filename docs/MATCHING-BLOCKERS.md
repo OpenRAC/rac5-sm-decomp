@@ -1367,3 +1367,28 @@ rather than 68 bytes, while the
 [halfword bit update](../nonmatching/levels/LEVEL_16_024FE8.c) links 64 bytes
 and first differs at byte 2. The other 159 candidate sites receive no match
 credit. Relocation-masked similarity alone does not qualify source reuse.
+
+Another 353 bounded USA relocation-bearing candidate sites of 72–84 bytes
+have Ghidra-corroborated complete body extents. Nine pure C forms reproduce
+**158 placements from 153 authored sources** (12,236 placement bytes and
+11,844 distinct-source bytes) under the default pinned route. Five placements
+reuse canonical C after independent exact links and equal object hashes.
+The forms include
+[hashed-value stores](../src/levels/bodies/LEVEL_01_0B5C78.c),
+[four calls with a saved global](../src/levels/bodies/LEVEL_01_0B6F78.c),
+[three repeated calls](../src/levels/bodies/LEVEL_01_028DC0.c),
+[state initialization](../src/levels/bodies/LEVEL_01_075420.c) and a
+[0x58-byte record field](../src/levels/bodies/LEVEL_01_024468.c) at offset
+0x3c. The last source uses the record base corroborated by its linked
+instructions; treating that field as an isolated global left a byte-56
+difference. Previous source and placement pins remain unchanged.
+
+Eleven other representative C attempts remain under `nonmatching/levels/`
+with measured first differences and reopening conditions. The
+[related record lookup](../nonmatching/levels/LEVEL_01_0246D0.c) links 80
+rather than 84 bytes after adopting the same record base, while the
+[global table scan](../nonmatching/levels/LEVEL_01_079BD0.c) has the correct
+72-byte length but first differs at byte 6 in register allocation. The other
+195 candidate sites receive no match credit. One masked group also has ten
+normalized Ghidra pseudocode variants, so its apparent structural similarity
+does not by itself establish a shared C definition.
