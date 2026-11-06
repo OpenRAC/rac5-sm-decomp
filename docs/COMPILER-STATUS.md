@@ -602,3 +602,26 @@ sensitive to the absolute build directory. A reproducible build maps the
 working directory to the qualified build path with
 `-fdebug-prefix-map`; the emitted code and read-only data sections were
 identical even without that mapping. No compiler binary is committed.
+
+## Level-only R5900 `mfc1` assembler route (2026-11-06)
+
+The default GNU EE assembler adds one load-delay `nop` after `mfc1` in the
+148-byte `LEVEL_01:0x0639E8` body; the retail body has no such instruction.
+Its floating-condition delay `nop` must still be preserved. The separately
+built assembler uses OpenRAC RAC2's public
+[targeted source transformation](https://github.com/OpenRAC/rac2-decomp/blob/e07c4844d64b007377031e49c683d57fba8db07c/tools/compiler/transformers/r5900_mfc1_interlock.py),
+which exempts only R5900 `mfc1` from the obsolete coprocessor-load delay.
+The external binary is pinned by SHA-256 `b0bb487958caa611e8cc88a5675135035ea21e79fc5659323bff5bfd81b890f3`
+in [`config/levels/compiler_trial.json`](../config/levels/compiler_trial.json);
+the binary is not distributed here.
+
+This is a per-source level-body route: `body_sources.tsv` selects
+`r5900-mfc1` only for `src/levels/bodies/LEVEL_01_0639E8.c`, and the gate
+requires an explicit `--extra-as r5900-mfc1=PATH` with the pinned hash.
+The default assembler remains selected for every other accepted source.
+Isolated linked comparisons reproduce the complete 148-byte body at all
+20 numbered USA level placements from one C object. Complete-module
+qualification passes **21/21 USA modules exact**, with 2,371 SN batch links.
+The 22,829 previously accepted source rows and their object SHA-256 pins
+remain byte-for-byte unchanged. The gate receipt records both assembler
+hashes and rejects a missing or changed alternate binary.

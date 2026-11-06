@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import json
 import sys
 import unittest
 from collections import defaultdict
@@ -15,6 +16,7 @@ from c_source_policy import policy_errors  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 BODIES = ROOT / "config/levels/bodies.tsv"
 BODY_SOURCES = ROOT / "config/levels/body_sources.tsv"
+LEVEL_PROFILE = ROOT / "config/levels/compiler_trial.json"
 MODULES = ROOT / "config/levels/modules.tsv"
 INTERVALS = ROOT / "config/levels/code_intervals.tsv"
 BODY_PREFIX = "src/levels/bodies/"
@@ -42,6 +44,8 @@ class LevelBodyTests(unittest.TestCase):
         cls.rows = records(BODIES)
         cls.source_rows = records(BODY_SOURCES)
         cls.sources = {row["source"]: row for row in cls.source_rows}
+        cls.assembler_pins = json.loads(LEVEL_PROFILE.read_text(encoding="utf-8"))[
+            "extra_assemblers"]
         cls.modules = {Path(row["path"]).name: row for row in records(MODULES)}
         cls.ends = {row["module"]: int(row["end_exclusive"], 16)
                     for row in records(INTERVALS)}
@@ -87,9 +91,16 @@ class LevelBodyTests(unittest.TestCase):
                 self.assertRegex(row["source_sha256_lf"], r"^[0-9a-f]{64}$")
                 self.assertRegex(row["object_sha256"], r"^[0-9a-f]{64}$")
                 self.assertIn(row["profile"], PROFILES)
-                self.assertEqual(row["as"], "gnu-ee-trial")
+                if row["as"] != "gnu-ee-trial":
+                    self.assertIn(row["as"], self.assembler_pins)
+                    self.assertIn(source, self.assembler_pins[row["as"]]["accepted_sources"])
                 self.assertIn(source, sizes,
                               "source table carries a source no placement uses")
+        selected = {row["source"] for row in self.source_rows
+                    if row["as"] != "gnu-ee-trial"}
+        qualified = {source for entry in self.assembler_pins.values()
+                     for source in entry["accepted_sources"]}
+        self.assertEqual(selected, qualified)
 
     def test_every_body_file_is_referenced(self) -> None:
         referenced = {row["source"] for row in self.rows}
