@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **31,383 measured placements** of 1,809,924 placement bytes carried by **22,100
+The level scope is **31,766 measured placements** of 1,832,904 placement bytes carried by **22,466
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -988,6 +988,25 @@ first differ at byte 6 in global address register and store scheduling.
 Each retained C links 56 bytes. Five other already qualified compiler
 routes failed both representatives. Reopen with evidenced table layout
 or initializer value lifetime before qualifying a source-specific remedy.
+
+Another 383 reviewed 60-byte placements with one to four relocations
+link exactly from 366 C sources (22,980 placement bytes, 21,960
+distinct-source bytes). Seventeen additional placements reuse a source
+only after an independent exact link at the target; all 21 complete
+USA modules pass.
+
+Forty-six placements retain publishable C without match credit.
+Twenty indexed-table lookups (for example,
+[LEVEL_01:0x11A248](../nonmatching/levels/LEVEL_01_11A248.c))
+link 60 bytes but differ at byte 6 in masked-index and table-base
+registers. Fifteen conditional call wrappers (for example,
+[LEVEL_01:0x023C68](../nonmatching/levels/LEVEL_01_023C68.c))
+link 60 bytes but choose another comparison register and argument
+schedule. Five paired-array clears, two extended-argument float calls,
+two indirect calls and two shift results retain their measured first
+difference and reopening condition in their C comments. A new source
+or compiler hypothesis must pass isolated links and complete-module
+gates before receiving C credit.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C
