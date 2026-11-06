@@ -1,0 +1,55 @@
+{
+  "status": "reviewed_shared_source_role_families",
+  "family_count": 2,
+  "placement_count": 29,
+  "control_count": 19,
+  "families": [
+    {
+      "family_id": "family_18a03bdc",
+      "placements": 13,
+      "body_bytes": 64,
+      "accepted_C_controls": 4,
+      "normalized_C_sha256": "29f4f3892e650b588624fe685e99fa491380e531c6e566dcfd84f04d745f8a6b",
+      "caller_context_sha256": "bb23a854685c8c6533099ab9ceb56855f0a277a374b3465cda29e18bcc8563d8",
+      "data_window_sha256": {
+        "0": "4eb55ee6ca4623164450ca08aa6715069bc6f85051f943ba0d8ce725a86544a8"
+      },
+      "local_callee_roles": {},
+      "proof_mode": "unique_data_window"
+    },
+    {
+      "family_id": "family_cc401734",
+      "placements": 16,
+      "body_bytes": 96,
+      "accepted_C_controls": 15,
+      "normalized_C_sha256": "8f12d2a83968806a2cc3c9aeaabcd02706b7b5d508e4164abe67a11e9e4bf991",
+      "caller_context_sha256": "bff5cfdc92c8cccb0a25f87afae5848768657b4f5f52a31e246124409d9938a5",
+      "data_window_sha256": {
+        "28": "cf1e8aa59a54eb874e4b1119e41c408dd205ce0c425e09f992c3054da65f8bbf",
+        "36": "6ff222566b7504f8ebb5f7b68695d2b2a3359ec9310f793f6c1def7d27ffd0d6"
+      },
+      "local_callee_roles": {
+        "68": {
+          "body_bytes": 60,
+          "masked_sha256": "bc618aa6ebea2020d20d9052f8283c74a40fb818da7b31b0fd2eda9c325ff22e"
+        },
+        "76": {
+          "body_bytes": 188,
+          "masked_sha256": "7a92ef235e5045e66c1397dbb15ee4d016d31c4c32174b8c5d1be8049af4ec62"
+        }
+      },
+      "proof_mode": "paired_target_offsets"
+    }
+  ],
+  "spec_sha256": "91b8f2a56cd1383a8a9a6a17dcc81b8f5b196112cf095649bca21919ae74ed6b",
+  "controls_sha256": "6cd14c0a0023941a8066ecf98ce15f48cf862a24231024af07d52d8df1293cdb",
+  "code_catalogue_sha256": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
+  "module_catalogue_sha256": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
+  "inventory_summary_sha256": "4baab06c153cd1be2af72591f9bf82efc0b9c7d9198592cc50977dcc891b7b49",
+  "full_flow_summary_sha256": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
+  "called_boundary_sha256": "4593c2cf165d6248910a783e0198f85cfa9d00da60222c36a2d8915bcfa504d7",
+  "target_sha256": "043f3679a3a7f4e861986aeed303dd30e344c837c34303fc8591b71271a0f96f",
+  "qualified_gamewide_function_denominator": false,
+  "warning": "Only these explicitly reviewed placement families have source-role identity evidence. Other boundaries and families remain unresolved; no game-wide count or C credit follows.",
+  "table_sha256": "ad9f71feb99f52e67dea6052a9cb3bc37f235d373cf3d9daed44d2ba7241cfb6"
+}

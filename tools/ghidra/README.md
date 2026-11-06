@@ -80,6 +80,8 @@ python tools/level_boundary_coverage.py --write
 python tools/level_boundary_coverage.py --check
 python tools/level_called_boundaries.py --write baserom/SCUS_976.15.iso
 python tools/level_called_boundaries.py --check
+python tools/level_family_identity.py --write baserom/SCUS_976.15.iso
+python tools/level_family_identity.py --check
 ```
 
 The reference export contains addresses and reference kinds only. The Python
