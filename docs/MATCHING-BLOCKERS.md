@@ -1516,3 +1516,27 @@ new evidence adds four reusable facts:
 Two forms need a different allocation behaviour rather than a new source form:
 `LEVEL_02.REL:0x0E3A10` and `LEVEL_03.REL:0x0B9E58` differ only in the register
 holding a live temporary, across all six qualified cc1 profiles.
+
+Another 559 bounded USA candidates of 148–192 bytes were measured in the next
+scope. Eighteen forms reproduced 334 placements exactly; twelve representative
+forms remain blocked and are retained under `nonmatching/levels/`. The new
+evidence adds:
+
+- **Assembler and alignment together.** One 164-byte body needs the `ps2eeas`
+  route *and* `-malign-functions=2`: the GNU assembler binds the internal join
+  label after the compare/coprocessor-branch hazard nop (body byte 128 wrong),
+  `ps2eeas` alone pads the section to 168 bytes, and the alignment flag brings
+  it back to 164 with all 19 placements exact.
+- **64-bit soft-float frame.** One 152-byte body is exact only under
+  `sdk991111`: the retail saves its registers at 16-byte spacing for a body
+  that manipulates 64-bit values, while the pinned chain uses 8-byte spacing.
+- **32-bit mask encoding.** The retail forms a zero-extended 32-bit -1 with
+  `addiu`/`dsrl32`; GCC uses `lui 0xFFFF`/`dsrl32`. Same value, same size, two
+  immediate bytes differ; all six cc1 profiles agree.
+- **Floating-point allocation order.** Two parked forms differ only in `f1`/`f4`
+  versus `f0`/`f3` (or `v0`/`v1`) allocation while every instruction and size
+  match.
+- **Gate symbol resolution.** Generic source-level names resolve in the private
+  harness through retail relocations but not in the repository gate, which
+  accepts only imports/exports and `func_`/`D_<address>`. A shared source must
+  be expanded to per-site sources with the measured names before promotion.

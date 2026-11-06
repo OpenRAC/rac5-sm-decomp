@@ -657,3 +657,13 @@ Twenty-eight other representative C attempts remain under
 `nonmatching/levels/` with measured first differences and reopening
 conditions; the remaining candidate sites receive no match credit. All 21
 complete USA modules remain exact.
+
+Another 559 bounded USA candidates of 148–192 bytes were selected with
+Ghidra-corroborated extents. Eighteen forms reproduce **334 placements from
+288 authored sources** (54,792 placement bytes and 185,262 distinct-source
+bytes). One form uses `gnu-ee-trial`, one `gnu-ee-trial-divpad`, one
+`sdk991111`, and one the `ps2eeas` assembler with the measured
+`-malign-functions=2` flag; the rest use the pinned chain. Twelve other
+representative C attempts remain under `nonmatching/levels/` with measured
+first differences and reopening conditions. All 21 complete USA modules
+remain exact.

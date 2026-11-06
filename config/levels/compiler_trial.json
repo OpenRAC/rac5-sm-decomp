@@ -41,7 +41,8 @@
       "status": "qualified per source for USA level bodies only",
       "host": "linux",
       "accepted_sources": [
-        "src/levels/bodies/LEVEL_03_0497A0.c"
+        "src/levels/bodies/LEVEL_03_0497A0.c",
+        "src/levels/bodies/LEVEL_02_0023B0.c"
       ],
       "tools": {
         "assembler": "Ps2EeAs.exe",

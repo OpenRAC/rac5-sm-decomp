@@ -412,3 +412,4 @@ src/levels/bodies/LEVEL_20_076690.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_22_089040.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_23_08DD08.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_24_0912D8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_02_0023B0.c  -malign-functions=2
