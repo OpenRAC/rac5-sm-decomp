@@ -1,0 +1,11 @@
+extern int D_0018E208[];
+unsigned int func_000108(int index)
+{
+    if (index < 8) {
+        if (index != 0)
+            goto valid;
+    }
+    return 0xffffffffu;
+valid:
+    return D_0018E208[index - 1];
+}

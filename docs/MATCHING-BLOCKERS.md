@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **30,730 measured placements** of 1,773,356 placement bytes carried by **21,472
+The level scope is **31,147 measured placements** of 1,796,708 placement bytes carried by **21,874
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -943,6 +943,32 @@ and fallback reads, five other already qualified compiler routes did
 not resolve their representative mismatches. Reopen the retained
 sources with original type, layout or value-lifetime evidence; any new
 compiler remedy needs per-source qualification and complete-module gates.
+
+Another 417 reviewed 56-byte placements with one to three relocations
+link exactly from 402 C sources (23,352 placement bytes, 22,512
+distinct-source bytes). Fifteen extra placements reuse a source only
+after an independent exact link at the target; all 21 complete USA
+modules pass. Eighty-one other placements retain publishable C without
+match credit. The largest recurring blockers are:
+
+- Twenty conditional call results (for example,
+  [LEVEL_01:0x023B38](../nonmatching/levels/LEVEL_01_023B38.c)):
+  pinned C links 56 bytes but first differs in the post-call branch
+  and field load at byte 35.
+- Twenty 24-byte-stride call wrappers (for example,
+  [LEVEL_01:0x0A6000](../nonmatching/levels/LEVEL_01_0A6000.c)):
+  pinned C links 56 bytes but first differs at byte 2 in register
+  allocation for the stride and data base.
+- Sixteen indexed record lookups (for example,
+  [LEVEL_01:0x16B640](../nonmatching/levels/LEVEL_01_16B640.c)):
+  pinned C links 52 bytes and first differs at byte 28 in the
+  conditional table-entry tests.
+
+The remaining 25 retained C bodies cover global-state checks, four-entry
+scans, float-argument calls and isolated field access or return-value
+differences. Their source comments record the measured first difference
+and a concrete reopening condition. New compiler or type hypotheses
+need an isolated exact link and the complete-module gate before promotion.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C
