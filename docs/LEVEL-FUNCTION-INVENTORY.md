@@ -230,9 +230,18 @@ matching data windows, and one meets the paired-target rule. The resulting
 **15 further families** whose 204 accepted C controls anchor 66 other
 placements with exact full-module Ghidra boundaries and the same caller,
 callee and data-role checks. Two candidate families with only three C controls
-were held back. The scoped map now contains **167 source-role identities under
-this explicit rule at 2,279 placements**, with 2,203 fixed accepted C
-controls. The [summary](../config/levels/family_identity_summary.json) pins
+were held back. These steps established 167 source-role identities under the
+explicit rule at 2,279 placements, with 2,203 fixed accepted C controls.
+
+For shapes that recur within one module, the specification can instead select
+one unique 64-byte caller context. A further **115 context-partitioned
+families at 1,106 accepted C placements** meet the same C, data and callee
+checks. A shape is never grouped wholesale: every selected context occurs
+once in each member module and has no conflicting accepted C logic or extra
+placement admitted by the same strict context rule. The scoped map now
+contains **282 identities at 3,385 placements**, with 3,309 fixed C controls
+(265 families fully accepted C, 17 still partial). The
+[summary](../config/levels/family_identity_summary.json) pins
 the evidence without publishing game bytes. Callees are checked for role and
 boundary; the audit does not assert that each callee is itself one shared
 source function.

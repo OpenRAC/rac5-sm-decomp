@@ -64,6 +64,10 @@ def common_unique_contexts(per_member: list[set[str]]) -> set[str]:
     return set.intersection(*per_member)
 
 
+def context_select(unique_contexts: set[str], selector: str) -> bool:
+    return bool(selector) and unique_contexts == {selector}
+
+
 def enough_controls(total: int, controls: int) -> bool:
     return controls >= 2 and (controls == total or controls >= 4)
 
@@ -226,11 +230,22 @@ def generate(image: Path) -> tuple[list[dict[str, str]], dict]:
     family_results = []
     for spec in specs:
         family_id, shape = spec["family_id"], spec["masked_sha256"]
+        selector = spec.get("caller_context_selector", "")
+        selector = "" if selector == "-" else selector
         members = []
         for module, inv in inventory_by_module.items():
-            members.extend((module, int(row["start"], 16), row)
-                           for row in inv.values()
-                           if row["masked_lead_sha256"] == shape and row["body_end"])
+            for row in inv.values():
+                if row["masked_lead_sha256"] != shape or not row["body_end"]:
+                    continue
+                start = int(row["start"], 16)
+                if selector:
+                    facts_for_module = facts[module]
+                    unique_contexts = {context for context in
+                                       facts_for_module["caller_contexts"][start]
+                                       if facts_for_module["context_counts"][context] == 1}
+                    if not context_select(unique_contexts, selector):
+                        continue
+                members.append((module, start, row))
         if len(members) != int(spec["expected_placements"]):
             raise ValueError(f"{family_id}: unexpected masked-body placements")
         if len({module for module, _start, _row in members}) != len(members):
@@ -247,6 +262,8 @@ def generate(image: Path) -> tuple[list[dict[str, str]], dict]:
         member_sites = {(module, start) for module, start, _row in members}
         if not set(control_sites) <= member_sites or ref not in control_sites:
             raise ValueError(f"{family_id}: source controls do not cover the canonical reference")
+        if selector and set(control_sites) != member_sites:
+            raise ValueError(f"{family_id}: context-selected members need accepted C controls")
         normalized = set()
         for key, control in control_sites.items():
             accepted = matched.get(key)
@@ -294,6 +311,8 @@ def generate(image: Path) -> tuple[list[dict[str, str]], dict]:
                            "masked_sha256": shape})
         if not common_unique_contexts(contexts):
             raise ValueError(f"{family_id}: no common unique caller context")
+        if selector and selector not in common_unique_contexts(contexts):
+            raise ValueError(f"{family_id}: selected caller context does not close")
         if any(role != code_roles[0] for role in code_roles):
             raise ValueError(f"{family_id}: local callee roles differ")
         if not data_policy(spec["proof_mode"], data_roles):
@@ -311,6 +330,7 @@ def generate(image: Path) -> tuple[list[dict[str, str]], dict]:
                                                "masked_sha256": code_roles[0][site][1]}
                                    for site in sorted(code_roles[0])},
             "proof_mode": spec["proof_mode"],
+            "selection_context_sha256": selector or None,
         })
     public.sort(key=lambda row: (row["family_id"], row["module"], row["start"]))
     PRIVATE.write_text(json.dumps(family_results, indent=2) + "\n",
@@ -386,8 +406,14 @@ def check(summary: dict) -> None:
                        for row in placements}
     controls_per_family = Counter(row["family_id"] for row in controls)
     for family in summary["families"]:
+        spec = next(spec for spec in specs if spec["family_id"] == family["family_id"])
         if (family["placements"] != family_sizes[family["family_id"]]
                 or family["accepted_C_controls"] != controls_per_family[family["family_id"]]
+                or family.get("selection_context_sha256") !=
+                (None if spec.get("caller_context_selector") in (None, "", "-")
+                 else spec["caller_context_selector"])
+                or (spec.get("caller_context_selector") not in (None, "", "-")
+                    and family["accepted_C_controls"] != family["placements"])
                 or not enough_controls(family["placements"],
                                        family["accepted_C_controls"])):
             raise ValueError("reviewed family summary differs from placements or controls")

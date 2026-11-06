@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-from level_family_identity import (common_unique_contexts, data_policy,  # noqa: E402
+from level_family_identity import (common_unique_contexts, context_select, data_policy,  # noqa: E402
                                    enough_controls, ghidra_exact_boundary,
                                    normalized_control)
 
@@ -38,6 +38,8 @@ class FamilyIdentityTests(unittest.TestCase):
         self.assertEqual(common_unique_contexts([{"x", "y"}, {"x"}, {"x", "z"}]),
                          {"x"})
         self.assertEqual(common_unique_contexts([{"x"}, {"y"}]), set())
+        self.assertTrue(context_select({"x"}, "x"))
+        self.assertFalse(context_select({"x", "y"}, "x"))
 
     def test_unmatched_family_needs_four_controls_and_exact_boundary(self) -> None:
         self.assertTrue(enough_controls(2, 2))
