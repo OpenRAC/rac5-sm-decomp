@@ -1321,3 +1321,27 @@ links 72 bytes and first differs at byte 18 in its end-pointer traversal.
 The other 280
 candidate sites receive no new match credit. A relocation-masked form remains
 a research lead until every claimed placement links exactly.
+
+Another 402 bounded USA relocation-bearing candidate sites of 68–76 bytes
+have Ghidra-corroborated complete body extents and one normalized pseudocode
+form per selected group. Five pure C forms reproduce **101 placements from
+96 authored sources** (7,192 placement bytes and 6,836 distinct-source bytes)
+under the default pinned route. Five placements reuse canonical C after
+independent exact links and equal object hashes. The forms are a
+[frontend loop](../src/levels/bodies/FRONTEND_003B10.c),
+[named `memset` call](../src/levels/bodies/LEVEL_01_018800.c),
+[global table search](../src/levels/bodies/LEVEL_01_07A538.c),
+[guarded call chain](../src/levels/bodies/LEVEL_01_0A75C8.c) and
+[stack-buffer call](../src/levels/bodies/LEVEL_01_068CF0.c).
+Previous source and placement pins remain unchanged.
+
+Fifteen other representative C attempts remain in `nonmatching/levels/` with
+measured first differences and reopening conditions. The
+[frontend global reset](../nonmatching/levels/FRONTEND_021668.c) has the
+correct 68-byte length after changing its source control flow, but first
+differs at byte 23 in its branch form and register use. The
+[68-byte forwarding helper](../nonmatching/levels/LEVEL_01_0362D8.c) links
+60 bytes after accounting for two additional call arguments; its stack
+argument convention remains unresolved. The other 301 candidate sites gain
+no match credit. Relocation-masked similarity alone does not qualify a shared
+source or prove a match.

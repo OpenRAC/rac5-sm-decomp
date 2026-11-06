@@ -355,14 +355,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 32,998 accepted placements with 2,386 SN link invocations;
+all 21 USA modules and 33,099 accepted placements with 2,388 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**32,998 placements** in **23,422 sources**, **1,949,076 placement
-bytes**, **1,503,460 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**33,099 placements** in **23,518 sources**, **1,956,268 placement
+bytes**, **1,510,296 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -562,3 +562,12 @@ frontend forwarding wrapper with its stack argument. The other 14
 representative C attempts remain under `nonmatching/levels/` without match
 credit; 280 candidate sites remain unaccepted. All 21
 complete USA modules remain exact.
+
+Another 101 reviewed relocation-bearing placements of 68–72 bytes link
+exactly from 96 authored pure C sources (7,192 placement bytes and 6,836
+distinct-source bytes). Five placements reuse canonical C after independent
+exact links and object-hash checks. The five forms cover a frontend loop,
+the named `memset` import, a global-table search, guarded calls and a
+stack-buffer call. Fifteen other representative C attempts remain under
+`nonmatching/levels/` without match credit; 301 candidate sites remain
+unaccepted. All 21 complete USA modules remain exact.
