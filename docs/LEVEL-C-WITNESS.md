@@ -355,14 +355,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 32,794 accepted placements with 2,381 SN link invocations;
+all 21 USA modules and 32,876 accepted placements with 2,385 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**32,794 placements** in **23,237 sources**, **1,924,072 placement
-bytes**, **1,480,400 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**32,876 placements** in **23,315 sources**, **1,939,564 placement
+bytes**, **1,495,136 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -541,3 +541,13 @@ imports retain their names. Forty-three other reviewed C attempts stay in
 `nonmatching/levels/` without match credit. Every retail interval returns
 at byte 40 with its delay slot at byte 44; all 21 complete modules remain
 exact.
+
+Another 82 reviewed relocation-bearing placements of 176–196 bytes link
+exactly from 78 authored pure C sources (15,492 placement bytes and 14,736
+distinct-source bytes). Four placements reuse a canonical source after an
+independent exact link and equal object hash at each placement. The four
+source forms initialize pointer fields, update a bounded range, update an
+effect state and guard a state transition. Sixteen other representative C
+attempts stay in `nonmatching/levels/` with measured first differences and
+reopening conditions; the other 327 candidate sites receive no C credit.
+All 21 complete USA modules remain exact.

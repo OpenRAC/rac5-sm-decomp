@@ -1247,3 +1247,31 @@ links 72 bytes and first differs at byte 32; the retail retains a redundant
 state check that must not be introduced as purposeless C. The other 277
 candidate sites receive no new matching credit from this review. Their
 masked structural similarity is not a source-identity proof.
+
+Another 409 relocation-bearing candidate sites of 156–200 bytes have
+Ghidra-corroborated complete body extents. Four pure C forms reproduce **82
+placements from 78 authored sources** (15,492 placement bytes and 14,736
+distinct-source bytes) under the default pinned route. Four placements reuse
+canonical C after independent exact links and equal object hashes. These
+forms are a
+[176-byte pointer-field initializer](../src/levels/bodies/FRONTEND_0170D0.c),
+a [196-byte range update](../src/levels/bodies/FRONTEND_012690.c), a
+[192-byte effect-state update](../src/levels/bodies/LEVEL_01_066230.c) and a
+[192-byte guarded state update](../src/levels/bodies/LEVEL_01_04A998.c).
+Previous source and placement pins are unchanged.
+
+Sixteen other representative C attempts remain in `nonmatching/levels/` with
+measured first differences and specific reopening conditions. For example,
+the [200-byte effect call](../nonmatching/levels/LEVEL_01_0DC120.c) links to
+the right length under the already qualified `gnu-ee-trial-divpad` route but
+first differs at byte 4 in 64-bit mask construction. The
+[196-byte pointer clamp](../nonmatching/levels/LEVEL_01_055018.c) links to
+200 bytes and first differs at byte 2. The qualified SDK, GNU trial and
+division-pad compiler routes emit the same 200-byte object for that source. The
+[196-byte refcounted list removal](../nonmatching/levels/FRONTEND_025390.c)
+links 220 bytes and first differs at byte 8 because the fallback call extends
+the link-pointer lifetime. The
+[200-byte path CRC](../nonmatching/levels/LEVEL_01_10F380.c) links 108 bytes
+and differs from its first byte; its separator scan remains unresolved.
+The other 327 candidate sites receive no new matching credit; masked
+structural similarity remains a research lead only.
