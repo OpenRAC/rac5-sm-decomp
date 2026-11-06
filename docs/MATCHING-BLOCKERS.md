@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **32,143 measured placements** of 1,856,444 placement bytes carried by **22,828
+The level scope is **32,163 measured placements** of 1,857,164 placement bytes carried by **22,829
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -1045,6 +1045,30 @@ the source comments. For example, the [flag update](../nonmatching/levels/LEVEL_
 still differs in branch-likely scheduling. Nine candidate entries lacked
 a Ghidra function at their start; they receive neither C credit nor an
 invented boundary until reviewed further.
+
+Three repeated short-body leads remain blocked after further measured trials.
+For the 20 [indexed lookups](../nonmatching/levels/LEVEL_01_039B18.c),
+reordering C locals and nesting the call expression produced the same
+64-byte object and byte-6 register difference; three qualified GNU routes
+kept that difference, while both SDK routes produced 44 bytes with a
+byte-0 difference. For the 40 [conditional byte conversions](../nonmatching/levels/LEVEL_01_0881D8.c),
+a mutable result and a conditional expression missed the retail
+branch-likely instruction; three GNU routes retained a byte-24 difference,
+and the SDK routes differed from byte 0. For the 20
+[field initializers](../nonmatching/levels/LEVEL_01_08BE88.c),
+source-order and ordinary structure-field variants still scheduled the
+36-byte stores differently at byte 8 across all five qualified routes.
+These remain C attempts without match credit; reopen only with evidence
+for a different source-level data layout or a qualified scheduling remedy.
+
+The 20 raw-identical 36-byte linked-list initializers now reproduce the
+retail body from one [C source](../src/levels/bodies/LEVEL_01_09FB18.c)
+(720 placement bytes, 36 distinct-source bytes). The embedded list head
+is represented explicitly: its second pointer is addressed relative to
+the head rather than through the enclosing node, which reproduces the
+retail pointer-store order without assembly or barriers. All 20 isolated
+links and all 21 complete USA modules are exact; the former retained
+attempt at the representative placement is promoted.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C
