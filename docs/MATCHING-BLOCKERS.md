@@ -1415,3 +1415,28 @@ Fifteen other representative C attempts remain under `nonmatching/levels/`
 with measured first differences and reopening conditions. The other 266
 candidate sites receive no match credit. Previous source and placement pins
 remain unchanged.
+
+Another 478 bounded USA relocation-bearing candidate sites of 104–128 bytes
+have Ghidra-corroborated complete body extents. Five pure C forms reproduce
+**124 placements from 118 authored sources** (15,204 placement bytes and
+14,468 distinct-source bytes) under the default pinned route. Six placements
+reuse canonical C after independent exact links and equal object hashes.
+The forms include a [file-close loop](../src/levels/bodies/FRONTEND_002888.c)
+using the named `ps2fioClose` import,
+[UI state handling](../src/levels/bodies/FRONTEND_01E438.c),
+[named `sscanf`](../src/levels/bodies/FRONTEND_01CB08.c),
+[guarded frees](../src/levels/bodies/LEVEL_01_110C88.c) and
+[conditional calls](../src/levels/bodies/LEVEL_01_023AB8.c).
+
+The file-close loop initially linked to the correct 120-byte length but
+first differed at byte 83: an early `return 0` caused a constant to replace
+the saved close result. Breaking the loop and returning that result once
+reproduced all 42 placements. Fifteen other representative C attempts remain
+under `nonmatching/levels/` with measured first differences and reopening
+conditions. For example, the
+[frontend text scan](../nonmatching/levels/FRONTEND_00C448.c) has the correct
+128-byte length but differs at byte 4 in its saved registers, and the
+[frontend copy wrapper](../nonmatching/levels/FRONTEND_024958.c) links 124
+bytes but differs from the start of its prologue. The other 354 candidate
+sites receive no match credit. Previous source and placement pins remain
+unchanged.
