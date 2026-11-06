@@ -32,6 +32,7 @@ jobs:
           python tools/level_full_module_flow.py --check
           python tools/level_boundary_coverage.py --check
           python tools/level_called_boundaries.py --check
+          python tools/level_family_identity.py --check
           python tools/level_split_dedupe.py --check
       - name: No game data or build artifacts in the repository
         run: python tools/check_repository.py

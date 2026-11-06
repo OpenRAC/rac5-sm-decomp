@@ -204,6 +204,37 @@ function denominator. Reproduce them after the private inventory and gap
 audit with `python tools/level_called_boundaries.py --write
 baserom/SCUS_976.15.iso`; CI checks the public pins without the disc.
 
+### Reviewed source-role identities across levels
+
+The [family-identity audit](../tools/level_family_identity.py) records a first,
+deliberately narrow set of cross-level identities. Its
+[specifications](../config/levels/family_identity_specs.tsv) select two
+collision-free masked shapes, and its
+[C controls](../config/levels/family_identity_controls.tsv) name previously
+accepted source placements. The private pass checks every selected boundary
+against accepted C or a relocation-backed witness; it also requires a caller
+context unique within each module and common to every family member. It
+compares normalized C control logic, local data targets, named relocations and
+unique callee roles. One family requires a unique matching 64-byte data window
+at each placement; the other uses two matching target windows at fixed
+body-relative offsets, one independently unique per module.
+
+The resulting [placement map](../config/levels/reviewed_family_placements.tsv)
+has **two canonical source-role families at 29 placements**: a 64-byte body in
+13 modules with four accepted C controls, and a 96-byte body in 16 modules
+with fifteen accepted C controls. The
+[summary](../config/levels/family_identity_summary.json) pins the evidence
+without publishing game bytes. Callees are checked for role and boundary; the
+audit does not assert that each callee is itself one shared source function.
+
+These are only two reviewed identities, not a complete function catalogue.
+They add neither C credit nor a game-wide denominator; the overall function
+measure remains `0/0`. Future families need the same explicit source-role
+review, and masked shapes repeated inside one module remain excluded from
+automatic identity grouping. Reproduce the private pass with
+`python tools/level_family_identity.py --write baserom/SCUS_976.15.iso` after
+the boundary inventory; CI checks the public evidence pins without the disc.
+
 ## Structural translation leads
 
 [`level_translation_families.py`](../tools/level_translation_families.py)
