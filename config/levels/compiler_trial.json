@@ -16,6 +16,20 @@
         "as": []
       },
       "provenance": "GNU EE assembler built from OpenRAC/rac2-decomp's versioned R5900 mfc1 interlock source transformation (tools/compiler/transformers/r5900_mfc1_interlock.py, commit e07c4844d64b007377031e49c683d57fba8db07c). The patch exempts only mfc1 from the obsolete coprocessor-load delay while keeping the retail floating-condition delay. The separately measured 148-byte level body is exact at all 20 USA placements; the base assembler remains the route for all other accepted sources. This external binary is hash-pinned and never committed."
+    },
+    "ee-frozen": {
+      "id": "rac5-level-ee-frozen-20261106",
+      "status": "qualified per source for USA level bodies only",
+      "host": "linux",
+      "accepted_sources": ["src/levels/bodies/LEVEL_01_001940.c"],
+      "tools": {
+        "assembler": "ee-as",
+        "as_sha256": "d2f76ccfa6a7efcbe8605a6f52fe602354370b4d8dce55650c281dc95ebab9de"
+      },
+      "flags": {
+        "as": []
+      },
+      "provenance": "Private EE assembler recovered with the legally supplied toolchain used in the RAC1 workspace. On the pinned USA body at LEVEL_01:0x001940, the default GNU assembler emits 96 bytes and misses the retail floating-point latency and delay-slot schedule; this hash-pinned binary emits the exact 100-byte body at all 20 numbered level placements. It is selected only for the measured source, never globally, and the external binary is not distributed."
     }
   },
   "scope": "two shared C witnesses at twenty pinned LEVEL_*.REL placements and func_00002F80 in FRONTEND.REL; additional accepted level bodies and their per-source routes are governed by config/levels/body_sources.tsv",
