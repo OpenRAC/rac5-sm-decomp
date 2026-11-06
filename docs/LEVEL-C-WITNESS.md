@@ -629,3 +629,18 @@ matches its first 32, and the
 [heap extraction helper](../nonmatching/levels/LEVEL_01_036F58.c) links 148 of
 160 bytes. The other 142 candidate sites receive no match credit. All 21
 complete USA modules remain exact.
+
+Another 1,666 bounded USA relocation-bearing candidate sites of 129–200 bytes
+have Ghidra-corroborated complete body extents: all 1,666 match the inventory.
+Seventeen pure C forms reproduce **361 placements from 344 authored sources**
+(60,892 placement bytes and 204,070 distinct-source bytes). Thirty-nine
+placements are exact only under the qualified `gnu-ee-trial-divpad` profile
+and twenty under `sdk991111`; the rest use the pinned chain. The forms include
+a table-scan loop, a frontend pad/state sequence, a guarded index loop, a
+float wrapper, a pool-element append, a list teardown, a sound dispatcher and
+several dispatch chains.
+
+Forty-seven other representative C attempts remain under `nonmatching/levels/`
+with measured first differences and reopening conditions; the remaining
+candidate sites receive no match credit. All 21 complete USA modules remain
+exact.
