@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **32,334 measured placements** of 1,878,264 placement bytes carried by **22,835
+The level scope is **32,594 measured placements** of 1,901,864 placement bytes carried by **23,046
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -1177,3 +1177,24 @@ the qualified SDK and GNU trial profiles on the representative, did not
 change this mismatch. The 20 candidate sites remain uncounted until a
 source-level lifetime or narrowly qualified compiler remedy reproduces
 all retail bytes and the complete modules.
+
+Another 463 relocation-bearing candidate bodies of 68–100 bytes have matching
+Ghidra body extents. Pure C under the pinned GNU EE route reproduces **260
+placements from 211 authored sources** (23,600 placement bytes and 19,236
+distinct-source bytes). Forty-nine placements reuse a canonical source after
+an independent exact link and object-hash check. Examples include the
+[four-call wrapper](../src/levels/bodies/LEVEL_01_0C0B18.c),
+[global-state call guard](../src/levels/bodies/LEVEL_01_0BC530.c) and
+[callback-list traversal](../src/levels/bodies/LEVEL_01_09FA48.c).
+All 21 complete USA modules remain exact; the prior source and placement rows
+are unchanged.
+
+The other 203 candidate bodies retain pure C in `nonmatching/levels/`, with
+their linked size, first difference and a source-level reopening condition in
+each file. For example, the
+[guarded removal](../nonmatching/levels/LEVEL_01_0BB340.c) currently links
+108 rather than 100 bytes, while the
+[frontend stack wrapper](../nonmatching/levels/FRONTEND_023860.c) links 100
+bytes but differs from its first byte. These receive no C credit. The
+relocation-masked shapes used to select the sites were research leads; they
+did not by themselves establish source sharing or match status.

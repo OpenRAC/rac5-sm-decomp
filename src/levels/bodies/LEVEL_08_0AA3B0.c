@@ -1,0 +1,12 @@
+extern int D_002EB8D0[];
+
+void func_0AA3B0(void)
+{
+    int *node = (int *)(unsigned int)D_002EB8D0[8];
+    while (node != &D_002EB8D0[7]) {
+        char *owner = (char *)(unsigned int)node[5];
+        void (*callback)(int *) = *(void (**)(int *))(owner + 0x1c);
+        if (callback != 0) callback(node);
+        node = (int *)(unsigned int)node[1];
+    }
+}
