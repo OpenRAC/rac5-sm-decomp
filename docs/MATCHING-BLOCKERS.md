@@ -1345,3 +1345,25 @@ differs at byte 23 in its branch form and register use. The
 argument convention remains unresolved. The other 301 candidate sites gain
 no match credit. Relocation-masked similarity alone does not qualify a shared
 source or prove a match.
+
+Another 279 bounded USA relocation-bearing candidate sites of 68 bytes have
+Ghidra-corroborated complete body extents and one normalized pseudocode form
+per selected group. Seven pure C forms reproduce **120 placements from 97
+authored sources** (8,160 placement bytes and 6,596 distinct-source bytes)
+under the default pinned route. Twenty-three placements reuse canonical C
+after independent exact links and equal object hashes. Notably, the
+[paired named `memset` calls](../src/levels/bodies/LEVEL_01_1318D0.c) use one
+source at twenty raw-identical placements. Other forms include a
+[two-call global mask](../src/levels/bodies/LEVEL_01_087E00.c),
+[call and global stores](../src/levels/bodies/LEVEL_01_0A7360.c),
+[shared record layout](../src/levels/bodies/LEVEL_01_0C48D8.c) and
+[conditional state wrapper](../src/levels/bodies/LEVEL_04_1C71F0.c).
+Previous source and placement pins remain unchanged.
+
+Thirteen other representative C attempts remain under `nonmatching/levels/`
+with measured first differences and reopening conditions. The
+[global sentinel test](../nonmatching/levels/LEVEL_01_0A6958.c) links 48
+rather than 68 bytes, while the
+[halfword bit update](../nonmatching/levels/LEVEL_16_024FE8.c) links 64 bytes
+and first differs at byte 2. The other 159 candidate sites receive no match
+credit. Relocation-masked similarity alone does not qualify source reuse.
