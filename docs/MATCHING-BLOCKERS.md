@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **32,677 measured placements** of 1,913,564 placement bytes carried by **23,125
+The level scope is **32,794 measured placements** of 1,924,072 placement bytes carried by **23,237
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -1222,3 +1222,28 @@ callee signature corroborated as float, float, pointer, pointer, int; its
 linked 112-byte C body first differs at byte 12. The other 341 candidate
 sites have no new matching credit from this review. Relocation-masked
 similarity alone still does not establish C source identity.
+
+Another 394 relocation-bearing candidate sites of 80–100 bytes have
+Ghidra-corroborated complete body extents. Six pure C forms reproduce **117
+placements from 112 authored sources** (10,508 placement bytes and 10,068
+distinct-source bytes). Five placements reuse canonical C after independent
+exact links and equal object hashes. The forms are a
+[84-byte countdown wrapper](../src/levels/bodies/LEVEL_01_028510.c),
+[84-byte guarded record loop](../src/levels/bodies/LEVEL_01_013368.c),
+[88-byte float-indexed table lookup](../src/levels/bodies/LEVEL_01_0001A8.c),
+[92-byte ATRAC fade wrapper](../src/levels/bodies/LEVEL_01_18D2E0.c),
+[100-byte record initializer](../src/levels/bodies/LEVEL_01_06AF60.c) and
+[92-byte callback-array traversal](../src/levels/bodies/LEVEL_01_07DCD8.c).
+They use the default pinned C and assembler route. All 21 complete USA
+modules remain exact, and previous source and placement pins are unchanged.
+
+Fourteen other representative C attempts remain in `nonmatching/levels/`
+with measured first differences and reopening conditions. The
+[88-byte packed-table initializer](../nonmatching/levels/LEVEL_01_0974A8.c)
+requires the source-specific `-mno-check-zero-division` flag to reach the
+correct length but still differs at byte 2. The
+[80-byte frontend state guard](../nonmatching/levels/FRONTEND_021438.c)
+links 72 bytes and first differs at byte 32; the retail retains a redundant
+state check that must not be introduced as purposeless C. The other 277
+candidate sites receive no new matching credit from this review. Their
+masked structural similarity is not a source-identity proof.

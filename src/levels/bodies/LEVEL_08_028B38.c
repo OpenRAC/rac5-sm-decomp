@@ -1,0 +1,11 @@
+extern unsigned int func_027A30(int, int);
+extern void func_027AA8(int, int, int);
+
+int func_028B38(unsigned int value)
+{
+    unsigned int previous = func_027A30(0x89, 0xff);
+    if (value > previous)
+        return 0;
+    func_027AA8(0x89, (previous - value) & 0xff, 0xff);
+    return 1;
+}
