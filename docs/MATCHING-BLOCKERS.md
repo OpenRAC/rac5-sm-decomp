@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **31,766 measured placements** of 1,832,904 placement bytes carried by **22,466
+The level scope is **31,897 measured placements** of 1,840,700 placement bytes carried by **22,590
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -1007,6 +1007,30 @@ two indirect calls and two shift results retain their measured first
 difference and reopening condition in their C comments. A new source
 or compiler hypothesis must pass isolated links and complete-module
 gates before receiving C credit.
+
+A review of 144 putative 60-byte intervals with five or more relocations
+found 129 exact 60-byte C placements from 123 sources. Thirteen guarded
+pair-array stores retain C without match credit (for example,
+[LEVEL_01:0x080C98](../nonmatching/levels/LEVEL_01_080C98.c)):
+pinned C links 68 bytes and first differs at byte 2 in argument and
+global register allocation.
+
+The other two putative intervals, in LEVEL_15.REL and LEVEL_21.REL at
+0x0F78B8, each contain **two distinct complete functions**: a 32-byte
+global state store followed by a 28-byte call wrapper at 0x0F78D8.
+Ghidra recognizes both entries, and each retail body has its own
+return. The [call wrapper](../src/levels/bodies/LEVEL_15_0F78D8.c)
+links exactly at both placements from one C source. The two
+[32-byte stores](../nonmatching/levels/LEVEL_15_0F78B8.c) retain C
+without credit: pinned C links 20 bytes and first differs at byte 0
+after folding a staged global address into one constant. Reopen with
+evidence for the original data layout or a qualified address route.
+No 60-byte match is claimed for those split intervals.
+
+Taken together, this review adds 131 exact placements from 124 C
+sources (7,796 placement bytes, 7,408 distinct-source bytes) while
+retaining 15 useful nonmatching C bodies. All 21 complete USA modules
+remain exact.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C
