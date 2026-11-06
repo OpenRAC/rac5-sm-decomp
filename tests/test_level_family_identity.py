@@ -8,6 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from level_family_identity import (common_unique_contexts, data_policy,  # noqa: E402
+                                   enough_controls, ghidra_exact_boundary,
                                    normalized_control)
 
 
@@ -37,6 +38,14 @@ class FamilyIdentityTests(unittest.TestCase):
         self.assertEqual(common_unique_contexts([{"x", "y"}, {"x"}, {"x", "z"}]),
                          {"x"})
         self.assertEqual(common_unique_contexts([{"x"}, {"y"}]), set())
+
+    def test_unmatched_family_needs_four_controls_and_exact_boundary(self) -> None:
+        self.assertTrue(enough_controls(2, 2))
+        self.assertTrue(enough_controls(13, 4))
+        self.assertFalse(enough_controls(17, 3))
+        row = {"min": "0x100", "max": "0x13F", "body_bytes": "64"}
+        self.assertTrue(ghidra_exact_boundary(row, 0x100, 0x140))
+        self.assertFalse(ghidra_exact_boundary(row, 0x100, 0x144))
 
 
 if __name__ == "__main__":
