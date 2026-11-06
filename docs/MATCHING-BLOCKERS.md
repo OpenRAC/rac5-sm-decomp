@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **32,163 measured placements** of 1,857,164 placement bytes carried by **22,829
+The level scope is **32,222 measured placements** of 1,866,356 placement bytes carried by **22,831
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -1069,6 +1069,27 @@ the head rather than through the enclosing node, which reproduces the
 retail pointer-store order without assembly or barriers. All 20 isolated
 links and all 21 complete USA modules are exact; the former retained
 attempt at the representative placement is promoted.
+
+Three more reviewed short-body forms add 59 exact USA placements (9,192
+placement bytes, 300 new distinct-source bytes). A
+[152-byte flag update](../src/levels/bodies/LEVEL_01_087620.c) and a
+[148-byte phase update](../src/levels/bodies/LEVEL_01_0639E8.c) each link
+exactly at twenty numbered levels. The phase update alone selects the
+hash-pinned `r5900-mfc1` assembler route; the default assembler inserts
+an extra load-delay word after `mfc1`. Another nineteen placements reuse
+the already accepted [168-byte source](../src/levels/bodies/LEVEL_01_088EC0.c)
+without adding a source. All 21 complete USA modules remain exact, and
+all previously accepted object pins are unchanged.
+
+Seventeen other reviewed C hypotheses from the same 140–196-byte scope
+remain in `nonmatching/` with their first difference and reopening
+condition. The [164-byte float clamp](../nonmatching/levels/LEVEL_01_0023B0.c)
+differs only in one branch destination after natural C restructuring.
+The [double classifier](../nonmatching/levels/FRONTEND_023528.c) has a
+152-byte Ghidra body followed by a nonzero word inside the 156-byte
+candidate interval; no credit is claimed for that extra word or its
+unresolved ownership. Five qualified `cc1` routes did not resolve the
+other representative differences.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C

@@ -2,7 +2,23 @@
   "id": "rac5-level-shared-c-gnu-ee-trial-20261015",
   "status": "qualified_two_shared_functions_and_frontend_only",
   "base_profile": "config/boot/compiler_trial.json",
-  "scope": "two shared C functions at twenty pinned LEVEL_*.REL placements and func_00002F80 in FRONTEND.REL only",
+  "extra_assemblers": {
+    "r5900-mfc1": {
+      "id": "rac5-level-gnu-ee-r5900-mfc1-20261106",
+      "status": "qualified per source for USA level bodies only",
+      "host": "linux",
+      "accepted_sources": ["src/levels/bodies/LEVEL_01_0639E8.c"],
+      "tools": {
+        "assembler": "as",
+        "as_sha256": "b0bb487958caa611e8cc88a5675135035ea21e79fc5659323bff5bfd81b890f3"
+      },
+      "flags": {
+        "as": []
+      },
+      "provenance": "GNU EE assembler built from OpenRAC/rac2-decomp's versioned R5900 mfc1 interlock source transformation (tools/compiler/transformers/r5900_mfc1_interlock.py, commit e07c4844d64b007377031e49c683d57fba8db07c). The patch exempts only mfc1 from the obsolete coprocessor-load delay while keeping the retail floating-condition delay. The separately measured 148-byte level body is exact at all 20 USA placements; the base assembler remains the route for all other accepted sources. This external binary is hash-pinned and never committed."
+    }
+  },
+  "scope": "two shared C witnesses at twenty pinned LEVEL_*.REL placements and func_00002F80 in FRONTEND.REL; additional accepted level bodies and their per-source routes are governed by config/levels/body_sources.tsv",
   "accepted": {
     "source": "src/levels/shared/func_00000100.c",
     "source_sha256_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",

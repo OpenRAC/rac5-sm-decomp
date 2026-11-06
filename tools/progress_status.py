@@ -210,6 +210,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
     body_rows = records(BODIES)
     body_sizes: dict[str, int] = {}
     body_profiles: dict[str, int] = {}
+    body_assemblers: dict[str, int] = {}
     for row in body_rows:
         source = source_rows.get(row["source"])
         if source is None:
@@ -218,6 +219,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
         body_sizes.setdefault(row["source"], int(row["size"]))
         selector = source["profile"]
         body_profiles[selector] = body_profiles.get(selector, 0) + 1
+        assembler = source["as"]
+        body_assemblers[assembler] = body_assemblers.get(assembler, 0) + 1
         if not (ROOT / row["source"]).is_file():
             raise ValueError(f"level body source is missing: {row['source']}")
     body_modules = sorted({row["module"] for row in body_rows})
@@ -232,11 +235,17 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             sum(int(row["size"]) for row in body_rows)
             or body_summary["unique_source_bytes"] != sum(body_sizes.values())
             or body_summary["profiles"] != body_profiles
+            or body_summary["assembler_profiles"] != body_assemblers
             or body_summary["cc1_sha256"] != {
                 selector: (profile["tools"]["cc1_sha256"]
                            if selector == "pinned" else
                            profile["extra_compilers"][selector]["tools"]["cc1_sha256"])
                 for selector in sorted(body_profiles)}
+            or body_summary["as_sha256"] != {
+                selector: (profile["tools"]["as_sha256"]
+                           if selector == "gnu-ee-trial" else
+                           level_profile["extra_assemblers"][selector]["tools"]["as_sha256"])
+                for selector in sorted(body_assemblers)}
             or body_summary["modules"] != body_modules
             or body_summary["module_sha256"] !=
             {module: by_name[module]["sha256"] for module in body_modules}):
@@ -363,6 +372,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                    "accepted_level_body_unique_source_bytes":
                        body_summary["unique_source_bytes"],
                    "accepted_level_body_profiles": body_summary["profiles"],
+                   "accepted_level_body_assembler_profiles":
+                       body_summary["assembler_profiles"],
                    "accepted_level_body_modules": body_summary["modules"],
                    "known_identical_full_intervals": duplicates},
         "function_inventory": {

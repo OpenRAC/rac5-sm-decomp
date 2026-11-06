@@ -173,7 +173,7 @@ def module_symbols(source: bytes) -> tuple[dict[str, int], dict[str, int]]:
 
 
 def read_bodies(path: Path, sources_path: Path, known: dict[str, str],
-                ends: dict[str, int]) -> list[dict]:
+                ends: dict[str, int], assembler_pins: dict) -> list[dict]:
     """Read and validate the placement table and the source table it names.
 
     A placement row carries only what belongs to a placement: where the body
@@ -197,9 +197,15 @@ def read_bodies(path: Path, sources_path: Path, known: dict[str, str],
             if raw["profile"] not in BODY_PROFILES:
                 raise ValueError(
                     f"{sources_path.name}:{number}: unknown profile {raw['profile']}")
-            if raw["as"] != BODY_ASSEMBLER:
+            if (raw["as"] != BODY_ASSEMBLER
+                    and raw["as"] not in assembler_pins):
                 raise ValueError(
-                    f"{sources_path.name}:{number}: assembler is not {BODY_ASSEMBLER}")
+                    f"{sources_path.name}:{number}: unqualified assembler {raw['as']}")
+            if (raw["as"] != BODY_ASSEMBLER
+                    and source not in assembler_pins[raw["as"]]["accepted_sources"]):
+                raise ValueError(
+                    f"{sources_path.name}:{number}: assembler {raw['as']} is not "
+                    f"qualified for {source}")
             for key in ("source_sha256_lf", "object_sha256"):
                 if re.fullmatch(r"[0-9a-f]{64}", raw[key]) is None:
                     raise ValueError(
@@ -382,8 +388,47 @@ def extra_cc1_paths(items: list[str]) -> dict[str, Path]:
     return table
 
 
+def extra_as_paths(items: list[str]) -> dict[str, Path]:
+    """Parse explicit source-specific assemblers without a silent fallback."""
+    table: dict[str, Path] = {}
+    for item in items:
+        name, separator, value = item.partition("=")
+        if not separator or not name or not value:
+            raise ValueError(f"--extra-as expects NAME=PATH, got {item!r}")
+        if name in table:
+            raise ValueError(f"duplicate --extra-as selector: {name}")
+        table[name] = Path(value)
+    return table
+
+
+def check_extra_as(paths: dict[str, Path], level_profile: dict) -> None:
+    """Reject unknown or changed external assemblers before any body compilation."""
+    for selector, path in paths.items():
+        entry = level_profile.get("extra_assemblers", {}).get(selector)
+        if entry is None:
+            raise ValueError(f"unknown --extra-as selector: {selector}")
+        if digest(path) != entry["tools"]["as_sha256"]:
+            raise ValueError(f"{selector} assembler differs from the pinned level trial")
+
+
+def select_body_assembler(selector: str, default: Path,
+                          extra_as: dict[str, Path], level_profile: dict
+                          ) -> tuple[Path, list[str]]:
+    """Select one hash-qualified assembler for an authored body source."""
+    if selector == BODY_ASSEMBLER:
+        return default, []
+    entry = level_profile.get("extra_assemblers", {}).get(selector)
+    if entry is None:
+        raise ValueError(f"unknown level body assembler: {selector}")
+    path = extra_as.get(selector)
+    if path is None:
+        raise ValueError(f"assembler {selector} needs --extra-as {selector}=PATH")
+    return path, entry["flags"]["as"]
+
+
 def compile_body_sources(rows: list[dict], args, extra_cc1: dict[str, Path],
-                         base_profile: dict) -> dict[str, tuple[Path, dict, str]]:
+                         extra_as: dict[str, Path], base_profile: dict,
+                         level_profile: dict) -> dict[str, tuple[Path, dict, str]]:
     """Compile one object per bodies.tsv source and verify its two hashes."""
     output = require_private_output(args.output_dir)
     output.mkdir(parents=True, exist_ok=True)
@@ -405,6 +450,8 @@ def compile_body_sources(rows: list[dict], args, extra_cc1: dict[str, Path],
         cc1 = args.cc1 if profile == "pinned" else extra_cc1.get(profile)
         if cc1 is None:
             raise ValueError(f"profile {profile} needs --extra-cc1 {profile}=PATH")
+        assembler, as_flags = select_body_assembler(
+            row["as"], args.gnu_as, extra_as, level_profile)
         entry = cflags.for_source(per_source, source)
         if not entry.pinned or not entry.assembler_pinned:
             raise ValueError(f"level body tool selectors belong in body_sources.tsv: "
@@ -420,7 +467,8 @@ def compile_body_sources(rows: list[dict], args, extra_cc1: dict[str, Path],
         run([str(cc1.resolve()), *flags, *entry.flags,
              f"{stem}.i", "-o", f"{stem}.s"],
             work, work / f"{stem}.cc1.log")
-        run([str(args.gnu_as.resolve()), "-o", f"{stem}.o", f"{stem}.s"],
+        run([str(assembler.resolve()), *as_flags,
+             "-o", f"{stem}.o", f"{stem}.s"],
             work, work / f"{stem}.as.log")
         obj = work / f"{stem}.o"
         if not any(value == 0 for value, _size
@@ -817,6 +865,9 @@ def main() -> None:
     parser.add_argument("--extra-cc1", action="append", default=[],
                         metavar="NAME=PATH",
                         help="extra pinned cc1 by profile selector (gnu-ee-trial)")
+    parser.add_argument("--extra-as", action="append", default=[],
+                        metavar="NAME=PATH",
+                        help="extra hash-pinned assembler selected by body_sources.tsv")
     parser.add_argument("--refresh-bodies", action="store_true",
                         help="rewrite config/levels/bodies.tsv hashes after a full pass")
     parser.add_argument("--jobs", type=int, default=1,
@@ -841,6 +892,8 @@ def main() -> None:
             raise ValueError(f"unknown --extra-cc1 selector: {selector}")
         if digest(path) != entry["tools"]["cc1_sha256"]:
             raise ValueError(f"{selector} cc1 differs from the pinned compiler trial")
+    extra_as = extra_as_paths(args.extra_as)
+    check_extra_as(extra_as, profile)
     compile_sources(profile, sources, args.cpp, args.cc1, args.gnu_as,
                     args.output_dir)
     accepted_object = read_object(
@@ -852,9 +905,11 @@ def main() -> None:
     bodies = {Path(row["source"]).stem: linked_body(row, args.linker)
               for row in sources if "offset" in row}
     known, ends = pinned_modules(), code_ends()
-    body_rows = read_bodies(BODIES, BODY_SOURCES, known, ends)
+    body_rows = read_bodies(BODIES, BODY_SOURCES, known, ends,
+                            profile.get("extra_assemblers", {}))
     local_libcalls = read_local_libcalls(LOCAL_LIBCALLS, body_rows)
-    body_objects = compile_body_sources(body_rows, args, extra_cc1, base_profile)
+    body_objects = compile_body_sources(body_rows, args, extra_cc1, extra_as,
+                                        base_profile, profile)
     bodies_by_module: dict[str, list[dict]] = defaultdict(list)
     for row in body_rows:
         bodies_by_module[row["module"]].append(row)
@@ -1062,6 +1117,14 @@ def main() -> None:
             selector: (base_profile["tools"]["cc1_sha256"] if selector == "pinned"
                        else base_profile["extra_compilers"][selector]["tools"]["cc1_sha256"])
             for selector in sorted({row["profile"] for row in body_rows})},
+        "assembler_profiles": {
+            selector: sum(1 for row in body_rows if row["as"] == selector)
+            for selector in sorted({row["as"] for row in body_rows})},
+        "as_sha256": {
+            selector: (base_profile["tools"]["as_sha256"]
+                       if selector == BODY_ASSEMBLER else
+                       profile["extra_assemblers"][selector]["tools"]["as_sha256"])
+            for selector in sorted({row["as"] for row in body_rows})},
         "modules": sorted(bodies_by_module),
         "module_sha256": {module: known[module]
                           for module in sorted(bodies_by_module)},
