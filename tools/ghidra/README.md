@@ -76,6 +76,8 @@ $rac5FullArgs = @('D:\private\ghidra-projects', 'rac5-full-modules', '-import') 
 & 'C:\path\to\ghidra\support\analyzeHeadless.bat' @rac5FullArgs
 python tools/level_full_module_flow.py --write baserom/SCUS_976.15.iso --ghidra-dir $ghidraOut
 python tools/level_full_module_flow.py --check
+python tools/level_boundary_coverage.py --write
+python tools/level_boundary_coverage.py --check
 ```
 
 The reference export contains addresses and reference kinds only. The Python
