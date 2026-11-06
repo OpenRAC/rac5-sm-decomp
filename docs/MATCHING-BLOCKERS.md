@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **30,384 measured placements** of 1,755,364 placement bytes carried by **21,144
+The level scope is **30,730 measured placements** of 1,773,356 placement bytes carried by **21,472
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -907,6 +907,42 @@ and floating-point arguments. The linked register choices establish where a
 call receives the record pointer or a floating-point value; signed `-1`
 uses the retail single immediate instruction where an unsigned constant
 would expand to two. No candidate in this scope remains nonmatching.
+
+Another 346 reviewed 52-byte placements with two or more relocations
+link exactly from 328 C sources (17,992 placement bytes, 17,056
+distinct-source bytes). Eighteen extra placements reuse a source only
+after an independent exact link at the target. All 21 complete USA
+modules pass. Fifty-one other placements retain publishable C without
+match credit:
+
+- Twenty bound-checked record clears (for example,
+  [LEVEL_01:0x0B2618](../nonmatching/levels/LEVEL_01_0B2618.c))
+  link 48 against 52 bytes and first differ at byte 4. The compiler
+  removes the retail boolean complement and shortens the branch.
+- Twenty lazy pointer initializers (for example,
+  [LEVEL_01:0x1EEA20](../nonmatching/levels/LEVEL_01_1EEA20.c))
+  link 48 against 52 bytes and first differ at byte 8. The compiler
+  folds a pointer-null guard, including with an inline C helper.
+- Five four-entry table clears (for example,
+  [LEVEL_02:0x028F80](../nonmatching/levels/LEVEL_02_028F80.c))
+  link 52 bytes but first differ at byte 8 because the global base
+  and field offset combine and loop registers change.
+- Two masked global setters (for example,
+  [LEVEL_04:0x0B7E80](../nonmatching/levels/LEVEL_04_0B7E80.c))
+  link 52 bytes but first differ at byte 30 in the final address register.
+- Two global read wrappers (for example,
+  [LEVEL_15:0x0F52D8](../nonmatching/levels/LEVEL_15_0F52D8.c))
+  link 40 against 52 bytes and first differ at byte 4 in the staged
+  global address calculation.
+- Two fallback indexed reads (for example,
+  [LEVEL_22:0x1311E0](../nonmatching/levels/LEVEL_22_1311E0.c))
+  link 52 bytes but first differ at byte 6 in the index-mask register.
+
+For the bound checks, lazy initializers, table clears, masked setters
+and fallback reads, five other already qualified compiler routes did
+not resolve their representative mismatches. Reopen the retained
+sources with original type, layout or value-lifetime evidence; any new
+compiler remedy needs per-source qualification and complete-module gates.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C
