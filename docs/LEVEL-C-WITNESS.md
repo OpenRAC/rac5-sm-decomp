@@ -345,14 +345,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 29,526 accepted placements with 2,337 SN link invocations;
+all 21 USA modules and 29,868 accepted placements with 2,339 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**29,526 placements** in **20,319 sources**, **1,712,976 placement
-bytes**, **1,301,652 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**29,868 placements** in **20,648 sources**, **1,729,392 placement
+bytes**, **1,317,444 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -503,3 +503,14 @@ evaluation orders: 60 read the second value into a local before the call,
 while 20 link with direct arguments. Twenty other bodies copy quadwords from
 the first call's result using 64-bit C types. Each retail interval returns at
 byte 36 with its delay slot at byte 40; all 21 complete modules remain exact.
+
+Another 342 reviewed 48-byte placements with one or two relocations link
+exactly from 329 authored C sources (16,416 placement bytes and 15,792
+distinct-source bytes). Thirteen additional placements reuse an identical
+source after exact relinks with the canonical file. Four signed-modulo
+wrappers use the measured per-source division flag; the 20 null-guarded
+wrappers qualify their error callee as nonreturning, matching the retail
+control flow. A packed C structure reproduces one unaligned 16-byte copy.
+Eleven reviewed C attempts remain under `nonmatching/levels/` without match
+credit. Every retail interval returns at byte 40 with its delay slot at byte
+44; all 21 complete modules remain exact.

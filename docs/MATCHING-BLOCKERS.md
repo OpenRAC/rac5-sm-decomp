@@ -477,7 +477,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **29,526 measured placements** of 1,712,976 placement bytes carried by **20,319
+The level scope is **29,868 measured placements** of 1,729,392 placement bytes carried by **20,648
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies
@@ -825,6 +825,35 @@ before the call and 20 require direct arguments; this preserves the retail
 order of the two address setups. Twenty other bodies require 64-bit C values
 to reproduce the two quadword stores. All 21 complete modules pass; no new C
 attempt is parked for this scope.
+
+Another 342 reviewed 48-byte placements with one or two relocations link
+exactly from 329 C sources (16,416 placement bytes, 15,792 distinct-source
+bytes). Thirteen extra placements reuse a source only after it linked exactly
+at both sites. Four signed-modulo wrappers use the existing source-specific
+`-mno-check-zero-division` flag. Twenty wrappers call an error path that is
+nonreturning in the matching C; a read-only decompilation of the exemplar
+callee shows an indirect call followed by unconditional self-recursion.
+A packed C structure reproduces the unaligned 16-byte copy in
+`LEVEL_24:0x0BEAE8` without instruction assembly. The full 21-module gate
+passes. Eleven other sites retain useful C without match credit:
+
+- Five bounded-index wrappers (for example,
+  [`LEVEL_16:0x022C28`](../nonmatching/levels/LEVEL_16_022C28.c)) link 48
+  bytes but first differ at byte 6 in the range-result register and branch
+  layout. Natural positive-branch and local-result forms and five qualified
+  `cc1` routes did not reproduce the retail sequence.
+- Five record-reset wrappers (for example,
+  [`LEVEL_16:0x112480`](../nonmatching/levels/LEVEL_16_112480.c)) link 44
+  rather than 48 bytes and first differ at byte 4: the compiler omits a
+  record-pointer copy and schedules the byte clear before the call rather
+  than in its delay slot. Typed records and natural store orders did not
+  restore it.
+- One nested-condition wrapper,
+  [`LEVEL_02:0x16F9F8`](../nonmatching/levels/LEVEL_02_16F9F8.c), links 48
+  bytes but first differs at byte 14 in the condition register. A direct
+  expression and five qualified `cc1` routes did not select the retail
+  register. Reopen these families with source-value lifetime or a qualified
+  compiler route that explains the register and branch choices.
 
 Fourteen sign-test bodies remain nonmatching (for example,
 [`LEVEL_01:0x1337E8`](../nonmatching/levels/LEVEL_01_1337E8.c)). Pinned C
