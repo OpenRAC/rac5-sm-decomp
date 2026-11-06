@@ -1464,3 +1464,30 @@ retained under `nonmatching/levels/` and none counted:
 - `LEVEL_01.REL:0x036F58` (160 B) links 148 bytes. The loop body is identical
   instruction by instruction, but the prologue loses a second `heap` register
   and merges the guard's `end - heap` with the count's.
+
+Another 1,666 bounded USA candidate sites of 129–200 bytes were measured in
+November 2026. Seventeen C forms reproduced 361 placements exactly; see
+`docs/LEVEL-C-WITNESS.md`. Forty-seven representative forms remain blocked and
+are retained under `nonmatching/levels/` with their measured difference and a
+reopening condition; none is counted. The measured blockers cluster into four
+classes:
+
+- **Register allocation permutations**: the same instructions are present but
+  a pair of temporaries is allocated in the opposite registers (for example
+  `LEVEL_01.REL:0x0C3AA8` and the float-register permutation of
+  `LEVEL_02.REL:0x059F40`).
+- **Prologue and epilogue order**: `FRONTEND.REL:0x0026B0` differs only in the
+  restore order (`s1,s0,s2,ra` instead of `s0,s1,s2,ra`), and
+  `LEVEL_02.REL:0x09EA50` hoists the division constant after the register
+  saves.
+- **Constant materialisation and hoisting**: `LEVEL_01.REL:0x0DD080`
+  reassociates the `|5`, `LEVEL_01.REL:0x0AE658` folds a `+4` that the retail
+  materialises in a delay slot, and `LEVEL_01.REL:0x0D9248` rotates five
+  constants through the argument registers.
+- **Flow reconstruction**: `LEVEL_01.REL:0x0C9AA8` merges `lui` pairs the
+  retail keeps distinct, and `LEVEL_01.REL:0x0D0E28` duplicates a table-scan
+  test that the retail keeps as two top-tested loops.
+
+One form needs a measured flag rather than new C: `LEVEL_02.REL:0x0C07A0`
+links 200 bytes only with `-mno-check-zero-division`. Two exact forms require
+the `gnu-ee-trial-divpad` profile (see `LEVEL-C-WITNESS.md`).
