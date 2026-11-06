@@ -46,9 +46,9 @@ Decompilation progress is tracked live on **[openrac.dev](https://openrac.dev)**
 | Boot `.text` | 498,900 bytes measured | 88,948 bytes (17.83%) | 693 |
 | Frontend (`FRONTEND.REL`) | 162,944 candidate bytes | 476 bytes | 1 |
 | Levels (20 `LEVEL_*.REL`) | 36,341,888 candidate bytes by placement | 80 bytes (1,600 by placement) | 2 |
-| Level bodies (counted separately) | 1,516,892 unique source bytes | 1,964,428 bytes by placement | 23,615 |
+| Level bodies (counted separately) | 1,528,736 unique source bytes | 1,976,664 bytes by placement | 23,768 |
 
-The ByteMatch estimate divides the **1,606,396** accepted C bytes by a provisional **6,418,204**-byte denominator: **25.03%**. That denominator combines the 498,900 measured boot `.text` bytes, the 162,944 frontend candidate-code bytes and the 5,756,360 optimistically deduplicated level candidate bytes. It is an estimate over candidate code intervals, not a qualified unique-code size; the snapshot's `overall_percent` stays `null`.
+The ByteMatch estimate divides the **1,618,240** accepted C bytes by a provisional **6,418,204**-byte denominator: **25.21%**. That denominator combines the 498,900 measured boot `.text` bytes, the 162,944 frontend candidate-code bytes and the 5,756,360 optimistically deduplicated level candidate bytes. It is an estimate over candidate code intervals, not a qualified unique-code size; the snapshot's `overall_percent` stays `null`.
 <!-- progress:end -->
 
 This is a **scoped** snapshot, not a game-wide percentage: the boot scope is
