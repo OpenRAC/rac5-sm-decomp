@@ -370,3 +370,9 @@ src/levels/bodies/LEVEL_03_12CF00.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_16_139FE0.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_22_105888.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_23_11FB10.c  -mno-check-zero-division
+
+# Exact 48-byte signed modulo wrappers use the measured opt-in division flag.
+src/levels/bodies/LEVEL_03_12CF88.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_06_125338.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_22_105910.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_23_11FBB8.c  -mno-check-zero-division
