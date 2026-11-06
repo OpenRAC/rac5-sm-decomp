@@ -174,6 +174,36 @@ boundaries and code/data gaps, reviewing cross-level source identity and
 mapping accepted C to the same canonical identities. The ByteMatch function
 count remains `0/0` until that catalogue is qualified.
 
+### Relocation-backed entries missed by Ghidra
+
+The [called-boundary audit](../tools/level_called_boundaries.py) checks the
+nonzero uncovered gaps that contain a statically decoded direct call. It
+requires the call site to have a pinned local 26-bit jump relocation to the
+candidate entry, then verifies the returning body's bytes, reachable control
+flow, delay slots and extent against the pinned USA module. It also rejects an
+external direct edge or relocated code pointer into a reviewed body's interior.
+Ghidra does not
+own these callers or entries, so its absence is not treated as evidence that
+the relocated calls are data.
+
+The private run found **93 relocation-backed candidate entries at 99 call
+sites**. **92 entries** have closed returning body witnesses covering **15,456
+placement bytes**, with no overlap; one `FRONTEND.REL` entry at `0x22C0` has
+unresolved indirect flow and no return before the next static entry. At commit
+`c391953a`, 58 of the 92 returning placements already had accepted C, leaving
+**34 newly corroborated boundary placements** (10,964 placement bytes). The
+tracked [boundary table](../config/levels/called_boundary_witnesses.tsv) and
+[summary](../config/levels/called_boundary_summary.json) contain metadata only;
+the detailed caller and flow review remains ignored.
+
+These witnesses establish entry and returning body evidence at those
+placements. They do not establish that all placements with one masked hash
+share a source function: some shapes recur more than once in a module and
+local data targets can differ. They add no C match credit or game-wide
+function denominator. Reproduce them after the private inventory and gap
+audit with `python tools/level_called_boundaries.py --write
+baserom/SCUS_976.15.iso`; CI checks the public pins without the disc.
+
 ## Structural translation leads
 
 [`level_translation_families.py`](../tools/level_translation_families.py)
