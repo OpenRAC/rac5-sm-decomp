@@ -1392,3 +1392,26 @@ rather than 84 bytes after adopting the same record base, while the
 195 candidate sites receive no match credit. One masked group also has ten
 normalized Ghidra pseudocode variants, so its apparent structural similarity
 does not by itself establish a shared C definition.
+
+Another 385 bounded USA relocation-bearing candidate sites were reviewed:
+366 sites of 84–100 bytes and 19 sites of an 80-byte named ATRAC stop wrapper.
+All have Ghidra-corroborated complete body extents. Six pure C forms reproduce
+**119 placements from 113 authored sources** (11,120 placement bytes and
+10,560 distinct-source bytes) under the default pinned route. Six placements
+reuse canonical C after independent exact links and equal object hashes.
+The forms include [two function-address dispatchers](../src/levels/bodies/LEVEL_01_079608.c),
+[graphics setup](../src/levels/bodies/LEVEL_01_0349B8.c),
+[guarded global calls](../src/levels/bodies/LEVEL_01_0C9620.c),
+[four-call initialization](../src/levels/bodies/LEVEL_01_019420.c) and the
+[ATRAC stop wrapper](../src/levels/bodies/LEVEL_01_18D290.c).
+
+The dispatchers initially linked to the correct 100-byte length but differed
+because numeric comparison constants lowered with `ori`; naming the compared
+functions produced the retail relocations and exact links. The ATRAC wrapper
+was reopened from its retained C using evidence that the named import takes
+the instance stored in the list entry. Its prior
+`nonmatching/levels/LEVEL_01_18D290.c` file is removed on promotion.
+Fifteen other representative C attempts remain under `nonmatching/levels/`
+with measured first differences and reopening conditions. The other 266
+candidate sites receive no match credit. Previous source and placement pins
+remain unchanged.

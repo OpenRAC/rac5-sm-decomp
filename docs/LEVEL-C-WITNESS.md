@@ -355,14 +355,14 @@ four jobs reproduced the same 21 exact module hashes as the sequential pass.
 repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
-all 21 USA modules and 33,377 accepted placements with 2,394 SN link invocations;
+all 21 USA modules and 33,496 accepted placements with 2,396 SN link invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**33,377 placements** in **23,768 sources**, **1,976,664 placement
-bytes**, **1,528,736 distinct-source bytes**). These are scoped matches, not a
+level-body scope (**33,496 placements** in **23,881 sources**, **1,987,784 placement
+bytes**, **1,539,296 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -590,3 +590,13 @@ stores, repeated calls, state initialization, two table scans and a measured
 representative C attempts remain under `nonmatching/levels/` without match
 credit; 195 candidate sites remain unaccepted. All 21 complete USA modules
 remain exact.
+
+Another 119 reviewed relocation-bearing placements of 80–100 bytes link
+exactly from 113 authored pure C sources (11,120 placement bytes and 10,560
+distinct-source bytes). Six placements reuse canonical C after independent
+exact links and object-hash checks. Two dispatchers compare symbolic function
+addresses, three forms issue direct call sequences, and a named ATRAC stop
+wrapper passes the instance from its list entry. The former retained ATRAC C
+has been promoted into `src/levels/bodies/`. Fifteen other representative C
+attempts remain under `nonmatching/levels/` without match credit; 266
+candidate sites remain unaccepted. All 21 complete USA modules remain exact.
