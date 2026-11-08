@@ -1,5 +1,5 @@
-extern void func_207618(void);
-extern void func_088BB8(void *, void (*)(void), int);
+extern void func_207618(void *);
+extern int func_088BB8(void *, void (*)(void *), unsigned int);
 
 void func_207CF0(void *value)
 {
