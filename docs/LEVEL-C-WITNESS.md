@@ -685,3 +685,23 @@ not been claimed exact. A resource-selection form is withheld even though an
 earlier C version linked exactly at twenty sites: its variable C shift lacked
 a proven input bound and could be undefined. All 21 complete USA modules
 remain exact. No PAL placement is counted here.
+
+Another 80 selected USA masked leads of at most 200 bytes covered 1,420
+candidate sites. Thirty-five forms reproduce **612 placements from 590 authored
+C sources** (62,224 bytes by placement and 60,316 distinct-source bytes). One
+124-byte form has seven exact placements and twelve defined C nonmatches; the
+seven exact callers use one separately verified typed 8-byte stub source. Only
+those seven accepted stub rows change source, leaving 2,226 placements on the
+original shared stub. Thirty-two previously accepted C sources received
+corrected prototypes for the 132-byte callback family; their 33 linked
+placements retain the same object hashes. The already pinned `ps2eeas`
+assembler is selected for 36 new
+canonical sources covering two measured 32- and 112-byte forms, not globally.
+
+Forty-five representative C attempts are retained under `nonmatching/levels/`
+with measured first differences and reopening conditions. Their forms include
+460 individually tested nonmatching sites; another 329 selected sites remain
+untested. Nineteen locally exact 68-byte getter placements remain uncredited
+while the accepted caller ABI chain is reviewed. All 21 complete USA modules
+remain exact; no PAL placement is counted here. The distinct-function
+denominator is still unqualified.

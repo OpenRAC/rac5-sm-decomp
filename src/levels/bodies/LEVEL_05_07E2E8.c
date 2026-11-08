@@ -2,15 +2,15 @@
  * Appends a three-word record while the fixed-size table has room.
  */
 typedef struct {
-    unsigned int first;
-    unsigned int second;
-    unsigned int third;
+    void *argument;
+    void (*callback)(void *);
+    unsigned int key;
 } Record;
 
 extern unsigned int D_00226A50;
 extern Record D_00226A58[];
 
-int func_07E2E8(unsigned int first, unsigned int second, unsigned int third)
+int func_07E2E8(void *argument, void (*callback)(void *), unsigned int key)
 {
     unsigned int count = D_00226A50;
     Record *entry;
@@ -19,9 +19,9 @@ int func_07E2E8(unsigned int first, unsigned int second, unsigned int third)
         return 0;
     entry = &D_00226A58[count];
     D_00226A50 = count + 1;
-    entry->first = first;
-    entry->second = second;
-    entry->third = third;
+    entry->argument = argument;
+    entry->callback = callback;
+    entry->key = key;
     return 1;
 }
 

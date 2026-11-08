@@ -1,5 +1,5 @@
-extern void func_1CC810(void);
-extern void func_080C48(void *, void (*)(void), int);
+extern void func_1CC810(void *);
+extern int func_080C48(void *, void (*)(void *), unsigned int);
 
 void func_1CCEE8(void *value)
 {
