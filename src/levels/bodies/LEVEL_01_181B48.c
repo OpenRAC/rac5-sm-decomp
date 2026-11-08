@@ -3,7 +3,7 @@ typedef struct {
     int a260;
     int a264;
     float f268;
-    float f26C;
+    float f26C[8];
 } Rec;
 
 extern int rand(void);
@@ -12,7 +12,7 @@ void func_181B48(Rec *r)
 {
     int i = 0;
     int n = 4;
-    float *p = &r->f26C;
+    float *p = r->f26C;
 
     r->a264 = 0;
     r->f268 = 0.5f;
