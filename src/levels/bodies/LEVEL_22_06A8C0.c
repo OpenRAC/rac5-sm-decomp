@@ -23,11 +23,11 @@ extern Elem D_0018BCB0[1];
 extern int D_00155444;
 extern char D_0006AA68[1];
 
-extern void func_06BF28(void *a0, char *a1);
+extern void func_06BF28(void *a0, int target);
 
 void func_06A8C0(Head *a0)
 {
-    func_06BF28(a0->f0, &D_0006AA68);
+    func_06BF28(a0->f0, (int)&D_0006AA68);
     if (((Mid *)a0->f0)->f48->fDC == &D_0006AA68) {
         ((Mid *)a0->f0)->f48->fDC = a0->fC;
     }

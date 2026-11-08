@@ -1635,7 +1635,7 @@
       "placements": 10,
       "body_bytes": 44,
       "accepted_C_controls": 10,
-      "normalized_C_sha256": "1af0a11f4218042416f9fdb3633e39abad419c57aa5f2b899ba733f0c2175a9b",
+      "normalized_C_sha256": "09eec3898d96445bdaeb04454b981e316a646d477a5eaeed868f6dd92b008298",
       "caller_context_sha256": "9c5a219b37b4d632aa4a44f4c8ba36860575c85221ad9a5a7400a963bd05dfb3",
       "data_window_sha256": {},
       "local_callee_roles": {
@@ -4260,7 +4260,7 @@
       "placements": 20,
       "body_bytes": 32,
       "accepted_C_controls": 20,
-      "normalized_C_sha256": "08ebaf89eacd6a4b6e87718ab57d9e83599d24cc8fb818f1c7667224a07f74a8",
+      "normalized_C_sha256": "3acf4b7f549ea5f80bb146cbf61bdede5a3768681f379dc0efac8ef3efcfc3de",
       "caller_context_sha256": "42c0ca7a34524d858cad8f4ae67952e61dae78b6ec60b509520cf488a3974920",
       "data_window_sha256": {},
       "local_callee_roles": {
@@ -4277,7 +4277,7 @@
       "placements": 20,
       "body_bytes": 32,
       "accepted_C_controls": 20,
-      "normalized_C_sha256": "08ebaf89eacd6a4b6e87718ab57d9e83599d24cc8fb818f1c7667224a07f74a8",
+      "normalized_C_sha256": "95b8b46f9956918de9641880558703fb150b4ce20e4aad582a2111123993e0f0",
       "caller_context_sha256": "f5d1a9108309b527e7cc6306017021b84586551139bc73422153f38d956ffddc",
       "data_window_sha256": {},
       "local_callee_roles": {
