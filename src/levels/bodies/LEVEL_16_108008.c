@@ -1,8 +1,8 @@
-extern void *func_1072E8(void);
-extern void func_092508(void *);
+extern void *func_1072E8(unsigned int kind, int count);
+extern int func_092508(void *value);
 
-void func_108008(void)
+int func_108008(unsigned int kind, int count)
 {
-    void *value = func_1072E8();
-    func_092508(value);
+    void *value = func_1072E8(kind, count);
+    return func_092508(value);
 }

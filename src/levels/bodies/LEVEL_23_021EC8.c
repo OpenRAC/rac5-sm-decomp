@@ -1,6 +1,6 @@
-extern void func_022F68(void *, int);
+extern int func_022F68(int category, int selector);
 
-void func_021EC8(char *item, void *other)
+void func_021EC8(char *item, int category)
 {
-    func_022F68(other, *(int *)(item + 0xf8));
+    func_022F68(category, *(int *)(item + 0xf8));
 }

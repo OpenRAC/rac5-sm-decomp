@@ -1,6 +1,7 @@
-extern char * func_0242A8(void);
+extern int func_0242A8(int category, int selector);
 
-int func_024B48(void)
+int func_024B48(int category, int selector)
 {
-    return *(int *)(func_0242A8() + 0x54) != 0;
+    int address = func_0242A8(category, selector);
+    return *(int *)(address + 0x54) != 0;
 }

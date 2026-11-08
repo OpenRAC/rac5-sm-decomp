@@ -1,8 +1,8 @@
-extern void *func_0DF030(void);
-extern void func_07CC00(void *);
+extern void *func_0DF030(unsigned int kind, int count);
+extern int func_07CC00(void *value);
 
-void func_0DFD50(void)
+int func_0DFD50(unsigned int kind, int count)
 {
-    void *value = func_0DF030();
-    func_07CC00(value);
+    void *value = func_0DF030(kind, count);
+    return func_07CC00(value);
 }

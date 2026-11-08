@@ -42,7 +42,12 @@
       "host": "linux",
       "accepted_sources": [
         "src/levels/bodies/LEVEL_03_0497A0.c",
-        "src/levels/bodies/LEVEL_02_0023B0.c"
+        "src/levels/bodies/LEVEL_02_0023B0.c",
+        "src/levels/bodies/LEVEL_01_000768.c",
+        "src/levels/bodies/LEVEL_04_0005A8.c",
+        "src/levels/bodies/LEVEL_10_000530.c",
+        "src/levels/bodies/LEVEL_15_000550.c",
+        "src/levels/bodies/LEVEL_16_0004A8.c"
       ],
       "tools": {
         "assembler": "Ps2EeAs.exe",
@@ -51,7 +56,7 @@
       "flags": {
         "as": []
       },
-      "provenance": "SN Systems Ps2EeAs 1.8.19.316, the privately supplied EE assembler already pinned for the boot reconstruction in config/boot/compiler_trial.json. On the measured 192-byte level body the pinned GNU assembler expands the 64-bit constant as ori/dsll16 and links 216 bytes, while this assembler emits the retail lui/ori/dsll3/ori chain and reproduces all 18 USA placements exactly. Selected only for the measured sources, never globally; the external binary is not distributed."
+      "provenance": "SN Systems Ps2EeAs 1.8.19.316, the privately supplied EE assembler already pinned for the boot reconstruction in config/boot/compiler_trial.json. On the measured 192-byte level body the pinned GNU assembler expands the 64-bit constant as ori/dsll16 and links 216 bytes, while this assembler emits the retail lui/ori/dsll3/ori chain and reproduces all 18 USA placements exactly. A separate 132-byte body is exact at twenty USA placements from five per-source variants with the same pinned assembler. Selected only for the measured sources, never globally; the external binary is not distributed."
     }
   },
   "scope": "two shared C witnesses at twenty pinned LEVEL_*.REL placements and func_00002F80 in FRONTEND.REL; additional accepted level bodies and their per-source routes are governed by config/levels/body_sources.tsv",

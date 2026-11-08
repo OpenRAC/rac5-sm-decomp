@@ -667,3 +667,21 @@ bytes). One form uses `gnu-ee-trial`, one `gnu-ee-trial-divpad`, one
 representative C attempts remain under `nonmatching/levels/` with measured
 first differences and reopening conditions. All 21 complete USA modules
 remain exact.
+
+Another 80 selected masked leads of at most 200 bytes covered 1,533 USA
+candidate sites. Boundary review split one apparent 124-byte interval into a
+64-byte called function and a separate 60-byte address-taken `qsort` callback
+at each of twenty modules; the composite interval earns no credit. Thirty-one
+other forms and both split functions reproduce **618 placements from 561 C
+sources** (72,464 placement bytes and 65,748 distinct-source bytes). One
+132-byte form uses five source variants on the already hash-pinned, per-source
+`ps2eeas` assembler route at twenty placements. The 66 corrected declarations
+in already accepted C sources retain their prior object hashes.
+
+Forty-eight representative C forms remain under `nonmatching/levels/`, with
+their measured first differences and reopening conditions. They cover 414
+individually tested nonmatching sites; another 521 sites in the selection have
+not been claimed exact. A resource-selection form is withheld even though an
+earlier C version linked exactly at twenty sites: its variable C shift lacked
+a proven input bound and could be undefined. All 21 complete USA modules
+remain exact. No PAL placement is counted here.
