@@ -1,9 +1,15 @@
-extern int func_0668A8(void);
-extern void func_066750(int);
+typedef struct {
+    void *f0;
+    char pad[8];
+    char *fC;
+} Head;
 
-void func_066720(void)
+extern void *func_0668A8(void *key);
+extern void func_066750(Head *);
+
+void func_066720(void *key)
 {
-    int value = func_0668A8();
+    Head *value = func_0668A8(key);
     if (value != 0)
         func_066750(value);
 }

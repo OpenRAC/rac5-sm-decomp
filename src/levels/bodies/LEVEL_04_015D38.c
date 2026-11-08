@@ -1,5 +1,6 @@
-extern void func_076988(void);
+extern void func_076988(void *key);
 
-void func_015D38(void) {
-    func_076988();
+void func_015D38(void *key)
+{
+    func_076988(key);
 }

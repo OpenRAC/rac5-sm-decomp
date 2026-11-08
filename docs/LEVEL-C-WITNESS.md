@@ -701,7 +701,17 @@ canonical sources covering two measured 32- and 112-byte forms, not globally.
 Forty-five representative C attempts are retained under `nonmatching/levels/`
 with measured first differences and reopening conditions. Their forms include
 460 individually tested nonmatching sites; another 329 selected sites remain
-untested. Nineteen locally exact 68-byte getter placements remain uncredited
-while the accepted caller ABI chain is reviewed. All 21 complete USA modules
+untested. At that snapshot, nineteen locally exact 68-byte setter placements
+remained uncredited while the accepted caller ABI chain was reviewed. All 21 complete USA modules
 remain exact; no PAL placement is counted here. The distinct-function
 denominator is still unqualified.
+
+The previously held 68-byte setter now reproduces **nineteen USA
+placements from eighteen authored C sources** (1,292 bytes by placement and
+1,224 distinct-source bytes). Its direct accepted-C caller graph was closed
+over 322 edges: 153 accepted sources received consistent prototypes while
+retaining their object hashes at 160 placements; 36 already compatible
+sources remained unchanged. The terminal 80-byte getters and related callees
+serve as boundary and ABI witnesses, not new C matches. All 21 complete USA
+modules remain exact; no PAL placement is credited. The distinct-function
+denominator remains unqualified.

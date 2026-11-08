@@ -5,8 +5,8 @@ after the private boot and level-program gates pass. It records **693 accepted
 boot C functions (88,948 bytes) in the 498,900-byte boot `.text`**, **one 476-byte C
 function in `FRONTEND.REL`**, plus **two shared C functions (8 + 72 bytes)
 at twenty numbered level placements** and, counted separately, the
-**36,272 accepted level-body placements**
-(2,376,740 placement bytes carried by 26,408 sources, 1,890,384 distinct-source
+**36,291 accepted level-body placements**
+(2,378,032 placement bytes carried by 26,426 sources, 1,891,608 distinct-source
 bytes). The shared pair counts as two authored functions, not forty
 independent matches, and the level bodies are a scope of their own: one
 authored source can carry many placements. Two other exact C shapes remain
@@ -101,11 +101,11 @@ to `master`, the progress workflow uploads `SCUS_976.15_report/report.json`;
 ByteMatch reads that artifact as its progress graph. Its denominator combines **498,900 measured
 boot `.text` bytes**, **162,944 frontend candidate-code bytes**, and **5,756,360
 optimistically deduplicated level candidate bytes**, for **6,418,204 provisional
-code bytes**. The numerator is **1,979,888 accepted C bytes**: 88,948 in boot, 476
+code bytes**. The numerator is **1,981,112 accepted C bytes**: 88,948 in boot, 476
 in frontend, 80 from two authored functions shared across twenty levels, and
-1,890,384 unique source bytes of accepted level C bodies (each body counted once,
+1,891,608 unique source bytes of accepted level C bodies (each body counted once,
 however many placements carry it). The site rounds the resulting approximately
-**30.8480%** to **30.85%**.
+**30.8671%** to **30.87%**.
 
 ByteMatch's overall **0/0 functions** means that a reviewed count of distinct
 functions is unavailable; it does not mean no C functions are accepted. The

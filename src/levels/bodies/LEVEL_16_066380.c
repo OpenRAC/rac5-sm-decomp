@@ -1,6 +1,6 @@
-extern char * func_0660E8(void);
+extern void *func_0660E8(void *key);
 
-int func_066380(void)
+int func_066380(void *key)
 {
-    return *(int *)(func_0660E8() + 0xc);
+    return *(int *)((char *)func_0660E8(key) + 0xc);
 }

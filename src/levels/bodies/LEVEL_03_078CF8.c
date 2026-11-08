@@ -1,6 +1,7 @@
-extern char * func_0792D0(void);
+extern int *func_0792D0(int key);
 
-int func_078CF8(void)
+int func_078CF8(void *key)
 {
-    return *(int *)(func_0792D0() + 4);
+    int *entry = func_0792D0((int)key);
+    return entry[1];
 }

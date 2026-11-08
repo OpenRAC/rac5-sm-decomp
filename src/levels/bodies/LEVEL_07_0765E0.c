@@ -1,9 +1,9 @@
-extern int func_076F78(void);
-extern void func_076FC8(int);
+extern void *func_076F78(void *key);
+extern void func_076FC8(void *record);
 
-void func_0765E0(void)
+void func_0765E0(void *key)
 {
-    int value = func_076F78();
+    void *value = func_076F78(key);
     if (value != 0)
         func_076FC8(value);
 }
