@@ -1,0 +1,19 @@
+typedef struct Node Node;
+typedef struct Holder Holder;
+
+extern Holder D_171F30;
+extern void func_076690(Holder *list, Node *element);
+
+void func_075B50(int *address)
+{
+    int *node = address - 8;
+    int *element = (int *)node[1];
+    element[2] = (int)node;
+    *(int *)(node[2] + 12) = node[3];
+    *(int *)(node[3] + 8) = node[2];
+    node[2] = (int)node;
+    node[3] = (int)node;
+    *(int *)(element[0] + 4) = element[1];
+    *(int *)element[1] = element[0];
+    func_076690(&D_171F30, (Node *)element);
+}

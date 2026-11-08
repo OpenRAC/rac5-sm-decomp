@@ -3142,7 +3142,7 @@
       "placements": 15,
       "body_bytes": 36,
       "accepted_C_controls": 15,
-      "normalized_C_sha256": "6a0450a7cdf2954288ec046be89080dda6bb3c1c1741f1ef009193c58e499233",
+      "normalized_C_sha256": "e493ed321545a8de0a0e1814e82c3d6a144400a9fc922cb406f8523c46303f48",
       "caller_context_sha256": "02d74766366f27392a7d1b81c1b4c1c2edf0020518a831564da6d2ab77fa4657",
       "data_window_sha256": {},
       "local_callee_roles": {

@@ -1,7 +1,7 @@
-extern long long func_0AAE08(void);
-extern void func_0AAE28(long long, int, long long);
+extern char *func_0AAE08(char *data);
+extern unsigned short *func_0AAE28(char *data, unsigned int type, int ordinal);
 
-void func_0AADD0(long long first, long long second, long long third)
+void func_0AADD0(char *first, long long second, int third)
 {
-    func_0AAE28(func_0AAE08(), 3, third);
+    func_0AAE28(func_0AAE08(first), 3, third);
 }

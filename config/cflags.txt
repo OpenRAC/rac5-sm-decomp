@@ -413,3 +413,46 @@ src/levels/bodies/LEVEL_22_089040.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_23_08DD08.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_24_0912D8.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_02_0023B0.c  -malign-functions=2
+src/levels/bodies/LEVEL_01_000768.c  -malign-loops=2 -malign-functions=2
+src/levels/bodies/LEVEL_01_0A07E0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_01_0B9CC8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_02_0A70F8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_02_0C05D8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_03_0A0568.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_03_0B9AB0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_04_0005A8.c  -malign-loops=2 -malign-functions=2
+src/levels/bodies/LEVEL_04_0A59F8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_04_0BF4A8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_05_09ED98.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_05_0B8270.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_06_09AFB8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_06_0B45C8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_07_0A27E8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_07_0BBD28.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_08_0AB0E0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_08_0C4BB8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_09_09DA98.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_09_0B6F78.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_10_000530.c  -malign-loops=2 -malign-functions=2
+src/levels/bodies/LEVEL_10_0A18C0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_10_0BB010.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_15_000550.c  -malign-loops=2 -malign-functions=2
+src/levels/bodies/LEVEL_15_081148.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_15_09A310.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_16_0004A8.c  -malign-loops=2 -malign-functions=2
+src/levels/bodies/LEVEL_16_08FAA0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_16_0A8D18.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_17_08EF98.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_17_0A8258.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_18_08EAB8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_18_0A7CF0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_19_08F338.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_19_0A85F0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_20_07A1A0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_20_093248.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_22_08EE60.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_22_0A8170.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_23_097528.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_23_0B0A60.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_24_09A060.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_24_0B3558.c  -mno-check-zero-division

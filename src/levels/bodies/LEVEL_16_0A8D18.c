@@ -1,0 +1,6 @@
+extern unsigned int func_0A8D60(unsigned int *object);
+
+void func_0A8D18(unsigned int *object) {
+    object[0x74 / 4] = object[0x54 / 4] - object[0x50 / 4];
+    object[0x74 / 4] /= func_0A8D60(object);
+}
