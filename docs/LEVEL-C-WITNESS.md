@@ -715,3 +715,20 @@ sources remained unchanged. The terminal 80-byte getters and related callees
 serve as boundary and ABI witnesses, not new C matches. All 21 complete USA
 modules remain exact; no PAL placement is credited. The distinct-function
 denominator remains unqualified.
+
+Another 80 reviewed USA masked leads of at most 200 bytes covered 1,229
+candidate sites. Thirty-three forms reproduce **489 placements from 474
+authored C sources** (53,516 bytes by placement and 52,020 distinct-source
+bytes). Three dependencies were promoted together with their callers: 23
+accepted C sources received corrected prototypes or a bounded float array
+while keeping their object hashes at 25 accepted placements, and seven 8-byte
+stub placements now use one typed C source. The other 2,219 placements keep
+their original shared stub. Existing qualified compiler profiles suffice;
+the 21 complete USA modules remain byte-exact.
+
+Forty-two representative measured differences and five additional defined C
+witnesses under semantic review remain in `nonmatching/levels/`. Of the 1,229
+selected sites, 669 have measured nonmatching C and 71 remain semantic holds;
+none is untested. Locally equal bytes in a held source earn no C credit.
+No PAL placement is counted, and the distinct-function denominator remains
+unqualified.
