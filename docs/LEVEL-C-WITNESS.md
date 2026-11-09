@@ -769,3 +769,21 @@ placements in 63 forms link byte-exact but are held for ABI review, with one
 representative source each under `nonmatching/levels/` where the form had no
 accepted source. All 21 complete USA modules remain exact; no PAL placement
 is counted, and the distinct-function denominator remains unqualified.
+
+A further 697 reviewed USA bounded candidates of 100–200 bytes link exactly
+(88,376 placement bytes) from 670 new authored pure C sources (84,800
+distinct-source bytes). They come from the 748 relocation-masked forms of
+100–200 bytes that had no retained attempt (213 of 100–120 bytes and 535 of
+124–200 bytes), worked in parallel on two machines and verified again before
+integration. Twenty-seven placements reuse an identical new source after an
+independent exact link at each site; the other per-placement sources are
+copies of an exact representative whose address-carrying names are rewritten
+for that placement and then linked on their own bytes. Six hundred and
+seventy-three placements use the pinned chain and 24 `gnu-ee-trial`. One
+divisor-search helper with variable divisors uses the existing per-source
+`-mno-check-zero-division` flag at its twelve placements, because those retail
+bodies carry no divide-by-zero trap. A further 748 placements in 104 forms
+link byte-exact but are held for ABI review, with one representative source
+each under `nonmatching/levels/`. All 21 complete USA modules remain exact; no
+PAL placement is counted, and the distinct-function denominator remains
+unqualified.
