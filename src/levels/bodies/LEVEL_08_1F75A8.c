@@ -1,0 +1,48 @@
+/* LEVEL_08:0x1F75A8 -- placement copy of LEVEL_06_1B1660.c: tests whether a point is near an object's position and otherwise runs a collision query. */
+typedef struct {
+    float x, y, z;
+} V3;
+typedef struct {
+    float limit;
+    char pad4[0x10];
+    char *link;
+} Info;
+typedef struct {
+    char pad0[0x30];
+    V3 pos;
+    char pad3C[0x54 - 0x3C];
+    Info *info;
+    char pad58[0x70 - 0x58];
+    float t;
+} Obj;
+extern void func_01AC70(V3 *out);
+extern void func_19D848(char *object, int mask, int bits);
+extern int func_020148(V3 *a, float *out, V3 *b, int c, int d, float e);
+
+static inline void Sub(V3 *r, V3 *a, V3 *b)
+{
+    r->x = a->x - b->x;
+    r->y = a->y - b->y;
+    r->z = a->z - b->z;
+}
+
+int func_1F75A8(Obj *o)
+{
+    Info *info = o->info;
+    V3 cur;
+    V3 d;
+    float tmp[4];
+
+    if (info->limit <= o->t)
+        return 1;
+    func_01AC70(&cur);
+    cur.y += 0.75f;
+    Sub(&d, &cur, &o->pos);
+    if (d.x * d.x + d.y * d.y + d.z * d.z < 0.4f)
+        return 1;
+    func_19D848(info->link, -1, 8);
+    if (func_020148(&o->pos, tmp, &o->pos, 0x28, 0, 0.2f))
+        return 1;
+    func_19D848(info->link, -9, 0);
+    return 0;
+}

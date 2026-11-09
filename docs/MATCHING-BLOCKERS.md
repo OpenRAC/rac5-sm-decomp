@@ -797,7 +797,7 @@ extra placements reuse a source only after the canonical file linked exactly
 at both sites. The natural C for the 40 global-update wrappers also preserves
 the first local call's return value through the global store. All 21 complete
 modules pass. One call wrapper,
-[`LEVEL_10:0x0C5D98`](../nonmatching/levels/LEVEL_10_0C5D98.c), remains
+[`LEVEL_10:0x0C5D98`](../src/levels/bodies/LEVEL_10_0C5D98.c) (accepted 9 November 2026), remains
 nonmatching: pinned C links 44 bytes but first differs at byte 4, where the
 global-address setup precedes forwarded argument copies. Natural argument
 types, five qualified `cc1` routes and scoped scheduling flags did not restore
@@ -1637,3 +1637,5 @@ A further 60 of those forms are accepted. **Not yet accepted:** `FRONTEND:0x0233
 A further 56 of those forms are accepted. **ABI holds:** 332 byte-exact placements in 44 forms (97,988 placement bytes) stay held, with representatives under `nonmatching/levels/`.
 
 A further 191 forms of up to 800 bytes are accepted, including retries of earlier attempts; the six retained files of those forms left `nonmatching/levels/` and the entries above that cited them now link the accepted sources. **Refused exact C:** [LEVEL_01:0x1413E8](../nonmatching/levels/alternatives/LEVEL_01_1413E8_do_while.c) links 164/164 bytes only because the release step of an inline helper is wrapped in `do { ... } while (0)`, whose loop note aligns the else label and emits the retail nop before each call; the same helper without the wrapper links 152 bytes (31 differing words, first at +0x18). Retry with a natural form, for example evidence of a statement macro in the original. **ABI holds:** 631 byte-exact placements in 107 forms (174,560 placement bytes) stay held, with representatives under `nonmatching/levels/`.
+
+Prototype reconciliation of the held forms has started: 421 held placements in 70 forms are accepted after their sources were retyped to agree with the accepted definitions and callers, and 121 retained representatives and attempts of now-accepted placements left `nonmatching/levels/` (eleven of them from its `alternatives/` directory). Two further retyped forms were refused because they replaced a prototype with an empty parameter list while still passing arguments to a callee that the accepted definition gives none; they stay held. For many other held forms the accepted callee's own prototype looks wrong, for example a `void` definition whose callers branch on its return register; those need a change to the accepted definition and to all of its callers. A further 96 forms of up to 1,000 bytes are accepted. **ABI holds:** 733 byte-exact placements in 83 forms (228,468 placement bytes) stay held, with representatives under `nonmatching/levels/` or its `alternatives/` directory.

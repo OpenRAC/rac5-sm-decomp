@@ -947,3 +947,24 @@ placements to three typed stub sources. A further 631 placements in 107
 forms link byte-exact but stay held for ABI review. All 21 complete USA
 modules remain exact; no PAL placement is counted, and the distinct-function
 denominator remains unqualified.
+
+Further forms reproduce **1,117 USA placements from 962 authored pure C
+sources** (344,828 bytes by placement and 268,728 distinct-source bytes) in
+166 forms of 44–916 bytes. Six hundred and ninety-six placements in 96 forms
+are new matches: 102 of up to 200 bytes, 216 of 201–300 bytes, 110 of
+301–400 bytes, 196 of 401–600 bytes, 54 of 601–800 bytes and 18 of 801–1000
+bytes. The other 421 placements in 70 forms were byte-exact before but held
+for ABI review; their sources now declare every local callee, and define
+their own function, with the ABI classes of the accepted definitions and
+callers, and each was linked again at its own placement. A hundred and
+fifty-five placements reuse an identical source after an independent exact
+link at each site. Eight hundred and fifteen placements use the pinned
+chain, 155 `gnu-ee-trial`, 126 the qualified `gnu-ee-trial-divpad` profile
+and 21 `sdk991111`; a 248-byte body is exact at its seventeen placements only
+with the qualified per-source `r5900-mfc1` assembler route, and five forms
+use the existing per-source `-mno-check-zero-division` flag at 38
+placements. The prototype rules above release 29 of these placements and
+move two accepted stub placements to a typed stub source. A further 733
+placements in 83 forms link byte-exact but stay held for ABI review. All 21
+complete USA modules remain exact; no PAL placement is counted, and the
+distinct-function denominator remains unqualified.
