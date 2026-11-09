@@ -750,3 +750,22 @@ callers or callees; their representative C is retained under
 `nonmatching/levels/` and earns no credit. All 21 complete USA modules remain
 exact; no PAL placement is counted, and the distinct-function denominator
 remains unqualified.
+
+Another 644 reviewed USA bounded candidates of 80–200 bytes link exactly
+(58,800 placement bytes): 572 new authored pure C sources (51,608
+distinct-source bytes) and eight already accepted sources, each relinked at
+its new placement. The selection covers the relocation-masked forms of 61–120
+bytes that had no retained attempt and the forms of up to 200 bytes that
+already had an accepted placement. Fifty-nine placements reuse an identical
+new source after an independent exact link at each site; the other per-placement
+sources are copies of an exact representative whose address-carrying names
+are rewritten for that placement and then linked on its own bytes. Six
+hundred and seventeen placements use the pinned chain, 20 the qualified
+`gnu-ee-trial-divpad` profile and seven `gnu-ee-trial`; two placements of
+one modulo body use the existing per-source `-mno-check-zero-division` flag,
+with a constant non-zero divisor. Eleven near misses keep their best C under
+`nonmatching/levels/` with measured first differences; 219 further
+placements in 63 forms link byte-exact but are held for ABI review, with one
+representative source each under `nonmatching/levels/` where the form had no
+accepted source. All 21 complete USA modules remain exact; no PAL placement
+is counted, and the distinct-function denominator remains unqualified.

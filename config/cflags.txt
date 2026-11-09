@@ -456,3 +456,5 @@ src/levels/bodies/LEVEL_23_097528.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_23_0B0A60.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_24_09A060.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_24_0B3558.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_04_170688.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_08_17BA30.c  -mno-check-zero-division
