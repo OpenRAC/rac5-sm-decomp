@@ -787,3 +787,21 @@ link byte-exact but are held for ABI review, with one representative source
 each under `nonmatching/levels/`. All 21 complete USA modules remain exact; no
 PAL placement is counted, and the distinct-function denominator remains
 unqualified.
+
+The ABI holds of the three previous selections were reviewed again with two
+prototype rules that leave every linked byte unchanged. A held caller that
+declared a callee `void` where the accepted definition returns a value now
+declares the definition's return class. Where held callers pass arguments to
+an accepted parameterless constant stub, that callee placement moves to a typed
+stub source with the callers' argument classes, but only after every accepted
+and held caller of it agrees: six typed stub sources now carry 127 accepted
+placements that previously used `FRONTEND_001E08.c` (106), `FRONTEND_003E10.c`
+(20) and `FRONTEND_0025B0.c` (1), each linked exact at its placement. This
+releases **142 placements in 13 forms from 142 authored pure C sources**
+(19,192 bytes by placement and distinct-source bytes alike), all on the pinned
+chain; their retained representatives leave `nonmatching/levels/`. The same
+review corrected the private prototype checker, which had read call statements
+such as `return func_X(a);` as declarations; no source accepted in those
+selections had a conflict hidden by it. A further 899 byte-exact placements in
+175 forms stay held. All 21 complete USA modules remain exact; no PAL placement
+is counted, and the distinct-function denominator remains unqualified.
