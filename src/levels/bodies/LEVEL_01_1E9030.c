@@ -1,15 +1,4 @@
-/* LEVEL_01.REL:0x1E9030: reviewed 412-byte candidate, held for ABI review.
- * Advances two phase accumulators and emits the whole steps through a
- * callback.
- * gnu-ee-trial-divpad C with gnu-ee-trial links 412/412 bytes and is byte-
- * exact at this and 11 other USA placements, but the prototypes disagree.
- * Another placement of the same form conflicts with an accepted prototype, so
- * the whole form is held.
- * Retry: reconcile the prototype with the accepted definition and callers
- * (argument count, types and return use), then relink every placement and
- * rerun the complete-module gate.
- * No matching credit.
- */
+/* LEVEL_01:0x1E9030 -- placement copy of LEVEL_08_2303D8.c: placement copy of LEVEL_01_1E9030.c: advances two phase accumulators and emits the whole steps through a callback. */
 typedef struct V3 {
     float x;
     float y;
@@ -48,7 +37,7 @@ extern V3 D_00217E58;
 extern V3 D_00217E98;
 extern float floorf(float x);
 extern void func_104D78(void *a, void *b, int c);
-extern void func_1E8D08(Rec *r, Ctx *c, int n, float f, float g);
+extern void func_1E8D08(int r, Ctx *c, int n, float f, float g);
 
 void func_1E9030(Dst *dst, Src *src, Rec *out, float t)
 {
@@ -88,7 +77,7 @@ void func_1E9030(Dst *dst, Src *src, Rec *out, float t)
         q = p + v;
         n = floorf(q);
         if (n > 0.0f) {
-            func_1E8D08(o, &ctx, (int)n, (1.0f - p) * inv, inv);
+            func_1E8D08((int)o, &ctx, (int)n, (1.0f - p) * inv, inv);
             *php = q - n;
         } else {
             *php = q;
