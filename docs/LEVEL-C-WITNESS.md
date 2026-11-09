@@ -840,3 +840,22 @@ retained attempts of the newly accepted forms leave `nonmatching/levels/`; a
 further 203 placements in 23 forms link byte-exact but stay held for ABI
 review. All 21 complete USA modules remain exact; no PAL placement is counted,
 and the distinct-function denominator remains unqualified.
+
+Two further reviews add **743 USA placements from 581 authored pure C
+sources** (96,144 bytes by placement and 78,672 distinct-source bytes) in 113
+forms of 20–316 bytes. A retry pass over forms with retained attempts
+reproduces 578 placements, and per-placement address variants of accepted
+sources reproduce 150 more placements of forms that already had an accepted
+member; each variant links exactly on its own bytes. A hundred and
+sixty-two placements reuse an identical source after an independent exact link
+at each site. Six hundred and six placements use the pinned chain, 87 the
+qualified `gnu-ee-trial-divpad` profile, 28 `sdk991111` and 22
+`gnu-ee-trial`; six variants keep the per-source assembler route of their
+origin source (five `ps2eeas`, one `ee-frozen`), and four keep its per-source
+flag (three `-mno-check-zero-division`, one `-malign-functions=2`). The
+prototype rules above release 15 of these placements and move 14 accepted stub
+placements to two typed stub sources. The 216 retained attempts of the newly
+accepted forms leave `nonmatching/levels/`, and a further 228 placements in 53
+forms link byte-exact but stay held for ABI review. All 21 complete USA
+modules remain exact; no PAL placement is counted, and the distinct-function
+denominator remains unqualified.

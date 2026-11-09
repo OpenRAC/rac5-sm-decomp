@@ -317,7 +317,7 @@ not been claimed.
 | [`0x0588A8`](../nonmatching/levels/LEVEL_01_0588A8.c), 280 bytes | Pinned GNU EE links 276 bytes; first difference at body byte 25 changes the initial float register (`f3` retail, `f1` C). Both local calls keep their targets but occur four bytes early. All 20 structural placements differ. | Recover the state-field initialization order and float live ranges that add the missing instruction before the calls. |
 | [`0x094098`](../nonmatching/levels/LEVEL_01_094098.c), 280 bytes | Pinned GNU EE links 280 bytes; first difference at body byte 37 is the outer-loop index register. All 20 structural placements differ, while the named `g_MaterialHasBloomedThisFrame` import is retained. | Recover nested-loop register lifetimes and field-store scheduling before another family-wide linked comparison. |
 | [`0x098108`](../nonmatching/levels/LEVEL_01_098108.c), 236 bytes | Pinned GNU EE links 240 bytes; first difference at body byte 1 is list-owner register allocation. The compiler also adds a divide-by-zero check absent from retail. Only the representative is measured. | Qualify a compiler route for the retail `divu` shape and recover the entry register lifetimes before deriving placements. |
-| [`0x164708`](../nonmatching/levels/LEVEL_01_164708.c), 124 bytes | Pinned GNU EE links 124 bytes; first difference at body byte 0 loads `D_00207558` before the retail float constant. Only the representative is measured. | Recover the global-load and float-constant scheduling in pure C before deriving the 16 structural placements. |
+| [`0x164708`](../src/levels/bodies/LEVEL_01_164708.c) (accepted 9 November 2026), 124 bytes | Pinned GNU EE links 124 bytes; first difference at body byte 0 loads `D_00207558` before the retail float constant. Only the representative is measured. | Recover the global-load and float-constant scheduling in pure C before deriving the 16 structural placements. |
 | [`0x11E9A8`](../nonmatching/levels/LEVEL_01_11E9A8.c), 264 bytes | Pinned GNU EE links 264 bytes; first difference at body byte 88 is a branch displacement. Both local calls keep their sites and targets; all 20 structural placements differ at byte 88. | Recover the float return-value lifetime and store/branch form after the second call while preserving the retail comparison's NaN behavior. |
 | [`0x0CD700`](../nonmatching/levels/LEVEL_01_0CD700.c), 1,880 bytes | `gnu-ee-trial`: 1,848 bytes; first difference at body byte 0 for the retained clean source. A structural probe moved the first difference to byte 72 but did not match the six-entry copy loop. | Verify loop register lifetimes, source ABI and the candidate boundary before testing another form. |
 | [`0x0FF2B8`](../nonmatching/levels/LEVEL_01_0FF2B8.c), 2,004 bytes | `gnu-ee-trial-divpad`: 2,048 bytes; first difference at body byte 0. Eight `memset` calls appear, but the stack frame is 400 bytes instead of the reference's 416. | Recover local variable lifetimes and frame layout while preserving the eight calls and reviewed return/delay slot. |
@@ -519,7 +519,7 @@ These candidate entries have source-level C retained under `nonmatching/levels/`
 | --- | ---: | --- | --- |
 | [`0x0004D8`](../src/levels/bodies/FRONTEND_0004D8.c) (accepted 9 November 2026) | 44 B | pinned: 44 B, first difference +2 | Recover the two-global test expression that assigns the retail value registers. |
 | [`0x002620`](../nonmatching/levels/FRONTEND_002620.c) | 28 B | pinned: 28 B, first difference +12 | Recover the second-argument ABI conversion that places a move in the imported lseek call delay slot. |
-| [`0x003600`](../nonmatching/levels/FRONTEND_003600.c) | 52 B | pinned: 48 B, first difference +6 | Recover the global flag store and imported-call argument register order. |
+| [`0x003600`](../src/levels/bodies/FRONTEND_003600.c) (accepted 9 November 2026) | 52 B | pinned: 48 B, first difference +6 | Recover the global flag store and imported-call argument register order. |
 | [`0x005618`](../nonmatching/levels/FRONTEND_005618.c) | 56 B | sdk991111: 56 B, first difference +22 | Recover the branch-dependent global-pointer load and selected field offset. |
 | [`0x006120`](../src/levels/bodies/FRONTEND_006120.c) (accepted 9 November 2026) | 56 B | pinned: 56 B, first difference +2 | Recover the state-table base and index register lifetimes across the three updates. |
 | [`0x00AB70`](../nonmatching/levels/FRONTEND_00AB70.c) | 56 B | pinned: 56 B, first difference +2 | Recover the record-stride multiply and argument-bank setup for the local call. |
@@ -528,8 +528,8 @@ These candidate entries have source-level C retained under `nonmatching/levels/`
 | [`0x020918`](../nonmatching/levels/FRONTEND_020918.c) | 44 B | pinned: 40 B, first difference +2 | Recover the mask-expression order and the retail literal/register lifetimes. |
 | [`0x0209B0`](../src/levels/bodies/FRONTEND_0209B0.c) (accepted 9 November 2026) | 48 B | pinned: 44 B, first difference +20 | Recover the conditional masked return without shortening away the retail conditional move. |
 | [`0x021188`](../src/levels/bodies/FRONTEND_021188.c) (accepted 9 November 2026) | 40 B | pinned: 40 B, first difference +28 | Recover the null-check and sign-test branch layout without the branch-likely shortening. |
-| [`0x021A00`](../nonmatching/levels/FRONTEND_021A00.c) | 44 B | pinned: 44 B, first difference +8 | Recover the bounds-failure branch and stride-calculation lifetime. |
-| [`0x021C40`](../nonmatching/levels/FRONTEND_021C40.c) | 52 B | sdk991111: 52 B, first difference +10 | Recover the bounds-failure branch while retaining the indexed comparison and SDK compiler route. |
+| [`0x021A00`](../src/levels/bodies/FRONTEND_021A00.c) (accepted 9 November 2026) | 44 B | pinned: 44 B, first difference +8 | Recover the bounds-failure branch and stride-calculation lifetime. |
+| [`0x021C40`](../src/levels/bodies/FRONTEND_021C40.c) (accepted 9 November 2026) | 52 B | sdk991111: 52 B, first difference +10 | Recover the bounds-failure branch while retaining the indexed comparison and SDK compiler route. |
 | [`0x024140`](../nonmatching/levels/FRONTEND_024140.c) | 64 B | pinned: 64 B, first difference +12 | Recover the local float store versus output-pointer setup around the first call. |
 | [`0x026878`](../nonmatching/levels/FRONTEND_026878.c) | 64 B | pinned: 48 B, first difference +0 | Recover the saved-register frame and comparison-result lifetime around the imported strcmp call. |
 | [`0x0275D0`](../nonmatching/levels/FRONTEND_0275D0.c) | 52 B | pinned: 52 B, first difference +2 | Recover the lazy-initialization pointer test and its address/register lifetimes without an artificial null check. |
@@ -550,34 +550,34 @@ The following USA candidate bodies are raw-identical across the listed numbered 
 | [`0x058738`](../src/levels/bodies/LEVEL_01_058738.c) (accepted 9 November 2026) | 60 B | 20 | pinned: 60 B, first difference +15 | Recover the local zero-float and stack pointer selection after the initial field load. |
 | [`0x0BCBA0`](../nonmatching/levels/LEVEL_01_0BCBA0.c) | 60 B | 20 | pinned: 56 B, first difference +0 | Recover the owner-pointer lifetime and the two-stage count/output checks. |
 | [`0x129DF8`](../src/levels/bodies/LEVEL_01_129DF8.c) (accepted 9 November 2026) | 56 B | 20 | pinned: 56 B, first difference +8 | Recover the linked-list loop entry without the compiler shortening it to a branch-likely return. |
-| [`0x037238`](../nonmatching/levels/LEVEL_01_037238.c) | 52 B | 20 | pinned: 56 B, first difference +2 | Recover the insertion-loop entry and value truncation before the first comparison. |
+| [`0x037238`](../src/levels/bodies/LEVEL_01_037238.c) (accepted 9 November 2026) | 52 B | 20 | pinned: 56 B, first difference +2 | Recover the insertion-loop entry and value truncation before the first comparison. |
 | [`0x03C0E8`](../nonmatching/levels/LEVEL_01_03C0E8.c) | 52 B | 20 | pinned: 56 B, first difference +9 | Recover the retail 64-bit clear-mask materialization and final field update. |
-| [`0x02E568`](../nonmatching/levels/LEVEL_01_02E568.c) | 48 B | 20 | pinned: 48 B, first difference +6 | Recover the three field-load lifetimes and subtraction register assignment. |
+| [`0x02E568`](../src/levels/bodies/LEVEL_01_02E568.c) (accepted 9 November 2026) | 48 B | 20 | pinned: 48 B, first difference +6 | Recover the three field-load lifetimes and subtraction register assignment. |
 | [`0x03BF08`](../nonmatching/levels/LEVEL_01_03BF08.c) | 48 B | 20 | pinned: 48 B, first difference +2 | Recover the child-pointer and flag temporary registers while keeping the short signed clear mask. |
 | [`0x03BF60`](../nonmatching/levels/LEVEL_01_03BF60.c) | 48 B | 20 | pinned: 48 B, first difference +2 | Recover the child-pointer and flag temporary registers while keeping the short signed clear mask. |
 | [`0x0A60C8`](../nonmatching/levels/LEVEL_01_0A60C8.c) | 48 B | 20 | pinned: 48 B, first difference +4 | Recover the packed high-byte extraction and alpha mask scheduling before field stores. |
 | [`0x0D83C8`](../src/levels/bodies/LEVEL_01_0D83C8.c) (accepted 9 November 2026) | 48 B | 20 | pinned: 48 B, first difference +12 | Recover the unsigned-range and zero-sentinel branch layout without reordering the half-width subtraction. |
 | [`0x0294C0`](../nonmatching/levels/LEVEL_01_0294C0.c) | 44 B | 20 | pinned: 40 B, first difference +4 | Recover the nested byte-flag tests and the retail boolean return lifetime that adds one operation. |
 | [`0x134F68`](../nonmatching/levels/LEVEL_01_134F68.c) | 52 B | 15 | pinned: 52 B, first difference +24 | Recover the record field-store and zero-fill grouping after the first six exact operations. |
-| [`0x08BE88`](../nonmatching/levels/LEVEL_01_08BE88.c) | 36 B | 20 | pinned: 36 B, first difference +12 | Recover the byte and zero-store ordering while retaining the signed -1 constant and the final delay-slot store. |
+| [`0x08BE88`](../src/levels/bodies/LEVEL_01_08BE88.c) (accepted 9 November 2026) | 36 B | 20 | pinned: 36 B, first difference +12 | Recover the byte and zero-store ordering while retaining the signed -1 constant and the final delay-slot store. |
 | [`0x09FB18`](../src/levels/bodies/LEVEL_01_09FB18.c) (now accepted) | 36 B | 20 | pinned: 36 B, first difference +8 | Recover the self-linked node pointer-store order relative to the four zeroed fields. |
-| [`0x04B4C0`](../nonmatching/levels/LEVEL_01_04B4C0.c) | 32 B | 20 | pinned: 44 B, first difference +5 | The 64-bit clear mask materializes too long; test a natural source form or a narrowly qualified opt-in compiler remedy with prior-mask controls. |
+| [`0x04B4C0`](../src/levels/bodies/LEVEL_01_04B4C0.c) (accepted 9 November 2026) | 32 B | 20 | pinned: 44 B, first difference +5 | The 64-bit clear mask materializes too long; test a natural source form or a narrowly qualified opt-in compiler remedy with prior-mask controls. |
 | [`0x06DDE8`](../src/levels/bodies/LEVEL_01_06DDE8.c) (accepted 9 November 2026) | 36 B | 13 | pinned: 44 B, first difference +20 | The compiler inserts a redundant zero-divisor trap before modulo by the constant 12; qualify a narrow source/compiler remedy with controls for accepted division users. |
 | [`0x036648`](../nonmatching/levels/LEVEL_01_036648.c) | 52 B | 20 | `gnu-ee-trial-divpad`: 56 B, first difference +40 | The profile inserts one more padding word before the second floating division; qualify a source-specific schedule with controls for accepted division users. |
 | [`0x0B91F0`](../src/levels/bodies/LEVEL_01_0B91F0.c) (accepted 9 November 2026) | 12 B | 20 | pinned: 12 B, first difference +0 | The compiler folds the unsigned constant comparison into a different instruction form; recover the original source or a narrow qualified profile. |
 | [`0x049780`](../nonmatching/levels/LEVEL_01_049780.c) | 12 B | 15 | pinned: 8 B, first difference +0 | The no-op C body drops retail's balanced stack frame; establish the frame's source-level cause or original compiler behavior. |
 | [`LEVEL_03:0x039678`](../nonmatching/levels/LEVEL_03_039678.c) | 64 B | 7 | pinned: 64 B, first difference +22 | Recover the callback ABI or source-level lifetime that assigns the nested pointer loads to the retail temporaries. |
 | [`LEVEL_02:0x1805A0`](../src/levels/bodies/LEVEL_02_1805A0.c) (accepted 9 November 2026) | 60 B | 4 | pinned: 60 B, first difference +18 | Recover the indexed slot access shape that assigns the byte index and slot base to the retail temporaries. |
-| [`LEVEL_08:0x20FA38`](../nonmatching/levels/LEVEL_08_20FA38.c) | 64 B | 3 | pinned: 64 B, first difference +13 | Recover the original list-initialization loop and end-pointer lifetime before rechecking the shared sites. |
+| [`LEVEL_08:0x20FA38`](../src/levels/bodies/LEVEL_08_20FA38.c) (accepted 9 November 2026) | 64 B | 3 | pinned: 64 B, first difference +13 | Recover the original list-initialization loop and end-pointer lifetime before rechecking the shared sites. |
 | [`LEVEL_04:0x165538`](../nonmatching/levels/LEVEL_04_165538.c) | 48 B | 3 | pinned: 44 B, first difference +16 | Retain the second byte comparison's result lifetime and final boolean move without artificial compiler steering. |
 | [`LEVEL_22:0x1311A0`](../nonmatching/levels/LEVEL_22_1311A0.c) | 64 B | 2 | pinned: 64 B, first difference +2 | Recover the selector source and child-pointer register lifetime around the early sentinel return. |
 | [`LEVEL_15:0x11D580`](../nonmatching/levels/LEVEL_15_11D580.c) | 44 B | 2 | pinned: 40 B, first difference +28; `gnu-ee-trial-divpad`: 56 B | Qualify a source-specific division schedule with controls for prior accepted division bodies. |
 | [`LEVEL_22:0x131218`](../nonmatching/levels/LEVEL_22_131218.c) | 44 B | 2 | pinned: 44 B, first difference +4 | Recover the null and index-bound branch ordering before retrying both sites. |
 | [`LEVEL_08:0x1AE4C0`](../nonmatching/levels/LEVEL_08_1AE4C0.c) | 24 B candidate interval | 1 | pinned empty C: 8 B, first difference +0 | Review the two return sequences and incoming references to establish actual function ownership before C promotion. |
-| [`LEVEL_16:0x0752D0`](../nonmatching/levels/LEVEL_16_0752D0.c) | 64 B | 1 | pinned: 64 B, first difference +2 | Recover the loop-end pointer and accumulator register lifetimes while retaining the 0x80 record stride. |
+| [`LEVEL_16:0x0752D0`](../src/levels/bodies/LEVEL_16_0752D0.c) (accepted 9 November 2026) | 64 B | 1 | pinned: 64 B, first difference +2 | Recover the loop-end pointer and accumulator register lifetimes while retaining the 0x80 record stride. |
 | [`LEVEL_17:0x16A720`](../nonmatching/levels/LEVEL_17_16A720.c) | 64 B | 1 | pinned: 64 B, first difference +12 | Recover the nested boolean branch and result lifetime without shortening the second state test. |
 | [`LEVEL_10:0x1E2060`](../src/levels/bodies/LEVEL_10_1E2060.c) (accepted 9 November 2026) | 60 B | 1 | pinned: 68 B, first difference +4 | Establish the virtual callback prototype and saved-register setup before retrying the indirect call. |
-| [`LEVEL_10:0x174150`](../nonmatching/levels/LEVEL_10_174150.c) | 56 B | 1 | pinned: 56 B, first difference +12 | Recover the subobject pointer and callback-call source shape around the 0x50 record offset. |
+| [`LEVEL_10:0x174150`](../src/levels/bodies/LEVEL_10_174150.c) (accepted 9 November 2026) | 56 B | 1 | pinned: 56 B, first difference +12 | Recover the subobject pointer and callback-call source shape around the 0x50 record offset. |
 | [`LEVEL_16:0x136178`](../src/levels/bodies/LEVEL_16_136178.c) (accepted 9 November 2026) | 56 B | 1 | pinned: 60 B, first difference +16 | Recover the floating constant store and branch layout while preserving the final child update. |
 | [`LEVEL_16:0x156D50`](../nonmatching/levels/LEVEL_16_156D50.c) | 52 B | 1 | pinned: 48 B, first difference +0 | Recover the source and destination field-load schedule for the five record updates. |
 | [`LEVEL_17:0x16A7E0`](../src/levels/bodies/LEVEL_17_16A7E0.c) (accepted 9 November 2026) | 52 B | 1 | pinned: 52 B, first difference +8 | Recover the two-entry loop counter and pointer register lifetimes. |
@@ -590,7 +590,7 @@ The following USA candidate bodies are raw-identical across the listed numbered 
 | [`LEVEL_02:0x166B00`](../nonmatching/levels/LEVEL_02_166B00.c) | 40 B | 1 | pinned: 40 B, first difference +2 | Recover the byte-counter load, clear store and limit-pointer register order. |
 | [`LEVEL_02:0x1A3510`](../nonmatching/levels/LEVEL_02_1A3510.c) | 40 B | 1 | pinned: 40 B, first difference +2 | Recover the byte-counter load, clear store and limit-pointer register order. |
 | [`LEVEL_02:0x1D9670`](../src/levels/bodies/LEVEL_02_1D9670.c) (accepted 9 November 2026) | 40 B | 1 | pinned: 36 B, first difference +2 | Recover the indexed record's separate +4 subrecord address and output-register lifetime. |
-| [`LEVEL_16:0x1599E8`](../nonmatching/levels/LEVEL_16_1599E8.c) | 40 B | 1 | pinned: 32 B, first difference +2 | Recover the two independent stride calculations; the compiler shortens the conditional stride. |
+| [`LEVEL_16:0x1599E8`](../src/levels/bodies/LEVEL_16_1599E8.c) (accepted 9 November 2026) | 40 B | 1 | pinned: 32 B, first difference +2 | Recover the two independent stride calculations; the compiler shortens the conditional stride. |
 | [`LEVEL_16:0x177F60`](../nonmatching/levels/LEVEL_16_177F60.c) | 40 B | 1 | pinned: 40 B, first difference +2 | Recover the byte-counter load, clear store and limit-pointer register order. |
 
 ## Short local data relocations (5 November 2026)
@@ -726,7 +726,7 @@ without match credit:
   routes did not restore it. Reopen with evidence for the original value
   lifetime or a qualified compiler route.
 - Two call wrappers (for example,
-  [`LEVEL_02:0x03FBD0`](../nonmatching/levels/LEVEL_02_03FBD0.c)) link the
+  [`LEVEL_02:0x03FBD0`](../src/levels/bodies/LEVEL_02_03FBD0.c) (accepted 9 November 2026)) link the
   correct 40 bytes but first differ at byte 8. The compiler swaps a parameter
   move with local-address setup. Reopen with a natural source form or a
   qualified compiler route that preserves the retail order.
@@ -754,7 +754,7 @@ modules pass; the flag is limited to the five measured bodies. Eighty other
   different register. Natural early-return and typed forms and five other
   qualified `cc1` routes did not select the retail register.
 - Twenty constant-comparison wrappers (for example,
-  [`LEVEL_01:0x0413E8`](../nonmatching/levels/LEVEL_01_0413E8.c)) link at 44
+  [`LEVEL_01:0x0413E8`](../src/levels/bodies/LEVEL_01_0413E8.c) (accepted 9 November 2026)) link at 44
   bytes but first differ at byte 6: the constant and field load use opposite
   registers. Natural comparison forms and five other qualified `cc1` routes
   did not select the retail allocation. Reopen both comparison families with
@@ -849,7 +849,7 @@ passes. Eleven other sites retain useful C without match credit:
   than in its delay slot. Typed records and natural store orders did not
   restore it.
 - One nested-condition wrapper,
-  [`LEVEL_02:0x16F9F8`](../nonmatching/levels/LEVEL_02_16F9F8.c), links 48
+  [`LEVEL_02:0x16F9F8`](../src/levels/bodies/LEVEL_02_16F9F8.c) (accepted 9 November 2026), links 48
   bytes but first differs at byte 14 in the condition register. A direct
   expression and five qualified `cc1` routes did not select the retail
   register. Reopen these families with source-value lifetime or a qualified
@@ -916,7 +916,7 @@ modules pass. Fifty-one other placements retain publishable C without
 match credit:
 
 - Twenty bound-checked record clears (for example,
-  [LEVEL_01:0x0B2618](../nonmatching/levels/LEVEL_01_0B2618.c))
+  [LEVEL_01:0x0B2618](../src/levels/bodies/LEVEL_01_0B2618.c) (accepted 9 November 2026))
   link 48 against 52 bytes and first differ at byte 4. The compiler
   removes the retail boolean complement and shortens the branch.
 - Twenty lazy pointer initializers (for example,
@@ -928,7 +928,7 @@ match credit:
   link 52 bytes but first differ at byte 8 because the global base
   and field offset combine and loop registers change.
 - Two masked global setters (for example,
-  [LEVEL_04:0x0B7E80](../nonmatching/levels/LEVEL_04_0B7E80.c))
+  [LEVEL_04:0x0B7E80](../src/levels/bodies/LEVEL_04_0B7E80.c) (accepted 9 November 2026))
   link 52 bytes but first differ at byte 30 in the final address register.
 - Two global read wrappers (for example,
   [LEVEL_15:0x0F52D8](../src/levels/bodies/LEVEL_15_0F52D8.c) (accepted 9 November 2026))
@@ -1011,7 +1011,7 @@ gates before receiving C credit.
 A review of 144 putative 60-byte intervals with five or more relocations
 found 129 exact 60-byte C placements from 123 sources. Thirteen guarded
 pair-array stores retain C without match credit (for example,
-[LEVEL_01:0x080C98](../nonmatching/levels/LEVEL_01_080C98.c)):
+[LEVEL_01:0x080C98](../src/levels/bodies/LEVEL_01_080C98.c) (accepted 9 November 2026)):
 pinned C links 68 bytes and first differs at byte 2 in argument and
 global register allocation.
 
@@ -1055,7 +1055,7 @@ byte-0 difference. For the 40 [conditional byte conversions](../src/levels/bodie
 a mutable result and a conditional expression missed the retail
 branch-likely instruction; three GNU routes retained a byte-24 difference,
 and the SDK routes differed from byte 0. For the 20
-[field initializers](../nonmatching/levels/LEVEL_01_08BE88.c),
+[field initializers](../src/levels/bodies/LEVEL_01_08BE88.c) (accepted 9 November 2026),
 source-order and ordinary structure-field variants still scheduled the
 36-byte stores differently at byte 8 across all five qualified routes.
 These remain C attempts without match credit; reopen only with evidence
@@ -1083,7 +1083,7 @@ all previously accepted object pins are unchanged.
 
 Seventeen other reviewed C hypotheses from the same 140–196-byte scope
 remain in `nonmatching/` with their first difference and reopening
-condition. The [164-byte float clamp](../nonmatching/levels/LEVEL_01_0023B0.c)
+condition. The [164-byte float clamp](../src/levels/bodies/LEVEL_01_0023B0.c) (accepted 9 November 2026)
 differs only in one branch destination after natural C restructuring.
 The [double classifier](../nonmatching/levels/FRONTEND_023528.c) has a
 152-byte Ghidra body followed by a nonzero word inside the 156-byte
@@ -1169,7 +1169,7 @@ the call without changing its behavior.
 
 Twenty 20-byte local global-copy bodies remain nonmatching despite one
 authored C source per site under `nonmatching/levels/` (for example,
-[`LEVEL_01:0x08CDC8`](../nonmatching/levels/LEVEL_01_08CDC8.c)).
+[`LEVEL_01:0x08CDC8`](../src/levels/bodies/LEVEL_01_08CDC8.c) (accepted 9 November 2026)).
 The pinned compiler emits the same 20-byte length but first differs at
 body byte 2 by exchanging the source-address and copied-word temporary
 registers. Typed pointers, arrays and a one-word structure, as well as
@@ -1242,7 +1242,7 @@ with measured first differences and reopening conditions. The
 [88-byte packed-table initializer](../nonmatching/levels/LEVEL_01_0974A8.c)
 requires the source-specific `-mno-check-zero-division` flag to reach the
 correct length but still differs at byte 2. The
-[80-byte frontend state guard](../nonmatching/levels/FRONTEND_021438.c)
+[80-byte frontend state guard](../src/levels/bodies/FRONTEND_021438.c) (accepted 9 November 2026)
 links 72 bytes and first differs at byte 32; the retail retains a redundant
 state check that must not be introduced as purposeless C. The other 277
 candidate sites receive no new matching credit from this review. Their
@@ -1287,7 +1287,7 @@ the accepted placement tables and progress reports are unchanged.
 The [matrix-vector calculation](../nonmatching/levels/LEVEL_01_126078.c)
 links to the correct 136-byte length but still differs at byte 8 after a
 source-level load-order change. The
-[bitfield decoder](../nonmatching/levels/FRONTEND_00B928.c) links to the
+[bitfield decoder](../src/levels/bodies/FRONTEND_00B928.c) (accepted 9 November 2026) links to the
 correct 104-byte length but first differs at byte 1; unsigned byte input
 corrected the earlier 92-byte candidate. The
 [enumerated-type test](../nonmatching/levels/LEVEL_01_0374B8.c) links 128
@@ -1436,7 +1436,7 @@ under `nonmatching/levels/` with measured first differences and reopening
 conditions. For example, the
 [frontend text scan](../nonmatching/levels/FRONTEND_00C448.c) has the correct
 128-byte length but differs at byte 4 in its saved registers, and the
-[frontend copy wrapper](../nonmatching/levels/FRONTEND_024958.c) links 124
+[frontend copy wrapper](../src/levels/bodies/FRONTEND_024958.c) (accepted 9 November 2026) links 124
 bytes but differs from the start of its prologue. The other 354 candidate
 sites receive no match credit. Previous source and placement pins remain
 unchanged.
@@ -1546,12 +1546,12 @@ evidence adds:
 Forty-eight representative pure-C attempts for selected bodies of at most 200 bytes were recompiled and linked at their stated USA sites. All 48 remain nonmatching; their forms account for 414 individually measured nonmatching placements, with no C match credit. Twenty-two representatives link at the retail length, twenty are shorter, and six are longer. A matching length or relocation-masked shape does not extend a measurement to untested placements. The useful sources are retained under `nonmatching/levels/` with their first differences and reopening conditions.
 
 - **Register lifetimes and call ABI.** The [frontend table lookup](../nonmatching/levels/FRONTEND_01F1A0.c) links 104/104 bytes but swaps two temporary registers from byte 62; its caller's second-argument type also needs review. The [global fade selector](../nonmatching/levels/LEVEL_02_069E68.c) links 148/152 bytes and changes the branch at byte 8 because the global pointer and stack bound have different lifetimes. The [global state initializer](../nonmatching/levels/LEVEL_01_035988.c) links 100/104 bytes and first differs at byte 2 in its base-register allocation.
-- **Control flow, delay slots and returns.** The [byte-store helper](../nonmatching/levels/LEVEL_01_133FE8.c) links 132/132 bytes but lacks the retail callee-argument move in the call delay slot at byte 52. The [copy wrapper](../nonmatching/levels/LEVEL_01_1EBBD0.c) uses the qualified `sdk991111` profile and preserves the named `memcpy` import, yet links 120/124 bytes: after an exact 92-byte prefix it emits a tail jump instead of the retail call and return. The [signed clamp](../nonmatching/levels/LEVEL_01_0B9D20.c) links 140/140 bytes but selects a shift where retail uses a signed comparison at byte 92.
+- **Control flow, delay slots and returns.** The [byte-store helper](../nonmatching/levels/LEVEL_01_133FE8.c) links 132/132 bytes but lacks the retail callee-argument move in the call delay slot at byte 52. The [copy wrapper](../src/levels/bodies/LEVEL_01_1EBBD0.c) (accepted 9 November 2026) uses the qualified `sdk991111` profile and preserves the named `memcpy` import, yet links 120/124 bytes: after an exact 92-byte prefix it emits a tail jump instead of the retail call and return. The [signed clamp](../nonmatching/levels/LEVEL_01_0B9D20.c) links 140/140 bytes but selects a shift where retail uses a signed comparison at byte 92.
 - **Layout, aliasing and store order.** The [twelve-byte record copy](../nonmatching/levels/LEVEL_01_0D8060.c) links 144/140 bytes and differs from entry, leaving its alignment and copy-before-guard ABI open. The [rotation matrix](../nonmatching/levels/LEVEL_01_123F10.c) links 144/144 bytes but first changes the sine/cosine store and float-register schedule at byte 16. The [float-state initializer](../nonmatching/levels/LEVEL_01_0589C0.c) links 192/196 bytes; constant loading and field-store order diverge from byte 13.
 - **Integer width and lowering.** The [packed 64-bit field return](../nonmatching/levels/LEVEL_01_03B368.c) reproduces the initial unaligned load/copy but links 44/72 bytes; the remaining stack-word reconstruction and masks require a faithful source form. The [partial-product multiplication](../nonmatching/levels/LEVEL_01_1EA410.c) has the correct 96-byte length but differs at entry in multiplier and register order. The [upper-coordinate helper](../nonmatching/levels/LEVEL_01_0AD0C0.c) links 132/132 bytes and first differs at byte 26 in the operand order of two additions; preserve the original upper-Y calculation when reopening it.
 - **Assembler and alignment.** The [bit-mask helper](../nonmatching/levels/LEVEL_02_0413B8.c) links 152/148 bytes with the qualified per-source `ps2eeas` route and first differs at byte 6. Its register/order mismatch and final alignment word remain unresolved; the GNU assembler gives a longer result.
 
-The 132-byte [resource-selection body](../nonmatching/levels/LEVEL_01_089B60.c) has a separate **defined-behavior blocker**. An earlier C version linked exactly at 20 USA placements with `1U << item[-1]`, but `item[-1]` is a byte and a 32-bit C shift is undefined when it is at least 32. The R5900 variable shift uses only the low five bits. The reviewed direct callers in the representative level do not prove that the byte is in 0..31; their record pointers come from resource data, and an all-ones flag mask does not bound the shift. The retained defined C uses `1U << (item[-1] & 31U)` and links 136/132 bytes, first differing at byte 20 at all 20 placements. None of those placements receives match credit. Reopen only with a range proof covering every applicable producer/caller or a qualified compiler route that reproduces the retail from defined C.
+The 132-byte [resource-selection body](../src/levels/bodies/LEVEL_01_089B60.c) (accepted 9 November 2026) has a separate **defined-behavior blocker**. An earlier C version linked exactly at 20 USA placements with `1U << item[-1]`, but `item[-1]` is a byte and a 32-bit C shift is undefined when it is at least 32. The R5900 variable shift uses only the low five bits. The reviewed direct callers in the representative level do not prove that the byte is in 0..31; their record pointers come from resource data, and an all-ones flag mask does not bound the shift. The retained defined C uses `1U << (item[-1] & 31U)` and links 136/132 bytes, first differing at byte 20 at all 20 placements. None of those placements receives match credit. Reopen only with a range proof covering every applicable producer/caller or a qualified compiler route that reproduces the retail from defined C.
 
 ### Further bounded USA short-body blockers (November 2026)
 
@@ -1561,7 +1561,7 @@ In the reviewed USA selection, 45 representative pure-C attempts still differ fr
 - **Floating-point scheduling and assembler scope.** The [matrix product](../nonmatching/levels/LEVEL_02_12EDC0.c) links 196/196 bytes but assigns the first float registers differently from +2; recover live ranges under a qualified compiler route. The [two-division body](../nonmatching/levels/LEVEL_02_03B090.c) links 56/52 bytes: retail needs two latency words before its first division and one before its second, while the available division-padding route adds two to both. A route change needs per-source qualification and regression controls.
 - **Integer width, address expressions and defined behavior.** The [aligned-address helper](../src/levels/bodies/LEVEL_01_058738.c) (accepted 9 November 2026) links 60/60 bytes but first differs at +15 because retail uses aligned-address OR semantics rather than addition. The [64-bit mask builder](../nonmatching/levels/LEVEL_02_041000.c) links 56/52 bytes and needs the original constant expansion. The [72-byte shift helper](../src/levels/bodies/LEVEL_02_028C90.c) (accepted 9 November 2026) retains defined C and links 76 bytes, first differing at +48; its privately exact unmasked shift needs a proof that every applicable value is below 32, or a qualified route that matches from defined C.
 - **Partial masked forms.** The [124-byte output helper](../src/levels/bodies/LEVEL_02_05E888.c) (accepted 9 November 2026) has 12 nonmatching placements (132/124 bytes, first difference +60) alongside seven separately exact placements. Recover its stack loads and call behavior for the per-module output stub; do not promote the remaining 12 by masked similarity.
-- **Semantic holds.** The earlier 132-byte resource-selection shift at LEVEL_01.REL:0x089B60 described above remains uncredited without an input-range proof. The [124-byte byte conversion](../nonmatching/levels/LEVEL_02_138630.c) links 116/124 bytes without a redundant zero guard; the privately exact guarded C is held because that guard is unreachable after the lowercase-range test. Reopen only with credible source-level evidence for the guard or a natural defined C match. At the previous snapshot, the 68-byte setter at `LEVEL_02.REL:0x07BCA0` was locally exact but uncredited because accepted callers declared a zero-argument prototype; the measured resolution below supersedes that hold.
+- **Semantic holds.** The earlier 132-byte resource-selection shift at LEVEL_01.REL:0x089B60 described above remains uncredited without an input-range proof. The [124-byte byte conversion](../src/levels/bodies/LEVEL_01_132280.c) (accepted 9 November 2026) links 116/124 bytes without a redundant zero guard; the privately exact guarded C is held because that guard is unreachable after the lowercase-range test. Reopen only with credible source-level evidence for the guard or a natural defined C match. At the previous snapshot, the 68-byte setter at `LEVEL_02.REL:0x07BCA0` was locally exact but uncredited because accepted callers declared a zero-argument prototype; the measured resolution below supersedes that hold.
 
 **Resolved: 68-byte setter/getter ABI chain (USA).** The 68-byte
 [setter](../src/levels/bodies/LEVEL_02_07BCA0.c) passes its object key to an
@@ -1584,13 +1584,13 @@ In this reviewed USA selection, 42 representative pure-C attempts still differ f
 - **Calls and return flow.** The [two-argument caller](../src/levels/bodies/LEVEL_01_1B63C8.c) (accepted 9 November 2026) links 116/116 bytes, first difference +42, while its accepted callee still declares one argument; reconcile both sides of that ABI before credit. The [guarded getter](../nonmatching/levels/LEVEL_02_07AA10.c) links 92/96 bytes, first difference +28: retain its pointer-key contract while restoring the boolean temporary and branch schedule.
 - **Defined operations and unexplained frames.** The [byte-indexed bit update](../nonmatching/levels/LEVEL_02_027CB8.c) links 80/84 bytes, first difference +2; an explicit low-five-bit shift mask is needed for defined behavior over all byte values. The [global division body](../nonmatching/levels/LEVEL_02_09DB78.c) links 104/88 bytes, first difference +4; establish a nonzero divisor invariant or defined divide-zero behavior before promotion. The [empty body](../nonmatching/levels/LEVEL_02_04E708.c) links 8/12 bytes from plain C, first difference +0; explain the retail transient frame rather than adding dead or volatile locals for bytes.
 
-**Semantic holds, separately uncredited.** Five defined C witnesses are retained separately under `nonmatching/levels/`: the [168-byte list walker](../src/levels/bodies/LEVEL_01_154D58.c) (accepted 9 November 2026) needs a nonzero record-count invariant; the [136-byte float conversion](../nonmatching/levels/LEVEL_01_06AD30.c) needs a finite, bounded input; and the [80-byte selector](../src/levels/bodies/LEVEL_01_025098.c) (accepted 9 November 2026) needs a non-null callee result on all paths. The [76-byte wrapper](../nonmatching/levels/LEVEL_01_16B020.c) and [72-byte wrapper](../nonmatching/levels/LEVEL_01_144050.c) link byte-exact in isolation but remain uncredited because accepted callers use conflicting ABI declarations. The [80-byte return-code wrapper](../nonmatching/levels/LEVEL_02_0DE010.c) and [72-byte four-call wrapper](../src/levels/bodies/LEVEL_01_0B6EC0.c) (accepted 9 November 2026) use defined natural C that links 80/80 bytes (first difference +34) and 52/72 bytes (first difference +6), respectively; their privately exact XOR test and one-iteration loop have no independent source justification. None of these holds is C match credit. Reopen only with the stated range, ABI or source evidence and then repeat isolated links and the complete-program gate.
+**Semantic holds, separately uncredited.** Five defined C witnesses are retained separately under `nonmatching/levels/`: the [168-byte list walker](../src/levels/bodies/LEVEL_01_154D58.c) (accepted 9 November 2026) needs a nonzero record-count invariant; the [136-byte float conversion](../src/levels/bodies/LEVEL_01_06AD30.c) (accepted 9 November 2026) needs a finite, bounded input; and the [80-byte selector](../src/levels/bodies/LEVEL_01_025098.c) (accepted 9 November 2026) needs a non-null callee result on all paths. The [76-byte wrapper](../nonmatching/levels/LEVEL_01_16B020.c) and [72-byte wrapper](../nonmatching/levels/LEVEL_01_144050.c) link byte-exact in isolation but remain uncredited because accepted callers use conflicting ABI declarations. The [80-byte return-code wrapper](../nonmatching/levels/LEVEL_02_0DE010.c) and [72-byte four-call wrapper](../src/levels/bodies/LEVEL_01_0B6EC0.c) (accepted 9 November 2026) use defined natural C that links 80/80 bytes (first difference +34) and 52/72 bytes (first difference +6), respectively; their privately exact XOR test and one-iteration loop have no independent source justification. None of these holds is C match credit. Reopen only with the stated range, ABI or source evidence and then repeat isolated links and the complete-program gate.
 
 ### USA bounded bodies of 68–76 bytes (9 November 2026)
 
 This USA selection covers the 40–76-byte bounded candidates whose relocation-masked form had no retained attempt. Nine representative pure-C attempts still differ from retail and earn no credit; 25 other forms are byte-exact but held for ABI review. Equal length is not a match.
 
-- **Loop induction.** The [pool-slot claim](../nonmatching/levels/LEVEL_16_15D9A8.c) and its [0x2D0-displacement sibling](../nonmatching/levels/LEVEL_16_14D788.c) link 68/68 bytes under `sdk991111`, first difference +8: the retail keeps the pool base as the induction pointer and reads the slot flag by displacement, while the compiler folds the displacement into the pointer; the pinned and `gnu-ee-trial` profiles keep a separate counter (60 bytes). Find a loop or element form that keeps the displacement out of the induction variable.
+- **Loop induction.** The [pool-slot claim](../nonmatching/levels/LEVEL_16_15D9A8.c) and its [0x2D0-displacement sibling](../src/levels/bodies/LEVEL_16_14D788.c) (accepted 9 November 2026) link 68/68 bytes under `sdk991111`, first difference +8: the retail keeps the pool base as the induction pointer and reads the slot flag by displacement, while the compiler folds the displacement into the pointer; the pinned and `gnu-ee-trial` profiles keep a separate counter (60 bytes). Find a loop or element form that keeps the displacement out of the induction variable.
 - **Address constants and register choice.** The [clamped counter decrement](../src/levels/bodies/LEVEL_18_114188.c) (accepted 9 November 2026) links 68/72 bytes, first difference +4: the retail adds the 0x18 field offset after materialising the global, the compiler folds it into the address constant. The [table-entry division](../nonmatching/levels/LEVEL_10_173168.c) needs `gnu-ee-trial-divpad` for its division and links 72/72 bytes, first difference +8, with the index product in another register. The [timer start or stop](../nonmatching/levels/LEVEL_10_19B498.c) links 68/68 bytes, first difference +4: the retail places the float zero in the second float argument register; establish that parameter from callee or caller evidence before retrying.
 - **Branch and tail layout.** The [mode selector](../nonmatching/levels/LEVEL_22_11BBC0.c) (68/68 bytes, +28) becomes a conditional move in every measured form and profile; the [identifier test](../nonmatching/levels/LEVEL_07_1983A8.c) (68/72 bytes, +24) lacks the retail copy of the comparison into a second result register; the [kind-to-class mapping](../nonmatching/levels/LEVEL_03_193860.c) (68/68 bytes, +28) keeps a separate case-3 block where the retail shares one return; the [leading-entry count](../nonmatching/levels/LEVEL_16_168C98.c) (68/68 bytes, +4) fills the first delay slot with the counter reset instead of the list base. Recover the original statement shapes; do not add dead code.
 
@@ -1623,3 +1623,5 @@ Two retry passes restarted from earlier attempts: of 446 forms with a retained a
 **ABI holds, separately uncredited.** 294 byte-exact placements in 22 forms (25,784 placement bytes) disagree with an accepted callee definition or accepted callers after the two prototype rules. Their representative sources are under `nonmatching/levels/`; for 16 forms that already had a retained attempt, the byte-exact candidate sits beside it under [`nonmatching/levels/alternatives/`](../nonmatching/levels/alternatives/) with an `_abi_hold` suffix. Reopen them like the other ABI holds above.
 
 A second retry pass matched 57 more forms; their 112 retained files left `nonmatching/levels/` and the entries above that cited them now link the accepted sources. **ABI holds:** 203 byte-exact placements in 23 forms (18,464 placement bytes) stay held, with representatives under `nonmatching/levels/` or, beside an earlier retained attempt, under `nonmatching/levels/alternatives/` with an `_abi_hold` suffix.
+
+A third retry pass and a review of address variants of accepted sources matched 113 more forms; their 216 retained files left `nonmatching/levels/` and the entries above that cited them now link the accepted sources. **ABI holds:** 228 byte-exact placements in 53 forms (24,660 placement bytes) stay held, with representatives under `nonmatching/levels/` or, beside an earlier retained attempt, under `nonmatching/levels/alternatives/`.
