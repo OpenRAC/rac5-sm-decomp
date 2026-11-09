@@ -732,3 +732,21 @@ selected sites, 669 have measured nonmatching C and 71 remain semantic holds;
 none is untested. Locally equal bytes in a held source earn no C credit.
 No PAL placement is counted, and the distinct-function denominator remains
 unqualified.
+
+Another 309 reviewed USA bounded candidates of 68–76 bytes, from the
+40–76-byte candidates whose relocation-masked form had no retained attempt,
+link exactly from 248 authored pure C sources (22,440 placement bytes and
+18,004 distinct-source bytes). Seventy representative sources carry 131
+placements: 61 of them reuse an identical source only after an independent
+exact link at each site. The other 178 placements use one source each, a copy
+of an exact representative whose address-carrying names are rewritten for that
+placement and which then links exactly on its own bytes. One 72-byte two-word
+record return is exact at its thirteen placements only with the already pinned
+per-source `ps2eeas` assembler. Nine representative C attempts remain under
+`nonmatching/levels/` with measured first differences and reopening
+conditions. Twenty-five further forms covering 78 placements link byte-exact
+but are held for ABI review, because their prototypes disagree with accepted
+callers or callees; their representative C is retained under
+`nonmatching/levels/` and earns no credit. All 21 complete USA modules remain
+exact; no PAL placement is counted, and the distinct-function denominator
+remains unqualified.
