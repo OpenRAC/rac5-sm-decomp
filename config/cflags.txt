@@ -460,3 +460,7 @@ src/levels/bodies/LEVEL_04_170688.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_08_17BA30.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_01_17E200.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_01_06DDE8.c  -mno-check-zero-division
+src/levels/bodies/FRONTEND_0125A8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_01_0023B0.c  -malign-functions=2
+src/levels/bodies/LEVEL_01_098380.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_02_09EA50.c  -mno-check-zero-division

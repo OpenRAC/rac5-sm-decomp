@@ -25,7 +25,8 @@
       "host": "linux",
       "accepted_sources": [
         "src/levels/bodies/LEVEL_01_001940.c",
-        "src/levels/bodies/LEVEL_02_08EA20.c"
+        "src/levels/bodies/LEVEL_02_08EA20.c",
+        "src/levels/bodies/LEVEL_01_0880F0.c"
       ],
       "tools": {
         "assembler": "ee-as",
@@ -34,7 +35,7 @@
       "flags": {
         "as": []
       },
-      "provenance": "Private EE assembler recovered with the legally supplied toolchain used in the RAC1 workspace. On the pinned USA body at LEVEL_01:0x001940, the default GNU assembler emits 96 bytes and misses the retail floating-point latency and delay-slot schedule; this hash-pinned binary emits the exact 100-byte body at all 20 numbered level placements. It is selected only for the measured source, never globally, and the external binary is not distributed."
+      "provenance": "Private EE assembler recovered with the legally supplied toolchain used in the RAC1 workspace. On the pinned USA body at LEVEL_01:0x001940, the default GNU assembler emits 96 bytes and misses the retail floating-point latency and delay-slot schedule; this hash-pinned binary emits the exact 100-byte body at all 20 numbered level placements. It is selected only for the measured source, never globally, and the external binary is not distributed. A per-placement address variant of LEVEL_02_08EA20.c is exact at its own USA placement with the same route (November 2026)."
     },
     "ps2eeas": {
       "id": "rac5-level-ps2eeas-20261106",
@@ -84,7 +85,12 @@
         "src/levels/bodies/LEVEL_23_062900.c",
         "src/levels/bodies/LEVEL_24_0444A8.c",
         "src/levels/bodies/LEVEL_24_062798.c",
-        "src/levels/bodies/LEVEL_01_03BC48.c"
+        "src/levels/bodies/LEVEL_01_03BC48.c",
+        "src/levels/bodies/LEVEL_01_0023B0.c",
+        "src/levels/bodies/LEVEL_01_04B4C0.c",
+        "src/levels/bodies/LEVEL_01_04B4E0.c",
+        "src/levels/bodies/LEVEL_02_050468.c",
+        "src/levels/bodies/LEVEL_01_069148.c"
       ],
       "tools": {
         "assembler": "Ps2EeAs.exe",
@@ -93,7 +99,7 @@
       "flags": {
         "as": []
       },
-      "provenance": "SN Systems Ps2EeAs 1.8.19.316, the privately supplied EE assembler already pinned for the boot reconstruction in config/boot/compiler_trial.json. On the measured 192-byte level body the pinned GNU assembler expands the 64-bit constant as ori/dsll16 and links 216 bytes, while this assembler emits the retail lui/ori/dsll3/ori chain and reproduces all 18 USA placements exactly. A separate 132-byte body is exact at twenty USA placements from five per-source variants with the same pinned assembler. Two further 32- and 112-byte forms are exact at nineteen USA placements each; 36 new canonical source files use this same qualified per-source route, and the 21 complete modules remain exact. A 72-byte two-word record return links 72/72 bytes with one differing word under the pinned GNU assembler, which loads the 0xFFFFFFFF mask with lui instead of the retail addiu; this assembler reproduces all thirteen USA placements of that form from one source (November 2026). Selected only for the measured sources, never globally; the external binary is not distributed."
+      "provenance": "SN Systems Ps2EeAs 1.8.19.316, the privately supplied EE assembler already pinned for the boot reconstruction in config/boot/compiler_trial.json. On the measured 192-byte level body the pinned GNU assembler expands the 64-bit constant as ori/dsll16 and links 216 bytes, while this assembler emits the retail lui/ori/dsll3/ori chain and reproduces all 18 USA placements exactly. A separate 132-byte body is exact at twenty USA placements from five per-source variants with the same pinned assembler. Two further 32- and 112-byte forms are exact at nineteen USA placements each; 36 new canonical source files use this same qualified per-source route, and the 21 complete modules remain exact. A 72-byte two-word record return links 72/72 bytes with one differing word under the pinned GNU assembler, which loads the 0xFFFFFFFF mask with lui instead of the retail addiu; this assembler reproduces all thirteen USA placements of that form from one source (November 2026). Five per-placement address variants of sources already on this route (LEVEL_02_0023B0.c, LEVEL_02_050448.c, LEVEL_02_06E1E0.c and LEVEL_03_0497A0.c) are exact at their own USA placements with the same route (November 2026). Selected only for the measured sources, never globally; the external binary is not distributed."
     }
   },
   "scope": "two shared C witnesses at twenty pinned LEVEL_*.REL placements and func_00002F80 in FRONTEND.REL; additional accepted level bodies and their per-source routes are governed by config/levels/body_sources.tsv",
