@@ -464,3 +464,16 @@ src/levels/bodies/FRONTEND_0125A8.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_01_0023B0.c  -malign-functions=2
 src/levels/bodies/LEVEL_01_098380.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_02_09EA50.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_01_154E00.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_02_15B678.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_03_154290.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_04_161550.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_05_1507F0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_05_16BD60.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_06_14B4F8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_07_158128.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_08_167280.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_09_14DDE0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_10_153908.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_22_11A580.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_24_14B350.c  -mno-check-zero-division
