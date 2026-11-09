@@ -4,7 +4,7 @@
  * pinned C with gnu-ee-trial links 100/100 bytes and is byte-exact at this and
  * 1 other USA placement, but the prototypes disagree.
  * It declares func_013708 returning float with (pointer, pointer, pointer,
- * pointer), but the accepted LEVEL_01_013708.c defines it returning float with
+ * pointer), but the held byte-exact candidate LEVEL_01_013708.c defines it returning float with
  * (int, int, int, int).
  * Retry: reconcile the prototype with the accepted definition and callers
  * (argument count, types and return use), then relink every placement and

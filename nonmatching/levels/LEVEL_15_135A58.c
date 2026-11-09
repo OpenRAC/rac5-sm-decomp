@@ -3,7 +3,7 @@
  * pinned C with gnu-ee-trial links 152/152 bytes and is byte-exact at this and
  * 1 other USA placement, but the prototypes disagree.
  * It declares func_13EB00 returning void with (pointer, pointer, pointer,
- * pointer, pointer), but the accepted LEVEL_15_13EB00.c defines it returning
+ * pointer, pointer), but the held byte-exact candidate LEVEL_15_13EB00.c defines it returning
  * void with (pointer, int, int, int, int).
  * Retry: reconcile the prototype with the accepted definition and callers
  * (argument count, types and return use), then relink every placement and
