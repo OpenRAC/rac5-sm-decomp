@@ -869,21 +869,21 @@
     "accepted_frontend_c_bytes": 476,
     "accepted_c_bytes_per_unique_source": 80,
     "accepted_c_bytes_by_placement": 1600,
-    "accepted_level_body_placements": 38430,
-    "accepted_level_body_unique_sources": 28391,
-    "accepted_level_body_placement_bytes": 2601164,
-    "accepted_level_body_unique_source_bytes": 2098048,
+    "accepted_level_body_placements": 38572,
+    "accepted_level_body_unique_sources": 28539,
+    "accepted_level_body_placement_bytes": 2620356,
+    "accepted_level_body_unique_source_bytes": 2117288,
     "accepted_level_body_profiles": {
       "gnu-ee-trial": 650,
       "gnu-ee-trial-divpad": 512,
       "gnu-ee-trial-divpad-blockmove": 45,
-      "pinned": 36743,
+      "pinned": 36885,
       "sdk991111": 438,
       "sdk991111sync": 42
     },
     "accepted_level_body_assembler_profiles": {
       "ee-frozen": 39,
-      "gnu-ee-trial": 38263,
+      "gnu-ee-trial": 38405,
       "ps2eeas": 108,
       "r5900-mfc1": 20
     },
@@ -1976,18 +1976,18 @@
       },
       "bodies": {
         "table": "config/levels/bodies.tsv",
-        "table_sha256": "77df158fbd6ccdbeca529300ce7551595cabe683ce4c22a8c77585114e48ca42",
+        "table_sha256": "bfab9a738d0c30a6076b65fd56e53778c168761b07745696bf7bbdf1d8ef0115",
         "sources_table": "config/levels/body_sources.tsv",
-        "sources_table_sha256": "e85a2136a1edd190f557ec7dd7f3beff89d9c4d7de0fd6cdb18077d237ccab3f",
-        "placements": 38430,
-        "unique_sources": 28391,
-        "placement_bytes": 2601164,
-        "unique_source_bytes": 2098048,
+        "sources_table_sha256": "9732eee1e38d3d6220a6a67448ccb9d8b68af2fa21257604904393fe7014111d",
+        "placements": 38572,
+        "unique_sources": 28539,
+        "placement_bytes": 2620356,
+        "unique_source_bytes": 2117288,
         "profiles": {
           "gnu-ee-trial": 650,
           "gnu-ee-trial-divpad": 512,
           "gnu-ee-trial-divpad-blockmove": 45,
-          "pinned": 36743,
+          "pinned": 36885,
           "sdk991111": 438,
           "sdk991111sync": 42
         },
@@ -2001,7 +2001,7 @@
         },
         "assembler_profiles": {
           "ee-frozen": 39,
-          "gnu-ee-trial": 38263,
+          "gnu-ee-trial": 38405,
           "ps2eeas": 108,
           "r5900-mfc1": 20
         },
@@ -2058,14 +2058,14 @@
           "LEVEL_24.REL": "2feea61ac6fc1dd9b6bdb343b4c0cd1cebcce51b9472ebc8b048dcead6f0ca6e"
         },
         "import_identity": {
-          "body_row_sites": 4974,
+          "body_row_sites": 5014,
           "accepted_witness_sites": 24,
           "accepted_witness_placements_checked": 41,
-          "total_sites": 4998,
+          "total_sites": 5038,
           "mismatches": 0
         },
         "batch_link_size": 25,
-        "body_batch_linker_invocations": 2470
+        "body_batch_linker_invocations": 2366
       },
       "provisional_controls": [
         "LEVEL_01.REL:0x190:24",
