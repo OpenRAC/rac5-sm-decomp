@@ -876,3 +876,18 @@ accepted forms leave `nonmatching/levels/`, and a further 305 placements in
 23 forms link byte-exact but stay held for ABI review. All 21 complete USA
 modules remain exact; no PAL placement is counted, and the distinct-function
 denominator remains unqualified.
+
+Forms that had never been attempted, of 201–300 and 401–600 bytes, reproduce
+**730 USA placements from 600 authored pure C sources** (191,992 bytes by
+placement and 157,576 distinct-source bytes) in 113 forms of 204–556 bytes:
+674 placements of 201–300 bytes and 56 of 401–600 bytes. A hundred and thirty
+placements reuse an identical source after an independent exact link at each
+site; the other per-placement sources are copies of an exact representative
+whose address-carrying names are rewritten for that placement and then linked
+on their own bytes. Four hundred and ninety-nine placements use the pinned
+chain, 142 the qualified `gnu-ee-trial-divpad` profile, 86 `gnu-ee-trial` and
+three `gnu-ee-trial-divpad-blockmove`. The prototype rules above release 46 of
+these placements and move 92 accepted stub placements to five typed stub
+sources. A further 395 placements in 49 forms link byte-exact but stay held
+for ABI review. All 21 complete USA modules remain exact; no PAL placement is
+counted, and the distinct-function denominator remains unqualified.
