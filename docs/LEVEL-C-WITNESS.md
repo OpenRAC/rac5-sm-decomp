@@ -859,3 +859,20 @@ accepted forms leave `nonmatching/levels/`, and a further 228 placements in 53
 forms link byte-exact but stay held for ABI review. All 21 complete USA
 modules remain exact; no PAL placement is counted, and the distinct-function
 denominator remains unqualified.
+
+The rest of that retry pass reproduces **765 USA placements from 535
+authored pure C sources** (87,540 bytes by placement and 62,688
+distinct-source bytes) in 57 forms of 28–196 bytes; 230 placements reuse an
+identical source after an independent exact link at each site. Seven hundred
+and forty-four placements use the pinned chain and 21 the qualified
+`sdk991111` profile. Two exact forms are not counted because their C reaches
+the retail bytes only through constructs that steer code generation: the
+140-byte `FRONTEND:0x0249D8`, accepted in #229 through a `volatile` pointee
+that forces a 64-bit load, is withdrawn, and the 140-byte clamp at
+`FRONTEND:0x012600` and its 20 level copies, exact only with a local zero
+temporary, is not accepted. Both are kept under
+`nonmatching/levels/alternatives/`. The 148 retained attempts of the newly
+accepted forms leave `nonmatching/levels/`, and a further 305 placements in
+23 forms link byte-exact but stay held for ABI review. All 21 complete USA
+modules remain exact; no PAL placement is counted, and the distinct-function
+denominator remains unqualified.
