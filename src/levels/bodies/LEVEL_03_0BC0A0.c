@@ -1,0 +1,23 @@
+/* LEVEL_03:0x0BC0A0 -- placement copy of LEVEL_01_0BC2B8.c: stores a helper result into a word table, calls a second helper unless mode is 1. */
+struct S0BC2B8 {
+    char pad0[0x20];
+    int f20[1];
+};
+
+extern int func_0BC978(void);
+extern int func_087CA0(void);
+extern void func_087C40(int n);
+extern struct S0BC2B8 D_003438B0;
+
+void func_0BC0A0(int mode)
+{
+    int idx;
+    int val;
+
+    idx = func_0BC978();
+    val = func_087CA0();
+    D_003438B0.f20[idx] = val;
+    if (mode != 1) {
+        func_087C40(0x200);
+    }
+}
