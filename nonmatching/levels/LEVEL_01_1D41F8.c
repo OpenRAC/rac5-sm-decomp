@@ -1,0 +1,68 @@
+/* LEVEL_01.REL:0x1D41F8: reviewed 292-byte candidate, held for ABI review.
+ * Fills batches of 60-byte records from two vectors and a source block.
+ * pinned C with gnu-ee-trial links 292/292 bytes and is byte-exact at this and
+ * 15 other USA placements, but the prototypes disagree.
+ * It declares func_097658 returning pointer with (pointer, pointer, int), but
+ * the accepted LEVEL_01_097658.c defines it returning void with (pointer, int,
+ * long long).
+ * Retry: reconcile the prototype with the accepted definition and callers
+ * (argument count, types and return use), then relink every placement and
+ * rerun the complete-module gate.
+ * No matching credit.
+ */
+typedef struct Vec3 { float x, y, z; } Vec3;
+
+typedef struct Src {
+    float f0, f4, f8, fC, f10, f14, f18;
+} Src;
+
+typedef struct Rec {
+    Vec3 a;
+    Vec3 b;
+    float f18;
+    float f1C;
+    float f20;
+    float f24;
+    float f28;
+    int w2C;
+    float f30;
+    int w34;
+    float f38;
+} Rec;
+
+extern Rec *func_097658(int *, void *, int);
+
+void func_1D41F8(void *obj, Src *s, Vec3 *a, Vec3 *b, int tag, int total)
+{
+    int cnt;
+    Rec *p;
+    Rec *end;
+    Rec *q;
+    Vec3 *bp;
+
+    while (total > 0) {
+        p = func_097658(&cnt, obj, total);
+        if (cnt == 0)
+            break;
+        end = p + cnt;
+        for (q = p; q != end; q++) {
+            q->a.x = a->x;
+            q->a.y = a->y;
+            q->a.z = a->z;
+            bp = &q->b;
+            bp->x = b->x;
+            bp->y = b->y;
+            bp->z = b->z;
+            q->f20 = s->f8;
+            q->f24 = s->fC;
+            q->f28 = s->f10;
+            q->f30 = s->f14;
+            q->f38 = s->f18;
+            q->f18 = s->f0;
+            q->f1C = s->f4;
+            q->w2C = tag;
+            q->w34 = 0;
+        }
+        total -= cnt;
+    }
+}
