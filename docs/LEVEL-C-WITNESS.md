@@ -805,3 +805,23 @@ such as `return func_X(a);` as declarations; no source accepted in those
 selections had a conflict hidden by it. A further 899 byte-exact placements in
 175 forms stay held. All 21 complete USA modules remain exact; no PAL placement
 is counted, and the distinct-function denominator remains unqualified.
+
+Retry passes over the open forms of up to 200 bytes reproduce **475 further
+USA placements from 424 authored pure C sources** (41,412 bytes by placement
+and 39,416 distinct-source bytes) in 44 forms of 12–200 bytes. Most (330
+placements) belong to forms that already had a retained attempt and were
+restarted from it; the others belong to forms whose first attempt in the
+earlier selections did not match. Fifty-one placements reuse an identical
+source after an independent exact link at each site. Four hundred and fifty
+placements use the pinned chain, 21 the qualified `sdk991111` profile and four
+`gnu-ee-trial`; one modulo-by-twelve body uses the existing per-source
+`-mno-check-zero-division` flag at its thirteen placements. The two prototype
+rules above release 33 of these placements and move 26 accepted placements of
+`FRONTEND_001E08.c` to two typed stub sources. The 211 retained attempts of
+the now accepted forms leave `nonmatching/levels/`, and the blocker entries
+that cited them link the accepted sources instead. A further 294 placements
+in 22 forms link byte-exact but stay held for ABI review, with one
+representative each under `nonmatching/levels/` (under its `alternatives/`
+directory where an earlier attempt is already retained). All 21 complete USA
+modules remain exact; no PAL placement is counted, and the distinct-function
+denominator remains unqualified.

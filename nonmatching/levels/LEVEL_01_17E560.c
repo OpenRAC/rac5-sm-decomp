@@ -5,7 +5,7 @@
  * 11 other USA placements, but the prototypes disagree.
  * It declares func_188370 returning int with no arguments, but the accepted
  * LEVEL_01_188370.c defines it returning void with (pointer, long long, int).
- * It declares func_186D68 returning void with no arguments, but the accepted
+ * It declares func_186D68 returning void with no arguments, but the held byte-exact candidate
  * LEVEL_01_186D68.c defines it returning void with (pointer, pointer, pointer,
  * int, int).
  * Retry: reconcile the prototype with the accepted definition and callers
