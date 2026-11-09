@@ -825,3 +825,18 @@ representative each under `nonmatching/levels/` (under its `alternatives/`
 directory where an earlier attempt is already retained). All 21 complete USA
 modules remain exact; no PAL placement is counted, and the distinct-function
 denominator remains unqualified.
+
+A further retry pass reproduces **261 USA placements from 252 authored pure C
+sources** (21,100 bytes by placement and 20,432 distinct-source bytes) in 57
+forms of 32–196 bytes; 220 of them belong to forms with a retained attempt.
+Nine placements reuse an identical source after an independent exact link at
+each site. Two hundred and fifty-three placements use the pinned chain, six
+`gnu-ee-trial` and one each the qualified `gnu-ee-trial-divpad` and
+`sdk991111` profiles. One accepted placement of `FRONTEND_001E08.c` moves to a
+typed stub source under the prototype rules above. An exact 60-byte candidate
+at `LEVEL_15`/`LEVEL_21` `0x0F78B8` is not counted: that interval holds two
+functions, and its second one is already accepted on its own. The 112
+retained attempts of the newly accepted forms leave `nonmatching/levels/`; a
+further 203 placements in 23 forms link byte-exact but stay held for ABI
+review. All 21 complete USA modules remain exact; no PAL placement is counted,
+and the distinct-function denominator remains unqualified.
