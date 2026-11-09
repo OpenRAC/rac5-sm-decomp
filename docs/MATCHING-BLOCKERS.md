@@ -1631,3 +1631,5 @@ The rest of the third retry pass matched 57 more forms; their 148 retained files
 ### USA bounded bodies of 201–600 bytes (9 November 2026)
 
 Never-attempted forms of 201–300 and 401–600 bytes are being worked in parallel; 113 forms are accepted so far, and their nonmatching attempts stay outside the repository for a measured retry. **ABI holds:** 395 byte-exact placements in 49 forms (98,656 placement bytes) disagree with accepted callers or callees — larger bodies call more accepted helpers, so a higher share is held. Their representatives are under `nonmatching/levels/`. Reopen them like the other ABI holds above.
+
+A further 60 of those forms are accepted. **Not yet accepted:** `FRONTEND:0x0233F8` is exact only with the `ee-frozen` assembler route and reconstructs the soft-float packing routine of GNU libgcc's `fp-bit`; it needs a provenance and licence review against the public GNU source, like the boot `__pack_d`, before acceptance; its attempt stays private until then. **ABI holds:** 472 byte-exact placements in 40 forms (146,416 placement bytes) stay held, with representatives under `nonmatching/levels/`.
