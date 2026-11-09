@@ -35,14 +35,27 @@ jobs:
       - name: Check the committed report is current
         run: python3 tools/gen_progress_report.py --check
 
+      # The pinned CLI is cached so that most runs do not depend on the GitHub
+      # release download, which can answer HTTP 504 for a minute or more.
+      - name: Restore the pinned objdiff CLI
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/objdiff
+          key: objdiff-cli-v3.8.1-linux-x86_64-c8290281e82114bc
+
       - name: Validate the reports with objdiff
         run: |
-          curl --fail --location --retry 3 -o "$RUNNER_TEMP/objdiff-cli" \
-            https://github.com/encounter/objdiff/releases/download/v3.8.1/objdiff-cli-linux-x86_64
-          echo "c8290281e82114bcc1a06ff73061110d3902a177822e750337de2537188e358f  $RUNNER_TEMP/objdiff-cli" | sha256sum --check
-          chmod +x "$RUNNER_TEMP/objdiff-cli"
+          objdiff="$RUNNER_TEMP/objdiff/objdiff-cli"
+          if [ ! -f "$objdiff" ]; then
+            mkdir -p "$RUNNER_TEMP/objdiff"
+            curl --fail --location --retry 10 --retry-delay 15 --retry-max-time 600 \
+              --retry-all-errors --connect-timeout 30 --max-time 120 -o "$objdiff" \
+              https://github.com/encounter/objdiff/releases/download/v3.8.1/objdiff-cli-linux-x86_64
+          fi
+          echo "c8290281e82114bcc1a06ff73061110d3902a177822e750337de2537188e358f  $objdiff" | sha256sum --check
+          chmod +x "$objdiff"
           for r in progress/report.json progress/pal/report.json; do
-            "$RUNNER_TEMP/objdiff-cli" report changes "$r" "$r" -o "$RUNNER_TEMP/validation.json"
+            "$objdiff" report changes "$r" "$r" -o "$RUNNER_TEMP/validation.json"
           done
 
       - name: Summarise
