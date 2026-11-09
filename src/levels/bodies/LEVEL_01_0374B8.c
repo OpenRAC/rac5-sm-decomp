@@ -1,0 +1,2 @@
+/* LEVEL_01:0x0374B8 -- classifies a record kind; returns 1 for the listed kinds, else 0. */
+int func_0374B8(const char *r){ unsigned int raw = *(const unsigned short *)(r + 0x100); int result = 0; if (raw - 3 < 2 || (short)raw == 6 || (short)raw == 7 || (short)raw == 8 || (short)raw == 14 || (short)raw == 16 || (short)raw == 17 || (short)raw == 18 || (short)raw == 15 || (short)raw == 29 || (short)raw == 54 || (short)raw == 64) result = 1; return result; }
