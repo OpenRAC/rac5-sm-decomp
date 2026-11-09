@@ -1,0 +1,43 @@
+/* LEVEL_04:0x1E7E20 -- placement copy of LEVEL_01_1D0E38.c: spawns six randomly tinted effects at table positions for each active slot, unless a state check says to skip. */
+
+extern char D_0024F950[];
+extern int D_0022290C;
+extern unsigned int D_0020F934;
+extern float D_00244D58[][3];
+
+extern int rand(void);
+extern int func_06C5E8(void *g);
+extern void func_132058(float *out, void *a0, float *in);
+extern int func_09C430(int a0, int a1);
+extern void func_09D8C8(int a0, float *v, int a2, float f12, float f13, unsigned int a3, int t0);
+
+static __inline__ void emit_1D0E38(float *pos, int g, unsigned int col)
+{
+    unsigned int j;
+    unsigned int mask;
+
+    for (j = 0; j < 1; j++) {
+        mask = 1 << j;
+        if (D_0020F934 & mask) {
+            func_09D8C8(func_09C430(j, 0), pos, g, 0.3f, 0.3f, col, 0);
+        }
+    }
+}
+
+void func_1E7E20(void *a0)
+{
+    float v[3];
+    unsigned int i;
+    unsigned int col;
+
+    if (func_06C5E8(D_0024F950) != 0) {
+        if ((*(unsigned long long *)(D_0024F950 + 0x960) & 0x80000000000ULL) == 0) {
+            return;
+        }
+    }
+    for (i = 0; i < 6; i++) {
+        col = rand() % 0x333333 + 0xFF000000;
+        func_132058(v, a0, D_00244D58[i]);
+        emit_1D0E38(v, D_0022290C, col);
+    }
+}
