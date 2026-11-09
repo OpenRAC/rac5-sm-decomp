@@ -1,0 +1,62 @@
+/* FRONTEND.REL:0x008430: reviewed 344-byte candidate, held for ABI review.
+ * Uploads a texture to the GS and reads it back in its swizzled form once, for
+ * 8-bit and 4-bit formats.
+ * pinned C with gnu-ee-trial links 344/344 bytes and is byte-exact at this and
+ * 20 other USA placements, but the prototypes disagree.
+ * It declares func_005C68 returning pointer with (int), but the accepted
+ * FRONTEND_005C68.c defines it returning int with (pointer).
+ * It declares func_005C98 returning pointer with (int, int, int), but the
+ * accepted FRONTEND_005C98.c defines it returning pointer with (pointer, int,
+ * int).
+ * Retry: reconcile the prototype with the accepted definition and callers
+ * (argument count, types and return use), then relink every placement and
+ * rerun the complete-module gate.
+ * No matching credit.
+ */
+struct Tex008430 {
+    char pad0[4];
+    unsigned short h4;
+    unsigned short h6;
+    unsigned short h8;
+    unsigned short hA;
+};
+
+extern struct Tex008430 *func_005C68(int id);
+extern void *func_005C98(int id, int a, int b);
+extern void writeTexPSMT8(int a, unsigned int b, int c, int d, unsigned int e, unsigned int f, void *p) __asm__("writeTexPSMT8__FiiiiiiPv");
+extern void readTexPSMCT32(int a, unsigned int b, int c, int d, unsigned int e, unsigned int f, void *p) __asm__("readTexPSMCT32__FiiiiiiPv");
+extern void writeTexPSMT4(int a, unsigned int b, int c, int d, unsigned int e, unsigned int f, void *p) __asm__("writeTexPSMT4__FiiiiiiPv");
+extern void readTexPSMCT16(int a, unsigned int b, int c, int d, unsigned int e, unsigned int f, void *p) __asm__("readTexPSMCT16__FiiiiiiPv");
+
+void func_008430(int id)
+{
+    struct Tex008430 *t;
+    void *buf;
+
+    t = func_005C68(id);
+    if (t->h6 != 0) {
+        return;
+    }
+    buf = func_005C98(id, 0, 0);
+    if (t->h4 == 5) {
+        if (t->h8 < 0x20) {
+            return;
+        }
+        if (t->hA < 0x20) {
+            return;
+        }
+        writeTexPSMT8(0, (t->h8 + 63U) >> 6, 0, 0, t->h8, t->hA, buf);
+        readTexPSMCT32(0, ((t->h8 >> 1) + 63U) >> 6, 0, 0, t->h8 >> 1, t->hA >> 1, buf);
+        t->h6 = 1;
+    } else if (t->h4 == 4) {
+        if (t->h8 < 0x20) {
+            return;
+        }
+        if (t->hA < 0x20) {
+            return;
+        }
+        writeTexPSMT4(0, (t->h8 + 63U) >> 6, 0, 0, t->h8, t->hA, buf);
+        readTexPSMCT16(0, ((t->hA >> 1) + 63U) >> 6, 0, 0, t->hA >> 1, t->h8 >> 1, buf);
+        t->h6 = 1;
+    }
+}

@@ -1,0 +1,42 @@
+/* LEVEL_01.REL:0x01DB40: reviewed 324-byte candidate, held for ABI review.
+ * Tests a displaced position, and if blocked asks a second helper with the
+ * axis length of a matrix row set.
+ * gnu-ee-trial-divpad C with gnu-ee-trial links 324/324 bytes and is byte-
+ * exact at this and 19 other USA placements, but the prototypes disagree.
+ * It declares func_01C0E8 returning int with (pointer, pointer, pointer,
+ * pointer, float, float, float), but the accepted LEVEL_01_01C0E8.c defines it
+ * returning int with (pointer, pointer, pointer, pointer, float, float).
+ * Retry: reconcile the prototype with the accepted definition and callers
+ * (argument count, types and return use), then relink every placement and
+ * rerun the complete-module gate.
+ * No matching credit.
+ */
+extern float sqrtf(float x);
+extern int func_01C0E8(void *a0, void *a1, float *a2, float *a3, float f12, float f13, float f14);
+extern int func_11DEC8(void *a0, void *a1, float *a2, float *a3, float *t0, float *t1, float *t2,
+                       float *t3, float f12, float f13, float f14);
+
+static __inline__ int Second(void *a0, void *a1, float *m, float *base, float *dir, float p2,
+                             float p3)
+{
+    float len2;
+    float len;
+
+    len2 = m[0] * m[0] + m[1] * m[1] + m[2] * m[2];
+    len = sqrtf(len2);
+    return (unsigned char)func_11DEC8(a0, a1, m, m + 4, m + 8, m + 12, base, dir, p2, len2, p3 * len);
+}
+
+int func_01DB40(void *a0, void *a1, float *m, float *base, float *dir, float p1, float p2, float p3,
+                float p4)
+{
+    float vec[3];
+
+    vec[0] = base[0] + dir[0] * p2;
+    vec[1] = base[1] + dir[1] * p2;
+    vec[2] = base[2] + dir[2] * p2;
+    if (func_01C0E8(a0, a1, m, vec, p1, p4, p3) != 0 || Second(a0, a1, m, base, dir, p2, p3) != 0) {
+        return 1;
+    }
+    return 0;
+}
