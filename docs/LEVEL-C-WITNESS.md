@@ -910,3 +910,18 @@ stub placements to three typed stub sources. A further 472 placements in 40
 forms link byte-exact but stay held for ABI review. All 21 complete USA
 modules remain exact; no PAL placement is counted, and the distinct-function
 denominator remains unqualified.
+
+A further 56 never-attempted forms reproduce **339 USA placements from 274
+authored pure C sources** (106,064 bytes by placement and 78,052
+distinct-source bytes) of 204–560 bytes: 252 placements of 201–300 bytes and
+87 of 401–600 bytes; sixty-five placements reuse an identical source after an
+independent exact link at each site. One hundred and eighty-eight placements
+use the pinned chain, 77 `gnu-ee-trial`, 73 the qualified
+`gnu-ee-trial-divpad` profile and one `gnu-ee-trial-divpad-blockmove`; two
+forms of 216 and 224 bytes use the existing per-source
+`-mno-check-zero-division` flag at fourteen placements. The prototype rules
+above release two of these placements and move one accepted stub placement
+to a typed stub source. A further 332 placements in 44 forms link byte-exact
+but stay held for ABI review. All 21 complete USA modules remain exact; no
+PAL placement is counted, and the distinct-function denominator remains
+unqualified.
