@@ -64,7 +64,7 @@ Every doc of this repository, by folder. New here? Read [building.md](build/buil
 | `tools/boot_trial_gate.py` | The pinned complete-boot C gate |
 | `tools/level_program_gate.py` | The complete SNR2 program gate for the frontend and level 01 |
 | `tools/level_c_gate.py` | The shared-level, frontend and level-body C gate |
-| `tools/progress_status.py` | The scoped progress snapshot and the README's progress table |
+| `tools/progress_status.py` | The scoped progress snapshot and its summary table |
 | `tools/bytematch_estimate.py` | The labelled ByteMatch estimate |
 | `tools/check_repository.py` | The pre-commit check: no game data, build output or toolchain in Git (CI runs it) |
 

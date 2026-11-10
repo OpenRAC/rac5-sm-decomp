@@ -27,21 +27,9 @@
 
 ## Progress
 
-A scoped snapshot written by `tools/progress_status.py`, not a game-wide percentage: the boot is measured, the
-front end and levels are candidate code intervals. [progress/README.md](progress/README.md) explains every count and
-[docs/contributing/roadmap.md](docs/contributing/roadmap.md) lists what is still open. Live numbers are on
-[ByteMatch](https://bytematch.dev/OpenRAC/rac5-sm-decomp).
-
-<!-- progress:begin (tools/progress_status.py --write-readme) -->
-| Scope | Code scope | Accepted C | Accepted functions |
-| --- | --- | ---: | ---: |
-| Boot `.text` | 498,900 bytes measured | 88,948 bytes (17.83%) | 693 |
-| Frontend (`FRONTEND.REL`) | 162,944 candidate bytes | 476 bytes | 1 |
-| Levels (20 `LEVEL_*.REL`) | 36,341,888 candidate bytes by placement | 80 bytes (1,600 by placement) | 2 |
-| Level bodies (counted separately) | 3,964,964 unique source bytes | 4,790,160 bytes by placement | 35,799 |
-
-The ByteMatch estimate divides the **4,054,468** accepted C bytes by a provisional **6,418,204**-byte denominator: **63.17%**. That denominator combines the 498,900 measured boot `.text` bytes, the 162,944 frontend candidate-code bytes and the 5,756,360 optimistically deduplicated level candidate bytes. It is an estimate over candidate code intervals, not a qualified unique-code size; the snapshot's `overall_percent` stays `null`.
-<!-- progress:end -->
+Progress is tracked on [ByteMatch](https://bytematch.dev/OpenRAC/rac5-sm-decomp), one badge per version below. It is
+a scoped estimate, not a game-wide percentage: `python3 tools/progress_status.py --check` prints what each count
+covers, and [progress/README.md](progress/README.md) explains them.
 
 ## Supported versions
 
