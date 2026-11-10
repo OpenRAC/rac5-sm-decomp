@@ -17,8 +17,8 @@
 </p>
 
 <p align="center">
-  A work-in-progress, matching decompilation of <i>Ratchet &amp; Clank: Size Matters</i> (2008) for PlayStation 2.<br>
-  The boot executable, the front end and 20 level modules, rebuilt as C that compiles back to the same bytes as retail.
+  A matching decompilation of <i>Ratchet &amp; Clank: Size Matters</i> (2008) for PlayStation 2.<br>
+  The boot executable, front end and 20 levels, rebuilt as C matching retail byte for byte.
 </p>
 
 > [!WARNING]
