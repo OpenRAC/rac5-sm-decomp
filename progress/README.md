@@ -20,14 +20,14 @@ candidate code intervals, not verified function sizes or unique game code.
 hashes; smaller shared functions may occur elsewhere. `overall_percent` is
 therefore `null`. The only percentage in the snapshot is explicitly scoped to
 the boot `.text`: 88,948 / 498,900 bytes (17.83%).
-The [function-boundary and deduplication audit](../docs/LEVEL-FUNCTION-INVENTORY.md)
+The [function-boundary and deduplication audit](../docs/research/level-function-inventory.md)
 now records 124,356 possible entry intervals, 74,051 stronger bounded
 candidates and an exact-duplicate upper bound of 33,168,892 candidate bytes.
 Relocation-masked groups remain review leads, not counted progress.
 An independent R5900 Ghidra pass agrees with **91,350** of those candidate
 boundaries. The data-target and closed local-callgraph checks retain **2,415
 shared template leads**, including one 32,796-byte body across all twenty numbered
-levels. The [audit guide](../docs/LEVEL-FUNCTION-INVENTORY.md) explains why
+levels. The [audit guide](../docs/research/level-function-inventory.md) explains why
 these are useful deduplication worklists but still not an exact unique-code
 denominator.
 The optional Ghidra body-range pass flags **1,590** candidate starts inside
@@ -40,18 +40,18 @@ oversized candidate intervals, leaving 294,836 surrounding body bytes unique.
 Its **23,471,984-byte** result, including conditional target-graph matches
 for zero-filled local data and placement-checked partial families, is a
 conditional deduplication scenario, not a verified unique-code denominator.
-The [switch-body review](../docs/LEVEL-FUNCTION-INVENTORY.md#contiguous-switch-body-review)
+The [switch-body review](../docs/research/level-function-inventory.md#contiguous-switch-body-review)
 identifies 1,117 contiguous function placements before data and call checks.
-An [optimistic masked-shape audit](../docs/LEVEL-FUNCTION-INVENTORY.md#optimistic-relocation-masked-shape-scenario)
+An [optimistic masked-shape audit](../docs/research/level-function-inventory.md#optimistic-relocation-masked-shape-scenario)
 also measures **5,756,360 candidate bytes** when identical masked bodies are
 grouped across levels while repeated bodies inside one level stay separate.
 That is a useful aggressive research scenario, not an accepted progress total.
-An additional [context/data review](../docs/LEVEL-FUNCTION-INVENTORY.md#repeated-shapes-with-code-context-and-data-anchors)
+An additional [context/data review](../docs/research/level-function-inventory.md#repeated-shapes-with-code-context-and-data-anchors)
 retains 5,631 repeated-shape families, including reviewed split segments and
 62 switch-body families, after global collision and final-callee checks and
 gives a **16,857,360-byte conditional
 scenario**. This too remains a structural worklist, not counted C progress.
-The separate [site-paired role review](../docs/LEVEL-FUNCTION-INVENTORY.md#site-paired-code-role-review)
+The separate [site-paired role review](../docs/research/level-function-inventory.md#site-paired-code-role-review)
 retains 141,319 conditional pairs after global collision, code-role and
 dependency checks, giving a **10,088,660-byte normalized-code scenario**.
 Its 13 selected reference modules reproduce the savings measured with all 20.
@@ -59,9 +59,9 @@ Variant callees may have different source; this is not a qualified denominator
 or counted C progress.
 
 To refresh the snapshot with your own lawful pinned USA image and local tools,
-run the [boot gate](../docs/BOOT-TRIAL-GATE.md), the
-[level-program gate](../docs/LEVEL-PROGRAM-GATE.md) and the
-[shared level C gate](../docs/LEVEL-C-WITNESS.md), then:
+run the [boot gate](../docs/gates/boot-trial-gate.md), the
+[level-program gate](../docs/gates/level-program-gate.md) and the
+[shared level C gate](../docs/gates/level-c-witness.md), then:
 
 ```sh
 python tools/level_function_inventory.py --write baserom/SCUS_976.15.iso

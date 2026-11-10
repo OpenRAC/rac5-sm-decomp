@@ -15,9 +15,9 @@ The overlay sections themselves have virtual address zero and no `SHF_ALLOC`
 flag. These are measured properties of `SCUS_976.15`, not claims about other
 games or the original VU source.
 
-[`tools/boot_dvp.py`](../tools/boot_dvp.py) checks those properties against
+[`tools/boot_dvp.py`](../../tools/boot_dvp.py) checks those properties against
 the hash-pinned boot. It generates only the metadata catalogue
-[`config/boot/dvp_overlays.tsv`](../config/boot/dvp_overlays.tsv), with section
+[`config/boot/dvp_overlays.tsv`](../../config/boot/dvp_overlays.tsv), with section
 names, sizes, string offsets, load addresses and VU addresses. Given lawful
 local SN assembler/linker copies, it can generate a private synthetic object:
 
@@ -35,9 +35,9 @@ sections still matches the ELF entry, program header and raw `PT_LOAD` bytes.
 That direct SN-linker output has 41 sections like retail, but its full file is
 **856,100** rather than **856,120 bytes**: section order, some flags/alignment,
 `.reginfo` placement, and the temporary BSS-tail section differ. The later
-[`tools/boot_elf_pack.py`](../tools/boot_elf_pack.py) reconstructs this file
+[`tools/boot_elf_pack.py`](../../tools/boot_elf_pack.py) reconstructs this file
 container from a C-linked `PT_LOAD` and the generated numeric
-[`elf_layout.json`](../config/boot/elf_layout.json). It regenerates `.DVP`
+[`elf_layout.json`](../../config/boot/elf_layout.json). It regenerates `.DVP`
 payloads, `.reginfo`, section names and headers without copying the retail
 file. The packaged **856,120-byte ELF is byte-identical** to the pinned boot.
 The loaded non-code sections still come from the user's private boot; this is
@@ -60,6 +60,6 @@ so linked ELF metadata can affect the debugger even when loaded bytes agree.
 For C matching, keep the exact entry and loaded program-byte check separate
 from whole-file identity and tool behavior. The `.DVP` data can now be
 regenerated privately for the baseline. This metadata result alone does not
-count a C match. The [boot-only gate](BOOT-MATCH-SCOPE.md) now accepts 263
+count a C match. The [boot-only gate](../gates/boot-match-scope.md) now accepts 263
 reviewed boot placements (19,048 bytes) and requires the entire packaged ELF to
 match.

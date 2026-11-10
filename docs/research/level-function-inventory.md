@@ -1,6 +1,6 @@
 # SNR2 function-boundary and shared-code audit
 
-[`tools/level_function_inventory.py`](../tools/level_function_inventory.py)
+[`tools/level_function_inventory.py`](../../tools/level_function_inventory.py)
 analyzes all 21 hash-pinned USA `LVL/*.REL` modules. It gathers possible
 function starts from direct `jal` targets, the exported `lib_main` entry and
 code addresses in packed local pointer relocations. It partitions every
@@ -54,7 +54,7 @@ python tools/level_function_inventory.py --check
 python tools/progress_status.py --write
 ```
 
-The tracked [`function_inventory_summary.json`](../config/levels/function_inventory_summary.json)
+The tracked [`function_inventory_summary.json`](../../config/levels/function_inventory_summary.json)
 contains metadata and counts only. Detailed per-module TSVs and
 `exact_duplicate_groups.tsv` / `masked_review_leads.tsv` stay under ignored
 `build/level-functions/` because they are large, generated research worklists.
@@ -70,9 +70,9 @@ game-wide percentage is claimed from this audit.
 
 A separate private Ghidra 12.1.3 project imported all 21 pinned candidate
 code slices at module offset `0x80` with an R5900 language extension. The
-authored [`ExportFunctionBounds.java`](../tools/ghidra/ExportFunctionBounds.java)
+authored [`ExportFunctionBounds.java`](../../tools/ghidra/ExportFunctionBounds.java)
 exports only entry/body metadata. The
-[`level_ghidra_crosscheck.py`](../tools/level_ghidra_crosscheck.py) tool
+[`level_ghidra_crosscheck.py`](../../tools/level_ghidra_crosscheck.py) tool
 requires the Ghidra body to be contiguous from the same candidate entry and
 to end at the independently inferred return boundary. A nonzero tail after
 that boundary stays unclassified but does not invalidate the agreed body.
@@ -95,7 +95,7 @@ control-flow/body-range review. The remaining 21 appear as short terminal
 call/tail forms and are also left unaccepted.
 An optional body-range export now records Ghidra's actual address sets rather
 than only minimum and maximum addresses.
-[`level_flow_ranges.py`](../tools/level_flow_ranges.py) finds **32,805,452
+[`level_flow_ranges.py`](../../tools/level_flow_ranges.py) finds **32,805,452
 bytes by placement** assigned to Ghidra function bodies and **1,590 static
 candidate starts inside another Ghidra body**. Of these, **1,209** also have a
 direct non-call branch/jump from that same Ghidra body to the candidate start.
@@ -105,7 +105,7 @@ and table review. Neither class is automatically removed from the candidate
 inventory. A code-only
 Ghidra import can also leave real address-taken code unowned; the range pass
 does not prove an exhaustive function inventory.
-See [`tools/ghidra/README.md`](../tools/ghidra/README.md) for reproducing the
+See [`tools/ghidra/README.md`](../../tools/ghidra/README.md) for reproducing the
 analysis with a lawful image and local Ghidra installation.
 
 ### Full-module flow review
@@ -113,7 +113,7 @@ analysis with a lawful image and local Ghidra installation.
 An isolated second Ghidra pass imported each **complete pinned REL** while
 marking only the known code interval executable. Unlike the code-only import,
 this exposes data pointers and some computed jump/call references. The
-[`level_full_module_flow.py`](../tools/level_full_module_flow.py) audit verifies
+[`level_full_module_flow.py`](../../tools/level_full_module_flow.py) audit verifies
 the pinned module hash and relocation sites, checks computed-flow instruction
 forms, and assigns all **1,590** previously inside-body candidate starts to
 review categories:
@@ -137,15 +137,15 @@ header entries and **5** functions in non-executable data; these 26 are
 excluded. The full-module function and reference exports for identical
 `LEVEL_15`/`LEVEL_21` intervals have identical hashes, a repeatability check.
 All complete REL files and detailed worklists remain private. The tracked
-[`full_module_flow_summary.json`](../config/levels/full_module_flow_summary.json)
+[`full_module_flow_summary.json`](../../config/levels/full_module_flow_summary.json)
 contains only counts and hashes, never program bytes. See the
-[reproduction commands](../tools/ghidra/README.md#full-module-flow-review).
+[reproduction commands](../../tools/ghidra/README.md#full-module-flow-review).
 
 ### Boundary coverage before a function total
 
 The pinned full-module Ghidra export proposes **101,769 in-code function
 entries** across the 21 modules. The independent
-[`level_boundary_coverage.py`](../tools/level_boundary_coverage.py) pass checks
+[`level_boundary_coverage.py`](../../tools/level_boundary_coverage.py) pass checks
 those exports against the pinned code slices and counts owners for each byte.
 It finds **35,297,840 singly owned bytes** and **1,044,048 unowned bytes** in
 the 36,341,888-byte placement scope, with no overlapping Ghidra ranges.
@@ -167,7 +167,7 @@ hash cannot stand for one distinct function.
 After regenerating the private candidate inventory and full-module Ghidra
 exports, run `python tools/level_boundary_coverage.py --write`; its detailed
 `build/level-functions/unowned_code_gaps.tsv` remains ignored. The tracked
-[`boundary_coverage_summary.json`](../config/levels/boundary_coverage_summary.json)
+[`boundary_coverage_summary.json`](../../config/levels/boundary_coverage_summary.json)
 contains only counts and input hashes, and CI runs the public `--check` mode.
 A game-wide function denominator still requires classifying the unresolved
 boundaries and code/data gaps, reviewing cross-level source identity and
@@ -176,7 +176,7 @@ count remains `0/0` until that catalogue is qualified.
 
 ### Relocation-backed entries missed by Ghidra
 
-The [called-boundary audit](../tools/level_called_boundaries.py) checks the
+The [called-boundary audit](../../tools/level_called_boundaries.py) checks the
 nonzero uncovered gaps that contain a statically decoded direct call. It
 requires the call site to have a pinned local 26-bit jump relocation to the
 candidate entry, then verifies the returning body's bytes, reachable control
@@ -192,8 +192,8 @@ placement bytes**, with no overlap; one `FRONTEND.REL` entry at `0x22C0` has
 unresolved indirect flow and no return before the next static entry. At commit
 `c391953a`, 58 of the 92 returning placements already had accepted C, leaving
 **34 newly corroborated boundary placements** (10,964 placement bytes). The
-tracked [boundary table](../config/levels/called_boundary_witnesses.tsv) and
-[summary](../config/levels/called_boundary_summary.json) contain metadata only;
+tracked [boundary table](../../config/levels/called_boundary_witnesses.tsv) and
+[summary](../../config/levels/called_boundary_summary.json) contain metadata only;
 the detailed caller and flow review remains ignored.
 
 These witnesses establish entry and returning body evidence at those
@@ -206,11 +206,11 @@ baserom/SCUS_976.15.iso`; CI checks the public pins without the disc.
 
 ### Reviewed source-role identities across levels
 
-The [family-identity audit](../tools/level_family_identity.py) records a first,
+The [family-identity audit](../../tools/level_family_identity.py) records a first,
 deliberately narrow set of cross-level identities. Its
-[specifications](../config/levels/family_identity_specs.tsv) select two
+[specifications](../../config/levels/family_identity_specs.tsv) select two
 collision-free masked shapes, and its
-[C controls](../config/levels/family_identity_controls.tsv) name previously
+[C controls](../../config/levels/family_identity_controls.tsv) name previously
 accepted source placements. The private pass checks every selected boundary
 against accepted C or a relocation-backed witness; it also requires a caller
 context unique within each module and common to every family member. It
@@ -226,7 +226,7 @@ placements** for which every masked-shape placement already has accepted C,
 the normalized C logic agrees, and no shape repeats within its module. Of
 those families, 92 have no local data target, 57 have independently unique
 matching data windows, and one meets the paired-target rule. The resulting
-[placement map](../config/levels/reviewed_family_placements.tsv) also admits
+[placement map](../../config/levels/reviewed_family_placements.tsv) also admits
 **15 further families** whose 204 accepted C controls anchor 66 other
 placements with exact full-module Ghidra boundaries and the same caller,
 callee and data-role checks. Two candidate families with only three C controls
@@ -241,7 +241,7 @@ once in each member module and has no conflicting accepted C logic or extra
 placement admitted by the same strict context rule. The scoped map now
 contains **282 identities at 3,385 placements**, with 3,309 fixed C controls
 (265 families fully accepted C, 17 still partial). The
-[summary](../config/levels/family_identity_summary.json) pins
+[summary](../../config/levels/family_identity_summary.json) pins
 the evidence without publishing game bytes. Callees are checked for role and
 boundary; the audit does not assert that each callee is itself one shared
 source function.
@@ -256,7 +256,7 @@ the boundary inventory; CI checks the public evidence pins without the disc.
 
 ## Structural translation leads
 
-[`level_translation_families.py`](../tools/level_translation_families.py)
+[`level_translation_families.py`](../../tools/level_translation_families.py)
 filters masked groups to one placement per module, requires every boundary
 to agree with Ghidra, preserves named relocation symbols and addends, and
 requires local HI16/LO16 data references to move by one consistent
@@ -299,7 +299,7 @@ game-wide function catalogue.
 ## Splitting oversized candidate intervals
 
 Some static next-entry intervals appear to contain several functions. The
-[`level_split_dedupe.py`](../tools/level_split_dedupe.py) review only splits an
+[`level_split_dedupe.py`](../../tools/level_split_dedupe.py) review only splits an
 interval, including pointer-only and nonzero-tail parents, at each selected
 sub-body for which the code-only and full-module
 Ghidra analyses agree, its end contains `jr $ra` plus the delay slot, and any
@@ -344,14 +344,14 @@ below the prior scenario. The calculation never counts a parent and its split
 segments at the same time. Ghidra-derived starts and structural equivalence
 remain review leads, so this is **not** a qualified unique-code denominator or
 a ByteMatch percentage. The compact
-[`split_dedupe_summary.json`](../config/levels/split_dedupe_summary.json)
+[`split_dedupe_summary.json`](../../config/levels/split_dedupe_summary.json)
 records counts and input hashes only.
 
 ## Contiguous switch-body review
 
 Some statically labelled `no_return` entries are dispatchers for pointer-only
 case labels rather than separate tiny functions. The
-[`level_switch_bodies.py`](../tools/level_switch_bodies.py) audit accepts a
+[`level_switch_bodies.py`](../../tools/level_switch_bodies.py) audit accepts a
 contiguous full-module Ghidra body only when it starts at a direct-call entry,
 ends in `jr $ra` and its delay slot, contains only pointer-labelled static
 entries, and has no competing Ghidra function, external direct edge into an
@@ -360,12 +360,12 @@ body at the start must agree on the full outer range. The pinned private pass
 finds **1,117 placements** comprising **1,784,320 body bytes**. Ninety-eight
 relocation-masked groups recur between modules, with 1,539,908 possible
 placement-byte savings before data and callgraph checks. Their private
-worklist is pinned by [`switch_body_summary.json`](../config/levels/switch_body_summary.json).
+worklist is pinned by [`switch_body_summary.json`](../../config/levels/switch_body_summary.json).
 This is function-ownership evidence, not a counted C match.
 
 ## Optimistic relocation-masked shape scenario
 
-The separate [`level_shape_scenario.py`](../tools/level_shape_scenario.py)
+The separate [`level_shape_scenario.py`](../../tools/level_shape_scenario.py)
 audit answers how low the candidate-byte count could go if every body with
 the same relocation-masked instructions and fixup descriptors shared a code
 shape. It rehashes every static, selected split and reviewed switch body
@@ -383,13 +383,13 @@ relocations gives 31,627,388 bytes under the same maximum-per-module rule.
 These are alternative *shape-counting assumptions*, not bounds that prove
 source equivalence. Matching masked code can still refer to different data,
 contain uncertain boundaries or require distinct C definitions. The
-[`shape_scenario_summary.json`](../config/levels/shape_scenario_summary.json)
+[`shape_scenario_summary.json`](../../config/levels/shape_scenario_summary.json)
 is deliberately separate from the conditional structural review and from
 qualified C progress; none supplies a ByteMatch denominator yet.
 
 ## Repeated shapes with code context and data anchors
 
-The [context-translation audit](../tools/level_context_translation.py)
+The [context-translation audit](../../tools/level_context_translation.py)
 examines functions whose masked instruction shape recurs within a level. It
 replaces reviewed split parents with their segments and contiguous switch
 bodies with one function unit, preserving exact-hash gap markers for unselected
@@ -451,7 +451,7 @@ source for every placement; this is not a qualified denominator.
 
 ## Site-paired code-role review
 
-The [role-graph audit](../tools/level_role_graph.py) tests a broader form of
+The [role-graph audit](../../tools/level_role_graph.py) tests a broader form of
 structural sharing across the 20 retained modules. The 13 reference modules
 listed in the summary reproduce the same candidate savings as a private run
 using all 20, while reducing the cost of regeneration. Each proposed pair has

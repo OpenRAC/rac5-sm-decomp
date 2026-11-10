@@ -1,6 +1,6 @@
 # Local SNR2 relocated-image baseline
 
-[`tools/relocate.py`](../tools/relocate.py) applies the **pinned USA boot
+[`tools/relocate.py`](../../tools/relocate.py) applies the **pinned USA boot
 loader's** SNR2 pointer adjustments, symbol resolution, packed local fixups
 and named-symbol relocations to a personally supplied `LVL/*.REL` module. It
 uses Python's standard library, verifies the complete disc and boot hashes,
@@ -45,22 +45,22 @@ memory region, in 4,096-byte chunks including the final partial chunk:
 The direct comparisons found **zero differing bytes**. The level 01 test
 exposed the named relocation's 24-bit symbol index: 17 final pointer sites
 refer to symbols numbered 256 or higher. The pinned boot reads the full
-index, not just its low byte ([format notes](REL-FORMAT.md)). No instruction
+index, not just its low byte ([format notes](rel-format.md)). No instruction
 listings, retail executables, relocated images or RAM dumps are committed.
 
 This establishes the **loader output** for two modules at those measured
 bases. It does not establish code/data boundaries, assembly rebuilding,
 compiler identity or flags, C/C++ matches, or a progress percentage. The
 remaining 19 module placements still need runtime comparison. See the
-[roadmap](ROADMAP.md) for the next gates.
+[roadmap](../contributing/roadmap.md) for the next gates.
 
-Later [frontend](FRONTEND-ASSEMBLY.md) and
-[level 01](LEVEL-01-ASSEMBLY.md) assembly experiments rebuilt candidate
+Later [frontend](frontend-assembly.md) and
+[level 01](level-01-assembly.md) assembly experiments rebuilt candidate
 pre-relocation code intervals byte for byte. They did not repeat runtime
 memory comparisons or establish complete REL assembly builds.
-The later [21-placement campaign](SNR2-ASSEMBLY-CAMPAIGN.md) extends this
+The later [21-placement campaign](snr2-assembly-intervals.md) extends this
 pre-relocation interval check to the other modules; it does not extend the
 paused-memory evidence beyond these two placements.
-The newer [shared level C gate](LEVEL-C-WITNESS.md) preserves both measured
+The newer [shared level C gate](../gates/level-c-witness.md) preserves both measured
 relocated hashes after C integration. It does not add new paused-memory
 captures for the other nineteen numbered levels.

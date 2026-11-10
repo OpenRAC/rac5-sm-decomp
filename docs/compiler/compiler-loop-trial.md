@@ -6,7 +6,7 @@ body is 68 bytes, against the pinned retail 64-byte interval. Removing the
 compiler's short-loop padding pass in an isolated build produced **zero**
 `nop` instructions and a 60-byte body. The retail has **one** there.
 
-[`0001-rac5-short-loop-six.patch`](../tools/compiler/patches/0001-rac5-short-loop-six.patch)
+[`0001-rac5-short-loop-six.patch`](../../tools/compiler/patches/0001-rac5-short-loop-six.patch)
 changes both branches of `mips_r5900_pad_loops` from `loop < 7` to
 `loop < 6`. It is a **RAC5-only trial**, applied to an isolated copy of the
 locally reconstructed source after its existing patch stack. The source
@@ -24,16 +24,16 @@ The isolated patched `cc1` SHA-256 was
 `9614eceecbcb1f7a64cf3a4ad3c827b3e257ab6b1f934e42fcbc4ded0f0584d6`.
 With the same measured `cpp` and assembler, `-O2 -G0` now emits **one**
 `nop`. The C source in
-[`nonmatching/boot/fog_preupdate.c`](../nonmatching/boot/fog_preupdate.c)
+[`nonmatching/boot/fog_preupdate.c`](../../nonmatching/boot/fog_preupdate.c)
 produces object SHA-256
 `c2cb485df80e2e548499a984b4d9aeb753393dd8a958069255e42190631fc0f1`;
 the isolated linked interval matches **64/64 bytes**, SHA-256
 `f8a6560b8960c8d17085570344896f2e51ffea6285580cd0390579b61c6f7abe`.
 
 A second, independent loop shape provides another control.
-[`MCPFONT_FontStringLength__FPCc`](../nonmatching/boot/mcpfont_string_length.c)
+[`MCPFONT_FontStringLength__FPCc`](../../nonmatching/boot/mcpfont_string_length.c)
 at `0x01E67978` and
-[`MCP_FontStringLength__FPCc`](../nonmatching/boot/mcp_string_length.c)
+[`MCP_FontStringLength__FPCc`](../../nonmatching/boot/mcp_string_length.c)
 at `0x01E67EE8` have identical retail 64-byte bodies. With the same authored
 indexed-string loop, the original threshold-seven `cc1` yields **48/64**
 equal bytes at either placement; threshold six yields **64/64** at each,
@@ -47,7 +47,7 @@ Alternative pointer and while-loop C forms did not match, so this result also
 depends on the authored source shape.
 
 A third control exercises the other padding path: the backward branch in
-[`GLOBALWAD_ReleaseTransitionBank__Fv`](../nonmatching/boot/globalwad_release_transition_bank.c)
+[`GLOBALWAD_ReleaseTransitionBank__Fv`](../../nonmatching/boot/globalwad_release_transition_bank.c)
 at `0x01E8FE80` has an unfilled (`nop`) delay slot in retail. The original
 compiler yields **69/96** equal bytes and a 100-byte body. Threshold six
 yields **96/96**, SHA-256
@@ -74,6 +74,6 @@ controls. The GNU source, local compiler binaries,
 objects, generated assembly and linked ELF are not distributed here. Keep
 the three loop shapes under `nonmatching/`; they remain unaccepted. One
 different boot function, `MEMCARD_Busy__Fv`, has since passed the limited
-[boot-only gate](BOOT-MATCH-SCOPE.md). The later
-[ByteMatch estimate](../progress/README.md) uses only accepted C bytes and a
+[boot-only gate](../gates/boot-match-scope.md). The later
+[ByteMatch estimate](../../progress/README.md) uses only accepted C bytes and a
 provisional code denominator; it does not count these loop trials.

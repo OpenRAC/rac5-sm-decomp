@@ -20,7 +20,7 @@ exactly equal the named type-4 relocation sites. Both comparisons found no
 missing or extra sites. Zero targets remain import placeholders until the
 SNR2 loader applies named relocations.
 
-[`tools/snr2_assembly.py`](../tools/snr2_assembly.py) verifies the full USA
+[`tools/snr2_assembly.py`](../../tools/snr2_assembly.py) verifies the full USA
 disc and module hashes, the boundary checks, both relocation-site sets and
 the measured SN tool hashes. It decodes 506,944 words with optional
 `rabbitizer==1.16.2`, including 1,188 R5900 `sqrt.s` forms mapped to
@@ -37,9 +37,9 @@ python tools/snr2_assembly.py baserom/SCUS_976.15.iso LEVEL_01.REL \
 This is an exact **pre-relocation candidate code interval**, not a complete
 LEVEL_01.REL assembly baseline or function catalogue. The module header,
 data, symbol tables and packed stream outside it are still original bytes.
-The independent [relocated-image comparison](RELOCATED-IMAGE.md) previously
+The independent [relocated-image comparison](relocated-image.md) previously
 matched the full level 01 loader output to paused EE memory at one observed
 base; this assembly experiment did not repeat that runtime comparison.
 It identifies no matching C/C++ functions and adds no ByteMatch progress.
 The same guarded workflow has since verified
-[candidate intervals in all 21 SNR2 placements](SNR2-ASSEMBLY-CAMPAIGN.md).
+[candidate intervals in all 21 SNR2 placements](snr2-assembly-intervals.md).

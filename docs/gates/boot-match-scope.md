@@ -7,7 +7,7 @@ delay slot inside that extent, has no trailing alignment bytes, and has no
 direct branch or jump target into its interval.
 
 The further boot bodies were promoted the same way under the
-[promotion protocol](BOOT-PROMOTION.md): each was reviewed for its complete
+[promotion protocol](boot-promotion.md): each was reviewed for its complete
 retail boundary, symbol mangling, callers, callees and behaviour, then moved
 from `nonmatching/boot/` to `src/boot/`, added to the enumerated accepted set,
 and requalified by the complete private gate at the final commit. The accepted
@@ -20,12 +20,12 @@ word is checked against retail and receives no C credit. No accepted byte comes
 from the retained assembly baseline. This is a
 reviewed placement set, not a complete retail function catalogue.
 
-The project qualifies the [hash-pinned compiler trial](../config/boot/compiler_trial.json)
+The project qualifies the [hash-pinned compiler trial](../../config/boot/compiler_trial.json)
 **for these reviewed boot placements only**. Its independently authored C compiles to the
 pinned object without byte rewriting. The initial qualification recompiled 17 objects
 covering 20 C witnesses, including distinct conditional, call, copy and
 short-loop shapes. The expanded campaign is documented in
-[BOOT-TRIAL-GATE.md](BOOT-TRIAL-GATE.md); it does not expand acceptance. The linker
+[boot-trial-gate.md](boot-trial-gate.md); it does not expand acceptance. The linker
 replaces the candidate interval in the complete private boot assembly.
 `tools/boot_trial_gate.py` requires the reconstructed `.text` to match all
 498,900 retail bytes and the raw file-backed `PT_LOAD` to match all 809,872
@@ -33,10 +33,10 @@ bytes, with identical entry, complete program header and BSS location/size.
 The non-code loaded sections still originate from the user's hash-pinned
 retail executable. A source-slice comparison alone cannot pass this gate.
 
-The [ELF packaging tool](../tools/boot_elf_pack.py) now takes the C-linked
+The [ELF packaging tool](../../tools/boot_elf_pack.py) now takes the C-linked
 `PT_LOAD`, independently regenerates the 31 non-loaded `.DVP` sections and
 tables from public metadata, and emits the header, `.reginfo`, section names
-and section headers from a numeric [layout catalogue](../config/boot/elf_layout.json).
+and section headers from a numeric [layout catalogue](../../config/boot/elf_layout.json).
 The resulting **856,120-byte ELF matches the entire pinned file** by SHA-256.
 The direct SN-linker output still has a different section layout; the
 packaging step repairs that difference without copying the retail ELF file.
@@ -60,7 +60,7 @@ remove the counted claim and
 repair the source or move it back to `nonmatching/` until it passes again.
 
 Further promotions require their own placement and boundary review, and the
-[promotion audit](BOOT-PROMOTION.md) shortlist is a review queue rather than
+[promotion audit](boot-promotion.md) shortlist is a review queue rather than
 acceptance. Exact bytes in the current multi-object witness are a useful
 starting point, but do not automatically accept other C bodies. Inline assembly
 and fixed-register experiments are not C evidence and remain outside the public

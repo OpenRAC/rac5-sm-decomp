@@ -19,8 +19,8 @@ type-4 relocation sites. The two site sets have no missing or extra entries.
 The 434 zero targets remain import placeholders until the SNR2 loader applies
 its named relocations.
 
-[`tools/frontend_assembly.py`](../tools/frontend_assembly.py), a compatibility
-entry point for the shared [`tools/snr2_assembly.py`](../tools/snr2_assembly.py), verifies the
+[`tools/frontend_assembly.py`](../../tools/frontend_assembly.py), a compatibility
+entry point for the shared [`tools/snr2_assembly.py`](../../tools/snr2_assembly.py), verifies the
 complete USA disc and frontend module hashes, both jump-site sets, and the
 measured SN tool hashes. It decodes 40,736 words with optional
 `rabbitizer==1.16.2`, including three R5900 `sqrt.s` forms that need an
@@ -39,10 +39,10 @@ This establishes an exact **pre-relocation interval**, not a complete
 FRONTEND.REL assembly baseline or a function catalogue. The header, data,
 symbol tables, packed stream and any other bytes outside this interval are
 still taken from the original module. The independent
-[relocated-image comparison](RELOCATED-IMAGE.md) established that the loader
+[relocated-image comparison](relocated-image.md) established that the loader
 output for the full frontend matched paused EE memory at one observed base;
 this new assembly experiment did not repeat that runtime comparison.
 It identifies no matching C/C++ functions and adds no ByteMatch progress.
 The same assembly workflow now covers a separate
-[candidate interval in LEVEL_01.REL](LEVEL-01-ASSEMBLY.md).
-It has since been applied to [all 21 SNR2 placements](SNR2-ASSEMBLY-CAMPAIGN.md).
+[candidate interval in LEVEL_01.REL](level-01-assembly.md).
+It has since been applied to [all 21 SNR2 placements](snr2-assembly-intervals.md).

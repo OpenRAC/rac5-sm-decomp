@@ -1,7 +1,7 @@
 /* USA LEVEL_01.REL:0x19BFF0. Retained C hypothesis, not a match.
  * The pinned profile links 476 bytes against a 520-byte candidate body;
  * the first difference is at body byte 4. Control flow and the random
- * factor still need semantic review; see docs/MATCHING-BLOCKERS.md. */
+ * factor still need semantic review; see docs/contributing/matching-blockers.md. */
 typedef struct { float x, y, z; } Vec3;
 extern Vec3 D_00217E88;
 extern float D_002251A4;

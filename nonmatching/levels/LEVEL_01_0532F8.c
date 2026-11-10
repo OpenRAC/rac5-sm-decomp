@@ -2,7 +2,7 @@
  * The gnu-ee-trial profile links 428 bytes against a 428-byte candidate
  * body; the first difference is at body byte 48. Equivalent head-store
  * orders did not resolve the scheduling difference around memset.
- * See docs/MATCHING-BLOCKERS.md. */
+ * See docs/contributing/matching-blockers.md. */
 typedef struct {
     float f00;
     float f04;

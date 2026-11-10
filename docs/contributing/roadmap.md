@@ -8,27 +8,27 @@
    loadable segment, entry `0x01E62508`, and a `.text` section at `0x01E62500`
    (size `0x79CD4`). The disc also has `LVL/FRONTEND.REL` and numbered
    `LVL/LEVEL_*.REL` files. Their SNR2 headers, relocation tables and exported
-   symbols have been checked across all 21 modules (`docs/REL-FORMAT.md`).
+   symbols have been checked across all 21 modules (`docs/build/rel-format.md`).
    The boot's embedded SNR2 table provides 1,803 named symbols
-   (`docs/BOOT-SYMBOLS.md`).
+   (`docs/build/boot-symbols.md`).
    A metadata-only comparison with MultiworldGG's USA PS2 runtime map confirms
    several boot globals and the 12-word loader-site signature
-   (`docs/MULTIWORLD-CROSSCHECK.md`).
+   (`docs/research/multiworld-crosscheck.md`).
    The boot loader's two relocation sources and all 21 packed local-fixup
-   streams are now mapped (`docs/REL-FORMAT.md`). The complete loaded file
+   streams are now mapped (`docs/build/rel-format.md`). The complete loaded file
    bytes for the frontend and level 01 have been reproduced and compared
-   directly to EE memory before constructors (`docs/RELOCATED-IMAGE.md`).
+   directly to EE memory before constructors (`docs/build/relocated-image.md`).
    Candidate code intervals for all 21 placements are backed by exact
    jump-relocation site sets and private assembly comparisons
-   (`docs/SNR2-ASSEMBLY-CAMPAIGN.md`). The
-   [frontend and level 01 program gate](LEVEL-PROGRAM-GATE.md) now combines
+   (`docs/build/snr2-assembly-intervals.md`). The
+   [frontend and level 01 program gate](../gates/level-program-gate.md) now combines
    exact assembly with the full original module and two measured relocated
    images. Further review of other boundaries, shared code, data layout and
    runtime behavior remains necessary; do not reuse RAC2's
    WAD layout.
 3. **Establish an assembly baseline (in progress).** The entire 498,900-byte
    boot `.text` section now reassembles exactly with a measured local SN
-   assembler/linker combination (`docs/ASSEMBLY-STATUS.md`). Copying the
+   assembler/linker combination (`docs/build/assembly-status.md`). Copying the
    pinned non-code sections into ignored local assembly also reproduces all
    809,872 file-backed boot load bytes. Candidate code intervals in all 21
    SNR2 placements also reassemble exactly (36,341,888 cumulative bytes by
@@ -39,22 +39,22 @@
    before calling this a full-program baseline. Non-code copying is not
    decompilation.
 4. **Identify compiler profiles.** Mangled C++ exports and ProDG SNR2 modules
-   are evidence, not a compiler version (`docs/COMPILER-STATUS.md`). Measure
+   are evidence, not a compiler version (`docs/compiler/compiler-status.md`). Measure
    signatures on code and SDK-library ranges. Do not copy RAC2's `sdk` or game
    compiler routing without witness functions and baseline controls. One
-   [boot C-object integration witness](BOOT-C-WITNESS.md) preserves all
+   [boot C-object integration witness](../gates/boot-c-witness.md) preserves all
    raw retail `PT_LOAD` bytes and header. A combined trial now preserves them
-   initially with twenty C functions linked together (`docs/BOOT-C-WITNESS.md`). The
+   initially with twenty C functions linked together (`docs/gates/boot-c-witness.md`). The
    current pure-C campaign recompiles 713 objects and catalogues 713 body extents;
    inline-assembly experiments are excluded. That
    evidence supports a reviewed boot placement set, not a general compiler or
    full runtime behavior. The later packaging gate rebuilds the entire ELF
    file exactly from the linked load image and numeric metadata.
-   The [boot gate](BOOT-TRIAL-GATE.md) now rebuilds all C objects from
+   The [boot gate](../gates/boot-trial-gate.md) now rebuilds all C objects from
    SHA-pinned local tools and checks the complete load image reproducibly.
    693 reviewed boot placements are accepted under this limited profile;
    level programs and the original compiler identity remain open.
-   The [VU overlay audit](DVP-OVERLAYS.md) privately reproduces the 31 DVP
+   The [VU overlay audit](../build/dvp-overlays.md) privately reproduces the 31 DVP
    sections while preserving the exact load segment. An older direct SN-linker
    output differs in section layout and CRC; the metadata packaging gate now
    recreates the pinned complete file exactly.
@@ -65,7 +65,7 @@
    (`config/boot/witness_boundaries.tsv`). Review remaining boundaries,
    padding, aliases and placements before producing a retail function
    catalogue; commit metadata only.
-   Across levels, the [candidate inventory](LEVEL-FUNCTION-INVENTORY.md)
+   Across levels, the [candidate inventory](../research/level-function-inventory.md)
    covers all 21 placements and separates bounded call targets from pointer
    entries and unresolved spans. Review those boundaries and masked duplicate
    leads before declaring a unique-code denominator.
@@ -95,14 +95,14 @@
    scenario as a game-wide denominator.
 6. **Start scoped C/C++ matching.** `MEMCARD_Busy__Fv` is the first
    accepted 16-byte boot placement. The
-   [level C gate](LEVEL-C-WITNESS.md) accepts two authored C functions,
+   [level C gate](../gates/level-c-witness.md) accepts two authored C functions,
    8 and 72 bytes, at twenty level placements, plus a 476-byte frontend
    initializer. Other functions still need reviewed
    boundaries, compiler profiles and placement
-   checks. The [scoped progress snapshot](../progress/README.md) records
+   checks. The [scoped progress snapshot](../../progress/README.md) records
    measured status without publishing a premature game-wide percentage.
 
 The tools complete step 1, the SNR2 metadata part of step 2, and the boot's
 file-backed assembly/load-image part of step 3. Runtime and level-program
 baselines and game-wide matching C/C++ remain open. See the
-[boot-only acceptance scope](BOOT-MATCH-SCOPE.md) before counting more.
+[boot-only acceptance scope](../gates/boot-match-scope.md) before counting more.

@@ -1,6 +1,6 @@
 /* USA LEVEL_01.REL:0x0CD700. Retained C hypothesis, not a match.
  * The gnu-ee-trial profile links 1848 bytes against an 1880-byte body;
- * first difference at body byte 0. See docs/MATCHING-BLOCKERS.md. */
+ * first difference at body byte 0. See docs/contributing/matching-blockers.md. */
 typedef unsigned int u32;
 typedef unsigned short u16;
 typedef unsigned char u8;

@@ -8,7 +8,7 @@ toolchain and `-O2 -G0` can produce these limited intervals. It does not
 identify the original compiler; the later full-boot gate supplies the
 separate loaded-byte evidence for the accepted placements.
 The `MEMCARD_Busy__Fv` source has since moved to `src/boot/` under the
-[boot-only acceptance gate](BOOT-MATCH-SCOPE.md); two later reviews promoted 30
+[boot-only acceptance gate](../gates/boot-match-scope.md); two later reviews promoted 30
 bodies each to the same directory, so 263 accepted boot placements now supply
 their own compiled bytes. The remaining functions of this early table stay in
 `nonmatching/` and contribute no accepted matches unless they were among the
@@ -63,9 +63,9 @@ an unfilled branch delay matches 96/96 in `GLOBALWAD_ReleaseTransitionBank`;
 the original compiler yielded 69/96. The current provisional span total is
 **648/648 bytes across twenty functions**. Isolated slice equality alone did
 not qualify a whole-program match. A later
-[provisional integration witness](BOOT-C-WITNESS.md) linked the
+[provisional integration witness](../gates/boot-c-witness.md) linked the
 `MEMCARD_Busy__Fv` C object into the entire boot assembly and kept the full
-file-backed bytes exact. A [combined integration witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)
+file-backed bytes exact. A [combined integration witness](../gates/boot-c-witness.md#combined-provisional-c-witness)
 now links every authored body into the boot at once and preserves the exact raw
 `PT_LOAD` bytes, program header and ELF entry; linking stays provisional, and
 only the reviewed placements in the explicit gate set are counted.
@@ -80,16 +80,16 @@ function symbol. Objects can contain multiple bodies.
 One body,
 `dlib_displist_direct_end__FP13DLIB_DISPLIST`, carries the per-source option
 `-mno-check-zero-division` recorded in
-[`config/cflags.txt`](../config/cflags.txt), and ten more are built by two
+[`config/cflags.txt`](../../config/cflags.txt), and ten more are built by two
 further pinned compilers through the same file's selectors
-([route P](COMPILER-STATUS.md#a-second-pinned-compiler-route-p),
-[route Q](COMPILER-STATUS.md#the-sony-sdk-compiler-route-q)).
+([route P](compiler-status.md#a-second-pinned-compiler-route-p),
+[route Q](compiler-status.md#the-sony-sdk-compiler-route-q)).
 Sources retain their retail ELF symbols, and the linked ELF must keep the complete
 856,120-byte boot byte-identical. **61 of these bodies** have since completed
-[promotion review](BOOT-PROMOTION.md) and now live in `src/boot/`: together with
+[promotion review](../gates/boot-promotion.md) and now live in `src/boot/`: together with
 `MEMCARD_Busy__Fv` they supply 19,048 boot `.text` bytes from their own compiled
 placements, while every other body remains an uncounted witness. The generated
-[`config/boot/witness_boundaries.tsv`](../config/boot/witness_boundaries.tsv)
+[`config/boot/witness_boundaries.tsv`](../../config/boot/witness_boundaries.tsv)
 catalogue lists each identifiable linked body with its compiled extent, following zero
 alignment and the kind of control transfer it ends in (`jr_ra`, `jump`,
 `jr_reg`, `break`, `syscall`, or `call`). A terminal call does not prove that its
@@ -107,7 +107,7 @@ sibling calls, where retail emits a direct `j` for some tail calls.
 
 `FOG_PreUpdate__Fv` at `0x01E7D4A8` exposed a short-loop padding mismatch in
 the original trial `cc1`: two `nop` instructions before the backward branch,
-where retail has one. An [isolated RAC5-only compiler patch](COMPILER-LOOP-TRIAL.md)
+where retail has one. An [isolated RAC5-only compiler patch](compiler-loop-trial.md)
 changes the loop threshold from seven to six instructions and reproduces the
 entire **64/64-byte** body, without post-processing the object. All sixteen
 earlier function witnesses keep identical object hashes under that patched
@@ -115,7 +115,7 @@ compiler. This is a stronger profile control, not proof of the original
 compiler. The FOG function itself remains unaccepted.
 `GLOBALWAD_ReleaseTransitionBank__Fv` exercises a backward branch whose
 retail delay slot remains `nop`, covering the unfilled-delay path of that
-loop-padding trial ([details](COMPILER-LOOP-TRIAL.md)).
+loop-padding trial ([details](compiler-loop-trial.md)).
 The globals' current names and types in the C files are hypotheses; their
 link-time addresses are measured from the pinned instructions and recorded in
 `config/boot/witness-*.ld`. The table deliberately contains no code bytes.
@@ -165,11 +165,11 @@ python tools/compare_boot_slice.py baserom/SCUS_976.15 build/snd_unlock_position
 For the combined whole-boot witness, use the seventeen C sources **without**
 `-DRAC5_WITNESS_PADDING` and with the isolated RAC5 `cc1`; compile them from
 bare filenames on the Linux filesystem, and run `tools/boot_c_campaign.py` as documented in
-[`BOOT-C-WITNESS.md`](BOOT-C-WITNESS.md#combined-provisional-c-witness).
+[`boot-c-witness.md`](../gates/boot-c-witness.md#combined-provisional-c-witness).
 Its pinned object hashes guard the exact trial inputs.
 
 The `FOG_PreUpdate__Fv` control uses the isolated patched `cc1` described in
-[`COMPILER-LOOP-TRIAL.md`](COMPILER-LOOP-TRIAL.md), then the same assembler
+[`compiler-loop-trial.md`](compiler-loop-trial.md), then the same assembler
 and `config/boot/witness-fog-preupdate.ld`. Its comparison command now exits
 successfully:
 

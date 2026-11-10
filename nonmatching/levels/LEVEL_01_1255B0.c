@@ -1,6 +1,6 @@
 /* USA LEVEL_01.REL:0x1255B0. Retained C hypothesis, not a match.
  * The pinned profile links 544 bytes against a 544-byte candidate body;
- * the first difference is at body byte 32. See docs/MATCHING-BLOCKERS.md. */
+ * the first difference is at body byte 32. See docs/contributing/matching-blockers.md. */
 void func_1255B0(float *param_1,float *param_2,float *param_3)
 
 {

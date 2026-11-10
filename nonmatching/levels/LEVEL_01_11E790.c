@@ -1,7 +1,7 @@
 /* USA LEVEL_01.REL:0x11E790. Retained C hypothesis, not a match.
  * The gnu-ee-trial-divpad profile links 532 bytes against a 536-byte
  * candidate body; the first difference is at body byte 0.
- * See docs/MATCHING-BLOCKERS.md. */
+ * See docs/contributing/matching-blockers.md. */
 extern float fabsf(float value);
 extern float func_11E6B8(float *out0, float *out1,
                          const float *a, const float *b);

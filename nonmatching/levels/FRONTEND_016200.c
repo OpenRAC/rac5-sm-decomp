@@ -1,7 +1,7 @@
 /* USA FRONTEND.REL:0x016200. Retained C hypothesis, not a match.
  * The gnu-ee-trial-divpad profile links 1736 bytes against a 1924-byte
  * body; first difference at body byte 92. The following zero word is
- * alignment outside this candidate body. See docs/MATCHING-BLOCKERS.md. */
+ * alignment outside this candidate body. See docs/contributing/matching-blockers.md. */
 typedef unsigned char u8;
 typedef unsigned int u32;
 

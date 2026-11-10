@@ -9,42 +9,42 @@ the SNR2 packaging, this is evidence of C++ and SN ProDG tooling in the
 programs. It does **not** identify the exact compiler executable, version,
 flags or assembler for each source unit.
 The boot also retains 1,803 names in its embedded SNR2 table
-([`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md)); names and address ranges are useful
+([`boot-symbols.md`](../build/boot-symbols.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
 The current catalogue records **91,644 boot `.text` bytes in 713 C bodies**
 across several code areas, built by the locally reconstructed GNU EE chain and,
 for 180 of them, by one of six further pinned compilers
-([witness evidence](COMPILER-WITNESSES.md)).
+([witness evidence](compiler-witnesses.md)).
 All of them link together into the complete boot text while preserving the
 retail raw `PT_LOAD` bytes and program header
-([combined witness](BOOT-C-WITNESS.md#combined-provisional-c-witness)); the
+([combined witness](../gates/boot-c-witness.md#combined-provisional-c-witness)); the
 generated `config/boot/witness_boundaries.tsv` catalogue lists each linked body
 with its compiled extent, its following zero alignment and the kind of control
 transfer it ends in. Six hundred and ninety-three reviewed placements (88,948 bytes,
 starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
-The [boot gate](BOOT-TRIAL-GATE.md) pins the isolated compiler identities,
+The [boot gate](../gates/boot-trial-gate.md) pins the isolated compiler identities,
 rebuilds all 713 objects from authored C and checks that full link in one run;
 its machine-readable report accepts 693 boot-only placements (88,948 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
-`nop`. An [isolated RAC5 short-loop threshold trial](COMPILER-LOOP-TRIAL.md)
+`nop`. An [isolated RAC5 short-loop threshold trial](compiler-loop-trial.md)
 now reproduces that function while leaving all earlier object hashes unchanged.
 An independent string-length loop matches at two boot addresses, and a
 third short loop with an unfilled branch delay now matches in
 `GLOBALWAD_ReleaseTransitionBank__Fv` under the same threshold
-([loop evidence](COMPILER-LOOP-TRIAL.md)). Further loop lengths and source
+([loop evidence](compiler-loop-trial.md)). Further loop lengths and source
 families still need controls before qualifying a general compiler profile.
 
 In particular, RAC2's reconstructed GNU EE-GCC game profile and its Sony SDK
 profile have **not** been qualified for Size Matters. The repository now has
-a [boot-only compiler profile](../config/boot/compiler_trial.json) accepted
+a [boot-only compiler profile](../../config/boot/compiler_trial.json) accepted
 for its 693 reviewed placements and one
-[RAC5-only patch](../tools/compiler/patches/0001-rac5-short-loop-six.patch).
+[RAC5-only patch](../../tools/compiler/patches/0001-rac5-short-loop-six.patch).
 Its per-source compiler and options live in
-[`config/cflags.txt`](../config/cflags.txt); it is not a game-wide C/C++
+[`config/cflags.txt`](../../config/cflags.txt); it is not a game-wide C/C++
 qualification and publishes no game-wide percentage.
 
 ## Three compilers in the boot
@@ -154,7 +154,7 @@ explicitly, because it decides where the source can live: `"host": "linux"`.
 The driver is an ELF executable, and its 2.9 front end cannot stat a DrvFs path
 at all — run from a Windows-visible directory it fails with `cpp: x.c: Value
 too large for defined data type` — so the routed sources are staged under
-`--output-dir`, which the [gate contract](BOOT-TRIAL-GATE.md) already requires
+`--output-dir`, which the [gate contract](../gates/boot-trial-gate.md) already requires
 to be a native Linux directory. `prodg2953` states `"host": "windows"` and
 keeps its Windows-visible staging directory. Everything else is shared: the
 same `driver -B<dir>/ -E` and `driver -S <flags>` shape, the same
@@ -268,7 +268,7 @@ the definitions this route introduces, and neither may stay.
   owners are unaffected.
 - **No game-wide figure follows.** These five bodies are provisional witnesses;
   acceptance remains a separate per-body review, and the boot-only scope
-  ([BOOT-MATCH-SCOPE.md](BOOT-MATCH-SCOPE.md)) is unchanged.
+  ([boot-match-scope.md](../gates/boot-match-scope.md)) is unchanged.
 
 ## What route P does not establish
 
@@ -286,16 +286,16 @@ the definitions this route introduces, and neither may stay.
   changes their standing.
 - **No game-wide figure follows.** These five bodies are provisional witnesses;
   acceptance remains a separate per-body review, and the boot-only scope
-  ([BOOT-MATCH-SCOPE.md](BOOT-MATCH-SCOPE.md)) is unchanged.
+  ([boot-match-scope.md](../gates/boot-match-scope.md)) is unchanged.
 
 To expand this beyond the accepted boot placements, establish complete
 assembly and loaded-program baselines for the applicable level modules, then
 compare candidate C++/C toolchains and flags with independent functions and
 controls across code families. A local slice alone does not qualify a match.
-The [boot-only scope](BOOT-MATCH-SCOPE.md) records the accepted criterion,
+The [boot-only scope](../gates/boot-match-scope.md) records the accepted criterion,
 exact packaged ELF and remaining source/runtime limitations.
 For level modules, a separate
-[narrow shared-function trial](LEVEL-C-WITNESS.md) now verifies two functions
+[narrow shared-function trial](../gates/level-c-witness.md) now verifies two functions
 (8 and 72 bytes) at all twenty numbered placements, with a 24-byte level 01 and
 12-byte frontend control. It does not qualify a general level compiler.
 
@@ -319,7 +319,7 @@ that repairs one is hundreds of objects worse than the pinned `as` on the other.
    Ps2EeAs 2.0 — the pinned SN ProDG 2.0 assembler the boot assembly base
    already uses — the same source is **160/160**.
 
-[`config/cflags.txt`](../config/cflags.txt) therefore carries `as=NAME` beside
+[`config/cflags.txt`](../../config/cflags.txt) therefore carries `as=NAME` beside
 the compiler selector, and the profile pins the two extras in
 `extra_assemblers`. An entry may be nothing but an assembler selector:
 `nonmatching/boot/__pack_d.c  as=ee-sdk` says the pinned chain keeps its global
@@ -421,7 +421,7 @@ status. Do not pick a compiler or a one-function option merely because it raises
 a similarity score, and never change emitted instructions to pass a gate.
 
 An option measured for one source file belongs in
-[`config/cflags.txt`](../config/cflags.txt), not in the campaign profile: the
+[`config/cflags.txt`](../../config/cflags.txt), not in the campaign profile: the
 profile keeps its global flags, so the objects of every other file stay pinned
 and need no requalification. The same file carries the per-line compiler
 selector, for the same reason — a family that needs another compiler must not
@@ -578,7 +578,7 @@ one RTL instruction although it emits at least seven aligned or fifteen
 unaligned load/store words. The pass therefore mistakes these already-long
 loops for short ones.
 
-The [targeted source patch](../tools/compiler/patches/0004-rac5-blockmove-loopcount.patch)
+The [targeted source patch](../../tools/compiler/patches/0004-rac5-blockmove-loopcount.patch)
 counts those emitted words only for this 32-byte block-move form. It is
 composed on a separate copy of the qualified `gnu-ee-trial-divpad` source;
 the existing compiler and every existing source routing stay unchanged.
@@ -612,7 +612,7 @@ built assembler uses OpenRAC RAC2's public
 [targeted source transformation](https://github.com/OpenRAC/rac2-decomp/blob/e07c4844d64b007377031e49c683d57fba8db07c/tools/compiler/transformers/r5900_mfc1_interlock.py),
 which exempts only R5900 `mfc1` from the obsolete coprocessor-load delay.
 The external binary is pinned by SHA-256 `b0bb487958caa611e8cc88a5675135035ea21e79fc5659323bff5bfd81b890f3`
-in [`config/levels/compiler_trial.json`](../config/levels/compiler_trial.json);
+in [`config/levels/compiler_trial.json`](../../config/levels/compiler_trial.json);
 the binary is not distributed here.
 
 This is a per-source level-body route: `body_sources.tsv` selects
