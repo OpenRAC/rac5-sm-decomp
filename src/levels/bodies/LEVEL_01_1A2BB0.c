@@ -1,16 +1,4 @@
-/* LEVEL_01.REL:0x1A2BB0: reviewed 480-byte candidate, held for ABI review.
- * Blends two pairs of sampled points by the actor's weight and updates the
- * camera aim.
- * gnu-ee-trial C with gnu-ee-trial links 480/480 bytes and is byte-exact at
- * this and 7 other USA placements, but the prototypes disagree.
- * It declares func_125E78 returning void with (pointer, pointer, int), but the
- * accepted LEVEL_01_125E78.c defines it returning void with (pointer, pointer,
- * pointer).
- * Retry: reconcile the prototype with the accepted definition and callers
- * (argument count, types and return use), then relink every placement and
- * rerun the complete-module gate.
- * No matching credit.
- */
+/* LEVEL_01:0x1A2BB0 -- blends two pairs of sampled points by the actor's weight and updates the camera aim. */
 typedef struct V3 {
     float x, y, z;
 } V3;
@@ -37,13 +25,13 @@ typedef struct Obj {
 extern float D_00208AB4;
 extern char D_00235140[];
 
-extern void func_125E78(float *out, void *link, int idx);
+extern void func_125E78(float *out, void *link, void *v);
 extern void func_19FBC8(void *sub, float *a, float *b);
 extern float func_001200(void);
 extern void func_001210(float a, float b);
 extern void func_03C0E8(void *p, int v);
 
-void func_1A2BB0(Obj *o, int i0, int i1, int i2, int i3, float speed)
+void func_1A2BB0(Obj *o, void *i0, void *i1, void *i2, void *i3, float speed)
 {
     float a[4], b[4], c[4], d[4], e[4], f[4];
     Ctl *ctl;

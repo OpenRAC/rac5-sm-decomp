@@ -1,26 +1,16 @@
-/* LEVEL_01.REL:0x054D48: reviewed 336-byte candidate, held for ABI review.
- * Picks the next object state from pad input and hold state, and arms a
- * follow-up action when the right button is pressed.
- * pinned C with gnu-ee-trial links 336/336 bytes and is byte-exact at this and
- * 19 other USA placements, but the prototypes disagree.
- * It declares func_17CB10 returning int with (int), but the accepted
- * LEVEL_01_17CB10.c defines it returning int with (pointer).
- * Retry: reconcile the prototype with the accepted definition and callers
- * (argument count, types and return use), then relink every placement and
- * rerun the complete-module gate.
- * No matching credit.
- */
+/* LEVEL_01:0x054D48 -- picks the next object state from pad input and hold state, and arms a follow-up action when the right button is pressed. */
+
 extern char *D_001F3FAC;
 
 extern int func_06A8D0(char *o, unsigned int *pad);
 extern int func_023B38(char *o);
 extern int func_023B70(char *o);
-extern int func_17CB10(int h);
+extern int func_17CB10(char *h);
 
 static __inline__ void follow_054D48(char *a0, unsigned int a1, unsigned char ok)
 {
     int s0;
-    int h;
+    char *h;
 
     if (ok == 0) {
         return;
@@ -31,7 +21,7 @@ static __inline__ void follow_054D48(char *a0, unsigned int a1, unsigned char ok
         return;
     }
     if (a1 & ((*(int *)(D_001F3FAC + 0x24) == 2) ? 0x2200 : 0x2000)) {
-        h = *(int *)(a0 + 0x5A4);
+        h = *(char **)(a0 + 0x5A4);
         if (h != 0) {
             if (func_17CB10(h) != 0) {
                 *(short *)(a0 + 0x102) = 0x25;

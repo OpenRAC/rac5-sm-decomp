@@ -1,21 +1,8 @@
-/* LEVEL_17.REL:0x0140B0: reviewed 460-byte candidate, held for ABI review.
- * Integrates a clamped velocity over a few substeps and tests the result
- * against a limit.
- * pinned C with r5900-mfc1 links 460/460 bytes and is byte-exact at this USA
- * placement, but the prototypes disagree.
- * It defines the function returning int with (pointer, pointer, pointer,
- * pointer, pointer, int, float, float), but the accepted caller
- * LEVEL_17_1651C0.c declares it returning int with (pointer, pointer, pointer,
- * pointer, float, float, pointer, int).
- * Retry: reconcile the prototype with the accepted definition and callers
- * (argument count, types and return use), then relink every placement and
- * rerun the complete-module gate.
- * No matching credit.
- */
+/* LEVEL_17:0x0140B0 -- integrates a clamped velocity over a few substeps and tests the result against a limit. */
 extern float D_0018E324;
 
-int func_0140B0(float *p, float *x, float *y, float *z, float *v, int flag,
-                float u, float w)
+int func_0140B0(float *p, float *x, float *y, float *z, float u, float w,
+                float *v, int flag)
 {
     int mm[4];
     if (p) {

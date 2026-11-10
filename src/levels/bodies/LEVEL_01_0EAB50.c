@@ -1,16 +1,4 @@
-/* LEVEL_01.REL:0x0EAB50: reviewed 580-byte candidate, held for ABI review.
- * Spawns an effect batch facing the camera from a position.
- * gnu-ee-trial-divpad C with gnu-ee-trial links 580/580 bytes and is byte-
- * exact at this and 9 other USA placements, but the prototypes disagree.
- * It declares func_0011C8 returning pointer with no arguments, but the
- * accepted LEVEL_01_0011C8.c defines it returning int with no arguments.
- * It declares func_105A00 returning pointer with (int, int), but the accepted
- * LEVEL_01_105A00.c defines it returning int with (int, int).
- * Retry: reconcile the prototype with the accepted definition and callers
- * (argument count, types and return use), then relink every placement and
- * rerun the complete-module gate.
- * No matching credit.
- */
+/* LEVEL_01:0x0EAB50 -- spawns an effect batch facing the camera from a position. */
 typedef struct V {
     float x;
     float y;
@@ -38,8 +26,8 @@ extern float sqrtf(float x);
 extern Ent D_00206918[];
 extern int D_001EF418;
 
-extern Cam *func_0011C8(void);
-extern Elem *func_105A00(int a, int b);
+extern unsigned int func_0011C8(void);
+extern int func_105A00(int count, int size);
 extern int func_099328(int a, int flag);
 extern Elem *func_105C18(Elem *e, int obj, void *tab, int a, V *p,
                          float f0, float f1, float f2, int b, int c);
@@ -65,7 +53,7 @@ void func_0EAB50(int obj, int idx, V *pos, int arg, float f0, float f1, float f2
     int r;
     int n;
 
-    c = func_0011C8();
+    c = (Cam *)func_0011C8();
     cp = &c->pos;
     cd = &c->dir;
     d.x = pos->x - cp->x;
@@ -88,7 +76,7 @@ void func_0EAB50(int obj, int idx, V *pos, int arg, float f0, float f1, float f2
     pt.z = pos->z + dir.z * scale;
     s = D_00206918[idx].f_04;
     tab = D_00206918[idx].f_08;
-    e = func_105A00(1, 2);
+    e = (Elem *)func_105A00(1, 2);
     if (e != 0) {
         fl = s + 0x60000000 <= 0x1FFFFFFF;
         r = func_099328(D_001EF418, fl);
