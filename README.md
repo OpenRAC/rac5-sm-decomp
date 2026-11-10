@@ -48,7 +48,7 @@ The ByteMatch estimate divides the **4,054,468** accepted C bytes by a provision
 | Release | Region | Boot executable | Code | Notes |
 | --- | --- | --- | --- | --- |
 | v1.00 | NTSC-U | `SCUS_976.15` | [![Code](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent)](https://bytematch.dev/OpenRAC/rac5-sm-decomp) | Primary version |
-| v1.00 | PAL | `SCES_550.19` | [![Code](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent&version=SCES_550.19)](https://bytematch.dev/OpenRAC/rac5-sm-decomp/SCES_550.19) | |
+| v1.00 | PAL | `SCES_550.19` | [![Code](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent&version=SCES_550.19)](https://bytematch.dev/OpenRAC/rac5-sm-decomp/SCES_550.19) | Tracked, compared with USA by `tools/version_check.py` |
 
 Expected SHA-1 of the primary disc image (1,744,764,928 bytes):
 
