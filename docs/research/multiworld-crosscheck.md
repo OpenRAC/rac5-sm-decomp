@@ -30,7 +30,7 @@ The public [Size Matters New Game hook](https://github.com/Panguu/Archipelago-Ra
 also identifies `FRONTEND.REL` module offset `0x2F80` as an initializer and
 `0x3024` as a state-write site inside it. Its first 12 bytes agree with our
 pinned USA frontend module. An independent Ghidra pass identifies a contiguous
-476-byte candidate body at `0x2F80`; the [level C gate](LEVEL-C-WITNESS.md)
+476-byte candidate body at `0x2F80`; the [level C gate](../gates/level-c-witness.md)
 checks independently authored C at that placement against the complete module
 and measured relocated-image hash. The external hook was a research lead;
 no patch instructions or Archipelago code are imported.

@@ -1,6 +1,6 @@
 /* USA FRONTEND.REL:0x00A150. Retained C hypothesis, not a match.
  * The pinned GNU EE profile links 1116 bytes against a 1168-byte body;
- * first difference at body byte 8. See docs/MATCHING-BLOCKERS.md. */
+ * first difference at body byte 8. See docs/contributing/matching-blockers.md. */
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;

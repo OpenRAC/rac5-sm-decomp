@@ -1,6 +1,6 @@
 # Instructions for contributors and AI agents
 
-Read `README.md`, `LEGAL.md` and `docs/ROADMAP.md` before changing this project.
+Read `README.md`, `LEGAL.md` and `docs/contributing/roadmap.md` before changing this project.
 This repository adopts RAC2's **evidence standard and source layout**, not its
 compiler settings or level-format assumptions.
 
@@ -80,13 +80,13 @@ compiler settings or level-format assumptions.
    Do not commit campaign machinery or a document per batch of work: no
    committed queues, lot registers, reservation databases, owner-local
    publication routes or merge-queue scripts. Lasting knowledge belongs in
-   `docs/MATCHING-BLOCKERS.md` or an existing document; ephemeral notes belong
+   `docs/contributing/matching-blockers.md` or an existing document; ephemeral notes belong
    in the commit message. Do not use private working vocabulary (*wave*, *lot*,
    *campaign*, *root*, *kit*) in repository text; describe a scope and a date.
 
 ## Shared blocker knowledge
 
-[`docs/MATCHING-BLOCKERS.md`](docs/MATCHING-BLOCKERS.md) is the shared reference for
+[`docs/contributing/matching-blockers.md`](docs/contributing/matching-blockers.md) is the shared reference for
 blockers, measured attempts and verified remedies. **Every contributor may edit any
 entry through a normal fork/topic branch and pull request**, including entries
 originally written by someone else. Maintainers review merges; they do not own all
@@ -98,7 +98,7 @@ read the relevant entry and retained source, and check cited fixes against curre
 `origin/master`. Do not repeat recorded attempts without a new hypothesis or changed input.
 
 When you find a blocker, useful evidence or a solution, update the existing entry in
-`docs/MATCHING-BLOCKERS.md` in your branch and include it in the relevant PR. Keep it
+`docs/contributing/matching-blockers.md` in your branch and include it in the relevant PR. Keep it
 concise:
 
 - Identify the target/family, release, compiler/assembler profile and placement coverage.

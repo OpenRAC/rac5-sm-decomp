@@ -2,7 +2,7 @@
 
 Keep useful C/C++ hypotheses here until the compiler and complete-program byte
 gate accept them. Some local boot slices now reproduce their reference bytes
-(`docs/COMPILER-WITNESSES.md`), but their placement and acceptance reviews
+(`docs/compiler/compiler-witnesses.md`), but their placement and acceptance reviews
 are not complete. These candidates do not count toward progress.
 Before parking a function or switching targets, commit its best useful,
 publishable C/C++ attempt here with the measured difference and a concrete
@@ -17,7 +17,7 @@ their retail intervals in the assembly baseline without C credit. Symbol-only
 declaration labels for retail ELF names are allowed and emit no instructions.
 The two short level C controls under `nonmatching/levels/` have exact linked
 bodies, but they are not accepted matches; see
-[`docs/LEVEL-C-WITNESS.md`](../docs/LEVEL-C-WITNESS.md).
+[`docs/gates/level-c-witness.md`](../docs/gates/level-c-witness.md).
 
 Name a primary attempt after its reference symbol (or a measured address when no
 symbol exists). Keep distinct alternatives under the same area's `alternatives/`

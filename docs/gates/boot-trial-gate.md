@@ -1,10 +1,10 @@
 # Reproducible boot C trial gate
 
-The pinned [compiler trial](../config/boot/compiler_trial.json) identifies the
+The pinned [compiler trial](../../config/boot/compiler_trial.json) identifies the
 locally reconstructed GNU EE `cpp`/`cc1`/`as` binaries by SHA-256, the
 RAC5-only short-loop patch, and the exact `-O2 -G0` flags. It is accepted
 **only for its reviewed boot placements** under the full loaded-byte criterion
-([scope](BOOT-MATCH-SCOPE.md)); the original compiler is not identified.
+([scope](boot-match-scope.md)); the original compiler is not identified.
 The reviewed sources are in `src/boot/`, the profile lists them explicitly in
 `accepted_sources`, and the campaign enumerates the same set in
 `ACCEPTED_SOURCES`. Every other body remains under `nonmatching/`.
@@ -20,10 +20,10 @@ bytes). Of these, 693 reviewed placements supply 88,948 accepted C bytes.
 `tools/progress_status.py` regenerates the accepted totals; an object match
 alone does not grant C credit.
 Per-source compiler and options measured for one file are listed in
-[`config/cflags.txt`](../config/cflags.txt) and applied by the gate; the profile
+[`config/cflags.txt`](../../config/cflags.txt) and applied by the gate; the profile
 keeps its global flags. Another pinned compiler handles 180 objects: 35 use
-SN ProDG 3.01 `ee-gcc2953` ([route P](COMPILER-STATUS.md#a-second-pinned-compiler-route-p)),
-127 use Sony SDK `2.9-ee-991111` ([route Q](COMPILER-STATUS.md#the-sony-sdk-compiler-route-q)),
+SN ProDG 3.01 `ee-gcc2953` ([route P](../compiler/compiler-status.md#a-second-pinned-compiler-route-p)),
+127 use Sony SDK `2.9-ee-991111` ([route Q](../compiler/compiler-status.md#the-sony-sdk-compiler-route-q)),
 10 use its division-padding profile, four use the pre-patch GNU trial profile,
 three use the SDK synchronization profile and one uses the SDK quadword profile.
 Another pinned assembler handles 89 objects.
@@ -88,7 +88,7 @@ and DVP metadata, links the objects into the complete private boot assembly,
 and rechecks every candidate body boundary the catalogue records. It requires exact boot
 `.text` (**498,900/498,900**), raw `PT_LOAD` (**809,872/809,872**), entry,
 program header and BSS placement. It then regenerates the ELF container from
-[`config/boot/elf_layout.json`](../config/boot/elf_layout.json) and the DVP
+[`config/boot/elf_layout.json`](../../config/boot/elf_layout.json) and the DVP
 catalogue, and requires exact full-file SHA-256 (**856,120/856,120 bytes**).
 Witness counts come from the verified boundary catalogue, not a second frozen
 compiler-profile counter. The `exit` column records the observed terminal transfer:
@@ -106,7 +106,7 @@ the boundary catalogue verifies the retail zeros and direct-flow/label safety,
 and that word earns no C credit. A source that covers only a prefix of the
 function or lacks a reviewed normal return keeps no acceptance.
 It also records a `promotion_input_sha256` fingerprint so the
-[per-body promotion audit](BOOT-PROMOTION.md) can reject an old receipt after
+[per-body promotion audit](boot-promotion.md) can reject an old receipt after
 source, owner, compiler-profile or boundary changes.
 Each run overwrites an old report with `status: "incomplete"` before checking
 tools, so a failed run cannot leave a stale pass. The packer also removes its
@@ -117,7 +117,7 @@ output. A rerun with the pinned tools passed.
 This gate makes the limited boot build **repeatable and falsifiable**. The
 accepted scope is the pinned boot and its reviewed placements; it does
 not prove original compiler identity, other boot functions, level programs,
-or full gameplay. The [DVP and section-layout gap](DVP-OVERLAYS.md) is
+or full gameplay. The [DVP and section-layout gap](../build/dvp-overlays.md) is
 resolved by packaging; the original loaded non-code sections are still inputs.
 The private report is not yet a ByteMatch percentage. Any later source or toolchain
 change must rerun this gate; a failure withdraws the match until repaired.
@@ -139,6 +139,6 @@ The first acceptance was `MEMCARD_Busy__Fv`: one measured boot placement,
 a 16-byte C body, no trailing alignment and an exact complete boot ELF. Thirty
 more bodies were accepted after their own boundary, symbol, caller and behaviour
 review, each supplying its whole owned range. Their acceptance rationale and
-rollback rule are in [`BOOT-MATCH-SCOPE.md`](BOOT-MATCH-SCOPE.md). The remaining
+rollback rule are in [`boot-match-scope.md`](boot-match-scope.md). The remaining
 linked C bodies stay provisional until each receives its own review, even though
 they participate in this exact load-image build.

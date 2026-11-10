@@ -18,7 +18,7 @@ SHA-256
 Those non-code sections are copied reference bytes, not independently
 decompiled source.
 
-[`tools/boot_assembly.py`](../tools/boot_assembly.py) verifies the pinned boot
+[`tools/boot_assembly.py`](../../tools/boot_assembly.py) verifies the pinned boot
 hash, decodes all 124,725 text words with optional `rabbitizer 1.16.2` in
 R5900 mode, writes all game-derived source only under ignored
 `build/boot-assembly/`, and assembles and links it at the measured addresses.
@@ -63,19 +63,19 @@ The first module interval has since been tested separately: the candidate
 `FRONTEND.REL` code region at offsets `0x80`–`0x27D00` reassembles
 **162,944 / 162,944 bytes** from private mnemonics. Its jump sites agree
 exactly with both SNR2 relocation sources
-([frontend evidence](FRONTEND-ASSEMBLY.md)). This is not yet the whole REL
+([frontend evidence](frontend-assembly.md)). This is not yet the whole REL
 assembly baseline.
 
 `LEVEL_01.REL` now has a separate, much larger candidate code interval at
 `0x80`–`0x1EF180`: **2,027,776 / 2,027,776 bytes** reassemble exactly,
 with complete local and named jump-site correspondence
-([level 01 evidence](LEVEL-01-ASSEMBLY.md)). Neither result rebuilds a
+([level 01 evidence](level-01-assembly.md)). Neither result rebuilds a
 complete REL. The same guarded procedure has since reproduced candidate
 code intervals for **all 21 SNR2 placements**
-([campaign evidence](SNR2-ASSEMBLY-CAMPAIGN.md)). Those bytes are counted by
+([campaign evidence](snr2-assembly-intervals.md)). Those bytes are counted by
 placement, not as unique code or C progress.
 
-A [provisional C integration witness](BOOT-C-WITNESS.md) has also replaced
+A [provisional C integration witness](../gates/boot-c-witness.md) has also replaced
 the 16-byte boot body `MEMCARD_Busy__Fv` with a linked GNU EE C object while
 preserving the entire boot `.text`. Its retail `PT_LOAD` header and raw
 809,872-byte file-backed segment now also match. It is still under
@@ -136,7 +136,7 @@ the per-source flags in `config/cflags.txt` work — not as a global pin change.
 
 That selector now exists: `config/cflags.txt` takes `as=NAME` beside the
 compiler selector, and the profile pins the two extra binaries in
-`extra_assemblers` ([route R](COMPILER-STATUS.md#the-assembler-is-a-per-source-choice-too-route-r)).
+`extra_assemblers` ([route R](../compiler/compiler-status.md#the-assembler-is-a-per-source-choice-too-route-r)).
 Two bodies use it, the 416 pre-existing objects are untouched, and the gate
 links 477 objects into the exact complete boot. The measurements that made it
 necessary: `__pack_d` (304 bytes) is 249/304 under the pinned `as` and 300/300

@@ -1,6 +1,6 @@
 /* USA LEVEL_01.REL:0x01A398. Retained C hypothesis, not a match.
  * The pinned profile links 236 bytes against a 244-byte candidate body;
- * the first difference is at body byte 6. See docs/MATCHING-BLOCKERS.md. */
+ * the first difference is at body byte 6. See docs/contributing/matching-blockers.md. */
 extern float D_00217E78[];
 extern float D_00217DC0[];
 extern float D_00217E98[];

@@ -31,7 +31,7 @@ interval itself is reconstructed from private assembly. This is a
 new C match, an identified level compiler, a function catalogue, or fresh
 runtime gameplay proof. The relocated SHA-256 values were previously compared
 with paused EE memory at the observed bases
-([evidence](RELOCATED-IMAGE.md)). The gate starts by marking its report
+([evidence](../build/relocated-image.md)). The gate starts by marking its report
 `incomplete` with zero matches, and publishes `passed_assembly_only` only
 after both complete files and loaded-image hashes pass. A later C replacement
 must preserve the entire SNR2 file and every applicable placement before it

@@ -1,44 +1,36 @@
 <p align="center">
-  <img src="docs/images/rac5-logo.webp" alt="RAC5 — Size Matters" width="480">
+  <a href="https://openrac.dev/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/openrac-logo-dark.svg">
+      <img src="docs/assets/openrac-logo-light.svg" alt="OpenRAC" width="360">
+    </picture>
+  </a>
 </p>
 
-# Ratchet & Clank: Size Matters (PS2) Decompilation
+<h3 align="center">Ratchet &amp; Clank: Size Matters decompilation project</h3>
 
-<p align="center"><em>Original project artwork; no game assets.</em></p>
+<p align="center">
+  <a href="https://bytematch.dev/OpenRAC/rac5-sm-decomp"><img src="https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent" alt="Code matched"></a>
+  <a href="https://github.com/OpenRAC/rac5-sm-decomp/actions/workflows/checks.yml"><img src="https://github.com/OpenRAC/rac5-sm-decomp/actions/workflows/checks.yml/badge.svg" alt="Source checks"></a>
+  <a href="https://openrac.dev/"><img src="https://img.shields.io/badge/website-openrac.dev-e8a317" alt="openrac.dev"></a>
+  <a href="https://discord.gg/Sfd2B54PDG"><img src="https://img.shields.io/badge/Discord-join%20us-5865F2?logo=discord&logoColor=white" alt="Discord"></a>
+</p>
 
-[![Website](https://img.shields.io/badge/Website-openrac.dev-ff8a00?logo=googlechrome&logoColor=white)](https://openrac.dev)
-[![Discord](https://img.shields.io/badge/Discord-Join%20Community-5865F2?logo=discord&logoColor=white)](https://discord.gg/Sfd2B54PDG)
-[![Source checks](https://github.com/OpenRAC/rac5-sm-decomp/actions/workflows/checks.yml/badge.svg)](https://github.com/OpenRAC/rac5-sm-decomp/actions/workflows/checks.yml)
-[![Progress report](https://github.com/OpenRAC/rac5-sm-decomp/actions/workflows/progress.yml/badge.svg)](https://github.com/OpenRAC/rac5-sm-decomp/actions/workflows/progress.yml)
-[![Code](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent)](https://bytematch.dev/OpenRAC/rac5-sm-decomp)
-[![Functions](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Functions&measure=matched_functions)](https://bytematch.dev/OpenRAC/rac5-sm-decomp)
+<p align="center">
+  A work-in-progress, matching decompilation of <i>Ratchet &amp; Clank: Size Matters</i> (2008) for PlayStation 2.<br>
+  The boot executable, the front end and 20 level modules, rebuilt as C that compiles back to the same bytes as retail.
+</p>
 
-A work-in-progress **matching decompilation** of *Ratchet & Clank: Size Matters* (High Impact Games, 2008) for the PlayStation 2, tracking both the North American release (`SCUS_976.15`, NTSC-U v1.00) and the European release (`SCES_550.19`, PAL v1.00), part of the **[OpenRAC](https://openrac.dev)** initiative.
-
-The disc's programs are rebuilt from C and assembly until every byte equals retail:
-
-| Program | Release | What it is | Size | SHA-256 of the retail file |
-| --- | --- | --- | ---: | --- |
-| `SCUS_976.15` | USA (v1.00) | Boot executable: engine core and level loader | 856,120 | `d8f1794a5b4f6bd7f70ca62ae11fb790d1c300c2a877ef1aef4c1855fd6575ac` |
-| `SCES_550.19` | Europe (v1.00) | Boot executable: engine core and level loader | 856,888 | `2b33e2d66e144ceb63fd8348ba85f560abace4449c3109ee54719c9e3e462c1f` |
-| `LVL/FRONTEND.REL` | Both | Front end (menus), SNR2 module | 2,052,794 / 1,794,103 | see [`config/levels/modules.tsv`](config/levels/modules.tsv) |
-| `LVL/LEVEL_*.REL` | Both | 20 numbered level modules, SNR2 | 1,036,928 – 4,260,355 | see [`config/levels/modules.tsv`](config/levels/modules.tsv) |
-
-The objective is to recover readable C/C++ that reproduces retail bytes with measured, pinned compiler profiles at reviewed placements. Assembly and copied retail non-code data still support the build; only C/C++ that passes the relevant complete-program gates earns matching credit.
-
-> [!NOTE]
-> This repository contains **no game assets, retail executables, or disassembly**. To work on it, you must provide your own legally obtained copy of the game. Please review [`LEGAL.md`](LEGAL.md) before contributing.
-
----
+> [!WARNING]
+> This repository has no game data, executables, disc images or proprietary toolchains.
+> You need your own copy of the game. Read [LEGAL.md](LEGAL.md) before contributing.
 
 ## Progress
 
-Decompilation progress is tracked live on **[openrac.dev](https://openrac.dev)** and **[bytematch.dev/OpenRAC/rac5-sm-decomp](https://bytematch.dev/OpenRAC/rac5-sm-decomp)**.
-
-| Version | Region | Target ID | Code Matched | Functions Matched |
-|---|---|---|---|---|
-| **v1.00** | NTSC-U (North America) | `SCUS_976.15` | [![](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent)](https://bytematch.dev/OpenRAC/rac5-sm-decomp) | [![](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Functions&measure=matched_functions)](https://bytematch.dev/OpenRAC/rac5-sm-decomp) |
-| **v1.00** | PAL (Europe) | `SCES_550.19` | [![](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent&version=SCES_550.19)](https://bytematch.dev/OpenRAC/rac5-sm-decomp/SCES_550.19) | [![](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Functions&measure=matched_functions&version=SCES_550.19)](https://bytematch.dev/OpenRAC/rac5-sm-decomp/SCES_550.19) |
+A scoped snapshot written by `tools/progress_status.py`, not a game-wide percentage: the boot is measured, the
+front end and levels are candidate code intervals. [progress/README.md](progress/README.md) explains every count and
+[docs/contributing/roadmap.md](docs/contributing/roadmap.md) lists what is still open. Live numbers are on
+[ByteMatch](https://bytematch.dev/OpenRAC/rac5-sm-decomp).
 
 <!-- progress:begin (tools/progress_status.py --write-readme) -->
 | Scope | Code scope | Accepted C | Accepted functions |
@@ -51,160 +43,61 @@ Decompilation progress is tracked live on **[openrac.dev](https://openrac.dev)**
 The ByteMatch estimate divides the **4,054,468** accepted C bytes by a provisional **6,418,204**-byte denominator: **63.17%**. That denominator combines the 498,900 measured boot `.text` bytes, the 162,944 frontend candidate-code bytes and the 5,756,360 optimistically deduplicated level candidate bytes. It is an estimate over candidate code intervals, not a qualified unique-code size; the snapshot's `overall_percent` stays `null`.
 <!-- progress:end -->
 
-This is a **scoped** snapshot, not a game-wide percentage: the boot scope is
-measured, the frontend and level scopes are candidate code intervals, and the
-level denominator is an optimistic deduplication scenario.
-[`progress/README.md`](progress/README.md) explains every count, and
-[`docs/ROADMAP.md`](docs/ROADMAP.md) lists what is still open: the original
-compiler identity, most function boundaries, the level compiler profiles and
-full runtime behavior.
-The Functions badges show `0/0` until a reviewed game-wide function count is
-available; this does not mean that no C bodies have been matched.
+## Supported versions
 
----
+| Release | Region | Boot executable | Code | Notes |
+| --- | --- | --- | --- | --- |
+| v1.00 | NTSC-U | `SCUS_976.15` | [![Code](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent)](https://bytematch.dev/OpenRAC/rac5-sm-decomp) | Primary version |
+| v1.00 | PAL | `SCES_550.19` | [![Code](https://bytematch.dev/OpenRAC/rac5-sm-decomp.svg?mode=shield&label=Code&measure=matched_code_percent&version=SCES_550.19)](https://bytematch.dev/OpenRAC/rac5-sm-decomp/SCES_550.19) | |
 
-## Supported Versions
+Expected SHA-1 of the primary disc image (1,744,764,928 bytes):
 
-This repository tracks both the North American and European releases:
+```text
+61b9cf7f46b8fc318daa2b98cfc53301654775d6
+```
 
-| Version | Region | Target ID / Serial | Video Mode | Modules | Status |
-|---|---|---|---|---|---|
-| **v1.00** | NTSC-U (North America) | `SCUS_976.15` | NTSC (60 Hz) | 21 SNR2 (`LVL/`) | **Primary** target |
-| **v1.00** | PAL (Europe) | `SCES_550.19` | PAL (50 Hz) | 21 SNR2 (`LVL/`) | Tracked |
+The programs, their hashes and the PAL disc: [docs/build/building.md](docs/build/building.md).
 
-Use `python3 tools/versions.py` to inspect the version table, `python3 tools/versions.py check` to verify baserom dumps, or `python3 tools/version_check.py --version pal` for cross-version symbol and code comparisons.
+## Quick setup
 
----
+Python 3.12 or newer is all the checks need; they use only the standard library.
 
-## Quick Start
+```sh
+git clone https://github.com/OpenRAC/rac5-sm-decomp.git && cd rac5-sm-decomp
+python -m unittest discover -s tests -v
+python tools/check_repository.py
+python3 tools/versions.py dump --version us --image /path/to/your-disc.iso
+python3 tools/versions.py check
+```
 
-### Prerequisites
-
-- **Python 3.12 or newer** — the tools use only the standard library.
-- **Your own lawful copy** of the game:
-  - **USA PS2 disc**: 1,744,764,928 bytes, SHA-1 `61b9cf7f46b8fc318daa2b98cfc53301654775d6` (`SCUS_976.15`)
-  - **Europe PS2 disc**: 1,982,988,288 bytes, SHA-1 `da06cadf3c022d146d113c797311a435a941655b` (`SCES_550.19`)
-- *(Optional)* your own local SN Systems assembler/linker and the pinned GNU EE compiler tools, for the assembly rebuilds and the gates.
-
-### Setup & Build
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/OpenRAC/rac5-sm-decomp.git
-   cd rac5-sm-decomp
-   ```
-
-2. **Run the checks that need no game data** (the same ones CI runs):
-   ```bash
-   python -m unittest discover -s tests -v
-   python tools/check_repository.py
-   python tools/progress_status.py --check
-   python tools/gen_progress_report.py --check
-   ```
-
-3. **Verify your own copy of the disc.** Keep the ISO outside Git, for example under the ignored `baserom/` directory:
-   ```bash
-   # Inspect and verify your USA disc:
-   python3 tools/disc.py inspect "/path/to/size-matters-us.iso"
-   python3 tools/disc.py verify "/path/to/size-matters-us.iso"
-   python3 tools/disc.py extract-boot "/path/to/size-matters-us.iso"
-
-   # Inspect and verify your Europe disc:
-   python3 tools/disc.py inspect "/path/to/size-matters-pal.iso"
-   python3 tools/disc.py verify "/path/to/size-matters-pal.iso"
-   python3 tools/disc.py extract-boot "/path/to/size-matters-pal.iso" --out baserom/pal/SCES_550.19
-
-   # Or dump and verify all programs for a version automatically:
-   python3 tools/versions.py dump --version us --image "/path/to/size-matters-us.iso"
-   python3 tools/versions.py dump --version pal --image "/path/to/size-matters-pal.iso"
-   python3 tools/versions.py check
-   ```
-   `verify` checks the complete ISO and the boot executable against the target configuration; `extract-boot` writes only to the ignored `baserom/` directory.
-
-4. **Inspect the verified programs and check the committed metadata** against your own image:
-   ```bash
-   python tools/elf.py baserom/SCUS_976.15
-   python tools/boot_symbols.py inspect baserom/SCUS_976.15
-   python tools/boot_symbols.py catalogue baserom/SCUS_976.15
-   python tools/rel.py inspect "/path/to/your-size-matters-us.iso" --boot baserom/SCUS_976.15
-   python tools/rel.py catalogue "/path/to/your-size-matters-us.iso"
-   ```
-   These commands report facts locally; `catalogue` without `--write` checks whether the tracked metadata is current.
-
-5. **Rebuild the baselines and run the gates** (private; needs your own local toolchain):
-   ```bash
-   python tools/boot_assembly.py --assembler <Ps2EeAs> --linker <ld> baserom/SCUS_976.15
-   python tools/snr2_assembly.py --all --assembler <Ps2EeAs> --linker <ld> "/path/to/your-size-matters-us.iso"
-   python tools/boot_trial_gate.py --cpp <cpp> --cc1 <cc1> --as <as> \
-       --assembler <Ps2EeAs> --linker <ld> --output-dir <build> baserom/SCUS_976.15
-   python tools/level_program_gate.py --assembler <Ps2EeAs> --linker <ld> "/path/to/your-size-matters-us.iso"
-   python tools/level_c_gate.py --cpp <cpp> --cc1 <cc1> --as <as> \
-       --linker <ld> --output-dir <build> "/path/to/your-size-matters-us.iso"
-   python tools/progress_status.py --write
-   ```
-   Every gate's inputs, flags and evidence requirements are in [`docs/`](docs/): the [boot gate](docs/BOOT-TRIAL-GATE.md), the [level program gate](docs/LEVEL-PROGRAM-GATE.md), the [level C gate](docs/LEVEL-C-WITNESS.md) and the [assembly guide](docs/ASSEMBLY-STATUS.md). Game-derived output stays under the ignored `build/` directory.
-
-For more documentation:
-
-- [`docs/ROADMAP.md`](docs/ROADMAP.md) – the measured starting point and the order of work
-- [`docs/COMPILER-STATUS.md`](docs/COMPILER-STATUS.md) – what is known about the compiler, and what is not
-- [`docs/BOOT-MATCH-SCOPE.md`](docs/BOOT-MATCH-SCOPE.md) – what an accepted boot placement means
-- [`docs/LEVEL-FUNCTION-INVENTORY.md`](docs/LEVEL-FUNCTION-INVENTORY.md) – the level function boundaries and the shared-code reviews
-- [`docs/REL-FORMAT.md`](docs/REL-FORMAT.md) and [`docs/RELOCATED-IMAGE.md`](docs/RELOCATED-IMAGE.md) – the SNR2 modules and their relocation
-
----
+The assembly rebuilds and the gates need your own SN Systems assembler and linker and the pinned GNU EE compiler:
+[docs/build/building.md](docs/build/building.md).
 
 ## Contributing
 
-Contributions are warmly welcome! Whether you are interested in decompiling functions, researching engine quirks, or improving documentation:
+Start with [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md). Reserve your scope in the
+[coordination issue](https://github.com/OpenRAC/rac5-sm-decomp/issues/99) first. All docs are listed in [docs/README.md](docs/README.md):
 
-- **Set up** your environment and verify your own copy of the disc ([Quick Start](#quick-start)).
-- **Choose a scope** and reserve it in the [coordination issue](https://github.com/OpenRAC/rac5-sm-decomp/issues/99), where each contributor keeps one comment listing its own reservations. The walls met while matching are tracked in [`docs/MATCHING-BLOCKERS.md`](docs/MATCHING-BLOCKERS.md).
-- **Match** one function at a time: one authored definition in `src/`, a useful but unaccepted attempt in `nonmatching/`. Only a qualified toolchain reproducing the **complete retail program bytes at every applicable placement** counts as a match.
-- **Check** with `python -m unittest discover -s tests -v`, `python tools/check_repository.py` and `python tools/progress_status.py --check`. Regenerate metadata and progress with the relevant tool; never edit generated tables or progress claims by hand.
-- **Open a pull request** against `master` from a branch of your fork, with the target identity, evidence, commands and remaining limitations in the description. **The maintainer merges manually.**
+- [docs/build/](docs/build) - building, the assembly rebuilds, SNR2 modules and their relocation
+- [docs/gates/](docs/gates) - the boot and level gates, and what an accepted placement means
+- [docs/compiler/](docs/compiler) - what is known about the compiler, and the trials
+- [docs/contributing/](docs/contributing) - matching blockers and the roadmap
+- [docs/research/](docs/research) - level function boundaries and the public address map
 
-Read [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md) first; they hold the rules, the sources you may use and the review steps. Never publish ISO/ELF/REL/WAD bytes, extracted assets, assembly listings, memory dumps, proprietary tools, SDK files, secrets or personal disc paths; see [`LEGAL.md`](LEGAL.md). Join our **[Discord Community](https://discord.gg/Sfd2B54PDG)** to discuss progress, ask questions, and collaborate!
-
----
-
-## Tools
-
-| Tool | Purpose |
-|---|---|
-| `tools/disc.py` | Inspect, verify and extract the pinned USA disc |
-| `tools/elf.py` | Report the PS2 ELF metadata without publishing executable bytes |
-| `tools/rel.py` | The SNR2 level modules: inspect them and regenerate the metadata catalogues |
-| `tools/boot_symbols.py` | The boot's embedded SNR2 symbol table and code-label bounds |
-| `tools/relocate.py` | Reconstruct a module at a measured load base (private baseline) |
-| `tools/boot_assembly.py` | Rebuild the boot `.text` and the file-backed load image |
-| `tools/snr2_assembly.py` | Rebuild the candidate code interval of every level placement |
-| `tools/boot_trial_gate.py` | The pinned complete-boot C gate |
-| `tools/level_program_gate.py` | The complete SNR2 program gate for the frontend and level 01 |
-| `tools/level_c_gate.py` | The shared-level, frontend and level-body C gate |
-| `tools/progress_status.py` | The scoped progress snapshot and this README's progress table |
-| `tools/bytematch_estimate.py` | The labelled ByteMatch estimate |
-| `tools/check_repository.py` | The pre-commit check: no game data, build output or toolchain in Git (CI runs it) |
-
----
+Keep the build matching retail. Never commit game images, extracted game data or proprietary tool binaries.
 
 ## Credits
 
-This project builds upon years of dedicated reverse-engineering research and tooling by the community:
-
-- **[Newlib](https://sourceware.org/newlib/)** and the SunPro fdlibm routines — the public library source used as a research lead for some boot C bodies, with its notices preserved ([`CREDITS.md`](CREDITS.md), [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)).
-- **[rac1-decomp](https://github.com/OpenRAC/rac1-decomp)**, **[rac3-decomp](https://github.com/OpenRAC/rac3-decomp)** and the [RAC2 project](https://github.com/OpenRAC/rac2-gc-decomp) — the OpenRAC decompilations that set the evidence standard and the repository layout this one follows.
-- **[Wrench](https://github.com/chaoticgd/wrench)** by chaoticgd — *Ratchet & Clank* PS2 modding tools and asset format specifications.
-- **Decompilation Tooling & Ecosystem**:
-  - [splat](https://github.com/ethteck/splat) & [spimdisasm](https://github.com/Decompollaborate/spimdisasm) – Binary splitting and MIPS disassembly.
-  - [m2c](https://github.com/matt-kempster/m2c) & [asm-differ](https://github.com/simonlindholm/asm-differ) – Assembly-to-C translation and diffing.
-  - [objdiff](https://github.com/encounter/objdiff) – Object diffing tool.
-  - [ByteMatch](https://bytematch.dev) & [decomp.wiki](https://decomp.wiki) – Progress tracking and decompilation knowledge base.
-
----
+- [Newlib](https://sourceware.org/newlib/) and the SunPro fdlibm routines - library source used as a lead for some boot C bodies
+  ([CREDITS.md](CREDITS.md), [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)).
+- [rac1-decomp](https://github.com/OpenRAC/rac1-decomp), [rac3-decomp](https://github.com/OpenRAC/rac3-decomp) and
+  [rac2-decomp](https://github.com/OpenRAC/rac2-decomp) - the evidence standard and the repository layout.
+- [Wrench](https://github.com/chaoticgd/wrench) by chaoticgd - modding tools and asset formats.
+- [splat](https://github.com/ethteck/splat), [spimdisasm](https://github.com/Decompollaborate/spimdisasm),
+  [m2c](https://github.com/matt-kempster/m2c), [asm-differ](https://github.com/simonlindholm/asm-differ),
+  [objdiff](https://github.com/encounter/objdiff) and [ByteMatch](https://bytematch.dev).
 
 ## License
 
-- Code written for this project is licensed under the [GNU General Public License v3.0](LICENSE).
-- Reconstructed libraries and third-party components retain their original licenses (see [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) and [`LEGAL.md`](LEGAL.md)).
-- *Ratchet & Clank* is a registered trademark of Sony Interactive Entertainment. This project is not affiliated with or endorsed by Sony or Insomniac Games.
+Code written for this project is under the [GNU General Public License v3.0](LICENSE). Code reconstructed from
+third-party binaries belongs to its copyright holders; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

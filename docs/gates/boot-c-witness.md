@@ -3,7 +3,7 @@
 `MEMCARD_Busy__Fv` at `0x01E627C0`–`0x01E627D0` is the first authored C
 candidate linked **inside the complete boot assembly baseline**. The trial
 GNU EE chain compiled the source in
-[`src/boot/memcard_busy.c`](../src/boot/memcard_busy.c) with
+[`src/boot/memcard_busy.c`](../../src/boot/memcard_busy.c) with
 `-O2 -G0`, without the optional spacing sentinel. Its 16-byte `.text`
 replaced the retail assembly at that exact address. SN `ld.exe` linked that
 real object between two private assembly sections; the object bytes were
@@ -12,7 +12,7 @@ not rewritten after compilation.
 The resulting boot `.text` matches **498,900 / 498,900 bytes**, SHA-256
 `8dab904fd9dd57e1c3774c92b07fe0872445a99775e85dc62229e857a1a6830c`.
 With non-code sections copied from the pinned boot as in the
-[assembly baseline](ASSEMBLY-STATUS.md), the logical file-backed load image
+[assembly baseline](../build/assembly-status.md), the logical file-backed load image
 matches **809,872 / 809,872 bytes**, SHA-256
 `4f4fb8fe218317dbd7a2f65ca4e64934d743d03e673dbd75220937cfc6fd47fb`.
 The linked BSS is NOBITS at the retail address `0x01F28100` with the same
@@ -29,7 +29,7 @@ allocated NOBITS tail after the unchanged BSS. This tail accounts for the
 retail segment's memory extent without adding file-backed data or changing
 the BSS section. It is a linker layout reconstruction, not a new C function.
 
-[`tools/boot_c_witness.py`](../tools/boot_c_witness.py) reproduces this
+[`tools/boot_c_witness.py`](../../tools/boot_c_witness.py) reproduces this
 experiment using the pinned boot, local SN assembler/linker, and a privately
 compiled C object. It checks the normalized C source SHA-256
 `16e4be48785a4f90e710cf9b5ffe596e071bd1041a41a8fab5936dbb1fca9e18`
@@ -63,33 +63,33 @@ python tools/boot_c_witness.py baserom/SCUS_976.15 \
 ```
 
 This historical one-object witness alone was provisional. The later
-[full boot gate](BOOT-TRIAL-GATE.md) qualifies the reviewed boot placements
+[full boot gate](boot-trial-gate.md) qualifies the reviewed boot placements
 under a limited boot-only profile and counts 263 matches (19,048 bytes), starting
 with this first 16-byte body. The direct SN-linker file
 differs in section headers and non-loaded metadata, while the later packaging
 gate reconstructs the complete ELF exactly. The original
 compiler identity, complete runtime comparison and game-wide catalogue remain
-open. The later [ByteMatch estimate](../progress/README.md) uses a provisional
+open. The later [ByteMatch estimate](../../progress/README.md) uses a provisional
 denominator and does not count the other boot witnesses. The original compiler's
 FOG loop mismatch motivated the
-[isolated RAC5 threshold trial](COMPILER-LOOP-TRIAL.md) below.
+[isolated RAC5 threshold trial](../compiler/compiler-loop-trial.md) below.
 
 ## Combined provisional C witness
 
 **Historical qualification:** the measurements in this section describe the initial
 20-body campaign. The current pure-C campaign links 713 objects and catalogues 713
 bodies; every object span expands a global function symbol. Its current counts and
-source policy are in [BOOT-TRIAL-GATE.md](BOOT-TRIAL-GATE.md). These are different
+source policy are in [boot-trial-gate.md](boot-trial-gate.md). These are different
 measures: one object can contain more than one body. Inline-assembly experiments
 are excluded from the current campaign and retained privately.
 
 The initial full-boot link was repeated with **twenty authored C
 functions** from seventeen exact-slice source groups in
-[`COMPILER-WITNESSES.md`](COMPILER-WITNESSES.md). Compile these sources with
+[`compiler-witnesses.md`](../compiler/compiler-witnesses.md). Compile these sources with
 the same pinned GNU EE `cpp`/`as` and the isolated
-[RAC5 short-loop `cc1` trial](COMPILER-LOOP-TRIAL.md), `-O2 -G0`, and **without**
+[RAC5 short-loop `cc1` trial](../compiler/compiler-loop-trial.md), `-O2 -G0`, and **without**
 `RAC5_WITNESS_PADDING`; place the resulting seventeen `.o` files in an ignored
-local directory. Run [`tools/boot_c_campaign.py`](../tools/boot_c_campaign.py)
+local directory. Run [`tools/boot_c_campaign.py`](../../tools/boot_c_campaign.py)
 with that directory:
 
 ```sh
@@ -99,7 +99,7 @@ python tools/boot_c_campaign.py baserom/SCUS_976.15 \
 ```
 
 For a single command that first recompiles those objects with the pinned
-private tools, use the [boot trial gate](BOOT-TRIAL-GATE.md).
+private tools, use the [boot trial gate](boot-trial-gate.md).
 
 The tool pins each public C source and private object by SHA-256, splits the
 verified boot assembly around the seventeen object intervals, and links those
@@ -116,10 +116,10 @@ retail entry address `0x01E62508`, and the original BSS section placement and
 size. Generated assembly, copied
 non-code sections, objects and ELF stay under ignored `build/`.
 
-[`tools/boot_witness_boundaries.py`](../tools/boot_witness_boundaries.py)
+[`tools/boot_witness_boundaries.py`](../../tools/boot_witness_boundaries.py)
 separately audits the linked ELF's twenty global C function symbols against
 the pinned boot and generates
-[`config/boot/witness_boundaries.tsv`](../config/boot/witness_boundaries.tsv):
+[`config/boot/witness_boundaries.tsv`](../../config/boot/witness_boundaries.tsv):
 
 ```sh
 python tools/boot_witness_boundaries.py baserom/SCUS_976.15 \
@@ -138,20 +138,20 @@ every body ends with `jr $ra`. A terminal call is recorded as `call`, without
 asserting that its callee cannot return; it is not independent boundary qualification.
 
 The direct SN-linked ELF still differs. The retail file has 31 VU `.DVP` sections outside
-its `PT_LOAD`. Their [metadata audit and private reproduction](DVP-OVERLAYS.md)
+its `PT_LOAD`. Their [metadata audit and private reproduction](../build/dvp-overlays.md)
 matches all 31 section contents and types. That direct-link file is 20 bytes
 shorter than retail and retains section-layout differences. The later
-[`boot_elf_pack.py`](../tools/boot_elf_pack.py) repairs those metadata
+[`boot_elf_pack.py`](../../tools/boot_elf_pack.py) repairs those metadata
 differences and produces a complete byte-identical ELF. The earlier PCSX2
 smoke test is documented separately; it does not establish full gameplay.
 
 `FOG_PreUpdate__Fv`, the two string-length witnesses and
 `GLOBALWAD_ReleaseTransitionBank__Fv` use the isolated
-[RAC5 short-loop compiler trial](COMPILER-LOOP-TRIAL.md); the earlier sixteen
+[RAC5 short-loop compiler trial](../compiler/compiler-loop-trial.md); the earlier sixteen
 retain their prior object hashes under that trial.
 
 The integration does **not** accept a body merely by linking it. Acceptance
-follows the [promotion review](BOOT-PROMOTION.md): 263 reviewed placements
+follows the [promotion review](boot-promotion.md): 263 reviewed placements
 (19,048 bytes) are counted, and every other linked body remains provisional.
 Complete ELF metadata, runtime behavior and the game-wide
 catalogue remain open. The non-code sections still come from the pinned game

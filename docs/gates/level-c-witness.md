@@ -3,20 +3,20 @@
 `func_00000100` is an independently authored 8-byte C body returning `1`.
 The same two retail instructions occupy module offset `0x100` in all twenty
 numbered USA `LEVEL_*.REL` files. The source has **one definition** in
-[`src/levels/shared/func_00000100.c`](../src/levels/shared/func_00000100.c).
+[`src/levels/shared/func_00000100.c`](../../src/levels/shared/func_00000100.c).
 Its name describes the measured offset; its game-level purpose is unknown.
 
 `func_shared_zero_buffer` is a second independently authored, 72-byte C body.
 It reads two level-local pointer records and calls the imported `memset` to
 clear a rounded buffer length. Its module offset differs among the twenty
-levels, so the [trial profile](../config/levels/compiler_trial.json) pins each
+levels, so the [trial profile](../../config/levels/compiler_trial.json) pins each
 placement. The two addressed data objects also move independently. The gate
 resolves their local HI16/LO16 fixups at each placement and requires their
 64-byte data windows to be identical across levels and unique within each
 module. This verifies the particular data references used by this function;
 it does not establish semantic identity for other masked families.
 
-The narrowly scoped [level compiler trial](../config/levels/compiler_trial.json)
+The narrowly scoped [level compiler trial](../../config/levels/compiler_trial.json)
 reuses the hash-pinned RAC5 GNU EE tools and `-O2 -G0` flags. It accepts these
 two shared functions and one frontend function. Two independent forms serve as
 uncounted controls:
@@ -56,7 +56,7 @@ placement**, not a general frontend compiler profile or gameplay equivalence.
 
 `config/levels/bodies.tsv` records **210 placements** (13,128 module bytes)
 carried by **158 sources**: 157 author files under
-[`src/levels/bodies/`](../src/levels/bodies) plus the shared
+[`src/levels/bodies/`](../../src/levels/bodies) plus the shared
 `func_00000100.c`. The placements cover all 21 modules (the frontend and the
 twenty numbered levels). Eight wave-17 lots measured them; three placements
 proved independently by two lots (`LEVEL_02.REL` `0x3EE08`, `0x23A28`,
@@ -171,7 +171,7 @@ registers upward, and the chain that matches reverts it. On top of the
 project's own division padding patch, two anchored edits are collected in
 `tools/compiler/patches/0003-rac5-upstream-saves-divpad.patch`; the profile is
 pinned per source as `gnu-ee-trial-divpad` and
-[described in the compiler status](COMPILER-STATUS.md). The change is
+[described in the compiler status](../compiler/compiler-status.md). The change is
 additive: the 177 level bodies accepted before it recompile to byte-identical
 objects under the new `cc1`.
 
@@ -296,7 +296,7 @@ source wall: the source the wave-19 campaign had written, unchanged, gives
 504 bytes under the pinned compiler and **512 exact bytes** under
 `gnu-ee-trial-divpad`. That is a correction to what the earlier waves
 concluded, and it is recorded in
-[`MATCHING-BLOCKERS.md`](MATCHING-BLOCKERS.md).
+[`matching-blockers.md`](../contributing/matching-blockers.md).
 
 ### The wave-23 campaign, and the form of a float copy
 
@@ -623,10 +623,10 @@ table loop and a sound-bank teardown.
 
 Seven other representative C attempts remain under `nonmatching/levels/` with
 measured first differences and reopening conditions; for example the
-[frontend range lookup](../nonmatching/levels/FRONTEND_014838.c) matches its
-first 78 bytes, the [lowercase copy](../nonmatching/levels/FRONTEND_01C9C0.c)
+[frontend range lookup](../../nonmatching/levels/FRONTEND_014838.c) matches its
+first 78 bytes, the [lowercase copy](../../nonmatching/levels/FRONTEND_01C9C0.c)
 matches its first 32, and the
-[heap extraction helper](../nonmatching/levels/LEVEL_01_036F58.c) links 148 of
+[heap extraction helper](../../nonmatching/levels/LEVEL_01_036F58.c) links 148 of
 160 bytes. The other 142 candidate sites receive no match credit. All 21
 complete USA modules remain exact.
 

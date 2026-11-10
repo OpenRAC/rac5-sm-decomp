@@ -8,7 +8,7 @@ and `LEVEL_21.REL` have identical complete interval SHA-256 values, leaving
 20 distinct full-interval hashes, and other modules can share smaller pieces.
 No function boundaries or authored C/C++ matches are inferred.
 
-[`tools/snr2_assembly.py`](../tools/snr2_assembly.py) derives a candidate
+[`tools/snr2_assembly.py`](../../tools/snr2_assembly.py) derives a candidate
 end for each pinned module by rounding the last 26-bit jump-relocation site
 **plus its delay slot** up to the next `0x80` boundary. The start is `0x80`,
 the value of the measured header field at `0x28`. This boundary rule is a
@@ -28,7 +28,7 @@ module:
   instruction-word fallback was needed in any of the 21 intervals.
 
 The generated metadata-only
-[`config/levels/code_intervals.tsv`](../config/levels/code_intervals.tsv)
+[`config/levels/code_intervals.tsv`](../../config/levels/code_intervals.tsv)
 records each module's end, byte count, exact SHA-256 and relocation counts.
 It contains no game bytes. With your own lawful pinned USA image and locally
 available measured tools, reproduce the whole campaign and check that table:
@@ -47,7 +47,7 @@ These are **pre-relocation code-interval** baselines. Module headers, data,
 symbol/relocation tables and bytes outside the candidate intervals have not
 been independently reconstructed. The full relocated images of only
 `FRONTEND.REL` and `LEVEL_01.REL` were separately compared with paused EE
-memory ([runtime evidence](RELOCATED-IMAGE.md)); no new runtime comparison
+memory ([runtime evidence](relocated-image.md)); no new runtime comparison
 was made for the other 19 placements. The module intervals are not a
 complete-program assembly or C/C++ matching gate, and they add **zero**
 ByteMatch progress.

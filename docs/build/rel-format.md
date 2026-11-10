@@ -3,7 +3,7 @@
 The verified `SCUS_976.15` disc has 21 `LVL/*.REL` files: `FRONTEND.REL` and
 20 numbered level modules. All begin with `SNR2`, a **SN ProDG relocatable
 module format**, rather than an ELF header. The field names used by
-[`tools/rel.py`](../tools/rel.py) follow the public
+[`tools/rel.py`](../../tools/rel.py) follow the public
 [SNR2 loader by emoose](https://github.com/emoose/re4-research/blob/master/prodg-rel.py)
 (BSD-3-Clause). The parser itself was written here and tested against all 21
 files; this is a format reference, not imported game code.
@@ -75,13 +75,13 @@ For each module, the sampled packed sites cover HI16, LO16, 26-bit and 32-bit
 operations; the named sites cover types 2, 4, 5 and 6. All **28 sampled
 relocations** matched the locally predicted runtime words. That preliminary
 check was followed by a direct comparison of **every loaded file byte** for
-both modules ([relocated-image evidence](RELOCATED-IMAGE.md)). No instruction
+both modules ([relocated-image evidence](relocated-image.md)). No instruction
 words or RAM dumps are committed; another run may use different bases.
 
 The symbol tables expose **41 nonzero-address exports**: one
 `lib_main__FiPPc` in each module and `G_wadFilename` in each of the 20 level
 modules. `G_wadFilename` is data, so an export is not automatically a function.
-The tables in [`config/levels/`](../config/levels/) contain module hashes and
+The tables in [`config/levels/`](../../config/levels/) contain module hashes and
 these exported names with **module-relative offsets**, not linked RAM
 addresses. Regenerate or verify them with:
 
@@ -92,7 +92,7 @@ python tools/rel.py catalogue baserom/SCUS_976.15.iso
 python tools/rel.py catalogue baserom/SCUS_976.15.iso --write
 ```
 
-The [SNR2 assembly campaign](SNR2-ASSEMBLY-CAMPAIGN.md) now verifies
+The [SNR2 assembly campaign](snr2-assembly-intervals.md) now verifies
 candidate code intervals and exact local/named jump-relocation site sets for
 all 21 placements. The inferred boundaries and data layouts still need
 further review. The `tools/rel.py`
@@ -101,4 +101,4 @@ or prove a complete loaded image; `tools/relocate.py` now reconstructs the two
 runtime-verified images in ignored local storage. This does **not** establish
 function boundaries, sizes, shared-function identities, or a matching build.
 The linked boot's related symbol table and an unresolved frontend import are
-described in [`BOOT-SYMBOLS.md`](BOOT-SYMBOLS.md).
+described in [`boot-symbols.md`](boot-symbols.md).

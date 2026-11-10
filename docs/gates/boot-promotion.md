@@ -7,7 +7,7 @@ and a linked symbol's compiled extent alone is not a reviewed retail function
 boundary. `src/boot/` and the accepted progress count are reserved for reviewed
 placements.
 
-Run the [complete boot gate](BOOT-TRIAL-GATE.md) with the pinned lawful input and
+Run the [complete boot gate](boot-trial-gate.md) with the pinned lawful input and
 private tools. It recompiles every C source, rejects instruction assembly even
 after preprocessing, verifies each pinned object, and requires the entire boot
 ELF to match. A successful private receipt now includes

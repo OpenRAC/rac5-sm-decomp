@@ -5,7 +5,7 @@ Thanks for helping. The rules live in [`AGENTS.md`](AGENTS.md) and
 
 1. **Set up.** Python 3.12 or newer, your own lawful copy of the pinned USA
    disc and, for the assembly and gate work, your own local toolchain
-   ([README](README.md#quick-start)). The pinned USA input and the SNR2 and
+   ([docs/build/building.md](docs/build/building.md)). The pinned USA input and the SNR2 and
    boot metadata are verified: **693** narrowly accepted boot placements
    (88,948 bytes), one 476-byte frontend function and two shared level
    functions. The level compiler profiles, the complete function catalogue and
@@ -14,7 +14,7 @@ Thanks for helping. The rules live in [`AGENTS.md`](AGENTS.md) and
    comment in the [coordination issue](https://github.com/OpenRAC/rac5-sm-decomp/issues/99)
    that lists your own reservations; there is no automated matching queue. The
    walls met while matching are tracked in
-   [`docs/MATCHING-BLOCKERS.md`](docs/MATCHING-BLOCKERS.md), the shared and
+   [`docs/contributing/matching-blockers.md`](docs/contributing/matching-blockers.md), the shared and
    editable blocker register.
 3. **Match.** Once the applicable compiler, program format and function
    boundary are qualified, write matching C or C++ in `src/`, with one
@@ -35,6 +35,7 @@ For a game-derived finding, verify your own lawful USA disc against
 uncertainty. Share a measured hypothesis in an issue or a focused change to
 the tools or documentation. Do not add guessed function matches or claim
 progress from symbol names.
+
 
 ## Rules
 
@@ -58,7 +59,7 @@ progress from symbol names.
 - **A function is matched only when the complete retail program bytes
   reproduce at every applicable placement.** The boot-only scope and its
   remaining caveats are documented in
-  [`docs/BOOT-MATCH-SCOPE.md`](docs/BOOT-MATCH-SCOPE.md).
+  [`docs/gates/boot-match-scope.md`](docs/gates/boot-match-scope.md).
 - **One flag set per source file**, in
   [`config/cflags.txt`](config/cflags.txt); never per function.
 - **Keep scratch work private.** `scratch/`, `_scratch*/`, personal disc
@@ -68,7 +69,7 @@ progress from symbol names.
 
 ## Review and promotion
 
-For boot candidates, run the [promotion audit](docs/BOOT-PROMOTION.md) after the
+For boot candidates, run the [promotion audit](docs/gates/boot-promotion.md) after the
 complete private gate. It explains each owner's mechanical blockers and creates
 a shortlist for semantic review; it never accepts a function automatically.
 
