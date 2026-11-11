@@ -3,7 +3,7 @@
 extern int D_00218B28;
 extern void func_0284B8();
 extern int func_028CD0();
-extern void func_0260D0();
+extern void func_0260D0(unsigned int g, int arg);
 extern void func_0262B0();
 extern void func_0D46F0();
 

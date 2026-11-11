@@ -9,7 +9,7 @@ typedef struct {
 
 extern Q *D_001BE010;
 
-void func_1679A8();
+extern void func_1679A8(char *o);
 void func_073518(char *a0, Q *a1, float f12, int a2, float f13, int a3,
                  float f14, int a4, float f15, int a5, int a6, int a7);
 
@@ -17,7 +17,7 @@ void func_166878(char *a0, int a1)
 {
     a0[0x45] = a1 ? 1 : 2;
     if (a1 != 0) {
-        func_1679A8();
+        func_1679A8(a0);
     } else {
         Q *q = D_001BE010;
 

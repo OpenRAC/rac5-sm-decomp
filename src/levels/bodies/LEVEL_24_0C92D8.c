@@ -22,7 +22,7 @@ extern Cfg *D_001C4C2C;
 extern int D_001D4114;
 extern int D_001D4110;
 extern int D_001D5228;
-extern unsigned func_0812C0(long long value);
+extern unsigned int func_0812C0(int value);
 extern int D_002F8860[];
 extern int func_0D1D60(int *set);
 extern Item *func_022448(int a, int b);

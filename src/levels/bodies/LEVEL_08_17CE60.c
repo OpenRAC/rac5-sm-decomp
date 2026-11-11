@@ -1,6 +1,6 @@
-extern long long func_17AB78(int);
+extern int func_17AB78(int);
 
-long long func_17CE60(char *record)
+int func_17CE60(char *record, void *b, void *c, void *d)
 {
     char *value = *(char **)(record + 0x58);
     int state = *(int *)(value + 100);

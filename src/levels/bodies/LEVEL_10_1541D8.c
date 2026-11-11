@@ -2,11 +2,11 @@
    func_1F42D0 and returns its answer. */
 extern char *D_0021007C;
 
-float func_1F42D0(float *p, float v);
+extern int func_1F42D0(float input);
 
-float func_1541D8(void)
+int func_1541D8(void)
 {
     float *p = *(float **)(D_0021007C + 0x58);
 
-    return func_1F42D0(p, *p);
+    return func_1F42D0(*p);
 }

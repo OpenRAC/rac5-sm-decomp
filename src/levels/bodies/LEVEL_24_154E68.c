@@ -5,12 +5,12 @@ typedef struct {
     int i68;
 } Obj;
 
-extern Obj *func_154EF8(void);
+extern Obj *func_154EF8(void *value);
 extern void func_1548D8(void *a0);
 
 void func_154E68(void *a0)
 {
-    Obj *s0 = func_154EF8();
+    Obj *s0 = func_154EF8(a0);
 
     if (s0 != 0) {
         func_1548D8(a0);

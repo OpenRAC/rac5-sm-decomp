@@ -1,8 +1,8 @@
 extern void *func_07DF70(void);
-extern unsigned int func_07DE48(long long);
+extern unsigned int func_07DE48(int);
 extern char *D_001C965C;
 
-unsigned int func_07DEE0(long long value)
+unsigned int func_07DEE0(int value)
 {
     if (func_07DF70() == 0) {
         return 0;

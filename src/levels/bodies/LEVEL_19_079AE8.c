@@ -1,9 +1,9 @@
-extern void func_079880(long long);
-extern long long func_079AA0(long long);
+extern void func_079880(int);
+extern unsigned int func_079AA0(int value);
 
-long long func_079AE8(long long first, long long second)
+unsigned int func_079AE8(int first, int second)
 {
-    long long value;
+    unsigned int value;
     func_079880(second);
     value = func_079AA0(first);
     func_079880(0);

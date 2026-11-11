@@ -1,5 +1,5 @@
 extern void * D_0033E330;
-extern void func_0BE460(void *, void *);
+extern int func_0BE460(int a, int b);
 
 void func_0BE370(void *value)
 {

@@ -1,5 +1,6 @@
-extern void func_1101F8(int first, int second);
+extern int func_1101F8(int first, int second);
 
-void func_110298(void) {
-    func_1101F8(8192, 0);
+int func_110298(void)
+{
+    return func_1101F8(8192, 0);
 }

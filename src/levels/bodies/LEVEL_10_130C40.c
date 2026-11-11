@@ -1,6 +1,6 @@
 extern char D_0020FCAC[];
 
-int func_130C40(void)
+int func_130C40(int unused)
 {
     int *p = *(int *)D_0020FCAC;
 

@@ -4,7 +4,7 @@ extern char D_003EB448[];
 
 void func_082D78(char *a, char *b);
 
-void func_20EA18(char *a0)
+void func_20EA18(char *a0, void *a1)
 {
     unsigned char v;
     float f;

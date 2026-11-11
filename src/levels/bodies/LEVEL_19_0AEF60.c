@@ -1,5 +1,5 @@
-extern long long func_0AB8F8(void);
-extern void func_026140(long long);
+extern unsigned int func_0AB8F8(void);
+extern void func_026140(int i);
 extern void func_0255A0(void);
 extern unsigned char D_001B5779;
 

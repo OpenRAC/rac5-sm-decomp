@@ -1,10 +1,9 @@
-extern int *func_0F4708(void);
+extern int *func_0F4708(unsigned int handle);
 extern void func_024080(int);
 extern void func_0F4660(int *);
 
-void func_0F48F8(void)
-{
-    int *object = func_0F4708();
+void func_0F48F8(unsigned int handle) {
+    int *object = func_0F4708(handle);
 
     if (object != 0) {
         int value = object[0];

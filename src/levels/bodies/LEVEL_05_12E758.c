@@ -1,6 +1,6 @@
 extern char D_001F60CC[];
 
-int func_12E758(void)
+int func_12E758(int unused)
 {
     int *p = *(int *)D_001F60CC;
 

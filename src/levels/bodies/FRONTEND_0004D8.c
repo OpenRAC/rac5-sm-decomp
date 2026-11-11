@@ -2,8 +2,7 @@
 extern int D_00027E1C;
 extern int D_00027DFC;
 
-int func_0004D8(void)
-{
+int func_0004D8(char *p) {
     if (D_00027E1C || D_00027DFC)
         return 1;
     return 0;

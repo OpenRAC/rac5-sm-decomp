@@ -16,13 +16,13 @@ typedef struct {
     float f0;
 } ObjB;
 
-extern int func_014040(ObjA *, Tmp *);
+extern int func_014040(ObjA *, Tmp *, int b, float x);
 
-void func_013FF0(ObjA *a0, ObjB *a1)
+void func_013FF0(ObjA *a0, ObjB *a1, int b, float x)
 {
     Tmp t;
 
-    if (func_014040(a0, &t)) {
+    if (func_014040(a0, &t, b, x)) {
         a0->f4 = t.f0;
     }
     if (a1 != 0) {

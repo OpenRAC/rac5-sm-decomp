@@ -1,10 +1,10 @@
 extern char D_001D5498[];
-extern void func_094040(void *out, void *arg, const void *data,
+extern void func_094040(void *out, unsigned int id, const void *data,
                         int size, int first, int second, int third);
-extern void func_094218(void *out);
+extern int func_094218(void *out);
 
-void func_1D61A8(void *arg) {
+int func_1D61A8(unsigned int id) {
     char local[16];
-    func_094040(local, arg, D_001D5498, 40, 0, 6, 0);
-    func_094218(local);
+    func_094040(local, id, D_001D5498, 40, 0, 6, 0);
+    return func_094218(local);
 }

@@ -1,12 +1,12 @@
-extern void func_032170(void);
-extern void func_0321C8(long long, long long);
-extern void func_0320C0(long long, long long);
-extern void func_032128(long long, long long);
-extern void func_032220(long long, long long);
+extern void func_032170(char *, int);
+extern void func_0321C8(char *, int);
+extern void func_0320C0(char *, int);
+extern void func_032128(char *, int);
+extern void func_032220(char *, int);
 
-void func_0322B0(long long first, long long second)
+void func_0322B0(char *first, int second)
 {
-    func_032170();
+    func_032170(first, second);
     func_0321C8(first, second);
     func_0320C0(first, second);
     func_032128(first, second);

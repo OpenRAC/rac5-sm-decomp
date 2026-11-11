@@ -8,11 +8,11 @@ struct Rec {
 };
 
 extern struct Rec D_00255180[];
-extern void func_0004F8(int, int);
+extern int func_0004F8(int, int);
 
-void func_000520(int index)
+int func_000520(int index)
 {
     struct Rec rec = D_00255180[index];
 
-    func_0004F8(rec.d, rec.b);
+    return func_0004F8(rec.d, rec.b);
 }

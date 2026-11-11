@@ -1,5 +1,5 @@
 /* LEVEL_01:0x0C36E8 -- reads a status word and runs the matching startup or fallback calls. */
-extern unsigned int func_088020(long long value);
+extern unsigned int func_088020(int value);
 extern void func_0B6020(int a);
 extern void func_01A828(int a, int b);
 extern int func_0BCB20(void);

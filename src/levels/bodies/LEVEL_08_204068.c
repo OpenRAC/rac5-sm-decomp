@@ -1,6 +1,6 @@
 /* LEVEL_08:0x204068 -- placement copy of LEVEL_04_1DD0F0.c: clears a status byte, calls a helper, then stores the owner link and reset values. */
 
-void func_084B98(void *a0, int a1);
+float func_084B98(void *a0, int a1);
 
 struct Ent {
     int w00;

@@ -9,13 +9,13 @@ typedef struct {
     float f_00;
 } Slot;
 
-int func_014248(Obj *a0, float *out);
+int func_014248(Obj *a0, float *out, int b, float x);
 
-void func_0141F8(Obj *a0, Slot *a1)
+void func_0141F8(Obj *a0, Slot *a1, int b, float x)
 {
     float t;
 
-    if (func_014248(a0, &t))
+    if (func_014248(a0, &t, b, x))
         a0->f_04 = t;
     if (a1)
         a1->f_00 = t;

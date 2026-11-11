@@ -1,6 +1,6 @@
-extern void func_088C68(int);
+extern int func_088C68(int);
 
-void func_07CB38(char *item)
+int func_07CB38(char *item)
 {
-    func_088C68(*(int *)(item + 0x48));
+    return func_088C68(*(int *)(item + 0x48));
 }

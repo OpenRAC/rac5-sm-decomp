@@ -3,7 +3,7 @@ extern int func_027B98(void);
 extern int D_00223780;
 extern int D_00214DC0[];
 
-int func_017798(void)
+int func_017798(int *a0, int a1)
 {
     char *base;
     int value;

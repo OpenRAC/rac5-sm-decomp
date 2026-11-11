@@ -11,7 +11,7 @@ extern int D_001B2494;
 extern char D_001B2499[];
 
 extern int func_0C8918(char *a);
-extern void func_0220C8(int a, long b);
+extern char *func_0220C8(int row, int column);
 extern int func_022110(unsigned int a0, int a1);
 extern int func_0C0E70(void);
 extern int func_022400(int a);

@@ -11,14 +11,14 @@ struct Box {
     struct V3 hi;
 };
 
-extern int func_083A50(struct V3 *a, struct V3 *b);
+extern int func_083A50(struct V3 *a, struct V3 *b, void *w);
 extern void func_11AFC0(void *a, void *b, void *c, void *d, struct V3 *lo, struct V3 *hi);
 
-void func_083CB0(void *a0, void *a1)
+void func_083CB0(void *a0, void *a1, void *a2)
 {
     struct Box bx;
 
-    if (func_083A50(&bx.lo, &bx.hi) == 0) {
+    if (func_083A50(&bx.lo, &bx.hi, a2) == 0) {
         return;
     }
     bx.lo.x = bx.lo.x - 0.03125f;

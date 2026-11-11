@@ -5,12 +5,12 @@ typedef struct {
     float f_04;
 } Rec;
 
-extern int func_013C20(Rec *a, float *out);
+extern int func_013C20(Rec *a, float *out, int b, float x);
 
-void func_013BD0(Rec *a0, Rec *a1)
+void func_013BD0(Rec *a0, Rec *a1, int b, float x)
 {
     float v;
-    if (func_013C20(a0, &v)) {
+    if (func_013C20(a0, &v, b, x)) {
         a0->f_04 = v;
     }
     if (a1 != 0) {

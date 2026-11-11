@@ -1,7 +1,7 @@
 extern char *func_130868(char *, int);
-extern long long func_116930(void *);
+extern int func_116930(void *p);
 
-long long func_131CB8(char *record)
+int func_131CB8(char *record)
 {
     char *entry;
     if (record == 0) return 0;

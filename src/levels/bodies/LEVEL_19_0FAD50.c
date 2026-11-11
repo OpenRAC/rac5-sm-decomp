@@ -1,10 +1,9 @@
-extern int *func_0FAB60(void);
+extern int *func_0FAB60(unsigned int handle);
 extern void func_0270E8(int);
 extern void func_0FAAB8(int *);
 
-void func_0FAD50(void)
-{
-    int *object = func_0FAB60();
+void func_0FAD50(unsigned int handle) {
+    int *object = func_0FAB60(handle);
 
     if (object != 0) {
         int value = object[0];

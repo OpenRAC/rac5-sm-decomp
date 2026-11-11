@@ -1,5 +1,5 @@
 extern void func_136AB8(void *, unsigned char, int);
-extern void func_0B3198(int, int);
+extern int func_0B3198(int a, int b);
 
 void func_136B90(unsigned char *record)
 {

@@ -1,7 +1,7 @@
 /* LEVEL_18:0x0EEAF8 -- placement copy of LEVEL_01_10F6A8.c: reserves an amount from a capacity block when it fits, updating two counters. */
 typedef struct CapBlock { unsigned int pad_00[2]; unsigned int f08; unsigned int f0C; unsigned int f10; } CapBlock;
 extern CapBlock D_0027F968;
-int func_0EEAF8(long long unused, int amount)
+int func_0EEAF8(int p, int amount)
 {
     unsigned int needed = amount - (D_0027F968.f08 - D_0027F968.f0C);
     if (needed > D_0027F968.f10)

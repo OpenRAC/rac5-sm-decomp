@@ -9,7 +9,7 @@ extern char D_0019CD70[];
 extern void func_09EC90(void);
 extern void func_07FDC0(void);
 extern int func_0802B8(void);
-extern void func_07FFC8(void);
+extern int func_07FFC8(void);
 extern int func_080028(void);
 extern void func_07FDD0(void);
 extern void func_080A28(float *a, float *b, float x, float y);

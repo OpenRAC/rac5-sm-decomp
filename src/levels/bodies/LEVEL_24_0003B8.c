@@ -9,11 +9,11 @@ typedef union {
 } Elem;
 
 extern Elem D_001DC280[1];
-extern void func_000390(int a0, int a1);
+extern int func_000390(int a0, int a1);
 
-void func_0003B8(int a0)
+int func_0003B8(int index)
 {
-    Elem e = D_001DC280[a0];
+    Elem e = D_001DC280[index];
 
-    func_000390(e.words[3], e.words[1]);
+    return func_000390(e.words[3], e.words[1]);
 }

@@ -7,14 +7,14 @@ typedef struct {
 } Obj;
 
 extern int D_0023EF30;
-extern void func_078340(Obj *obj);
+extern void func_078340(Obj *obj, void *extra);
 
 void func_078490(int value, void *extra)
 {
     Obj *obj = (Obj *)value;
 
     if (obj->active) {
-        func_078340(obj);
+        func_078340(obj, extra);
         obj->active = 0;
         obj->pending = 0;
         D_0023EF30--;

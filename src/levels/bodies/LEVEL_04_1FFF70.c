@@ -1,10 +1,10 @@
 extern char D_001FF260[];
-extern void func_099A40(void *out, void *arg, const void *data,
+extern void func_099A40(void *out, unsigned int id, const void *data,
                         int size, int first, int second, int third);
-extern void func_099C18(void *out);
+extern int func_099C18(void *out);
 
-void func_1FFF70(void *arg) {
+int func_1FFF70(unsigned int id) {
     char local[16];
-    func_099A40(local, arg, D_001FF260, 40, 0, 6, 0);
-    func_099C18(local);
+    func_099A40(local, id, D_001FF260, 40, 0, 6, 0);
+    return func_099C18(local);
 }

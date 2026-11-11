@@ -1091,3 +1091,23 @@ route, a 432-byte body at 20 placements only with the `ps2eeas` route, and
 four forms use the existing per-source `-mno-check-zero-division` flag at 37
 placements. All 21 complete USA modules remain exact; no PAL placement is
 counted, and the distinct-function denominator remains unqualified.
+
+A second round of prototype corrections, and four large bodies matched for
+the first time, add **1,086 USA placements from 1,033 authored pure C
+sources** (303,420 bytes by placement and 270,872 distinct-source bytes) in
+165 forms. The prototypes of 120 more accepted functions were corrected in
+1,030 accepted sources, each linked again exactly at all of its placements,
+and byte-exact held callers of 55 accepted functions now declare those
+functions as they are defined; this releases 1,059 held placements of 48–876
+bytes. Four bodies of 2,008–2,176 bytes are exact at 27 placements, with
+address variants where the levels place their data differently. The
+prototype review now reads an unnamed `long long` parameter as a 64-bit
+argument and a multi-line `typedef struct` return as a structure; with it,
+caller/callee disagreements inside the accepted tree fall from 2,159 to
+1,796 and none is introduced. Eight hundred and twenty-five placements use
+the pinned chain, 163 `gnu-ee-trial`, 77 the qualified `gnu-ee-trial-divpad`
+profile and 21 `sdk991111`; a 412-byte body is exact at its two placements
+only with the qualified per-source `r5900-mfc1` assembler route, 41
+placements use the per-source `-mno-check-zero-division` flag and 15
+`-fno-gcse`. All 21 complete USA modules remain exact; no PAL placement is
+counted, and the distinct-function denominator remains unqualified.

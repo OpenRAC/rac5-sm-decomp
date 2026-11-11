@@ -1,12 +1,12 @@
-extern void func_03BF08(void);
-extern void func_03BF60(long long, long long);
-extern void func_03BE58(long long, long long);
-extern void func_03BEC0(long long, long long);
-extern void func_03BFB8(long long, long long);
+extern void func_03BF08(char *object, int mode);
+extern void func_03BF60(void *context, int value);
+extern void func_03BE58(char *, int);
+extern void func_03BEC0(char *, int);
+extern void func_03BFB8(char *, int);
 
-void func_03C060(long long first, long long second)
+void func_03C060(char *first, int second)
 {
-    func_03BF08();
+    func_03BF08(first, second);
     func_03BF60(first, second);
     func_03BE58(first, second);
     func_03BEC0(first, second);

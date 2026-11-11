@@ -7,7 +7,7 @@ struct Pair0141D8 {
 
 extern void func_013D70(float *a0);
 
-void func_0141D8(char *a0)
+void func_0141D8(char *a0, void *w, float *b, char *tbl)
 {
     char *o;
     struct Pair0141D8 buf;

@@ -1,6 +1,6 @@
 extern char D_001A815C[];
 
-int func_10F1D0(void)
+int func_10F1D0(int unused)
 {
     int *p = *(int *)D_001A815C;
 

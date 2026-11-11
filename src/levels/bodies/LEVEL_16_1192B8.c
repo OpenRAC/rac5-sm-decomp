@@ -3,9 +3,9 @@ extern int func_0B9828(unsigned int value);
 extern void func_0B93E0(int a);
 extern int func_0AB670(void);
 extern void func_1134D0(float a);
-extern unsigned int func_0795B8(long long value);
+extern unsigned int func_0795B8(int value);
 extern int func_0A50B0(int a);
-extern void func_018C18(int a, int b);
+extern int func_018C18(int a, int b);
 extern int D_001B8518;
 extern char D_0019AEA4;
 

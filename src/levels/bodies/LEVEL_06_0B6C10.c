@@ -1,5 +1,5 @@
 extern void * D_003157B0;
-extern void func_0B6D00(void *, void *);
+extern int func_0B6D00(int a, int b);
 
 void func_0B6C10(void *value)
 {

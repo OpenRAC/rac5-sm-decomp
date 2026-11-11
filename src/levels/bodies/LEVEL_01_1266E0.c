@@ -13,7 +13,7 @@ typedef struct {
     float f_20;
 } Nine;
 
-void func_1266E0(Nine *a0, Nine *a1)
+void func_1266E0(Nine *a0, Nine *a1, int flag)
 {
     float s00 = a1->f_00;
     float s04 = a1->f_04;

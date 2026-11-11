@@ -1,4 +1,4 @@
-int func_02F930(unsigned char *object)
+int func_02F930(unsigned char *object, void *owner)
 {
     unsigned char *target = *(unsigned char **)(object + 0x14);
     if (target != 0 && *(unsigned short *)(target + 0x14) != 2)

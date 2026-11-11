@@ -1,5 +1,5 @@
-extern void func_1A84D8(void);
+extern int func_1A84D8(void *record);
 
-void func_1A7390(void) {
-    func_1A84D8();
+void func_1A7390(void *record) {
+    func_1A84D8(record);
 }

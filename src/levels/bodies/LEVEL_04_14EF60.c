@@ -1,8 +1,8 @@
 extern void *func_14FC50(void);
-extern void func_027098(void *, int);
+extern int func_027098(void *, int);
 
-void func_14EF60(void)
+int func_14EF60(void *o, int idx)
 {
     void *value = func_14FC50();
-    func_027098(value, 0xff);
+    return func_027098(value, 0xff);
 }

@@ -1,6 +1,6 @@
 /* LEVEL_04:0x1DD0F0 -- clears a status byte, calls a helper, then stores the owner link and reset values. */
 
-void func_080088(void *a0, int a1);
+float func_080088(void *a0, int a1);
 
 struct Ent {
     int w00;
