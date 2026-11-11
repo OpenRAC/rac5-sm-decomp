@@ -56,7 +56,8 @@ def shape_counts(units: list[tuple[str, int, str, str]]) -> dict[str, int]:
     }
 
 
-def measured_units(image: Path) -> tuple[list[tuple[str, int, str, str]], int, int]:
+def measured_unit_records(image: Path) -> tuple[list[tuple[str, int, int, str, str]], int, int]:
+    """Candidate body units as (module, offset, size, raw sha256, masked shape)."""
     inventory = json.loads(INVENTORY.read_text(encoding="utf-8"))
     split = json.loads(SPLIT.read_text(encoding="utf-8"))
     switch = json.loads(SWITCH.read_text(encoding="utf-8"))
@@ -97,7 +98,7 @@ def measured_units(image: Path) -> tuple[list[tuple[str, int, str, str]], int, i
     if len(switch_rows) != switch["reviewed_placements"]:
         raise ValueError("private switch worklist count changed")
 
-    units: list[tuple[str, int, str, str]] = []
+    units: list[tuple[str, int, int, str, str]] = []
     represented = 0
     with IsoDisc(image) as disc:
         verify_disc(disc, target)
@@ -144,7 +145,7 @@ def measured_units(image: Path) -> tuple[list[tuple[str, int, str, str]], int, i
                     if (hashlib.sha256(raw).hexdigest() != row["raw_sha256"]
                             or masked != row["masked_lead_sha256"]):
                         raise ValueError(f"{module} static body differs from pinned image")
-                    units.append((module, size, row["raw_sha256"], masked))
+                    units.append((module, left, size, row["raw_sha256"], masked))
                     represented += size
             for row in switches:
                 left, right = int(row["start"], 16), int(row["end"], 16)
@@ -156,7 +157,7 @@ def measured_units(image: Path) -> tuple[list[tuple[str, int, str, str]], int, i
                         or masked != row["masked_sha256"]
                         or right - left != int(row["body_bytes"])):
                     raise ValueError(f"{module} switch body differs from pinned image")
-                units.append((module, len(raw), row["raw_sha256"], masked))
+                units.append((module, left, len(raw), row["raw_sha256"], masked))
                 represented += len(raw)
             if cursor != code_end:
                 raise ValueError(f"{module} static candidate coverage ends early")
@@ -177,13 +178,20 @@ def measured_units(image: Path) -> tuple[list[tuple[str, int, str, str]], int, i
                     if (hashlib.sha256(raw).hexdigest() != row["raw_sha256"]
                             or masked != row["masked_sha256"]):
                         raise ValueError(f"{module} split body differs from pinned image")
-                    units.append((module, size, row["raw_sha256"], masked))
+                    units.append((module, left, size, row["raw_sha256"], masked))
                     represented += size
     retained_bytes = split["retained_candidate_interval_bytes"]
     residual = retained_bytes - represented
     if residual < 0:
         raise ValueError("candidate bodies exceed retained code intervals")
     return units, retained_bytes, residual
+
+
+def measured_units(image: Path) -> tuple[list[tuple[str, int, str, str]], int, int]:
+    """Candidate body units as (module, size, raw sha256, masked shape)."""
+    records, retained_bytes, residual = measured_unit_records(image)
+    return ([(module, size, raw, masked) for module, _offset, size, raw, masked in records],
+            retained_bytes, residual)
 
 
 def snapshot(units: list[tuple[str, int, str, str]], retained: int,

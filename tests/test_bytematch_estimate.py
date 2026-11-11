@@ -23,15 +23,15 @@ class ByteMatchEstimateTests(unittest.TestCase):
         result = report(self.status, self.shape)
         self.assertEqual(result["version"], 2)
         accepted = boot_trial_gate.accepted_body_bytes()
-        levels = int(self.status["levels"]["accepted_c_bytes_per_unique_source"])
-        levels += int(self.status["levels"]["accepted_level_body_masked_shape_bytes"])
-        self.assertEqual(result["measures"]["matched_code"],
-                         str(accepted + 476 + levels))
-        self.assertEqual(result["measures"]["total_code"], "6418204")
-        self.assertEqual(result["measures"]["total_units"], 3)
+        levels = int(self.status["levels"]["accepted_level_map_bytes"])
+        self.assertEqual(result["measures"]["matched_code"], str(accepted + levels))
+        # The level denominator already holds FRONTEND.REL: no separate frontend term.
+        self.assertEqual(result["measures"]["total_code"],
+                         str(498900 + self.shape["masked_max_per_module_scenario_bytes"]))
+        self.assertEqual(result["measures"]["total_units"], 2)
         self.assertEqual([u["measures"]["matched_code"] for u in result["units"]],
-                         [str(accepted), "476", str(levels)])
-        self.assertIn("optimistic", result["units"][2]["name"])
+                         [str(accepted), str(levels)])
+        self.assertIn("optimistic", result["units"][1]["name"])
         self.assertFalse(self.status["bytematch_objdiff_ready"])
 
     def test_stale_or_promoted_scope_is_rejected(self) -> None:

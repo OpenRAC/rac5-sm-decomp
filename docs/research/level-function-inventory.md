@@ -171,8 +171,11 @@ exports, run `python tools/level_boundary_coverage.py --write`; its detailed
 contains only counts and input hashes, and CI runs the public `--check` mode.
 A game-wide function denominator still requires classifying the unresolved
 boundaries and code/data gaps, reviewing cross-level source identity and
-mapping accepted C to the same canonical identities. The ByteMatch function
-count remains `0/0` until that catalogue is qualified.
+mapping accepted C to the same canonical identities. Until that catalogue is
+qualified, the ByteMatch function count uses candidate functions instead: the
+candidate boot code intervals and the relocation-masked level shape units of
+[`config/levels/shape_units.tsv`](../../config/levels/shape_units.tsv), as the
+[progress notes](../../progress/README.md) explain.
 
 ### Relocation-backed entries missed by Ghidra
 

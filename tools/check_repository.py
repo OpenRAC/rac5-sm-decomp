@@ -15,12 +15,14 @@ PRIVATE_SUFFIXES = (
     ".dll", ".7z", ".zip", ".img", ".cnf", ".bik", ".vag",
     ".pss", ".o", ".a", ".map", ".log",
 )
-# The two accepted-body tables grow with proved sources and placements. Their
-# schema and contents are checked separately; all other tracked files retain
-# the strict one-megabyte default.
+# The two accepted-body tables grow with proved sources and placements, and the
+# ByteMatch report carries one unit per candidate function. Their schema and
+# contents are checked separately; all other tracked files retain the strict
+# one-megabyte default.
 LARGE_TRACKED = {
     "config/levels/body_sources.tsv": 12_000_000,
     "config/levels/bodies.tsv": 5_000_000,
+    "progress/report.json": 6_000_000,
 }
 
 

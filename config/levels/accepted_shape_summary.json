@@ -57,5 +57,12 @@
   "accepted_masked_max_per_module_units": 5075,
   "accepted_shapes_outside_candidate_units": 56,
   "accepted_shape_bytes_outside_candidate_units": 16336,
+  "shape_units_sha256": "32d0f263545c14d8c2827416852d63369df77b48d928059a3872c6d7dee9db31",
+  "map_rows": 9408,
+  "map_bytes": 5756360,
+  "map_matched_bytes": 703112,
+  "map_functions": 11499,
+  "map_matched_functions": 5116,
+  "map_matched_outside_units_bytes": 3440,
   "warning": "Accepted bodies are credited once per relocation-masked shape, at their largest per-module multiplicity, like the optimistic level denominator; shape units are candidate functions, not a reviewed function catalogue."
 }

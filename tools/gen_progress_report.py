@@ -3,26 +3,30 @@
 Progress report for ByteMatch (bytematch.dev), in objdiff's report format (version 2).
 
 ByteMatch reads a `report.json` uploaded by GitHub Actions as an artifact named
-`<SERIAL>_report` (e.g. `SCUS_976.15_report` and `SCES_550.19_report`).
+`<SERIAL>_report` (e.g. `SCUS_976.15_report` and `SCES_550.19_report`). Its map
+draws one tile per unit, grouped in folders by the unit names, sized by code
+bytes and coloured by how much of the unit is matched.
 
-Following OpenRAC methodology:
-  - Each level and the boot executable is tracked individually as its own unit
-    and category named after the level in the game (e.g. levels/level01_pokitaru),
-    carrying its placed functions.
-  - Overall headline project measures are deduplicated by relocation-masked
-    shape on both sides, preventing 20x static linking duplication from falsely
-    reporting ~35 MB of code: the optimistic level denominator counts each
-    masked candidate shape once, at its largest multiplicity in one module, and
-    accepted level bodies are counted by the same rule, so the address-variant
-    copies of one function in several levels count once.
-  - Function counts use the same units: candidate boot code intervals, and
-    masked level shape units counted once at their largest per-module
-    multiplicity (candidate functions, not a reviewed function catalogue).
+The units follow the source tree, one per candidate function:
+  - boot/<symbol>: the candidate boot code intervals. An accepted C function
+    counts its body bytes; the linker alignment after it and the bytes outside
+    every interval stay in boot/_unlabeled_code_and_padding.
+  - levels/<module directory>/<MODULE_OFFSET> and levels/shared/<MODULE_OFFSET>:
+    the rows of config/levels/shape_units.tsv (tools/level_accepted_shapes.py),
+    one per relocation-masked candidate shape at its largest multiplicity in one
+    module, in the directory where src/levels keeps such a source: shared/ for a
+    shape found in several modules. Each module's code outside candidate units
+    is one more unit, and the accepted C inside that code another.
+The headline measures are the sums of the units, so the map, the categories and
+the totals agree: the boot .text plus the optimistic level denominator of the 20
+retained modules (FRONTEND.REL included; LEVEL_21.REL repeats LEVEL_15.REL). A
+candidate unit counts as matched when accepted C reproduces all of its bytes at
+its own placement. Shape units are candidate functions, not a reviewed function
+catalogue.
 
 Usage:
   python3 tools/gen_progress_report.py            # write progress/report.json and progress/pal/report.json
   python3 tools/gen_progress_report.py --check    # CI: fail if the committed reports are out of date
-  python3 tools/gen_progress_report.py --version pal
 
 The report holds names, addresses, sizes and percentages -- no retail bytes.
 """
@@ -31,8 +35,11 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
+import re
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -40,39 +47,46 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 import boot_trial_gate  # noqa: E402
 import versions  # noqa: E402
+from boot_c_campaign import accepted_replacements  # noqa: E402
+from level_accepted_shapes import UNBOUNDED, read_units  # noqa: E402
+from level_names import LEVEL_NAMES  # noqa: E402
+from level_source_layout import COPIES, MODULE_DIRS, SHARED  # noqa: E402
 
 STATUS = ROOT / "progress/status.json"
 SHAPE = ROOT / "config/levels/shape_scenario_summary.json"
-CODE_INTERVALS = ROOT / "config/levels/code_intervals.tsv"
 BODY_PLACEMENTS = ROOT / "config/levels/bodies.tsv"
 BODY_SOURCES = ROOT / "config/levels/body_sources.tsv"
 BOOT_INTERVALS = ROOT / "config/boot/code_intervals.tsv"
-INVENTORY = ROOT / "config/levels/function_inventory_summary.json"
 ACCEPTED_SHAPES = ROOT / "config/levels/accepted_shape_summary.json"
+SHAPE_UNITS = ROOT / "config/levels/shape_units.tsv"
+REPORTS = {"us": ROOT / "progress/report.json", "pal": ROOT / "progress/pal/report.json"}
 
-LEVEL_NAMES: dict[str, tuple[str, str]] = {
-    "FRONTEND.REL": ("frontend", "Frontend (FRONTEND.REL)"),
-    "LEVEL_01.REL": ("level01_pokitaru", "Level 01: Pokitaru (Jowai Resort)"),
-    "LEVEL_02.REL": ("level02_rykan_v", "Level 02: Rykan V (Lava Fields)"),
-    "LEVEL_03.REL": ("level03_kalidon", "Level 03: Kalidon (Cerullean Sector)"),
-    "LEVEL_04.REL": ("level04_metalis", "Level 04: Metalis (Junkyard)"),
-    "LEVEL_05.REL": ("level05_medical_outpost", "Level 05: Medical Outpost Omega"),
-    "LEVEL_06.REL": ("level06_challax", "Level 06: Challax (Technomite City)"),
-    "LEVEL_07.REL": ("level07_dreamtime", "Level 07: Pokitaru Dreamtime"),
-    "LEVEL_08.REL": ("level08_dayni_moon", "Level 08: Dayni Moon (Agricultural Planet)"),
-    "LEVEL_09.REL": ("level09_inside_clank", "Level 09: Inside Clank"),
-    "LEVEL_10.REL": ("level10_quodrona", "Level 10: Quodrona (Otto-Matic Factory)"),
-    "LEVEL_15.REL": ("level15_giant_clank_metalis", "Level 15: Giant Clank (Metalis)"),
-    "LEVEL_16.REL": ("level16_multiplayer_01", "Level 16: Multiplayer (Map 1)"),
-    "LEVEL_17.REL": ("level17_multiplayer_02", "Level 17: Multiplayer (Map 2)"),
-    "LEVEL_18.REL": ("level18_multiplayer_03", "Level 18: Multiplayer (Map 3)"),
-    "LEVEL_19.REL": ("level19_multiplayer_04", "Level 19: Multiplayer (Map 4)"),
-    "LEVEL_20.REL": ("level20_multiplayer_lobby", "Level 20: Multiplayer Lobby"),
-    "LEVEL_21.REL": ("level21_giant_clank_space", "Level 21: Giant Clank (Space)"),
-    "LEVEL_22.REL": ("level22_skyboard_kalidon", "Level 22: Skyboard Race (Kalidon)"),
-    "LEVEL_23.REL": ("level23_skyboard_challax", "Level 23: Skyboard Race (Challax)"),
-    "LEVEL_24.REL": ("level24_treehouse", "Level 24: High Impact Games Treehouse"),
-}
+BOOT_CODE = {"us": 498900, "pal": 499156}
+BOOT_REMAINDER = "_unlabeled_code_and_padding"
+ACCEPTED_OUTSIDE = "accepted_code_outside_candidate_units"
+COMMENT = re.compile(r"/\*.*?\*/|//[^\n]*", re.S)
+# Fields that stay zero in every unit (no unit is linked from source yet).
+UNIT_ZERO_FIELDS = ("complete_code", "complete_code_percent", "total_units", "complete_units")
+
+
+def definition_start(head: str) -> int | None:
+    """Where the function name starts when `head` ends with `name(parameters)`."""
+    end = len(head.rstrip())
+    if not end or head[end - 1] != ")":
+        return None
+    depth = 0
+    for index in range(end - 1, -1, -1):
+        char = head[index]
+        if char in ";{}":
+            return None
+        if char == ")":
+            depth += 1
+        elif char == "(":
+            depth -= 1
+            if depth == 0:
+                match = re.search(r"[A-Za-z_]\w*\s*$", head[:index])
+                return match.start() if match else None
+    return None
 
 
 def read_tsv(path: Path) -> list[dict[str, str]]:
@@ -111,316 +125,250 @@ def accepted_us_level_bodies(status: dict) -> tuple[dict[str, int], int, int]:
     return by_module, sum(by_source.values()), len(by_source)
 
 
-def make_measures(
-    items: list[tuple[int, float, bool]],
-    units: int = 0,
-    complete_units: int = 0,
-    complete_code: int = 0,
-    functions: tuple[int, int] | None = None,
-) -> dict[str, object]:
-    """items: (size, fuzzy%, finished). uint64 fields are strings as in protobuf JSON.
-
-    functions, when given, is (total, matched) candidate functions; otherwise the
-    display rows are counted."""
-    total = sum(s for s, _, _ in items)
-    matched = sum(s for s, _, e in items if e)
-    nfun = len(items)
-    nmatch = sum(1 for _, _, e in items if e)
-    if functions is not None:
-        nfun, nmatch = functions
-        if not 0 <= nmatch <= nfun:
-            raise ValueError("matched functions exceed candidate functions")
-    fuzzy = sum(s * p for s, p, _ in items) / total if total else 0.0
-    m: dict[str, object] = {
-        "fuzzy_match_percent": fuzzy,
+def make_measures(total: int, matched: int, functions: int = 0,
+                  matched_functions: int = 0, units: int = 0) -> dict[str, object]:
+    """uint64 fields are strings, as in protobuf JSON."""
+    if not (0 <= matched <= total and 0 <= matched_functions <= functions):
+        raise ValueError("matched code or functions exceed their totals")
+    percent = 100.0 * matched / total if total else 0.0
+    return {
+        "fuzzy_match_percent": percent,
         "total_code": str(total),
         "matched_code": str(matched),
-        "matched_code_percent": 100.0 * matched / total if total else 0.0,
-        "total_functions": nfun,
-        "matched_functions": nmatch,
-        "matched_functions_percent": 100.0 * nmatch / nfun if nfun else 0.0,
-        "complete_code": str(complete_code),
-        "complete_code_percent": 100.0 * complete_code / total if total else 0.0,
-        "total_units": units,
-        "complete_units": complete_units,
-    }
-    return m
-
-
-def generate_report(v: versions.Version) -> dict[str, object]:
-    status = json.loads(STATUS.read_text(encoding="utf-8"))
-    shape = json.loads(SHAPE.read_text(encoding="utf-8"))
-    code_intervals = {row["module"]: int(row["interval_bytes"]) for row in read_tsv(CODE_INTERVALS)}
-
-    is_us = (v.key == "us")
-    boot_total_code = 498900 if is_us else 499156
-    # The private boot gate and all accepted source placements target SCUS.
-    # The PAL catalogue has no matching gate yet, so it cannot inherit them.
-    boot_matches = boot_trial_gate.accepted_matches() if is_us else []
-    boot_matched_code = sum(m["body_bytes"] for m in boot_matches)
-    body_bytes_by_module, _unique_body_bytes, _unique_body_sources = (
-        accepted_us_level_bodies(status) if is_us else ({}, 0, 0)
-    )
-    # Candidate functions: boot code intervals and masked level shape units.
-    boot_functions = len(read_tsv(BOOT_INTERVALS)) if is_us else 0
-    accepted_shapes = json.loads(ACCEPTED_SHAPES.read_text(encoding="utf-8"))
-    units_by_module = dict(accepted_shapes["candidate_units_by_module"])
-    for group in json.loads(INVENTORY.read_text(encoding="utf-8"))["identical_full_interval_groups"]:
-        for copy in group[1:]:
-            units_by_module[copy] = units_by_module[group[0]]
-    placements_by_module: dict[str, int] = {}
-    for row in read_tsv(BODY_PLACEMENTS) if is_us else []:
-        placements_by_module[row["module"]] = placements_by_module.get(row["module"], 0) + 1
-
-    units_list: list[dict[str, object]] = []
-    categories_list: list[dict[str, object]] = []
-
-    # 1. Boot Executable Unit
-    boot_items: list[tuple[int, float, bool]] = []
-    boot_functions_objs: list[dict[str, object]] = []
-    for m in boot_matches:
-        size = int(m["body_bytes"])
-        boot_items.append((size, 100.0, True))
-        boot_functions_objs.append({
-            "name": m["symbol"],
-            "size": size,
-            "fuzzy_match_percent": 100.0,
-        })
-    boot_unmatched = boot_total_code - boot_matched_code
-    if boot_unmatched > 0:
-        boot_items.append((boot_unmatched, 0.0, False))
-        boot_functions_objs.append({
-            "name": "__unmatched_boot_code",
-            "size": boot_unmatched,
-            "fuzzy_match_percent": 0.0,
-        })
-
-    boot_m = make_measures(boot_items, functions=(boot_functions, len(boot_matches))
-                           if is_us else None)
-    units_list.append({
-        "name": "boot/executable",
-        "measures": boot_m,
-        "functions": boot_functions_objs,
-        "metadata": {
-            "progress_categories": ["boot"],
-        },
-    })
-    categories_list.append({
-        "id": "boot",
-        "name": f"Boot Executable ({v.exe})",
-        "measures": boot_m,
-    })
-
-    # Level modules
-    level_combined_items: list[tuple[int, float, bool]] = []
-    level_combined_functions = [0, 0]
-
-    # Placed accepted functions per module
-    # Frontend: func_00002F80 (476 bytes)
-    # Level 1-10, 15-24: func_00000100 (48 bytes), func_shared_zero_buffer (32 bytes)
-    for mod_name, (slug, friendly_title) in LEVEL_NAMES.items():
-        mod_total = code_intervals.get(mod_name, 0)
-        mod_items: list[tuple[int, float, bool]] = []
-        mod_funcs: list[dict[str, object]] = []
-
-        if mod_name == "FRONTEND.REL" and is_us:
-            fe_matched = 476
-            mod_items.append((fe_matched, 100.0, True))
-            mod_funcs.append({
-                "name": "func_00002F80",
-                "size": fe_matched,
-                "fuzzy_match_percent": 100.0,
-            })
-            known_bytes = fe_matched
-        elif mod_name != "FRONTEND.REL" and is_us:
-            # Placed shared bodies
-            f1_bytes = 48
-            f2_bytes = 32
-            mod_items.append((f1_bytes, 100.0, True))
-            mod_funcs.append({
-                "name": "func_00000100",
-                "size": f1_bytes,
-                "fuzzy_match_percent": 100.0,
-            })
-            mod_items.append((f2_bytes, 100.0, True))
-            mod_funcs.append({
-                "name": "func_shared_zero_buffer",
-                "size": f2_bytes,
-                "fuzzy_match_percent": 100.0,
-            })
-            known_bytes = f1_bytes + f2_bytes
-        else:
-            known_bytes = 0
-
-        placed_bytes = body_bytes_by_module.get(mod_name, 0)
-        if placed_bytes:
-            mod_items.append((placed_bytes, 100.0, True))
-            mod_funcs.append({
-                "name": f"__{slug}_accepted_c_bodies_aggregate",
-                "size": placed_bytes,
-                "fuzzy_match_percent": 100.0,
-            })
-        unmatched = mod_total - known_bytes - placed_bytes
-        if unmatched < 0:
-            raise ValueError(f"accepted C exceeds candidate code in {mod_name}")
-        if unmatched:
-            mod_items.append((unmatched, 0.0, False))
-            mod_funcs.append({
-                "name": f"__{slug}_unmatched_code",
-                "size": unmatched,
-                "fuzzy_match_percent": 0.0,
-            })
-
-        mod_functions = None
-        if is_us:
-            special = 1 if mod_name == "FRONTEND.REL" else 2
-            mod_functions = (units_by_module[mod_name],
-                             placements_by_module.get(mod_name, 0) + special)
-            level_combined_functions[0] += mod_functions[0]
-            level_combined_functions[1] += mod_functions[1]
-        mod_m = make_measures(mod_items, functions=mod_functions)
-        unit_name = f"levels/{slug}"
-        units_list.append({
-            "name": unit_name,
-            "measures": mod_m,
-            "functions": mod_funcs,
-            "metadata": {
-                "progress_categories": [slug, "level_code"],
-            },
-        })
-        categories_list.append({
-            "id": slug,
-            "name": f"{friendly_title} ({mod_name})",
-            "measures": mod_m,
-        })
-        level_combined_items.extend(mod_items)
-
-    # Insert combined level category
-    categories_list.insert(1, {
-        "id": "level_code",
-        "name": "Level Modules (Combined Placements)",
-        "measures": make_measures(level_combined_items,
-                                  functions=tuple(level_combined_functions) if is_us else None),
-    })
-
-    # Overall project measures: deduplicated across candidate interval scenario
-    frontend_total = code_intervals.get("FRONTEND.REL", 162944)
-    frontend_matched = 476 if is_us else 0
-    level_dedup_total = shape["masked_max_per_module_scenario_bytes"]  # 5,756,360
-    level_dedup_matched = (80 + status["levels"]["accepted_level_body_masked_shape_bytes"]
-                           if is_us else 0)
-
-    dedup_total_code = boot_total_code + frontend_total + level_dedup_total
-    dedup_matched_code = boot_matched_code + frontend_matched + level_dedup_matched
-    overall_pct = 100.0 * dedup_matched_code / dedup_total_code if dedup_total_code else 0.0
-
-    # Candidate functions under the same rule as the code bytes: boot code
-    # intervals plus masked level shape units (the 20 retained modules, FRONTEND
-    # included); the three shared/frontend C functions count once each. PAL has
-    # no accepted C placements until its own complete-program gates are qualified.
-    if is_us:
-        n_total_functions = boot_functions + accepted_shapes["candidate_masked_max_per_module_units"]
-        n_matched_functions = (len(boot_matches) + 3
-                               + status["levels"]["accepted_level_body_masked_shape_units"])
-    else:
-        n_matched_functions = 0
-        n_total_functions = 0
-
-    overall_m = {
-        "fuzzy_match_percent": overall_pct,
-        "total_code": str(dedup_total_code),
-        "matched_code": str(dedup_matched_code),
-        "matched_code_percent": overall_pct,
-        "total_functions": n_total_functions,
-        "matched_functions": n_matched_functions,
-        "matched_functions_percent": 100.0 * n_matched_functions / n_total_functions if n_total_functions else 0.0,
+        "matched_code_percent": percent,
+        "total_functions": functions,
+        "matched_functions": matched_functions,
+        "matched_functions_percent": (100.0 * matched_functions / functions
+                                      if functions else 0.0),
         "complete_code": "0",
         "complete_code_percent": 0.0,
-        "total_units": len(units_list),
+        "total_units": units,
         "complete_units": 0,
     }
 
+
+def unit(name: str, total: int, matched: int, functions: int, matched_functions: int,
+         categories: list[str], source: str = "",
+         function: dict[str, object] | None = None) -> dict[str, object]:
+    measures = make_measures(total, matched, functions, matched_functions)
+    for field in UNIT_ZERO_FIELDS:
+        del measures[field]
+    item: dict[str, object] = {"name": name, "measures": measures}
+    if function is not None:
+        item["functions"] = [function]
+    metadata: dict[str, object] = {"progress_categories": categories}
+    if source:
+        metadata["source_path"] = source
+    item["metadata"] = metadata
+    return item
+
+
+def defined_function(source: str) -> str:
+    """The name of the function a level body source defines.
+
+    Scans the top-level braces; a brace that follows `name(parameters)` opens a
+    definition. The last definition without `static` wins (helpers come first).
+    """
+    text = COMMENT.sub(" ", (ROOT / source).read_text(encoding="utf-8"))
+    found: list[tuple[bool, str]] = []
+    depth = 0
+    for brace in re.finditer(r"[{}]", text):
+        if brace.group() == "}":
+            depth -= 1
+            continue
+        if depth == 0:
+            head = text[:brace.start()]
+            start = definition_start(head)
+            if start is not None:
+                name = re.match(r"[A-Za-z_]\w*", head[start:]).group()
+                statement = re.split(r"[;}]", head[:start])[-1]
+                found.append((re.search(r"\bstatic\b", statement) is not None, name))
+        depth += 1
+    if not found:
+        raise ValueError(f"{source}: no function definition found")
+    return next((name for is_static, name in reversed(found) if not is_static), found[-1][1])
+
+
+def boot_units(v: versions.Version) -> list[dict[str, object]]:
+    total = BOOT_CODE[v.key]
+    if v.key != "us":
+        # The private boot gate and all accepted sources target SCUS; the PAL
+        # catalogue has no matching gate yet, so it cannot inherit them.
+        return [unit("boot/executable", total, 0, 0, 0, ["boot"])]
+    matches = {match["owner"]: match for match in boot_trial_gate.accepted_matches()}
+    owners = {owner.start: owner for owner in accepted_replacements()}
+    units, used, matched = [], 0, 0
+    for row in read_tsv(BOOT_INTERVALS):
+        start = int(row["start"], 16)
+        owner = owners.get(start)
+        if owner is not None:
+            match = matches[owner.name]
+            size = int(match["body_bytes"])
+            units.append(unit(
+                f"boot/{match['symbol']}", size, size, 1, 1, ["boot"],
+                f"src/boot/{owner.name}.c",
+                {"name": match["symbol"], "size": str(size), "fuzzy_match_percent": 100.0}))
+            matched += 1
+        else:
+            size = int(row["max_bytes"])
+            units.append(unit(f"boot/{row['symbols'].split('|')[-1].strip()}",
+                              size, 0, 1, 0, ["boot"]))
+        used += size
+    if matched != len(owners) or matched != len(matches) or used > total:
+        raise ValueError("accepted boot C does not fill the catalogued boot intervals")
+    if total > used:
+        units.append(unit(f"boot/{BOOT_REMAINDER}", total - used, 0, 0, 0, ["boot"]))
+    return units
+
+
+def module_categories() -> dict[str, tuple[str, str]]:
+    """Directory -> (category id, category name) for each retained module."""
+    out = {}
+    for module, directory in MODULE_DIRS.items():
+        slug, title = LEVEL_NAMES[module]
+        modules = [module] + sorted(copy for copy, owner in COPIES.items() if owner == module)
+        name = title if module in title else f"{title} ({', '.join(modules)})"
+        out[directory] = (slug, name)
+    return out
+
+
+def level_units(v: versions.Version) -> list[dict[str, object]]:
+    summary = json.loads(ACCEPTED_SHAPES.read_text(encoding="utf-8"))
+    if (hashlib.sha256(SHAPE_UNITS.read_bytes()).hexdigest() != summary["shape_units_sha256"]
+            or hashlib.sha256(BODY_PLACEMENTS.read_bytes()).hexdigest()
+            != summary["bodies_table_sha256"]):
+        raise ValueError("config/levels/shape_units.tsv is stale; run "
+                         "tools/level_accepted_shapes.py --write with the pinned disc")
+    categories = module_categories()
+    table = read_units(SHAPE_UNITS)
+    if v.key != "us":
+        # The level candidate shapes are measured on the USA modules only; PAL
+        # keeps the same denominator per directory and no accepted C.
+        sizes: dict[str, int] = defaultdict(int)
+        for row in table:
+            sizes[row["home"]] += row["bytes"]
+        return [unit(f"levels/{home}", total, 0, 0, 0, ["levels"])
+                for home, total in sizes.items()]
+    units = []
+    names: dict[str, str] = {}
+    for row in table:
+        home = row["home"]
+        category = SHARED if home == SHARED else categories[home][0]
+        tags = [category, "levels"]
+        if row["name"] == UNBOUNDED:
+            if row["matched_bytes"]:
+                units.append(unit(f"levels/{home}/{ACCEPTED_OUTSIDE}", row["matched_bytes"],
+                                  row["matched_bytes"], 0, 0, tags))
+            units.append(unit(f"levels/{home}/{UNBOUNDED}",
+                              row["bytes"] - row["matched_bytes"], 0, 0, 0, tags))
+            continue
+        function = None
+        if row["source"]:
+            if row["source"] not in names:
+                names[row["source"]] = defined_function(row["source"])
+            function = {"name": names[row["source"]],
+                        "size": str(row["bytes"] // row["functions"]),
+                        "fuzzy_match_percent": 100.0}
+        units.append(unit(f"levels/{home}/{row['name']}", row["bytes"], row["matched_bytes"],
+                          row["functions"], row["matched_functions"], tags,
+                          row["source"], function))
+    return units
+
+
+def category(category_id: str, name: str, units: list[dict[str, object]]) -> dict[str, object]:
+    return {"id": category_id, "name": name, "measures": totals(units)}
+
+
+def totals(units: list[dict[str, object]]) -> dict[str, object]:
+    def total(field: str) -> int:
+        return sum(int(item["measures"].get(field, 0)) for item in units)
+    return make_measures(total("total_code"), total("matched_code"), total("total_functions"),
+                         total("matched_functions"), len(units))
+
+
+def generate_report(v: versions.Version) -> dict[str, object]:
+    if v.key == "us":
+        accepted_us_level_bodies(json.loads(STATUS.read_text(encoding="utf-8")))
+    boot = boot_units(v)
+    levels = level_units(v)
+    categories = [category("boot", f"Boot executable ({v.exe})", boot),
+                  category("levels", "Level modules (each candidate shape counted once)",
+                           levels)]
+    if v.key == "us":
+        for directory, (category_id, name) in module_categories().items():
+            members = [item for item in levels if item["metadata"]["progress_categories"][0]
+                       == category_id]
+            categories.append(category(category_id, name, members))
+        categories.append(category(SHARED, "Level code shared by several modules",
+                                   [item for item in levels
+                                    if item["metadata"]["progress_categories"][0] == SHARED]))
     return {
         "version": 2,
-        "measures": overall_m,
-        "units": units_list,
-        "categories": categories_list,
+        "measures": totals(boot + levels),
+        "units": boot + levels,
+        "categories": categories,
     }
 
 
+def dumps(report: dict[str, object]) -> str:
+    """JSON with one unit and one category per line, so diffs stay readable."""
+    def line(item: object) -> str:
+        return json.dumps(item, separators=(",", ":"))
+    return "\n".join([
+        "{",
+        f' "version": {report["version"]},',
+        f' "measures": {line(report["measures"])},',
+        ' "units": [',
+        ",\n".join("  " + line(item) for item in report["units"]),
+        " ],",
+        ' "categories": [',
+        ",\n".join("  " + line(item) for item in report["categories"]),
+        " ]",
+        "}",
+    ]) + "\n"
+
+
 def write_reports() -> None:
-    us_v = versions.get("us")
-    pal_v = versions.get("pal")
-
-    us_report = generate_report(us_v)
-    pal_report = generate_report(pal_v)
-
-    prog_dir = ROOT / "progress"
-    prog_dir.mkdir(parents=True, exist_ok=True)
-    (prog_dir / "us").mkdir(parents=True, exist_ok=True)
-    (prog_dir / "pal").mkdir(parents=True, exist_ok=True)
-
-    us_json = json.dumps(us_report, indent=1) + "\n"
-    pal_json = json.dumps(pal_report, indent=1) + "\n"
-
-    (prog_dir / "report.json").write_text(us_json, encoding="utf-8")
-    (prog_dir / "us" / "report.json").write_text(us_json, encoding="utf-8")
-    (prog_dir / "pal" / "report.json").write_text(pal_json, encoding="utf-8")
-
-    # Also write to build/bytematch/ for CI and objdiff compatibility
-    build_us = ROOT / f"build/bytematch/{us_v.id}"
-    build_pal = ROOT / f"build/bytematch/{pal_v.id}"
-    build_us.mkdir(parents=True, exist_ok=True)
-    build_pal.mkdir(parents=True, exist_ok=True)
-    (build_us / "report.json").write_text(us_json, encoding="utf-8")
-    (build_pal / "report.json").write_text(pal_json, encoding="utf-8")
-
-    (prog_dir / "functional.json").write_text("[]\n", encoding="utf-8")
-
-    m_us = us_report["measures"]
-    print(f"wrote progress/report.json ({us_v.id}): {m_us['matched_code_percent']:.2f}% code ({m_us['matched_code']}/{m_us['total_code']} bytes), {m_us['matched_functions']} functions, {m_us['total_units']} individual units")
-    m_pal = pal_report["measures"]
-    print(f"wrote progress/pal/report.json ({pal_v.id}): {m_pal['matched_code_percent']:.2f}% code ({m_pal['matched_code']}/{m_pal['total_code']} bytes), {m_pal['matched_functions']} functions, {m_pal['total_units']} individual units")
+    for key, path in REPORTS.items():
+        v = versions.get(key)
+        report = generate_report(v)
+        text = dumps(report)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding="utf-8", newline="\n")
+        # Also write to build/bytematch/ for CI and objdiff compatibility.
+        build = ROOT / f"build/bytematch/{v.id}"
+        build.mkdir(parents=True, exist_ok=True)
+        (build / "report.json").write_text(text, encoding="utf-8", newline="\n")
+        m = report["measures"]
+        print(f"wrote {path.relative_to(ROOT).as_posix()} ({v.id}): "
+              f"{m['matched_code_percent']:.2f}% code ({m['matched_code']}/{m['total_code']} "
+              f"bytes), {m['matched_functions']}/{m['total_functions']} functions, "
+              f"{m['total_units']} units")
+    (ROOT / "progress/functional.json").write_text("[]\n", encoding="utf-8", newline="\n")
 
 
 def check_reports() -> bool:
-    us_v = versions.get("us")
-    pal_v = versions.get("pal")
-
-    us_path = ROOT / "progress" / "report.json"
-    pal_path = ROOT / "progress" / "pal" / "report.json"
-
-    if not us_path.is_file() or not pal_path.is_file():
-        print("progress reports are missing; run 'python3 tools/gen_progress_report.py'", file=sys.stderr)
-        return False
-
-    current_us = json.dumps(generate_report(us_v), indent=1) + "\n"
-    current_pal = json.dumps(generate_report(pal_v), indent=1) + "\n"
-
-    committed_us = us_path.read_text(encoding="utf-8")
-    committed_pal = pal_path.read_text(encoding="utf-8")
-
-    if current_us != committed_us:
-        print("progress/report.json is out of date; re-run 'python3 tools/gen_progress_report.py'", file=sys.stderr)
-        return False
-
-    if current_pal != committed_pal:
-        print("progress/pal/report.json is out of date; re-run 'python3 tools/gen_progress_report.py'", file=sys.stderr)
-        return False
-
+    for key, path in REPORTS.items():
+        if not path.is_file():
+            print("progress reports are missing; run 'python3 tools/gen_progress_report.py'",
+                  file=sys.stderr)
+            return False
+        if dumps(generate_report(versions.get(key))) != path.read_text(encoding="utf-8"):
+            print(f"{path.relative_to(ROOT).as_posix()} is out of date; "
+                  "re-run 'python3 tools/gen_progress_report.py'", file=sys.stderr)
+            return False
     print("progress reports are current with source and placement tables")
     return True
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--check", action="store_true", help="verify that committed reports are current")
-    parser.add_argument("--version", choices=("us", "pal"), help="generate report for specific version only")
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--check", action="store_true",
+                        help="verify that committed reports are current")
     args = parser.parse_args()
-
     if args.check:
         sys.exit(0 if check_reports() else 1)
-
     write_reports()
 
 

@@ -376,6 +376,9 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                        accepted_shapes["accepted_masked_max_per_module_bytes"],
                    "accepted_level_body_masked_shape_units":
                        accepted_shapes["accepted_masked_max_per_module_units"],
+                   "accepted_level_map_bytes": accepted_shapes["map_matched_bytes"],
+                   "accepted_level_map_functions":
+                       accepted_shapes["map_matched_functions"],
                    "accepted_level_body_profiles": body_summary["profiles"],
                    "accepted_level_body_assembler_profiles":
                        body_summary["assembler_profiles"],
@@ -558,29 +561,28 @@ def summary_table(status: dict[str, object]) -> str:
         f"| {levels['accepted_c_bytes_per_unique_source']:,} bytes "
         f"({levels['accepted_c_bytes_by_placement']:,} by placement) "
         f"| {len(levels['accepted_shared_functions']):,} |",
-        f"| Level bodies (by masked shape, as the denominator) "
+        f"| Level code (by masked shape, as the denominator) "
         f"| {status['optimistic_shape_scenario']['masked_max_per_module_units']:,} "
         "candidate shape units "
-        f"| {levels['accepted_level_body_masked_shape_bytes']:,} bytes "
+        f"| {levels['accepted_level_map_bytes']:,} bytes "
         f"({levels['accepted_level_body_placement_bytes']:,} by placement, "
         f"{levels['accepted_level_body_unique_source_bytes']:,} by source) "
-        f"| {levels['accepted_level_body_masked_shape_units']:,} shape units "
+        f"| {levels['accepted_level_map_functions']:,} shape units "
         f"({levels['accepted_level_body_placements']:,} placements) |",
         "",
         f"The ByteMatch estimate divides the **{int(estimate['matched_code']):,}** "
         f"accepted C bytes by a provisional "
         f"**{int(estimate['total_code']):,}**-byte denominator: "
         f"**{estimate['matched_code_percent']:.2f}%**. That denominator combines "
-        f"the {boot['code_bytes']:,} measured boot `.text` bytes, the "
-        f"{frontend['candidate_code_bytes_by_placement']:,} frontend candidate-code "
-        f"bytes and the "
+        f"the {boot['code_bytes']:,} measured boot `.text` bytes and the "
         f"{status['optimistic_shape_scenario']['masked_max_per_module_bytes']:,} "
-        "optimistically deduplicated level candidate bytes. Accepted level bodies "
-        "are counted by the same rule, once per relocation-masked shape at their "
-        "largest per-module multiplicity, so the address-variant copies of one "
-        "function in several levels count once. It is an estimate over "
-        "candidate code intervals, not a qualified unique-code size; the "
-        "snapshot's `overall_percent` stays `null`.",
+        "optimistically deduplicated candidate bytes of the 20 retained level "
+        "modules, `FRONTEND.REL` included. A candidate unit counts as matched when "
+        "accepted C reproduces all of its bytes at its own placement, once per "
+        "relocation-masked shape at its largest per-module multiplicity, so the "
+        "address-variant copies of one function in several levels count once. "
+        "It is an estimate over candidate code intervals, not a qualified "
+        "unique-code size; the snapshot's `overall_percent` stays `null`.",
     ])
 
 

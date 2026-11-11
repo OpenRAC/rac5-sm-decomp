@@ -101,43 +101,59 @@ source and reported evidence. CI does not repeat the proprietary-tool builds.
 This scoped snapshot is **not an objdiff v2 report**. A separate
 [`tools/gen_progress_report.py`](../tools/gen_progress_report.py) builds the
 objdiff v2 report for [ByteMatch](https://bytematch.dev/OpenRAC/rac5-sm-decomp)
-from this snapshot and the public optimistic shape audit. On successful pushes
-to `master`, the progress workflow uploads `SCUS_976.15_report/report.json`;
-ByteMatch reads that artifact as its progress graph. Its denominator combines **498,900 measured
-boot `.text` bytes**, **162,944 frontend candidate-code bytes**, and **5,756,360
-optimistically deduplicated level candidate bytes**, for **6,418,204 provisional
-code bytes**. The numerator is **790,276 accepted C bytes**: 88,948 in boot, 476
-in frontend, 80 from two authored functions shared across twenty levels, and
-700,772 bytes of accepted level C bodies counted by the denominator's own rule,
-once per relocation-masked shape at its largest multiplicity in one module
-([`config/levels/accepted_shape_summary.json`](../config/levels/accepted_shape_summary.json),
-written by [`tools/level_accepted_shapes.py`](../tools/level_accepted_shapes.py)).
-The address-variant copies of one function in several levels are separate
-sources but one masked shape, so they count once; counting by source
+from this snapshot and the public shape map
+[`config/levels/shape_units.tsv`](../config/levels/shape_units.tsv), written with
+[`config/levels/accepted_shape_summary.json`](../config/levels/accepted_shape_summary.json)
+by [`tools/level_accepted_shapes.py`](../tools/level_accepted_shapes.py). On
+successful pushes to `master`, the progress workflow uploads
+`SCUS_976.15_report/report.json`; ByteMatch reads that artifact as its progress
+graph. Its denominator combines **498,900 measured boot `.text` bytes** and the
+**5,756,360 optimistically deduplicated candidate bytes** of the 20 retained
+level modules, `FRONTEND.REL` included, for **6,255,260 provisional code
+bytes**. The numerator is **792,060 accepted C bytes**: 88,948 in boot and
+703,112 in the level modules. A level candidate unit counts as matched when
+accepted C reproduces all of its bytes at its own placement, once per
+relocation-masked shape at its largest multiplicity in one module; accepted
+bytes outside every candidate unit (3,440) count where they lie. The
+address-variant copies of one function in several levels are separate sources
+but one masked shape, so they count once; counting by source
 (5,786,384 bytes) credited them up to twenty times against a denominator that
 counts them once. The site rounds the resulting approximately
-**12.3130%** to **12.31%**.
+**12.6623%** to **12.66%**. Until 2026-11-11 the report also added the
+162,944 frontend candidate bytes a second time to the denominator and credited
+the shared and frontend C functions, already in the placement table, twice.
+
+ByteMatch's map draws one tile per report unit, grouped in folders by the unit
+names, sized by code bytes and coloured matched, in progress or not started.
+The units follow the source tree. `boot/<symbol>` tiles are the 1,315
+candidate boot code intervals; an accepted body counts its body bytes, and its
+linker alignment joins the bytes outside every interval in
+`boot/_unlabeled_code_and_padding`. `levels/<module directory>/<MODULE_OFFSET>`
+and `levels/shared/<MODULE_OFFSET>` tiles are the 9,388 relocation-masked level
+shapes, placed like their sources in [`src/levels/`](../src/levels/README.md): a
+shape found in several modules sits in `shared/`, any other in its module's
+directory. Each module also has a `code_without_function_bounds` tile for its
+candidate code outside every candidate unit and, when accepted C lies there, an
+`accepted_code_outside_candidate_units` tile. Matched level tiles link to their
+source. The categories partition the same tiles: boot, the level modules, each
+module's own directory and the shared code.
 
 ByteMatch's function counts use the same units as its code bytes:
-**5,771 of 12,814 candidate functions**, from the 1,315 candidate boot code
+**5,809 of 12,814 candidate functions**, from the 1,315 candidate boot code
 intervals (693 accepted) and the 11,499 relocation-masked level shape units of
 the 20 measured modules, each shape counted once at its largest per-module
-multiplicity (5,075 accepted bodies, plus the two shared level functions and the
-frontend function). These are candidate functions, not a reviewed function
-catalogue: a masked shape can still cover different data roles or C
-definitions, and corrected boundaries can change both counts. Each level unit
-counts the candidate units of that module (static candidate bodies, reviewed
-split segments and switch bodies) and its accepted placements; the boot's
-`__unmatched_boot_code` row and each level's synthetic rows are display
-aggregates, not individual retail functions.
+multiplicity (5,116 covered by accepted C). These are candidate functions, not
+a reviewed function catalogue: a masked shape can still cover different data
+roles or C definitions, and corrected boundaries can change both counts.
 
-The dashboard's level unit and category both say **optimistic masked-shape
-estimate**. This denominator can rise when a presumed shared shape splits into
-distinct functions, or change as boundaries are corrected. It is not a
-qualified unique-code size or a verified game-wide matching percentage. The
-`overall_percent: null` and `bytematch_objdiff_ready: false` fields above remain
-the authoritative qualification status. Regenerate this separate artifact from
-public metadata with `python tools/gen_progress_report.py`; CI checks it
-without uploading private game data. The separate
+The dashboard's level category says **each candidate shape counted once**: the
+denominator is an optimistic masked-shape estimate. It can rise when a
+presumed shared shape splits into distinct functions, or change as boundaries
+are corrected. It is not a qualified unique-code size or a verified game-wide
+matching percentage. The `overall_percent: null` and
+`bytematch_objdiff_ready: false` fields above remain the authoritative
+qualification status. Regenerate this separate artifact from public metadata
+with `python tools/gen_progress_report.py`; CI checks it without uploading
+private game data. The separate
 [`tools/bytematch_estimate.py`](../tools/bytematch_estimate.py) still validates
 the labelled estimate used by the scoped status snapshot.
