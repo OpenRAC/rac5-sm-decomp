@@ -1,0 +1,55 @@
+/* LEVEL_22:0x12D720 -- placement copy of LEVEL_01_193690.c: looks up a hashed record in the shared table and publishes the start and end of its list (128-byte entries) and a float made from the packed id. */
+typedef struct {
+    char pad0[0xC];
+    char *list;
+    char pad10[0x24 - 0x10];
+    unsigned int hash;
+    char pad28[0x30 - 0x28];
+    int count;
+    char pad34[0x44 - 0x34];
+} Item;
+
+typedef struct {
+    char pad0[0x34];
+    Item *items;
+    unsigned int count;
+} Table;
+
+typedef struct {
+    char pad0[0x148];
+    int w148;
+} Game;
+
+extern Table *D_00165D70;
+extern Game D_001ED980;
+extern char *D_0016684C;
+extern char *D_00166850;
+extern float D_00166854;
+
+extern int func_0CED38(unsigned int id);
+
+static __inline__ Item *Find(unsigned int hash)
+{
+    Table *t;
+    unsigned int i;
+
+    t = D_00165D70;
+    for (i = 0; i < t->count; i++) {
+        if (t->items[i].hash == hash) {
+            return &t->items[i];
+        }
+    }
+    return 0;
+}
+
+void func_12D720(void)
+{
+    Item *rec;
+    int *count;
+
+    rec = Find(0x702127E9u);
+    count = &rec->count;
+    D_0016684C = rec->list;
+    D_00166850 = rec->list + (*count << 7);
+    D_00166854 = (float)func_0CED38((D_001ED980.w148 << 16) | 0xA00030C1u);
+}

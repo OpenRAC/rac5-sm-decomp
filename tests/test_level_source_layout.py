@@ -189,6 +189,35 @@ class LevelSourceLayoutTest(unittest.TestCase):
             self.assertEqual(json.loads(summary.read_text(encoding="utf-8"))["controls_sha256"],
                              hashlib.sha256(controls.read_bytes()).hexdigest())
 
+    def test_main_moves_staged_sources_before_checking_names(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            staged, home = ("src/levels/bodies/LEVEL_04_000400.c",
+                            "src/levels/04_metalis/LEVEL_04_000400.c")
+            (root / "src/levels/bodies").mkdir(parents=True)
+            (root / staged).write_text("void func_000400(void)\n{\n}\n", encoding="utf-8")
+            (root / "config/levels").mkdir(parents=True)
+            bodies = root / "config/levels/bodies.tsv"
+            bodies.write_text(f"module\toffset\tsize\tsource\nLEVEL_04.REL\t0x000400\t8\t{staged}\n",
+                              encoding="utf-8")
+            controls = root / "config/levels/family_identity_controls.tsv"
+            controls.write_text("family_id\tmodule\tstart\tsource\n", encoding="utf-8")
+            summary = root / "config/levels/family_identity_summary.json"
+            summary.write_text(json.dumps({"controls_sha256": hashlib.sha256(
+                controls.read_bytes()).hexdigest(), "families": []}, indent=2) + "\n",
+                encoding="utf-8")
+            with (patch.object(layout, "ROOT", root), patch.object(layout, "BODIES", bodies),
+                  patch.object(layout, "FAMILY_CONTROLS", controls),
+                  patch.object(layout, "FAMILY_SUMMARY", summary),
+                  patch.object(layout.level_function_names, "check", return_value=([], []))):
+                with contextlib.redirect_stdout(io.StringIO()) as output:
+                    self.assertEqual(layout.main([]), 1)
+                self.assertIn(f"{staged} -> {home}", output.getvalue())
+                with contextlib.redirect_stdout(io.StringIO()):
+                    self.assertEqual(layout.main(["--apply"]), 0)
+            self.assertTrue((root / home).is_file())
+            self.assertIn(home, bodies.read_text(encoding="utf-8"))
+
     def test_repository_layout_is_exact(self) -> None:
         with contextlib.redirect_stdout(io.StringIO()) as output:
             self.assertEqual(layout.main([]), 0)

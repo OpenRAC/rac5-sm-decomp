@@ -1,0 +1,21 @@
+/* LEVEL_02:0x165198 -- unlinks the object's data block from its doubly linked list and releases the attached item. */
+extern void func_082F58(char *item, int mode);
+
+void func_165198(char *a0)
+{
+    char *s0;
+    char *v;
+
+    s0 = *(char **)(a0 + 0x58);
+    if (*(char **)(s0 + 0x14) != 0) {
+        *(int *)*(char **)(s0 + 0x14) = *(int *)s0;
+        v = *(char **)s0;
+        if (v != 0) {
+            *(int *)(v + 0x14) = *(int *)(s0 + 0x14);
+        }
+        *(int *)(s0 + 0x14) = 0;
+    }
+    if (*(char **)(s0 + 0x24) != 0) {
+        func_082F58(*(char **)(s0 + 0x24), 0);
+    }
+}
