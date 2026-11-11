@@ -803,3 +803,10 @@ src/levels/bodies/LEVEL_19_0511F8.c  -fno-gcse
 src/levels/bodies/LEVEL_20_04B3C0.c  -fno-gcse
 src/levels/bodies/LEVEL_22_1332B0.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_23_18FED8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_04_1C6B10.c  -fno-gcse
+src/levels/bodies/LEVEL_04_1C6FF8.c  -fno-gcse
+src/levels/bodies/LEVEL_05_199C08.c  -fno-gcse
+src/levels/bodies/LEVEL_08_1EFC90.c  -fno-gcse
+src/levels/bodies/LEVEL_08_1F0178.c  -fno-gcse
+src/levels/bodies/LEVEL_24_195738.c  -fno-gcse
+src/levels/bodies/LEVEL_24_195C20.c  -fno-gcse

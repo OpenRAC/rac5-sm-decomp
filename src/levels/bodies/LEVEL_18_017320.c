@@ -3,7 +3,7 @@ extern void func_026658(void);
 extern int func_026E70(void);
 extern void func_024118(int a, int b);
 extern void func_0242F8(int a, int b);
-extern void func_0C5B10(int a, int b, int c);
+extern int func_0C5B10(int key, int state, int arg);
 extern int D_001E0428;
 
 void func_017320(void)

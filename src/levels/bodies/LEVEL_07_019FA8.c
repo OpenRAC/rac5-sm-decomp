@@ -5,7 +5,7 @@ extern void func_029990();
 extern int func_02A1A8();
 extern void func_027428(unsigned int g, int arg);
 extern void func_027608();
-extern void func_0D94A0();
+extern int func_0D94A0(int key, int state, int arg);
 
 void func_019FA8(void)
 {

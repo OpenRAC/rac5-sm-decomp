@@ -1,6 +1,6 @@
 extern int func_079B70(void);
 extern char *D_001A540C;
-char *func_0798A0(void)
+char *func_0798A0(int unused)
 {
     char *result;
     if (func_079B70() != 0)

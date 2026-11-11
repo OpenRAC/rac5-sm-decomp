@@ -5,7 +5,7 @@ extern int func_10A280(int a);
 extern int func_016E80(int a);
 extern int func_0AA1D8(void);
 extern void func_021E60(int a, int b, int c);
-extern void func_0C5980(int a, int b, int c);
+extern int func_0C5980(int key, int state, int arg);
 extern unsigned char D_00165AC8[];
 
 void func_0C93F8(void)

@@ -1183,3 +1183,19 @@ placements use the pinned chain, 82 `gnu-ee-trial`, 36 the qualified
 `config/levels/compiler_trial.json`. All 21 complete USA modules remain exact;
 no PAL placement is counted, and the distinct-function denominator remains
 unqualified.
+
+A seventh round of prototype corrections and 19 more mid-size bodies add
+**110 USA placements from 106 authored pure C sources** (54,976 bytes by
+placement and 53,188 distinct-source bytes) in 23 forms. Thirty-eight accepted
+functions in three families were defined without parameters although their
+callers pass them arguments; they now take those arguments, unused, with
+unchanged bytes. Fifty-six accepted callers that declared `void` for functions
+that return `int` (15 of them with an empty parameter list) now declare them
+as they are defined, also with unchanged bytes. With these corrections and with
+held callers that now declare two more callees as `int`, 61 held placements of
+420–656 bytes are released. Nineteen bodies of 408–712 bytes are exact for the
+first time at 49 placements. Caller/callee disagreements inside the accepted tree fall from 1,747 on `master` to 1,719 and none is introduced. Eighty-two placements use the pinned
+chain, 15 `gnu-ee-trial` and 13 the qualified `gnu-ee-trial-divpad` profile;
+seven sources take the per-source `-fno-gcse` option. All 21 complete USA
+modules remain exact; no PAL placement is counted, and the distinct-function
+denominator remains unqualified.
