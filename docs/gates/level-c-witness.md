@@ -1146,3 +1146,19 @@ placements use the pinned chain, 60 `gnu-ee-trial`, 52 the qualified
 21 placements only with the qualified per-source `ps2eeas` assembler route.
 All 21 complete USA modules remain exact; no PAL placement is counted, and the
 distinct-function denominator remains unqualified.
+
+Forty-two more mid-size bodies and a fifth round of held-caller corrections
+add **690 USA placements from 594 authored pure C sources** (339,328 bytes by
+placement and 292,112 distinct-source bytes) in 44 forms. Forty-two bodies of
+404–660 bytes are exact for the first time at 668 placements, most of them
+with address variants where the levels place their data differently; one
+particle update keeps a nonempty `do { … } while (0)` group around its
+release-and-return block at its 20 placements, as the source rules allow. The
+byte-exact held callers of 61 more accepted functions now declare them as they
+are defined, which releases 22 held placements of 92–412 bytes. Caller/callee disagreements inside the accepted tree stay at 1,747 and none is introduced.
+Three hundred and twelve placements use the pinned chain, 219 `gnu-ee-trial`,
+125 the qualified `gnu-ee-trial-divpad` profile, 21 `sdk991111` and 13 the
+qualified `gnu-ee-trial-divpad-blockmove` profile; 33 sources take the
+per-source `-fno-gcse` option and 22 the `-mno-check-zero-division` flag. All
+21 complete USA modules remain exact; no PAL placement is counted, and the
+distinct-function denominator remains unqualified.
