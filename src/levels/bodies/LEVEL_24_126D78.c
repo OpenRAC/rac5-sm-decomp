@@ -1,6 +1,6 @@
-extern void func_0E7540(int);
+extern void func_0E7540(int index, float *pos);
 
-void func_126D78(void)
+void func_126D78(int a0, float *pos)
 {
-    func_0E7540(0xe);
+    func_0E7540(0xe, pos);
 }

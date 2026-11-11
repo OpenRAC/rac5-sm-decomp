@@ -15,8 +15,7 @@ extern void RENDEREFFECT_Color(unsigned a) __asm__("RENDEREFFECT_Color__FUi");
 extern void RENDEREFFECT_DoFilmNoise(void) __asm__("RENDEREFFECT_DoFilmNoise__Fv");
 extern void RENDEREFFECT_SwirlyEdgeBlur(float t) __asm__("RENDEREFFECT_SwirlyEdgeBlur__Ff");
 
-void func_09CC48(float dt)
-{
+void func_09CC48(int frame, float dt) {
     D_0023F310 += dt;
     if (func_02A968(0xD)) {
         RENDEREFFECT_Bloom(1, 1);

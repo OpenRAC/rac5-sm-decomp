@@ -1,4 +1,4 @@
-extern void func_03DE90(char *, int, int);
+extern int func_03DE90(char *o, int id, int force);
 
 void func_03DF60(char *item)
 {

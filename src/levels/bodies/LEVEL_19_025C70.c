@@ -1,7 +1,7 @@
 extern int func_025A08(void);
-extern long long func_024A50(int, int);
+extern int func_024A50(int, int);
 
-long long func_025C70(void)
+int func_025C70(void)
 {
     if (func_025A08() == 0)
         return 1;

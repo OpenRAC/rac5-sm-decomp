@@ -1,7 +1,7 @@
 extern long long func_05D070(void *object);
 extern long long func_035DA0(void *object);
 
-void func_035CF8(void *object, unsigned long long enable)
+void func_035CF8(void *object, int enable)
 {
     char *base = object;
     unsigned long long bit = (enable & 1) << 8;

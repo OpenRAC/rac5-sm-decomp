@@ -6,8 +6,7 @@ extern void func_0F52B0(void);
 extern void func_0F52D8(void);
 extern void func_0B75C8(int a);
 
-void func_0B6660(void)
-{
+void func_0B6660(int arg) {
     long v = func_0B7098();
 
     if (v == 1)

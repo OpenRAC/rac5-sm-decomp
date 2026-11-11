@@ -1,6 +1,6 @@
-void func_01C7C0(int, int, int, int, int);
+extern void *func_01C7C0(int align, int size, int zero, char *file, int line);
 
-void func_01C870(int a0, int a1, int a2, int a3)
+void *func_01C870(int size, int zero, char *file, int line)
 {
-    func_01C7C0(16, a0, a1, a2, a3);
+    return func_01C7C0(16, size, zero, file, line);
 }

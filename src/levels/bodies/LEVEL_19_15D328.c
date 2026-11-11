@@ -1,6 +1,6 @@
 extern int func_076698(int);
 
-int func_15D328(unsigned char *record)
+int func_15D328(unsigned char *record, void *key)
 {
     if (record[0x45] == 0) {
         int *values = *(int **)(record + 0x54);

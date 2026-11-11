@@ -9,7 +9,7 @@ extern void func_12F288(void *buf, int a, int b, void *c, float f0, float f1,
                         float f2);
 extern void func_039018(void *self, void *buf, void *out);
 
-void *func_1E0AF8(void *self, void *a1, void *a2, Obj *obj, int e, float f)
+void *func_1E0AF8(void *self, void *a1, void *a2, Obj *obj, int e, unsigned char *out1, int mode)
 {
     char buf[0x30];
 

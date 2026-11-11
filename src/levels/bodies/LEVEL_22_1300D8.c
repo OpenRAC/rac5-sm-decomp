@@ -37,7 +37,7 @@ extern void func_105910(int a);
 extern void func_12FE00(Obj *o, int a, int b);
 extern void func_014A50(void);
 extern void func_031CC0(int a);
-extern void func_016EC0(int a, int b);
+extern int func_016EC0(int a, int b);
 extern int func_10A770(int a);
 
 void func_1300D8(Obj *o)

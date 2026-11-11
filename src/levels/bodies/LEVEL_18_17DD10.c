@@ -2,7 +2,7 @@
 extern void func_17DEC8(char *param);
 extern void func_127E08(int value);
 
-char *func_17DD10(int param_1, char *param_2)
+char *func_17DD10(int param_1, char *param_2, int param_3, int param_4)
 {
     char *base = *(char **)(param_2 + 0x58);
     int *p5;

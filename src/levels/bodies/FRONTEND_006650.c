@@ -7,7 +7,7 @@ void func_00A5E0(void);
 void func_007B38(void);
 extern void dlib_displist_db_init(void *p, int n) __asm__("dlib_displist_db_init__FP16DLIB_DISPLIST_DBi");
 
-void func_006650(void)
+void func_006650(int arg)
 {
     func_01C6B0();
     func_005FC0(gMatrixStack, 8, 8, 0x20, 8, 8, 8);

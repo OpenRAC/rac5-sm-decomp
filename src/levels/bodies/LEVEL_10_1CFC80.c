@@ -10,7 +10,7 @@ extern void func_126D38(void *a0, int a1, int a2, float f12, float f13,
                         float f14);
 extern void func_032D28(void *a0, void *a1, void *a2);
 
-void *func_1CFC80(void *a0, int a1, int a2, Rec *a3, int t0)
+void *func_1CFC80(void *a0, int a1, int a2, Rec *a3, int t0, unsigned char *out1, int mode)
 {
     char buf[0x30];
     float f = a3->f_2C;

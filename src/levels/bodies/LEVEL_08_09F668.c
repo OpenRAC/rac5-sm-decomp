@@ -1,8 +1,8 @@
-extern void func_09F548(void);
+extern void func_09F548(void *h);
 
 void func_09F668(char *record)
 {
-    func_09F548();
+    func_09F548(record);
     *(int *)(record + 0xc) = 0;
     *(unsigned short *)(record + 0x10) = 0x100;
     *(int *)(record + 8) = 0;

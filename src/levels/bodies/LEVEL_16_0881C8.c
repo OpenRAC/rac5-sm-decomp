@@ -1,8 +1,8 @@
 extern char D_0024E70C[];
-extern void func_087E10(char *, void *, void *, long long);
+extern void *func_087E10(char *, void *, void *, int);
 
-void func_0881C8(char *record, int index, long long extra)
+void *func_0881C8(char *record, int index, int extra)
 {
     char *entry = D_0024E70C + index * 40;
-    func_087E10(record, entry + 16, entry, extra);
+    return func_087E10(record, entry + 16, entry, extra);
 }

@@ -13,7 +13,7 @@ extern void func_105FA8(void *a0, int a1, int a2, float f12, float f13,
                         float f14);
 extern void func_030748(Obj *a0, void *a1, void *a2);
 
-Obj *func_1846C0(Obj *a0, int a1, int a2, Other *a3, int a4)
+Obj *func_1846C0(Obj *a0, int a1, int a2, Other *a3, int a4, unsigned char *out1, int mode)
 {
     char buf[0x30];
     float f = a3->f_2C;

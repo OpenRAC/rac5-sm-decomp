@@ -1,6 +1,6 @@
 /* LEVEL_16:0x0228E0 -- for an id below 25, runs the set or clear handler
    chosen by the flag and reports success. */
-extern void func_025200(unsigned int id);
+extern int func_025200(unsigned int id);
 extern void func_025288(unsigned int id);
 
 int func_0228E0(unsigned int id, int flag)

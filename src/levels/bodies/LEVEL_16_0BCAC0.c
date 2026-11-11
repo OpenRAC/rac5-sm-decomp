@@ -22,7 +22,7 @@ extern void func_0A8EE0(struct Obj *o, int a, int b, int c, int d);
 extern void func_0A8EC8(struct Obj *o, int a, unsigned int b);
 extern int func_0A89E8(struct Obj *o, int a, int b);
 extern int func_0A8AC8(struct Obj *o, int a, int b);
-extern void func_0A9290(int a, int b, int c, int d, int e, int f, int g, int h, unsigned int i);
+extern int func_0A9290(int a, int b, int c, int d, int e, int f, int g, int h, unsigned int i);
 extern int func_0A8C60(struct Obj *o);
 
 void func_0BCAC0(void)

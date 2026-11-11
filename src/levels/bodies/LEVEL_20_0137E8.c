@@ -6,7 +6,7 @@ extern char *D_00104194;
 extern void func_01EA08(void);
 extern void func_013870(void);
 extern void func_013A48(void);
-extern void func_021D00(int a, int b);
+extern int func_021D00(unsigned int index, int enabled);
 extern void func_0224A8(void);
 extern void func_022368(void);
 

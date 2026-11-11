@@ -1,9 +1,13 @@
 extern int D_0015B80C;
-extern int func_0EDCB0(char *, int);
-extern void GLOBALWAD_FindAssetsByType__F14WAD_ASSET_TYPE(char *);
+extern char *func_0EDCB0(char *, int);
+extern char *GLOBALWAD_FindAssetsByType__F14WAD_ASSET_TYPE(char *);
 
-void func_0EE2A0(char *record)
+char *func_0EE2A0(char *record)
 {
-    if (func_0EDCB0(record, D_0015B80C) == 0)
-        GLOBALWAD_FindAssetsByType__F14WAD_ASSET_TYPE(record);
+    char *found;
+
+    found = func_0EDCB0(record, D_0015B80C);
+    if (found == 0)
+        found = GLOBALWAD_FindAssetsByType__F14WAD_ASSET_TYPE(record);
+    return found;
 }

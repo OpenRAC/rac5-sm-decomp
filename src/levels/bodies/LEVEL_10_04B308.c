@@ -1,9 +1,9 @@
-extern void func_04A988(long long, int, int *, long long, long long, long long, long long, long long);
+extern void func_04A988(float scale, int owner, int count, void **out, float *pos, void *ent, float *dir, int flags, char *table);
 
-int func_04B308(long long a, long long b, long long c, long long d, long long e, long long f)
+void *func_04B308(float scale, int owner, float *pos, void *ent, float *dir, int flags, char *table)
 {
-    int output[4];
+    void *output[4];
     output[0] = 0;
-    func_04A988(a, 1, output, b, c, d, e, f);
+    func_04A988(scale, owner, 1, output, pos, ent, dir, flags, table);
     return output[0];
 }

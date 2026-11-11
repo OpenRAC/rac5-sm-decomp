@@ -10,7 +10,7 @@ typedef struct { State *p; } StateHolder;
 
 extern StateHolder D_00143EBC;
 
-void func_002F40(u64 first, u64 second, u64 third)
+void func_002F40(int first, int second, int third)
 {
     D_00143EBC.p->flags = (D_00143EBC.p->flags & ~1ULL) | (first & 1ULL);
     D_00143EBC.p->flags = (D_00143EBC.p->flags & ~2ULL) | ((second & 1ULL) << 1);

@@ -1,9 +1,9 @@
-extern void func_0DCE68(void *);
-extern void func_0DC138(long long, void *, void *);
+extern void func_0DCE68(void *, float, float);
+extern void func_0DC138(float *, void *, void *);
 
-void func_054D20(char *record, long long value)
+void func_054D20(char *record, float *v, float a, float b)
 {
     unsigned char buffer[48];
-    func_0DCE68(buffer);
-    func_0DC138(value, buffer, record + 0xe58);
+    func_0DCE68(buffer, a, b);
+    func_0DC138(v, buffer, record + 0xe58);
 }

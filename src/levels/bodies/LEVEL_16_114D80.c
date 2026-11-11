@@ -1,5 +1,5 @@
 extern int func_1149B0(void);
-extern void func_114BB8(void *);
+extern int func_114BB8(void *record);
 
 void func_114D80(void *record)
 {

@@ -1,12 +1,12 @@
-extern void func_040D18();
+extern void func_040D18(void *obj);
 extern void func_0036E8(int, int, float, float);
 extern void func_003718(int, int, float, float);
 extern void func_003888(int, int, float, float);
 extern void func_003BC8(int);
 
-void func_0585C0(void)
+void func_0585C0(char *state)
 {
-    func_040D18();
+    func_040D18(state);
     func_0036E8(0xA, 2, 6.0f, 1.0f);
     func_003718(0xA, 2, 3.0f, 1.0f);
     func_003888(0xA, 2, -0.3f, 1.0f);

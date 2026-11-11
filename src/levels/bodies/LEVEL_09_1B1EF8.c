@@ -9,7 +9,7 @@ typedef struct {
 void func_121EE8(float *buf, void *a1, void *a2, float x, float y, float z);
 void func_030DD8(char *a0, float *buf, float *tail);
 
-char *func_1B1EF8(char *a0, int a1, int a2, Src *a3, void *a4)
+char *func_1B1EF8(char *a0, int a1, int a2, Src *a3, void *a4, unsigned char *out1, int mode)
 {
     float buf[12];
 

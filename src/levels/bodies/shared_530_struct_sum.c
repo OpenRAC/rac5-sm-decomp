@@ -8,8 +8,9 @@ struct S {
 
 extern float func_000450(int value);
 
-float func_000530(struct S s)
+float func_000530(struct S *p)
 {
+    struct S s = *p;
     float sum = 0.0f;
 
     sum = sum + func_000450(s.d);

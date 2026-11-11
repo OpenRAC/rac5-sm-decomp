@@ -1,6 +1,6 @@
 /* LEVEL_15:0x0F52D8 -- passes a slot's field 8 to a call with flag 1. */
 extern char D_002A8B58[];
-extern void func_016A90(int, int);
+extern int func_016A90(int a, int b);
 
 void func_0F52D8(void)
 {

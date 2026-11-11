@@ -4,7 +4,7 @@ extern char D_001F6108[];
 
 int func_12F520(void);
 int func_12F320(int);
-void func_12F6D0(int);
+extern int func_12F6D0(int index);
 
 int func_12F5B8(void)
 {

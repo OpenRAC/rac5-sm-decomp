@@ -18,14 +18,17 @@ typedef struct {
 
 extern int func_012B78(ObjA *, Tmp *, int, int, int);
 
-void func_012B20(ObjA *a0, ObjB *a1, int a2)
+int func_012B20(ObjA *a0, ObjB *a1, int a2, float f)
 {
     Tmp t;
+    int r;
 
-    if (func_012B78(a0, &t, a2, 0x38, 0)) {
+    r = func_012B78(a0, &t, a2, 0x38, 0);
+    if (r) {
         a0->f4 = t.f0;
     }
     if (a1 != 0) {
         a1->f0 = t.f0;
     }
+    return r;
 }

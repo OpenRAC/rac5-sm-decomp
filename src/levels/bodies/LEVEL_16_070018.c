@@ -1,8 +1,8 @@
-extern void func_06FF88(void);
-extern void func_1044F0(long long, long long, long long);
+extern void func_06FF88(void *, float *, int);
+extern void func_1044F0(float *, void *, float *);
 
-void func_070018(long long first, long long second)
+void func_070018(void *obj, float *vec, int id)
 {
-    func_06FF88();
-    func_1044F0(second, first, second);
+    func_06FF88(obj, vec, id);
+    func_1044F0(vec, obj, vec);
 }

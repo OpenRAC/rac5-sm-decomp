@@ -1,14 +1,14 @@
-extern void func_03A5F0(void);
-extern void func_03A648(long long, long long);
-extern void func_03A520(long long, long long);
-extern void func_03A5A8(long long, long long);
-extern void func_03A6A0(long long, long long);
+extern void func_03A5F0(char *object, int mode);
+extern void func_03A648(char *object, int mode);
+extern void func_03A520(char *object, int mode);
+extern void func_03A5A8(char *object, int mode);
+extern void func_03A6A0(char *object, int mode);
 
-void func_03A748(long long first, long long second)
+void func_03A748(char *object, int mode)
 {
-    func_03A5F0();
-    func_03A648(first, second);
-    func_03A520(first, second);
-    func_03A5A8(first, second);
-    func_03A6A0(first, second);
+    func_03A5F0(object, mode);
+    func_03A648(object, mode);
+    func_03A520(object, mode);
+    func_03A5A8(object, mode);
+    func_03A6A0(object, mode);
 }

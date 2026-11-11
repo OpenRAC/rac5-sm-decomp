@@ -12,9 +12,9 @@ struct Mgr8 {
 };
 
 extern struct Mgr8 *D_001B5D20;
-void func_18F168(struct Ent8 *e, int p1, int p2);
+int func_18F168(struct Ent8 *e, int p1, void *p2);
 
-void func_18F2A8(int key, int p1, int p2)
+int func_18F2A8(int key, int p1, void *p2)
 {
     struct Mgr8 *m;
     struct Ent8 *cur;
@@ -29,5 +29,5 @@ void func_18F2A8(int key, int p1, int p2)
     }
     cur = 0;
 call:
-    func_18F168(cur, p1, p2);
+    return func_18F168(cur, p1, p2);
 }

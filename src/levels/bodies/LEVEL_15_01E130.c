@@ -1,6 +1,6 @@
-extern void func_01E990(int, int);
+extern char *func_01E990(int, int);
 
-void func_01E130(char *item)
+char *func_01E130(char *item)
 {
-    func_01E990(*(int *)(item + 0x9a0), *(int *)(item + 0xf8));
+    return func_01E990(*(int *)(item + 0x9a0), *(int *)(item + 0xf8));
 }

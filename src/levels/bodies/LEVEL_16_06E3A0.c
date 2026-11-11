@@ -1,11 +1,11 @@
 /* LEVEL_16:0x06E3A0 -- packs six bit fields into one flag word and passes it, with a local buffer, to two helpers. */
 
 void func_087530(void *record, unsigned int first, unsigned int second, int third, int fourth, int fifth, unsigned int sixth);
-void func_087708(void *buf);
+int func_087708(void *buf);
 extern unsigned char D_0006C768[];
 extern unsigned char D_0006C600[];
 
-void func_06E3A0(unsigned int p0, unsigned int p1, unsigned int p2, unsigned int p3, unsigned int p4, unsigned int p5)
+int func_06E3A0(unsigned int p0, unsigned int p1, unsigned int p2, unsigned int p3, unsigned int p4, unsigned int p5)
 {
     unsigned char buf[16];
     unsigned int x3;
@@ -25,5 +25,5 @@ void func_06E3A0(unsigned int p0, unsigned int p1, unsigned int p2, unsigned int
     p1 = p1 | x4;
     p1 = p1 | x5;
     func_087530(buf, p1 | 5, (unsigned int)D_0006C768, 56, 0, -1, (unsigned int)D_0006C600);
-    func_087708(buf);
+    return func_087708(buf);
 }

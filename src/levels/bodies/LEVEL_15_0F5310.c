@@ -14,7 +14,7 @@ typedef struct {
 
 extern Big D_002A8B58;
 extern void func_0214C0(int message, int a, unsigned char state);
-extern void func_016A90(int value, int a);
+extern int func_016A90(int a, int b);
 
 void func_0F5310(void)
 {

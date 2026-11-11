@@ -1,4 +1,4 @@
-extern void func_01F590(void *, int);
+extern int func_01F590(void *owner, int id);
 
 void func_01E490(char *item, void *other)
 {

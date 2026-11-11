@@ -9,7 +9,7 @@ extern void func_0977D0(int a0, int a1);
 extern void func_099980(void);
 extern int *D_001DA190;
 
-void func_08F2C0(void)
+void func_08F2C0(int flag)
 {
     func_097900(0);
     func_097650(5);

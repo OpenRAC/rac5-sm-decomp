@@ -13,7 +13,7 @@ extern int func_0221C8(void *o, void *x);
 extern struct Rec *func_0220C8(void *o, void *x);
 extern void *func_022C28(void *o, void *x);
 extern struct Q *func_022170(void *o, void *x, int n);
-extern void func_021F10(long long first, long long second);
+extern void func_021F10(void *first, void *second);
 
 int func_022238(void *a0, unsigned int a1, void *a2)
 {
@@ -32,7 +32,7 @@ int func_022238(void *a0, unsigned int a1, void *a2)
     r->c_44 = t;
     if (qv < t) {
         r->c_44 = t - qv;
-        func_021F10((long long)a0, (long long)a2);
+        func_021F10(a0, a2);
         return 1;
     }
     return 0;

@@ -12,7 +12,7 @@ void func_072368(struct Obj *o);
 void func_0719C8(struct Obj *o, unsigned int a);
 void func_071268(struct Obj *o);
 
-void func_0711F0(struct Obj *o, unsigned int a1)
+void func_0711F0(struct Obj *o, unsigned int a1, void *a2, int a3)
 {
     func_0715E0(o, a1);
     if (o->b206 != 0) {

@@ -3,21 +3,20 @@
  * Pinned C links 100 bytes, first difference at +0.
  * Recheck stack object types and the argument-copy order against callers. No matching credit.
  */
-extern void func_13F2A0(long long *, char *);
+extern void func_13F2A0(double *, char *);
 extern long long func_13F340(char *, char *, char *);
-extern void func_13F170(long long);
+extern double func_13F170(long long);
 
-void func_13F5D8(long long first, long long second)
-{
+double func_13F5D8(double first, double second) {
     char left[32];
     char right[32];
     char output[32];
-    long long a = first;
-    long long b = second;
+    double a = first;
+    double b = second;
     long long value;
     func_13F2A0(&a, left);
     func_13F2A0(&b, right);
     *(unsigned int *)(right + 4) ^= 1u;
     value = func_13F340(left, right, output);
-    func_13F170(value);
+    return func_13F170(value);
 }

@@ -4,9 +4,9 @@ typedef struct {
     float f1F8;
 } Rec;
 
-extern void func_062C18(int, int, int, int, float);
+extern void *func_062C18(int, int, int, int, float);
 
-void func_062BE8(Rec *a0, int a1, int a2, int a3)
+void *func_062BE8(Rec *a0, int a1, int a2, int a3)
 {
-    func_062C18(a1, a2, a3, 0, a0->f1F8);
+    return func_062C18(a1, a2, a3, 0, a0->f1F8);
 }

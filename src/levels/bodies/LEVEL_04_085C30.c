@@ -8,7 +8,7 @@ int SND_GetNumPositionalSounds(void) __asm__("SND_GetNumPositionalSounds__Fv");
 struct SndPositional *SND_GetPositionalSoundAt(unsigned int i) __asm__("SND_GetPositionalSoundAt__FUi");
 void SND_PausePositionalSound(struct SndPositional *p, int b) __asm__("SND_PausePositionalSound__FP14SND_Positionalb");
 
-void func_085C30(int a, int b)
+void func_085C30(void *owner, int paused, int unused)
 {
     unsigned int i;
     char *p;
@@ -17,9 +17,9 @@ void func_085C30(int a, int b)
     i = 0;
     while (i < (unsigned int)SND_GetNumPositionalSounds()) {
         p = (char *)SND_GetPositionalSoundAt(i);
-        if (*(int *)(p + 0x4C) == a) {
+        if (*(void **)(p + 0x4C) == owner) {
             if (*(int *)(p + 0x50) != 0) {
-                SND_PausePositionalSound((struct SndPositional *)p, b);
+                SND_PausePositionalSound((struct SndPositional *)p, paused);
             }
         }
         i++;

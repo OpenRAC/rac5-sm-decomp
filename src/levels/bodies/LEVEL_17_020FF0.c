@@ -1,4 +1,4 @@
-extern void func_022210(void *, int);
+extern int func_022210(void *owner, int id);
 
 void func_020FF0(char *item, void *other)
 {

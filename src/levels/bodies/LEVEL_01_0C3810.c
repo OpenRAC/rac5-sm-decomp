@@ -1,6 +1,6 @@
 extern long long func_0A63E0(int);
 extern void func_133DD8(int, void *, long long);
-extern void func_134070(int, int);
+extern int func_134070(int, int);
 extern char D_00212D58[];
 extern char *D_001F3FAC;
 

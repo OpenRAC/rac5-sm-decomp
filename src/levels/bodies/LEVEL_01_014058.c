@@ -3,14 +3,17 @@
    into both records when they are non-null. */
 int func_0140B0(int a0, float *out, int a2, int a3, int a4);
 
-void func_014058(int a0, int a1, int a2)
+int func_014058(int a0, int a1, int a2, float f)
 {
     float v;
+    int r;
 
-    if (func_0140B0(a0, &v, a2, 0x38, 0)) {
+    r = func_0140B0(a0, &v, a2, 0x38, 0);
+    if (r) {
         *(float *)(a0 + 4) = v;
     }
     if (a1 != 0) {
         *(float *)a1 = v;
     }
+    return r;
 }

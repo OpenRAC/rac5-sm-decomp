@@ -1,10 +1,10 @@
-extern void func_1B1208(long long);
-extern void func_1B1660(long long);
-extern void func_1B1690(long long, long long);
+extern void func_1B1208(void *);
+extern void func_1B1660(void *);
+extern int func_1B1690(int, int);
 
-void func_1A1B38(long long first, long long second, long long third, long long fourth)
+int func_1A1B38(int first, char *second, char *third, int fourth)
 {
     func_1B1208(second);
     func_1B1660(third);
-    func_1B1690(first, fourth);
+    return func_1B1690(first, fourth);
 }
