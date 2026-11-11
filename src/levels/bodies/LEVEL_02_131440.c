@@ -3,7 +3,7 @@ extern int func_1315A0(int value, int mode);
 extern int func_131C50(int value);
 extern int func_130950(int handle, int mode);
 
-void func_131440(char *obj)
+void func_131440(char *obj, char *ctx)
 {
     char *node = *(char **)(obj + 0x10);
     unsigned int i;

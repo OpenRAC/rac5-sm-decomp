@@ -1,6 +1,6 @@
-extern void func_024628(int, int);
+extern char *func_024628(int, int);
 
-void func_023CA8(char *item)
+char *func_023CA8(char *item)
 {
-    func_024628(*(int *)(item + 0x9a0), *(int *)(item + 0xf8));
+    return func_024628(*(int *)(item + 0x9a0), *(int *)(item + 0xf8));
 }

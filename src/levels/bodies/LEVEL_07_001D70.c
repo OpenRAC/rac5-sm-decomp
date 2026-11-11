@@ -1,9 +1,9 @@
-extern void func_001BF0(char *);
-extern void func_128C10(long long, long long, char *);
+extern void func_001BF0(float *out, float a, float b, float c, float d);
+extern void func_128C10(long long, long long, float *);
 
-void func_001D70(long long first, long long second)
+void func_001D70(long long first, long long second, float a, float b, float c, float d)
 {
-    char scratch[16];
-    func_001BF0(scratch);
+    float scratch[4];
+    func_001BF0(scratch, a, b, c, d);
     func_128C10(first, second, scratch);
 }

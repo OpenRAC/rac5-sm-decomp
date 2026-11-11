@@ -10,7 +10,7 @@ typedef struct {
 extern void func_13A208(void *, int, int, Body *, float, float, float);
 extern void func_038EB0(Obj *, void *, void *);
 
-void *func_2067E0(Obj *self, int x1, int x2, Body *body, int v)
+void *func_2067E0(Obj *self, int x1, int x2, Body *body, int v, unsigned char *out1, int mode)
 {
     char buf[0x30];
 

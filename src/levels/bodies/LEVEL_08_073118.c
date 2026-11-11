@@ -5,9 +5,9 @@ typedef struct {
     float f_1F8;
 } Node;
 
-extern void func_073148(int, int, int, int, float);
+extern void *func_073148(int, int, int, int, float);
 
-void func_073118(Node *a0, int a1, int a2, int a3)
+void *func_073118(Node *a0, int a1, int a2, int a3)
 {
-    func_073148(a1, a2, a3, 0, a0->f_1F8);
+    return func_073148(a1, a2, a3, 0, a0->f_1F8);
 }

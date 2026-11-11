@@ -6,7 +6,7 @@ typedef struct {
 void func_1248C8(float *buf, int a1, int a2, float f0, float f1, float f2);
 void func_0322E0(void *a, float *b, float *c);
 
-void *func_1BADE8(void *s, int b, int c, T *p, int e)
+void *func_1BADE8(void *s, int b, int c, T *p, int e, unsigned char *out1, int mode)
 {
     float buf[11];
 

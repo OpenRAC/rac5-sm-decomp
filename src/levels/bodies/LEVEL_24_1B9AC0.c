@@ -1,7 +1,7 @@
 /* LEVEL_24:0x1B9AC0 -- placement copy of LEVEL_01_1E8DE8.c: for two 0x7C-byte records, remaps a 16-bit field through a lookup table and stores a computed result. */
 
 extern unsigned int D_00263C80[];
-extern int func_1B9208();
+extern int func_1B9208(unsigned int x);
 
 void func_1B9AC0(char *a0)
 {

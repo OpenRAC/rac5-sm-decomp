@@ -10,14 +10,14 @@ typedef struct {
 
 extern G *D_001A540C;
 
-int func_079B70(void);
+int func_079B70(int mask);
 int func_079910(float x, float y);
 
-int func_0799F0(void)
+int func_0799F0(int mask)
 {
     int r;
 
-    if (!func_079B70())
+    if (!func_079B70(mask))
         return 0;
     r = func_079910(D_001A540C->f_134, D_001A540C->f_138);
     return D_001A540C->f_108 | r;

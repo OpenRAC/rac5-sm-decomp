@@ -2,7 +2,7 @@
 
 void func_162F38(void *a);
 
-void func_034750(char *a0, int a1)
+void func_034750(char *a0, int a1, float f)
 {
     char *s2;
     char *obj;

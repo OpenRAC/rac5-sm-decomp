@@ -1070,3 +1070,24 @@ at 22 placements only with the qualified per-source `r5900-mfc1` assembler
 route. A further 55 placements in four forms link byte-exact but stay held
 for ABI review. All 21 complete USA modules remain exact; no PAL placement
 is counted, and the distinct-function denominator remains unqualified.
+
+Correcting wrong prototypes in accepted code releases **1,325 USA placements
+from 1,261 authored pure C sources** (406,180 bytes by placement and 390,744
+distinct-source bytes) in 140 forms of 64–1,268 bytes. These placements were
+byte-exact but held because an accepted function had been given a prototype
+that its retail callers contradict: a `void` definition whose callers use the
+returned register, a definition with fewer arguments than the callers pass,
+or a different argument width or bank. The prototypes of 105 such functions
+were corrected in 1,215 accepted sources, the definition and every accepted
+declaration in every level, with each source linked again exactly at all of
+its placements; unused incoming arguments were added only where the retail
+callers set those registers. Sixty-four placements reuse an identical source
+after an independent exact link at each site. Nine hundred and forty-nine
+placements use the pinned chain, 268 `gnu-ee-trial`, 75 the qualified
+`gnu-ee-trial-divpad` profile, 21 `sdk991111` and twelve
+`gnu-ee-trial-divpad-blockmove`; bodies of 1,012, 664 and 304 bytes are exact
+at 20 placements only with the qualified per-source `r5900-mfc1` assembler
+route, a 432-byte body at 20 placements only with the `ps2eeas` route, and
+four forms use the existing per-source `-mno-check-zero-division` flag at 37
+placements. All 21 complete USA modules remain exact; no PAL placement is
+counted, and the distinct-function denominator remains unqualified.

@@ -1,10 +1,11 @@
 extern char D_001ED8F0[];
 extern void func_096CB8(void *out, void *arg, const void *data,
                         int size, int first, int second, int third);
-extern void func_096E90(void *out);
+extern int func_096E90(void *out);
 
-void func_1EE1F0(void *arg) {
+int func_1EE1F0(void *arg)
+{
     char local[16];
     func_096CB8(local, arg, D_001ED8F0, 40, 0, 2, 0);
-    func_096E90(local);
+    return func_096E90(local);
 }

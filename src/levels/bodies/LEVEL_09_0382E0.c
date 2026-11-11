@@ -3,7 +3,7 @@ extern void func_001000(int);
 extern void func_084810(int);
 extern void func_0C75B8(int);
 
-void func_0382E0(void)
+void func_0382E0(void *obj)
 {
     func_0018A0(0);
     func_001000(0);

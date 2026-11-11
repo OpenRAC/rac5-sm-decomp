@@ -1,6 +1,6 @@
-extern void func_108AE0(int, void *, void *, void *, void *);
+extern void *func_108AE0(int align, int size, int zero, char *file, int line);
 
-void func_108B90(void *a, void *b, void *c, void *d)
+void *func_108B90(int size, int zero, char *file, int line)
 {
-    func_108AE0(0x10, a, b, c, d);
+    return func_108AE0(0x10, size, zero, file, line);
 }

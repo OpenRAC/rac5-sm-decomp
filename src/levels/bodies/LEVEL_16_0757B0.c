@@ -9,7 +9,7 @@ typedef struct {
     float rest[356];
 } Scratch;
 
-void func_0757B0(int a, int b, Block *src)
+void func_0757B0(int a, int b, Block *src, int c)
 {
     Scratch scratch;
 

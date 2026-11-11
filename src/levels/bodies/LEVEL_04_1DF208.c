@@ -2,7 +2,7 @@ extern void func_1351C8(void *a0, int a1, int a2, float a3, float a4,
                         float a5);
 extern void func_035C18(void *a0, void *a1, void *a2);
 
-char *func_1DF208(char *a0, void *a1, void *a2, char *a3, int a4)
+char *func_1DF208(char *a0, void *a1, void *a2, char *a3, int a4, unsigned char *out1, int mode)
 {
     char buf[0x30];
     float v = *(float *)(a3 + 0x2C);

@@ -7,7 +7,7 @@ typedef struct {
 
 extern Big D_002A8B58;
 
-void func_0F51C8(void *a0)
+void func_0F51C8(void)
 {
     Big *p = &D_002A8B58;
     p->i = 3;

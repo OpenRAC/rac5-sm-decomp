@@ -1,6 +1,6 @@
-extern int func_233E00(void);
+extern int func_233E00(float input);
 
-void func_041238(char *record)
+void func_041238(char *record, float f)
 {
-    *(int *)(record + 0x984) = func_233E00();
+    *(int *)(record + 0x984) = func_233E00(f);
 }

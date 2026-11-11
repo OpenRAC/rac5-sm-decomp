@@ -1,4 +1,4 @@
-extern void func_048550(char *, int, int);
+extern int func_048550(char *o, int id, int force);
 
 void func_048620(char *item)
 {

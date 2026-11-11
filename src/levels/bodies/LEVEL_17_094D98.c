@@ -1,8 +1,8 @@
-extern void *func_095740(void);
-extern void func_094EB0(void *, void *);
+extern int func_095740(int idx, float *pos);
+extern int func_094EB0(unsigned int slot, unsigned int mode);
 
-void func_094D98(void *value)
+void func_094D98(int slot, float *pos)
 {
-    void *result = func_095740();
-    func_094EB0(value, result);
+    int zone = func_095740(slot, pos);
+    func_094EB0(slot, zone);
 }

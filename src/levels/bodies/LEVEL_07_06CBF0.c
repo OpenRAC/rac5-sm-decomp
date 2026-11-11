@@ -12,7 +12,7 @@ void func_06DD68(struct Obj *o);
 void func_06D3C8(struct Obj *o, unsigned int a);
 void func_06CC68(struct Obj *o);
 
-void func_06CBF0(struct Obj *o, unsigned int a1)
+void func_06CBF0(struct Obj *o, unsigned int a1, void *a2, int a3)
 {
     func_06CFE0(o, a1);
     if (o->b206 != 0) {

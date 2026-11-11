@@ -8,7 +8,7 @@ typedef struct {
 void func_128F50(char *buf, int a1, int a2, float x, float y, float z);
 void func_0345D0(int a0, char *buf, char *tail);
 
-char *func_1CB9D8(int a0, int a1, int a2, Src *a3, int a4)
+char *func_1CB9D8(int a0, int a1, int a2, Src *a3, int a4, unsigned char *out1, int mode)
 {
     char buf[0x30];
 

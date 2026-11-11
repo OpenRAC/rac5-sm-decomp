@@ -3,11 +3,11 @@ typedef struct {
     float v;
 } Obj;
 
-extern void func_0319C0(void);
+extern void func_0319C0(void *obj);
 extern float func_001158(void);
 
 void f(Obj *a0)
 {
-    func_0319C0();
+    func_0319C0(a0);
     a0->v = func_001158();
 }

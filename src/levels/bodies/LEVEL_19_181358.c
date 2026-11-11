@@ -10,7 +10,7 @@ typedef struct Obj Obj;
 extern void func_1066B8(float *, int, int, float, float, float);
 extern void func_02FAD8(Obj *, float *, float *);
 
-char *func_181358(Obj *a0, int a1, int a2, Ctx *a3, int a4)
+char *func_181358(Obj *a0, int a1, int a2, Ctx *a3, int a4, unsigned char *out1, int mode)
 {
     float buf[12];
     float v = a3->f2C;

@@ -1,10 +1,10 @@
-extern long long func_170F78(int);
+extern int func_170F78(void *node, void *other);
 
-long long func_1710C0(char *record)
+int func_1710C0(char *record, void *other)
 {
     char *value = *(char **)(record + 0x58);
-    int state = *(int *)(value + 100);
+    void *state = *(void **)(value + 100);
     if (state == 0)
         return 0;
-    return func_170F78(state);
+    return func_170F78(state, other);
 }

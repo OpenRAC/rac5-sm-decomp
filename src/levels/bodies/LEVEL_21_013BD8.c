@@ -10,7 +10,7 @@ void func_021DD8(void);
 void func_061428(void (*cb)(void));
 void func_013C68(void);
 void func_013DC8(void);
-void func_021698(int a0, int a1);
+extern int func_021698(unsigned int index, int enabled);
 void func_021C18(void);
 void func_021AD8(void);
 

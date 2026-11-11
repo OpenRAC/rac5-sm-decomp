@@ -11,12 +11,15 @@ typedef struct {
 
 int func_014320(Obj *a0, float *out, int a2, int a3, int a4);
 
-void func_0142C8(Obj *a0, Slot *a1, int a2)
+int func_0142C8(Obj *a0, Slot *a1, int a2, float f)
 {
     float t;
+    int r;
 
-    if (func_014320(a0, &t, a2, 0x38, 0))
+    r = func_014320(a0, &t, a2, 0x38, 0);
+    if (r)
         a0->f_04 = t;
     if (a1)
         a1->f_00 = t;
+    return r;
 }

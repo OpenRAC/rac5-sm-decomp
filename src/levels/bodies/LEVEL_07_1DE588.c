@@ -1,10 +1,10 @@
-extern void func_1EE170(long long);
-extern void func_1EE5C8(long long);
-extern void func_1EE5F8(long long, long long);
+extern void func_1EE170(void *);
+extern void func_1EE5C8(void *);
+extern int func_1EE5F8(int, int);
 
-void func_1DE588(long long first, long long second, long long third, long long fourth)
+int func_1DE588(int first, char *second, char *third, int fourth)
 {
     func_1EE170(second);
     func_1EE5C8(third);
-    func_1EE5F8(first, fourth);
+    return func_1EE5F8(first, fourth);
 }

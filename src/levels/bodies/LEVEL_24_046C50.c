@@ -3,7 +3,7 @@
 void func_055118(void *p);
 void func_0551F8(void *p);
 void func_021908(void *o, int v);
-void func_0350E8(long long first, long long second);
+extern void func_0350E8(char *object, int mode);
 void func_021EA8(void);
 
 struct Obj {
@@ -17,6 +17,6 @@ void func_046C50(struct Obj *a0, void *a1)
     func_0551F8(a1);
     a0->h102 = 0;
     func_021908(a0, 1);
-    func_0350E8((long long)a0, 1);
+    func_0350E8((char *)a0, 1);
     func_021EA8();
 }

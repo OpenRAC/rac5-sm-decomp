@@ -1,8 +1,10 @@
 extern int asyncCmdSync(int, void *, int *);
 
-void func_023CE8(void *unused, void *result)
+int func_023CE8(void *unused, void *result)
 {
     int scratch[4];
-    asyncCmdSync(0, result, scratch);
+    int r;
+    r = asyncCmdSync(0, result, scratch);
     *(int *)result = scratch[0];
+    return r;
 }
