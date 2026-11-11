@@ -1,7 +1,7 @@
 extern char *D_00237DD4;
-extern void func_003600(void *global, int first, int second);
+extern void func_003600(void *global, int first, int second, float x, float y);
 
 void func_003718(int first, int second, float x, float y)
 {
-    func_003600(D_00237DD4 + 120, first, second);
+    func_003600(D_00237DD4 + 120, first, second, x, y);
 }

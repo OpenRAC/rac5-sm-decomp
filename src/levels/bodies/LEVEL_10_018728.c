@@ -45,7 +45,7 @@ extern void func_026D60(int a, int b, int c);
 extern void func_0BA2B0(int *p, int n);
 extern void func_0268C0(int *a, int *b, int c);
 extern void func_0280F0(int a);
-extern void func_131120(int a);
+extern int func_131120(int a);
 extern void *memcpy(void *d, const void *s, unsigned int n);
 
 void func_018728(struct Mat *m, unsigned char flag, int doit)

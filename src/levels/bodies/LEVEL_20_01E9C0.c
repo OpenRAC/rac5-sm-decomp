@@ -1,10 +1,10 @@
-extern char *func_01EDC8(unsigned int, long long);
+extern char *func_01EDC8(unsigned int row, int column);
 
 void func_01E9C0(void)
 {
     unsigned int index = 0;
     do {
-        char *item = func_01EDC8(index, -1LL);
+        char *item = func_01EDC8(index, -1);
         if (item != 0) {
             *(int *)(item + 0x44) = 0;
         }

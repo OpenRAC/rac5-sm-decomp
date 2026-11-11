@@ -1,6 +1,6 @@
 extern unsigned char D_001ED29C;
 extern char *D_001E2EAC;
-extern void func_129970(int);
+extern int func_129970(int);
 
 void func_0BB338(void)
 {

@@ -4,7 +4,7 @@ extern void SND_LevelUpdate(const void *a, const void *b) __asm__("SND_LevelUpda
 extern void func_001EE0(void);
 extern int func_001B20(int a);
 extern void func_004EC8(void);
-extern void func_005618(int a);
+extern char *func_005618(int mask);
 extern int func_011558(void);
 extern void func_000120(int a);
 extern void *func_000178(void);

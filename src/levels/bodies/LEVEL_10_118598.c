@@ -3,14 +3,14 @@ struct Obj {
     int f4;
 };
 
-void *func_118460(void);
-int func_1186A0(void *);
+void *func_118460(unsigned int object);
+int func_1186A0(unsigned int);
 int func_0294A0(int, void *, void *);
 
-int func_118598(void *a0, void *a1, void *a2) {
-    struct Obj *obj = func_118460();
+int func_118598(unsigned int object, void *a1, void *a2) {
+    struct Obj *obj = func_118460(object);
     if (obj != 0) {
-        if (func_1186A0(a0) != 0) {
+        if (func_1186A0(object) != 0) {
             if (func_0294A0(obj->f0 - 1, a1, a2) != 0) {
                 obj->f4 = 4;
             } else {

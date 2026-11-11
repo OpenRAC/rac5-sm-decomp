@@ -1,6 +1,6 @@
 /* LEVEL_18:0x15E0D8 -- traces a ray from the view (or the object) along its facing and records the hit point in the effect block, or clears the hit flag. */
 extern char D_001D65E8[];
-extern int func_111BF0(void);
+extern int func_111BF0(char *o);
 extern void func_036608(int h);
 extern char *func_000E40(void);
 extern void func_103040(float *out, char *o, char *tbl);
@@ -40,7 +40,7 @@ void func_15E0D8(char *o)
     dist = 1000.0f;
     ctl = *(char **)(o + 0x58);
     tgt = *(char **)(o + 0x54);
-    if (func_111BF0() != 0 && *(unsigned char *)(tgt + 4) == 1) {
+    if (func_111BF0(o) != 0 && *(unsigned char *)(tgt + 4) == 1) {
         FromObj(from, dir, o);
     } else {
         func_036608(*(int *)ctl);

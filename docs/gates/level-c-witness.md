@@ -1111,3 +1111,18 @@ only with the qualified per-source `r5900-mfc1` assembler route, 41
 placements use the per-source `-mno-check-zero-division` flag and 15
 `-fno-gcse`. All 21 complete USA modules remain exact; no PAL placement is
 counted, and the distinct-function denominator remains unqualified.
+
+A third round of prototype corrections and three more large bodies add
+**127 USA placements from 127 authored pure C sources** (106,228 bytes) in 14
+forms. The prototypes of 97 more accepted functions were corrected in 255
+accepted sources, each linked again exactly at all of its placements, and the
+byte-exact held callers of 78 more accepted functions now declare them as they
+are defined; this releases 113 held placements of 56–600 bytes. Three record
+and effect-definition initializers of 3,100–5,272 bytes are exact at 14
+placements, with address variants where the levels place their tables
+differently. Caller/callee disagreements inside the accepted tree fall from
+1,796 to 1,691 and none is introduced. Ninety-four placements use the pinned
+chain, 15 `gnu-ee-trial`, 14 the qualified `gnu-ee-trial-divpad-blockmove`
+profile and four `gnu-ee-trial-divpad`. All 21 complete USA modules remain
+exact; no PAL placement is counted, and the distinct-function denominator
+remains unqualified.

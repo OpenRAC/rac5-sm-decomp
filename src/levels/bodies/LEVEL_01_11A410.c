@@ -1,9 +1,9 @@
 
-int *func_11A248(void);
+int *func_11A248(unsigned int value);
 
-int func_11A410(void)
+int func_11A410(unsigned int value)
 {
-    int *p = func_11A248();
+    int *p = func_11A248(value);
 
     if (p != 0)
         return p[1];

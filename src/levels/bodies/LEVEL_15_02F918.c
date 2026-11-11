@@ -1,10 +1,10 @@
 extern void func_02F7C0(void);
-extern void func_02F818(long long, long long);
-extern void func_02F710(long long, long long);
-extern void func_02F778(long long, long long);
-extern void func_02F870(long long, long long);
+extern void func_02F818(char *, int);
+extern void func_02F710(char *, int);
+extern void func_02F778(char *, int);
+extern void func_02F870(char *, int);
 
-void func_02F918(long long first, long long second)
+void func_02F918(char *first, int second)
 {
     func_02F7C0();
     func_02F818(first, second);

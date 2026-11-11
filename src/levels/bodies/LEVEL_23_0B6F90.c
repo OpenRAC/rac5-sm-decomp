@@ -1,7 +1,7 @@
 extern unsigned char D_001D0F64;
 extern char *D_001C73AC;
 extern unsigned char D_001D9B49;
-extern void func_124A18(int);
+extern int func_124A18(int);
 extern void func_025A30(void);
 
 void func_0B6F90(void)

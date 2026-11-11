@@ -10,7 +10,7 @@ extern void *D_0016EF70;
 
 void func_097638(void *value);
 void func_097378(void);
-void func_0F2168(void *p);
+int func_0F2168(void *p);
 void func_096530(int a);
 int func_0F2E38(void);
 void func_086D10(void);
