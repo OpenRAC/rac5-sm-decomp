@@ -26,6 +26,8 @@ from level_context_translation import check_summary as check_context_summary
 from level_role_graph import check_summary as check_role_summary
 from level_program_gate import MEASURED_LOADS
 from level_shape_scenario import check_summary as check_shape_summary
+from level_accepted_shapes import OUTPUT as ACCEPTED_SHAPES
+from level_accepted_shapes import check_summary as check_accepted_shapes
 from level_switch_bodies import check_summary as check_switch_summary
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -271,6 +273,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
     split = json.loads(SPLIT_DEDUPE.read_text(encoding="utf-8"))
     shape = json.loads(SHAPE_SCENARIO.read_text(encoding="utf-8"))
     check_shape_summary(shape)
+    accepted_shapes = json.loads(ACCEPTED_SHAPES.read_text(encoding="utf-8"))
+    check_accepted_shapes(accepted_shapes)
     switch = json.loads(SWITCH_BODY.read_text(encoding="utf-8"))
     check_switch_summary(switch)
     context = json.loads(CONTEXT_TRANSLATION.read_text(encoding="utf-8"))
@@ -368,6 +372,10 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                        body_summary["placement_bytes"],
                    "accepted_level_body_unique_source_bytes":
                        body_summary["unique_source_bytes"],
+                   "accepted_level_body_masked_shape_bytes":
+                       accepted_shapes["accepted_masked_max_per_module_bytes"],
+                   "accepted_level_body_masked_shape_units":
+                       accepted_shapes["accepted_masked_max_per_module_units"],
                    "accepted_level_body_profiles": body_summary["profiles"],
                    "accepted_level_body_assembler_profiles":
                        body_summary["assembler_profiles"],
@@ -448,6 +456,8 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                 shape["masked_max_per_module_scenario_bytes"],
             "masked_one_per_shape_bytes":
                 shape["masked_one_per_shape_scenario_bytes"],
+            "masked_max_per_module_units":
+                accepted_shapes["candidate_masked_max_per_module_units"],
             "unrepresented_bytes_kept_unique":
                 shape["unrepresented_bytes_kept_unique"],
             "qualified_unique_denominator": None,
@@ -512,6 +522,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "level_full_module_flow": digest(FULL_MODULE_FLOW),
             "level_split_dedupe": digest(SPLIT_DEDUPE),
             "level_shape_scenario": digest(SHAPE_SCENARIO),
+            "level_accepted_shapes": digest(ACCEPTED_SHAPES),
             "level_switch_body": digest(SWITCH_BODY),
             "level_context_translation": digest(CONTEXT_TRANSLATION),
             "level_role_graph": digest(ROLE_GRAPH),
@@ -547,10 +558,14 @@ def summary_table(status: dict[str, object]) -> str:
         f"| {levels['accepted_c_bytes_per_unique_source']:,} bytes "
         f"({levels['accepted_c_bytes_by_placement']:,} by placement) "
         f"| {len(levels['accepted_shared_functions']):,} |",
-        f"| Level bodies (counted separately) "
-        f"| {levels['accepted_level_body_unique_source_bytes']:,} unique source bytes "
-        f"| {levels['accepted_level_body_placement_bytes']:,} bytes by placement "
-        f"| {levels['accepted_level_body_unique_sources']:,} |",
+        f"| Level bodies (by masked shape, as the denominator) "
+        f"| {status['optimistic_shape_scenario']['masked_max_per_module_units']:,} "
+        "candidate shape units "
+        f"| {levels['accepted_level_body_masked_shape_bytes']:,} bytes "
+        f"({levels['accepted_level_body_placement_bytes']:,} by placement, "
+        f"{levels['accepted_level_body_unique_source_bytes']:,} by source) "
+        f"| {levels['accepted_level_body_masked_shape_units']:,} shape units "
+        f"({levels['accepted_level_body_placements']:,} placements) |",
         "",
         f"The ByteMatch estimate divides the **{int(estimate['matched_code']):,}** "
         f"accepted C bytes by a provisional "
@@ -560,7 +575,10 @@ def summary_table(status: dict[str, object]) -> str:
         f"{frontend['candidate_code_bytes_by_placement']:,} frontend candidate-code "
         f"bytes and the "
         f"{status['optimistic_shape_scenario']['masked_max_per_module_bytes']:,} "
-        "optimistically deduplicated level candidate bytes. It is an estimate over "
+        "optimistically deduplicated level candidate bytes. Accepted level bodies "
+        "are counted by the same rule, once per relocation-masked shape at their "
+        "largest per-module multiplicity, so the address-variant copies of one "
+        "function in several levels count once. It is an estimate over "
         "candidate code intervals, not a qualified unique-code size; the "
         "snapshot's `overall_percent` stays `null`.",
     ])

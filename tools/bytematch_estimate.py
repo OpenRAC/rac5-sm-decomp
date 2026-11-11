@@ -61,7 +61,9 @@ def report(status: dict, shape: dict) -> dict:
             or status["levels"]["accepted_frontend_functions"] !=
             ["func_00002F80"]):
         raise ValueError("frontend C scope changed")
-    level_bodies = status["levels"]["accepted_level_body_unique_source_bytes"]
+    # Accepted bodies are counted by the denominator's own rule: once per
+    # relocation-masked shape, at their largest per-module multiplicity.
+    level_bodies = status["levels"]["accepted_level_body_masked_shape_bytes"]
     level_matched = (status["levels"]["accepted_c_bytes_per_unique_source"]
                      + level_bodies)
     # Linker alignment following a complete C body earns no matching credit.
@@ -82,7 +84,7 @@ def report(status: dict, shape: dict) -> dict:
          "measures": frontend_measures,
          "metadata": {"progress_categories": ["frontend_candidate"]}},
         {"name": "Levels (optimistic masked-shape estimate; accepted bodies "
-                 "by unique source)",
+                 "by masked shape)",
          "measures": levels,
          "metadata": {"progress_categories": ["levels_optimistic"]}},
     ]

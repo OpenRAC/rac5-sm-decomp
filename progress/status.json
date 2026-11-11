@@ -873,6 +873,8 @@
     "accepted_level_body_unique_sources": 40197,
     "accepted_level_body_placement_bytes": 6539068,
     "accepted_level_body_unique_source_bytes": 5586376,
+    "accepted_level_body_masked_shape_bytes": 694544,
+    "accepted_level_body_masked_shape_units": 4760,
     "accepted_level_body_profiles": {
       "gnu-ee-trial": 2558,
       "gnu-ee-trial-divpad": 1893,
@@ -983,6 +985,7 @@
   "optimistic_shape_scenario": {
     "masked_max_per_module_bytes": 5756360,
     "masked_one_per_shape_bytes": 5637892,
+    "masked_max_per_module_units": 11499,
     "unrepresented_bytes_kept_unique": 1420532,
     "qualified_unique_denominator": null
   },
@@ -2095,6 +2098,7 @@
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
     "level_split_dedupe": "b3b2a6e5526b06be3b7fbf1405910f3fa42ba48b444301e1ecc1cf847a08bb85",
     "level_shape_scenario": "0b84a17077582c211603f07ef2a0cf8299774270499681112890d513cdc2fe47",
+    "level_accepted_shapes": "c6dada3b5b618160a669830915bc36b9ea73d6f644a6a358bf24a9efd187a796",
     "level_switch_body": "e5332627ffa1817ffa79178b85cd03a885c13eeb9721fbe1728d99330c32b0d3",
     "level_context_translation": "b22efea1dc6ee0d0e5661dab312042028fe6c8a213c6f7f260bd4ce00b4eac89",
     "level_role_graph": "19657c4ff0d6df249d34694fae3367babfd368561e91593722076dd8b8fb4f32"

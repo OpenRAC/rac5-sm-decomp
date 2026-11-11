@@ -9,9 +9,15 @@ Following OpenRAC methodology:
   - Each level and the boot executable is tracked individually as its own unit
     and category named after the level in the game (e.g. levels/level01_pokitaru),
     carrying its placed functions.
-  - Overall headline project measures are deduplicated across shared sources,
-    preventing 20x static linking duplication from falsely reporting ~35 MB
-    of code for a spin-off title whose true deduplicated code is ~6.42 MB.
+  - Overall headline project measures are deduplicated by relocation-masked
+    shape on both sides, preventing 20x static linking duplication from falsely
+    reporting ~35 MB of code: the optimistic level denominator counts each
+    masked candidate shape once, at its largest multiplicity in one module, and
+    accepted level bodies are counted by the same rule, so the address-variant
+    copies of one function in several levels count once.
+  - Function counts use the same units: candidate boot code intervals, and
+    masked level shape units counted once at their largest per-module
+    multiplicity (candidate functions, not a reviewed function catalogue).
 
 Usage:
   python3 tools/gen_progress_report.py            # write progress/report.json and progress/pal/report.json
@@ -40,6 +46,9 @@ SHAPE = ROOT / "config/levels/shape_scenario_summary.json"
 CODE_INTERVALS = ROOT / "config/levels/code_intervals.tsv"
 BODY_PLACEMENTS = ROOT / "config/levels/bodies.tsv"
 BODY_SOURCES = ROOT / "config/levels/body_sources.tsv"
+BOOT_INTERVALS = ROOT / "config/boot/code_intervals.tsv"
+INVENTORY = ROOT / "config/levels/function_inventory_summary.json"
+ACCEPTED_SHAPES = ROOT / "config/levels/accepted_shape_summary.json"
 
 LEVEL_NAMES: dict[str, tuple[str, str]] = {
     "FRONTEND.REL": ("frontend", "Frontend (FRONTEND.REL)"),
@@ -107,12 +116,20 @@ def make_measures(
     units: int = 0,
     complete_units: int = 0,
     complete_code: int = 0,
+    functions: tuple[int, int] | None = None,
 ) -> dict[str, object]:
-    """items: (size, fuzzy%, finished). uint64 fields are strings as in protobuf JSON."""
+    """items: (size, fuzzy%, finished). uint64 fields are strings as in protobuf JSON.
+
+    functions, when given, is (total, matched) candidate functions; otherwise the
+    display rows are counted."""
     total = sum(s for s, _, _ in items)
     matched = sum(s for s, _, e in items if e)
     nfun = len(items)
     nmatch = sum(1 for _, _, e in items if e)
+    if functions is not None:
+        nfun, nmatch = functions
+        if not 0 <= nmatch <= nfun:
+            raise ValueError("matched functions exceed candidate functions")
     fuzzy = sum(s * p for s, p, _ in items) / total if total else 0.0
     m: dict[str, object] = {
         "fuzzy_match_percent": fuzzy,
@@ -141,9 +158,19 @@ def generate_report(v: versions.Version) -> dict[str, object]:
     # The PAL catalogue has no matching gate yet, so it cannot inherit them.
     boot_matches = boot_trial_gate.accepted_matches() if is_us else []
     boot_matched_code = sum(m["body_bytes"] for m in boot_matches)
-    body_bytes_by_module, unique_body_bytes, _unique_body_sources = (
+    body_bytes_by_module, _unique_body_bytes, _unique_body_sources = (
         accepted_us_level_bodies(status) if is_us else ({}, 0, 0)
     )
+    # Candidate functions: boot code intervals and masked level shape units.
+    boot_functions = len(read_tsv(BOOT_INTERVALS)) if is_us else 0
+    accepted_shapes = json.loads(ACCEPTED_SHAPES.read_text(encoding="utf-8"))
+    units_by_module = dict(accepted_shapes["candidate_units_by_module"])
+    for group in json.loads(INVENTORY.read_text(encoding="utf-8"))["identical_full_interval_groups"]:
+        for copy in group[1:]:
+            units_by_module[copy] = units_by_module[group[0]]
+    placements_by_module: dict[str, int] = {}
+    for row in read_tsv(BODY_PLACEMENTS) if is_us else []:
+        placements_by_module[row["module"]] = placements_by_module.get(row["module"], 0) + 1
 
     units_list: list[dict[str, object]] = []
     categories_list: list[dict[str, object]] = []
@@ -168,7 +195,8 @@ def generate_report(v: versions.Version) -> dict[str, object]:
             "fuzzy_match_percent": 0.0,
         })
 
-    boot_m = make_measures(boot_items)
+    boot_m = make_measures(boot_items, functions=(boot_functions, len(boot_matches))
+                           if is_us else None)
     units_list.append({
         "name": "boot/executable",
         "measures": boot_m,
@@ -185,6 +213,7 @@ def generate_report(v: versions.Version) -> dict[str, object]:
 
     # Level modules
     level_combined_items: list[tuple[int, float, bool]] = []
+    level_combined_functions = [0, 0]
 
     # Placed accepted functions per module
     # Frontend: func_00002F80 (476 bytes)
@@ -242,7 +271,14 @@ def generate_report(v: versions.Version) -> dict[str, object]:
                 "fuzzy_match_percent": 0.0,
             })
 
-        mod_m = make_measures(mod_items)
+        mod_functions = None
+        if is_us:
+            special = 1 if mod_name == "FRONTEND.REL" else 2
+            mod_functions = (units_by_module[mod_name],
+                             placements_by_module.get(mod_name, 0) + special)
+            level_combined_functions[0] += mod_functions[0]
+            level_combined_functions[1] += mod_functions[1]
+        mod_m = make_measures(mod_items, functions=mod_functions)
         unit_name = f"levels/{slug}"
         units_list.append({
             "name": unit_name,
@@ -263,23 +299,32 @@ def generate_report(v: versions.Version) -> dict[str, object]:
     categories_list.insert(1, {
         "id": "level_code",
         "name": "Level Modules (Combined Placements)",
-        "measures": make_measures(level_combined_items),
+        "measures": make_measures(level_combined_items,
+                                  functions=tuple(level_combined_functions) if is_us else None),
     })
 
     # Overall project measures: deduplicated across candidate interval scenario
     frontend_total = code_intervals.get("FRONTEND.REL", 162944)
     frontend_matched = 476 if is_us else 0
     level_dedup_total = shape["masked_max_per_module_scenario_bytes"]  # 5,756,360
-    level_dedup_matched = 80 + unique_body_bytes if is_us else 0
+    level_dedup_matched = (80 + status["levels"]["accepted_level_body_masked_shape_bytes"]
+                           if is_us else 0)
 
     dedup_total_code = boot_total_code + frontend_total + level_dedup_total
     dedup_matched_code = boot_matched_code + frontend_matched + level_dedup_matched
     overall_pct = 100.0 * dedup_matched_code / dedup_total_code if dedup_total_code else 0.0
 
-    # Neither version has a reviewed function denominator. PAL has no accepted
-    # C placements at all until its own complete-program gates are qualified.
-    n_matched_functions = 0
-    n_total_functions = 0
+    # Candidate functions under the same rule as the code bytes: boot code
+    # intervals plus masked level shape units (the 20 retained modules, FRONTEND
+    # included); the three shared/frontend C functions count once each. PAL has
+    # no accepted C placements until its own complete-program gates are qualified.
+    if is_us:
+        n_total_functions = boot_functions + accepted_shapes["candidate_masked_max_per_module_units"]
+        n_matched_functions = (len(boot_matches) + 3
+                               + status["levels"]["accepted_level_body_masked_shape_units"])
+    else:
+        n_matched_functions = 0
+        n_total_functions = 0
 
     overall_m = {
         "fuzzy_match_percent": overall_pct,
