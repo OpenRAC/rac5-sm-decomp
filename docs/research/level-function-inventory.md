@@ -387,6 +387,23 @@ contain uncertain boundaries or require distinct C definitions. The
 is deliberately separate from the conditional structural review and from
 qualified C progress; none supplies a ByteMatch denominator yet.
 
+The provisional ByteMatch report nevertheless divides by the 5,756,360-byte
+scenario, so its numerator must use the same rule.
+[`level_accepted_shapes.py`](../../tools/level_accepted_shapes.py) rehashes every
+accepted level-body placement in the 20 measured modules with the same
+relocation mask and credits each masked shape once, at its largest accepted
+multiplicity in one module:
+[`accepted_shape_summary.json`](../../config/levels/accepted_shape_summary.json)
+records **694,544 bytes in 4,760 shape units** for 49,491 accepted placements
+(the 2,215 accepted `LEVEL_21.REL` placements repeat `LEVEL_15.REL`). Counted
+by source instead, the same placements give 5,586,376 bytes, because the
+address-variant copies of one function in several levels are separate sources.
+The same pass counts **11,499 candidate shape units** under the maximum-per-module
+rule; the report uses them, with the 1,315 candidate boot code intervals, as its
+provisional candidate-function counts. Fifty-six accepted shapes (16,336 bytes)
+do not coincide with a candidate unit because their accepted boundaries differ;
+they are still counted once each.
+
 ## Repeated shapes with code context and data anchors
 
 The [context-translation audit](../../tools/level_context_translation.py)

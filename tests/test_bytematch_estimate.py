@@ -24,7 +24,7 @@ class ByteMatchEstimateTests(unittest.TestCase):
         self.assertEqual(result["version"], 2)
         accepted = boot_trial_gate.accepted_body_bytes()
         levels = int(self.status["levels"]["accepted_c_bytes_per_unique_source"])
-        levels += int(self.status["levels"]["accepted_level_body_unique_source_bytes"])
+        levels += int(self.status["levels"]["accepted_level_body_masked_shape_bytes"])
         self.assertEqual(result["measures"]["matched_code"],
                          str(accepted + 476 + levels))
         self.assertEqual(result["measures"]["total_code"], "6418204")

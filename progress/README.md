@@ -7,9 +7,12 @@ function in `FRONTEND.REL`**, plus **two shared C functions (8 + 72 bytes)
 at twenty numbered level placements** and, counted separately, the
 **51,706 accepted level-body placements**
 (6,539,068 placement bytes carried by 40,197 sources, 5,586,376 distinct-source
-bytes). The shared pair counts as two authored functions, not forty
+bytes; **694,544 bytes in 4,760 relocation-masked shape units** when each shape
+is counted once, at its largest per-module multiplicity, like the level
+denominator). The shared pair counts as two authored functions, not forty
 independent matches, and the level bodies are a scope of their own: one
-authored source can carry many placements. Two other exact C shapes remain
+authored source can carry many placements, and the address-variant copies of
+one function in several levels are separate sources of one masked shape. Two other exact C shapes remain
 provisional controls. `FRONTEND.REL` and `LEVEL_01.REL` have exact complete-file assembly
 replacement and measured relocated-image baselines. Their original non-code
 bytes are still inputs, and assembly equality is not C progress.
@@ -79,6 +82,8 @@ python tools/level_switch_bodies.py --write baserom/SCUS_976.15.iso --full-ghidr
 python tools/level_switch_bodies.py --check
 python tools/level_shape_scenario.py --write baserom/SCUS_976.15.iso
 python tools/level_shape_scenario.py --check
+python tools/level_accepted_shapes.py --write baserom/SCUS_976.15.iso
+python tools/level_accepted_shapes.py --check
 python tools/level_context_translation.py --write baserom/SCUS_976.15.iso --full-ghidra-dir build/level-functions/full-ghidra
 python tools/level_context_translation.py --check
 python tools/level_role_graph.py --write baserom/SCUS_976.15.iso --full-ghidra-dir build/level-functions/full-ghidra
@@ -101,24 +106,30 @@ to `master`, the progress workflow uploads `SCUS_976.15_report/report.json`;
 ByteMatch reads that artifact as its progress graph. Its denominator combines **498,900 measured
 boot `.text` bytes**, **162,944 frontend candidate-code bytes**, and **5,756,360
 optimistically deduplicated level candidate bytes**, for **6,418,204 provisional
-code bytes**. The numerator is **5,675,880 accepted C bytes**: 88,948 in boot, 476
+code bytes**. The numerator is **784,048 accepted C bytes**: 88,948 in boot, 476
 in frontend, 80 from two authored functions shared across twenty levels, and
-5,586,376 unique source bytes of accepted level C bodies (each body counted once,
-however many placements carry it). The site rounds the resulting approximately
-**88.4341%** to **88.43%**.
+694,544 bytes of accepted level C bodies counted by the denominator's own rule,
+once per relocation-masked shape at its largest multiplicity in one module
+([`config/levels/accepted_shape_summary.json`](../config/levels/accepted_shape_summary.json),
+written by [`tools/level_accepted_shapes.py`](../tools/level_accepted_shapes.py)).
+The address-variant copies of one function in several levels are separate
+sources but one masked shape, so they count once; counting by source
+(5,586,376 bytes) credited them up to twenty times against a denominator that
+counts them once. The site rounds the resulting approximately
+**12.2160%** to **12.22%**.
 
-ByteMatch's overall **0/0 functions** means that a reviewed count of distinct
-functions is unavailable; it does not mean no C functions are accepted. The
-optimistic audit has 9,388 relocation-masked shape groups, but a masked shape
-can cover different data roles and C definitions. The level scope already has
-40,197 accepted C sources, so using that shape count as the function
-denominator would be inconsistent. A provisional function estimate would need
-its own boundary and cross-level identity audit, with matched and total counts
-computed under the same rule.
-Per-unit function counts are display aggregates as well: the boot's
-`__unmatched_boot_code` row represents all remaining boot code, and each level
-groups its accepted C bodies into one synthetic row. Those rows are not
-individual retail functions and cannot be summed into an overall denominator.
+ByteMatch's function counts use the same units as its code bytes:
+**5,456 of 12,814 candidate functions**, from the 1,315 candidate boot code
+intervals (693 accepted) and the 11,499 relocation-masked level shape units of
+the 20 measured modules, each shape counted once at its largest per-module
+multiplicity (4,760 accepted bodies, plus the two shared level functions and the
+frontend function). These are candidate functions, not a reviewed function
+catalogue: a masked shape can still cover different data roles or C
+definitions, and corrected boundaries can change both counts. Each level unit
+counts the candidate units of that module (static candidate bodies, reviewed
+split segments and switch bodies) and its accepted placements; the boot's
+`__unmatched_boot_code` row and each level's synthetic rows are display
+aggregates, not individual retail functions.
 
 The dashboard's level unit and category both say **optimistic masked-shape
 estimate**. This denominator can rise when a presumed shared shape splits into
