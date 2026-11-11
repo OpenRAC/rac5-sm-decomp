@@ -31,17 +31,22 @@ class GenProgressReportTests(unittest.TestCase):
         report = self.us
         self.assertEqual(report["version"], 2)
         m = report["measures"]
-        self.assertEqual(m["total_code"], "6255260")
-        self.assertEqual(m["matched_code"], "792060")
-        self.assertAlmostEqual(m["matched_code_percent"], 12.6623, places=4)
-        self.assertEqual((m["matched_functions"], m["total_functions"]), (5809, 12814))
+        self.assertEqual(m["total_code"], "5376420")
+        self.assertEqual(m["matched_code"], "789332")
+        self.assertAlmostEqual(m["matched_code_percent"], 14.6814, places=4)
+        self.assertEqual((m["matched_functions"], m["total_functions"]), (5809, 14409))
         self.assertEqual(m["total_units"], len(report["units"]))
 
-        # The headline is the boot .text plus the level denominator, which
-        # already holds FRONTEND.REL, and the accepted C they cover.
+        # The headline is the boot .text plus the level code map, which
+        # already holds FRONTEND.REL, and the accepted C they cover. The map
+        # splits every retained candidate interval byte and can only shrink the
+        # optimistic shape scenario.
         boot = boot_trial_gate.accepted_body_bytes()
-        self.assertEqual(int(m["total_code"]),
-                         498900 + self.shape["masked_max_per_module_scenario_bytes"])
+        self.assertEqual(int(m["total_code"]), 498900 + self.summary["map_bytes"])
+        self.assertEqual(self.summary["map_raw_bytes"],
+                         self.shape["retained_candidate_interval_bytes"])
+        self.assertLessEqual(self.summary["map_bytes"],
+                             self.shape["masked_max_per_module_scenario_bytes"])
         self.assertEqual(int(m["matched_code"]), boot + self.summary["map_matched_bytes"])
 
         # The accepted tables still agree with the scoped snapshot.
@@ -94,8 +99,7 @@ class GenProgressReportTests(unittest.TestCase):
         report = gen_progress_report.generate_report(pal_v)
         self.assertEqual(report["version"], 2)
         m = report["measures"]
-        self.assertEqual(m["total_code"],
-                         str(499156 + self.shape["masked_max_per_module_scenario_bytes"]))
+        self.assertEqual(m["total_code"], str(499156 + self.summary["map_bytes"]))
         self.assertEqual(m["matched_code"], "0")
         self.assertEqual(m["matched_code_percent"], 0)
         self.assertEqual((m["matched_functions"], m["total_functions"]), (0, 0))

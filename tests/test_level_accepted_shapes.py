@@ -9,8 +9,9 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-from level_accepted_shapes import (OUTPUT, UNBOUNDED, accepted_counts,  # noqa: E402
-                                   check_summary, map_totals, shape_unit_rows)
+from level_accepted_shapes import (OUTPUT, PADDING, UNBOUNDED, accepted_counts,  # noqa: E402
+                                   check_summary, covering_source, map_totals,
+                                   residual_pieces, shape_unit_rows)
 
 
 class LevelAcceptedShapesTests(unittest.TestCase):
@@ -38,31 +39,58 @@ class LevelAcceptedShapesTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "stale or exceeds"):
             check_summary(inflated)
 
-    def test_map_rows_cover_whole_units_once_per_shape(self) -> None:
-        # Shape X (8 bytes) sits in both modules, twice in FRONTEND; shape Y
-        # (12 bytes) only in LEVEL_01. One accepted FRONTEND body covers one X,
-        # one accepted LEVEL_01 body covers Y and 4 bytes outside every unit.
-        records = [("FRONTEND.REL", 0x100, 8, "x"), ("FRONTEND.REL", 0x108, 8, "x"),
-                   ("LEVEL_01.REL", 0x200, 8, "x"), ("LEVEL_01.REL", 0x300, 12, "y")]
-        spans = {"FRONTEND.REL": [(0x108, 0x110, "src/levels/frontend/FRONTEND_000108.c")],
-                 "LEVEL_01.REL": [(0x300, 0x310, "src/levels/01_pokitaru/LEVEL_01_000300.c")]}
-        rows = shape_unit_rows(records, spans, {"FRONTEND.REL": 16, "LEVEL_01.REL": 40},
+    def test_code_outside_units_splits_into_pieces_padding_and_unbounded(self) -> None:
+        data = bytearray(b"\x11" * 0xA0)
+        data[0x18:0x20] = bytes(8)
+        data[0x38:0x40] = bytes(8)
+        static = [{"start": "0x00", "limit": "0x20", "status": "bounded_candidate"},
+                  {"start": "0x20", "limit": "0x40", "status": "no_return"},
+                  {"start": "0x40", "limit": "0x60", "status": "nonzero_tail"},
+                  {"start": "0x60", "limit": "0x80", "status": "no_return"},
+                  {"start": "0x80", "limit": "0xA0", "status": "bounded_candidate"}]
+        units = [(0x00, 0x18), (0x40, 0x50), (0x80, 0x98)]
+        pieces, padding, unbounded = residual_pieces(
+            bytes(data), static, units, [(0x60, 0x70, "src/x.c")], [(0x80, 0x98)], set())
+        # A no_return entry is a candidate function, the code after a last return
+        # a fragment; accepted C is its own piece; zeros are padding; switch
+        # leftovers stay unbounded. Every byte lands in exactly one place.
+        self.assertEqual(pieces, [(0x20, 0x18, True, ""), (0x50, 0x10, False, ""),
+                                  (0x60, 0x10, True, "src/x.c"), (0x70, 0x10, False, "")])
+        self.assertEqual((padding, unbounded), (16, 8))
+        self.assertEqual(sum(b - a for a, b in units) + sum(p[1] for p in pieces)
+                         + padding + unbounded, len(data))
+
+    def test_map_rows_count_each_shape_once_at_its_largest_multiplicity(self) -> None:
+        front = "src/levels/frontend/FRONTEND_000108.c"
+        level = "src/levels/01_pokitaru/LEVEL_01_000300.c"
+        placements = [("FRONTEND.REL", 0x100, 8, "x", True, ""),
+                      ("FRONTEND.REL", 0x108, 8, "x", True, front),
+                      ("LEVEL_01.REL", 0x200, 8, "x", True, ""),
+                      ("LEVEL_01.REL", 0x300, 12, "y", True, level),
+                      ("LEVEL_01.REL", 0x30C, 4, "z", False, level)]
+        rows = shape_unit_rows(placements, {"FRONTEND.REL": (0, 0), "LEVEL_01.REL": (8, 4)},
                                ["FRONTEND.REL", "LEVEL_01.REL"])
+        common = {"modules": 1, "matched_functions": 0}
         self.assertEqual(rows, [
-            {"home": "01_pokitaru", "name": "LEVEL_01_000300", "bytes": 12, "matched_bytes": 12,
-             "functions": 1, "matched_functions": 1, "modules": 1,
-             "source": "src/levels/01_pokitaru/LEVEL_01_000300.c"},
-            {"home": "01_pokitaru", "name": UNBOUNDED, "bytes": 20, "matched_bytes": 4,
-             "functions": 0, "matched_functions": 0, "modules": 1, "source": ""},
-            {"home": "shared", "name": "FRONTEND_000108", "bytes": 16, "matched_bytes": 8,
-             "functions": 2, "matched_functions": 1, "modules": 2,
-             "source": "src/levels/frontend/FRONTEND_000108.c"},
+            {"home": "01_pokitaru", "name": "LEVEL_01_000300", "kind": "function", "size": 12,
+             "copies": 1, "matched_copies": 1, "functions": 1, "matched_functions": 1,
+             "modules": 1, "source": level},
+            {**common, "home": "01_pokitaru", "name": "LEVEL_01_00030C", "kind": "fragment",
+             "size": 4, "copies": 1, "matched_copies": 1, "functions": 0, "source": level},
+            {**common, "home": "01_pokitaru", "name": PADDING, "kind": "padding", "size": 8,
+             "copies": 1, "matched_copies": 0, "functions": 0, "source": ""},
+            {**common, "home": "01_pokitaru", "name": UNBOUNDED, "kind": "unbounded",
+             "size": 4, "copies": 1, "matched_copies": 0, "functions": 0, "source": ""},
+            {"home": "shared", "name": "FRONTEND_000108", "kind": "function", "size": 8,
+             "copies": 2, "matched_copies": 1, "functions": 2, "matched_functions": 1,
+             "modules": 2, "source": front},
         ])
-        self.assertEqual(map_totals(rows)["map_bytes"], 16 + 40 - 8)
-        partial = {"LEVEL_01.REL": [(0x304, 0x310, "src/levels/01_pokitaru/LEVEL_01_000304.c")]}
+        totals = map_totals(rows)
+        self.assertEqual((totals["map_bytes"], totals["map_matched_bytes"]), (44, 24))
+        self.assertEqual((totals["map_functions"], totals["map_matched_functions"]), (3, 2))
+        spans = {"LEVEL_01.REL": [(0x304, 0x310, "src/levels/01_pokitaru/LEVEL_01_000304.c")]}
         with self.assertRaisesRegex(ValueError, "part of a candidate unit"):
-            shape_unit_rows(records, partial, {"FRONTEND.REL": 16, "LEVEL_01.REL": 40},
-                            ["FRONTEND.REL", "LEVEL_01.REL"])
+            covering_source(spans, {"LEVEL_01.REL": [0x304]}, "LEVEL_01.REL", 0x300, 12)
 
     def test_committed_map_closes_on_the_denominator(self) -> None:
         summary = json.loads(OUTPUT.read_text(encoding="utf-8"))
