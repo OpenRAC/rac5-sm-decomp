@@ -5,9 +5,9 @@ after the private boot and level-program gates pass. It records **693 accepted
 boot C functions (88,948 bytes) in the 498,900-byte boot `.text`**, **one 476-byte C
 function in `FRONTEND.REL`**, plus **two shared C functions (8 + 72 bytes)
 at twenty numbered level placements** and, counted separately, the
-**51,706 accepted level-body placements**
-(6,539,068 placement bytes carried by 40,197 sources, 5,586,376 distinct-source
-bytes; **694,544 bytes in 4,760 relocation-masked shape units** when each shape
+**57,345 accepted level-body placements**
+(6,840,572 placement bytes carried by 42,468 sources, 5,786,384 distinct-source
+bytes; **700,772 bytes in 5,075 relocation-masked shape units** when each shape
 is counted once, at its largest per-module multiplicity, like the level
 denominator). The shared pair counts as two authored functions, not forty
 independent matches, and the level bodies are a scope of their own: one
@@ -106,23 +106,23 @@ to `master`, the progress workflow uploads `SCUS_976.15_report/report.json`;
 ByteMatch reads that artifact as its progress graph. Its denominator combines **498,900 measured
 boot `.text` bytes**, **162,944 frontend candidate-code bytes**, and **5,756,360
 optimistically deduplicated level candidate bytes**, for **6,418,204 provisional
-code bytes**. The numerator is **784,048 accepted C bytes**: 88,948 in boot, 476
+code bytes**. The numerator is **790,276 accepted C bytes**: 88,948 in boot, 476
 in frontend, 80 from two authored functions shared across twenty levels, and
-694,544 bytes of accepted level C bodies counted by the denominator's own rule,
+700,772 bytes of accepted level C bodies counted by the denominator's own rule,
 once per relocation-masked shape at its largest multiplicity in one module
 ([`config/levels/accepted_shape_summary.json`](../config/levels/accepted_shape_summary.json),
 written by [`tools/level_accepted_shapes.py`](../tools/level_accepted_shapes.py)).
 The address-variant copies of one function in several levels are separate
 sources but one masked shape, so they count once; counting by source
-(5,586,376 bytes) credited them up to twenty times against a denominator that
+(5,786,384 bytes) credited them up to twenty times against a denominator that
 counts them once. The site rounds the resulting approximately
-**12.2160%** to **12.22%**.
+**12.3130%** to **12.31%**.
 
 ByteMatch's function counts use the same units as its code bytes:
-**5,456 of 12,814 candidate functions**, from the 1,315 candidate boot code
+**5,771 of 12,814 candidate functions**, from the 1,315 candidate boot code
 intervals (693 accepted) and the 11,499 relocation-masked level shape units of
 the 20 measured modules, each shape counted once at its largest per-module
-multiplicity (4,760 accepted bodies, plus the two shared level functions and the
+multiplicity (5,075 accepted bodies, plus the two shared level functions and the
 frontend function). These are candidate functions, not a reviewed function
 catalogue: a masked shape can still cover different data roles or C
 definitions, and corrected boundaries can change both counts. Each level unit

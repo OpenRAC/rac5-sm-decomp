@@ -1,0 +1,7 @@
+/* LEVEL_09:0x019750 -- placement copy of FRONTEND_019500.c: returns the address of the global at 0x305B8. */
+extern char D_002172F0[];
+
+void *func_019750(void)
+{
+    return D_002172F0;
+}

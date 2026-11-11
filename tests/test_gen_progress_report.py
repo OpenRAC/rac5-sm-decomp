@@ -21,10 +21,10 @@ class GenProgressReportTests(unittest.TestCase):
         self.assertEqual(report["version"], 2)
         m = report["measures"]
         self.assertEqual(m["total_code"], "6418204")
-        self.assertEqual(m["matched_code"], "784048")
-        self.assertAlmostEqual(m["matched_code_percent"], 12.2160, places=4)
+        self.assertEqual(m["matched_code"], "790276")
+        self.assertAlmostEqual(m["matched_code_percent"], 12.3130, places=4)
         self.assertEqual(m["total_units"], 22)
-        self.assertEqual((m["matched_functions"], m["total_functions"]), (5456, 12814))
+        self.assertEqual((m["matched_functions"], m["total_functions"]), (5771, 12814))
 
         # The accepted placement table drives each unit, while the headline
         # counts accepted bodies once per masked shape, like the denominator,
@@ -32,8 +32,8 @@ class GenProgressReportTests(unittest.TestCase):
         by_module, unique_bytes, unique_sources = gen_progress_report.accepted_us_level_bodies(
             json.loads(gen_progress_report.STATUS.read_text(encoding="utf-8"))
         )
-        self.assertEqual(unique_bytes, 5586376)
-        self.assertEqual(unique_sources, 40197)
+        self.assertEqual(unique_bytes, 5786384)
+        self.assertEqual(unique_sources, 42468)
         level_01 = next(u for u in report["units"] if u["name"] == "levels/level01_pokitaru")
         self.assertEqual(int(level_01["measures"]["matched_code"]), 80 + by_module["LEVEL_01.REL"])
 
