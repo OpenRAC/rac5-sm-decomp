@@ -40,9 +40,8 @@ import argparse
 import csv
 import hashlib
 import json
-import re
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -53,8 +52,10 @@ import versions  # noqa: E402
 from boot_c_campaign import accepted_replacements  # noqa: E402
 from boot_zero_padding import read as boot_zero_padding  # noqa: E402
 from level_accepted_shapes import read_units  # noqa: E402
+from level_function_names import folder  # noqa: E402
 from level_names import LEVEL_NAMES  # noqa: E402
-from level_source_layout import COPIES, MODULE_DIRS, SHARED  # noqa: E402
+from level_source_layout import (COPIES, MODULE_DIRS, SHARED,  # noqa: E402
+                                 defined_function, definition_start)
 
 STATUS = ROOT / "progress/status.json"
 SHAPE = ROOT / "config/levels/shape_scenario_summary.json"
@@ -68,29 +69,8 @@ REPORTS = {"us": ROOT / "progress/report.json", "pal": ROOT / "progress/pal/repo
 BOOT_CODE = {"us": 498900, "pal": 499156}
 BOOT_REMAINDER = "_unlabeled_code"
 BOOT_TAIL = ".unlabeled_tail"
-COMMENT = re.compile(r"/\*.*?\*/|//[^\n]*", re.S)
 # Fields that stay zero in every unit (no unit is linked from source yet).
 UNIT_ZERO_FIELDS = ("complete_code", "complete_code_percent", "total_units", "complete_units")
-
-
-def definition_start(head: str) -> int | None:
-    """Where the function name starts when `head` ends with `name(parameters)`."""
-    end = len(head.rstrip())
-    if not end or head[end - 1] != ")":
-        return None
-    depth = 0
-    for index in range(end - 1, -1, -1):
-        char = head[index]
-        if char in ";{}":
-            return None
-        if char == ")":
-            depth += 1
-        elif char == "(":
-            depth -= 1
-            if depth == 0:
-                match = re.search(r"[A-Za-z_]\w*\s*$", head[:index])
-                return match.start() if match else None
-    return None
 
 
 def read_tsv(path: Path) -> list[dict[str, str]]:
@@ -167,32 +147,6 @@ def unit(name: str, total: int, matched: int, functions: int, matched_functions:
     return item
 
 
-def defined_function(source: str) -> str:
-    """The name of the function a level body source defines.
-
-    Scans the top-level braces; a brace that follows `name(parameters)` opens a
-    definition. The last definition without `static` wins (helpers come first).
-    """
-    text = COMMENT.sub(" ", (ROOT / source).read_text(encoding="utf-8"))
-    found: list[tuple[bool, str]] = []
-    depth = 0
-    for brace in re.finditer(r"[{}]", text):
-        if brace.group() == "}":
-            depth -= 1
-            continue
-        if depth == 0:
-            head = text[:brace.start()]
-            start = definition_start(head)
-            if start is not None:
-                name = re.match(r"[A-Za-z_]\w*", head[start:]).group()
-                statement = re.split(r"[;}]", head[:start])[-1]
-                found.append((re.search(r"\bstatic\b", statement) is not None, name))
-        depth += 1
-    if not found:
-        raise ValueError(f"{source}: no function definition found")
-    return next((name for is_static, name in reversed(found) if not is_static), found[-1][1])
-
-
 def boot_units(v: versions.Version) -> list[dict[str, object]]:
     total = BOOT_CODE[v.key]
     if v.key != "us":
@@ -246,6 +200,31 @@ def module_categories() -> dict[str, tuple[str, str]]:
     return out
 
 
+def level_unit_names(table: list[dict[str, object]]) -> list[str]:
+    """Report name of each map row other than padding.
+
+    levels/<home>/<original file without extension>/<label>: the folder appears
+    when the row's placements cite one original source file, and the label is
+    the boot twin symbol when there is one, else the module and offset name.
+    A label used twice in one folder keeps the row name as a suffix.
+    """
+    paths = []
+    for row in table:
+        if row["kind"] == "padding":
+            continue
+        group = folder(row["file"]) if row["file"] else ""
+        base = f"levels/{row['home']}/" + (f"{group}/" if group else "")
+        paths.append((base, row["symbol"] or row["name"], row["name"]))
+    counts = Counter(base + label for base, label, _name in paths)
+    names = [base + (label if counts[base + label] == 1 else f"{label}.{name}")
+             for base, label, name in paths]
+    folders = {name.rsplit("/", depth)[0] for name in names
+               for depth in range(1, name.count("/"))}
+    if len(set(names)) != len(names) or folders & set(names):
+        raise ValueError("level unit names are not unique leaves")
+    return names
+
+
 def level_units(v: versions.Version) -> list[dict[str, object]]:
     summary = json.loads(ACCEPTED_SHAPES.read_text(encoding="utf-8"))
     if (hashlib.sha256(SHAPE_UNITS.read_bytes()).hexdigest() != summary["shape_units_sha256"]
@@ -266,6 +245,7 @@ def level_units(v: versions.Version) -> list[dict[str, object]]:
                 for home, total in sizes.items()]
     units = []
     names: dict[str, str] = {}
+    unit_names = iter(level_unit_names(table))
     for row in table:
         if row["kind"] == "padding":
             continue
@@ -277,7 +257,7 @@ def level_units(v: versions.Version) -> list[dict[str, object]]:
                 names[row["source"]] = defined_function(row["source"])
             function = {"name": names[row["source"]], "size": str(row["size"]),
                         "fuzzy_match_percent": 100.0}
-        units.append(unit(f"levels/{home}/{row['name']}", row["size"] * row["copies"],
+        units.append(unit(next(unit_names), row["size"] * row["copies"],
                           row["size"] * row["matched_copies"], row["functions"],
                           row["matched_functions"], [category, "levels"],
                           row["source"], function))

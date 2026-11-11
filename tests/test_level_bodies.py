@@ -12,7 +12,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from c_source_policy import policy_errors  # noqa: E402
-from level_source_layout import SOURCE_DIRS, misplaced, repeated_names  # noqa: E402
+import level_function_names  # noqa: E402
+from level_source_layout import (misplaced, original_folders,  # noqa: E402
+                                 repeated_names, valid_source)
 
 ROOT = Path(__file__).resolve().parents[1]
 BODIES = ROOT / "config/levels/bodies.tsv"
@@ -86,10 +88,7 @@ class LevelBodyTests(unittest.TestCase):
         for row in self.source_rows:
             source = row["source"]
             with self.subTest(source=source):
-                parts = source.split("/")
-                self.assertEqual(parts[:2], ["src", "levels"])
-                self.assertEqual(len(parts), 4)
-                self.assertIn(parts[2], SOURCE_DIRS)
+                self.assertTrue(valid_source(source), source)
                 path = ROOT / source
                 self.assertTrue(path.is_file(), f"missing source {source}")
                 self.assertEqual(source_digest(path), row["source_sha256_lf"])
@@ -115,8 +114,10 @@ class LevelBodyTests(unittest.TestCase):
 
     def test_sources_sit_in_their_module_directory(self) -> None:
         # One directory per module, src/levels/shared/ for sources placed in
-        # several modules (tools/level_source_layout.py --apply restores it).
-        self.assertEqual(misplaced(self.rows), {})
+        # several modules, and a folder per cited original source file
+        # (tools/level_source_layout.py --apply restores it).
+        labels = level_function_names.labeller(*level_function_names.check())
+        self.assertEqual(misplaced(self.rows, original_folders(self.rows, labels)), {})
         self.assertEqual(repeated_names(self.rows), [])
 
     def test_sources_pass_the_c_policy(self) -> None:

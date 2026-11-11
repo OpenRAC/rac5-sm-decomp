@@ -68,23 +68,35 @@ class LevelAcceptedShapesTests(unittest.TestCase):
                       ("LEVEL_01.REL", 0x200, 8, "x", True, ""),
                       ("LEVEL_01.REL", 0x300, 12, "y", True, level),
                       ("LEVEL_01.REL", 0x30C, 4, "z", False, level)]
+        evidence = {("FRONTEND.REL", 0x100): ("Twin__Fv", "CORE/a.cpp"),
+                    ("FRONTEND.REL", 0x108): ("Twin__Fv", ""),
+                    ("LEVEL_01.REL", 0x200): ("Twin__Fv", "CORE/b.cpp"),
+                    ("LEVEL_01.REL", 0x300): ("", "CORE/c.cpp")}
+
+        def labels(module: str, offset: int) -> tuple[str, str]:
+            return evidence.get((module, offset), ("", ""))
+
         rows = shape_unit_rows(placements, {"FRONTEND.REL": (0, 0), "LEVEL_01.REL": (8, 4)},
-                               ["FRONTEND.REL", "LEVEL_01.REL"])
-        common = {"modules": 1, "matched_functions": 0}
+                               ["FRONTEND.REL", "LEVEL_01.REL"], labels)
+        common = {"modules": 1, "matched_functions": 0, "symbol": "", "file": ""}
         self.assertEqual(rows, [
             {"home": "01_pokitaru", "name": "LEVEL_01_000300", "kind": "function", "size": 12,
              "copies": 1, "matched_copies": 1, "functions": 1, "matched_functions": 1,
-             "modules": 1, "source": level},
+             "modules": 1, "source": level, "symbol": "", "file": "CORE/c.cpp"},
             {**common, "home": "01_pokitaru", "name": "LEVEL_01_00030C", "kind": "fragment",
              "size": 4, "copies": 1, "matched_copies": 1, "functions": 0, "source": level},
             {**common, "home": "01_pokitaru", "name": PADDING, "kind": "padding", "size": 8,
              "copies": 1, "matched_copies": 0, "functions": 0, "source": ""},
             {**common, "home": "01_pokitaru", "name": UNBOUNDED, "kind": "unbounded",
              "size": 4, "copies": 1, "matched_copies": 0, "functions": 0, "source": ""},
+            # Every placement names the same twin; the cited files disagree.
             {"home": "shared", "name": "FRONTEND_000108", "kind": "function", "size": 8,
              "copies": 2, "matched_copies": 1, "functions": 2, "matched_functions": 1,
-             "modules": 2, "source": front},
+             "modules": 2, "source": front, "symbol": "Twin__Fv", "file": ""},
         ])
+        unlabelled = shape_unit_rows(placements, {"FRONTEND.REL": (0, 0), "LEVEL_01.REL": (8, 4)},
+                                     ["FRONTEND.REL", "LEVEL_01.REL"])
+        self.assertEqual([(row["symbol"], row["file"]) for row in unlabelled], [("", "")] * 5)
         totals = map_totals(rows)
         # Zero alignment padding is not code: 44 bytes of rows, 36 of code.
         self.assertEqual((totals["map_bytes"], totals["map_matched_bytes"]), (36, 24))

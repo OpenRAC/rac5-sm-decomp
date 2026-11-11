@@ -64,7 +64,8 @@ Every doc of this repository, by folder. New here? Read [building.md](build/buil
 | `tools/boot_trial_gate.py` | The pinned complete-boot C gate |
 | `tools/level_program_gate.py` | The complete SNR2 program gate for the frontend and level 01 |
 | `tools/level_c_gate.py` | The shared-level, frontend and level-body C gate |
-| `tools/level_source_layout.py` | Check or restore the per-module layout of `src/levels/` |
+| `tools/level_source_layout.py` | Check or restore the layout of `src/levels/` (module directories, original source file folders); name boot twin sources |
+| `tools/level_function_names.py` | Boot twin names and original source files of level code (`config/levels/function_names.tsv`, `source_files.tsv`) |
 | `tools/boot_zero_padding.py` | The zero alignment padding of the boot `.text`, left out of the counted code |
 | `tools/level_accepted_shapes.py` | Accepted level C by masked shape, and the per-shape map `config/levels/shape_units.tsv` |
 | `tools/gen_progress_report.py` | The objdiff v2 report ByteMatch reads, one unit per candidate function |

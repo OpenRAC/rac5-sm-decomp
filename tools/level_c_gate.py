@@ -27,7 +27,7 @@ from elf import inspect_elf, read_global_functions
 from level_body_link import (BodyLinkError, defined_functions, read_object,
                              resolve_symbols, undefined_symbols)
 from level_program_gate import MEASURED_LOADS, replace_range, sha
-from level_source_layout import SOURCE_DIRS
+from level_source_layout import valid_source
 from r5900_assembly import LINKER_SHA256, check_tool, run_tool
 from rel import (HEADER, RELOCATION, SYMBOL, iter_packed_relocations,
                  unpack_relocation)
@@ -190,12 +190,10 @@ def read_bodies(path: Path, sources_path: Path, known: dict[str, str],
                 f"{sources_path.name}: header differs from the documented schema")
         for number, raw in enumerate(reader, 2):
             source = raw["source"].replace("\\", "/")
-            parts = source.split("/")
-            if not (len(parts) == 4 and parts[:2] == ["src", "levels"]
-                    and parts[2] in SOURCE_DIRS and parts[3].endswith(".c")):
+            if not valid_source(source):
                 raise ValueError(
                     f"{sources_path.name}:{number}: source outside the level body tree "
-                    "(src/levels/<module directory or shared>/)")
+                    "(src/levels/<module directory or shared>/[<folders>/])")
             if raw["profile"] not in BODY_PROFILES:
                 raise ValueError(
                     f"{sources_path.name}:{number}: unknown profile {raw['profile']}")

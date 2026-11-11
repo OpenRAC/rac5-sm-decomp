@@ -41,6 +41,33 @@ Most files are named `<MODULE>_<offset>.c` after the placement where the body
 was first matched; a shared file keeps that first name, and the placement
 table lists every module and offset where it links. File names are unique
 across the tree because the level gate compiles each source by its name.
+
+## Original source files
+
+Debug and assertion messages in the level modules keep the names of the
+original source files, such as `CORE/Breakable.cpp`.
+[`config/levels/source_files.tsv`](../../config/levels/source_files.tsv) lists
+the candidate intervals whose code loads the address of such a name, and the
+intervals between two that cite the same `.c` or `.cpp` file, since the code
+of one translation unit is contiguous. A source whose placements lie in the
+intervals of one such file lives in a folder named after the file without its
+extension, inside its module directory: `shared/CORE/Breakable/`,
+`01_pokitaru/ENGINE/par/`. Header names mark only the interval that cites them
+and make no folder.
+
+## Boot twin names
+
+The level modules keep no names for their own functions, but many of them are
+statically linked copies of named boot functions.
+[`config/levels/function_names.tsv`](../../config/levels/function_names.tsv)
+records each candidate level function that equals exactly one named boot
+function outside its relocation fields and calls the same functions; a body
+that several functions of one module equal is too generic to name. A source
+of such a twin defines its function under the boot symbol and is named after
+it, as the boot sources are: `frontend/VRAM_SwapFrameBuffers__Fb.c`. When several
+modules carry their own source of one twin, the file name adds the module:
+`04_metalis/CAMERA_SetCurrentCamera__FUi_LEVEL_04.c`. Callers keep the
+`func_<offset>` name, which the level gate resolves by address.
 `func_00002F80.c` (frontend New Game initializer) and
 `func_shared_zero_buffer.c` are checked by their own gates and are not in the
 placement table.
@@ -48,3 +75,6 @@ placement table.
 `python tools/level_source_layout.py` checks the layout (the unit tests run
 the same check) and `python tools/level_source_layout.py --apply` moves
 misplaced sources and rewrites the tables and documents that name them.
+`--name-twins` renames twin sources and their functions; refresh the object
+hashes of the renamed sources afterwards (`tools/level_c_gate.py
+--refresh-bodies`).
