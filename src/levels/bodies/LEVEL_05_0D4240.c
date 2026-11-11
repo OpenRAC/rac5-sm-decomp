@@ -8,7 +8,7 @@ extern void func_0D52D8(int);
 extern void func_019DC0(int, int);
 extern void func_0D5530(int);
 
-void func_0D4240(void)
+void func_0D4240(int unused)
 {
     switch (func_0D5000()) {
     case 2:

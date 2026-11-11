@@ -6,7 +6,7 @@ int func_129618(void);
 void func_129890(void);
 int func_1296B0(void);
 int func_129708(int a0);
-void func_0D1D40(int a0, int a1, int a2);
+int func_0D1D40(int a0, int a1, int a2);
 int func_1293E8(void);
 void func_1295E0(void);
 int func_129668(void);

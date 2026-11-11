@@ -48,7 +48,7 @@ extern void func_0160E0(void);
 extern void func_112CD8(void);
 extern void func_031E20(void);
 extern void func_08A3F8(void);
-extern void func_09D9A0(void);
+extern int func_09D9A0(void);
 extern void func_000BF0(int);
 extern int func_000DC0(void);
 extern void func_0194E0(void);
