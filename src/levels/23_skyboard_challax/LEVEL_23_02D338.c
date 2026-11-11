@@ -1,0 +1,7 @@
+/* LEVEL_23:0x02D338 -- placement copy of LEVEL_01_000B98.c: calls the module's two-argument setter with slot 1 and the all-ones 16-bit value. */
+extern void func_02D300(int a0, int a1);
+
+void func_02D338(void)
+{
+    func_02D300(1, 0xFFFF);
+}

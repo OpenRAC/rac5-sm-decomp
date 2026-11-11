@@ -90,8 +90,8 @@ MODULE_DIRS = {module: slug if slug == "frontend" else slug.removeprefix("level"
 SOURCE_DIRS = frozenset(MODULE_DIRS.values()) | {SHARED}
 
 
-def records(path: Path = BODIES) -> list[dict[str, str]]:
-    with path.open(encoding="utf-8", newline="") as file:
+def records(path: Path | None = None) -> list[dict[str, str]]:
+    with (path or BODIES).open(encoding="utf-8", newline="") as file:
         return list(csv.DictReader((line for line in file if not line.startswith("#")),
                                    delimiter="\t"))
 
@@ -401,11 +401,10 @@ def main(argv: list[str] | None = None) -> int:
     if repeated:
         print("source file names used by several sources: " + ", ".join(repeated[:20]))
         return 1
-    invalid = sorted({row["source"] for row in rows if not valid_source(row["source"])})
-    if invalid:
-        print("sources outside src/levels/<directory>/[<folders>/]<name>.c: "
-              + ", ".join(invalid[:20]))
-        return 1
+    moves = misplaced(rows, original_folders(rows, labels))
+    if args.apply and moves:
+        apply(moves)
+        rows = records()
     if args.name_twins:
         renames = twin_names(rows, names)
         if renames:
@@ -413,15 +412,16 @@ def main(argv: list[str] | None = None) -> int:
             print("refresh their object hashes: tools/level_c_gate.py ... --refresh-bodies")
             rows = records()
     moves = misplaced(rows, original_folders(rows, labels))
-    if args.apply and moves:
-        apply(moves)
-        rows = records()
-        moves = misplaced(rows, original_folders(rows, labels))
     if moves:
         for old, new in list(moves.items())[:20]:
             print(f"{old} -> {new}")
         print(f"{len(moves)} level body sources are outside their module directory; "
               "run python tools/level_source_layout.py --apply")
+        return 1
+    invalid = sorted({row["source"] for row in rows if not valid_source(row["source"])})
+    if invalid:
+        print("source names outside src/levels/<directory>/[<folders>/]<name>.c: "
+              + ", ".join(invalid[:20]))
         return 1
     sources = {row["source"] for row in rows}
     homes = Counter(source.split("/")[2] for source in sources)

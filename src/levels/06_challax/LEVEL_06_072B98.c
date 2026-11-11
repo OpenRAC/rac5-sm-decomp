@@ -1,0 +1,7 @@
+/* LEVEL_06:0x072B98 -- placement copy of LEVEL_01_000B98.c: calls the module's two-argument setter with slot 1 and the all-ones 16-bit value. */
+extern void func_072B60(int a0, int a1);
+
+void func_072B98(void)
+{
+    func_072B60(1, 0xFFFF);
+}

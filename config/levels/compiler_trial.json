@@ -156,7 +156,9 @@
         "src/levels/18_multiplayer_03/LEVEL_18_013EF0.c",
         "src/levels/18_multiplayer_03/LEVEL_18_031540.c",
         "src/levels/19_multiplayer_04/LEVEL_19_013EF0.c",
-        "src/levels/19_multiplayer_04/LEVEL_19_032000.c"
+        "src/levels/19_multiplayer_04/LEVEL_19_032000.c",
+        "src/levels/02_rykan_v/LEVEL_02_180748.c",
+        "src/levels/16_multiplayer_01/LEVEL_16_05D818.c"
       ],
       "tools": {
         "assembler": "as",
@@ -301,7 +303,11 @@
         "src/levels/22_skyboard_kalidon/LEVEL_22_02D660.c",
         "src/levels/23_skyboard_challax/LEVEL_23_030C40.c",
         "src/levels/24_treehouse/LEVEL_24_030808.c",
-        "src/levels/01_pokitaru/LEVEL_01_15A800.c"
+        "src/levels/01_pokitaru/LEVEL_01_15A800.c",
+        "src/levels/frontend/FRONTEND_00C190.c",
+        "src/levels/01_pokitaru/LEVEL_01_03B368.c",
+        "src/levels/04_metalis/LEVEL_04_129AE8.c",
+        "src/levels/15_giant_clank_metalis/LEVEL_15_12B008.c"
       ],
       "tools": {
         "assembler": "Ps2EeAs.exe",

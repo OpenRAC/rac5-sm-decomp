@@ -1235,3 +1235,27 @@ Five thousand three hundred and ninety-eight placements use the pinned chain,
 `r5900-mfc1` assembler, like the accepted bodies they copy. All 21 complete USA
 modules remain exact; no PAL placement is counted, and the distinct-function
 denominator remains unqualified.
+
+Pointer-only and nonzero-tail candidate bodies of up to 400 bytes, written as
+new C this time, add **11,156 USA placements**: 1,611 placements of 582 authored
+pure C sources and 9,530 address variants generated from them with each level's
+callee and data names (619,680 bytes by placement, in 597 relocation-masked
+forms). Nine retained drafts are exact under another qualified route, and six
+`FRONTEND` bodies are exact after correcting a near copy of an accepted level
+shape. Each placement links exactly. Five 8-byte forms (105 placements) start 4
+bytes past an 8-byte boundary, which the 8-byte function alignment of the
+qualified compilers cannot reach; they use the measured per-source
+`-malign-functions=2` flag that earlier accepted sources already take. Forms
+whose callers or callees disagree with an accepted prototype stay out (680
+placements in 59 forms); the prototype review now reads every callee definition
+whatever its name, including the boot twin names, and finds 1,917 disagreeing
+caller/callee source pairs on `master` and the same 1,917 here, none
+introduced. Counted by masked shape, accepted level bodies rise from 700,772 bytes
+in 5,075 shape units to 792,316 bytes in 6,223. 10,623 placements use the pinned
+chain, 403 the qualified `sdk991111` profile, 90 `gnu-ee-trial` and 40
+`gnu-ee-trial-divpad`; four sources are exact only with the qualified `ps2eeas`
+assembler and two only with `r5900-mfc1` (they differ by 1 to 42 words with the
+default assembler) and are recorded in `config/levels/compiler_trial.json`. 112
+of the new sources are boot twins and carry the boot symbol. All 21 complete USA
+modules remain exact; no PAL placement is counted, and the distinct-function
+denominator remains unqualified.

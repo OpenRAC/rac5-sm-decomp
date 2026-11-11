@@ -1,0 +1,7 @@
+/* LEVEL_17:0x0A4570 -- placement copy of LEVEL_01_000B98.c: calls the module's two-argument setter with slot 1 and the all-ones 16-bit value. */
+extern void func_0A4538(int a0, int a1);
+
+void func_0A4570(void)
+{
+    func_0A4538(1, 0xFFFF);
+}
