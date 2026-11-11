@@ -1,5 +1,5 @@
 void func_0DBD78(void);
-void func_0BB828(int mode);
+extern int func_0BB828(int index);
 
 void func_0DBD78(void)
 {

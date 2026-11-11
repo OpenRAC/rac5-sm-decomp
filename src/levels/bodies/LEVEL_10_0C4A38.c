@@ -1,6 +1,6 @@
 /* LEVEL_10:0x0C4A38 -- placement copy of LEVEL_01_0C36E8.c: reads a status word and runs the matching startup or fallback calls. */
 extern unsigned int func_088388(int value);
-extern void func_0B71F8(int a);
+extern int func_0B71F8(int index);
 extern void func_019EA8(int a, int b);
 extern int func_0BDE70(void);
 

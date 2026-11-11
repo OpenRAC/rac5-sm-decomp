@@ -1,5 +1,5 @@
 void func_0D7910(void);
-void func_0B71F8(int mode);
+extern int func_0B71F8(int index);
 
 void func_0D7910(void)
 {

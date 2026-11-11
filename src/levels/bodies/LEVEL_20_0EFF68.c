@@ -2,7 +2,7 @@
 
 extern int func_021BD8(int a, int b);
 extern int func_0E57F0(void);
-extern void func_08F6B0(int a);
+extern int func_08F6B0(int a);
 extern char *func_0E2118(int id);
 extern void func_0B0B78(int a, char *b, int c, int d);
 extern void func_0B0BB0(int a);

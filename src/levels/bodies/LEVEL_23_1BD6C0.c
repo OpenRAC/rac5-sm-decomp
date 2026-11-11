@@ -1,14 +1,14 @@
-/* LEVEL_23:0x1BD6C0 -- placement copy of FRONTEND_023200.c: converts a double to an unsigned 64-bit integer. */
-extern double func_1BE780(void);
+/* LEVEL_23:0x1BD6C0 -- placement copy of FRONTEND_023200.c: converts a float, widened to double, to an unsigned 64-bit integer. */
+extern double func_1BE780(float);
 extern int func_1BE2B0(double, double);
 extern double func_1BDD88(double, double);
 extern unsigned int func_1BE3C0(double);
 extern double func_1BD7B8(long long value);
 extern double func_1BDCC8(double, double);
 extern double func_1BDD20(double, double);
-unsigned long long func_1BD6C0(void)
+unsigned long long func_1BD6C0(float f)
 {
-    double a = func_1BE780();
+    double a = func_1BE780(f);
     double b;
     double c;
     unsigned long long v;

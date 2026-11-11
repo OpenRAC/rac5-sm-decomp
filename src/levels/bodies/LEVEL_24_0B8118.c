@@ -1,7 +1,7 @@
 /* LEVEL_24:0x0B8118 -- placement copy of LEVEL_01_0BE850.c: calls a three-argument helper on four record words, then runs a final helper. */
 
 extern void func_000418(int a0, int a1, int a2, int a3);
-extern void func_0AF8B0(int a0);
+extern int func_0AF8B0(int index);
 
 void func_0B8118(char *a0)
 {

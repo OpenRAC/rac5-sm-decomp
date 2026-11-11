@@ -1,5 +1,5 @@
 extern int D_002045A8;
-extern void func_0B6020(int);
+extern int func_0B6020(int index);
 extern void func_0CF640(void);
 
 void func_0CFB58(void)

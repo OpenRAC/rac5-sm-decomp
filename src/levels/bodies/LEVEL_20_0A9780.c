@@ -1,5 +1,5 @@
 extern int D_00114B38;
-extern void func_08F6B0(int);
+extern int func_08F6B0(int index);
 extern void func_0A9268(void);
 
 void func_0A9780(void)

@@ -4,7 +4,7 @@ extern int D_0010CF08[];
 extern char D_00199EC8[];
 extern int D_0010D148[];
 extern char D_0010D138[];
-extern void func_08F6B0(int a);
+extern int func_08F6B0(int a);
 
 void func_092608(int idx, unsigned int val)
 {

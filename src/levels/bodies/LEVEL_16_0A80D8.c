@@ -4,7 +4,7 @@ extern int D_001AA828[];
 extern char D_00276688[];
 extern int D_001AAA68[];
 extern char D_001AAA58[];
-extern void func_0A50B0(int a);
+extern int func_0A50B0(int index);
 
 void func_0A80D8(int idx, unsigned int val)
 {

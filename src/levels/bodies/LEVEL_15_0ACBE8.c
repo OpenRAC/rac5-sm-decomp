@@ -1,6 +1,6 @@
 extern void func_0F2E38(void);
 extern void func_086D10(void);
-extern void func_096530(int);
+extern int func_096530(int index);
 
 void func_0ACBE8(void)
 {

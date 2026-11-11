@@ -4,7 +4,7 @@ extern int D_00116CAC;
 extern int D_00116CB0;
 extern int D_00116CBC;
 extern int D_00116CC8;
-extern void func_08F6B0(int a0);
+extern int func_08F6B0(int a);
 
 void func_0B16D0(int a0)
 {

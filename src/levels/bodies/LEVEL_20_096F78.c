@@ -2,7 +2,7 @@ extern void *func_000270(int value);
 extern int func_0002D8(void *object);
 extern void func_0305B8(char *string, void *object, int flag);
 extern long long func_0003A0(int first, void *object, int third, int fourth);
-extern void func_08F6B0(int code);
+extern int func_08F6B0(int a);
 
 extern int D_0010D224;
 extern int D_0010D228;

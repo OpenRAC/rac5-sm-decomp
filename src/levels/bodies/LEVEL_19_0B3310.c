@@ -4,7 +4,7 @@ extern char D_001AF5A4[];
 extern unsigned int func_10F9D0(int a0);
 extern void func_0C5F20(int a0, unsigned int a1, int a2, int a3);
 extern void func_024010(void);
-extern void func_0A4928(int a0);
+extern int func_0A4928(int a);
 extern void func_0C5D00(int a0);
 extern void func_0AB8D8(int a0);
 extern void func_018898(int a0, int a1);
