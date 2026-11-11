@@ -21,6 +21,8 @@ from pathlib import Path
 from boot_assembly import TEXT_SIZE
 from boot_c_campaign import accepted_replacements, source_path
 from boot_trial_gate import accepted_matches
+from boot_zero_padding import OUTPUT as BOOT_ZERO_PADDING
+from boot_zero_padding import read as boot_zero_padding
 from bytematch_estimate import report as bytematch_report
 from level_context_translation import check_summary as check_context_summary
 from level_role_graph import check_summary as check_role_summary
@@ -352,6 +354,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
         "overall_percent": None,
         "bytematch_objdiff_ready": False,
         "boot": {"code_bytes": TEXT_SIZE,
+                 "zero_padding_bytes": sum(boot_zero_padding().values()),
                  "accepted_c_bytes": boot["counted_bytes"],
                  "accepted_functions": boot["accepted_functions"],
                  "scoped_code_percent":
@@ -377,6 +380,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                    "accepted_level_body_masked_shape_units":
                        accepted_shapes["accepted_masked_max_per_module_units"],
                    "level_map_bytes": accepted_shapes["map_bytes"],
+                   "level_map_zero_padding_bytes": accepted_shapes["map_padding_bytes"],
                    "level_map_functions": accepted_shapes["map_functions"],
                    "accepted_level_map_bytes": accepted_shapes["map_matched_bytes"],
                    "accepted_level_map_functions":
@@ -528,6 +532,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "level_split_dedupe": digest(SPLIT_DEDUPE),
             "level_shape_scenario": digest(SHAPE_SCENARIO),
             "level_accepted_shapes": digest(ACCEPTED_SHAPES),
+            "boot_zero_padding": digest(BOOT_ZERO_PADDING),
             "level_switch_body": digest(SWITCH_BODY),
             "level_context_translation": digest(CONTEXT_TRANSLATION),
             "level_role_graph": digest(ROLE_GRAPH),
@@ -576,12 +581,15 @@ def summary_table(status: dict[str, object]) -> str:
         f"accepted C bytes by a provisional "
         f"**{int(estimate['total_code']):,}**-byte denominator: "
         f"**{estimate['matched_code_percent']:.2f}%**. That denominator combines "
-        f"the {boot['code_bytes']:,} measured boot `.text` bytes and the "
+        f"the {boot['code_bytes'] - boot['zero_padding_bytes']:,} boot `.text` code "
+        f"bytes (the {boot['code_bytes']:,} measured bytes less "
+        f"{boot['zero_padding_bytes']:,} bytes of zero alignment padding) and the "
         f"{levels['level_map_bytes']:,} candidate code bytes of the 20 retained "
         "level modules, `FRONTEND.REL` included: every candidate interval byte "
-        "split into candidate functions, fragments, alignment padding and a few "
-        "unbounded bytes, each relocation-masked shape counted once at its largest "
-        "per-module multiplicity. A piece counts as matched when accepted C "
+        "split into candidate functions, fragments and a few unbounded bytes, each "
+        "relocation-masked shape counted once at its largest per-module "
+        f"multiplicity, less {levels['level_map_zero_padding_bytes']:,} bytes of "
+        "zero alignment padding. A piece counts as matched when accepted C "
         "reproduces all of its bytes at its own placement, so the address-variant "
         "copies of one function in several levels count once. "
         "It is an estimate over candidate code intervals, not a qualified "

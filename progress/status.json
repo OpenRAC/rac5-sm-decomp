@@ -6,6 +6,7 @@
   "bytematch_objdiff_ready": false,
   "boot": {
     "code_bytes": 498900,
+    "zero_padding_bytes": 2760,
     "accepted_c_bytes": 88948,
     "accepted_functions": [
       "MEMCARD_Idle__Fv",
@@ -875,7 +876,8 @@
     "accepted_level_body_unique_source_bytes": 5786384,
     "accepted_level_body_masked_shape_bytes": 700772,
     "accepted_level_body_masked_shape_units": 5075,
-    "level_map_bytes": 4877520,
+    "level_map_bytes": 4675716,
+    "level_map_zero_padding_bytes": 195520,
     "level_map_functions": 13094,
     "accepted_level_map_bytes": 700384,
     "accepted_level_map_functions": 5116,
@@ -2102,7 +2104,8 @@
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
     "level_split_dedupe": "b3b2a6e5526b06be3b7fbf1405910f3fa42ba48b444301e1ecc1cf847a08bb85",
     "level_shape_scenario": "0b84a17077582c211603f07ef2a0cf8299774270499681112890d513cdc2fe47",
-    "level_accepted_shapes": "810e5d3b721753fd870c161fd7ede41360936eb87a1d72962f82d3a98e6f6b6a",
+    "level_accepted_shapes": "e8da365c6ae9232eb1ea71e1a7901196909202ef01dc101f405ef498f1dd1da0",
+    "boot_zero_padding": "c2f438947f1b011b53339d08d8aadb8c73383e357bdd6f2bba4b0dc9c9aa2e16",
     "level_switch_body": "e5332627ffa1817ffa79178b85cd03a885c13eeb9721fbe1728d99330c32b0d3",
     "level_context_translation": "b22efea1dc6ee0d0e5661dab312042028fe6c8a213c6f7f260bd4ce00b4eac89",
     "level_role_graph": "19657c4ff0d6df249d34694fae3367babfd368561e91593722076dd8b8fb4f32"

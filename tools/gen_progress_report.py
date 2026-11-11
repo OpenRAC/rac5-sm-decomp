@@ -8,18 +8,20 @@ draws one tile per unit, grouped in folders by the unit names, sized by code
 bytes and coloured by how much of the unit is matched.
 
 The units follow the source tree, one per candidate function:
-  - boot/<symbol>: the candidate boot code intervals. An accepted C function
-    counts its body bytes; the linker alignment after it and the bytes outside
-    every interval stay in boot/_unlabeled_code_and_padding.
+  - boot/<symbol>: the candidate boot code intervals without their zero
+    alignment padding (config/boot/zero_padding.tsv). An accepted C function
+    counts its body bytes; the unlabeled code after it, up to the next label,
+    is boot/<symbol>.unlabeled_tail.
   - levels/<module directory>/<MODULE_OFFSET> and levels/shared/<MODULE_OFFSET>:
     the rows of config/levels/shape_units.tsv (tools/level_accepted_shapes.py),
     one per relocation-masked shape of candidate code (candidate functions and
     fragments of the function before them) at its largest multiplicity in one
     module, in the directory where src/levels keeps such a source: shared/ for a
-    shape found in several modules. Each module's alignment padding and its few
-    unbounded bytes are one more unit each.
+    shape found in several modules. Each module's few unbounded bytes are one
+    more unit; zero alignment padding is not code and is left out.
 The headline measures are the sums of the units, so the map, the categories and
-the totals agree: the boot .text plus the code of the 20 retained level modules
+the totals agree: the boot .text without its zero alignment padding plus the
+code of the 20 retained level modules
 (FRONTEND.REL included; LEVEL_21.REL repeats LEVEL_15.REL), every masked shape
 counted once at its largest per-module multiplicity. A piece counts as matched
 when accepted C reproduces all of its bytes at its own placement. These are
@@ -49,6 +51,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 import boot_trial_gate  # noqa: E402
 import versions  # noqa: E402
 from boot_c_campaign import accepted_replacements  # noqa: E402
+from boot_zero_padding import read as boot_zero_padding  # noqa: E402
 from level_accepted_shapes import read_units  # noqa: E402
 from level_names import LEVEL_NAMES  # noqa: E402
 from level_source_layout import COPIES, MODULE_DIRS, SHARED  # noqa: E402
@@ -63,7 +66,8 @@ SHAPE_UNITS = ROOT / "config/levels/shape_units.tsv"
 REPORTS = {"us": ROOT / "progress/report.json", "pal": ROOT / "progress/pal/report.json"}
 
 BOOT_CODE = {"us": 498900, "pal": 499156}
-BOOT_REMAINDER = "_unlabeled_code_and_padding"
+BOOT_REMAINDER = "_unlabeled_code"
+BOOT_TAIL = ".unlabeled_tail"
 COMMENT = re.compile(r"/\*.*?\*/|//[^\n]*", re.S)
 # Fields that stay zero in every unit (no unit is linked from source yet).
 UNIT_ZERO_FIELDS = ("complete_code", "complete_code_percent", "total_units", "complete_units")
@@ -197,6 +201,10 @@ def boot_units(v: versions.Version) -> list[dict[str, object]]:
         return [unit("boot/executable", total, 0, 0, 0, ["boot"])]
     matches = {match["owner"]: match for match in boot_trial_gate.accepted_matches()}
     owners = {owner.start: owner for owner in accepted_replacements()}
+    # Zero alignment words are not code: they leave the boot total and each
+    # interval (config/boot/zero_padding.tsv).
+    padding = boot_zero_padding()
+    total -= sum(padding.values())
     units, used, matched = [], 0, 0
     for row in read_tsv(BOOT_INTERVALS):
         start = int(row["start"], 16)
@@ -209,8 +217,14 @@ def boot_units(v: versions.Version) -> list[dict[str, object]]:
                 f"src/boot/{owner.name}.c",
                 {"name": match["symbol"], "size": str(size), "fuzzy_match_percent": 100.0}))
             matched += 1
+            # Unlabeled code after the accepted body, up to the next label.
+            rest = int(row["max_bytes"]) - padding.get(start, 0) - size
+            if rest > 0:
+                units.append(unit(f"boot/{match['symbol']}{BOOT_TAIL}", rest, 0, 0, 0,
+                                  ["boot"]))
+                size += rest
         else:
-            size = int(row["max_bytes"])
+            size = int(row["max_bytes"]) - padding.get(start, 0)
             units.append(unit(f"boot/{row['symbols'].split('|')[-1].strip()}",
                               size, 0, 1, 0, ["boot"]))
         used += size
@@ -246,12 +260,15 @@ def level_units(v: versions.Version) -> list[dict[str, object]]:
         # keeps the same denominator per directory and no accepted C.
         sizes: dict[str, int] = defaultdict(int)
         for row in table:
-            sizes[row["home"]] += row["size"] * row["copies"]
+            if row["kind"] != "padding":
+                sizes[row["home"]] += row["size"] * row["copies"]
         return [unit(f"levels/{home}", total, 0, 0, 0, ["levels"])
                 for home, total in sizes.items()]
     units = []
     names: dict[str, str] = {}
     for row in table:
+        if row["kind"] == "padding":
+            continue
         home = row["home"]
         category = SHARED if home == SHARED else categories[home][0]
         function = None

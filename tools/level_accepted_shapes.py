@@ -46,6 +46,7 @@ from disc import IsoDisc, verify_disc
 from level_function_inventory import masked_body, relocations
 from level_ghidra_crosscheck import rows
 from level_source_layout import MODULE_DIRS, SHARED, SOURCE_DIRS
+from zero_padding import trailing_zero_padding
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "config/levels/accepted_shape_summary.json"
@@ -182,7 +183,8 @@ def residual_pieces(data: bytes, static: list[dict[str, str]], units: list[tuple
     sorted candidate unit spans; accepted: the sorted accepted C spans; switches:
     the reviewed switch ranges; split_parents: starts of split parent intervals.
     Accepted C outside candidate units becomes its own piece. Elsewhere trailing
-    zero words are alignment padding, and the code before them becomes a piece:
+    zero words are alignment padding (the delay slot of a final branch or jump
+    stays code), and the code before them becomes a piece:
     a candidate function when it starts at a no_return interval (an entry without
     a return before the next entry), otherwise a fragment of the function before
     it (code after its last return, or the parts of a split interval between its
@@ -211,9 +213,7 @@ def residual_pieces(data: bytes, static: list[dict[str, str]], units: list[tuple
                     pieces.append((part_left, part_right - part_left,
                                    kind == "entry" and part_left == start, source))
                     continue
-                end = part_right
-                while end - 4 >= part_left and data[end - 4:end] == b"\0\0\0\0":
-                    end -= 4
+                end = part_right - trailing_zero_padding(data, part_left, part_right)
                 padding += part_right - end
                 if end == part_left:
                     continue
@@ -294,7 +294,7 @@ def map_totals(table: list[dict[str, object]]) -> dict[str, int]:
         return sum(row["size"] * row["copies"] for row in table
                    if kind is None or row["kind"] == kind)
     return {"map_rows": len(table),
-            "map_bytes": total(),
+            "map_bytes": total() - total("padding"),
             "map_matched_bytes": sum(row["size"] * row["matched_copies"] for row in table),
             "map_functions": sum(row["functions"] for row in table),
             "map_matched_functions": sum(row["matched_functions"] for row in table),

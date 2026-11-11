@@ -14,6 +14,7 @@ import boot_trial_gate  # noqa: E402
 import gen_progress_report  # noqa: E402
 import versions  # noqa: E402
 from level_source_layout import MODULE_DIRS  # noqa: E402
+from boot_zero_padding import read as boot_zero_padding  # noqa: E402
 
 
 def code(item: dict) -> tuple[int, int]:
@@ -31,9 +32,9 @@ class GenProgressReportTests(unittest.TestCase):
         report = self.us
         self.assertEqual(report["version"], 2)
         m = report["measures"]
-        self.assertEqual(m["total_code"], "5376420")
+        self.assertEqual(m["total_code"], "5171856")
         self.assertEqual(m["matched_code"], "789332")
-        self.assertAlmostEqual(m["matched_code_percent"], 14.6814, places=4)
+        self.assertAlmostEqual(m["matched_code_percent"], 15.2621, places=4)
         self.assertEqual((m["matched_functions"], m["total_functions"]), (5809, 14409))
         self.assertEqual(m["total_units"], len(report["units"]))
 
@@ -42,7 +43,9 @@ class GenProgressReportTests(unittest.TestCase):
         # splits every retained candidate interval byte and can only shrink the
         # optimistic shape scenario.
         boot = boot_trial_gate.accepted_body_bytes()
-        self.assertEqual(int(m["total_code"]), 498900 + self.summary["map_bytes"])
+        padding = sum(boot_zero_padding().values())
+        self.assertEqual(padding, 2760)
+        self.assertEqual(int(m["total_code"]), 498900 - padding + self.summary["map_bytes"])
         self.assertEqual(self.summary["map_raw_bytes"],
                          self.shape["retained_candidate_interval_bytes"])
         self.assertLessEqual(self.summary["map_bytes"],
