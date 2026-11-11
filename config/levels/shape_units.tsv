@@ -17,7 +17,7 @@ frontend	FRONTEND_001E10	function	112	1	1	1	1	1	src/levels/frontend/FRONTEND_001
 frontend	FRONTEND_001E80	function	44	1	1	1	1	1	src/levels/frontend/FRONTEND_001E80.c
 frontend	FRONTEND_001EE8	function	232	1	1	1	1	1	src/levels/frontend/FRONTEND_001EE8.c
 frontend	FRONTEND_002158	function	84	1	1	1	1	1	src/levels/frontend/FRONTEND_002158.c
-frontend	FRONTEND_0022C0	function	272	1	0	1	0	1	
+frontend	FRONTEND_0022C0	function	276	1	0	1	0	1	
 frontend	FRONTEND_0023D4	function	8	1	0	1	0	1	
 frontend	FRONTEND_0023DC	function	36	1	0	1	0	1	
 frontend	FRONTEND_002400	function	8	1	0	1	0	1	
@@ -86,7 +86,7 @@ frontend	FRONTEND_013C10	function	684	1	0	1	0	1
 frontend	FRONTEND_014180	function	984	1	0	1	0	1	
 frontend	FRONTEND_014F24	fragment	48	1	0	0	0	1	
 frontend	FRONTEND_015028	fragment	20	1	0	0	0	1	
-frontend	FRONTEND_015058	fragment	72	1	0	0	0	1	
+frontend	FRONTEND_015058	fragment	76	1	0	0	0	1	
 frontend	FRONTEND_015280	fragment	44	1	0	0	0	1	
 frontend	FRONTEND_015530	function	576	1	0	1	0	1	
 frontend	FRONTEND_015788	function	292	1	1	1	1	1	src/levels/frontend/FRONTEND_015788.c
@@ -138,7 +138,7 @@ frontend	FRONTEND_01E978	fragment	180	1	0	0	0	1
 frontend	FRONTEND_01EB80	fragment	68	1	0	0	0	1	
 frontend	FRONTEND_01ECC4	fragment	584	1	0	0	0	1	
 frontend	FRONTEND_01FE90	function	108	1	0	1	0	1	
-frontend	FRONTEND_01FEFC	fragment	72	1	0	0	0	1	
+frontend	FRONTEND_01FEFC	fragment	76	1	0	0	0	1	
 frontend	FRONTEND_01FF48	function	8	1	0	1	0	1	
 frontend	FRONTEND_01FF50	function	8	1	0	1	0	1	
 frontend	FRONTEND_01FF58	function	8	1	0	1	0	1	
@@ -156,7 +156,7 @@ frontend	FRONTEND_022790	function	48	1	0	1	0	1
 frontend	FRONTEND_0227C0	fragment	4	1	0	0	0	1	
 frontend	FRONTEND_022840	function	44	1	0	1	0	1	
 frontend	FRONTEND_022878	function	40	1	1	1	1	1	src/levels/frontend/FRONTEND_022878.c
-frontend	alignment_padding	padding	2240	1	0	0	0	1	
+frontend	alignment_padding	padding	2100	1	0	0	0	1	
 01_pokitaru	LEVEL_01_015EE8	function	80	1	0	1	0	1	
 01_pokitaru	LEVEL_01_01A320	fragment	20	1	0	0	0	1	
 01_pokitaru	LEVEL_01_0320E0	function	216	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_0320E0.c
@@ -176,7 +176,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 01_pokitaru	LEVEL_01_1596D0	function	208	1	0	1	0	1	
 01_pokitaru	LEVEL_01_1597A0	function	1008	1	0	1	0	1	
 01_pokitaru	LEVEL_01_159B90	function	192	1	0	1	0	1	
-01_pokitaru	LEVEL_01_159C50	function	344	1	0	1	0	1	
+01_pokitaru	LEVEL_01_159C50	function	348	1	0	1	0	1	
 01_pokitaru	LEVEL_01_159DAC	function	16	1	0	1	0	1	
 01_pokitaru	LEVEL_01_159DBC	function	16	1	0	1	0	1	
 01_pokitaru	LEVEL_01_159DCC	function	16	1	0	1	0	1	
@@ -239,10 +239,10 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 01_pokitaru	LEVEL_01_15D6F0	function	736	1	0	1	0	1	
 01_pokitaru	LEVEL_01_165E78	function	852	1	0	1	0	1	
 01_pokitaru	LEVEL_01_1661E0	function	64	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_1661E0.c
-01_pokitaru	LEVEL_01_166220	function	80	1	0	1	0	1	
+01_pokitaru	LEVEL_01_166220	function	84	1	0	1	0	1	
 01_pokitaru	LEVEL_01_166274	function	196	1	0	1	0	1	
-01_pokitaru	LEVEL_01_166338	function	60	1	0	1	0	1	
-01_pokitaru	LEVEL_01_166378	function	304	1	0	1	0	1	
+01_pokitaru	LEVEL_01_166338	function	64	1	0	1	0	1	
+01_pokitaru	LEVEL_01_166378	function	308	1	0	1	0	1	
 01_pokitaru	LEVEL_01_1664AC	function	780	1	0	1	0	1	
 01_pokitaru	LEVEL_01_1667B8	function	184	1	0	1	0	1	
 01_pokitaru	LEVEL_01_166870	function	328	1	0	1	0	1	
@@ -254,7 +254,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 01_pokitaru	LEVEL_01_1683F8	function	40	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_1683F8.c
 01_pokitaru	LEVEL_01_16EF10	function	252	1	0	1	0	1	
 01_pokitaru	LEVEL_01_188878	function	1380	1	0	1	0	1	
-01_pokitaru	LEVEL_01_188E18	function	404	1	0	1	0	1	
+01_pokitaru	LEVEL_01_188E18	function	408	1	0	1	0	1	
 01_pokitaru	LEVEL_01_188FB0	function	24	1	0	1	0	1	
 01_pokitaru	LEVEL_01_188FC8	function	204	1	0	1	0	1	
 01_pokitaru	LEVEL_01_189094	function	72	1	0	1	0	1	
@@ -279,7 +279,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 01_pokitaru	LEVEL_01_18DB18	function	40	1	0	1	0	1	
 01_pokitaru	LEVEL_01_18DDF8	function	928	1	0	1	0	1	
 01_pokitaru	LEVEL_01_18E198	function	92	1	0	1	0	1	
-01_pokitaru	LEVEL_01_18E1F8	function	136	1	0	1	0	1	
+01_pokitaru	LEVEL_01_18E1F8	function	140	1	0	1	0	1	
 01_pokitaru	LEVEL_01_18E284	function	16	1	0	1	0	1	
 01_pokitaru	LEVEL_01_18E294	function	56	1	0	1	0	1	
 01_pokitaru	LEVEL_01_18E2CC	function	40	1	0	1	0	1	
@@ -313,7 +313,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 01_pokitaru	LEVEL_01_190928	function	32	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_190928.c
 01_pokitaru	LEVEL_01_190948	function	40	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_190948.c
 01_pokitaru	LEVEL_01_198390	function	1168	1	0	1	0	1	
-01_pokitaru	LEVEL_01_198858	function	88	1	0	1	0	1	
+01_pokitaru	LEVEL_01_198858	function	92	1	0	1	0	1	
 01_pokitaru	LEVEL_01_1988B4	function	1036	1	0	1	0	1	
 01_pokitaru	LEVEL_01_198CC0	function	780	1	0	1	0	1	
 01_pokitaru	LEVEL_01_198FCC	function	192	1	0	1	0	1	
@@ -331,22 +331,22 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 01_pokitaru	LEVEL_01_1C10A0	function	140	1	0	1	0	1	
 01_pokitaru	LEVEL_01_1C1130	function	460	1	0	1	0	1	
 01_pokitaru	LEVEL_01_1C1300	function	192	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C13C0	function	132	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C1448	function	12	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C1458	function	12	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C1468	function	12	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C1478	function	12	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C1488	function	12	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C1498	function	464	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C166C	function	12	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C167C	function	12	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C168C	function	12	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C13C0	function	136	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C1448	function	16	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C1458	function	16	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C1468	function	16	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C1478	function	16	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C1488	function	16	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C1498	function	468	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C166C	function	16	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C167C	function	16	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C168C	function	16	1	0	1	0	1	
 01_pokitaru	LEVEL_01_1C169C	function	20	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C16B0	function	12	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C16B0	function	16	1	0	1	0	1	
 01_pokitaru	LEVEL_01_1C16C0	function	64	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C1700	function	468	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C18D8	function	12	1	0	1	0	1	
-01_pokitaru	LEVEL_01_1C18E8	function	12	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C1700	function	472	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C18D8	function	16	1	0	1	0	1	
+01_pokitaru	LEVEL_01_1C18E8	function	16	1	0	1	0	1	
 01_pokitaru	LEVEL_01_1C18F8	function	88	1	0	1	0	1	
 01_pokitaru	LEVEL_01_1C1950	function	748	1	0	1	0	1	
 01_pokitaru	LEVEL_01_1C1C40	function	436	1	0	1	0	1	
@@ -371,7 +371,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 01_pokitaru	LEVEL_01_1C46E8	function	540	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_1C46E8.c
 01_pokitaru	LEVEL_01_1C6648	fragment	68	1	0	0	0	1	
 01_pokitaru	LEVEL_01_1C6690	function	2532	1	0	1	0	1	
-01_pokitaru	alignment_padding	padding	11060	1	0	0	0	1	
+01_pokitaru	alignment_padding	padding	10644	1	0	0	0	1	
 01_pokitaru	code_without_function_bounds	unbounded	40	1	0	0	0	1	
 02_rykan_v	LEVEL_02_033C80	function	764	1	0	1	0	1	
 02_rykan_v	LEVEL_02_0346E8	function	68	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_0346E8.c
@@ -399,7 +399,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 02_rykan_v	LEVEL_02_15D640	function	32	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_15D640.c
 02_rykan_v	LEVEL_02_15D660	function	776	1	0	1	0	1	
 02_rykan_v	LEVEL_02_15D968	function	60	1	0	1	0	1	
-02_rykan_v	LEVEL_02_15D9A8	function	80	1	0	1	0	1	
+02_rykan_v	LEVEL_02_15D9A8	function	84	1	0	1	0	1	
 02_rykan_v	LEVEL_02_15D9FC	function	16	1	0	1	0	1	
 02_rykan_v	LEVEL_02_15DA0C	function	16	1	0	1	0	1	
 02_rykan_v	LEVEL_02_15DA1C	function	16	2	0	2	0	1	
@@ -438,7 +438,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 02_rykan_v	LEVEL_02_162BC0	function	180	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_162BC0.c
 02_rykan_v	LEVEL_02_162E70	function	704	1	0	1	0	1	
 02_rykan_v	LEVEL_02_163130	function	80	1	0	1	0	1	
-02_rykan_v	LEVEL_02_163180	function	148	1	0	1	0	1	
+02_rykan_v	LEVEL_02_163180	function	152	1	0	1	0	1	
 02_rykan_v	LEVEL_02_163218	function	240	1	0	1	0	1	
 02_rykan_v	LEVEL_02_163308	function	40	1	0	1	0	1	
 02_rykan_v	LEVEL_02_163330	function	20	1	0	1	0	1	
@@ -486,11 +486,11 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 02_rykan_v	LEVEL_02_167F58	function	796	1	0	1	0	1	
 02_rykan_v	LEVEL_02_168278	function	1144	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1686F0	function	604	1	0	1	0	1	
-02_rykan_v	LEVEL_02_16894C	fragment	120	2	0	0	0	1	
+02_rykan_v	LEVEL_02_16894C	fragment	124	2	0	0	0	1	
 02_rykan_v	LEVEL_02_168A00	function	80	2	2	2	2	1	src/levels/02_rykan_v/LEVEL_02_168A00.c
 02_rykan_v	LEVEL_02_168B80	function	908	1	0	1	0	1	
 02_rykan_v	LEVEL_02_168F10	function	60	1	0	1	0	1	
-02_rykan_v	LEVEL_02_168F50	function	96	1	0	1	0	1	
+02_rykan_v	LEVEL_02_168F50	function	100	1	0	1	0	1	
 02_rykan_v	LEVEL_02_168FB4	function	16	1	0	1	0	1	
 02_rykan_v	LEVEL_02_168FC4	function	16	1	0	1	0	1	
 02_rykan_v	LEVEL_02_168FD4	function	16	1	0	1	0	1	
@@ -612,12 +612,12 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 02_rykan_v	LEVEL_02_180868	function	104	1	0	1	0	1	
 02_rykan_v	LEVEL_02_180908	function	632	1	0	1	0	1	
 02_rykan_v	LEVEL_02_18A178	function	1040	1	0	1	0	1	
-02_rykan_v	LEVEL_02_18A5C0	function	224	1	0	1	0	1	
+02_rykan_v	LEVEL_02_18A5C0	function	228	1	0	1	0	1	
 02_rykan_v	LEVEL_02_18A6A4	function	84	1	0	1	0	1	
 02_rykan_v	LEVEL_02_18A6F8	function	80	1	0	1	0	1	
 02_rykan_v	LEVEL_02_18A748	function	76	1	0	1	0	1	
 02_rykan_v	LEVEL_02_18A794	function	452	1	0	1	0	1	
-02_rykan_v	LEVEL_02_18A958	function	124	1	0	1	0	1	
+02_rykan_v	LEVEL_02_18A958	function	128	1	0	1	0	1	
 02_rykan_v	LEVEL_02_18A9D8	function	96	1	0	1	0	1	
 02_rykan_v	LEVEL_02_18AA38	function	76	1	0	1	0	1	
 02_rykan_v	LEVEL_02_18AA84	function	376	1	0	1	0	1	
@@ -704,7 +704,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 02_rykan_v	LEVEL_02_1B3300	function	176	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1B33B0	function	480	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1B3590	function	188	1	0	1	0	1	
-02_rykan_v	LEVEL_02_1B3650	function	108	1	0	1	0	1	
+02_rykan_v	LEVEL_02_1B3650	function	112	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1B36C0	function	384	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1B3840	function	124	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1B38BC	function	16	1	0	1	0	1	
@@ -741,7 +741,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 02_rykan_v	LEVEL_02_1B5728	function	168	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1B5728.c
 02_rykan_v	LEVEL_02_1B57F0	function	816	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1B5B20	function	244	1	0	1	0	1	
-02_rykan_v	LEVEL_02_1B5C18	function	84	1	0	1	0	1	
+02_rykan_v	LEVEL_02_1B5C18	function	88	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1B5C70	function	108	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1B5CDC	function	16	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1B5CEC	function	16	1	0	1	0	1	
@@ -777,7 +777,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 02_rykan_v	LEVEL_02_1BD988	function	184	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1BDA40	function	584	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1BDC88	function	192	1	0	1	0	1	
-02_rykan_v	LEVEL_02_1BDD48	function	244	1	0	1	0	1	
+02_rykan_v	LEVEL_02_1BDD48	function	248	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1BDE40	function	24	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1BDE58	function	40	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1BDE80	function	72	1	0	1	0	1	
@@ -824,12 +824,12 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 02_rykan_v	LEVEL_02_1D3B00	function	36	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1D3C20	function	1032	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1D4028	function	244	1	0	1	0	1	
-02_rykan_v	LEVEL_02_1D4120	function	76	1	0	1	0	1	
+02_rykan_v	LEVEL_02_1D4120	function	80	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1D4170	function	116	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1D41E4	function	580	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1D4428	function	48	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1D4458	function	64	1	0	1	0	1	
-02_rykan_v	LEVEL_02_1D4498	function	24	1	0	1	0	1	
+02_rykan_v	LEVEL_02_1D4498	function	28	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1D44B4	function	16	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1D44C4	function	16	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1D44D4	function	28	1	0	1	0	1	
@@ -857,7 +857,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 02_rykan_v	LEVEL_02_1D95D0	function	160	1	0	1	0	1	
 02_rykan_v	LEVEL_02_1D9670	function	40	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1D9670.c
 02_rykan_v	LEVEL_02_1D9698	function	128	1	0	1	0	1	
-02_rykan_v	alignment_padding	padding	11568	1	0	0	0	1	
+02_rykan_v	alignment_padding	padding	11192	1	0	0	0	1	
 02_rykan_v	code_without_function_bounds	unbounded	40	1	0	0	0	1	
 03_kalidon	LEVEL_03_001160	function	44	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_001160.c
 03_kalidon	LEVEL_03_01A0FC	fragment	32	1	0	0	0	1	
@@ -876,14 +876,14 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_160490	function	976	1	0	1	0	1	
 03_kalidon	LEVEL_03_160860	function	536	1	0	1	0	1	
 03_kalidon	LEVEL_03_160A78	function	176	1	0	1	0	1	
-03_kalidon	LEVEL_03_160B28	function	96	1	0	1	0	1	
+03_kalidon	LEVEL_03_160B28	function	100	1	0	1	0	1	
 03_kalidon	LEVEL_03_160B8C	function	32	1	0	1	0	1	
 03_kalidon	LEVEL_03_160BAC	function	612	1	0	1	0	1	
 03_kalidon	LEVEL_03_160E10	function	556	1	0	1	0	1	
 03_kalidon	LEVEL_03_16103C	function	52	1	0	1	0	1	
 03_kalidon	LEVEL_03_161070	function	52	1	0	1	0	1	
 03_kalidon	LEVEL_03_1610A4	function	168	1	0	1	0	1	
-03_kalidon	LEVEL_03_16114C	function	20	1	0	1	0	1	
+03_kalidon	LEVEL_03_16114C	function	24	1	0	1	0	1	
 03_kalidon	LEVEL_03_161164	function	116	1	0	1	0	1	
 03_kalidon	LEVEL_03_1611D8	function	80	1	0	1	0	1	
 03_kalidon	LEVEL_03_161228	function	696	1	0	1	0	1	
@@ -893,7 +893,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_16169C	function	200	1	0	1	0	1	
 03_kalidon	LEVEL_03_161764	function	72	1	0	1	0	1	
 03_kalidon	LEVEL_03_1617AC	function	216	1	0	1	0	1	
-03_kalidon	LEVEL_03_161884	function	80	1	0	1	0	1	
+03_kalidon	LEVEL_03_161884	function	84	1	0	1	0	1	
 03_kalidon	LEVEL_03_1618D8	function	84	1	0	1	0	1	
 03_kalidon	LEVEL_03_16192C	function	40	1	0	1	0	1	
 03_kalidon	LEVEL_03_161954	function	72	1	0	1	0	1	
@@ -919,7 +919,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_16D280	function	612	1	0	1	0	1	
 03_kalidon	LEVEL_03_16D4E8	function	180	1	0	1	0	1	
 03_kalidon	LEVEL_03_16D5A0	function	324	1	0	1	0	1	
-03_kalidon	LEVEL_03_16D6E8	function	64	1	0	1	0	1	
+03_kalidon	LEVEL_03_16D6E8	function	68	1	0	1	0	1	
 03_kalidon	LEVEL_03_16D72C	function	80	1	0	1	0	1	
 03_kalidon	LEVEL_03_16D77C	function	136	1	0	1	0	1	
 03_kalidon	LEVEL_03_16D804	function	32	1	0	1	0	1	
@@ -928,7 +928,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_16D880	function	64	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_16D880.c
 03_kalidon	LEVEL_03_16DB28	function	636	1	0	1	0	1	
 03_kalidon	LEVEL_03_16DDA8	function	324	1	0	1	0	1	
-03_kalidon	LEVEL_03_16DF60	function	140	1	0	1	0	1	
+03_kalidon	LEVEL_03_16DF60	function	144	1	0	1	0	1	
 03_kalidon	LEVEL_03_16DFF0	function	12	1	0	1	0	1	
 03_kalidon	LEVEL_03_16DFFC	function	72	1	0	1	0	1	
 03_kalidon	LEVEL_03_16E044	function	276	1	0	1	0	1	
@@ -952,7 +952,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_18B220	function	220	1	0	1	0	1	
 03_kalidon	LEVEL_03_18B358	function	820	1	0	1	0	1	
 03_kalidon	LEVEL_03_18B690	function	112	1	0	1	0	1	
-03_kalidon	LEVEL_03_18B700	function	96	1	0	1	0	1	
+03_kalidon	LEVEL_03_18B700	function	100	1	0	1	0	1	
 03_kalidon	LEVEL_03_18B764	function	56	1	0	1	0	1	
 03_kalidon	LEVEL_03_18B79C	function	1004	1	0	1	0	1	
 03_kalidon	LEVEL_03_18BB88	function	992	1	0	1	0	1	
@@ -966,10 +966,10 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_18D118	function	304	1	0	1	0	1	
 03_kalidon	LEVEL_03_18E030	function	772	1	0	1	0	1	
 03_kalidon	LEVEL_03_18E338	function	56	1	0	1	0	1	
-03_kalidon	LEVEL_03_18E370	function	76	1	0	1	0	1	
+03_kalidon	LEVEL_03_18E370	function	80	1	0	1	0	1	
 03_kalidon	LEVEL_03_18E3C0	function	36	1	0	1	0	1	
 03_kalidon	LEVEL_03_18E3E4	function	716	1	0	1	0	1	
-03_kalidon	LEVEL_03_18E6B0	function	740	1	0	1	0	1	
+03_kalidon	LEVEL_03_18E6B0	function	744	1	0	1	0	1	
 03_kalidon	LEVEL_03_18E998	function	56	1	0	1	0	1	
 03_kalidon	LEVEL_03_18E9D0	function	124	1	0	1	0	1	
 03_kalidon	LEVEL_03_18EA4C	function	136	1	0	1	0	1	
@@ -991,7 +991,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_18FF40	function	1176	1	0	1	0	1	
 03_kalidon	LEVEL_03_190430	function	2204	1	0	1	0	1	
 03_kalidon	LEVEL_03_190CD0	function	104	1	0	1	0	1	
-03_kalidon	LEVEL_03_190D38	function	1104	1	0	1	0	1	
+03_kalidon	LEVEL_03_190D38	function	1108	1	0	1	0	1	
 03_kalidon	LEVEL_03_19118C	function	104	1	0	1	0	1	
 03_kalidon	LEVEL_03_1911F4	function	788	1	0	1	0	1	
 03_kalidon	LEVEL_03_191508	function	300	1	0	1	0	1	
@@ -1027,7 +1027,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_195B58	function	44	1	0	1	0	1	
 03_kalidon	LEVEL_03_195BE8	function	96	1	0	1	0	1	
 03_kalidon	LEVEL_03_195C48	function	984	1	0	1	0	1	
-03_kalidon	LEVEL_03_196020	fragment	28	1	0	0	0	1	
+03_kalidon	LEVEL_03_196020	fragment	32	1	0	0	0	1	
 03_kalidon	LEVEL_03_196098	function	44	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_196098.c
 03_kalidon	LEVEL_03_1960C8	function	44	1	0	1	0	1	
 03_kalidon	LEVEL_03_1960F8	function	104	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1960F8.c
@@ -1045,47 +1045,47 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_19C198	function	172	1	0	1	0	1	
 03_kalidon	LEVEL_03_19C2A0	function	1880	1	0	1	0	1	
 03_kalidon	LEVEL_03_19C9F8	function	308	1	0	1	0	1	
-03_kalidon	LEVEL_03_19CB90	function	312	1	0	1	0	1	
-03_kalidon	LEVEL_03_19CCCC	function	16	1	0	1	0	1	
-03_kalidon	LEVEL_03_19CCE0	function	152	1	0	1	0	1	
+03_kalidon	LEVEL_03_19CB90	function	316	1	0	1	0	1	
+03_kalidon	LEVEL_03_19CCCC	function	20	1	0	1	0	1	
+03_kalidon	LEVEL_03_19CCE0	function	156	1	0	1	0	1	
 03_kalidon	LEVEL_03_19CD7C	function	232	1	0	1	0	1	
-03_kalidon	LEVEL_03_19CE64	function	108	1	0	1	0	1	
+03_kalidon	LEVEL_03_19CE64	function	112	1	0	1	0	1	
 03_kalidon	LEVEL_03_19CED4	function	68	1	0	1	0	1	
 03_kalidon	LEVEL_03_19CF18	function	88	1	0	1	0	1	
-03_kalidon	LEVEL_03_19CF70	function	96	1	0	1	0	1	
-03_kalidon	LEVEL_03_19CFD4	function	32	1	0	1	0	1	
-03_kalidon	LEVEL_03_19CFF8	function	116	1	0	1	0	1	
-03_kalidon	LEVEL_03_19D070	function	1212	1	0	1	0	1	
+03_kalidon	LEVEL_03_19CF70	function	100	1	0	1	0	1	
+03_kalidon	LEVEL_03_19CFD4	function	36	1	0	1	0	1	
+03_kalidon	LEVEL_03_19CFF8	function	120	1	0	1	0	1	
+03_kalidon	LEVEL_03_19D070	function	1216	1	0	1	0	1	
 03_kalidon	LEVEL_03_19D530	function	40	1	0	1	0	1	
 03_kalidon	LEVEL_03_19D558	function	236	1	0	1	0	1	
-03_kalidon	LEVEL_03_19D644	function	100	1	0	1	0	1	
-03_kalidon	LEVEL_03_19D6AC	function	128	1	0	1	0	1	
-03_kalidon	LEVEL_03_19D730	function	1184	1	0	1	0	1	
-03_kalidon	LEVEL_03_19DBD4	function	144	1	0	1	0	1	
-03_kalidon	LEVEL_03_19DC68	function	140	1	0	1	0	1	
+03_kalidon	LEVEL_03_19D644	function	104	1	0	1	0	1	
+03_kalidon	LEVEL_03_19D6AC	function	132	1	0	1	0	1	
+03_kalidon	LEVEL_03_19D730	function	1188	1	0	1	0	1	
+03_kalidon	LEVEL_03_19DBD4	function	148	1	0	1	0	1	
+03_kalidon	LEVEL_03_19DC68	function	144	1	0	1	0	1	
 03_kalidon	LEVEL_03_19DCF8	function	1748	1	0	1	0	1	
-03_kalidon	LEVEL_03_19E3CC	function	452	1	0	1	0	1	
-03_kalidon	LEVEL_03_19E594	function	148	1	0	1	0	1	
-03_kalidon	LEVEL_03_19E62C	function	100	1	0	1	0	1	
-03_kalidon	LEVEL_03_19E694	function	192	1	0	1	0	1	
-03_kalidon	LEVEL_03_19E758	function	268	1	0	1	0	1	
+03_kalidon	LEVEL_03_19E3CC	function	456	1	0	1	0	1	
+03_kalidon	LEVEL_03_19E594	function	152	1	0	1	0	1	
+03_kalidon	LEVEL_03_19E62C	function	104	1	0	1	0	1	
+03_kalidon	LEVEL_03_19E694	function	196	1	0	1	0	1	
+03_kalidon	LEVEL_03_19E758	function	272	1	0	1	0	1	
 03_kalidon	LEVEL_03_19E868	function	420	1	0	1	0	1	
 03_kalidon	LEVEL_03_19EA0C	function	100	1	0	1	0	1	
-03_kalidon	LEVEL_03_19EA70	function	40	1	0	1	0	1	
-03_kalidon	LEVEL_03_19EA9C	function	136	1	0	1	0	1	
-03_kalidon	LEVEL_03_19EB28	function	136	1	0	1	0	1	
-03_kalidon	LEVEL_03_19EBB4	function	468	1	0	1	0	1	
-03_kalidon	LEVEL_03_19ED8C	function	156	1	0	1	0	1	
-03_kalidon	LEVEL_03_19EE2C	function	180	1	0	1	0	1	
-03_kalidon	LEVEL_03_19EEE4	function	320	1	0	1	0	1	
-03_kalidon	LEVEL_03_19F028	function	316	1	0	1	0	1	
-03_kalidon	LEVEL_03_19F168	function	1528	1	0	1	0	1	
-03_kalidon	LEVEL_03_19F764	function	824	1	0	1	0	1	
-03_kalidon	LEVEL_03_19FAA0	function	144	1	0	1	0	1	
+03_kalidon	LEVEL_03_19EA70	function	44	1	0	1	0	1	
+03_kalidon	LEVEL_03_19EA9C	function	140	1	0	1	0	1	
+03_kalidon	LEVEL_03_19EB28	function	140	1	0	1	0	1	
+03_kalidon	LEVEL_03_19EBB4	function	472	1	0	1	0	1	
+03_kalidon	LEVEL_03_19ED8C	function	160	1	0	1	0	1	
+03_kalidon	LEVEL_03_19EE2C	function	184	1	0	1	0	1	
+03_kalidon	LEVEL_03_19EEE4	function	324	1	0	1	0	1	
+03_kalidon	LEVEL_03_19F028	function	320	1	0	1	0	1	
+03_kalidon	LEVEL_03_19F168	function	1532	1	0	1	0	1	
+03_kalidon	LEVEL_03_19F764	function	828	1	0	1	0	1	
+03_kalidon	LEVEL_03_19FAA0	function	148	1	0	1	0	1	
 03_kalidon	LEVEL_03_19FB34	function	24	1	0	1	0	1	
 03_kalidon	LEVEL_03_19FB4C	function	124	1	0	1	0	1	
 03_kalidon	LEVEL_03_19FBC8	function	516	1	0	1	0	1	
-03_kalidon	LEVEL_03_19FDD0	function	172	1	0	1	0	1	
+03_kalidon	LEVEL_03_19FDD0	function	176	1	0	1	0	1	
 03_kalidon	LEVEL_03_19FE80	function	232	1	0	1	0	1	
 03_kalidon	LEVEL_03_19FF68	function	24	1	0	1	0	1	
 03_kalidon	LEVEL_03_19FF80	function	96	1	0	1	0	1	
@@ -1146,9 +1146,9 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_1A3010	function	12	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1A3010.c
 03_kalidon	LEVEL_03_1A3020	function	108	1	0	1	0	1	
 03_kalidon	LEVEL_03_1A30E8	function	188	1	0	1	0	1	
-03_kalidon	LEVEL_03_1A31E0	function	104	1	0	1	0	1	
+03_kalidon	LEVEL_03_1A31E0	function	108	1	0	1	0	1	
 03_kalidon	LEVEL_03_1A324C	function	760	1	0	1	0	1	
-03_kalidon	LEVEL_03_1A3544	function	16	1	0	1	0	1	
+03_kalidon	LEVEL_03_1A3544	function	20	1	0	1	0	1	
 03_kalidon	LEVEL_03_1A3558	function	644	1	0	1	0	1	
 03_kalidon	LEVEL_03_1A37DC	function	52	1	0	1	0	1	
 03_kalidon	LEVEL_03_1A3810	function	788	1	0	1	0	1	
@@ -1191,7 +1191,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_1CE9B0	function	276	1	0	1	0	1	
 03_kalidon	LEVEL_03_1CEAC8	function	580	1	0	1	0	1	
 03_kalidon	LEVEL_03_1CED10	function	232	1	0	1	0	1	
-03_kalidon	LEVEL_03_1CEDF8	function	124	1	0	1	0	1	
+03_kalidon	LEVEL_03_1CEDF8	function	128	1	0	1	0	1	
 03_kalidon	LEVEL_03_1CEE78	function	36	1	0	1	0	1	
 03_kalidon	LEVEL_03_1CEE9C	function	380	1	0	1	0	1	
 03_kalidon	LEVEL_03_1CF018	function	580	1	0	1	0	1	
@@ -1208,7 +1208,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_1CF610	function	256	1	0	1	0	1	
 03_kalidon	LEVEL_03_1CF710	function	160	1	0	1	0	1	
 03_kalidon	LEVEL_03_1CF7B0	function	212	1	0	1	0	1	
-03_kalidon	LEVEL_03_1CF884	function	280	1	0	1	0	1	
+03_kalidon	LEVEL_03_1CF884	function	284	1	0	1	0	1	
 03_kalidon	LEVEL_03_1CF9A0	function	320	1	0	1	0	1	
 03_kalidon	LEVEL_03_1CFAE0	function	48	1	0	1	0	1	
 03_kalidon	LEVEL_03_1CFB10	function	132	1	0	1	0	1	
@@ -1231,42 +1231,42 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_1D1388	function	980	1	0	1	0	1	
 03_kalidon	LEVEL_03_1D1760	function	904	1	0	1	0	1	
 03_kalidon	LEVEL_03_1D1AE8	function	184	1	0	1	0	1	
-03_kalidon	LEVEL_03_1D1BA0	function	96	1	0	1	0	1	
-03_kalidon	LEVEL_03_1D1C04	function	292	2	0	2	0	1	
+03_kalidon	LEVEL_03_1D1BA0	function	100	1	0	1	0	1	
+03_kalidon	LEVEL_03_1D1C04	function	296	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D1D2C	function	348	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D1E88	function	776	2	0	2	0	1	
-03_kalidon	LEVEL_03_1D2190	function	272	2	0	2	0	1	
+03_kalidon	LEVEL_03_1D2190	function	276	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D22A4	function	52	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D22D8	function	88	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D2330	function	28	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D234C	function	104	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D23B4	function	52	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D23E8	function	132	2	0	2	0	1	
-03_kalidon	LEVEL_03_1D246C	function	12	2	0	2	0	1	
-03_kalidon	LEVEL_03_1D247C	function	48	2	0	2	0	1	
+03_kalidon	LEVEL_03_1D246C	function	16	2	0	2	0	1	
+03_kalidon	LEVEL_03_1D247C	function	52	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D24B0	function	116	2	0	2	0	1	
-03_kalidon	LEVEL_03_1D2524	function	48	2	0	2	0	1	
-03_kalidon	LEVEL_03_1D2558	function	48	2	0	2	0	1	
+03_kalidon	LEVEL_03_1D2524	function	52	2	0	2	0	1	
+03_kalidon	LEVEL_03_1D2558	function	52	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D258C	function	64	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D25CC	function	36	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D25F0	function	284	2	0	2	0	1	
-03_kalidon	LEVEL_03_1D270C	function	328	2	0	2	0	1	
-03_kalidon	LEVEL_03_1D2858	function	68	2	0	2	0	1	
+03_kalidon	LEVEL_03_1D270C	function	332	2	0	2	0	1	
+03_kalidon	LEVEL_03_1D2858	function	72	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D28A0	function	124	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D291C	function	56	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D2954	function	36	2	0	2	0	1	
-03_kalidon	LEVEL_03_1D2978	function	68	2	0	2	0	1	
+03_kalidon	LEVEL_03_1D2978	function	72	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D29C0	function	228	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D2AA4	function	120	2	0	2	0	1	
-03_kalidon	LEVEL_03_1D2B1C	function	68	2	0	2	0	1	
-03_kalidon	LEVEL_03_1D2B64	function	112	2	0	2	0	1	
-03_kalidon	LEVEL_03_1D2BD8	function	32	2	0	2	0	1	
-03_kalidon	LEVEL_03_1D2BFC	function	32	2	0	2	0	1	
+03_kalidon	LEVEL_03_1D2B1C	function	72	2	0	2	0	1	
+03_kalidon	LEVEL_03_1D2B64	function	116	2	0	2	0	1	
+03_kalidon	LEVEL_03_1D2BD8	function	36	2	0	2	0	1	
+03_kalidon	LEVEL_03_1D2BFC	function	36	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D2C20	function	440	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D2DD8	function	8	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D2DE0	function	40	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D2E08	function	640	2	0	2	0	1	
-03_kalidon	LEVEL_03_1D3088	function	112	1	0	1	0	1	
+03_kalidon	LEVEL_03_1D3088	function	116	1	0	1	0	1	
 03_kalidon	LEVEL_03_1D30FC	function	24	1	0	1	0	1	
 03_kalidon	LEVEL_03_1D3114	function	84	1	0	1	0	1	
 03_kalidon	LEVEL_03_1D3168	function	100	1	0	1	0	1	
@@ -1308,11 +1308,11 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 03_kalidon	LEVEL_03_1D4D00	function	424	1	0	1	0	1	
 03_kalidon	LEVEL_03_1D4EA8	function	124	2	0	2	0	1	
 03_kalidon	LEVEL_03_1D4F28	function	244	2	0	2	0	1	
-03_kalidon	LEVEL_03_1EC560	fragment	104	1	0	0	0	1	
+03_kalidon	LEVEL_03_1EC560	fragment	108	1	0	0	0	1	
 03_kalidon	LEVEL_03_1EDA50	function	1908	1	0	1	0	1	
 03_kalidon	LEVEL_03_1EE908	fragment	20	1	0	0	0	1	
 03_kalidon	LEVEL_03_1EEE68	fragment	420	1	0	0	0	1	
-03_kalidon	alignment_padding	padding	11736	1	0	0	0	1	
+03_kalidon	alignment_padding	padding	11120	1	0	0	0	1	
 03_kalidon	code_without_function_bounds	unbounded	24	1	0	0	0	1	
 04_metalis	LEVEL_04_019FB4	fragment	32	1	0	0	0	1	
 04_metalis	LEVEL_04_16D5A0	function	180	1	0	1	0	1	
@@ -1320,7 +1320,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 04_metalis	LEVEL_04_193E18	function	208	1	0	1	0	1	
 04_metalis	LEVEL_04_193EF0	function	96	1	0	1	0	1	
 04_metalis	LEVEL_04_193FA8	function	460	1	0	1	0	1	
-04_metalis	LEVEL_04_1941B0	function	64	1	0	1	0	1	
+04_metalis	LEVEL_04_1941B0	function	68	1	0	1	0	1	
 04_metalis	LEVEL_04_1941F4	function	96	1	0	1	0	1	
 04_metalis	LEVEL_04_194254	function	96	1	0	1	0	1	
 04_metalis	LEVEL_04_1942B4	function	32	1	0	1	0	1	
@@ -1334,7 +1334,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 04_metalis	LEVEL_04_194AB8	function	68	1	0	1	0	1	
 04_metalis	LEVEL_04_194B58	function	488	1	0	1	0	1	
 04_metalis	LEVEL_04_194D40	function	92	1	0	1	0	1	
-04_metalis	LEVEL_04_194DA0	function	100	1	0	1	0	1	
+04_metalis	LEVEL_04_194DA0	function	104	1	0	1	0	1	
 04_metalis	LEVEL_04_194E08	function	124	1	0	1	0	1	
 04_metalis	LEVEL_04_194E84	function	556	1	0	1	0	1	
 04_metalis	LEVEL_04_1950B0	function	100	1	0	1	0	1	
@@ -1347,7 +1347,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 04_metalis	LEVEL_04_195C98	function	456	1	0	1	0	1	
 04_metalis	LEVEL_04_195EB8	function	504	1	0	1	0	1	
 04_metalis	LEVEL_04_196110	function	600	1	0	1	0	1	
-04_metalis	LEVEL_04_196368	fragment	44	1	0	0	0	1	
+04_metalis	LEVEL_04_196368	fragment	48	1	0	0	0	1	
 04_metalis	LEVEL_04_196490	function	116	1	0	1	0	1	
 04_metalis	LEVEL_04_196510	function	132	1	0	1	0	1	
 04_metalis	LEVEL_04_1A3A78	function	48	1	0	1	0	1	
@@ -1356,7 +1356,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 04_metalis	LEVEL_04_1A3FA8	function	76	1	0	1	0	1	
 04_metalis	LEVEL_04_1A8850	fragment	12	1	0	0	0	1	
 04_metalis	LEVEL_04_1FD8E8	function	1840	1	0	1	0	1	
-04_metalis	alignment_padding	padding	11880	1	0	0	0	1	
+04_metalis	alignment_padding	padding	11460	1	0	0	0	1	
 04_metalis	code_without_function_bounds	unbounded	40	1	0	0	0	1	
 05_medical_outpost	LEVEL_05_0198FC	fragment	24	1	0	0	0	1	
 05_medical_outpost	LEVEL_05_02E588	fragment	60	1	0	0	0	1	
@@ -1378,13 +1378,13 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 05_medical_outpost	LEVEL_05_15B498	function	72	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_1690D8	function	84	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_169130	function	268	1	0	1	0	1	
-05_medical_outpost	LEVEL_05_169240	function	112	1	0	1	0	1	
+05_medical_outpost	LEVEL_05_169240	function	116	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_1692B4	function	296	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_1693DC	function	864	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_16973C	function	84	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_169790	function	28	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_1697AC	function	288	1	0	1	0	1	
-05_medical_outpost	LEVEL_05_1698CC	function	20	1	0	1	0	1	
+05_medical_outpost	LEVEL_05_1698CC	function	24	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_1698E4	function	132	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_169968	function	16	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_169978	function	248	1	0	1	0	1	
@@ -1422,7 +1422,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 05_medical_outpost	LEVEL_05_17C3C0	function	96	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_17C3C0.c
 05_medical_outpost	LEVEL_05_17C440	function	824	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_17C778	function	100	1	0	1	0	1	
-05_medical_outpost	LEVEL_05_17C7E0	function	116	1	0	1	0	1	
+05_medical_outpost	LEVEL_05_17C7E0	function	120	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_17C858	function	160	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_17C8F8	function	1680	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_17CF88	function	172	1	0	1	0	1	
@@ -1481,14 +1481,14 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 05_medical_outpost	LEVEL_05_185108	function	24	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_185108.c
 05_medical_outpost	LEVEL_05_185178	function	392	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_185300	function	56	1	0	1	0	1	
-05_medical_outpost	LEVEL_05_185338	function	80	1	0	1	0	1	
+05_medical_outpost	LEVEL_05_185338	function	84	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_18538C	function	464	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_18555C	function	236	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_185648	function	368	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_1857B8	function	328	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_185900	function	872	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_185C68	function	508	1	0	1	0	1	
-05_medical_outpost	LEVEL_05_185E64	function	68	1	0	1	0	1	
+05_medical_outpost	LEVEL_05_185E64	function	72	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_185EAC	function	388	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_186030	function	148	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_1860C4	function	1312	1	0	1	0	1	
@@ -1550,7 +1550,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 05_medical_outpost	LEVEL_05_199B70	function	60	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_199C08	function	648	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_199C08.c
 05_medical_outpost	LEVEL_05_199E90	function	132	1	0	1	0	1	
-05_medical_outpost	LEVEL_05_199F18	function	140	1	0	1	0	1	
+05_medical_outpost	LEVEL_05_199F18	function	144	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_199FA8	function	60	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_199FE4	function	48	1	0	1	0	1	
 05_medical_outpost	LEVEL_05_19A014	function	176	1	0	1	0	1	
@@ -1577,7 +1577,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 05_medical_outpost	LEVEL_05_1B01F0	function	12	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_1B01F0.c
 05_medical_outpost	LEVEL_05_1B0200	function	12	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_1B0200.c
 05_medical_outpost	LEVEL_05_1C02C8	function	1808	1	0	1	0	1	
-05_medical_outpost	alignment_padding	padding	10544	1	0	0	0	1	
+05_medical_outpost	alignment_padding	padding	10200	1	0	0	0	1	
 05_medical_outpost	code_without_function_bounds	unbounded	40	1	0	0	0	1	
 06_challax	LEVEL_06_0981E8	fragment	44	1	0	0	0	1	
 06_challax	LEVEL_06_15E060	function	488	1	0	1	0	1	
@@ -1602,7 +1602,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 06_challax	LEVEL_06_17FB18	function	508	1	0	1	0	1	
 06_challax	LEVEL_06_17FD18	function	60	1	0	1	0	1	
 06_challax	LEVEL_06_17FDB0	function	796	1	0	1	0	1	
-06_challax	LEVEL_06_180130	function	352	1	0	1	0	1	
+06_challax	LEVEL_06_180130	function	356	1	0	1	0	1	
 06_challax	LEVEL_06_180294	function	188	1	0	1	0	1	
 06_challax	LEVEL_06_180350	function	368	1	0	1	0	1	
 06_challax	LEVEL_06_1804C0	function	224	1	0	1	0	1	
@@ -1633,7 +1633,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 06_challax	LEVEL_06_1840A0	function	668	1	0	1	0	1	
 06_challax	LEVEL_06_184340	function	636	1	0	1	0	1	
 06_challax	LEVEL_06_1845C0	function	444	1	0	1	0	1	
-06_challax	LEVEL_06_184780	function	136	1	0	1	0	1	
+06_challax	LEVEL_06_184780	function	140	1	0	1	0	1	
 06_challax	LEVEL_06_18480C	function	288	1	0	1	0	1	
 06_challax	LEVEL_06_18492C	function	1000	1	0	1	0	1	
 06_challax	LEVEL_06_184D14	function	852	1	0	1	0	1	
@@ -1686,7 +1686,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 06_challax	LEVEL_06_1AC988	function	344	1	0	1	0	1	
 06_challax	LEVEL_06_1ACAE0	function	744	1	0	1	0	1	
 06_challax	LEVEL_06_1ACDC8	function	192	1	0	1	0	1	
-06_challax	LEVEL_06_1ACE88	function	172	1	0	1	0	1	
+06_challax	LEVEL_06_1ACE88	function	176	1	0	1	0	1	
 06_challax	LEVEL_06_1ACF38	function	108	1	0	1	0	1	
 06_challax	LEVEL_06_1ACFA4	function	300	1	0	1	0	1	
 06_challax	LEVEL_06_1AD0D0	function	184	1	0	1	0	1	
@@ -1739,7 +1739,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 06_challax	LEVEL_06_1B0D00	function	12	1	0	1	0	1	
 06_challax	LEVEL_06_1B3138	function	420	1	0	1	0	1	
 06_challax	LEVEL_06_1B32E8	function	1108	1	0	1	0	1	
-06_challax	alignment_padding	padding	10788	1	0	0	0	1	
+06_challax	alignment_padding	padding	10448	1	0	0	0	1	
 06_challax	code_without_function_bounds	unbounded	16	1	0	0	0	1	
 07_dreamtime	LEVEL_07_0B4320	function	96	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1053E0	function	1136	1	0	1	0	1	
@@ -1751,7 +1751,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 07_dreamtime	LEVEL_07_12BC8C	fragment	8	1	0	0	0	1	
 07_dreamtime	LEVEL_07_164C70	function	1360	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1651C0	function	76	1	0	1	0	1	
-07_dreamtime	LEVEL_07_165210	function	84	1	0	1	0	1	
+07_dreamtime	LEVEL_07_165210	function	88	1	0	1	0	1	
 07_dreamtime	LEVEL_07_165268	function	44	1	0	1	0	1	
 07_dreamtime	LEVEL_07_165294	function	556	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1654C0	function	20	1	0	1	0	1	
@@ -1761,7 +1761,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 07_dreamtime	LEVEL_07_16576C	function	92	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1657C8	function	400	1	0	1	0	1	
 07_dreamtime	LEVEL_07_165978	function	528	1	0	1	0	1	
-07_dreamtime	LEVEL_07_165B88	function	80	1	0	1	0	1	
+07_dreamtime	LEVEL_07_165B88	function	84	1	0	1	0	1	
 07_dreamtime	LEVEL_07_165BDC	function	96	1	0	1	0	1	
 07_dreamtime	LEVEL_07_165C3C	function	372	1	0	1	0	1	
 07_dreamtime	LEVEL_07_165DB0	function	48	1	0	1	0	1	
@@ -1812,12 +1812,12 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 07_dreamtime	LEVEL_07_16D1F0	function	108	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_16D1F0.c
 07_dreamtime	LEVEL_07_1718F8	function	692	1	0	1	0	1	
 07_dreamtime	LEVEL_07_171BB0	function	192	1	0	1	0	1	
-07_dreamtime	LEVEL_07_171C70	function	112	1	0	1	0	1	
+07_dreamtime	LEVEL_07_171C70	function	116	1	0	1	0	1	
 07_dreamtime	LEVEL_07_171CF8	function	76	1	0	1	0	1	
 07_dreamtime	LEVEL_07_171D44	function	36	1	0	1	0	1	
-07_dreamtime	LEVEL_07_171D68	function	20	1	0	1	0	1	
+07_dreamtime	LEVEL_07_171D68	function	24	1	0	1	0	1	
 07_dreamtime	LEVEL_07_171D80	function	356	1	0	1	0	1	
-07_dreamtime	LEVEL_07_171EE4	function	48	1	0	1	0	1	
+07_dreamtime	LEVEL_07_171EE4	function	52	1	0	1	0	1	
 07_dreamtime	LEVEL_07_171F18	function	648	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1721A0	function	1004	1	0	1	0	1	
 07_dreamtime	LEVEL_07_17258C	function	576	1	0	1	0	1	
@@ -1837,9 +1837,9 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 07_dreamtime	LEVEL_07_17F0C8	function	872	1	0	1	0	1	
 07_dreamtime	LEVEL_07_17F430	function	3004	1	0	1	0	1	
 07_dreamtime	LEVEL_07_17FFF0	function	1636	1	0	1	0	1	
-07_dreamtime	LEVEL_07_180660	function	100	1	0	1	0	1	
+07_dreamtime	LEVEL_07_180660	function	104	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1806C8	function	32	1	0	1	0	1	
-07_dreamtime	LEVEL_07_1806E8	function	92	1	0	1	0	1	
+07_dreamtime	LEVEL_07_1806E8	function	96	1	0	1	0	1	
 07_dreamtime	LEVEL_07_180748	function	512	1	0	1	0	1	
 07_dreamtime	LEVEL_07_180948	function	964	1	0	1	0	1	
 07_dreamtime	LEVEL_07_180D0C	function	1060	1	0	1	0	1	
@@ -1922,7 +1922,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 07_dreamtime	LEVEL_07_1B7190	function	96	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1B7048.c
 07_dreamtime	LEVEL_07_1B71F0	function	340	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1B7348	function	436	1	0	1	0	1	
-07_dreamtime	LEVEL_07_1B7500	fragment	188	1	0	0	0	1	
+07_dreamtime	LEVEL_07_1B7500	fragment	192	1	0	0	0	1	
 07_dreamtime	LEVEL_07_1B75C0	function	60	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1B7600	function	284	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1B7720	function	112	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1B7720.c
@@ -1930,16 +1930,16 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 07_dreamtime	LEVEL_07_1B7820	function	148	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1B7820.c
 07_dreamtime	LEVEL_07_1C11F0	function	824	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C1528	function	204	1	0	1	0	1	
-07_dreamtime	LEVEL_07_1C15F8	function	144	1	0	1	0	1	
+07_dreamtime	LEVEL_07_1C15F8	function	148	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C16A0	function	76	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C16EC	function	36	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C1710	function	24	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C1728	function	20	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C173C	function	76	1	0	1	0	1	
-07_dreamtime	LEVEL_07_1C1788	function	20	1	0	1	0	1	
-07_dreamtime	LEVEL_07_1C17A0	function	128	1	0	1	0	1	
+07_dreamtime	LEVEL_07_1C1788	function	24	1	0	1	0	1	
+07_dreamtime	LEVEL_07_1C17A0	function	132	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C1824	function	372	1	0	1	0	1	
-07_dreamtime	LEVEL_07_1C1998	function	116	1	0	1	0	1	
+07_dreamtime	LEVEL_07_1C1998	function	120	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C1A10	function	136	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C1A98	function	824	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C1DD0	function	220	1	0	1	0	1	
@@ -1950,7 +1950,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 07_dreamtime	LEVEL_07_1C2A0C	function	208	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C2ADC	function	296	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C2C08	function	1008	1	0	1	0	1	
-07_dreamtime	LEVEL_07_1C2FF8	function	88	1	0	1	0	1	
+07_dreamtime	LEVEL_07_1C2FF8	function	92	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C3054	function	24	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C306C	function	24	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1C3084	function	48	1	0	1	0	1	
@@ -1981,8 +1981,8 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 07_dreamtime	LEVEL_07_1F6DC0	function	1336	1	0	1	0	1	
 07_dreamtime	LEVEL_07_1F7B40	fragment	1848	1	0	0	0	1	
 07_dreamtime	LEVEL_07_1FE2F0	function	172	1	0	1	0	1	
-07_dreamtime	alignment_padding	padding	11256	1	0	0	0	1	
-07_dreamtime	code_without_function_bounds	unbounded	20	1	0	0	0	1	
+07_dreamtime	alignment_padding	padding	10864	1	0	0	0	1	
+07_dreamtime	code_without_function_bounds	unbounded	24	1	0	0	0	1	
 08_dayni_moon	LEVEL_08_003360	function	16	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_003360.c
 08_dayni_moon	LEVEL_08_003A48	function	16	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_003A48.c
 08_dayni_moon	LEVEL_08_01ACF0	fragment	28	1	0	0	0	1	
@@ -1999,7 +1999,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 08_dayni_moon	LEVEL_08_1156C8	function	72	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1156C8.c
 08_dayni_moon	LEVEL_08_115710	function	188	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_115710.c
 08_dayni_moon	LEVEL_08_169C30	function	188	1	0	1	0	1	
-08_dayni_moon	LEVEL_08_169D30	function	68	1	0	1	0	1	
+08_dayni_moon	LEVEL_08_169D30	function	72	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_169D78	function	564	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_169FAC	function	56	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_169FE4	function	72	1	0	1	0	1	
@@ -2050,7 +2050,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 08_dayni_moon	LEVEL_08_18A400	function	604	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_18C860	function	348	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_18C9C0	function	172	1	0	1	0	1	
-08_dayni_moon	LEVEL_08_18CA70	function	264	1	0	1	0	1	
+08_dayni_moon	LEVEL_08_18CA70	function	268	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_18CB7C	function	48	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_18CBAC	function	28	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_18CBC8	function	240	1	0	1	0	1	
@@ -2074,13 +2074,12 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 08_dayni_moon	LEVEL_08_18DFC0	function	36	2	0	2	0	1	
 08_dayni_moon	LEVEL_08_18DFE8	function	740	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_18E2D0	function	268	1	0	1	0	1	
-08_dayni_moon	LEVEL_08_18E3E0	fragment	48	1	0	0	0	1	
 08_dayni_moon	LEVEL_08_18E418	function	156	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_18E4B8	function	232	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_18E5A0	function	40	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_198AD0	function	200	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_198B98	function	224	1	0	1	0	1	
-08_dayni_moon	LEVEL_08_198C78	function	96	1	0	1	0	1	
+08_dayni_moon	LEVEL_08_198C78	function	100	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_198CDC	function	132	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_198D60	function	48	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_198D90	function	40	1	0	1	0	1	
@@ -2104,7 +2103,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 08_dayni_moon	LEVEL_08_19A3B8	function	60	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_19A3F8	function	40	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_19A5E8	function	268	1	0	1	0	1	
-08_dayni_moon	LEVEL_08_19A720	function	104	1	0	1	0	1	
+08_dayni_moon	LEVEL_08_19A720	function	108	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_19A78C	function	232	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_19A874	function	304	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_19A9A4	function	196	1	0	1	0	1	
@@ -2116,7 +2115,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 08_dayni_moon	LEVEL_08_19AED8	function	164	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_19AED8.c
 08_dayni_moon	LEVEL_08_19AF80	function	412	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_19B120	function	604	1	0	1	0	1	
-08_dayni_moon	LEVEL_08_19B380	fragment	20	1	0	0	0	1	
+08_dayni_moon	LEVEL_08_19B380	fragment	24	1	0	0	0	1	
 08_dayni_moon	LEVEL_08_19B398	function	64	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_19D840	fragment	4	1	0	0	0	1	
 08_dayni_moon	LEVEL_08_19ECD0	function	324	1	0	1	0	1	
@@ -2128,7 +2127,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 08_dayni_moon	LEVEL_08_1AB4C8	function	556	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1AB6F4	fragment	12	1	0	0	0	1	
 08_dayni_moon	LEVEL_08_1AB758	function	808	1	0	1	0	1	
-08_dayni_moon	LEVEL_08_1ABA88	function	76	1	0	1	0	1	
+08_dayni_moon	LEVEL_08_1ABA88	function	80	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1ABAD8	function	408	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1ABC70	function	72	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1ABCB8	function	384	1	0	1	0	1	
@@ -2140,7 +2139,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 08_dayni_moon	LEVEL_08_1AC538	function	68	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1AC5D8	function	408	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1AC770	function	88	1	0	1	0	1	
-08_dayni_moon	LEVEL_08_1AC7C8	function	68	1	0	1	0	1	
+08_dayni_moon	LEVEL_08_1AC7C8	function	72	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1AC810	function	44	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1AC83C	function	52	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1AC870	function	480	1	0	1	0	1	
@@ -2156,10 +2155,9 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 08_dayni_moon	LEVEL_08_1AE378	function	44	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1AE378.c
 08_dayni_moon	LEVEL_08_1AE3A8	function	152	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1AE4C0	function	12	1	0	1	0	1	
-08_dayni_moon	LEVEL_08_1AE4CC	fragment	8	2	0	0	0	1	
 08_dayni_moon	LEVEL_08_1AE4D8	function	1212	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1AE998	function	148	1	0	1	0	1	
-08_dayni_moon	LEVEL_08_1AEA30	function	236	1	0	1	0	1	
+08_dayni_moon	LEVEL_08_1AEA30	function	240	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1AEB20	function	48	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1AEB50	function	16	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1AEB60	function	16	1	0	1	0	1	
@@ -2237,7 +2235,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 08_dayni_moon	LEVEL_08_1B7E10	function	160	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1B7E10.c
 08_dayni_moon	LEVEL_08_1BFAB0	function	356	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1BFC18	function	232	1	0	1	0	1	
-08_dayni_moon	LEVEL_08_1BFD00	function	124	1	0	1	0	1	
+08_dayni_moon	LEVEL_08_1BFD00	function	128	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1BFD80	function	512	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1BFF80	function	136	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1C0008	function	56	1	0	1	0	1	
@@ -2305,7 +2303,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 08_dayni_moon	LEVEL_08_1F3F38	function	732	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1F4218	function	584	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1F4460	function	72	1	0	1	0	1	
-08_dayni_moon	LEVEL_08_1F44A8	function	108	1	0	1	0	1	
+08_dayni_moon	LEVEL_08_1F44A8	function	112	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1F4518	function	28	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1F4534	function	136	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_1F45BC	function	52	1	0	1	0	1	
@@ -2373,16 +2371,16 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 08_dayni_moon	LEVEL_08_230628	function	4112	1	0	1	0	1	
 08_dayni_moon	LEVEL_08_231638	function	92	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_231638.c
 08_dayni_moon	LEVEL_08_231698	function	1800	1	0	1	0	1	
-08_dayni_moon	alignment_padding	padding	13008	1	0	0	0	1	
+08_dayni_moon	alignment_padding	padding	12532	1	0	0	0	1	
 08_dayni_moon	code_without_function_bounds	unbounded	16	1	0	0	0	1	
 09_inside_clank	LEVEL_09_097BC0	function	2024	1	0	1	0	1	
 09_inside_clank	LEVEL_09_14FC70	function	76	1	1	1	1	1	src/levels/09_inside_clank/LEVEL_09_14FC70.c
 09_inside_clank	LEVEL_09_15D948	function	640	1	0	1	0	1	
 09_inside_clank	LEVEL_09_15DBC8	function	188	1	0	1	0	1	
-09_inside_clank	LEVEL_09_15DC88	function	104	1	0	1	0	1	
+09_inside_clank	LEVEL_09_15DC88	function	108	1	0	1	0	1	
 09_inside_clank	LEVEL_09_15DD08	function	76	1	0	1	0	1	
 09_inside_clank	LEVEL_09_15DD54	function	96	1	0	1	0	1	
-09_inside_clank	LEVEL_09_15DDB4	function	20	1	0	1	0	1	
+09_inside_clank	LEVEL_09_15DDB4	function	24	1	0	1	0	1	
 09_inside_clank	LEVEL_09_15DDCC	function	356	1	0	1	0	1	
 09_inside_clank	LEVEL_09_15DF30	function	52	1	0	1	0	1	
 09_inside_clank	LEVEL_09_15DF64	function	644	1	0	1	0	1	
@@ -2430,7 +2428,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 09_inside_clank	LEVEL_09_181B50	function	904	1	0	1	0	1	
 09_inside_clank	LEVEL_09_181ED8	function	40	1	0	1	0	1	
 09_inside_clank	LEVEL_09_181F58	function	96	1	0	1	0	1	
-09_inside_clank	LEVEL_09_181FC0	function	100	1	0	1	0	1	
+09_inside_clank	LEVEL_09_181FC0	function	104	1	0	1	0	1	
 09_inside_clank	LEVEL_09_182028	function	20	1	0	1	0	1	
 09_inside_clank	LEVEL_09_18203C	function	20	1	0	1	0	1	
 09_inside_clank	LEVEL_09_182050	function	1656	1	0	1	0	1	
@@ -2444,7 +2442,6 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 09_inside_clank	LEVEL_09_182B70	function	720	1	0	1	0	1	
 09_inside_clank	LEVEL_09_182E40	function	44	1	0	1	0	1	
 09_inside_clank	LEVEL_09_182E70	function	1772	1	0	1	0	1	
-09_inside_clank	LEVEL_09_183560	fragment	32	1	0	0	0	1	
 09_inside_clank	LEVEL_09_183588	function	1892	1	0	1	0	1	
 09_inside_clank	LEVEL_09_183CF0	function	40	1	0	1	0	1	
 09_inside_clank	LEVEL_09_183D70	function	476	1	0	1	0	1	
@@ -2453,7 +2450,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 09_inside_clank	LEVEL_09_184880	function	40	2	0	2	0	1	
 09_inside_clank	LEVEL_09_18A388	function	700	1	0	1	0	1	
 09_inside_clank	LEVEL_09_18A648	function	308	1	0	1	0	1	
-09_inside_clank	LEVEL_09_18A780	function	140	1	0	1	0	1	
+09_inside_clank	LEVEL_09_18A780	function	144	1	0	1	0	1	
 09_inside_clank	LEVEL_09_18A810	function	48	1	0	1	0	1	
 09_inside_clank	LEVEL_09_18A840	function	28	1	0	1	0	1	
 09_inside_clank	LEVEL_09_18A85C	function	36	1	0	1	0	1	
@@ -2481,12 +2478,12 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 09_inside_clank	LEVEL_09_18F7B8	function	340	1	1	1	1	1	src/levels/09_inside_clank/LEVEL_09_18F7B8.c
 09_inside_clank	LEVEL_09_19EA00	function	788	1	0	1	0	1	
 09_inside_clank	LEVEL_09_19ED18	function	212	1	0	1	0	1	
-09_inside_clank	LEVEL_09_19EDF0	function	128	1	0	1	0	1	
+09_inside_clank	LEVEL_09_19EDF0	function	132	1	0	1	0	1	
 09_inside_clank	LEVEL_09_19EE74	function	20	1	0	1	0	1	
 09_inside_clank	LEVEL_09_19EE88	function	76	1	0	1	0	1	
 09_inside_clank	LEVEL_09_19EED4	function	96	1	0	1	0	1	
 09_inside_clank	LEVEL_09_19EF34	function	80	1	0	1	0	1	
-09_inside_clank	LEVEL_09_19EF84	function	20	1	0	1	0	1	
+09_inside_clank	LEVEL_09_19EF84	function	24	1	0	1	0	1	
 09_inside_clank	LEVEL_09_19EF9C	function	144	1	0	1	0	1	
 09_inside_clank	LEVEL_09_19F02C	function	340	1	0	1	0	1	
 09_inside_clank	LEVEL_09_19F180	function	60	1	0	1	0	1	
@@ -2514,8 +2511,8 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 09_inside_clank	LEVEL_09_1A32B8	function	116	1	0	1	0	1	
 09_inside_clank	LEVEL_09_1A3338	function	248	1	0	1	0	1	
 09_inside_clank	LEVEL_09_1A3430	function	92	1	0	1	0	1	
-09_inside_clank	alignment_padding	padding	10696	1	0	0	0	1	
-09_inside_clank	code_without_function_bounds	unbounded	28	1	0	0	0	1	
+09_inside_clank	alignment_padding	padding	10352	1	0	0	0	1	
+09_inside_clank	code_without_function_bounds	unbounded	36	1	0	0	0	1	
 10_quodrona	LEVEL_10_001300	function	16	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_001300.c
 10_quodrona	LEVEL_10_0037C8	function	16	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_0037C8.c
 10_quodrona	LEVEL_10_016500	function	244	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_016500.c
@@ -2557,7 +2554,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_163E28	function	532	1	0	1	0	1	
 10_quodrona	LEVEL_10_164040	function	488	1	0	1	0	1	
 10_quodrona	LEVEL_10_164228	function	100	2	0	2	0	1	
-10_quodrona	LEVEL_10_164290	function	128	1	0	1	0	1	
+10_quodrona	LEVEL_10_164290	function	132	1	0	1	0	1	
 10_quodrona	LEVEL_10_164314	function	164	1	0	1	0	1	
 10_quodrona	LEVEL_10_1643B8	function	32	1	0	1	0	1	
 10_quodrona	LEVEL_10_1643D8	function	44	1	0	1	0	1	
@@ -2581,7 +2578,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_165998	function	132	1	0	1	0	1	
 10_quodrona	LEVEL_10_165A20	function	496	1	0	1	0	1	
 10_quodrona	LEVEL_10_165C78	function	40	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_165C78.c
-10_quodrona	LEVEL_10_165CA0	function	196	1	0	1	0	1	
+10_quodrona	LEVEL_10_165CA0	function	200	1	0	1	0	1	
 10_quodrona	LEVEL_10_165D68	function	176	1	0	1	0	1	
 10_quodrona	LEVEL_10_165E18	function	28	1	0	1	0	1	
 10_quodrona	LEVEL_10_165E34	function	28	1	0	1	0	1	
@@ -2715,7 +2712,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_18CB00	function	144	1	0	1	0	1	
 10_quodrona	LEVEL_10_18CB90	function	232	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_18CB90.c
 10_quodrona	LEVEL_10_18CCD0	function	1220	1	0	1	0	1	
-10_quodrona	LEVEL_10_18D1D0	function	344	1	0	1	0	1	
+10_quodrona	LEVEL_10_18D1D0	function	348	1	0	1	0	1	
 10_quodrona	LEVEL_10_18D32C	function	1004	1	0	1	0	1	
 10_quodrona	LEVEL_10_18D718	function	532	1	0	1	0	1	
 10_quodrona	LEVEL_10_18D92C	function	996	1	0	1	0	1	
@@ -2730,7 +2727,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_18E018	function	88	1	0	1	0	1	
 10_quodrona	LEVEL_10_18E0E0	function	172	1	0	1	0	1	
 10_quodrona	LEVEL_10_18E1E8	function	660	1	0	1	0	1	
-10_quodrona	LEVEL_10_18E488	function	76	1	0	1	0	1	
+10_quodrona	LEVEL_10_18E488	function	80	1	0	1	0	1	
 10_quodrona	LEVEL_10_18E4D8	function	124	1	0	1	0	1	
 10_quodrona	LEVEL_10_18E554	function	40	1	0	1	0	1	
 10_quodrona	LEVEL_10_18E57C	function	288	1	0	1	0	1	
@@ -2750,7 +2747,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_1902D8	function	52	1	0	1	0	1	
 10_quodrona	LEVEL_10_190FA0	function	448	1	0	1	0	1	
 10_quodrona	LEVEL_10_191160	function	92	1	0	1	0	1	
-10_quodrona	LEVEL_10_1911C0	function	88	1	0	1	0	1	
+10_quodrona	LEVEL_10_1911C0	function	92	1	0	1	0	1	
 10_quodrona	LEVEL_10_19121C	function	304	1	0	1	0	1	
 10_quodrona	LEVEL_10_19134C	function	36	1	0	1	0	1	
 10_quodrona	LEVEL_10_191370	function	352	1	0	1	0	1	
@@ -2781,7 +2778,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_19B1F0	function	560	1	0	1	0	1	
 10_quodrona	LEVEL_10_19B428	function	112	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_19B428.c
 10_quodrona	LEVEL_10_19B498	function	68	1	0	1	0	1	
-10_quodrona	LEVEL_10_19B4E0	function	424	1	0	1	0	1	
+10_quodrona	LEVEL_10_19B4E0	function	428	1	0	1	0	1	
 10_quodrona	LEVEL_10_19B68C	function	88	1	0	1	0	1	
 10_quodrona	LEVEL_10_19B6E4	function	36	1	0	1	0	1	
 10_quodrona	LEVEL_10_19B708	function	184	1	0	1	0	1	
@@ -2848,7 +2845,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_1A6400	function	192	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1A6400.c
 10_quodrona	LEVEL_10_1A64C0	function	64	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A6558	function	428	1	0	1	0	1	
-10_quodrona	LEVEL_10_1A6728	function	180	1	0	1	0	1	
+10_quodrona	LEVEL_10_1A6728	function	184	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A67E0	function	20	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A67F4	function	420	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A6998	function	56	1	0	1	0	1	
@@ -2865,7 +2862,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_1A8550	function	108	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A85C0	function	204	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1A85C0.c
 10_quodrona	LEVEL_10_1A8690	function	160	1	0	1	0	1	
-10_quodrona	LEVEL_10_1A8730	function	208	1	0	1	0	1	
+10_quodrona	LEVEL_10_1A8730	function	212	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A8804	function	16	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A8814	function	20	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A8828	function	16	1	0	1	0	1	
@@ -2873,7 +2870,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_1A8848	function	16	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A8858	function	16	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A8868	function	36	1	0	1	0	1	
-10_quodrona	LEVEL_10_1A888C	function	92	1	0	1	0	1	
+10_quodrona	LEVEL_10_1A888C	function	96	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A88EC	function	16	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A88FC	function	16	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A890C	function	72	1	0	1	0	1	
@@ -2886,7 +2883,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_1A8AC0	function	528	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A8CD0	function	232	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A8DE8	function	88	2	2	2	2	1	src/levels/10_quodrona/LEVEL_10_1A8DE8.c
-10_quodrona	LEVEL_10_1A8E40	function	76	1	0	1	0	1	
+10_quodrona	LEVEL_10_1A8E40	function	80	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A8E90	function	368	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A9000	function	76	1	0	1	0	1	
 10_quodrona	LEVEL_10_1A904C	function	200	1	0	1	0	1	
@@ -2909,18 +2906,18 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_1AA3E0	function	60	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AA478	function	160	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AA518	function	160	1	0	1	0	1	
-10_quodrona	LEVEL_10_1AA5B8	function	152	1	0	1	0	1	
+10_quodrona	LEVEL_10_1AA5B8	function	156	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AA654	function	16	1	0	1	0	1	
-10_quodrona	LEVEL_10_1AA664	function	20	1	0	1	0	1	
+10_quodrona	LEVEL_10_1AA664	function	24	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AA67C	function	16	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AA68C	function	16	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AA69C	function	16	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AA6AC	function	36	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AA6D0	function	76	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AA71C	function	88	1	0	1	0	1	
-10_quodrona	LEVEL_10_1AA774	function	24	1	0	1	0	1	
+10_quodrona	LEVEL_10_1AA774	function	28	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AA790	function	60	1	0	1	0	1	
-10_quodrona	LEVEL_10_1AA7CC	function	92	1	0	1	0	1	
+10_quodrona	LEVEL_10_1AA7CC	function	96	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AA82C	function	408	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AA9C4	function	16	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AA9D4	function	16	1	0	1	0	1	
@@ -2929,7 +2926,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_1AAA70	function	52	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AAAA4	function	68	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AAAE8	function	40	1	0	1	0	1	
-10_quodrona	LEVEL_10_1AAB68	function	140	1	0	1	0	1	
+10_quodrona	LEVEL_10_1AAB68	function	144	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AABF8	function	64	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AAC38	function	4	1	0	1	0	1	
 10_quodrona	LEVEL_10_1AAC3C	function	40	1	0	1	0	1	
@@ -2965,7 +2962,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_1BDC70	function	296	1	0	1	0	1	
 10_quodrona	LEVEL_10_1BDDA0	function	428	1	0	1	0	1	
 10_quodrona	LEVEL_10_1C7148	function	1092	1	0	1	0	1	
-10_quodrona	LEVEL_10_1C75F0	function	212	1	0	1	0	1	
+10_quodrona	LEVEL_10_1C75F0	function	216	1	0	1	0	1	
 10_quodrona	LEVEL_10_1C76C8	function	56	1	0	1	0	1	
 10_quodrona	LEVEL_10_1C7700	function	56	1	0	1	0	1	
 10_quodrona	LEVEL_10_1C7738	function	232	1	0	1	0	1	
@@ -2973,9 +2970,9 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_1C7BA8	function	292	1	0	1	0	1	
 10_quodrona	LEVEL_10_1C7CCC	function	48	1	0	1	0	1	
 10_quodrona	LEVEL_10_1C7D00	function	48	1	0	1	0	1	
-10_quodrona	LEVEL_10_1C7D30	fragment	180	1	0	0	0	1	
+10_quodrona	LEVEL_10_1C7D30	fragment	184	1	0	0	0	1	
 10_quodrona	LEVEL_10_1C7E08	function	184	1	0	1	0	1	
-10_quodrona	LEVEL_10_1C7EC0	function	68	1	0	1	0	1	
+10_quodrona	LEVEL_10_1C7EC0	function	72	1	0	1	0	1	
 10_quodrona	LEVEL_10_1C7F08	function	68	1	0	1	0	1	
 10_quodrona	LEVEL_10_1C7F4C	function	116	1	0	1	0	1	
 10_quodrona	LEVEL_10_1C7FC0	function	44	1	0	1	0	1	
@@ -3022,7 +3019,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 10_quodrona	LEVEL_10_1E2FA8	fragment	44	1	0	0	0	1	
 10_quodrona	LEVEL_10_1E2FD8	function	392	1	0	1	0	1	
 10_quodrona	LEVEL_10_1E3160	function	408	1	0	1	0	1	
-10_quodrona	alignment_padding	padding	11464	1	0	0	0	1	
+10_quodrona	alignment_padding	padding	11064	1	0	0	0	1	
 10_quodrona	code_without_function_bounds	unbounded	16	1	0	0	0	1	
 15_giant_clank_metalis	LEVEL_15_0004D4	fragment	32	1	0	0	0	1	
 15_giant_clank_metalis	LEVEL_15_000EB8	function	116	1	0	1	0	1	
@@ -3313,7 +3310,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 15_giant_clank_metalis	LEVEL_15_109AA8	function	368	1	0	1	0	1	
 15_giant_clank_metalis	LEVEL_15_109C18	function	384	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_109C18.c
 15_giant_clank_metalis	LEVEL_15_109D98	function	2124	1	0	1	0	1	
-15_giant_clank_metalis	LEVEL_15_10A5E8	function	264	1	0	1	0	1	
+15_giant_clank_metalis	LEVEL_15_10A5E8	function	268	1	0	1	0	1	
 15_giant_clank_metalis	LEVEL_15_10A6F4	function	8	1	0	1	0	1	
 15_giant_clank_metalis	LEVEL_15_10A6FC	function	16	1	0	1	0	1	
 15_giant_clank_metalis	LEVEL_15_10A70C	function	20	1	0	1	0	1	
@@ -3652,7 +3649,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 15_giant_clank_metalis	LEVEL_15_13E9FC	fragment	16	1	0	0	0	1	
 15_giant_clank_metalis	LEVEL_15_13EA10	function	240	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_13EA10.c
 15_giant_clank_metalis	LEVEL_15_13EB00	function	104	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_13EB00.c
-15_giant_clank_metalis	alignment_padding	padding	8708	1	0	0	0	1	
+15_giant_clank_metalis	alignment_padding	padding	8500	1	0	0	0	1	
 15_giant_clank_metalis	code_without_function_bounds	unbounded	40	1	0	0	0	1	
 16_multiplayer_01	LEVEL_16_02E9E8	fragment	20	1	0	0	0	1	
 16_multiplayer_01	LEVEL_16_02EA00	function	460	1	0	1	0	1	
@@ -3668,21 +3665,21 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 16_multiplayer_01	LEVEL_16_137E20	function	92	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_137E80	function	308	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_137FB8	function	192	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_138078	function	164	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_138120	function	12	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_138130	function	12	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_138140	function	12	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_138150	function	80	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_1381A4	function	56	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_1381E0	function	12	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_1381F0	function	12	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_138200	function	12	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_138210	function	12	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_138220	function	12	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_138230	function	12	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_138240	function	12	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_138250	function	76	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_1382A0	function	28	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_138078	function	168	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_138120	function	16	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_138130	function	16	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_138140	function	16	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_138150	function	84	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_1381A4	function	60	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_1381E0	function	16	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_1381F0	function	16	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_138200	function	16	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_138210	function	16	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_138220	function	16	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_138230	function	16	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_138240	function	16	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_138250	function	80	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_1382A0	function	32	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_1382C8	function	184	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_138380	function	540	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_1385A0	function	396	1	0	1	0	1	
@@ -3707,7 +3704,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 16_multiplayer_01	LEVEL_16_154A60	function	584	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_154CA8	function	776	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_154FB0	function	164	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_155058	function	100	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_155058	function	104	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_1550C0	function	28	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_1550DC	function	64	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_15511C	function	68	1	0	1	0	1	
@@ -3728,7 +3725,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 16_multiplayer_01	LEVEL_16_155AEC	function	628	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_155D60	function	204	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_155E30	function	452	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_155E30.c
-16_multiplayer_01	LEVEL_16_155FF8	function	104	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_155FF8	function	108	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_156064	function	92	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_1560C0	function	24	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_1560D8	function	128	1	0	1	0	1	
@@ -3774,11 +3771,11 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 16_multiplayer_01	LEVEL_16_160008	function	152	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_1600A0	function	532	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_1602B8	function	724	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_1605CC	function	36	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_1605CC	function	40	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_1605F4	function	16	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_160604	function	116	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_160678	function	36	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_1606A0	function	12	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_160678	function	40	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_1606A0	function	16	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_1606B0	function	52	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_1606E4	function	68	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_160728	function	28	1	0	1	0	1	
@@ -3834,14 +3831,14 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 16_multiplayer_01	LEVEL_16_1691A0	function	3100	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_1691A0.c
 16_multiplayer_01	LEVEL_16_169DE0	function	628	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16A058	function	92	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_16A0B8	function	132	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_16A0B8	function	136	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16A140	function	80	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16A190	function	192	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16A250	function	152	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16A2E8	function	272	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16A3F8	function	44	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16A428	function	320	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_16A428.c
-16_multiplayer_01	LEVEL_16_16A568	function	72	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_16A568	function	76	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16A5B4	function	48	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16A5E4	function	8	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16A5EC	function	32	1	0	1	0	1	
@@ -3851,7 +3848,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 16_multiplayer_01	LEVEL_16_16A6C8	function	88	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16EFC8	function	600	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16F220	function	92	1	0	1	0	1	
-16_multiplayer_01	LEVEL_16_16F280	function	92	1	0	1	0	1	
+16_multiplayer_01	LEVEL_16_16F280	function	96	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16F2E0	function	64	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16F320	function	36	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_16F344	function	68	1	0	1	0	1	
@@ -3893,8 +3890,8 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 16_multiplayer_01	LEVEL_16_17DAC8	function	164	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_17DB70	function	136	1	0	1	0	1	
 16_multiplayer_01	LEVEL_16_17DD68	function	2660	1	0	1	0	1	
-16_multiplayer_01	alignment_padding	padding	10732	1	0	0	0	1	
-16_multiplayer_01	code_without_function_bounds	unbounded	68	1	0	0	0	1	
+16_multiplayer_01	alignment_padding	padding	10168	1	0	0	0	1	
+16_multiplayer_01	code_without_function_bounds	unbounded	72	1	0	0	0	1	
 17_multiplayer_02	LEVEL_17_014280	function	172	1	0	1	0	1	
 17_multiplayer_02	LEVEL_17_014330	function	172	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_014330.c
 17_multiplayer_02	LEVEL_17_02E258	fragment	12	1	0	0	0	1	
@@ -3981,7 +3978,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 17_multiplayer_02	LEVEL_17_16DEC8	function	116	1	0	1	0	1	
 17_multiplayer_02	LEVEL_17_16DF40	function	328	1	0	1	0	1	
 17_multiplayer_02	LEVEL_17_16E088	function	188	1	0	1	0	1	
-17_multiplayer_02	LEVEL_17_16E148	function	92	1	0	1	0	1	
+17_multiplayer_02	LEVEL_17_16E148	function	96	1	0	1	0	1	
 17_multiplayer_02	LEVEL_17_16E1A8	function	108	1	0	1	0	1	
 17_multiplayer_02	LEVEL_17_16E214	function	16	1	0	1	0	1	
 17_multiplayer_02	LEVEL_17_16E224	function	16	1	0	1	0	1	
@@ -4015,7 +4012,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 17_multiplayer_02	LEVEL_17_170720	function	112	1	0	1	0	1	
 17_multiplayer_02	LEVEL_17_170790	function	368	1	0	1	0	1	
 17_multiplayer_02	LEVEL_17_170938	function	576	1	0	1	0	1	
-17_multiplayer_02	alignment_padding	padding	10280	1	0	0	0	1	
+17_multiplayer_02	alignment_padding	padding	9808	1	0	0	0	1	
 17_multiplayer_02	code_without_function_bounds	unbounded	8	1	0	0	0	1	
 18_multiplayer_03	LEVEL_18_013E8C	fragment	16	1	0	0	0	1	
 18_multiplayer_03	LEVEL_18_0485C8	function	252	1	0	1	0	1	
@@ -4026,10 +4023,10 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 18_multiplayer_03	LEVEL_18_143B98	fragment	12	1	0	0	0	1	
 18_multiplayer_03	LEVEL_18_143BA8	function	572	1	0	1	0	1	
 18_multiplayer_03	LEVEL_18_143DE8	function	192	1	0	1	0	1	
-18_multiplayer_03	LEVEL_18_143EA8	function	112	1	0	1	0	1	
+18_multiplayer_03	LEVEL_18_143EA8	function	116	1	0	1	0	1	
 18_multiplayer_03	LEVEL_18_143F1C	function	20	1	0	1	0	1	
 18_multiplayer_03	LEVEL_18_143F30	function	92	1	0	1	0	1	
-18_multiplayer_03	LEVEL_18_143F8C	function	20	1	0	1	0	1	
+18_multiplayer_03	LEVEL_18_143F8C	function	24	1	0	1	0	1	
 18_multiplayer_03	LEVEL_18_143FA4	function	360	1	0	1	0	1	
 18_multiplayer_03	LEVEL_18_14410C	function	80	1	0	1	0	1	
 18_multiplayer_03	LEVEL_18_14415C	function	648	1	0	1	0	1	
@@ -4152,9 +4149,9 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 18_multiplayer_03	LEVEL_18_179088	fragment	12	1	0	0	0	1	
 18_multiplayer_03	LEVEL_18_179098	function	740	1	0	1	0	1	
 18_multiplayer_03	LEVEL_18_179380	function	204	1	0	1	0	1	
-18_multiplayer_03	LEVEL_18_179450	function	128	1	0	1	0	1	
+18_multiplayer_03	LEVEL_18_179450	function	132	1	0	1	0	1	
 18_multiplayer_03	LEVEL_18_1794E8	function	92	1	0	1	0	1	
-18_multiplayer_03	LEVEL_18_179544	function	20	1	0	1	0	1	
+18_multiplayer_03	LEVEL_18_179544	function	24	1	0	1	0	1	
 18_multiplayer_03	LEVEL_18_17955C	function	144	1	0	1	0	1	
 18_multiplayer_03	LEVEL_18_1795EC	function	388	1	0	1	0	1	
 18_multiplayer_03	LEVEL_18_179770	function	136	1	0	1	0	1	
@@ -4179,7 +4176,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 18_multiplayer_03	LEVEL_18_17D808	function	476	1	0	1	0	1	
 18_multiplayer_03	LEVEL_18_17D9E8	function	328	1	1	1	1	1	src/levels/18_multiplayer_03/LEVEL_18_17D9E8.c
 18_multiplayer_03	LEVEL_18_188E70	function	1376	1	0	1	0	1	
-18_multiplayer_03	alignment_padding	padding	10504	1	0	0	0	1	
+18_multiplayer_03	alignment_padding	padding	10020	1	0	0	0	1	
 18_multiplayer_03	code_without_function_bounds	unbounded	8	1	0	0	0	1	
 19_multiplayer_04	LEVEL_19_0E9FD0	fragment	28	1	0	0	0	1	
 19_multiplayer_04	LEVEL_19_13B410	function	244	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_13B410.c
@@ -4209,7 +4206,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 19_multiplayer_04	LEVEL_19_153CC0	fragment	12	1	0	0	0	1	
 19_multiplayer_04	LEVEL_19_153CD0	function	552	1	0	1	0	1	
 19_multiplayer_04	LEVEL_19_153EF8	function	188	1	0	1	0	1	
-19_multiplayer_04	LEVEL_19_153FB8	function	104	1	0	1	0	1	
+19_multiplayer_04	LEVEL_19_153FB8	function	108	1	0	1	0	1	
 19_multiplayer_04	LEVEL_19_154024	function	176	1	0	1	0	1	
 19_multiplayer_04	LEVEL_19_1540D4	function	96	1	0	1	0	1	
 19_multiplayer_04	LEVEL_19_154134	function	16	1	0	1	0	1	
@@ -4263,7 +4260,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 19_multiplayer_04	LEVEL_19_15AA88	function	584	1	0	1	0	1	
 19_multiplayer_04	LEVEL_19_15AD08	function	60	1	0	1	0	1	
 19_multiplayer_04	LEVEL_19_15AD50	function	304	1	0	1	0	1	
-19_multiplayer_04	LEVEL_19_15AE80	fragment	68	1	0	0	0	1	
+19_multiplayer_04	LEVEL_19_15AE80	fragment	72	1	0	0	0	1	
 19_multiplayer_04	LEVEL_19_15AEC8	function	116	1	0	1	0	1	
 19_multiplayer_04	LEVEL_19_15AF3C	function	404	1	0	1	0	1	
 19_multiplayer_04	LEVEL_19_15B0D0	function	64	1	0	1	0	1	
@@ -4319,7 +4316,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 19_multiplayer_04	LEVEL_19_189B30	function	4428	1	0	1	0	1	
 19_multiplayer_04	LEVEL_19_18B210	function	2008	1	0	1	0	1	
 19_multiplayer_04	LEVEL_19_18D6B8	function	2968	1	0	1	0	1	
-19_multiplayer_04	alignment_padding	padding	10416	1	0	0	0	1	
+19_multiplayer_04	alignment_padding	padding	9940	1	0	0	0	1	
 19_multiplayer_04	code_without_function_bounds	unbounded	8	1	0	0	0	1	
 20_multiplayer_lobby	LEVEL_20_012904	fragment	8	1	0	0	0	1	
 20_multiplayer_lobby	LEVEL_20_014654	fragment	24	1	0	0	0	1	
@@ -4329,8 +4326,8 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 20_multiplayer_lobby	LEVEL_20_079138	fragment	108	1	0	0	0	1	
 20_multiplayer_lobby	LEVEL_20_079DC0	fragment	20	1	0	0	0	1	
 20_multiplayer_lobby	LEVEL_20_08F24C	fragment	16	1	0	0	0	1	
-20_multiplayer_lobby	LEVEL_20_0C586C	fragment	240	1	0	0	0	1	
-20_multiplayer_lobby	LEVEL_20_0C76A8	fragment	68	1	0	0	0	1	
+20_multiplayer_lobby	LEVEL_20_0C586C	fragment	244	1	0	0	0	1	
+20_multiplayer_lobby	LEVEL_20_0C76A8	fragment	72	1	0	0	0	1	
 20_multiplayer_lobby	LEVEL_20_0DBB9C	fragment	48	1	0	0	0	1	
 20_multiplayer_lobby	LEVEL_20_0DBF54	fragment	24	1	0	0	0	1	
 20_multiplayer_lobby	LEVEL_20_0DCF1C	fragment	48	1	0	0	0	1	
@@ -4343,13 +4340,13 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 20_multiplayer_lobby	LEVEL_20_0EA9DC	fragment	608	1	0	0	0	1	
 20_multiplayer_lobby	LEVEL_20_0EFD20	fragment	20	1	0	0	0	1	
 20_multiplayer_lobby	LEVEL_20_0F81D0	fragment	36	1	0	0	0	1	
-20_multiplayer_lobby	alignment_padding	padding	7740	1	0	0	0	1	
+20_multiplayer_lobby	alignment_padding	padding	7368	1	0	0	0	1	
 20_multiplayer_lobby	code_without_function_bounds	unbounded	8	1	0	0	0	1	
 22_skyboard_kalidon	LEVEL_22_030E40	fragment	28	1	0	0	0	1	
 22_skyboard_kalidon	LEVEL_22_06B564	fragment	16	1	0	0	0	1	
 22_skyboard_kalidon	LEVEL_22_08DC4C	fragment	24	1	0	0	0	1	
 22_skyboard_kalidon	LEVEL_22_0A7414	fragment	32	1	0	0	0	1	
-22_skyboard_kalidon	LEVEL_22_0D095C	fragment	300	1	0	0	0	1	
+22_skyboard_kalidon	LEVEL_22_0D095C	fragment	304	1	0	0	0	1	
 22_skyboard_kalidon	LEVEL_22_0D4C4C	fragment	48	1	0	0	0	1	
 22_skyboard_kalidon	LEVEL_22_0E6EF8	fragment	28	1	0	0	0	1	
 22_skyboard_kalidon	LEVEL_22_0FCD3C	fragment	24	1	0	0	0	1	
@@ -4358,7 +4355,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 22_skyboard_kalidon	LEVEL_22_0FFC44	fragment	16	1	0	0	0	1	
 22_skyboard_kalidon	LEVEL_22_10FD70	function	136	1	0	1	0	1	
 22_skyboard_kalidon	LEVEL_22_10FE00	function	816	1	0	1	0	1	
-22_skyboard_kalidon	alignment_padding	padding	8280	1	0	0	0	1	
+22_skyboard_kalidon	alignment_padding	padding	8028	1	0	0	0	1	
 22_skyboard_kalidon	code_without_function_bounds	unbounded	304	1	0	0	0	1	
 23_skyboard_challax	LEVEL_23_09562C	fragment	16	1	0	0	0	1	
 23_skyboard_challax	LEVEL_23_11A1B8	fragment	140	1	0	0	0	1	
@@ -4378,7 +4375,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 23_skyboard_challax	LEVEL_23_186910	function	108	1	0	1	0	1	
 23_skyboard_challax	LEVEL_23_186988	function	44	1	0	1	0	1	
 23_skyboard_challax	LEVEL_23_1869B8	function	112	1	1	1	1	1	src/levels/23_skyboard_challax/LEVEL_23_1869B8.c
-23_skyboard_challax	alignment_padding	padding	10020	1	0	0	0	1	
+23_skyboard_challax	alignment_padding	padding	9708	1	0	0	0	1	
 23_skyboard_challax	code_without_function_bounds	unbounded	304	1	0	0	0	1	
 24_treehouse	LEVEL_24_13CCE0	function	780	1	0	1	0	1	
 24_treehouse	LEVEL_24_13D000	function	952	1	0	1	0	1	
@@ -4418,7 +4415,7 @@ frontend	alignment_padding	padding	2240	1	0	0	0	1
 24_treehouse	LEVEL_24_19A6A0	function	184	1	0	1	0	1	
 24_treehouse	LEVEL_24_19A760	function	80	1	0	1	0	1	
 24_treehouse	LEVEL_24_19A7B0	function	436	1	0	1	0	1	
-24_treehouse	alignment_padding	padding	10364	1	0	0	0	1	
+24_treehouse	alignment_padding	padding	10004	1	0	0	0	1	
 24_treehouse	code_without_function_bounds	unbounded	16	1	0	0	0	1	
 shared	FRONTEND_000120	function	32	1	1	1	1	20	src/levels/frontend/FRONTEND_000120.c
 shared	FRONTEND_000178	function	12	22	22	22	22	20	src/levels/frontend/FRONTEND_000178.c
@@ -4438,12 +4435,12 @@ shared	FRONTEND_001410	function	132	1	1	1	1	20	src/levels/frontend/FRONTEND_0014
 shared	FRONTEND_001540	fragment	12	2	0	0	0	20	
 shared	FRONTEND_001550	function	696	1	0	1	0	20	
 shared	FRONTEND_001808	function	12	4	4	4	4	20	src/levels/frontend/FRONTEND_001808.c
-shared	FRONTEND_001814	fragment	12	2	2	0	0	3	src/levels/frontend/FRONTEND_001808.c
+shared	FRONTEND_001814	fragment	12	2	2	0	0	4	src/levels/frontend/FRONTEND_001808.c
 shared	FRONTEND_001AE0	function	52	1	0	1	0	20	
 shared	FRONTEND_001B14	fragment	8	1	0	0	0	20	
 shared	FRONTEND_001B20	function	20	2	2	2	2	20	src/levels/frontend/FRONTEND_001B20.c
 shared	FRONTEND_001B34	fragment	8	1	0	0	0	2	
-shared	FRONTEND_001E08	function	8	290	288	290	288	20	src/levels/shared/FRONTEND_001E08.c
+shared	FRONTEND_001E08	function	8	293	288	290	288	20	src/levels/shared/FRONTEND_001E08.c
 shared	FRONTEND_001EB0	function	44	3	3	3	3	20	src/levels/frontend/FRONTEND_001EB0.c
 shared	FRONTEND_001FD0	function	16	13	13	13	13	20	src/levels/frontend/FRONTEND_001FD0.c
 shared	FRONTEND_001FF0	function	20	11	11	11	11	20	src/levels/frontend/FRONTEND_001FF0.c
@@ -4604,12 +4601,12 @@ shared	FRONTEND_00AC9C	fragment	8	1	0	0	0	8
 shared	FRONTEND_00ACA8	function	324	1	0	1	0	20	
 shared	FRONTEND_00AEEC	fragment	8	4	0	0	0	19	
 shared	FRONTEND_00AF50	function	320	1	0	1	0	20	
-shared	FRONTEND_00B090	fragment	136	1	0	0	0	20	
+shared	FRONTEND_00B090	fragment	140	1	0	0	0	20	
 shared	FRONTEND_00B11C	function	8	1	0	1	0	20	
 shared	FRONTEND_00B124	function	16	1	0	1	0	20	
 shared	FRONTEND_00B134	function	20	1	0	1	0	20	
 shared	FRONTEND_00B148	function	388	1	0	1	0	20	
-shared	FRONTEND_00B2CC	fragment	128	1	0	0	0	20	
+shared	FRONTEND_00B2CC	fragment	132	1	0	0	0	20	
 shared	FRONTEND_00B350	function	8	1	0	1	0	20	
 shared	FRONTEND_00B358	function	16	1	0	1	0	20	
 shared	FRONTEND_00B368	function	20	1	0	1	0	20	
@@ -4831,7 +4828,7 @@ shared	FRONTEND_01CC00	function	128	1	1	1	1	20	src/levels/frontend/FRONTEND_01CC
 shared	FRONTEND_01CC80	function	264	1	1	1	1	20	src/levels/frontend/FRONTEND_01CC80.c
 shared	FRONTEND_01CD88	function	132	1	1	1	1	20	src/levels/frontend/FRONTEND_01CD88.c
 shared	FRONTEND_01CE10	function	420	1	1	1	1	20	src/levels/frontend/FRONTEND_01CE10.c
-shared	FRONTEND_01CFB8	function	416	1	0	1	0	20	
+shared	FRONTEND_01CFB8	function	420	1	0	1	0	20	
 shared	FRONTEND_01D15C	function	60	1	0	1	0	20	
 shared	FRONTEND_01D198	function	72	1	0	1	0	20	
 shared	FRONTEND_01D1E0	function	44	1	0	1	0	20	
@@ -4842,18 +4839,18 @@ shared	FRONTEND_01D298	function	176	1	0	1	0	20
 shared	FRONTEND_01D348	function	184	1	0	1	0	20	
 shared	FRONTEND_01D400	function	160	1	0	1	0	20	
 shared	FRONTEND_01D4A0	function	256	1	0	1	0	20	
-shared	FRONTEND_01D5A0	fragment	284	1	0	0	0	20	
+shared	FRONTEND_01D5A0	fragment	288	1	0	0	0	20	
 shared	FRONTEND_01D6C0	function	52	1	0	1	0	20	
 shared	FRONTEND_01D6F4	function	64	1	0	1	0	20	
 shared	FRONTEND_01D734	function	36	1	0	1	0	20	
 shared	FRONTEND_01D758	function	28	1	0	1	0	20	
 shared	FRONTEND_01D774	function	28	1	0	1	0	20	
 shared	FRONTEND_01D790	function	48	1	0	1	0	20	
-shared	FRONTEND_01D7C0	function	168	1	0	1	0	20	
-shared	FRONTEND_01D86C	function	176	1	0	1	0	20	
-shared	FRONTEND_01D920	function	152	1	0	1	0	20	
+shared	FRONTEND_01D7C0	function	172	1	0	1	0	20	
+shared	FRONTEND_01D86C	function	180	1	0	1	0	20	
+shared	FRONTEND_01D920	function	156	1	0	1	0	20	
 shared	FRONTEND_01D9BC	function	224	1	0	1	0	20	
-shared	FRONTEND_01DA9C	fragment	232	1	0	0	0	20	
+shared	FRONTEND_01DA9C	fragment	236	1	0	0	0	20	
 shared	FRONTEND_01DB88	function	28	1	0	1	0	20	
 shared	FRONTEND_01DBA4	function	12	1	0	1	0	20	
 shared	FRONTEND_01DBB0	function	72	1	0	1	0	20	
@@ -4861,7 +4858,7 @@ shared	FRONTEND_01DBF8	function	28	1	0	1	0	20
 shared	FRONTEND_01DC14	function	28	1	0	1	0	20	
 shared	FRONTEND_01DC30	function	40	1	0	1	0	20	
 shared	FRONTEND_01DC58	function	52	1	0	1	0	20	
-shared	FRONTEND_01DC8C	function	236	1	0	1	0	20	
+shared	FRONTEND_01DC8C	function	240	1	0	1	0	20	
 shared	FRONTEND_01DD7C	function	32	1	0	1	0	20	
 shared	FRONTEND_01DD9C	function	88	1	0	1	0	20	
 shared	FRONTEND_01DDF4	function	32	1	0	1	0	20	
@@ -4950,7 +4947,7 @@ shared	FRONTEND_021188	function	40	1	1	1	1	20	src/levels/frontend/FRONTEND_02118
 shared	FRONTEND_0211B0	function	64	1	1	1	1	20	src/levels/frontend/FRONTEND_0211B0.c
 shared	FRONTEND_0211F0	function	28	1	1	1	1	20	src/levels/frontend/FRONTEND_0211F0.c
 shared	FRONTEND_021210	function	44	1	0	1	0	20	
-shared	FRONTEND_02123C	fragment	52	1	0	0	0	20	
+shared	FRONTEND_02123C	fragment	56	1	0	0	0	20	
 shared	FRONTEND_021274	function	8	1	0	1	0	20	
 shared	FRONTEND_02127C	function	8	1	0	1	0	20	
 shared	FRONTEND_021284	function	8	1	0	1	0	20	
@@ -4982,7 +4979,7 @@ shared	FRONTEND_021C2C	fragment	16	1	0	0	0	20
 shared	FRONTEND_021C40	function	52	1	1	1	1	20	src/levels/frontend/FRONTEND_021C40.c
 shared	FRONTEND_021C78	function	48	1	0	1	0	20	
 shared	FRONTEND_021CB0	function	92	1	0	1	0	20	
-shared	FRONTEND_021D18	function	208	1	0	1	0	20	
+shared	FRONTEND_021D18	function	212	1	0	1	0	20	
 shared	FRONTEND_021DEC	function	436	1	0	1	0	20	
 shared	FRONTEND_021FA0	function	200	1	0	1	0	20	
 shared	FRONTEND_022068	function	40	1	0	1	0	20	
@@ -5029,7 +5026,7 @@ shared	FRONTEND_023110	function	236	1	1	1	1	20	src/levels/frontend/FRONTEND_0231
 shared	FRONTEND_023200	function	244	1	1	1	1	20	src/levels/frontend/FRONTEND_023200.c
 shared	FRONTEND_0232F8	function	152	1	1	1	1	20	src/levels/frontend/FRONTEND_0232F8.c
 shared	FRONTEND_023390	function	96	1	0	1	0	20	
-shared	FRONTEND_0233F0	function	4	1	0	1	0	20	
+shared	FRONTEND_0233F0	function	8	1	0	1	0	20	
 shared	FRONTEND_0233F8	function	300	1	0	1	0	20	
 shared	FRONTEND_023528	function	156	1	0	1	0	20	
 shared	FRONTEND_0235C8	function	576	1	0	1	0	20	
@@ -5047,15 +5044,15 @@ shared	FRONTEND_023FE0	function	144	1	0	1	0	20
 shared	FRONTEND_024070	fragment	44	1	0	0	0	20	
 shared	FRONTEND_0240A0	function	152	1	1	1	1	20	src/levels/frontend/FRONTEND_0240A0.c
 shared	FRONTEND_024140	function	64	1	0	1	0	20	
-shared	FRONTEND_024180	function	20	1	0	1	0	20	
-shared	FRONTEND_024198	function	12	1	0	1	0	20	
+shared	FRONTEND_024180	function	24	1	0	1	0	20	
+shared	FRONTEND_024198	function	16	1	0	1	0	20	
 shared	FRONTEND_0241A8	function	12	1	0	1	0	20	
 shared	FRONTEND_0241B4	function	12	1	0	1	0	20	
-shared	FRONTEND_0241C0	function	4	11	0	11	0	20	
-shared	FRONTEND_0241C8	function	12	3	0	3	0	20	
-shared	FRONTEND_0241D8	function	4	1	0	1	0	20	
+shared	FRONTEND_0241C0	function	8	11	0	11	0	20	
+shared	FRONTEND_0241C8	function	16	3	0	3	0	20	
+shared	FRONTEND_0241D8	function	8	1	0	1	0	20	
 shared	FRONTEND_0241E0	function	24	1	0	1	0	20	
-shared	FRONTEND_0241F8	function	12	1	0	1	0	20	
+shared	FRONTEND_0241F8	function	16	1	0	1	0	20	
 shared	FRONTEND_024208	function	36	1	1	1	1	20	src/levels/frontend/FRONTEND_024208.c
 shared	FRONTEND_024230	function	44	1	0	1	0	20	
 shared	FRONTEND_024268	function	84	1	0	1	0	20	
@@ -5076,8 +5073,8 @@ shared	FRONTEND_024958	function	124	1	1	1	1	20	src/levels/frontend/FRONTEND_0249
 shared	FRONTEND_024A70	function	816	1	0	1	0	20	
 shared	FRONTEND_024DA0	function	476	1	0	1	0	20	
 shared	FRONTEND_024F80	function	484	1	0	1	0	20	
-shared	FRONTEND_025168	function	20	2	0	2	0	20	
-shared	FRONTEND_025180	function	12	1	0	1	0	20	
+shared	FRONTEND_025168	function	24	2	0	2	0	20	
+shared	FRONTEND_025180	function	16	1	0	1	0	20	
 shared	FRONTEND_025190	function	16	3	0	3	0	20	
 shared	FRONTEND_0251C8	function	36	1	0	1	0	20	
 shared	FRONTEND_0251F0	function	32	1	0	1	0	20	
@@ -5092,12 +5089,12 @@ shared	FRONTEND_025488	function	112	1	0	1	0	20
 shared	FRONTEND_025508	function	12	1	0	1	0	20	
 shared	FRONTEND_025514	function	128	1	0	1	0	20	
 shared	FRONTEND_025594	function	24	1	0	1	0	20	
-shared	FRONTEND_0255AC	function	88	1	0	1	0	20	
+shared	FRONTEND_0255AC	function	92	1	0	1	0	20	
 shared	FRONTEND_025610	function	12	1	0	1	0	20	
-shared	FRONTEND_02561C	function	12	1	0	1	0	20	
-shared	FRONTEND_02562C	function	4	1	0	1	0	20	
+shared	FRONTEND_02561C	function	16	1	0	1	0	20	
+shared	FRONTEND_02562C	function	8	1	0	1	0	20	
 shared	FRONTEND_025640	function	48	2	0	2	0	20	
-shared	FRONTEND_025670	function	64	2	0	2	0	20	
+shared	FRONTEND_025670	function	68	2	0	2	0	20	
 shared	FRONTEND_0256B4	function	12	2	0	2	0	20	
 shared	FRONTEND_025740	function	52	1	0	1	0	20	
 shared	FRONTEND_025778	function	40	1	0	1	0	20	
@@ -5114,7 +5111,7 @@ shared	FRONTEND_025D08	function	136	1	1	1	1	20	src/levels/shared/FRONTEND_025D08
 shared	FRONTEND_025D90	function	316	1	1	1	1	20	src/levels/frontend/FRONTEND_025D90.c
 shared	FRONTEND_025ED0	function	228	1	0	1	0	20	
 shared	FRONTEND_025FB8	function	260	1	0	1	0	20	
-shared	FRONTEND_0260C0	function	152	1	0	1	0	20	
+shared	FRONTEND_0260C0	function	156	1	0	1	0	20	
 shared	FRONTEND_02615C	function	20	1	0	1	0	20	
 shared	FRONTEND_026170	function	16	1	0	1	0	20	
 shared	FRONTEND_026180	function	40	1	0	1	0	20	
@@ -5129,7 +5126,7 @@ shared	FRONTEND_0262E4	function	104	1	0	1	0	20
 shared	FRONTEND_02634C	function	104	1	0	1	0	20	
 shared	FRONTEND_0263B4	function	100	1	0	1	0	20	
 shared	FRONTEND_026418	function	28	1	0	1	0	20	
-shared	FRONTEND_026434	function	4	1	0	1	0	20	
+shared	FRONTEND_026434	function	8	1	0	1	0	20	
 shared	FRONTEND_02643C	fragment	68	1	0	0	0	20	
 shared	FRONTEND_026480	function	120	1	0	1	0	20	
 shared	FRONTEND_0264F8	function	472	1	1	1	1	20	src/levels/frontend/FRONTEND_0264F8.c
@@ -5160,7 +5157,7 @@ shared	LEVEL_01_000140	function	80	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_00
 shared	LEVEL_01_000190	function	24	8	8	8	8	19	src/levels/01_pokitaru/LEVEL_01_000190.c
 shared	LEVEL_01_0001A8	function	88	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0001A8.c
 shared	LEVEL_01_000200	function	28	1	0	1	0	19	
-shared	LEVEL_01_00021C	fragment	40	1	0	0	0	19	
+shared	LEVEL_01_00021C	fragment	44	1	0	0	0	19	
 shared	LEVEL_01_000248	function	8	1	0	1	0	19	
 shared	LEVEL_01_000250	function	8	1	0	1	0	19	
 shared	LEVEL_01_000258	function	8	1	0	1	0	19	
@@ -5818,7 +5815,7 @@ shared	LEVEL_01_039B18	function	64	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_03
 shared	LEVEL_01_039B58	function	376	1	0	1	0	19	
 shared	LEVEL_01_039CD0	function	308	1	0	1	0	19	
 shared	LEVEL_01_039E08	function	76	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_039E08.c
-shared	LEVEL_01_039E60	function	56	1	0	1	0	19	
+shared	LEVEL_01_039E60	function	60	1	0	1	0	19	
 shared	LEVEL_01_039E9C	function	52	1	0	1	0	19	
 shared	LEVEL_01_039ED0	function	96	1	0	1	0	19	
 shared	LEVEL_01_039F30	function	100	1	0	1	0	19	
@@ -6244,7 +6241,7 @@ shared	LEVEL_01_077EA8	function	172	1	0	1	0	13
 shared	LEVEL_01_077F58	function	176	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_077F58.c
 shared	LEVEL_01_078008	function	348	1	0	1	0	13	
 shared	LEVEL_01_078164	fragment	24	1	0	0	0	10	
-shared	LEVEL_01_0781D8	function	72	1	0	1	0	19	
+shared	LEVEL_01_0781D8	function	76	1	0	1	0	19	
 shared	LEVEL_01_078224	function	52	1	0	1	0	19	
 shared	LEVEL_01_078258	function	64	1	0	1	0	19	
 shared	LEVEL_01_078298	function	48	1	0	1	0	19	
@@ -6492,7 +6489,7 @@ shared	LEVEL_01_090118	function	92	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_09
 shared	LEVEL_01_090178	function	1008	1	0	1	0	19	
 shared	LEVEL_01_090568	function	3684	1	0	1	0	19	
 shared	LEVEL_01_0913D0	function	228	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0913D0.c
-shared	LEVEL_01_091510	fragment	32	1	0	0	0	19	
+shared	LEVEL_01_091510	fragment	36	1	0	0	0	19	
 shared	LEVEL_01_091538	function	248	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_091538.c
 shared	LEVEL_01_091630	function	240	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_091630.c
 shared	LEVEL_01_091720	function	60	1	0	1	0	19	
@@ -7189,11 +7186,11 @@ shared	LEVEL_01_0E4890	function	180	1	0	1	0	19
 shared	LEVEL_01_0E4950	function	756	1	0	1	0	19	
 shared	LEVEL_01_0E4C48	function	264	1	0	1	0	19	
 shared	LEVEL_01_0E4D50	function	496	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0E4D50.c
-shared	LEVEL_01_0E4F5C	fragment	372	1	0	0	0	16	
+shared	LEVEL_01_0E4F5C	fragment	376	1	0	0	0	16	
 shared	LEVEL_01_0E50D8	function	1772	1	0	1	0	16	
 shared	LEVEL_01_0E57D0	function	124	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_0E57D0.c
 shared	LEVEL_01_0E5850	function	448	1	0	1	0	16	
-shared	LEVEL_01_0E5A10	fragment	264	1	0	0	0	16	
+shared	LEVEL_01_0E5A10	fragment	268	1	0	0	0	16	
 shared	LEVEL_01_0E5B20	function	1636	1	0	1	0	17	
 shared	LEVEL_01_0E6188	function	92	1	1	1	1	17	src/levels/01_pokitaru/LEVEL_01_0E6188.c
 shared	LEVEL_01_0E61E8	function	1628	1	0	1	0	19	
@@ -7201,7 +7198,7 @@ shared	LEVEL_01_0E6848	function	1500	1	0	1	0	19
 shared	LEVEL_01_0E6E28	function	1816	1	0	1	0	12	
 shared	LEVEL_01_0E75F8	function	152	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_0E75F8.c
 shared	LEVEL_01_0E7690	function	420	1	0	1	0	15	
-shared	LEVEL_01_0E7834	fragment	320	1	0	0	0	15	
+shared	LEVEL_01_0E7834	fragment	324	1	0	0	0	15	
 shared	LEVEL_01_0E7978	function	1952	1	0	1	0	15	
 shared	LEVEL_01_0E8118	function	180	1	0	1	0	15	
 shared	LEVEL_01_0E81D8	function	632	1	1	1	1	15	src/levels/01_pokitaru/LEVEL_01_0E81D8.c
@@ -7271,27 +7268,27 @@ shared	LEVEL_01_0F0980	function	12	1	1	1	1	13	src/levels/shared/LEVEL_01_0F0980.
 shared	LEVEL_01_0F0998	function	88	13	0	13	0	19	
 shared	LEVEL_01_0F09F0	function	48	13	0	13	0	19	
 shared	LEVEL_01_0F0CF0	function	32796	1	0	1	0	19	
-shared	LEVEL_01_0F8D30	fragment	412	1	0	0	0	17	
+shared	LEVEL_01_0F8D30	fragment	416	1	0	0	0	17	
 shared	LEVEL_01_0F8ED0	function	3048	1	0	1	0	17	
 shared	LEVEL_01_0F9AB8	function	92	1	1	1	1	17	src/levels/01_pokitaru/LEVEL_01_0F9AB8.c
 shared	LEVEL_01_0F9B18	function	2312	2	0	2	0	19	
-shared	LEVEL_01_0FA478	fragment	396	1	0	0	0	12	
+shared	LEVEL_01_0FA478	fragment	400	1	0	0	0	12	
 shared	LEVEL_01_0FA608	function	3032	1	0	1	0	12	
 shared	LEVEL_01_0FB1E0	function	92	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_0FB1E0.c
 shared	LEVEL_01_0FB240	function	2448	1	0	1	0	13	
-shared	LEVEL_01_0FBC28	fragment	348	1	0	0	0	17	
+shared	LEVEL_01_0FBC28	fragment	352	1	0	0	0	17	
 shared	LEVEL_01_0FBD88	function	3448	1	0	1	0	17	
 shared	LEVEL_01_0FCB00	function	96	1	1	1	1	17	src/levels/01_pokitaru/LEVEL_01_0FCB00.c
 shared	LEVEL_01_0FCB60	function	1540	2	0	2	0	19	
 shared	LEVEL_01_0FD168	function	1432	2	0	2	0	19	
 shared	LEVEL_01_0FD700	function	1744	1	0	1	0	13	
 shared	LEVEL_01_0FDE28	function	612	1	0	1	0	19	
-shared	LEVEL_01_0FE08C	fragment	220	1	0	0	0	18	
+shared	LEVEL_01_0FE08C	fragment	224	1	0	0	0	18	
 shared	LEVEL_01_0FE170	function	1756	1	0	1	0	18	
 shared	LEVEL_01_0FE850	function	68	1	0	1	0	18	
 shared	LEVEL_01_0FE894	fragment	24	1	0	0	0	13	
 shared	LEVEL_01_0FE908	fragment	4	3	0	0	0	17	
-shared	LEVEL_01_0FE968	fragment	364	1	0	0	0	19	
+shared	LEVEL_01_0FE968	fragment	368	1	0	0	0	19	
 shared	LEVEL_01_0FEAD8	function	1812	1	0	1	0	19	
 shared	LEVEL_01_0FF1F8	function	92	1	1	1	1	19	src/levels/shared/LEVEL_01_0FF1F8.c
 shared	LEVEL_01_0FF258	function	92	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0FF258.c
@@ -7328,7 +7325,7 @@ shared	LEVEL_01_1068F0	function	2472	1	0	1	0	12
 shared	LEVEL_01_107298	fragment	4	1	0	0	0	16	
 shared	LEVEL_01_1072A0	function	4400	1	0	1	0	12	
 shared	LEVEL_01_1083D0	function	1792	1	0	1	0	16	
-shared	LEVEL_01_108AD0	fragment	52	1	0	0	0	16	
+shared	LEVEL_01_108AD0	fragment	56	1	0	0	0	16	
 shared	LEVEL_01_108B08	function	108	1	0	1	0	19	
 shared	LEVEL_01_108B78	function	440	1	0	1	0	16	
 shared	LEVEL_01_108D50	function	8	1	1	1	1	16	src/levels/shared/LEVEL_01_108D50.c
@@ -7344,7 +7341,7 @@ shared	LEVEL_01_109DB8	function	96	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_10
 shared	LEVEL_01_109E18	function	1364	1	0	1	0	7	
 shared	LEVEL_01_10A370	function	1304	1	0	1	0	19	
 shared	LEVEL_01_10A888	function	1664	1	0	1	0	5	
-shared	LEVEL_01_10AF08	fragment	448	1	0	0	0	14	
+shared	LEVEL_01_10AF08	fragment	452	1	0	0	0	14	
 shared	LEVEL_01_10B0D0	function	2004	1	0	1	0	19	
 shared	LEVEL_01_10B8A8	function	96	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_10B8A8.c
 shared	LEVEL_01_10B908	function	2236	1	0	1	0	19	
@@ -7354,7 +7351,7 @@ shared	LEVEL_01_10C5C0	function	196	1	1	1	1	8	src/levels/01_pokitaru/LEVEL_01_10
 shared	LEVEL_01_10C688	function	2288	1	0	1	0	8	
 shared	LEVEL_01_10CF78	function	4452	1	0	1	0	8	
 shared	LEVEL_01_10E0E0	function	112	1	1	1	1	8	src/levels/01_pokitaru/LEVEL_01_10E0E0.c
-shared	LEVEL_01_10E1A8	fragment	360	1	0	0	0	15	
+shared	LEVEL_01_10E1A8	fragment	364	1	0	0	0	15	
 shared	LEVEL_01_10E318	function	3468	1	0	1	0	15	
 shared	LEVEL_01_10F0A8	function	96	1	1	1	1	15	src/levels/01_pokitaru/LEVEL_01_10F0A8.c
 shared	LEVEL_01_10F108	function	140	1	1	1	1	15	src/levels/01_pokitaru/LEVEL_01_10F108.c
@@ -7791,7 +7788,6 @@ shared	LEVEL_01_1426A0	function	512	1	0	1	0	12
 shared	LEVEL_01_1428F8	function	228	1	0	1	0	13	
 shared	LEVEL_01_1429F0	function	64	1	0	1	0	13	
 shared	LEVEL_01_142B88	function	880	1	0	1	0	9	
-shared	LEVEL_01_142EF8	fragment	4	3	0	0	0	14	
 shared	LEVEL_01_142F00	function	76	1	0	1	0	9	
 shared	LEVEL_01_142F50	function	1396	1	0	1	0	9	
 shared	LEVEL_01_1434C8	function	336	1	0	1	0	9	
@@ -8045,7 +8041,7 @@ shared	LEVEL_01_16E110	function	940	1	0	1	0	12
 shared	LEVEL_01_16E4C0	function	788	2	0	2	0	14	
 shared	LEVEL_01_16E7D8	function	1160	2	0	2	0	14	
 shared	LEVEL_01_16EC60	function	568	1	0	1	0	12	
-shared	LEVEL_01_16EE98	fragment	116	1	0	0	0	6	
+shared	LEVEL_01_16EE98	fragment	120	1	0	0	0	6	
 shared	LEVEL_01_16F010	function	36	1	0	1	0	12	
 shared	LEVEL_01_16F098	function	100	1	1	1	1	12	src/levels/shared/LEVEL_01_16F098.c
 shared	LEVEL_01_16F100	function	96	1	0	1	0	12	
@@ -8054,7 +8050,7 @@ shared	LEVEL_01_16F1C8	function	256	2	2	2	2	14	src/levels/shared/LEVEL_01_16F1C8
 shared	LEVEL_01_16F310	function	188	2	2	2	2	14	src/levels/01_pokitaru/LEVEL_01_16F310.c
 shared	LEVEL_01_16F3D0	function	80	2	2	2	2	12	src/levels/01_pokitaru/LEVEL_01_16F3D0.c
 shared	LEVEL_01_16F440	function	76	1	0	1	0	9	
-shared	LEVEL_01_16F498	function	84	1	0	1	0	9	
+shared	LEVEL_01_16F498	function	88	1	0	1	0	9	
 shared	LEVEL_01_16F4F0	function	292	1	0	1	0	9	
 shared	LEVEL_01_16F614	function	152	1	0	1	0	9	
 shared	LEVEL_01_16F6AC	function	232	1	0	1	0	9	
@@ -8072,7 +8068,7 @@ shared	LEVEL_01_170120	function	52	1	1	1	1	16	src/levels/shared/LEVEL_01_170120.
 shared	LEVEL_01_170158	function	20	1	1	1	1	16	src/levels/shared/LEVEL_01_170158.c
 shared	LEVEL_01_170170	function	168	1	0	1	0	16	
 shared	LEVEL_01_170218	function	48	1	0	1	0	16	
-shared	LEVEL_01_170248	function	232	1	0	1	0	12	
+shared	LEVEL_01_170248	function	236	1	0	1	0	12	
 shared	LEVEL_01_170334	function	12	1	0	1	0	12	
 shared	LEVEL_01_170340	function	104	1	0	1	0	16	
 shared	LEVEL_01_1703A8	function	108	1	0	1	0	16	
@@ -8292,7 +8288,7 @@ shared	LEVEL_01_191790	function	56	1	1	1	1	5	src/levels/shared/LEVEL_01_191790.c
 shared	LEVEL_01_1917D0	function	88	1	1	1	1	5	src/levels/01_pokitaru/LEVEL_01_1917D0.c
 shared	LEVEL_01_191828	function	56	2	2	2	2	5	src/levels/01_pokitaru/LEVEL_01_191828.c
 shared	LEVEL_01_191860	function	376	1	0	1	0	5	
-shared	LEVEL_01_1919D8	function	36	4	0	4	0	5	
+shared	LEVEL_01_1919D8	function	36	4	0	4	0	6	
 shared	LEVEL_01_191A00	function	80	1	0	1	0	5	
 shared	LEVEL_01_191B88	function	84	1	0	1	0	7	
 shared	LEVEL_01_191BE8	function	184	1	0	1	0	7	
@@ -8330,7 +8326,7 @@ shared	LEVEL_01_195908	function	72	1	0	1	0	16
 shared	LEVEL_01_195950	function	268	1	0	1	0	16	
 shared	LEVEL_01_195A80	function	332	1	0	1	0	16	
 shared	LEVEL_01_195BD0	function	84	1	0	1	0	16	
-shared	LEVEL_01_195C28	function	368	1	0	1	0	16	
+shared	LEVEL_01_195C28	function	372	1	0	1	0	16	
 shared	LEVEL_01_195D9C	function	324	1	0	1	0	16	
 shared	LEVEL_01_195EE0	function	100	1	0	1	0	16	
 shared	LEVEL_01_195F44	function	380	1	0	1	0	16	
@@ -8343,7 +8339,7 @@ shared	LEVEL_01_196628	function	104	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_1
 shared	LEVEL_01_196690	function	100	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_196628.c
 shared	LEVEL_01_1966F8	function	200	2	0	2	0	16	
 shared	LEVEL_01_196818	function	308	1	0	1	0	16	
-shared	LEVEL_01_196990	function	264	1	0	1	0	16	
+shared	LEVEL_01_196990	function	268	1	0	1	0	16	
 shared	LEVEL_01_196A9C	function	308	1	0	1	0	16	
 shared	LEVEL_01_196BD0	function	380	1	0	1	0	16	
 shared	LEVEL_01_196D4C	function	384	1	0	1	0	16	
@@ -8370,7 +8366,7 @@ shared	LEVEL_01_19AB28	function	1324	1	0	1	0	15
 shared	LEVEL_01_19B058	function	588	1	1	1	1	15	src/levels/01_pokitaru/LEVEL_01_19B058.c
 shared	LEVEL_01_19B2A8	function	56	1	1	1	1	15	src/levels/01_pokitaru/LEVEL_01_19B2A8.c
 shared	LEVEL_01_19B338	function	156	1	0	1	0	10	
-shared	LEVEL_01_19B3E0	function	48	1	0	1	0	14	
+shared	LEVEL_01_19B3E0	function	52	1	0	1	0	14	
 shared	LEVEL_01_19B414	function	36	1	0	1	0	14	
 shared	LEVEL_01_19B438	function	16	1	0	1	0	14	
 shared	LEVEL_01_19B448	function	16	1	0	1	0	14	
@@ -8391,7 +8387,7 @@ shared	LEVEL_01_19C828	function	72	1	0	1	0	14
 shared	LEVEL_01_19C8C8	function	44	1	0	1	0	14	
 shared	LEVEL_01_19C8F8	function	60	1	0	1	0	14	
 shared	LEVEL_01_19C938	function	60	1	0	1	0	10	
-shared	LEVEL_01_19C978	function	84	1	0	1	0	14	
+shared	LEVEL_01_19C978	function	88	1	0	1	0	14	
 shared	LEVEL_01_19C9D0	function	16	1	0	1	0	14	
 shared	LEVEL_01_19C9E0	function	16	1	0	1	0	14	
 shared	LEVEL_01_19C9F0	function	16	1	0	1	0	14	
@@ -8420,9 +8416,9 @@ shared	LEVEL_01_19DB08	function	40	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_19
 shared	LEVEL_01_19DB30	function	160	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_19DB30.c
 shared	LEVEL_01_19DBD0	function	28	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_19DBD0.c
 shared	LEVEL_01_19DBF0	function	40	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_19DBF0.c
-shared	LEVEL_01_19DC38	function	208	1	0	1	0	13	
+shared	LEVEL_01_19DC38	function	212	1	0	1	0	13	
 shared	LEVEL_01_19DD0C	function	36	1	0	1	0	13	
-shared	LEVEL_01_19DD30	function	916	1	0	1	0	13	
+shared	LEVEL_01_19DD30	function	920	1	0	1	0	13	
 shared	LEVEL_01_19E0C8	function	36	1	0	1	0	13	
 shared	LEVEL_01_19E0EC	function	712	1	0	1	0	13	
 shared	LEVEL_01_19E3B4	function	56	1	0	1	0	13	
@@ -8440,18 +8436,18 @@ shared	LEVEL_01_19F7C0	function	412	1	0	1	0	8
 shared	LEVEL_01_19F960	function	92	12	0	12	0	14	
 shared	LEVEL_01_19FA20	function	420	1	0	1	0	8	
 shared	LEVEL_01_19FBC8	function	724	1	0	1	0	8	
-shared	LEVEL_01_19FEA0	function	692	1	0	1	0	8	
+shared	LEVEL_01_19FEA0	function	696	1	0	1	0	8	
 shared	LEVEL_01_1A0158	function	28	1	0	1	0	8	
 shared	LEVEL_01_1A0174	function	8	1	0	1	0	8	
 shared	LEVEL_01_1A017C	function	8	1	0	1	0	8	
 shared	LEVEL_01_1A0184	function	24	1	0	1	0	8	
 shared	LEVEL_01_1A019C	function	8	1	0	1	0	8	
 shared	LEVEL_01_1A01A4	function	32	1	0	1	0	8	
-shared	LEVEL_01_1A01C4	function	28	1	0	1	0	8	
+shared	LEVEL_01_1A01C4	function	32	1	0	1	0	8	
 shared	LEVEL_01_1A01E4	function	24	1	0	1	0	8	
 shared	LEVEL_01_1A01FC	function	8	1	0	1	0	8	
 shared	LEVEL_01_1A0204	function	136	1	0	1	0	8	
-shared	LEVEL_01_1A0298	function	304	1	0	1	0	8	
+shared	LEVEL_01_1A0298	function	308	1	0	1	0	8	
 shared	LEVEL_01_1A03CC	function	20	1	0	1	0	8	
 shared	LEVEL_01_1A03E0	function	128	1	0	1	0	8	
 shared	LEVEL_01_1A0460	function	40	1	0	1	0	8	
@@ -8507,7 +8503,7 @@ shared	LEVEL_01_1A9480	function	1892	1	0	1	0	12
 shared	LEVEL_01_1A9BE8	function	240	1	1	1	1	12	src/levels/shared/LEVEL_01_1A9BE8.c
 shared	LEVEL_01_1A9CD8	function	60	1	1	1	1	12	src/levels/shared/LEVEL_01_1A9CD8.c
 shared	LEVEL_01_1A9D18	function	340	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1A9D18.c
-shared	LEVEL_01_1A9E70	function	124	1	0	1	0	12	
+shared	LEVEL_01_1A9E70	function	128	1	0	1	0	12	
 shared	LEVEL_01_1A9EF0	function	28	1	0	1	0	12	
 shared	LEVEL_01_1A9F0C	function	76	1	0	1	0	12	
 shared	LEVEL_01_1A9F58	function	60	1	0	1	0	12	
@@ -8554,7 +8550,7 @@ shared	LEVEL_01_1B0978	function	32	1	1	1	1	12	src/levels/shared/LEVEL_01_1B0978.
 shared	LEVEL_01_1B0998	function	616	1	0	1	0	16	
 shared	LEVEL_01_1B0C00	function	708	1	0	1	0	12	
 shared	LEVEL_01_1B0EC8	function	156	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_1B0EC8.c
-shared	LEVEL_01_1B0F70	fragment	468	1	0	0	0	16	
+shared	LEVEL_01_1B0F70	fragment	472	1	0	0	0	16	
 shared	LEVEL_01_1B1148	function	3200	1	0	1	0	16	
 shared	LEVEL_01_1B1DC8	function	96	2	1	2	1	16	src/levels/01_pokitaru/LEVEL_01_1B1DC8.c
 shared	LEVEL_01_1B1E28	function	2288	1	0	1	0	16	
@@ -8612,7 +8608,7 @@ shared	LEVEL_01_1B6A30	function	1268	1	0	1	0	16
 shared	LEVEL_01_1B6F28	function	56	1	1	1	1	16	src/levels/shared/LEVEL_01_1B6F28.c
 shared	LEVEL_01_1B6FB8	function	864	1	0	1	0	8	
 shared	LEVEL_01_1B7378	function	240	1	0	1	0	8	
-shared	LEVEL_01_1B7468	function	96	1	0	1	0	8	
+shared	LEVEL_01_1B7468	function	100	1	0	1	0	8	
 shared	LEVEL_01_1B74CC	function	100	1	0	1	0	8	
 shared	LEVEL_01_1B7530	function	296	1	0	1	0	8	
 shared	LEVEL_01_1B7658	function	420	1	0	1	0	8	
@@ -8636,7 +8632,7 @@ shared	LEVEL_01_1B98C0	function	220	1	0	1	0	2
 shared	LEVEL_01_1B99A0	function	640	1	0	1	0	2	
 shared	LEVEL_01_1B9C20	function	232	1	0	1	0	2	
 shared	LEVEL_01_1B9D08	function	340	1	0	1	0	2	
-shared	LEVEL_01_1B9E60	function	136	1	0	1	0	2	
+shared	LEVEL_01_1B9E60	function	140	1	0	1	0	2	
 shared	LEVEL_01_1B9EEC	function	64	1	0	1	0	2	
 shared	LEVEL_01_1B9F2C	function	60	1	0	1	0	2	
 shared	LEVEL_01_1B9F68	function	640	1	0	1	0	2	
@@ -8677,7 +8673,7 @@ shared	LEVEL_01_1BC220	function	380	4	0	4	0	10
 shared	LEVEL_01_1BC3F8	function	652	1	0	1	0	2	
 shared	LEVEL_01_1BC688	function	748	1	0	1	0	2	
 shared	LEVEL_01_1BC978	function	176	1	0	1	0	2	
-shared	LEVEL_01_1BCA28	function	108	1	0	1	0	2	
+shared	LEVEL_01_1BCA28	function	112	1	0	1	0	2	
 shared	LEVEL_01_1BCA98	function	28	1	0	1	0	2	
 shared	LEVEL_01_1BCAB4	function	136	1	0	1	0	2	
 shared	LEVEL_01_1BCB3C	function	56	1	0	1	0	2	
@@ -8712,7 +8708,7 @@ shared	LEVEL_01_1BD7F4	function	436	1	0	1	0	2
 shared	LEVEL_01_1BD9A8	function	228	1	0	1	0	2	
 shared	LEVEL_01_1BDA8C	function	36	1	0	1	0	2	
 shared	LEVEL_01_1BDAB0	function	652	1	0	1	0	2	
-shared	LEVEL_01_1BDD40	function	96	1	0	1	0	2	
+shared	LEVEL_01_1BDD40	function	100	1	0	1	0	2	
 shared	LEVEL_01_1BDDA4	function	24	1	0	1	0	2	
 shared	LEVEL_01_1BDDBC	function	76	1	0	1	0	2	
 shared	LEVEL_01_1BDE08	function	76	1	0	1	0	2	
@@ -8783,14 +8779,14 @@ shared	LEVEL_01_1C7188	function	52	1	1	1	1	17	src/levels/shared/LEVEL_16_17F998.
 shared	LEVEL_01_1C71BC	fragment	8	1	0	0	0	13	
 shared	LEVEL_01_1C71C8	function	212	1	0	1	0	17	
 shared	LEVEL_01_1C72A0	function	84	1	0	1	0	17	
-shared	LEVEL_01_1C72F8	function	276	1	0	1	0	13	
+shared	LEVEL_01_1C72F8	function	280	1	0	1	0	13	
 shared	LEVEL_01_1C7410	function	8	1	0	1	0	17	
 shared	LEVEL_01_1C7418	function	8	1	0	1	0	17	
 shared	LEVEL_01_1C7420	function	8	1	0	1	0	17	
 shared	LEVEL_01_1C7428	function	8	1	0	1	0	17	
 shared	LEVEL_01_1C7430	function	8	1	0	1	0	17	
 shared	LEVEL_01_1C7438	function	8	1	0	1	0	17	
-shared	LEVEL_01_1C7440	function	76	1	0	1	0	13	
+shared	LEVEL_01_1C7440	function	80	1	0	1	0	13	
 shared	LEVEL_01_1C7490	function	28	1	0	1	0	13	
 shared	LEVEL_01_1C74AC	function	28	1	0	1	0	13	
 shared	LEVEL_01_1C74C8	function	28	1	0	1	0	13	
@@ -8807,14 +8803,14 @@ shared	LEVEL_01_1C7A20	function	172	1	0	1	0	17
 shared	LEVEL_01_1C7AD0	function	32	1	1	1	1	17	src/levels/01_pokitaru/LEVEL_01_1C7AD0.c
 shared	LEVEL_01_1C7AF0	fragment	4	1	0	0	0	14	
 shared	LEVEL_01_1C7AF8	function	1044	1	0	1	0	13	
-shared	LEVEL_01_1C7F0C	fragment	216	1	0	0	0	13	
+shared	LEVEL_01_1C7F0C	fragment	220	1	0	0	0	13	
 shared	LEVEL_01_1C7FE8	function	1704	1	0	1	0	17	
 shared	LEVEL_01_1C8690	function	312	1	0	1	0	17	
 shared	LEVEL_01_1C87C8	function	72	1	0	1	0	17	
 shared	LEVEL_01_1C8810	function	880	1	0	1	0	17	
 shared	LEVEL_01_1C8B80	function	208	1	0	1	0	17	
 shared	LEVEL_01_1C8C50	function	644	1	0	1	0	17	
-shared	LEVEL_01_1C8ED4	function	316	1	0	1	0	17	
+shared	LEVEL_01_1C8ED4	function	320	1	0	1	0	17	
 shared	LEVEL_01_1C9014	function	16	1	0	1	0	17	
 shared	LEVEL_01_1C9024	function	76	1	0	1	0	17	
 shared	LEVEL_01_1C9070	function	44	1	0	1	0	17	
@@ -8923,9 +8919,9 @@ shared	LEVEL_01_1D4320	function	304	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_1
 shared	LEVEL_01_1D4450	function	92	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_1D4450.c
 shared	LEVEL_01_1D4510	fragment	400	1	0	0	0	16	
 shared	LEVEL_01_1D46A0	function	2036	1	0	1	0	16	
-shared	LEVEL_01_1D4E94	fragment	492	1	0	0	0	16	
+shared	LEVEL_01_1D4E94	fragment	496	1	0	0	0	16	
 shared	LEVEL_01_1D5088	function	3180	1	0	1	0	16	
-shared	LEVEL_01_1D5CF4	fragment	160	1	0	0	0	16	
+shared	LEVEL_01_1D5CF4	fragment	164	1	0	0	0	16	
 shared	LEVEL_01_1D5DC0	function	556	1	0	1	0	16	
 shared	LEVEL_01_1D5FF0	function	32	1	0	1	0	16	
 shared	LEVEL_01_1D6010	function	2216	1	0	1	0	16	
@@ -9033,7 +9029,7 @@ shared	LEVEL_01_1EB0A8	function	268	1	0	1	0	19
 shared	LEVEL_01_1EB310	function	44	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_1EB310.c
 shared	LEVEL_01_1EB3F8	function	24	1	0	1	0	19	
 shared	LEVEL_01_1EB420	function	24	1	0	1	0	19	
-shared	LEVEL_01_1EB450	function	4	1	0	1	0	19	
+shared	LEVEL_01_1EB450	function	8	1	0	1	0	19	
 shared	LEVEL_01_1EB458	function	20	1	0	1	0	19	
 shared	LEVEL_01_1EBC50	function	140	1	1	1	1	20	src/levels/01_pokitaru/LEVEL_01_1EBC50.c
 shared	LEVEL_01_1EDAD0	function	8	2	0	2	0	19	
@@ -9042,7 +9038,7 @@ shared	LEVEL_01_1EDBAC	function	24	1	0	1	0	19
 shared	LEVEL_01_1EDBC4	function	100	1	0	1	0	19	
 shared	LEVEL_01_1EDC30	function	12	1	0	1	0	19	
 shared	LEVEL_01_1EDC44	function	24	1	0	1	0	19	
-shared	LEVEL_01_1EDC74	function	4	1	0	1	0	19	
+shared	LEVEL_01_1EDC74	function	8	1	0	1	0	19	
 shared	LEVEL_01_1EDC7C	function	28	1	0	1	0	19	
 shared	LEVEL_02_00D5A8	fragment	4	1	0	0	0	14	
 shared	LEVEL_02_013A90	function	712	1	0	1	0	4	
@@ -9126,7 +9122,7 @@ shared	LEVEL_02_0D1338	function	60	1	1	1	1	4	src/levels/02_rykan_v/LEVEL_02_0D13
 shared	LEVEL_02_0D1378	function	72	1	1	1	1	4	src/levels/02_rykan_v/LEVEL_02_0D1378.c
 shared	LEVEL_02_0F1E30	fragment	76	1	0	0	0	14	
 shared	LEVEL_02_110B68	function	1772	1	0	1	0	5	
-shared	LEVEL_02_111254	fragment	444	1	0	0	0	5	
+shared	LEVEL_02_111254	fragment	448	1	0	0	0	5	
 shared	LEVEL_02_129220	function	76	1	1	1	1	19	src/levels/02_rykan_v/LEVEL_02_129220.c
 shared	LEVEL_02_12C8F4	fragment	8	1	0	0	0	9	
 shared	LEVEL_02_148C70	function	48	1	0	1	0	2	
@@ -9201,7 +9197,7 @@ shared	LEVEL_02_184070	function	604	1	0	1	0	2
 shared	LEVEL_02_1842D0	function	624	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_1842D0.c
 shared	LEVEL_02_184540	function	40	1	0	1	0	2	
 shared	LEVEL_02_1845C0	function	472	1	0	1	0	3	
-shared	LEVEL_02_1847D0	function	68	1	0	1	0	3	
+shared	LEVEL_02_1847D0	function	72	1	0	1	0	3	
 shared	LEVEL_02_184818	function	44	1	0	1	0	3	
 shared	LEVEL_02_184844	function	68	1	0	1	0	3	
 shared	LEVEL_02_184888	function	60	1	0	1	0	3	
@@ -9244,7 +9240,7 @@ shared	LEVEL_02_1CC5F0	function	80	1	0	1	0	3
 shared	LEVEL_02_1D0D80	function	184	1	0	1	0	4	
 shared	LEVEL_02_1D0E38	function	1000	1	0	1	0	4	
 shared	LEVEL_02_1D1220	function	92	1	0	1	0	4	
-shared	LEVEL_02_1D1280	function	108	1	0	1	0	4	
+shared	LEVEL_02_1D1280	function	112	1	0	1	0	4	
 shared	LEVEL_02_1D12F0	function	44	1	0	1	0	4	
 shared	LEVEL_02_1D131C	function	72	1	0	1	0	4	
 shared	LEVEL_02_1D1364	function	112	1	0	1	0	4	
@@ -9253,8 +9249,8 @@ shared	LEVEL_02_1D1450	function	28	1	0	1	0	4
 shared	LEVEL_02_1D146C	function	28	1	0	1	0	4	
 shared	LEVEL_02_1D1488	function	692	1	0	1	0	4	
 shared	LEVEL_02_1D173C	function	168	1	0	1	0	4	
-shared	LEVEL_02_1D17E4	function	36	1	0	1	0	4	
-shared	LEVEL_02_1D180C	function	40	1	0	1	0	4	
+shared	LEVEL_02_1D17E4	function	40	1	0	1	0	4	
+shared	LEVEL_02_1D180C	function	44	1	0	1	0	4	
 shared	LEVEL_02_1D1838	function	36	1	0	1	0	4	
 shared	LEVEL_02_1D185C	function	132	1	0	1	0	4	
 shared	LEVEL_02_1D18E0	function	464	1	0	1	0	4	
@@ -9320,10 +9316,10 @@ shared	LEVEL_03_12D008	function	40	1	1	1	1	3	src/levels/03_kalidon/LEVEL_03_12D0
 shared	LEVEL_03_12D438	function	160	1	1	1	1	3	src/levels/03_kalidon/LEVEL_03_12D438.c
 shared	LEVEL_03_1376F0	function	180	1	0	1	0	7	
 shared	LEVEL_03_140DE8	function	276	1	0	1	0	2	
-shared	LEVEL_03_140F08	function	80	1	0	1	0	2	
+shared	LEVEL_03_140F08	function	84	1	0	1	0	2	
 shared	LEVEL_03_140F5C	function	16	1	0	1	0	2	
 shared	LEVEL_03_140F6C	function	16	1	0	1	0	2	
-shared	LEVEL_03_140F7C	function	16	1	0	1	0	2	
+shared	LEVEL_03_140F7C	function	20	1	0	1	0	2	
 shared	LEVEL_03_140F90	function	108	1	0	1	0	2	
 shared	LEVEL_03_140FFC	function	16	1	0	1	0	7	
 shared	LEVEL_03_141010	function	212	1	0	1	0	2	
@@ -9395,7 +9391,7 @@ shared	LEVEL_03_17A2A8	function	80	2	0	2	0	8
 shared	LEVEL_03_17A350	function	152	1	0	1	0	7	
 shared	LEVEL_03_17A3E8	function	284	1	0	1	0	7	
 shared	LEVEL_03_17A508	function	2508	1	0	1	0	7	
-shared	LEVEL_03_17AED8	function	52	5	0	5	0	8	
+shared	LEVEL_03_17AED8	function	52	6	0	5	0	8	
 shared	LEVEL_03_17AF10	function	176	1	0	1	0	7	
 shared	LEVEL_03_17AFC0	function	268	1	0	1	0	7	
 shared	LEVEL_03_17B0D0	function	100	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_17B0D0.c
@@ -9509,7 +9505,7 @@ shared	LEVEL_04_0752C0	function	328	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_075
 shared	LEVEL_04_075408	function	412	1	1	1	1	3	src/levels/shared/LEVEL_04_075408.c
 shared	LEVEL_04_0755A8	function	508	1	0	1	0	3	
 shared	LEVEL_04_0757D8	function	552	1	0	1	0	3	
-shared	LEVEL_04_075A00	fragment	108	1	0	0	0	3	
+shared	LEVEL_04_075A00	fragment	112	1	0	0	0	3	
 shared	LEVEL_04_076640	fragment	36	1	0	0	0	6	
 shared	LEVEL_04_078058	function	160	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_078058.c
 shared	LEVEL_04_07A7A0	function	296	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_07A7A0.c
@@ -9558,7 +9554,7 @@ shared	LEVEL_04_0F4748	fragment	7124	1	0	0	0	3
 shared	LEVEL_04_105E40	function	3656	1	0	1	0	2	
 shared	LEVEL_04_106C88	function	112	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_106C88.c
 shared	LEVEL_04_106CF8	function	812	1	0	1	0	2	
-shared	LEVEL_04_108200	fragment	424	1	0	0	0	7	
+shared	LEVEL_04_108200	fragment	428	1	0	0	0	7	
 shared	LEVEL_04_1083B0	function	3676	1	0	1	0	7	
 shared	LEVEL_04_109210	function	96	1	1	1	1	7	src/levels/04_metalis/LEVEL_04_109210.c
 shared	LEVEL_04_109270	function	1348	1	0	1	0	7	
@@ -9582,13 +9578,13 @@ shared	LEVEL_04_14EEA0	function	104	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_14E
 shared	LEVEL_04_14EF08	function	84	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_14EF08.c
 shared	LEVEL_04_14EF60	function	40	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_14EF60.c
 shared	LEVEL_04_14EF88	function	16	1	0	1	0	3	
-shared	LEVEL_04_14EFA0	function	72	1	0	1	0	3	
+shared	LEVEL_04_14EFA0	function	76	1	0	1	0	3	
 shared	LEVEL_04_14EFEC	function	196	1	0	1	0	3	
 shared	LEVEL_04_14F0B0	function	380	1	0	1	0	3	
 shared	LEVEL_04_14F22C	function	144	1	0	1	0	3	
 shared	LEVEL_04_14F2BC	function	80	1	0	1	0	3	
 shared	LEVEL_04_14F30C	function	104	1	0	1	0	3	
-shared	LEVEL_04_14F374	function	24	1	0	1	0	3	
+shared	LEVEL_04_14F374	function	28	1	0	1	0	3	
 shared	LEVEL_04_14F390	function	200	1	0	1	0	3	
 shared	LEVEL_04_14F458	function	508	1	0	1	0	3	
 shared	LEVEL_04_14F654	function	72	1	0	1	0	3	
@@ -9609,7 +9605,7 @@ shared	LEVEL_04_14FBF8	function	84	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_14FB
 shared	LEVEL_04_14FC50	function	112	1	0	1	0	3	
 shared	LEVEL_04_164528	function	260	1	0	1	0	2	
 shared	LEVEL_04_164630	function	56	2	0	2	0	2	
-shared	LEVEL_04_164668	function	684	1	0	1	0	2	
+shared	LEVEL_04_164668	function	688	1	0	1	0	2	
 shared	LEVEL_04_164918	function	224	1	0	1	0	2	
 shared	LEVEL_04_1649F8	function	40	1	0	1	0	2	
 shared	LEVEL_04_164A20	function	68	1	0	1	0	2	
@@ -9679,7 +9675,7 @@ shared	LEVEL_04_16FF90	function	492	1	0	1	0	2
 shared	LEVEL_04_170180	function	916	1	0	1	0	2	
 shared	LEVEL_04_170518	function	280	1	0	1	0	2	
 shared	LEVEL_04_170688	function	92	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_170688.c
-shared	LEVEL_04_170708	function	48	1	0	1	0	2	
+shared	LEVEL_04_170708	function	52	1	0	1	0	2	
 shared	LEVEL_04_17073C	function	16	2	0	2	0	6	
 shared	LEVEL_04_17074C	function	16	2	0	2	0	6	
 shared	LEVEL_04_17075C	function	16	2	0	2	0	6	
@@ -9703,7 +9699,7 @@ shared	LEVEL_04_171660	function	200	1	0	1	0	2
 shared	LEVEL_04_171728	function	912	1	0	1	0	2	
 shared	LEVEL_04_171AF0	function	36	1	1	1	1	2	src/levels/shared/LEVEL_04_171AF0.c
 shared	LEVEL_04_171B98	function	228	1	0	1	0	2	
-shared	LEVEL_04_171C88	function	76	1	0	1	0	2	
+shared	LEVEL_04_171C88	function	80	1	0	1	0	2	
 shared	LEVEL_04_171CD8	function	176	1	0	1	0	2	
 shared	LEVEL_04_171D88	function	144	1	0	1	0	2	
 shared	LEVEL_04_171E18	function	60	1	0	1	0	2	
@@ -9711,7 +9707,7 @@ shared	LEVEL_04_171E54	function	284	1	0	1	0	2
 shared	LEVEL_04_171F98	function	128	1	0	1	0	2	
 shared	LEVEL_04_172018	function	44	1	0	1	0	2	
 shared	LEVEL_04_176288	function	288	1	0	1	0	2	
-shared	LEVEL_04_1763E0	function	204	1	0	1	0	2	
+shared	LEVEL_04_1763E0	function	208	1	0	1	0	2	
 shared	LEVEL_04_1764B0	function	16	1	0	1	0	2	
 shared	LEVEL_04_1764C0	function	16	1	0	1	0	2	
 shared	LEVEL_04_1764D0	function	20	1	0	1	0	2	
@@ -9801,7 +9797,7 @@ shared	LEVEL_04_198DD0	function	68	1	0	1	0	2
 shared	LEVEL_04_198E70	function	100	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_198E70.c
 shared	LEVEL_04_198ED8	function	156	1	0	1	0	3	
 shared	LEVEL_04_198F78	function	128	1	0	1	0	3	
-shared	LEVEL_04_198FF8	function	84	1	0	1	0	3	
+shared	LEVEL_04_198FF8	function	88	1	0	1	0	3	
 shared	LEVEL_04_199050	function	396	1	0	1	0	3	
 shared	LEVEL_04_1991DC	function	1856	1	0	1	0	3	
 shared	LEVEL_04_19991C	function	136	1	0	1	0	3	
@@ -9815,7 +9811,7 @@ shared	LEVEL_04_19A360	function	512	1	0	1	0	3
 shared	LEVEL_04_19A560	function	72	1	0	1	0	6	
 shared	LEVEL_04_19A5A8	function	40	1	0	1	0	3	
 shared	LEVEL_04_19A628	function	412	1	0	1	0	2	
-shared	LEVEL_04_19A7D0	function	88	1	0	1	0	2	
+shared	LEVEL_04_19A7D0	function	92	1	0	1	0	2	
 shared	LEVEL_04_19A82C	function	432	1	0	1	0	2	
 shared	LEVEL_04_19A9DC	function	324	1	0	1	0	2	
 shared	LEVEL_04_19AB20	function	16	1	0	1	0	2	
@@ -9883,7 +9879,7 @@ shared	LEVEL_04_1BC4B8	function	524	1	0	1	0	2
 shared	LEVEL_04_1BC6C8	function	88	1	1	1	1	2	src/levels/shared/LEVEL_04_1BC6C8.c
 shared	LEVEL_04_1BC778	function	252	1	0	1	0	2	
 shared	LEVEL_04_1BC878	function	44	1	0	1	0	2	
-shared	LEVEL_04_1BC8A8	function	120	1	0	1	0	2	
+shared	LEVEL_04_1BC8A8	function	124	1	0	1	0	2	
 shared	LEVEL_04_1BC924	function	52	1	0	1	0	2	
 shared	LEVEL_04_1BC958	function	172	1	0	1	0	2	
 shared	LEVEL_04_1BCA04	function	92	1	0	1	0	2	
@@ -9906,23 +9902,23 @@ shared	LEVEL_04_1C3640	function	60	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1C36
 shared	LEVEL_04_1C3680	function	112	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1C3680.c
 shared	LEVEL_04_1C3708	function	248	1	0	1	0	3	
 shared	LEVEL_04_1C3800	function	104	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1C3800.c
-shared	LEVEL_04_1C3868	function	128	1	0	1	0	3	
+shared	LEVEL_04_1C3868	function	132	1	0	1	0	3	
 shared	LEVEL_04_1C38EC	function	776	1	0	1	0	3	
-shared	LEVEL_04_1C3BF4	function	12	1	0	1	0	3	
+shared	LEVEL_04_1C3BF4	function	16	1	0	1	0	3	
 shared	LEVEL_04_1C3C04	function	100	1	0	1	0	3	
-shared	LEVEL_04_1C3C68	function	148	1	0	1	0	3	
+shared	LEVEL_04_1C3C68	function	152	1	0	1	0	3	
 shared	LEVEL_04_1C3D00	function	100	1	0	1	0	3	
-shared	LEVEL_04_1C3D64	function	688	1	0	1	0	3	
-shared	LEVEL_04_1C4018	function	284	1	0	1	0	3	
+shared	LEVEL_04_1C3D64	function	692	1	0	1	0	3	
+shared	LEVEL_04_1C4018	function	288	1	0	1	0	3	
 shared	LEVEL_04_1C4138	function	528	1	0	1	0	3	
 shared	LEVEL_04_1C4348	function	212	1	0	1	0	3	
-shared	LEVEL_04_1C441C	function	36	1	0	1	0	3	
+shared	LEVEL_04_1C441C	function	40	1	0	1	0	3	
 shared	LEVEL_04_1C4444	function	76	1	0	1	0	3	
-shared	LEVEL_04_1C4490	function	232	1	0	1	0	3	
+shared	LEVEL_04_1C4490	function	236	1	0	1	0	3	
 shared	LEVEL_04_1C457C	function	340	1	0	1	0	3	
-shared	LEVEL_04_1C46D0	function	472	1	0	1	0	3	
-shared	LEVEL_04_1C48AC	function	224	1	0	1	0	3	
-shared	LEVEL_04_1C4990	function	484	1	0	1	0	3	
+shared	LEVEL_04_1C46D0	function	476	1	0	1	0	3	
+shared	LEVEL_04_1C48AC	function	228	1	0	1	0	3	
+shared	LEVEL_04_1C4990	function	488	1	0	1	0	3	
 shared	LEVEL_04_1C4B78	function	156	1	0	1	0	3	
 shared	LEVEL_04_1C4C14	function	60	1	0	1	0	3	
 shared	LEVEL_04_1C4C50	function	20	1	0	1	0	3	
@@ -10168,13 +10164,13 @@ shared	LEVEL_06_0E3410	function	244	1	1	1	1	2	src/levels/06_challax/LEVEL_06_0E3
 shared	LEVEL_06_127FA0	function	72	1	1	1	1	6	src/levels/shared/LEVEL_06_127FA0.c
 shared	LEVEL_06_14CBE0	function	576	1	0	1	0	2	
 shared	LEVEL_06_14CE20	function	156	1	0	1	0	2	
-shared	LEVEL_06_14CEC0	function	100	1	0	1	0	2	
+shared	LEVEL_06_14CEC0	function	104	1	0	1	0	2	
 shared	LEVEL_06_14CF28	function	20	1	0	1	0	2	
 shared	LEVEL_06_14CF3C	function	56	1	0	1	0	2	
 shared	LEVEL_06_14CF74	function	36	1	0	1	0	2	
 shared	LEVEL_06_14CF98	function	632	1	0	1	0	2	
-shared	LEVEL_06_14D210	function	24	1	0	1	0	2	
-shared	LEVEL_06_14D22C	function	288	1	0	1	0	2	
+shared	LEVEL_06_14D210	function	28	1	0	1	0	2	
+shared	LEVEL_06_14D22C	function	292	1	0	1	0	2	
 shared	LEVEL_06_14D350	function	368	1	0	1	0	2	
 shared	LEVEL_06_14D4C0	function	48	1	0	1	0	2	
 shared	LEVEL_06_14D4F0	function	128	1	0	1	0	2	
@@ -10196,7 +10192,7 @@ shared	LEVEL_06_157500	function	104	1	1	1	1	3	src/levels/06_challax/LEVEL_06_157
 shared	LEVEL_06_16BD98	function	1020	1	0	1	0	2	
 shared	LEVEL_06_16C198	function	484	1	0	1	0	2	
 shared	LEVEL_06_16C380	function	196	1	0	1	0	2	
-shared	LEVEL_06_16C448	function	96	1	0	1	0	2	
+shared	LEVEL_06_16C448	function	100	1	0	1	0	2	
 shared	LEVEL_06_16C4AC	function	52	1	0	1	0	2	
 shared	LEVEL_06_16C4E0	function	668	1	0	1	0	2	
 shared	LEVEL_06_16C77C	function	612	1	0	1	0	2	
@@ -10226,7 +10222,7 @@ shared	LEVEL_06_16E6D0	function	972	1	0	1	0	3
 shared	LEVEL_06_16EAA0	function	884	1	0	1	0	2	
 shared	LEVEL_06_16EE18	function	48	1	0	1	0	3	
 shared	LEVEL_06_17CB80	function	1212	1	0	1	0	3	
-shared	LEVEL_06_17D078	function	108	1	0	1	0	3	
+shared	LEVEL_06_17D078	function	112	1	0	1	0	3	
 shared	LEVEL_06_17D0E8	function	836	1	0	1	0	3	
 shared	LEVEL_06_17D42C	function	420	1	0	1	0	3	
 shared	LEVEL_06_17D5D0	function	1020	1	0	1	0	3	
@@ -10246,7 +10242,7 @@ shared	LEVEL_06_195868	function	760	1	0	1	0	4
 shared	LEVEL_06_195B60	function	36	1	0	1	0	4	
 shared	LEVEL_06_198250	function	476	1	0	1	0	2	
 shared	LEVEL_06_198430	function	428	1	0	1	0	2	
-shared	LEVEL_06_1985E0	function	112	1	0	1	0	2	
+shared	LEVEL_06_1985E0	function	116	1	0	1	0	2	
 shared	LEVEL_06_198654	function	172	1	0	1	0	2	
 shared	LEVEL_06_198700	function	84	1	0	1	0	2	
 shared	LEVEL_06_198754	function	844	1	0	1	0	2	
@@ -10255,7 +10251,7 @@ shared	LEVEL_06_198B7C	function	36	1	0	1	0	2
 shared	LEVEL_06_198BA0	function	36	1	0	1	0	2	
 shared	LEVEL_06_198BC4	function	260	1	0	1	0	2	
 shared	LEVEL_06_198CC8	function	424	1	0	1	0	2	
-shared	LEVEL_06_199158	function	92	1	0	1	0	2	
+shared	LEVEL_06_199158	function	96	1	0	1	0	2	
 shared	LEVEL_06_1991B8	function	344	1	0	1	0	2	
 shared	LEVEL_06_199310	function	88	1	0	1	0	2	
 shared	LEVEL_06_199368	function	184	1	0	1	0	2	
@@ -10284,7 +10280,7 @@ shared	LEVEL_07_030A98	fragment	60	1	0	0	0	3
 shared	LEVEL_07_12BC98	function	148	1	1	1	1	3	src/levels/shared/LEVEL_22_0FFB18.c
 shared	LEVEL_07_12BD2C	fragment	8	1	0	0	0	2	
 shared	LEVEL_07_15F670	function	104	1	0	1	0	4	
-shared	LEVEL_07_15F6E0	function	112	1	0	1	0	4	
+shared	LEVEL_07_15F6E0	function	116	1	0	1	0	4	
 shared	LEVEL_07_15F754	function	56	1	0	1	0	4	
 shared	LEVEL_07_15F78C	function	64	1	0	1	0	4	
 shared	LEVEL_07_15F7CC	function	60	1	0	1	0	4	
@@ -10422,7 +10418,7 @@ shared	LEVEL_15_0C35E0	fragment	36	1	0	0	0	7
 shared	LEVEL_15_0C3730	fragment	28	1	0	0	0	7	
 shared	LEVEL_15_0D00CC	fragment	16	1	0	0	0	2	
 shared	LEVEL_15_0D0138	fragment	20	1	0	0	0	2	
-shared	LEVEL_15_0D1FC8	fragment	60	1	0	0	0	2	
+shared	LEVEL_15_0D1FC8	fragment	64	1	0	0	0	2	
 shared	LEVEL_15_0D49F0	fragment	28	1	0	0	0	4	
 shared	LEVEL_15_0D6564	fragment	16	1	0	0	0	3	
 shared	LEVEL_15_0D8E80	fragment	4	1	0	0	0	8	
@@ -10622,7 +10618,7 @@ shared	LEVEL_16_066138	function	512	1	0	1	0	5
 shared	LEVEL_16_069EE8	function	1400	1	0	1	0	5	
 shared	LEVEL_16_06C010	fragment	36	1	0	0	0	5	
 shared	LEVEL_16_06C090	function	1388	1	0	1	0	5	
-shared	LEVEL_16_06C5FC	fragment	356	1	0	0	0	5	
+shared	LEVEL_16_06C5FC	fragment	360	1	0	0	0	5	
 shared	LEVEL_16_06C768	function	7220	1	0	1	0	5	
 shared	LEVEL_16_06E3A0	function	116	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_06E3A0.c
 shared	LEVEL_16_06E7A8	function	356	1	0	1	0	4	
@@ -10667,7 +10663,7 @@ shared	LEVEL_16_094FA8	function	180	1	0	1	0	5
 shared	LEVEL_16_095518	function	336	1	0	1	0	5	
 shared	LEVEL_16_0956D8	function	452	1	0	1	0	5	
 shared	LEVEL_16_095F78	function	224	1	0	1	0	5	
-shared	LEVEL_16_096058	fragment	40	1	0	0	0	5	
+shared	LEVEL_16_096058	fragment	44	1	0	0	0	5	
 shared	LEVEL_16_096128	function	160	1	0	1	0	5	
 shared	LEVEL_16_0961C8	function	124	1	0	1	0	5	
 shared	LEVEL_16_096EE0	function	28	1	1	1	1	5	src/levels/shared/LEVEL_16_096EE0.c
@@ -10705,43 +10701,43 @@ shared	LEVEL_16_0AA990	fragment	4	1	0	0	0	5
 shared	LEVEL_16_0AA998	function	20	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_0AA998.c
 shared	LEVEL_16_0AA9B0	function	1136	1	0	1	0	5	
 shared	LEVEL_16_0AAE30	function	100	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_0AAE30.c
-shared	LEVEL_16_0AAE98	function	1240	1	0	1	0	5	
-shared	LEVEL_16_0AB374	function	12	1	0	1	0	5	
+shared	LEVEL_16_0AAE98	function	1244	1	0	1	0	5	
+shared	LEVEL_16_0AB374	function	16	1	0	1	0	5	
 shared	LEVEL_16_0AB384	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB390	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB3A0	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB3B0	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB3C0	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB3D0	function	24	1	0	1	0	5	
-shared	LEVEL_16_0AB3EC	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB3FC	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB40C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB41C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB42C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB43C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB44C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB45C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB46C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB47C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB48C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB49C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB4AC	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB4BC	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB4CC	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB4DC	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB4EC	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB4FC	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB50C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB51C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB52C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB53C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB54C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB55C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB56C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB57C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB58C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB59C	function	12	1	0	1	0	5	
-shared	LEVEL_16_0AB5AC	function	12	1	0	1	0	5	
+shared	LEVEL_16_0AB390	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB3A0	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB3B0	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB3C0	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB3D0	function	28	1	0	1	0	5	
+shared	LEVEL_16_0AB3EC	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB3FC	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB40C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB41C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB42C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB43C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB44C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB45C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB46C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB47C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB48C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB49C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB4AC	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB4BC	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB4CC	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB4DC	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB4EC	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB4FC	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB50C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB51C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB52C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB53C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB54C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB55C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB56C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB57C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB58C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB59C	function	16	1	0	1	0	5	
+shared	LEVEL_16_0AB5AC	function	16	1	0	1	0	5	
 shared	LEVEL_16_0AB5BC	function	144	1	0	1	0	5	
 shared	LEVEL_16_0AB6A8	function	100	1	0	1	0	5	
 shared	LEVEL_16_0AB998	function	672	1	0	1	0	5	
@@ -10768,7 +10764,7 @@ shared	LEVEL_16_0B81E8	function	112	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL
 shared	LEVEL_16_0B8258	function	48	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_0B8258.c
 shared	LEVEL_16_0B8288	function	56	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_0B8288.c
 shared	LEVEL_16_0B82D0	fragment	492	1	0	0	0	5	
-shared	LEVEL_16_0B84BC	function	100	1	0	1	0	5	
+shared	LEVEL_16_0B84BC	function	104	1	0	1	0	5	
 shared	LEVEL_16_0B8524	function	60	1	0	1	0	5	
 shared	LEVEL_16_0B8560	function	76	1	0	1	0	5	
 shared	LEVEL_16_0B85AC	function	16	1	0	1	0	5	
@@ -10796,7 +10792,7 @@ shared	LEVEL_16_0CA618	function	348	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL
 shared	LEVEL_16_0CEFC0	function	1504	1	0	1	0	4	
 shared	LEVEL_16_0D4E10	function	92	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_0D4E10.c
 shared	LEVEL_16_0DA098	fragment	52	1	0	0	0	4	
-shared	LEVEL_16_0E72D4	fragment	216	1	0	0	0	4	
+shared	LEVEL_16_0E72D4	fragment	220	1	0	0	0	4	
 shared	LEVEL_16_0E73B0	function	1768	1	0	1	0	5	
 shared	LEVEL_16_0E7A98	function	92	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_0E7A98.c
 shared	LEVEL_16_0E7AF8	function	80	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_0E7AF8.c
@@ -10960,7 +10956,7 @@ shared	LEVEL_16_11DE68	function	116	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL
 shared	LEVEL_16_11DEF0	function	660	1	0	1	0	5	
 shared	LEVEL_16_11E188	function	180	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_11E188.c
 shared	LEVEL_16_11E240	function	348	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_11E240.c
-shared	LEVEL_16_11E3A0	function	84	1	0	1	0	5	
+shared	LEVEL_16_11E3A0	function	88	1	0	1	0	5	
 shared	LEVEL_16_11E3F8	function	180	1	0	1	0	5	
 shared	LEVEL_16_11E4AC	function	124	1	0	1	0	5	
 shared	LEVEL_16_11E528	function	184	1	0	1	0	5	
@@ -10994,13 +10990,13 @@ shared	LEVEL_16_11FA90	function	248	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL
 shared	LEVEL_16_11FB88	function	92	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_11FB88.c
 shared	LEVEL_16_11FBE8	function	552	1	0	1	0	5	
 shared	LEVEL_16_11FE10	function	968	1	0	1	0	5	
-shared	LEVEL_16_1201D8	function	92	1	0	1	0	5	
+shared	LEVEL_16_1201D8	function	96	1	0	1	0	5	
 shared	LEVEL_16_120238	function	32	1	0	1	0	5	
 shared	LEVEL_16_120258	function	56	1	0	1	0	5	
 shared	LEVEL_16_120290	function	188	1	0	1	0	5	
-shared	LEVEL_16_12034C	function	152	1	0	1	0	5	
+shared	LEVEL_16_12034C	function	156	1	0	1	0	5	
 shared	LEVEL_16_1203E8	function	108	1	0	1	0	5	
-shared	LEVEL_16_120454	function	184	1	0	1	0	5	
+shared	LEVEL_16_120454	function	188	1	0	1	0	5	
 shared	LEVEL_16_120510	function	272	1	0	1	0	5	
 shared	LEVEL_16_120620	function	44	1	0	1	0	5	
 shared	LEVEL_16_12064C	function	180	1	0	1	0	5	
@@ -11139,7 +11135,7 @@ shared	LEVEL_16_143020	function	324	1	0	1	0	4
 shared	LEVEL_16_143168	function	188	1	0	1	0	4	
 shared	LEVEL_16_143228	function	72	1	0	1	0	4	
 shared	LEVEL_16_143270	function	112	1	0	1	0	4	
-shared	LEVEL_16_1432E0	fragment	316	1	0	0	0	4	
+shared	LEVEL_16_1432E0	fragment	320	1	0	0	0	4	
 shared	LEVEL_16_143420	function	3512	1	0	1	0	4	
 shared	LEVEL_16_1441D8	function	1428	1	0	1	0	4	
 shared	LEVEL_16_144770	function	96	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_144770.c
@@ -11170,7 +11166,7 @@ shared	LEVEL_16_14D820	function	72	1	0	1	0	4
 shared	LEVEL_16_14D8A0	function	40	1	1	1	1	4	src/levels/shared/LEVEL_16_14D8A0.c
 shared	LEVEL_16_14DA88	function	132	1	0	1	0	4	
 shared	LEVEL_16_14DB30	function	1388	1	0	1	0	4	
-shared	LEVEL_16_14E1E0	function	232	1	0	1	0	4	
+shared	LEVEL_16_14E1E0	function	236	1	0	1	0	4	
 shared	LEVEL_16_14E2CC	function	12	1	0	1	0	4	
 shared	LEVEL_16_14E400	function	264	1	0	1	0	4	
 shared	LEVEL_16_14E508	function	228	1	0	1	0	4	
@@ -11261,7 +11257,7 @@ shared	LEVEL_16_164C78	function	1052	1	0	1	0	4
 shared	LEVEL_16_165098	function	140	1	0	1	0	4	
 shared	LEVEL_16_165128	function	288	1	0	1	0	4	
 shared	LEVEL_16_165248	function	1268	1	0	1	0	4	
-shared	LEVEL_16_16573C	fragment	232	1	0	0	0	4	
+shared	LEVEL_16_16573C	fragment	236	1	0	0	0	4	
 shared	LEVEL_16_165828	function	1224	1	0	1	0	4	
 shared	LEVEL_16_165CF0	function	112	1	0	1	0	4	
 shared	LEVEL_16_165E18	function	776	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_165E18.c
@@ -11276,7 +11272,7 @@ shared	LEVEL_16_16C330	function	136	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL
 shared	LEVEL_16_16C780	function	168	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_16C780.c
 shared	LEVEL_16_16C8C0	function	212	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_16C8C0.c
 shared	LEVEL_16_16C9F0	function	56	2	0	2	0	4	
-shared	LEVEL_16_16CA58	function	48	2	0	2	0	4	
+shared	LEVEL_16_16CA58	function	52	2	0	2	0	4	
 shared	LEVEL_16_16CACC	function	52	2	0	2	0	4	
 shared	LEVEL_16_16CB00	function	12	2	0	2	0	4	
 shared	LEVEL_16_16CB28	function	32	2	2	2	2	4	src/levels/16_multiplayer_01/LEVEL_16_16CB28.c
@@ -11340,8 +11336,8 @@ shared	LEVEL_16_17F658	function	164	1	0	1	0	4
 shared	LEVEL_16_17F728	function	80	1	0	1	0	4	
 shared	LEVEL_16_17F778	function	72	1	0	1	0	4	
 shared	LEVEL_16_17F9D0	function	12	1	1	1	1	4	src/levels/shared/LEVEL_16_17F9D0.c
-shared	LEVEL_16_17FB10	function	272	1	0	1	0	4	
-shared	LEVEL_16_17FC54	function	76	1	0	1	0	4	
+shared	LEVEL_16_17FB10	function	276	1	0	1	0	4	
+shared	LEVEL_16_17FC54	function	80	1	0	1	0	4	
 shared	LEVEL_16_17FCA4	function	28	1	0	1	0	4	
 shared	LEVEL_16_17FCC0	function	28	1	0	1	0	4	
 shared	LEVEL_16_17FCDC	function	28	1	0	1	0	4	
@@ -11353,7 +11349,7 @@ shared	LEVEL_16_17FD40	function	68	1	0	1	0	4
 shared	LEVEL_16_17FD84	function	36	1	0	1	0	4	
 shared	LEVEL_16_17FE80	function	964	1	0	1	0	4	
 shared	LEVEL_16_180320	function	984	1	0	1	0	4	
-shared	LEVEL_16_1806F8	fragment	212	1	0	0	0	4	
+shared	LEVEL_16_1806F8	fragment	216	1	0	0	0	4	
 shared	LEVEL_16_181928	function	4756	1	0	1	0	4	
 shared	LEVEL_16_184410	function	688	1	0	1	0	4	
 shared	LEVEL_16_184710	function	24	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_184710.c
@@ -11576,13 +11572,13 @@ shared	LEVEL_22_131A98	function	104	1	1	1	1	2	src/levels/22_skyboard_kalidon/LEV
 shared	LEVEL_22_131B00	function	64	1	1	1	1	2	src/levels/22_skyboard_kalidon/LEVEL_22_131B00.c
 shared	LEVEL_22_132BC8	function	88	1	0	1	0	2	
 shared	LEVEL_22_132C28	function	140	1	0	1	0	2	
-shared	LEVEL_22_132CB8	function	68	1	0	1	0	2	
+shared	LEVEL_22_132CB8	function	72	1	0	1	0	2	
 shared	LEVEL_22_132D00	function	8	1	0	1	0	2	
 shared	LEVEL_22_132D08	function	8	1	0	1	0	2	
 shared	LEVEL_22_132D10	function	8	1	0	1	0	2	
 shared	LEVEL_22_132D18	function	8	1	0	1	0	2	
 shared	LEVEL_22_132D20	function	8	1	0	1	0	2	
-shared	LEVEL_22_132D28	function	108	1	0	1	0	2	
+shared	LEVEL_22_132D28	function	112	1	0	1	0	2	
 shared	LEVEL_22_132D98	function	32	1	0	1	0	2	
 shared	LEVEL_22_132DB8	function	44	1	0	1	0	2	
 shared	LEVEL_22_132DE4	function	44	1	0	1	0	2	

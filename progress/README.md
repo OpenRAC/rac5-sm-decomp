@@ -107,20 +107,24 @@ from this snapshot and the public shape map
 by [`tools/level_accepted_shapes.py`](../tools/level_accepted_shapes.py). On
 successful pushes to `master`, the progress workflow uploads
 `SCUS_976.15_report/report.json`; ByteMatch reads that artifact as its progress
-graph. Its denominator combines **498,900 measured boot `.text` bytes** and the
-**4,877,520 candidate code bytes** of the 20 retained level modules,
-`FRONTEND.REL` included, for **5,376,420 provisional code
+graph. Its denominator combines the **496,140 boot `.text` code bytes** (the
+498,900 measured bytes less 2,760 bytes of zero alignment padding,
+[`config/boot/zero_padding.tsv`](../config/boot/zero_padding.tsv)) and the
+**4,675,716 candidate code bytes** of the 20 retained level modules,
+`FRONTEND.REL` included, for **5,171,856 provisional code
 bytes**. The level map splits each of the 35,015,424 retained candidate
 interval bytes once: the candidate units of the
 [optimistic masked-shape audit](../docs/research/level-function-inventory.md#optimistic-relocation-masked-shape-scenario),
 then, in the code they leave out, accepted C where it lies, a candidate function
 for each `no_return` interval (an entry with no return before the next entry),
 fragments for the code after a function's last return or between the selected
-segments of a split interval, 203,284 bytes of zero alignment padding and
-1,044 unbounded bytes left in reviewed switch ranges. Every relocation-masked
-shape counts once at its largest multiplicity in one module; padding and
-unbounded bytes stay per module. (The audit itself keeps the 1,420,532 bytes
-outside its units unique in every module, for 5,756,360 bytes.)
+segments of a split interval, 195,520 bytes of zero alignment padding and
+1,060 unbounded bytes left in reviewed switch ranges. Zero alignment padding is
+not code and stays out of both totals; a zero word that is the delay slot of a
+final branch or jump is code. Every relocation-masked shape counts once at its
+largest multiplicity in one module; unbounded bytes stay per module. (The audit
+itself keeps the 1,420,532 bytes outside its units unique in every module, for
+5,756,360 bytes.)
 The numerator is **789,332 accepted C bytes**: 88,948 in boot and
 700,384 in the level modules. A piece counts as matched when accepted C
 reproduces all of its bytes at its own placement, at the shape's largest covered
@@ -128,23 +132,24 @@ multiplicity in one module. The address-variant copies of one function in
 several levels are separate sources but one masked shape, so they count once;
 counting by source (5,786,384 bytes) credited them up to twenty times against a
 denominator that counts them once. The site rounds the resulting approximately
-**14.6814%** to **14.68%**. Until 2026-11-11 the report added the 162,944
+**15.2621%** to **15.26%**. Until 2026-11-11 the report added the 162,944
 frontend candidate bytes a second time to the denominator, credited the shared
-and frontend C functions, already in the placement table, twice, and counted
-the code outside candidate units once per module.
+and frontend C functions, already in the placement table, twice, counted the
+code outside candidate units once per module and counted zero alignment padding
+as code.
 
 ByteMatch's map draws one tile per report unit, grouped in folders by the unit
 names, sized by code bytes and coloured matched, in progress or not started.
 The units follow the source tree. `boot/<symbol>` tiles are the 1,315
-candidate boot code intervals; an accepted body counts its body bytes, and its
-linker alignment joins the bytes outside every interval in
-`boot/_unlabeled_code_and_padding`. `levels/<module directory>/<MODULE_OFFSET>`
+candidate boot code intervals without their zero padding; an accepted body
+counts its body bytes, and the unlabeled code after it, up to the next label,
+is a `boot/<symbol>.unlabeled_tail` tile. `levels/<module directory>/<MODULE_OFFSET>`
 and `levels/shared/<MODULE_OFFSET>` tiles are the relocation-masked shapes of the
-level map (10,926 with candidate functions, 648 fragments), placed like their
+level map (10,926 with candidate functions, 644 fragments), placed like their
 sources in [`src/levels/`](../src/levels/README.md): a shape found in several
-modules sits in `shared/`, any other in its module's directory. Each module also
-has an `alignment_padding` tile and, where reviewed switch ranges leave a few
-bytes, a `code_without_function_bounds` tile. Matched level tiles link to their
+modules sits in `shared/`, any other in its module's directory. Where reviewed switch
+ranges leave a few bytes, a module also has a `code_without_function_bounds`
+tile. Matched level tiles link to their
 source. The categories partition the same tiles: boot, the level modules, each
 module's own directory and the shared code.
 
@@ -152,8 +157,8 @@ ByteMatch's function counts use the same units as its code bytes:
 **5,809 of 14,409 candidate functions**, from the 1,315 candidate boot code
 intervals (693 accepted) and the 13,094 candidate level functions of the map
 (the 11,499 shape units of the audit and 1,595 `no_return` entries), each shape
-counted once at its largest per-module multiplicity (5,116 covered by accepted C). Fragments, padding and
-unbounded bytes count as code, not as functions. These are candidate functions,
+counted once at its largest per-module multiplicity (5,116 covered by accepted C). Fragments, unlabeled
+tails and unbounded bytes count as code, not as functions. These are candidate functions,
 not a reviewed function catalogue: a masked shape can still cover different data
 roles or C definitions, a `no_return` interval can hold more than one function,
 and corrected boundaries can change both counts.

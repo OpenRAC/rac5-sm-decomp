@@ -52,7 +52,8 @@ def report(status: dict, shape: dict) -> dict:
             or status["levels"]["accepted_c_bytes_by_placement"] != 1600
             or len(status["levels"]["placements"]) != 21):
         raise ValueError("progress and shape audit disagree")
-    boot_total = status["boot"]["code_bytes"]
+    # Zero alignment padding is not code (config/boot/zero_padding.tsv).
+    boot_total = status["boot"]["code_bytes"] - status["boot"]["zero_padding_bytes"]
     boot_matched = status["boot"]["accepted_c_bytes"]
     if (status["levels"]["accepted_frontend_c_bytes"] != 476
             or status["levels"]["accepted_frontend_functions"] != ["func_00002F80"]):
@@ -67,7 +68,9 @@ def report(status: dict, shape: dict) -> dict:
     level_matched = status["levels"]["accepted_level_map_bytes"]
     # Linker alignment following a complete C body earns no matching credit.
     boot_accepted = accepted_body_bytes()
-    if boot_total != 498900 or boot_matched != boot_accepted:
+    if (status["boot"]["code_bytes"] != 498900
+            or not 0 <= status["boot"]["zero_padding_bytes"] < 498900
+            or boot_matched != boot_accepted):
         raise ValueError("accepted boot scope changed")
     if (shape["masked_max_per_module_bytes"]
             + shape["unrepresented_bytes_kept_unique"]
@@ -77,7 +80,7 @@ def report(status: dict, shape: dict) -> dict:
     boot = _measures(boot_total, boot_matched)
     levels = _measures(level_total, level_matched)
     units = [
-        {"name": "Boot .text (measured scope)", "measures": boot,
+        {"name": "Boot .text code (measured scope, zero padding excluded)", "measures": boot,
          "metadata": {"progress_categories": ["boot_measured"]}},
         {"name": "Levels and frontend (optimistic masked-shape estimate; accepted "
                  "C by covered candidate shape)",
@@ -90,7 +93,7 @@ def report(status: dict, shape: dict) -> dict:
                               units=2),
         "units": units,
         "categories": [
-            {"id": "boot_measured", "name": "Boot .text (measured scope)",
+            {"id": "boot_measured", "name": "Boot .text code (measured scope, zero padding excluded)",
              "measures": boot},
             {"id": "levels_optimistic",
              "name": "Levels and frontend (optimistic masked-shape estimate)",

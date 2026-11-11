@@ -26,8 +26,10 @@ class ByteMatchEstimateTests(unittest.TestCase):
         levels = int(self.status["levels"]["accepted_level_map_bytes"])
         self.assertEqual(result["measures"]["matched_code"], str(accepted + levels))
         # The level denominator already holds FRONTEND.REL: no separate frontend term.
+        # Zero alignment padding is not code: it leaves both totals.
         self.assertEqual(result["measures"]["total_code"],
-                         str(498900 + self.status["levels"]["level_map_bytes"]))
+                         str(498900 - self.status["boot"]["zero_padding_bytes"]
+                             + self.status["levels"]["level_map_bytes"]))
         self.assertEqual(result["measures"]["total_units"], 2)
         self.assertEqual([u["measures"]["matched_code"] for u in result["units"]],
                          [str(accepted), str(levels)])

@@ -40,7 +40,7 @@ class LevelAcceptedShapesTests(unittest.TestCase):
             check_summary(inflated)
 
     def test_code_outside_units_splits_into_pieces_padding_and_unbounded(self) -> None:
-        data = bytearray(b"\x11" * 0xA0)
+        data = bytearray(b"\x27" * 0xA0)   # addiu words, no branch
         data[0x18:0x20] = bytes(8)
         data[0x38:0x40] = bytes(8)
         static = [{"start": "0x00", "limit": "0x20", "status": "bounded_candidate"},
@@ -86,7 +86,9 @@ class LevelAcceptedShapesTests(unittest.TestCase):
              "modules": 2, "source": front},
         ])
         totals = map_totals(rows)
-        self.assertEqual((totals["map_bytes"], totals["map_matched_bytes"]), (44, 24))
+        # Zero alignment padding is not code: 44 bytes of rows, 36 of code.
+        self.assertEqual((totals["map_bytes"], totals["map_matched_bytes"]), (36, 24))
+        self.assertEqual(totals["map_padding_bytes"], 8)
         self.assertEqual((totals["map_functions"], totals["map_matched_functions"]), (3, 2))
         spans = {"LEVEL_01.REL": [(0x304, 0x310, "src/levels/01_pokitaru/LEVEL_01_000304.c")]}
         with self.assertRaisesRegex(ValueError, "part of a candidate unit"):
