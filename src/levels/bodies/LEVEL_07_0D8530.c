@@ -1,5 +1,5 @@
 void func_0D8530(void);
-void func_0B8080(int mode);
+extern int func_0B8080(int a);
 
 void func_0D8530(void)
 {

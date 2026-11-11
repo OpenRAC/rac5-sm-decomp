@@ -9,7 +9,7 @@ struct Rec {
 extern int D_00215B48[];
 extern int D_00215B28[];
 extern struct Rec D_00342CE8[];
-extern void func_0BB828();
+extern int func_0BB828(int index);
 
 void func_0BA900(int idx, void *a1)
 {

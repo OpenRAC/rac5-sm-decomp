@@ -10,7 +10,7 @@ extern int D_00158108;
 
 extern int func_08EFD0(int id, struct Loc0CF320 *out, float f);
 extern int func_088F48(struct Loc0CF320 *l);
-extern void func_096530(int a);
+extern int func_096530(int index);
 extern void func_016A10(int a, int b);
 
 void func_0AF960(void)

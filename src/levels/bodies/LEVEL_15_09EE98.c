@@ -1,7 +1,7 @@
 /* LEVEL_15:0x09EE98 -- placement copy of LEVEL_01_0BE850.c: calls a three-argument helper on four record words, then runs a final helper. */
 
 extern void func_000418(int a0, int a1, int a2, int a3);
-extern void func_096530(int a0);
+extern int func_096530(int index);
 
 void func_09EE98(char *a0)
 {

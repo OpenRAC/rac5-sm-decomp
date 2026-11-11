@@ -2,7 +2,7 @@
 struct R { char pad[0x2c]; int f; char pad2[0x6c - 0x30]; };
 extern struct R D_001F0898[];
 extern int D_001F05E4;
-extern void func_0B45C8(int);
+extern int func_0B45C8(int a);
 extern int func_019E30(void);
 extern void func_085740(int);
 

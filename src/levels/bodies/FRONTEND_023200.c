@@ -1,14 +1,14 @@
-/* FRONTEND:0x023200 -- converts a double to an unsigned 64-bit integer. */
-extern double func_024140(void);
+/* FRONTEND:0x023200 -- converts a float, widened to double, to an unsigned 64-bit integer. */
+extern double func_024140(float);
 extern int func_023DF0(double, double);
 extern double func_0238C8(double, double);
 extern unsigned int func_023F00(double);
 extern double func_0232F8(long long value);
 extern double func_023808(double, double);
 extern double func_023860(double, double);
-unsigned long long func_023200(void)
+unsigned long long func_023200(float f)
 {
-    double a = func_024140();
+    double a = func_024140(f);
     double b;
     double c;
     unsigned long long v;

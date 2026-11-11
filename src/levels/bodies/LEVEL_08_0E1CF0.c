@@ -6,7 +6,7 @@ extern int D_0024F514;
 extern unsigned char D_0024F53C;
 extern int D_0024F530;
 
-void func_0C0F10(int a0);
+extern int func_0C0F10(int a);
 
 void func_0E1CF0(int a0)
 {

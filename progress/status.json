@@ -869,22 +869,22 @@
     "accepted_frontend_c_bytes": 476,
     "accepted_c_bytes_per_unique_source": 80,
     "accepted_c_bytes_by_placement": 1600,
-    "accepted_level_body_placements": 50220,
-    "accepted_level_body_unique_sources": 38839,
-    "accepted_level_body_placement_bytes": 5776956,
-    "accepted_level_body_unique_source_bytes": 4888336,
+    "accepted_level_body_placements": 50532,
+    "accepted_level_body_unique_sources": 39143,
+    "accepted_level_body_placement_bytes": 5943928,
+    "accepted_level_body_unique_source_bytes": 5054664,
     "accepted_level_body_profiles": {
-      "gnu-ee-trial": 2139,
-      "gnu-ee-trial-divpad": 1642,
+      "gnu-ee-trial": 2199,
+      "gnu-ee-trial-divpad": 1694,
       "gnu-ee-trial-divpad-blockmove": 194,
-      "pinned": 45590,
-      "sdk991111": 613,
+      "pinned": 45769,
+      "sdk991111": 634,
       "sdk991111sync": 42
     },
     "accepted_level_body_assembler_profiles": {
       "ee-frozen": 40,
-      "gnu-ee-trial": 49873,
-      "ps2eeas": 141,
+      "gnu-ee-trial": 50164,
+      "ps2eeas": 162,
       "r5900-mfc1": 166
     },
     "accepted_level_body_modules": [
@@ -1976,19 +1976,19 @@
       },
       "bodies": {
         "table": "config/levels/bodies.tsv",
-        "table_sha256": "fd1305824a821a45c5c7f4533c12a072b88f82142fb8315a41ae224ba60becd9",
+        "table_sha256": "957719a045a01bf9ac0ff63af376e3da200620476e0176002f01c7dc73423653",
         "sources_table": "config/levels/body_sources.tsv",
-        "sources_table_sha256": "cc42346acdc049be664b789abf16383e78a49bc8b6e5ffa854619fe154815bd7",
-        "placements": 50220,
-        "unique_sources": 38839,
-        "placement_bytes": 5776956,
-        "unique_source_bytes": 4888336,
+        "sources_table_sha256": "838061fbe231cc2fb0ae1c39f21c0444c509601453adbbfe10014140d4252a29",
+        "placements": 50532,
+        "unique_sources": 39143,
+        "placement_bytes": 5943928,
+        "unique_source_bytes": 5054664,
         "profiles": {
-          "gnu-ee-trial": 2139,
-          "gnu-ee-trial-divpad": 1642,
+          "gnu-ee-trial": 2199,
+          "gnu-ee-trial-divpad": 1694,
           "gnu-ee-trial-divpad-blockmove": 194,
-          "pinned": 45590,
-          "sdk991111": 613,
+          "pinned": 45769,
+          "sdk991111": 634,
           "sdk991111sync": 42
         },
         "cc1_sha256": {
@@ -2001,8 +2001,8 @@
         },
         "assembler_profiles": {
           "ee-frozen": 40,
-          "gnu-ee-trial": 49873,
-          "ps2eeas": 141,
+          "gnu-ee-trial": 50164,
+          "ps2eeas": 162,
           "r5900-mfc1": 166
         },
         "as_sha256": {
@@ -2058,14 +2058,14 @@
           "LEVEL_24.REL": "2feea61ac6fc1dd9b6bdb343b4c0cd1cebcce51b9472ebc8b048dcead6f0ca6e"
         },
         "import_identity": {
-          "body_row_sites": 12738,
+          "body_row_sites": 13509,
           "accepted_witness_sites": 24,
           "accepted_witness_placements_checked": 41,
-          "total_sites": 12762,
+          "total_sites": 13533,
           "mismatches": 0
         },
         "batch_link_size": 25,
-        "body_batch_linker_invocations": 2492
+        "body_batch_linker_invocations": 2503
       },
       "provisional_controls": [
         "LEVEL_01.REL:0x190:24",
@@ -2084,7 +2084,7 @@
     "level_code_catalogue": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
     "level_module_catalogue": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
     "accepted_boot_c_sources_lf": "8473cb1f3e41ffde4fe252d81d9068d72e957e61a716f83d508365329c62916e",
-    "level_compiler_profile": "e67fb1ce5397c9a39ed4967d4991912625c6636888906a24a661a693fc594df2",
+    "level_compiler_profile": "57b4dd48c2c49c65cecfed8af317b5b630f8ee26b5f4907b19e67e851527e0c5",
     "accepted_level_c_source_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",
     "accepted_shared_buffer_c_source_lf": "8425fefc73b121bd3eb6ffc09e4c49bf6425958c0f5b63d638af3b11d6c6e387",
     "accepted_frontend_c_source_lf": "bb1626a4f47d509dec32ee92d5b046051827bc94e7f93daf6e37bc5e44325749",

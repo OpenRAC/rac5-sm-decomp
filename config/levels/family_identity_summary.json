@@ -909,7 +909,7 @@
       "placements": 20,
       "body_bytes": 44,
       "accepted_C_controls": 20,
-      "normalized_C_sha256": "f4d52847ecd4bacf3f48ec6c57936328a8ac1f28d37633e4318a7e012e1314bc",
+      "normalized_C_sha256": "93455e1b03277247fa41c6eec590b32cfcd17654e08333e748a42481b59f6c24",
       "caller_context_sha256": "3b592e02014461f42c9006cca8b3d65fa84246019aa37c0ebf72044c357d581b",
       "data_window_sha256": {
         "24": "997f1b20ef5ce6d1ed6dc9478970efb3d1f2e34979697d20afa2f45616eaaea3"

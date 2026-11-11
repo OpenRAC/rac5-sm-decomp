@@ -1,6 +1,6 @@
 extern void func_12F8E8(void);
 extern void func_0A4A08(void);
-extern void func_0B45C8(int);
+extern int func_0B45C8(int a);
 extern void RENDEREFFECT_RestoreScreenEffectsState__Fv(void);
 
 void func_0CD368(void)

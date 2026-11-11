@@ -28,7 +28,7 @@ typedef struct Obj069A40 {
 
 extern Cfg069A40 *D_001A2C34;
 
-void func_0A4928(int a);
+extern int func_0A4928(int a);
 
 void func_05B948(Obj069A40 *o)
 {

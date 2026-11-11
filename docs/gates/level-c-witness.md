@@ -1126,3 +1126,23 @@ chain, 15 `gnu-ee-trial`, 14 the qualified `gnu-ee-trial-divpad-blockmove`
 profile and four `gnu-ee-trial-divpad`. All 21 complete USA modules remain
 exact; no PAL placement is counted, and the distinct-function denominator
 remains unqualified.
+
+A fourth round of prototype corrections and eleven more mid-size bodies add
+**312 USA placements from 304 authored pure C sources** (166,972 bytes by
+placement and 166,328 distinct-source bytes) in 22 forms. The prototypes of 38
+more accepted functions were corrected in 419 accepted sources, each linked
+again exactly at all of its placements; with the held-side declaration
+corrections this releases 79 held placements of 44–640 bytes. Eleven bodies of
+460–788 bytes are exact for the first time at 233 placements, with address
+variants where the levels place their data differently. The 21 accepted
+placement copies of the soft-float conversion at `FRONTEND:0x023200` now take
+the `float` argument that their callers pass and that they hand on to the
+widening helper, with unchanged bytes. The prototype review now reads `long`
+and `unsigned long` as the 64-bit types they are under this compiler; with it,
+caller/callee disagreements inside the accepted tree fall from 1,753 on
+`master` to 1,747 and none is introduced. One hundred and seventy-nine
+placements use the pinned chain, 60 `gnu-ee-trial`, 52 the qualified
+`gnu-ee-trial-divpad` profile and 21 `sdk991111`; a 680-byte body is exact at
+21 placements only with the qualified per-source `ps2eeas` assembler route.
+All 21 complete USA modules remain exact; no PAL placement is counted, and the
+distinct-function denominator remains unqualified.

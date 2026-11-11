@@ -4,7 +4,7 @@ extern int D_001D739C;
 extern int D_001D73A0;
 extern int D_001D73AC;
 extern int D_001D73B8;
-extern void func_0AF8B0(int a0);
+extern int func_0AF8B0(int index);
 
 void func_0D1410(int a0)
 {

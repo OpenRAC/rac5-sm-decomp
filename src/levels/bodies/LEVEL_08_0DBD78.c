@@ -4,7 +4,7 @@ void func_02A628(void);
 void func_0C2018(void *p);
 void func_0C1D58(void);
 int func_1447D8(void *p);
-void func_0C0F10(int v);
+extern int func_0C0F10(int a);
 
 struct Ctx {
     unsigned char pad0000[0x1C68];

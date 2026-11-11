@@ -11,7 +11,7 @@ extern void *D_0022F770;
 void func_0BDA38(void *value);
 void func_0BD778(void);
 int func_139650(void *p);
-void func_0BC930(int a);
+extern int func_0BC930(int index);
 int func_13A320(void);
 void func_0ACD58(void);
 void func_02A878(void);
