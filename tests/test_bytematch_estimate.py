@@ -27,7 +27,7 @@ class ByteMatchEstimateTests(unittest.TestCase):
         self.assertEqual(result["measures"]["matched_code"], str(accepted + levels))
         # The level denominator already holds FRONTEND.REL: no separate frontend term.
         self.assertEqual(result["measures"]["total_code"],
-                         str(498900 + self.shape["masked_max_per_module_scenario_bytes"]))
+                         str(498900 + self.status["levels"]["level_map_bytes"]))
         self.assertEqual(result["measures"]["total_units"], 2)
         self.assertEqual([u["measures"]["matched_code"] for u in result["units"]],
                          [str(accepted), str(levels)])

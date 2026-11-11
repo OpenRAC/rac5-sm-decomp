@@ -13,16 +13,17 @@ The units follow the source tree, one per candidate function:
     every interval stay in boot/_unlabeled_code_and_padding.
   - levels/<module directory>/<MODULE_OFFSET> and levels/shared/<MODULE_OFFSET>:
     the rows of config/levels/shape_units.tsv (tools/level_accepted_shapes.py),
-    one per relocation-masked candidate shape at its largest multiplicity in one
+    one per relocation-masked shape of candidate code (candidate functions and
+    fragments of the function before them) at its largest multiplicity in one
     module, in the directory where src/levels keeps such a source: shared/ for a
-    shape found in several modules. Each module's code outside candidate units
-    is one more unit, and the accepted C inside that code another.
+    shape found in several modules. Each module's alignment padding and its few
+    unbounded bytes are one more unit each.
 The headline measures are the sums of the units, so the map, the categories and
-the totals agree: the boot .text plus the optimistic level denominator of the 20
-retained modules (FRONTEND.REL included; LEVEL_21.REL repeats LEVEL_15.REL). A
-candidate unit counts as matched when accepted C reproduces all of its bytes at
-its own placement. Shape units are candidate functions, not a reviewed function
-catalogue.
+the totals agree: the boot .text plus the code of the 20 retained level modules
+(FRONTEND.REL included; LEVEL_21.REL repeats LEVEL_15.REL), every masked shape
+counted once at its largest per-module multiplicity. A piece counts as matched
+when accepted C reproduces all of its bytes at its own placement. These are
+candidate functions, not a reviewed function catalogue.
 
 Usage:
   python3 tools/gen_progress_report.py            # write progress/report.json and progress/pal/report.json
@@ -48,7 +49,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 import boot_trial_gate  # noqa: E402
 import versions  # noqa: E402
 from boot_c_campaign import accepted_replacements  # noqa: E402
-from level_accepted_shapes import UNBOUNDED, read_units  # noqa: E402
+from level_accepted_shapes import read_units  # noqa: E402
 from level_names import LEVEL_NAMES  # noqa: E402
 from level_source_layout import COPIES, MODULE_DIRS, SHARED  # noqa: E402
 
@@ -63,7 +64,6 @@ REPORTS = {"us": ROOT / "progress/report.json", "pal": ROOT / "progress/pal/repo
 
 BOOT_CODE = {"us": 498900, "pal": 499156}
 BOOT_REMAINDER = "_unlabeled_code_and_padding"
-ACCEPTED_OUTSIDE = "accepted_code_outside_candidate_units"
 COMMENT = re.compile(r"/\*.*?\*/|//[^\n]*", re.S)
 # Fields that stay zero in every unit (no unit is linked from source yet).
 UNIT_ZERO_FIELDS = ("complete_code", "complete_code_percent", "total_units", "complete_units")
@@ -246,7 +246,7 @@ def level_units(v: versions.Version) -> list[dict[str, object]]:
         # keeps the same denominator per directory and no accepted C.
         sizes: dict[str, int] = defaultdict(int)
         for row in table:
-            sizes[row["home"]] += row["bytes"]
+            sizes[row["home"]] += row["size"] * row["copies"]
         return [unit(f"levels/{home}", total, 0, 0, 0, ["levels"])
                 for home, total in sizes.items()]
     units = []
@@ -254,23 +254,15 @@ def level_units(v: versions.Version) -> list[dict[str, object]]:
     for row in table:
         home = row["home"]
         category = SHARED if home == SHARED else categories[home][0]
-        tags = [category, "levels"]
-        if row["name"] == UNBOUNDED:
-            if row["matched_bytes"]:
-                units.append(unit(f"levels/{home}/{ACCEPTED_OUTSIDE}", row["matched_bytes"],
-                                  row["matched_bytes"], 0, 0, tags))
-            units.append(unit(f"levels/{home}/{UNBOUNDED}",
-                              row["bytes"] - row["matched_bytes"], 0, 0, 0, tags))
-            continue
         function = None
-        if row["source"]:
+        if row["source"] and row["kind"] == "function":
             if row["source"] not in names:
                 names[row["source"]] = defined_function(row["source"])
-            function = {"name": names[row["source"]],
-                        "size": str(row["bytes"] // row["functions"]),
+            function = {"name": names[row["source"]], "size": str(row["size"]),
                         "fuzzy_match_percent": 100.0}
-        units.append(unit(f"levels/{home}/{row['name']}", row["bytes"], row["matched_bytes"],
-                          row["functions"], row["matched_functions"], tags,
+        units.append(unit(f"levels/{home}/{row['name']}", row["size"] * row["copies"],
+                          row["size"] * row["matched_copies"], row["functions"],
+                          row["matched_functions"], [category, "levels"],
                           row["source"], function))
     return units
 

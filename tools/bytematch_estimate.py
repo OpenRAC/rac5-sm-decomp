@@ -44,9 +44,10 @@ def report(status: dict, shape: dict) -> dict:
             or shape.get("bytematch_ready") is not False
             or shape.get("overall_percent") is not None):
         raise ValueError("expected the provisional 20-level shape audit")
-    level_total = shape["masked_max_per_module_scenario_bytes"]
+    level_total = status["levels"]["level_map_bytes"]
     if (status["optimistic_shape_scenario"]["masked_max_per_module_bytes"]
-            != level_total
+            != shape["masked_max_per_module_scenario_bytes"]
+            or not 0 < level_total <= shape["masked_max_per_module_scenario_bytes"]
             or status["levels"]["accepted_c_bytes_per_unique_source"] != 80
             or status["levels"]["accepted_c_bytes_by_placement"] != 1600
             or len(status["levels"]["placements"]) != 21):
@@ -57,18 +58,20 @@ def report(status: dict, shape: dict) -> dict:
             or status["levels"]["accepted_frontend_functions"] != ["func_00002F80"]):
         raise ValueError("frontend C scope changed")
     # The 20 retained level modules include FRONTEND.REL, so the frontend's
-    # candidate code is already inside the level denominator. A candidate unit
-    # counts as matched when accepted C covers all of its bytes, once per
-    # relocation-masked shape at its largest per-module multiplicity
-    # (config/levels/shape_units.tsv); the shared and frontend C functions are
-    # placements of that table like any other accepted body.
+    # candidate code is already inside the level total: every candidate interval
+    # byte split into candidate functions, fragments, padding and unbounded code,
+    # each relocation-masked shape counted once at its largest per-module
+    # multiplicity (config/levels/shape_units.tsv). A piece counts as matched
+    # when accepted C covers all of its bytes; the shared and frontend C
+    # functions are placements of that table like any other accepted body.
     level_matched = status["levels"]["accepted_level_map_bytes"]
     # Linker alignment following a complete C body earns no matching credit.
     boot_accepted = accepted_body_bytes()
     if boot_total != 498900 or boot_matched != boot_accepted:
         raise ValueError("accepted boot scope changed")
     if (shape["masked_max_per_module_bytes"]
-            + shape["unrepresented_bytes_kept_unique"] != level_total):
+            + shape["unrepresented_bytes_kept_unique"]
+            != shape["masked_max_per_module_scenario_bytes"]):
         raise ValueError("optimistic level accounting does not close")
 
     boot = _measures(boot_total, boot_matched)
