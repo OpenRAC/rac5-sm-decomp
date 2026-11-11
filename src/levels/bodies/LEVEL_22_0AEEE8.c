@@ -1,6 +1,6 @@
 extern unsigned char D_0015D71C;
 extern char *D_0015332C;
-extern void func_10A770(int);
+extern int func_10A770(int);
 
 void func_0AEEE8(void)
 {

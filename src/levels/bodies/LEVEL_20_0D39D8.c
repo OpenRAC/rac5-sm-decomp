@@ -3,11 +3,11 @@ struct Obj {
     int kind;
 };
 
-struct Obj *func_0D3798(void);
+struct Obj *func_0D3798(unsigned int value);
 
-int func_0D39D8(void)
+int func_0D39D8(unsigned int value)
 {
-    struct Obj *p = func_0D3798();
+    struct Obj *p = func_0D3798(value);
 
     if (p == 0)
         return 0;

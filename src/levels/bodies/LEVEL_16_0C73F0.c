@@ -3,7 +3,7 @@
 extern int D_001B45CC;
 extern unsigned int D_001B45DC;
 
-void func_019DE0(unsigned int a);
+extern void func_019DE0(void);
 
 void func_0C73F0(unsigned int a0)
 {
@@ -15,7 +15,7 @@ void func_0C73F0(unsigned int a0)
     }
     if (D_001B45DC == 0) {
         if (a0 != 0) {
-            func_019DE0(a0);
+            func_019DE0();
         }
     }
     one = 1;

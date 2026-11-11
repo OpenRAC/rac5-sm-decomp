@@ -1,6 +1,6 @@
 extern int func_080F28(void);
 extern char *D_001E515C;
-char *func_080DC8(void)
+char *func_080DC8(int a)
 {
     char *result;
     if (func_080F28() != 0)

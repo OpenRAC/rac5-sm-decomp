@@ -1,9 +1,9 @@
 
-int *func_11D298(void);
+int *func_11D298(unsigned int value);
 
-int func_11D460(void)
+int func_11D460(unsigned int value)
 {
-    int *p = func_11D298();
+    int *p = func_11D298(value);
 
     if (p != 0)
         return p[1];

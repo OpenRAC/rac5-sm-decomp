@@ -1,9 +1,9 @@
-extern int func_079B70(void);
+extern int func_079B70(int mask);
 extern char *D_001A540C;
-char *func_079978(void)
+char *func_079978(int mask)
 {
     char *result;
-    if (func_079B70() != 0)
+    if (func_079B70(mask) != 0)
         result = D_001A540C + 0x1d0;
     else
         result = D_001A540C + 0x1e0;

@@ -3,7 +3,7 @@
 void func_02A3F0(void);
 void func_0B9188(void *p);
 void func_0B8EC8(void);
-void func_1362A0(void *p);
+int func_1362A0(void *p);
 void func_0B8080(int v);
 
 struct Ctx {

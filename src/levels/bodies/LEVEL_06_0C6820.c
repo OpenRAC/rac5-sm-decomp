@@ -1,6 +1,6 @@
 /* LEVEL_06:0x0C6820 -- placement copy of LEVEL_01_0CBF20.c: copies eight table pointers into a block behind a global pointer, then calls a helper when a flag is set. */
 extern unsigned char D_001F0544;
-extern void func_129970(void *v);
+extern int func_129970(void *v);
 extern unsigned int D_001E2EAC;
 extern unsigned int D_001F0518[8];
 
