@@ -1216,3 +1216,21 @@ differences in `config/levels/compiler_trial.json`, and 14 sources take the
 per-source `-fno-gcse` option. All 21 complete USA modules remain exact; no PAL
 placement is counted, and the distinct-function denominator remains
 unqualified.
+
+Copies of accepted shapes at candidate bodies that earlier lists left out add
+**5,639 USA placements from 2,271 authored pure C sources** (301,504 bytes by
+placement and 218,192 distinct-source bytes) in 264 forms. The earlier lists
+offered only candidate bodies whose boundary a direct call confirms; these
+placements are bodies reached only through pointers (callbacks and table
+methods) or followed by nonzero bytes, with the size and relocation-masked shape
+of an accepted placement. 3,368 reuse an accepted source unchanged, because
+their bytes are identical, and 2,271 are address variants of one; each links
+exactly at its placement. Caller/callee disagreements inside the accepted tree
+stay at 1,700 and none is introduced. Counted by masked shape, accepted level
+bodies rise from 694,544 bytes in 4,760 shape units to 700,772 bytes in 5,075.
+Five thousand three hundred and ninety-eight placements use the pinned chain,
+110 the qualified `gnu-ee-trial-divpad` profile, 93 `gnu-ee-trial` and 38
+`gnu-ee-trial-divpad-blockmove`; fifteen copies are exact only with the qualified
+`r5900-mfc1` assembler, like the accepted bodies they copy. All 21 complete USA
+modules remain exact; no PAL placement is counted, and the distinct-function
+denominator remains unqualified.

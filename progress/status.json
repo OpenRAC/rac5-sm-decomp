@@ -869,25 +869,25 @@
     "accepted_frontend_c_bytes": 476,
     "accepted_c_bytes_per_unique_source": 80,
     "accepted_c_bytes_by_placement": 1600,
-    "accepted_level_body_placements": 51706,
-    "accepted_level_body_unique_sources": 40197,
-    "accepted_level_body_placement_bytes": 6539068,
-    "accepted_level_body_unique_source_bytes": 5586376,
-    "accepted_level_body_masked_shape_bytes": 694544,
-    "accepted_level_body_masked_shape_units": 4760,
+    "accepted_level_body_placements": 57345,
+    "accepted_level_body_unique_sources": 42468,
+    "accepted_level_body_placement_bytes": 6840572,
+    "accepted_level_body_unique_source_bytes": 5786384,
+    "accepted_level_body_masked_shape_bytes": 700772,
+    "accepted_level_body_masked_shape_units": 5075,
     "accepted_level_body_profiles": {
-      "gnu-ee-trial": 2558,
-      "gnu-ee-trial-divpad": 1893,
-      "gnu-ee-trial-divpad-blockmove": 212,
-      "pinned": 46346,
+      "gnu-ee-trial": 2651,
+      "gnu-ee-trial-divpad": 2003,
+      "gnu-ee-trial-divpad-blockmove": 250,
+      "pinned": 51744,
       "sdk991111": 655,
       "sdk991111sync": 42
     },
     "accepted_level_body_assembler_profiles": {
-      "ee-frozen": 40,
-      "gnu-ee-trial": 51315,
-      "ps2eeas": 178,
-      "r5900-mfc1": 173
+      "ee-frozen": 41,
+      "gnu-ee-trial": 56934,
+      "ps2eeas": 182,
+      "r5900-mfc1": 188
     },
     "accepted_level_body_modules": [
       "FRONTEND.REL",
@@ -1979,18 +1979,18 @@
       },
       "bodies": {
         "table": "config/levels/bodies.tsv",
-        "table_sha256": "2647b0f63d0fe0537c0b9c02e566847cf6d860011801fe9a5cf89706e75217ee",
+        "table_sha256": "dae01ce30cc7ff8d286e56c153cfaa0bd8c7a18fe99b1b8c7e33db6f99ffafae",
         "sources_table": "config/levels/body_sources.tsv",
-        "sources_table_sha256": "8855b952d495977e2a93a329bb9e2910f1be4fc1d20e95173771291fef4ea0ca",
-        "placements": 51706,
-        "unique_sources": 40197,
-        "placement_bytes": 6539068,
-        "unique_source_bytes": 5586376,
+        "sources_table_sha256": "aede1af0fd2e3f6efedb33fffc31c8c5298bfaa0e4971befd9cfcab38923a3c8",
+        "placements": 57345,
+        "unique_sources": 42468,
+        "placement_bytes": 6840572,
+        "unique_source_bytes": 5786384,
         "profiles": {
-          "gnu-ee-trial": 2558,
-          "gnu-ee-trial-divpad": 1893,
-          "gnu-ee-trial-divpad-blockmove": 212,
-          "pinned": 46346,
+          "gnu-ee-trial": 2651,
+          "gnu-ee-trial-divpad": 2003,
+          "gnu-ee-trial-divpad-blockmove": 250,
+          "pinned": 51744,
           "sdk991111": 655,
           "sdk991111sync": 42
         },
@@ -2003,10 +2003,10 @@
           "sdk991111sync": "eaf94d2a0ca4f6ba7f8a2a20974940ea8a0bdd7868e3ec0aa6081b1b32a91250"
         },
         "assembler_profiles": {
-          "ee-frozen": 40,
-          "gnu-ee-trial": 51315,
-          "ps2eeas": 178,
-          "r5900-mfc1": 173
+          "ee-frozen": 41,
+          "gnu-ee-trial": 56934,
+          "ps2eeas": 182,
+          "r5900-mfc1": 188
         },
         "as_sha256": {
           "ee-frozen": "d2f76ccfa6a7efcbe8605a6f52fe602354370b4d8dce55650c281dc95ebab9de",
@@ -2061,14 +2061,14 @@
           "LEVEL_24.REL": "2feea61ac6fc1dd9b6bdb343b4c0cd1cebcce51b9472ebc8b048dcead6f0ca6e"
         },
         "import_identity": {
-          "body_row_sites": 14595,
+          "body_row_sites": 15071,
           "accepted_witness_sites": 24,
           "accepted_witness_placements_checked": 41,
-          "total_sites": 14619,
+          "total_sites": 15095,
           "mismatches": 0
         },
         "batch_link_size": 25,
-        "body_batch_linker_invocations": 2429
+        "body_batch_linker_invocations": 4375
       },
       "provisional_controls": [
         "LEVEL_01.REL:0x190:24",
@@ -2083,11 +2083,11 @@
   "public_inputs_sha256": {
     "target": "043f3679a3a7f4e861986aeed303dd30e344c837c34303fc8591b71271a0f96f",
     "compiler_profile": "258e00c1b3fdcee488f31f9bde2c4c96382e5b02fc41b6811c169fd8632c25dd",
-    "per_source_cflags": "d1d1f61ba58d56fc74ec41e381d4624e22e50d5d94e5913e00e7fa1dc583d65e",
+    "per_source_cflags": "b4ef55b87039b09f7615a864e3e2d71a4a469f3ce2a027ebf4ea23ef578c3d75",
     "level_code_catalogue": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
     "level_module_catalogue": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
     "accepted_boot_c_sources_lf": "8473cb1f3e41ffde4fe252d81d9068d72e957e61a716f83d508365329c62916e",
-    "level_compiler_profile": "40efeb1ffa10bb4956e39a79d43055b21c64cab86e51f848e0ac0fbd31ca21bb",
+    "level_compiler_profile": "9638d244c3ebd82bc8e7204ecea6117c2fe53615bc7f2fc83c3e05403fb5c8ea",
     "accepted_level_c_source_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",
     "accepted_shared_buffer_c_source_lf": "8425fefc73b121bd3eb6ffc09e4c49bf6425958c0f5b63d638af3b11d6c6e387",
     "accepted_frontend_c_source_lf": "bb1626a4f47d509dec32ee92d5b046051827bc94e7f93daf6e37bc5e44325749",
@@ -2098,7 +2098,7 @@
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
     "level_split_dedupe": "b3b2a6e5526b06be3b7fbf1405910f3fa42ba48b444301e1ecc1cf847a08bb85",
     "level_shape_scenario": "0b84a17077582c211603f07ef2a0cf8299774270499681112890d513cdc2fe47",
-    "level_accepted_shapes": "c6dada3b5b618160a669830915bc36b9ea73d6f644a6a358bf24a9efd187a796",
+    "level_accepted_shapes": "6a33a0ac86e48a7152ecd45dc0814be6354b8aece6b2cc703066d6a918ab9616",
     "level_switch_body": "e5332627ffa1817ffa79178b85cd03a885c13eeb9721fbe1728d99330c32b0d3",
     "level_context_translation": "b22efea1dc6ee0d0e5661dab312042028fe6c8a213c6f7f260bd4ce00b4eac89",
     "level_role_graph": "19657c4ff0d6df249d34694fae3367babfd368561e91593722076dd8b8fb4f32"
