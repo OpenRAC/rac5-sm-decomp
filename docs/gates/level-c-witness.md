@@ -1162,3 +1162,24 @@ qualified `gnu-ee-trial-divpad-blockmove` profile; 33 sources take the
 per-source `-fno-gcse` option and 22 the `-mno-check-zero-division` flag. All
 21 complete USA modules remain exact; no PAL placement is counted, and the
 distinct-function denominator remains unqualified.
+
+A sixth round of prototype corrections and 24 more mid-size bodies add
+**200 USA placements from 177 authored pure C sources** (117,396 bytes by
+placement and 105,732 distinct-source bytes) in 31 forms. The 15 accepted
+callers of the polygon slab clip at `LEVEL_01:0x00BAB0` now pass it the upper
+bound that arrives, unused by them, as their own second float argument, and the
+19 accepted copies of the wrapper at `LEVEL_01:0x0B7B58` forward the three
+floats that their callers pass; both keep their bytes. With these corrections
+and with held-side ones (callers that now declare `int` callees as `int`, and
+one definition that now takes the unused argument its callers pass), 130 held
+placements of 428–2,096 bytes are released, among them `LEVEL_01:0x0CAA30`
+(2,096 bytes) from `nonmatching/levels/`. Twenty-four bodies of 404–708 bytes
+are exact for the first time at 70 placements. Caller/callee disagreements inside the accepted tree stay at 1,747 and none is introduced. Seventy-seven
+placements use the pinned chain, 82 `gnu-ee-trial`, 36 the qualified
+`gnu-ee-trial-divpad` profile and five `gnu-ee-trial-divpad-blockmove`; a
+456-byte body is exact at 15 placements only with the qualified per-source
+`ps2eeas` assembler and a 420-byte body at three placements only with
+`r5900-mfc1`, both recorded with their measured differences in
+`config/levels/compiler_trial.json`. All 21 complete USA modules remain exact;
+no PAL placement is counted, and the distinct-function denominator remains
+unqualified.

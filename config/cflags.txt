@@ -792,3 +792,14 @@ src/levels/bodies/LEVEL_23_105DE0.c  -fno-gcse
 src/levels/bodies/LEVEL_23_169170.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_24_10A5B8.c  -fno-gcse
 src/levels/bodies/LEVEL_24_1632B8.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_04_19AC50.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_08_1BB980.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_15_1294B0.c  -fno-gcse
+src/levels/bodies/LEVEL_15_1296D0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_16_051D98.c  -fno-gcse
+src/levels/bodies/LEVEL_17_0517C8.c  -fno-gcse
+src/levels/bodies/LEVEL_18_0508A0.c  -fno-gcse
+src/levels/bodies/LEVEL_19_0511F8.c  -fno-gcse
+src/levels/bodies/LEVEL_20_04B3C0.c  -fno-gcse
+src/levels/bodies/LEVEL_22_1332B0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_23_18FED8.c  -mno-check-zero-division
