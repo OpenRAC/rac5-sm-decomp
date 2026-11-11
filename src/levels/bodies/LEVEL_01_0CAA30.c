@@ -1,8 +1,3 @@
-/* USA LEVEL_01.REL:0x0CAA30. Byte-exact C held out of the accepted tables.
- * It links exactly at LEVEL_01:0x0CAA30 and at its fourteen address-variant
- * placements, but it passes three floats to the accepted wrapper at
- * LEVEL_01:0x0B7B58, whose definition forwards only three pointers to
- * LEVEL_01:0x0B7978; the wrapper and its callee must declare the floats first. */
 /* LEVEL_01:0x0CAA30 -- draws the current list screen: highlight frames, one row per entry with its icon, and the selected entry's description line. */
 typedef struct Rect {
     int x, y, w, h;

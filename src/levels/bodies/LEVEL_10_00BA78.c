@@ -6,11 +6,11 @@ struct V3_00BCB8 {
     float z;
 };
 
-int func_00B870(struct V3_00BCB8 *pts, int a, int b, float f);
+int func_00B870(float zmin, float zmax, struct V3_00BCB8 *pts, int a, int b);
 float func_00AF80(struct V3_00BCB8 *out, struct V3_00BCB8 *pts, int n, int flag, float f);
 
 int func_00BA78(float *err_out, struct V3_00BCB8 *out, struct V3_00BCB8 *pts, int a, int b, int flag,
-                float scale, float unused1, float limit, float unused2, float dist, float k)
+                float scale, float zmax, float limit, float unused2, float dist, float k)
 {
     struct V3_00BCB8 res;
     struct V3_00BCB8 *p;
@@ -20,7 +20,7 @@ int func_00BA78(float *err_out, struct V3_00BCB8 *out, struct V3_00BCB8 *pts, in
     float s;
     int n;
 
-    n = func_00B870(pts, a, b, 0.0f);
+    n = func_00B870(0.0f, zmax, pts, a, b);
     if (n < 3) {
         return 0;
     }
