@@ -13,7 +13,7 @@ A module that is an identical copy of another (``identical_full_interval_groups`
 in ``config/levels/function_inventory_summary.json``: LEVEL_21.REL repeats
 LEVEL_15.REL) has no directory of its own; its placements count as the first
 module's.  Directory names are the level names of the progress report
-(``tools/gen_progress_report.py``) without the ``level`` prefix.
+(``tools/level_names.py``) without the ``level`` prefix.
 
 usage: python tools/level_source_layout.py [--apply]
 
@@ -41,7 +41,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from compile_boot_trial import digest  # noqa: E402
-from gen_progress_report import LEVEL_NAMES  # noqa: E402
+from level_names import LEVEL_NAMES  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 BODIES = ROOT / "config/levels/bodies.tsv"

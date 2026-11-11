@@ -18,6 +18,7 @@ class RepositoryTests(unittest.TestCase):
     def test_size_limit_keeps_the_strict_default(self) -> None:
         self.assertEqual(size_limit("config/levels/body_sources.tsv"), 12_000_000)
         self.assertEqual(size_limit("config/levels/bodies.tsv"), 5_000_000)
+        self.assertEqual(size_limit("progress/report.json"), 6_000_000)
         self.assertEqual(size_limit("src/boot/func_00100000.c"), 1_000_000)
         self.assertEqual(size_limit("config\\levels\\body_sources.tsv"), 12_000_000)
         self.assertEqual(size_limit("config\\levels\\bodies.tsv"), 5_000_000)

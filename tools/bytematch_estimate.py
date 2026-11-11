@@ -53,19 +53,16 @@ def report(status: dict, shape: dict) -> dict:
         raise ValueError("progress and shape audit disagree")
     boot_total = status["boot"]["code_bytes"]
     boot_matched = status["boot"]["accepted_c_bytes"]
-    frontend = next(row for row in status["levels"]["placements"]
-                    if row["module"] == "FRONTEND.REL")
-    frontend_total = frontend["candidate_code_bytes_by_placement"]
-    frontend_matched = frontend["accepted_c_bytes"]
-    if (frontend_matched != status["levels"]["accepted_frontend_c_bytes"]
-            or status["levels"]["accepted_frontend_functions"] !=
-            ["func_00002F80"]):
+    if (status["levels"]["accepted_frontend_c_bytes"] != 476
+            or status["levels"]["accepted_frontend_functions"] != ["func_00002F80"]):
         raise ValueError("frontend C scope changed")
-    # Accepted bodies are counted by the denominator's own rule: once per
-    # relocation-masked shape, at their largest per-module multiplicity.
-    level_bodies = status["levels"]["accepted_level_body_masked_shape_bytes"]
-    level_matched = (status["levels"]["accepted_c_bytes_per_unique_source"]
-                     + level_bodies)
+    # The 20 retained level modules include FRONTEND.REL, so the frontend's
+    # candidate code is already inside the level denominator. A candidate unit
+    # counts as matched when accepted C covers all of its bytes, once per
+    # relocation-masked shape at its largest per-module multiplicity
+    # (config/levels/shape_units.tsv); the shared and frontend C functions are
+    # placements of that table like any other accepted body.
+    level_matched = status["levels"]["accepted_level_map_bytes"]
     # Linker alignment following a complete C body earns no matching credit.
     boot_accepted = accepted_body_bytes()
     if boot_total != 498900 or boot_matched != boot_accepted:
@@ -75,33 +72,25 @@ def report(status: dict, shape: dict) -> dict:
         raise ValueError("optimistic level accounting does not close")
 
     boot = _measures(boot_total, boot_matched)
-    frontend_measures = _measures(frontend_total, frontend_matched)
     levels = _measures(level_total, level_matched)
     units = [
         {"name": "Boot .text (measured scope)", "measures": boot,
          "metadata": {"progress_categories": ["boot_measured"]}},
-        {"name": "Frontend (verified C; candidate code interval)",
-         "measures": frontend_measures,
-         "metadata": {"progress_categories": ["frontend_candidate"]}},
-        {"name": "Levels (optimistic masked-shape estimate; accepted bodies "
-                 "by masked shape)",
+        {"name": "Levels and frontend (optimistic masked-shape estimate; accepted "
+                 "C by covered candidate shape)",
          "measures": levels,
          "metadata": {"progress_categories": ["levels_optimistic"]}},
     ]
     return {
         "version": 2,
-        "measures": _measures(boot_total + frontend_total + level_total,
-                              boot_matched + frontend_matched + level_matched,
-                              units=3),
+        "measures": _measures(boot_total + level_total, boot_matched + level_matched,
+                              units=2),
         "units": units,
         "categories": [
             {"id": "boot_measured", "name": "Boot .text (measured scope)",
              "measures": boot},
-            {"id": "frontend_candidate",
-             "name": "Frontend (verified C; candidate code interval)",
-             "measures": frontend_measures},
             {"id": "levels_optimistic",
-             "name": "Levels (optimistic masked-shape estimate)",
+             "name": "Levels and frontend (optimistic masked-shape estimate)",
              "measures": levels},
         ],
     }

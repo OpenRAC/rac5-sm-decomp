@@ -64,6 +64,9 @@ Every doc of this repository, by folder. New here? Read [building.md](build/buil
 | `tools/boot_trial_gate.py` | The pinned complete-boot C gate |
 | `tools/level_program_gate.py` | The complete SNR2 program gate for the frontend and level 01 |
 | `tools/level_c_gate.py` | The shared-level, frontend and level-body C gate |
+| `tools/level_source_layout.py` | Check or restore the per-module layout of `src/levels/` |
+| `tools/level_accepted_shapes.py` | Accepted level C by masked shape, and the per-shape map `config/levels/shape_units.tsv` |
+| `tools/gen_progress_report.py` | The objdiff v2 report ByteMatch reads, one unit per candidate function |
 | `tools/progress_status.py` | The scoped progress snapshot and its summary table |
 | `tools/bytematch_estimate.py` | The labelled ByteMatch estimate |
 | `tools/check_repository.py` | The pre-commit check: no game data, build output or toolchain in Git (CI runs it) |
@@ -77,5 +80,7 @@ level denominator is an optimistic deduplication scenario.
 [`docs/contributing/roadmap.md`](contributing/roadmap.md) lists what is still open: the original
 compiler identity, most function boundaries, the level compiler profiles and
 full runtime behavior.
-The Functions badges show `0/0` until a reviewed game-wide function count is
-available; this does not mean that no C bodies have been matched.
+The Functions badge counts candidate functions (the candidate boot code
+intervals and the relocation-masked level shape units), not a reviewed
+game-wide function catalogue; the PAL badge stays `0/0` until PAL has gates of
+its own.

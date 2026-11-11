@@ -875,6 +875,8 @@
     "accepted_level_body_unique_source_bytes": 5786384,
     "accepted_level_body_masked_shape_bytes": 700772,
     "accepted_level_body_masked_shape_units": 5075,
+    "accepted_level_map_bytes": 703112,
+    "accepted_level_map_functions": 5116,
     "accepted_level_body_profiles": {
       "gnu-ee-trial": 2651,
       "gnu-ee-trial-divpad": 2003,
@@ -2098,7 +2100,7 @@
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
     "level_split_dedupe": "b3b2a6e5526b06be3b7fbf1405910f3fa42ba48b444301e1ecc1cf847a08bb85",
     "level_shape_scenario": "0b84a17077582c211603f07ef2a0cf8299774270499681112890d513cdc2fe47",
-    "level_accepted_shapes": "14a10bc950bfe961b5768f5de3f19a6340595d42ae27c61ba654696d5b4f1893",
+    "level_accepted_shapes": "82bd7e4e991f00eabbb401337697777f5ea6c2889098445f5cee480f0f52f914",
     "level_switch_body": "e5332627ffa1817ffa79178b85cd03a885c13eeb9721fbe1728d99330c32b0d3",
     "level_context_translation": "b22efea1dc6ee0d0e5661dab312042028fe6c8a213c6f7f260bd4ce00b4eac89",
     "level_role_graph": "19657c4ff0d6df249d34694fae3367babfd368561e91593722076dd8b8fb4f32"
