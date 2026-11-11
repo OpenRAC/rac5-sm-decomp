@@ -101,23 +101,23 @@ samples are included in these adaptations.
 
 Adapted files:
 
-- `src/levels/bodies/FRONTEND_0238C8.c`
-- `src/levels/bodies/LEVEL_01_1EA948.c`
-- `src/levels/bodies/LEVEL_02_1FF5E0.c`
-- `src/levels/bodies/LEVEL_03_202FD8.c`
-- `src/levels/bodies/LEVEL_04_203B08.c`
-- `src/levels/bodies/LEVEL_05_1D9D40.c`
-- `src/levels/bodies/LEVEL_06_1D9890.c`
-- `src/levels/bodies/LEVEL_07_1FECC0.c`
-- `src/levels/bodies/LEVEL_08_2334D0.c`
-- `src/levels/bodies/LEVEL_09_1D47B0.c`
-- `src/levels/bodies/LEVEL_10_1F39A0.c`
-- `src/levels/bodies/LEVEL_15_13F640.c` (also placed in LEVEL_21)
-- `src/levels/bodies/LEVEL_16_1963E8.c`
-- `src/levels/bodies/LEVEL_17_189A30.c`
-- `src/levels/bodies/LEVEL_18_197888.c`
-- `src/levels/bodies/LEVEL_19_1975B0.c`
-- `src/levels/bodies/LEVEL_20_0F8B18.c`
-- `src/levels/bodies/LEVEL_22_149D00.c`
-- `src/levels/bodies/LEVEL_23_1BDD88.c`
-- `src/levels/bodies/LEVEL_24_1BB620.c`
+- `src/levels/frontend/FRONTEND_0238C8.c`
+- `src/levels/01_pokitaru/LEVEL_01_1EA948.c`
+- `src/levels/02_rykan_v/LEVEL_02_1FF5E0.c`
+- `src/levels/03_kalidon/LEVEL_03_202FD8.c`
+- `src/levels/04_metalis/LEVEL_04_203B08.c`
+- `src/levels/05_medical_outpost/LEVEL_05_1D9D40.c`
+- `src/levels/06_challax/LEVEL_06_1D9890.c`
+- `src/levels/07_dreamtime/LEVEL_07_1FECC0.c`
+- `src/levels/08_dayni_moon/LEVEL_08_2334D0.c`
+- `src/levels/09_inside_clank/LEVEL_09_1D47B0.c`
+- `src/levels/10_quodrona/LEVEL_10_1F39A0.c`
+- `src/levels/15_giant_clank_metalis/LEVEL_15_13F640.c` (also placed in LEVEL_21)
+- `src/levels/16_multiplayer_01/LEVEL_16_1963E8.c`
+- `src/levels/17_multiplayer_02/LEVEL_17_189A30.c`
+- `src/levels/18_multiplayer_03/LEVEL_18_197888.c`
+- `src/levels/19_multiplayer_04/LEVEL_19_1975B0.c`
+- `src/levels/20_multiplayer_lobby/LEVEL_20_0F8B18.c`
+- `src/levels/22_skyboard_kalidon/LEVEL_22_149D00.c`
+- `src/levels/23_skyboard_challax/LEVEL_23_1BDD88.c`
+- `src/levels/24_treehouse/LEVEL_24_1BB620.c`

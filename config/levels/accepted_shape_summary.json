@@ -1,7 +1,7 @@
 {
   "status": "accepted_bodies_by_masked_shape",
   "module_count": 20,
-  "bodies_table_sha256": "dae01ce30cc7ff8d286e56c153cfaa0bd8c7a18fe99b1b8c7e33db6f99ffafae",
+  "bodies_table_sha256": "f4e7029f3e1c4b2a5883b2c0e869f0de552db0029d880d5d8ba97267296eb940",
   "shape_summary_sha256": "0b84a17077582c211603f07ef2a0cf8299774270499681112890d513cdc2fe47",
   "retained_placements": 54934,
   "identical_module_copy_placements": 2411,

@@ -70,9 +70,12 @@ caller bytes. Sources without a qualified row keep strict symbol resolution.
 
 - `offset` is hexadecimal (`0x00000100`); `size` is decimal bytes and a
   multiple of four.
-- `source` is repository-relative. Wave-17 and wave-18 bodies live in
-  `src/levels/bodies/`; the already reviewed `0x100` body may point at
-  `src/levels/shared/func_00000100.c`.
+- `source` is repository-relative. A source lives in its module's directory
+  (`src/levels/frontend/`, `src/levels/01_pokitaru/` ... `src/levels/24_treehouse/`)
+  when all of its placements are in that module, and in `src/levels/shared/`
+  when they span several modules; LEVEL_21.REL placements count as
+  LEVEL_15.REL's. `python tools/level_source_layout.py --apply` restores this
+  layout (see `src/levels/README.md`).
 - `profile` is `pinned` (the `compiler-no-pad-20261015` cc1), `gnu-ee-trial`
   (the same GNU EE build without the increasing-callee-saved patch, passed as
   `--extra-cc1 gnu-ee-trial=PATH`), `gnu-ee-trial-divpad` (the same build

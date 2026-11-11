@@ -12,7 +12,7 @@ import level_c_gate as gate
 
 def item(number, defined, mapping=None, batchable=True):
     return {"row": {"module": "LEVEL_01.REL", "offset": number * 8,
-                    "size": 8, "source": f"src/levels/bodies/u{number}.c"},
+                    "size": 8, "source": f"src/levels/01_pokitaru/u{number}.c"},
             "obj_path": Path(f"body_u{number}.o"),
             "object_sha": "0" * 64,
             "defined": set(defined), "mapping": mapping or {},
@@ -62,7 +62,7 @@ class BatchPlannerTests(unittest.TestCase):
             blob = b"object"
             obj_path.write_bytes(blob)
             row = {"module": "LEVEL_01.REL", "offset": 0x200,
-                   "size": 4, "source": "src/levels/bodies/qualified.c"}
+                   "size": 4, "source": "src/levels/01_pokitaru/qualified.c"}
             objects = {row["source"]: (obj_path, {"symbols": [], "relocs": []},
                                        hashlib.sha256(blob).hexdigest())}
             qualified = {(row["module"], row["source"]): {"symbol": "__muldi3"}}
@@ -87,7 +87,7 @@ class BatchPlannerTests(unittest.TestCase):
             obj.write_bytes(b"altered")
             expected = hashlib.sha256(b"original").hexdigest()
             row = {"module": "LEVEL_01.REL", "offset": 0x100,
-                   "size": 8, "source": "src/levels/bodies/unit.c"}
+                   "size": 8, "source": "src/levels/01_pokitaru/unit.c"}
             objects = {row["source"]: (obj, {"symbols": []}, expected)}
             with patch.object(gate, "OUTPUT", output):
                 with self.assertRaisesRegex(ValueError, "stale level body object"):

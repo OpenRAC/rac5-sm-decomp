@@ -12,6 +12,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from c_source_policy import policy_errors  # noqa: E402
+from level_source_layout import SOURCE_DIRS, misplaced, repeated_names  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 BODIES = ROOT / "config/levels/bodies.tsv"
@@ -19,8 +20,9 @@ BODY_SOURCES = ROOT / "config/levels/body_sources.tsv"
 LEVEL_PROFILE = ROOT / "config/levels/compiler_trial.json"
 MODULES = ROOT / "config/levels/modules.tsv"
 INTERVALS = ROOT / "config/levels/code_intervals.tsv"
-BODY_PREFIX = "src/levels/bodies/"
-SHARED_0100 = "src/levels/shared/func_00000100.c"
+# Two reviewed level sources outside the body table, each checked by its own gate.
+OWN_GATE_SOURCES = {"src/levels/frontend/func_00002F80.c",
+                    "src/levels/shared/func_shared_zero_buffer.c"}
 HEADER = ["module", "offset", "size", "source"]
 SOURCE_HEADER = ["source", "source_sha256_lf", "object_sha256", "profile", "as"]
 PROFILES = ("pinned", "gnu-ee-trial", "gnu-ee-trial-divpad",
@@ -84,7 +86,10 @@ class LevelBodyTests(unittest.TestCase):
         for row in self.source_rows:
             source = row["source"]
             with self.subTest(source=source):
-                self.assertTrue(source.startswith(BODY_PREFIX) or source == SHARED_0100)
+                parts = source.split("/")
+                self.assertEqual(parts[:2], ["src", "levels"])
+                self.assertEqual(len(parts), 4)
+                self.assertIn(parts[2], SOURCE_DIRS)
                 path = ROOT / source
                 self.assertTrue(path.is_file(), f"missing source {source}")
                 self.assertEqual(source_digest(path), row["source_sha256_lf"])
@@ -105,8 +110,14 @@ class LevelBodyTests(unittest.TestCase):
     def test_every_body_file_is_referenced(self) -> None:
         referenced = {row["source"] for row in self.rows}
         files = {path.relative_to(ROOT).as_posix()
-                 for path in (ROOT / "src/levels/bodies").glob("*.c")}
-        self.assertEqual(files - referenced, set())
+                 for path in (ROOT / "src/levels").rglob("*.c")}
+        self.assertEqual(files - referenced, OWN_GATE_SOURCES)
+
+    def test_sources_sit_in_their_module_directory(self) -> None:
+        # One directory per module, src/levels/shared/ for sources placed in
+        # several modules (tools/level_source_layout.py --apply restores it).
+        self.assertEqual(misplaced(self.rows), {})
+        self.assertEqual(repeated_names(self.rows), [])
 
     def test_sources_pass_the_c_policy(self) -> None:
         checked = set()
