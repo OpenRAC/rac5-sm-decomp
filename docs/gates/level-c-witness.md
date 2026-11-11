@@ -1199,3 +1199,20 @@ chain, 15 `gnu-ee-trial` and 13 the qualified `gnu-ee-trial-divpad` profile;
 seven sources take the per-source `-fno-gcse` option. All 21 complete USA
 modules remain exact; no PAL placement is counted, and the distinct-function
 denominator remains unqualified.
+
+Typed stub sources and 19 more mid-size bodies add **174 USA placements from
+170 authored pure C sources** (83,440 bytes by placement and 80,624
+distinct-source bytes) in 33 forms. The two shared stub sources, the empty
+`void` function at `FRONTEND:0x001E08` and the return-0 function at
+`FRONTEND:0x0025B0`, served 241 placements whose callers pass them one to
+three arguments; those placements now use seven typed stub sources, one per
+argument list, with unchanged bytes. With them, 135 held placements of
+76–1,072 bytes are released. Nineteen bodies of 404–996 bytes are exact for the
+first time at 39 placements. Caller/callee disagreements inside the accepted tree fall from 1,719 on `master` to 1,700 and none is introduced. One hundred and six placements use the
+pinned chain, 43 `gnu-ee-trial` and 25 the qualified `gnu-ee-trial-divpad`
+profile; four placements are exact only with the qualified `r5900-mfc1`
+assembler and one only with `ps2eeas`, both recorded with their measured
+differences in `config/levels/compiler_trial.json`, and 14 sources take the
+per-source `-fno-gcse` option. All 21 complete USA modules remain exact; no PAL
+placement is counted, and the distinct-function denominator remains
+unqualified.
