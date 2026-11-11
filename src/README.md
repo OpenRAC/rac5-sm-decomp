@@ -9,6 +9,10 @@ accepted set is enumerated in `tools/boot_c_campaign.py` and pinned in
 `config/boot/compiler_trial.json`. See `docs/gates/boot-match-scope.md` for the exact
 acceptance scope and limitations.
 Other candidates remain in `nonmatching/` until independently reviewed.
+`levels/` holds the accepted level C bodies in one directory per SNR2 module
+(`levels/frontend/`, `levels/01_pokitaru/` ... `levels/24_treehouse/`) plus
+`levels/shared/` for sources linked in several modules;
+[`levels/README.md`](levels/README.md) lists the directories and the rule.
 `levels/frontend/func_00002F80.c` reconstructs one 476-byte frontend New Game
 initializer. The level C gate checks its complete SNR2 module and measured
 relocated image; the source keeps unnamed structure fields as offsets where

@@ -55,8 +55,8 @@ placement**, not a general frontend compiler profile or gameplay equivalence.
 ## Wave-17 level bodies
 
 `config/levels/bodies.tsv` records **210 placements** (13,128 module bytes)
-carried by **158 sources**: 157 author files under
-[`src/levels/bodies/`](../../src/levels/bodies) plus the shared
+carried by **158 sources**: 157 author files (since moved into the per-module
+directories of [`src/levels/`](../../src/levels/README.md)) plus the shared
 `func_00000100.c`. The placements cover all 21 modules (the frontend and the
 twenty numbered levels). Eight wave-17 lots measured them; three placements
 proved independently by two lots (`LEVEL_02.REL` `0x3EE08`, `0x23A28`,
@@ -368,9 +368,10 @@ compiler controls and complete-program checks before their C bytes can be
 counted.
 
 `src/levels/shared/` contains the two explicitly authored witnesses from the
-initial shared-level compiler trial. Later accepted bodies stay in
-`src/levels/bodies/` even when one source is linked at several placements. The
-placement table records that reuse, and the progress report counts each source
+initial shared-level compiler trial. Later accepted bodies live in their
+module's directory, or in `src/levels/shared/` when one source is linked in
+several modules ([layout](../../src/levels/README.md)). The placement table
+records that reuse, and the progress report counts each source
 once in its distinct-source byte total.
 
 Another 267 reviewed 28-byte placements link exactly from 253 C sources
@@ -597,7 +598,7 @@ distinct-source bytes). Six placements reuse canonical C after independent
 exact links and object-hash checks. Two dispatchers compare symbolic function
 addresses, three forms issue direct call sequences, and a named ATRAC stop
 wrapper passes the instance from its list entry. The former retained ATRAC C
-has been promoted into `src/levels/bodies/`. Fifteen other representative C
+has been promoted into the level body tree. Fifteen other representative C
 attempts remain under `nonmatching/levels/` without match credit; 266
 candidate sites remain unaccepted. All 21 complete USA modules remain exact.
 

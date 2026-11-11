@@ -10,7 +10,7 @@ from import_guard import (ImportIdentityError,check_import_call_identity,
 from rel import HEADER,MAGIC,RELOCATION,SYMBOL
 
 ROW={'module':'LEVEL_01.REL','offset':0x2400,'size':80,
-     'source':'src/levels/bodies/LEVEL_01_002400.c'}
+     'source':'src/levels/01_pokitaru/LEVEL_01_002400.c'}
 
 def obj(name='cosf',at=12,kind=4,shndx=0):
     return {'symbols':[{'name':''},{'name':name,'shndx':shndx}],

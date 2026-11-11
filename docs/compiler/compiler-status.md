@@ -616,7 +616,7 @@ in [`config/levels/compiler_trial.json`](../../config/levels/compiler_trial.json
 the binary is not distributed here.
 
 This is a per-source level-body route: `body_sources.tsv` selects
-`r5900-mfc1` only for `src/levels/bodies/LEVEL_01_0639E8.c`, and the gate
+`r5900-mfc1` only for `src/levels/shared/LEVEL_01_0639E8.c`, and the gate
 requires an explicit `--extra-as r5900-mfc1=PATH` with the pinned hash.
 The default assembler remains selected for every other accepted source.
 Isolated linked comparisons reproduce the complete 148-byte body at all
@@ -638,7 +638,7 @@ This is a toolchain measurement, not evidence that the private binary may
 be redistributed or that it is the original game assembler.
 
 The level profile names this opt-in route `ee-frozen` and allows only
-`src/levels/bodies/LEVEL_01_001940.c` to select it. The gate requires
+`src/levels/shared/LEVEL_01_001940.c` to select it. The gate requires
 an explicit hash-checked `--extra-as ee-frozen=PATH`; every other accepted
 source retains its existing assembler route. Complete-module qualification
 passes **21/21 USA modules exact**, with 2,374 SN batch links. The

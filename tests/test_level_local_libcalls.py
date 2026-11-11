@@ -28,7 +28,7 @@ class QualifiedLibcallTests(unittest.TestCase):
         self.module[0x100:0x160] = self.helper
         self.row = {
             "module": "FRONTEND.REL",
-            "source": "src/levels/bodies/FRONTEND_0238C8.c",
+            "source": "src/levels/frontend/FRONTEND_0238C8.c",
             "offset": 0x500, "size": 680,
             "object_sha256": "a" * 64, "profile": "sdk991111",
         }
@@ -147,7 +147,7 @@ class QualifiedLibcallTests(unittest.TestCase):
 
     def test_reject_wrong_module_source_object_profile(self) -> None:
         for field, value in (("module", "LEVEL_01.REL"),
-                             ("source", "src/levels/bodies/other.c"),
+                             ("source", "src/levels/frontend/other.c"),
                              ("object_sha256", "b" * 64)):
             entry = dict(self.entry, **{field: value})
             with self.subTest(field=field), self.assertRaisesRegex(ValueError, "differs"):
@@ -196,7 +196,7 @@ class QualifiedLibcallTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "format"):
             self.read_table([], version="# format: old")
         for field, value in (("module", "LEVEL_01.REL"),
-                             ("source", "src/levels/bodies/other.c"),
+                             ("source", "src/levels/frontend/other.c"),
                              ("object_sha256", "b" * 64),
                              ("symbol", "func_000000"),
                              ("helper_sha256", "bad"),
