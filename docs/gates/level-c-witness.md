@@ -1044,3 +1044,29 @@ accepted stub placements to a typed stub source. A further 118 placements in
 ten forms link byte-exact but stay held for ABI review. All 21 complete USA
 modules remain exact; no PAL placement is counted, and the distinct-function
 denominator remains unqualified.
+
+A further **695 USA placements from 619 authored pure C sources** (170,968
+bytes by placement and 155,528 distinct-source bytes) in 70 forms of 28–900
+bytes are accepted. The prototype review now compares declarations the way
+the EE calling convention and the RAC1 and RAC2 decompilations do: 32-bit
+integers and pointers share one register class, and a declaration agrees
+when each register bank keeps its argument order, count and widths and the
+return contract is the same. Under that rule 585 held byte-exact placements
+in 62 forms no longer disagree with any accepted definition or caller and
+are accepted after a new exact link at each placement; 23 further
+placements in two forms were held earlier and no longer conflict at all.
+Following the same projects, a nonempty `do { ... } while (0)` group of real
+operations is allowed, so the two bodies refused for it earlier
+(`LEVEL_01:0x1413E8` and `LEVEL_01:0x019098`) are accepted at 23 placements.
+Twenty-two placements in two forms are exact only with the per-source
+`-fno-gcse` option, which keeps a stack-vector address and per-arm loop
+registers that global common-subexpression elimination would otherwise
+share, and the other 42 are new matches of 301–400 bytes. Seventy-six
+placements reuse an identical source after an independent exact link at
+each site. Five hundred and fifteen placements use the pinned chain, 135
+`gnu-ee-trial`, 44 the qualified `gnu-ee-trial-divpad` profile and one
+`gnu-ee-trial-divpad-blockmove`; two bodies of 556 and 604 bytes are exact
+at 22 placements only with the qualified per-source `r5900-mfc1` assembler
+route. A further 55 placements in four forms link byte-exact but stay held
+for ABI review. All 21 complete USA modules remain exact; no PAL placement
+is counted, and the distinct-function denominator remains unqualified.
