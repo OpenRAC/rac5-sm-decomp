@@ -1,0 +1,7 @@
+extern char D_002172E0[];
+extern void func_0810E8(void *, const void *);
+
+void _cleanup_r(void *value)
+{
+    func_0810E8(value, D_002172E0);
+}

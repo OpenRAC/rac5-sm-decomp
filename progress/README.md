@@ -147,7 +147,13 @@ is a `boot/<symbol>.unlabeled_tail` tile. `levels/<module directory>/<MODULE_OFF
 and `levels/shared/<MODULE_OFFSET>` tiles are the relocation-masked shapes of the
 level map (10,926 with candidate functions, 644 fragments), placed like their
 sources in [`src/levels/`](../src/levels/README.md): a shape found in several
-modules sits in `shared/`, any other in its module's directory. Where reviewed switch
+modules sits in `shared/`, any other in its module's directory. A shape whose
+code cites one original source file sits in a folder named after it
+(`levels/shared/CORE/Breakable/`; 210 shapes), and a shape that is the twin of a
+named boot function takes that symbol instead of its offset
+(`levels/shared/Quat_Slerp__FP4QUATPC4QUATT1f`; 208 shapes, 119 matched), from
+[`config/levels/source_files.tsv`](../config/levels/source_files.tsv) and
+[`config/levels/function_names.tsv`](../config/levels/function_names.tsv). Where reviewed switch
 ranges leave a few bytes, a module also has a `code_without_function_bounds`
 tile. Matched level tiles link to their
 source. The categories partition the same tiles: boot, the level modules, each

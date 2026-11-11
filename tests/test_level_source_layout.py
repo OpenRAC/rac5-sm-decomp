@@ -16,8 +16,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import level_source_layout as layout  # noqa: E402
 
 
-def row(module: str, source: str) -> dict[str, str]:
-    return {"module": module, "offset": "0x00000100", "size": "8", "source": source}
+def row(module: str, source: str, offset: str = "0x00000100",
+        size: str = "8") -> dict[str, str]:
+    return {"module": module, "offset": offset, "size": size, "source": source}
+
+
+def twin(module: str, offset: int, symbol: str, size: int = 8) -> dict[str, str]:
+    return {"module": module, "offset": f"0x{offset:06X}", "size": str(size),
+            "symbol": symbol, "boot_address": "0x01E70000"}
 
 
 class LevelSourceLayoutTest(unittest.TestCase):
@@ -50,6 +56,100 @@ class LevelSourceLayoutTest(unittest.TestCase):
         self.assertEqual(layout.repeated_names(rows), [])
         rows.append(row("LEVEL_05.REL", "src/levels/05_medical_outpost/LEVEL_04_000400.c"))
         self.assertEqual(layout.repeated_names(rows), ["LEVEL_04_000400.c"])
+
+    def test_original_file_folders(self) -> None:
+        self.assertTrue(layout.valid_source("src/levels/shared/CORE/Breakable/X.c"))
+        self.assertTrue(layout.valid_source("src/levels/01_pokitaru/X.c"))
+        self.assertFalse(layout.valid_source("src/levels/bodies/X.c"))
+        self.assertFalse(layout.valid_source("src/levels/shared/CORE/x-y/X.c"))
+        cited = {("LEVEL_01.REL", 0x100): "CORE/Breakable.cpp",
+                 ("LEVEL_15.REL", 0x200): "CORE/level.cpp",
+                 ("LEVEL_02.REL", 0x300): "CORE/a.cpp", ("LEVEL_03.REL", 0x300): "CORE/b.cpp"}
+
+        def labels(module: str, offset: int) -> tuple[str, str]:
+            return "", cited.get((module, offset), "")
+
+        rows = [row("LEVEL_01.REL", "src/levels/01_pokitaru/LEVEL_01_000100.c"),
+                row("LEVEL_02.REL", "src/levels/01_pokitaru/LEVEL_01_000100.c", "0x400"),
+                # LEVEL_21.REL repeats LEVEL_15.REL: the same evidence, in decimal.
+                row("LEVEL_21.REL", "src/levels/15_giant_clank_metalis/LEVEL_21_000200.c", "512"),
+                row("LEVEL_02.REL", "src/levels/shared/LEVEL_02_000300.c", "0x300"),
+                row("LEVEL_03.REL", "src/levels/shared/LEVEL_02_000300.c", "0x300")]
+        folders = layout.original_folders(rows, labels)
+        self.assertEqual(folders, {
+            "src/levels/01_pokitaru/LEVEL_01_000100.c": "CORE/Breakable",
+            "src/levels/15_giant_clank_metalis/LEVEL_21_000200.c": "CORE/level"})
+        self.assertEqual(layout.misplaced(rows, folders), {
+            "src/levels/01_pokitaru/LEVEL_01_000100.c":
+                "src/levels/shared/CORE/Breakable/LEVEL_01_000100.c",
+            "src/levels/15_giant_clank_metalis/LEVEL_21_000200.c":
+                "src/levels/15_giant_clank_metalis/CORE/level/LEVEL_21_000200.c"})
+
+    def test_twin_sources_take_the_boot_symbol(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sources = {
+                "src/levels/frontend/FRONTEND_004870.c":
+                    "/* FRONTEND:0x004870 */\nvoid func_006120(int);\n\n"
+                    "void func_004870(void)\n{\n    func_006120(0);\n}\n",
+                "src/levels/01_pokitaru/LEVEL_01_001000.c":
+                    "void func_001000(unsigned int id)\n{\n}\n",
+                "src/levels/02_rykan_v/func_00001000.c":
+                    "void func_00001000(unsigned int id)\n{\n}\n",
+                "src/levels/03_kalidon/LEVEL_03_000500.c":
+                    "void func_000500(void)\n{\n}\nvoid func_000508(void)\n{\n}\n",
+                "src/levels/04_metalis/LEVEL_04_000600.c":
+                    "void func_000600(void)\n{\n}\n"}
+            for path, text in sources.items():
+                (root / path).parent.mkdir(parents=True, exist_ok=True)
+                (root / path).write_text(text, encoding="utf-8")
+            (root / "config/levels").mkdir(parents=True)
+            lines = ["module\toffset\tsize\tsource",
+                     "FRONTEND.REL\t0x004870\t8\tsrc/levels/frontend/FRONTEND_004870.c",
+                     "LEVEL_01.REL\t0x001000\t8\tsrc/levels/01_pokitaru/LEVEL_01_001000.c",
+                     "LEVEL_02.REL\t4096\t8\tsrc/levels/02_rykan_v/func_00001000.c",
+                     "LEVEL_03.REL\t0x000500\t8\tsrc/levels/03_kalidon/LEVEL_03_000500.c",
+                     "LEVEL_04.REL\t0x000600\t8\tsrc/levels/04_metalis/LEVEL_04_000600.c"]
+            bodies = root / "config/levels/bodies.tsv"
+            bodies.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            controls = root / "config/levels/family_identity_controls.tsv"
+            controls.write_text("family_id\tmodule\tstart\tsource\n", encoding="utf-8")
+            summary = root / "config/levels/family_identity_summary.json"
+            summary.write_text(json.dumps({"controls_sha256": hashlib.sha256(
+                controls.read_bytes()).hexdigest(), "families": []}, indent=2) + "\n",
+                encoding="utf-8")
+            names = [twin("FRONTEND.REL", 0x4870, "DISPLAY_CommitView__Fv"),
+                     twin("LEVEL_01.REL", 0x1000, "CAMERA_SetCurrentCamera__FUi"),
+                     twin("LEVEL_02.REL", 0x1000, "CAMERA_SetCurrentCamera__FUi"),
+                     twin("LEVEL_03.REL", 0x500, "Two__Fv"),
+                     twin("LEVEL_04.REL", 0x600, "Longer__Fv", 12)]
+            with (patch.object(layout, "ROOT", root),
+                  patch.object(layout, "FAMILY_CONTROLS", controls),
+                  patch.object(layout, "FAMILY_SUMMARY", summary)):
+                rows = layout.records(bodies)
+                renames = layout.twin_names(rows, names)
+                # Two global definitions, or a twin of another size, keep their names.
+                self.assertEqual(renames, {
+                    "src/levels/01_pokitaru/LEVEL_01_001000.c": (
+                        "CAMERA_SetCurrentCamera__FUi",
+                        "src/levels/01_pokitaru/CAMERA_SetCurrentCamera__FUi_LEVEL_01.c"),
+                    "src/levels/02_rykan_v/func_00001000.c": (
+                        "CAMERA_SetCurrentCamera__FUi",
+                        "src/levels/02_rykan_v/CAMERA_SetCurrentCamera__FUi_LEVEL_02.c"),
+                    "src/levels/frontend/FRONTEND_004870.c": (
+                        "DISPLAY_CommitView__Fv",
+                        "src/levels/frontend/DISPLAY_CommitView__Fv.c")})
+                with contextlib.redirect_stdout(io.StringIO()):
+                    layout.rename_twins(renames)
+                self.assertEqual(layout.twin_names(layout.records(bodies), names), {})
+            renamed = (root / "src/levels/frontend/DISPLAY_CommitView__Fv.c").read_text(
+                encoding="utf-8")
+            # The definition takes the symbol; the call keeps its address name.
+            self.assertIn("void DISPLAY_CommitView__Fv(void)", renamed)
+            self.assertIn("func_006120(0);", renamed)
+            self.assertFalse((root / "src/levels/frontend/FRONTEND_004870.c").exists())
+            self.assertIn("src/levels/02_rykan_v/CAMERA_SetCurrentCamera__FUi_LEVEL_02.c",
+                          bodies.read_text(encoding="utf-8"))
 
     def test_apply_moves_sources_and_rewrites_references(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

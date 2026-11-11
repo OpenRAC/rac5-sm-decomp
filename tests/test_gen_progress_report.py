@@ -63,8 +63,14 @@ class GenProgressReportTests(unittest.TestCase):
         units = self.us["units"]
         names = [item["name"] for item in units]
         self.assertEqual(len(set(names)), len(names))
-        folders = {"boot"} | {f"levels/{d}" for d in MODULE_DIRS.values()} | {"levels/shared"}
-        self.assertTrue(all(name.rsplit("/", 1)[0] in folders for name in names))
+        homes = {f"levels/{d}" for d in MODULE_DIRS.values()} | {"levels/shared"}
+        for name in names:
+            # boot/<symbol>, or levels/<home>/[<original file folders>/]<label>.
+            self.assertTrue(name.count("/") == 1 and name.startswith("boot/")
+                            or "/".join(name.split("/")[:2]) in homes, name)
+        # Boot twins name their tiles; cited source files group them.
+        self.assertIn("levels/shared/Quat_Slerp__FP4QUATPC4QUATT1f", names)
+        self.assertTrue(any(name.startswith("levels/shared/CORE/Breakable/") for name in names))
         self.assertEqual(sum(code(item)[0] for item in units),
                          int(self.us["measures"]["total_code"]))
         self.assertEqual(sum(code(item)[1] for item in units),
@@ -91,6 +97,29 @@ class GenProgressReportTests(unittest.TestCase):
         self.assertEqual(sum(code(c)[1] for c in parts), code(categories["levels"])[1])
         self.assertIn("LEVEL_21.REL", categories["level15_giant_clank_metalis"]["name"])
         self.assertNotIn("level21_giant_clank_space", categories)
+
+    def test_level_unit_names_use_symbols_and_original_files(self) -> None:
+        def row(name: str, symbol: str = "", file: str = "", kind: str = "function",
+                home: str = "shared") -> dict[str, object]:
+            return {"home": home, "name": name, "kind": kind, "symbol": symbol, "file": file}
+
+        table = [row("FRONTEND_000100", "Twin__Fv", "CORE/Breakable.cpp"),
+                 row("LEVEL_01_000200", "Same__Fv"), row("LEVEL_01_000300", "Same__Fv"),
+                 row("LEVEL_01_000400", file="CORE/Player/grindrail.cpp"),
+                 row("LEVEL_01_000500", file="CORE/header.h"),
+                 row("alignment_padding", kind="padding", home="01_pokitaru"),
+                 row("code_without_function_bounds", kind="unbounded", home="01_pokitaru")]
+        self.assertEqual(gen_progress_report.level_unit_names(table), [
+            "levels/shared/CORE/Breakable/Twin__Fv",
+            "levels/shared/Same__Fv.LEVEL_01_000200",
+            "levels/shared/Same__Fv.LEVEL_01_000300",
+            "levels/shared/CORE/Player/grindrail/LEVEL_01_000400",
+            "levels/shared/LEVEL_01_000500",
+            "levels/01_pokitaru/code_without_function_bounds"])
+        # A label may not also be a folder of another tile.
+        with self.assertRaisesRegex(ValueError, "unique leaves"):
+            gen_progress_report.level_unit_names(
+                [row("LEVEL_01_000100", "CORE"), row("LEVEL_01_000200", file="CORE/x.cpp")])
 
     def test_function_names_come_from_definitions(self) -> None:
         self.assertEqual(gen_progress_report.definition_start("int f(int (*g)(int))"), 4)

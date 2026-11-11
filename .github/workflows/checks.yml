@@ -26,6 +26,8 @@ jobs:
           python tools/bytematch_estimate.py --check
       - name: Check level function inventory metadata
         run: python tools/level_function_inventory.py --check
+      - name: Check level boot twin names and original source files
+        run: python tools/level_function_names.py --check
       - name: Check accepted level bodies by masked shape
         run: python tools/level_accepted_shapes.py --check
       - name: Check independent boundaries and translation leads
