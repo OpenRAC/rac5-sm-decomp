@@ -672,3 +672,7 @@ src/levels/bodies/LEVEL_09_19A4F0.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_10_1B70C0.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_23_1895B8.c  -mno-check-zero-division
 src/levels/bodies/LEVEL_24_1867F0.c  -mno-check-zero-division
+src/levels/bodies/LEVEL_01_123FA0.c  -fno-gcse
+src/levels/bodies/LEVEL_04_1C6568.c  -fno-gcse
+src/levels/bodies/LEVEL_08_1EF6E8.c  -fno-gcse
+src/levels/bodies/LEVEL_24_195190.c  -fno-gcse
