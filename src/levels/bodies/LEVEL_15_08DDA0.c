@@ -1,9 +1,8 @@
 extern int D_00150650[];
-extern void func_08DAC0(int object, short a, short b,
-                        unsigned short c, unsigned short d);
+extern void func_08DAC0(int object, short a, short b, unsigned short c, unsigned short d, int extra);
 
 void func_08DDA0(int index, short a, short b,
-                 unsigned short c, unsigned short d)
+                 unsigned short c, unsigned short d, int extra)
 {
-    func_08DAC0(D_00150650[index], a, b, c, d);
+    func_08DAC0(D_00150650[index], a, b, c, d, extra);
 }

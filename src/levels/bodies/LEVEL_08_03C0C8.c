@@ -2,7 +2,7 @@ extern void func_03BFA0(unsigned short *heap, unsigned short *first, int unused1
 extern void func_03BEF0(unsigned short *heap, int index, int count, unsigned short value);
 extern void func_03C028(unsigned short *heap, unsigned short *first);
 
-void func_03C0C8(unsigned short *heap, unsigned short *first, unsigned short *last)
+void func_03C0C8(unsigned short *heap, unsigned short *first, unsigned short *last, unsigned short *tag)
 {
     unsigned short *slot;
     unsigned short top;

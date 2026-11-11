@@ -1,5 +1,6 @@
-extern void func_10FB58(int first, int second);
+extern int func_10FB58(int first, int second);
 
-void func_10FBF8(void) {
-    func_10FB58(8192, 0);
+int func_10FBF8(void)
+{
+    return func_10FB58(8192, 0);
 }

@@ -1,5 +1,6 @@
-extern void func_088640(void);
+extern void func_088640(char *record);
 
-void func_05E208(void) {
-    func_088640();
+void func_05E208(char *record)
+{
+    func_088640(record);
 }

@@ -4,7 +4,7 @@ extern int func_173020(O *);
 extern float func_1731E8(O *);
 extern float func_173168(O *, int);
 extern void func_1730A0(O *, float, float);
-extern int func_1732B0(float, O *, int);
+extern int func_1732B0(O *o, int index);
 extern void func_173028(O *, int, float);
 void func_173440(O *o)
 {
@@ -26,7 +26,7 @@ void func_173440(O *o)
             if (a < g)
                 func_1730A0(o, a, g);
             else {
-                if (o->e4 == cur && func_1732B0(a, o, cur))
+                if (o->e4 == cur && func_1732B0(o, cur))
                     return;
                 func_173028(o, o->e8, a);
             }

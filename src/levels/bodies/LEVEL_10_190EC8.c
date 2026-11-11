@@ -1,7 +1,7 @@
 /* LEVEL_10:0x190EC8 -- placement copy of LEVEL_08_1B82F8.c: draws a random percentage and calls a helper with one of two modes. */
 
 int rand(void);
-void func_190CE8(char *a0, int a1);
+extern int func_190CE8(char *a0, int a1);
 
 void func_190EC8(char *a0)
 {

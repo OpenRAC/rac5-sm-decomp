@@ -18,12 +18,11 @@ static __inline__ Vec3 make_vec(float *s)
     return v;
 }
 
-void func_173CB8(char *a0, float *a1)
-{
+float func_173CB8(char *a0, float *a1) {
     Vec3 u;
     Vec3 t;
 
     t = make_vec(a1);
     u = t;
-    func_173C48(a0, &u);
+    return func_173C48(a0, &u);
 }

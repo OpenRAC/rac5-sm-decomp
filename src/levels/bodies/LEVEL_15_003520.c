@@ -1,6 +1,6 @@
-extern void func_003390(float, float);
+extern void func_003390(int, int, float, float);
 
-void func_003520(float value)
+void func_003520(int a, float value, int b)
 {
-    func_003390(0.0f, value);
+    func_003390(a, b, 0.0f, value);
 }

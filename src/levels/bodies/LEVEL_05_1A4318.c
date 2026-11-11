@@ -31,7 +31,7 @@ typedef struct {
     unsigned char idx;
 } Obj;
 
-extern void func_11FF20(float *m, Obj *o);
+extern int func_11FF20(float *m, Obj *o);
 extern void func_121BA8(V4 *dst, float *mat, float *vec);
 extern unsigned func_1A41E8(Obj *o, V4 p);
 extern void func_1A42D8(Obj *o, Pool *p, unsigned int pick, int base);

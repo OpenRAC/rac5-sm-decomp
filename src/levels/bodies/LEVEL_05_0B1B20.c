@@ -1,5 +1,6 @@
-extern void func_0B1B00(int zero, void *value);
+extern int func_0B1B00(int zero, void *value);
 
-void func_0B1B20(void *value) {
-    func_0B1B00(0, value);
+int func_0B1B20(void *value)
+{
+    return func_0B1B00(0, value);
 }

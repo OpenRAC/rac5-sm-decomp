@@ -1,6 +1,6 @@
 extern char *D_0018E2DC;
-extern void func_0031C8(void *global, void *first, void *second);
+extern void func_0031C8(void *global, int first, int second);
 
-void func_003310(void *first, void *second) {
+void func_003310(int first, int second, float x, float y) {
     func_0031C8(D_0018E2DC + 140, first, second);
 }

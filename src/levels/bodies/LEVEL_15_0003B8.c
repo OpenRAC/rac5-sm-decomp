@@ -12,12 +12,12 @@ typedef union {
 
 extern Elem D_15FC80[];
 
-extern void func_000390(int, int);
+extern int func_000390(int, int);
 
-void func_0003B8(int index)
+int func_0003B8(int index)
 {
     Entry e;
 
     e.e = D_15FC80[index];
-    func_000390(e.w[3], e.w[1]);
+    return func_000390(e.w[3], e.w[1]);
 }

@@ -9,7 +9,7 @@ extern void func_07D450(O *o, S *s, int a2, int a3, int t0, int t1, int t2, int 
 extern void func_14E438(O *o);
 extern void func_079108(O *o, int x);
 
-int func_152310(O *o, int k)
+int func_152310(O *o, float dt, int k, int b, int c, int d, int e)
 {
     S *s;
     if ((unsigned)(k - 6) < 2)

@@ -1,7 +1,7 @@
 extern int D_001A2344;
 extern int D_001C3920;
 extern char *D_001950B4;
-extern void func_10F620(int, int);
+extern int func_10F620(int, int);
 
 void func_0B77C8(void)
 {

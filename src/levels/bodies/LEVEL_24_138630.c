@@ -1,8 +1,8 @@
 extern void *func_139320(void);
-extern void func_024D38(void *, int);
+extern int func_024D38(void *, int);
 
-void func_138630(void)
+int func_138630(void *o, int idx)
 {
     void *value = func_139320();
-    func_024D38(value, 0xff);
+    return func_024D38(value, 0xff);
 }

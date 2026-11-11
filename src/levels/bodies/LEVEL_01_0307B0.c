@@ -12,9 +12,9 @@ typedef struct Spring {
     float target;
 } Spring;
 extern float D_001EF29C;
-extern void func_030898(Body *b, int a1, int a2, int a3, float f);
+extern int func_030898(Body *b, int a1, int a2, int a3, float f);
 
-void func_0307B0(Body *b, int a1, Spring *s, int a3, int a4)
+int func_0307B0(Body *b, int a1, Spring *s, int a3, int a4)
 {
     int n[2];
     int *p;
@@ -40,5 +40,5 @@ void func_0307B0(Body *b, int a1, Spring *s, int a3, int a4)
         }
         *pos += *vel;
     } while (--i);
-    func_030898(b, a1, a3, a4, b->pos);
+    return func_030898(b, a1, a3, a4, b->pos);
 }

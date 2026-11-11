@@ -17,7 +17,7 @@ typedef struct Node {
 extern Node *D_002E5C04;
 extern void func_185440(int a, int b);
 
-void func_1855A8(void)
+void func_1855A8(void *owner)
 {
     Node *node;
 

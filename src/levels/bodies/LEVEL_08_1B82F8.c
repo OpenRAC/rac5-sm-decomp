@@ -1,7 +1,7 @@
 /* LEVEL_08:0x1B82F8 -- draws a random percentage and calls a helper with one of two modes. */
 
 int rand(void);
-void func_1B8118(char *a0, int a1);
+extern int func_1B8118(char *a0, int a1);
 
 void func_1B82F8(char *a0)
 {

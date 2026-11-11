@@ -1,5 +1,6 @@
-extern void func_124450(int first, int second);
+extern int func_124450(int first, int second);
 
-void func_124508(void) {
-    func_124450(8192, 0);
+int func_124508(void)
+{
+    return func_124450(8192, 0);
 }

@@ -2,7 +2,7 @@ extern unsigned char D_00215B90[];
 extern int D_00215B64;
 extern int D_00215B68;
 
-void func_139140(void);
+extern int func_139140(void);
 
 void func_0CC970(void)
 {

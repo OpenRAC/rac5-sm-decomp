@@ -5,8 +5,8 @@ extern int D_00209BA0;
 
 int func_019EE8(int a);
 int func_0BD078(void);
-void func_0BDDD0(int a);
-void func_0BD748(int a, int b);
+extern int func_0BDDD0(int a0);
+extern int func_0BD748(int a, int b);
 
 void func_0C7FA8(void)
 {

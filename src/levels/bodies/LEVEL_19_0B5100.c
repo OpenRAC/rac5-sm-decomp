@@ -3,8 +3,8 @@ extern unsigned char D_001AFEB8;
 extern int D_001AFD98;
 extern int func_0188D8(int a0);
 extern int func_0AA6F8(void);
-extern void func_0AB7E0(int a0);
-extern void func_0AB0E0(int a0, int a1);
+extern int func_0AB7E0(int a0);
+extern int func_0AB0E0(int a, int b);
 
 void func_0B5100(void)
 {

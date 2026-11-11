@@ -1,6 +1,6 @@
-extern void func_1287D8(int, int);
+extern int func_1287D8(int first, int second);
 
-void func_128890(void)
+int func_128890(void)
 {
-    func_1287D8(0x2000, 0);
+    return func_1287D8(0x2000, 0);
 }

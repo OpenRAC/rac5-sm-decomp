@@ -2,7 +2,7 @@ extern unsigned char D_0021A090[];
 extern int D_0021A064;
 extern int D_0021A068;
 
-void func_13F210(void);
+extern int func_13F210(void);
 
 void func_0CB878(void)
 {

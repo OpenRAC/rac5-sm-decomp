@@ -1,4 +1,4 @@
-extern void func_018598(int, int);
+extern int func_018598(int a, int b);
 
 void func_0B7490(void)
 {

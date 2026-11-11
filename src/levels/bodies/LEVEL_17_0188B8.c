@@ -6,7 +6,7 @@ extern int D_001AF190;
 
 extern void func_1212C8(void);
 extern int func_10F088(void);
-extern void func_0AAD48(int a0, int a1);
+extern int func_0AAD48(int a, int b);
 extern void func_018518(int a0, int a1);
 
 void func_0188B8(void)

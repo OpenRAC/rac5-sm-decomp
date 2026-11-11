@@ -1,5 +1,5 @@
 extern void * D_00240270;
-extern void func_09CA48(void *, void *);
+extern int func_09CA48(int a, int b);
 
 void func_09C958(void *value)
 {

@@ -1,6 +1,6 @@
-extern char * func_022400(void);
+extern char *func_022400(int x, int y);
 
-int func_022CC8(void)
+int func_022CC8(int x, int y)
 {
-    return *(int *)(func_022400() + 0x54) == 2;
+    return *(int *)(func_022400(x, y) + 0x54) == 2;
 }

@@ -22,7 +22,7 @@ extern float cosf(float);
 extern float sqrtf(float);
 extern int func_014378(Obj *, float, float, float);
 extern int func_157C60(struct Obj *, int);
-extern void func_07CC90(Obj *, float *, int);
+extern float func_07CC90(Obj *, float *, int);
 extern void func_123310(float *, float *, Obj *);
 extern int func_1BFB10(char *, char *, int, float *, float *);
 extern void func_07C468(Obj *, int);

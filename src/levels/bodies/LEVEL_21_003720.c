@@ -1,6 +1,6 @@
 extern char *D_00143EBC;
 
-void func_003720(unsigned long long value)
+void func_003720(int value)
 {
     unsigned long long *flags =
         (unsigned long long *)(D_00143EBC + 0x40);

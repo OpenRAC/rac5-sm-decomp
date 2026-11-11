@@ -5,7 +5,6 @@ typedef struct {
     float result;
 } Obj;
 
-void func_1E2938(Obj *obj)
-{
+void func_1E2938(Obj *obj, unsigned int word) {
     obj->result = 1.0f / obj->divisor;
 }

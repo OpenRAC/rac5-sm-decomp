@@ -1,8 +1,11 @@
 extern int func_114140(void);
 extern int func_114348(void *record);
 
-void func_114510(void *record)
+int func_114510(void *record)
 {
-    if (func_114140() == -0x5431300)
-        func_114348(record);
+    int r = func_114140();
+
+    if (r == -0x5431300)
+        r = func_114348(record);
+    return r;
 }

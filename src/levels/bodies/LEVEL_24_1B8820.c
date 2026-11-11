@@ -1,10 +1,11 @@
 extern char D_001B7F60[];
-extern void func_08F748(char *, long long, char *, int, int, int, int);
-extern void func_08F920(char *);
+extern void func_08F748(void *out, void *arg, const void *data,
+                        int size, int first, int second, int third);
+extern int func_08F920(void *out);
 
-void func_1B8820(long long value)
+int func_1B8820(void *arg)
 {
-    char scratch[16];
-    func_08F748(scratch, value, D_001B7F60, 0x20, 0, 2, 0);
-    func_08F920(scratch);
+    char local[16];
+    func_08F748(local, arg, D_001B7F60, 32, 0, 2, 0);
+    return func_08F920(local);
 }

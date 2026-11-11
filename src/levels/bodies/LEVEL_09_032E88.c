@@ -1,5 +1,6 @@
-extern void func_09CE28(void);
+extern void func_09CE28(void *obj);
 
-void func_032E88(void) {
-    func_09CE28();
+void func_032E88(void *obj)
+{
+    func_09CE28(obj);
 }

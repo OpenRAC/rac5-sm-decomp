@@ -1,5 +1,6 @@
-extern void func_135CD8(int first, int second);
+extern int func_135CD8(int first, int second);
 
-void func_135D90(void) {
-    func_135CD8(8192, 0);
+int func_135D90(void)
+{
+    return func_135CD8(8192, 0);
 }
