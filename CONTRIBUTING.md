@@ -4,8 +4,10 @@ Thanks for helping. The rules live in [`AGENTS.md`](AGENTS.md) and
 [`LEGAL.md`](LEGAL.md); this page is the short version and the workflow.
 
 1. **Set up.** Python 3.12 or newer, your own lawful copy of the pinned USA
-   disc and, for the assembly and gate work, your own local toolchain
-   ([docs/build/building.md](docs/build/building.md)). The pinned USA input and the SNR2 and
+   disc and, for the assembly and gate work, the toolchain: the GNU tools are
+   rebuilt from public sources by `bash tools/compiler/build_gnu_ee.sh`
+   ([getting the tools](docs/contributing/toolchain.md),
+   [docs/build/building.md](docs/build/building.md)). The pinned USA input and the SNR2 and
    boot metadata are verified: **693** narrowly accepted boot placements
    (88,948 bytes), one 476-byte frontend function and two shared level
    functions. The level compiler profiles, the complete function catalogue and

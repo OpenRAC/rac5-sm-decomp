@@ -336,12 +336,19 @@ python3 tools/level_c_gate.py baserom/SCUS_976.15.iso \
   --extra-cc1 sdk991111sync=/path/to/sdk-sync/cc1 \
   --extra-as r5900-mfc1=/path/to/r5900-mfc1/as \
   --extra-as ee-frozen=/path/to/ee-frozen/as \
+  --extra-as ps2eeas=/mnt/c/path/to/Ps2EeAs.exe \
   --output-dir /home/you/rac5-level-c-trial
 ```
 
+With the GNU tools rebuilt by `tools/compiler/build_gnu_ee.sh`
+([getting the tools](../contributing/toolchain.md)), add `--unpinned-tools`: the gate
+records each compiler or per-source assembler whose SHA-256 differs from its pin,
+still requires every object and module hash, and reports `"qualifying_tools": false`.
+
 `--refresh-bodies` rewrites the two hash columns of `body_sources.tsv` after a
 full pass. Keep it out of ordinary runs: a stale hash must fail, not be repaired
-silently.
+silently. It refuses `--unpinned-tools`: hashes recorded with other tools would not
+qualify.
 
 `--jobs N` compiles independently named body sources concurrently and, in the
 default linking mode, links their objects concurrently within each module.

@@ -17,7 +17,7 @@ The disc's programs are rebuilt from C and assembly until every byte equals reta
 - **Your own lawful copy** of the game:
   - **USA PS2 disc**: 1,744,764,928 bytes, SHA-1 `61b9cf7f46b8fc318daa2b98cfc53301654775d6` (`SCUS_976.15`)
   - **Europe PS2 disc**: 1,982,988,288 bytes, SHA-1 `da06cadf3c022d146d113c797311a435a941655b` (`SCES_550.19`)
-- *(Optional)* your own local SN Systems assembler/linker and the pinned GNU EE compiler tools, for the assembly rebuilds and the gates.
+- *(Optional)* the GNU EE compiler tools, rebuilt from public sources by `tools/compiler/build_gnu_ee.sh`, and your own SN Systems assembler and linker, for the assembly rebuilds and the gates: [getting the tools](../contributing/toolchain.md).
 
 ### Setup & Build
 
@@ -64,7 +64,7 @@ The disc's programs are rebuilt from C and assembly until every byte equals reta
    ```
    These commands report facts locally; `catalogue` without `--write` checks whether the tracked metadata is current.
 
-5. **Rebuild the baselines and run the gates** (private; needs your own local toolchain):
+5. **Rebuild the baselines and run the gates** (private; needs the tools of [getting the tools](../contributing/toolchain.md); add `--unpinned-tools` to a gate run with rebuilt GNU tools):
    ```bash
    python tools/boot_assembly.py --assembler <Ps2EeAs> --linker <ld> baserom/SCUS_976.15
    python tools/snr2_assembly.py --all --assembler <Ps2EeAs> --linker <ld> "/path/to/your-size-matters-us.iso"

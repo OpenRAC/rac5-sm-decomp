@@ -33,6 +33,7 @@ import subprocess
 from pathlib import Path
 
 import cflags
+import tool_pins
 from boot_c_campaign import (ACCEPTED_SOURCES, REPLACEMENTS, accepted_replacements,
                              object_digest_matches, source_path,
                              validate_replacements)
@@ -125,8 +126,8 @@ def check_profile(cpp: Path, cc1: Path, assembler: Path) -> dict[str, object]:
     if normalized_digest(patch) != profile["source"]["patch_sha256_lf"]:
         raise ValueError("RAC5 compiler trial patch differs from pinned source")
     for label, path in (("cpp", cpp), ("cc1", cc1), ("as", assembler)):
-        if digest(path) != profile["tools"][f"{label}_sha256"]:
-            raise ValueError(f"{label} differs from measured RAC5 trial")
+        tool_pins.check(label, path, digest(path), profile["tools"][f"{label}_sha256"],
+                        f"{label} differs from measured RAC5 trial")
     if (profile["tools"]["sn_assembler_sha256"] != ASSEMBLER_SHA256
             or profile["tools"]["sn_linker_sha256"] != LINKER_SHA256):
         raise ValueError("SN tool pins disagree with the boot linker witness")
@@ -157,8 +158,8 @@ def check_extra_compiler(profile: dict, selector: str, bin_dir: Path | None,
                         ("cc1", libexec / tools["cc1"])):
         if not path.is_file():
             raise ValueError(f"{selector} {label} is missing: {path}")
-        if digest(path) != tools[f"{label}_sha256"]:
-            raise ValueError(f"{selector} {label} differs from measured RAC5 trial")
+        tool_pins.check(f"{selector} {label}", path, digest(path), tools[f"{label}_sha256"],
+                        f"{selector} {label} differs from measured RAC5 trial")
     flags = pinned["flags"]
     if set(flags) != {"driver", "as"} or list(flags["driver"]) != ["-S"]:
         raise ValueError(f"{selector} flags differ from measured build")
@@ -211,8 +212,8 @@ def check_extra_assembler(profile: dict, selector: str,
     binary = bin_dir / tools["assembler"]
     if not binary.is_file():
         raise ValueError(f"{selector} assembler is missing: {binary}")
-    if digest(binary) != tools["assembler_sha256"]:
-        raise ValueError(f"{selector} assembler differs from measured RAC5 trial")
+    tool_pins.check(f"{selector} assembler", binary, digest(binary), tools["assembler_sha256"],
+                    f"{selector} assembler differs from measured RAC5 trial")
     # An assembler pin may carry flags of its own: the SDK `as` puts a `li.s`
     # float in a GP-relative lit4 pool unless it is run with -G0, and that pool
     # does not link in this campaign's script. The flag belongs to the pin, not
@@ -404,6 +405,12 @@ def add_extra_arguments(parser: argparse.ArgumentParser) -> None:
                         help="directory holding a pinned extra assembler's "
                              "binary; required once a config/cflags.txt entry "
                              "selects it with as=SELECTOR")
+    parser.add_argument("--unpinned-tools", action="store_true",
+                        help="record compilers and per-source assemblers whose "
+                             "SHA-256 differs from the pin (such as the GNU tools "
+                             "rebuilt by tools/compiler/build_gnu_ee.sh) instead of "
+                             "refusing them; every object must still match, and the "
+                             "run does not qualify a match")
 
 
 def main() -> None:
@@ -415,6 +422,7 @@ def main() -> None:
     parser.add_argument("--export-dir", type=Path)
     add_extra_arguments(parser)
     args = parser.parse_args()
+    tool_pins.allow(args.unpinned_tools)
     compile_objects(args.cpp, args.cc1, args.assembler,
                     args.output_dir, args.export_dir,
                     dict(args.extra_bin), dict(args.extra_stage),

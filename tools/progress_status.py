@@ -74,6 +74,11 @@ def records(path: Path) -> list[dict[str, str]]:
 
 def public_evidence(boot: dict[str, object], level: dict[str, object],
                     level_c: dict[str, object]) -> dict[str, object]:
+    # A gate run with --unpinned-tools checks a change but qualifies nothing.
+    for name, report in (("boot", boot), ("shared-level C", level_c)):
+        if report.get("qualifying_tools") is False:
+            raise ValueError(f"private {name} gate ran with --unpinned-tools; "
+                             "rerun it with the pinned tools")
     matches = accepted_matches()
     if (boot.get("status") != "passed_boot_only"
             or boot.get("raw_load_and_header_exact") is not True

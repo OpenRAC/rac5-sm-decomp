@@ -121,3 +121,45 @@ Adapted files:
 - `src/levels/22_skyboard_kalidon/LEVEL_22_149D00.c`
 - `src/levels/23_skyboard_challax/LEVEL_23_1BDD88.c`
 - `src/levels/24_treehouse/LEVEL_24_1BB620.c`
+
+## GNU EE compiler patches (`tools/compiler/`)
+
+The patches in `tools/compiler/` modify the public GNU EE source archive
+`gnu-ee-binutils-gcc-1.1` (GCC and GNU binutils, Copyright the Free Software
+Foundation, GNU GPL version 2 or any later version). The archive is not
+redistributed here: `tools/compiler/build_gnu_ee.sh` downloads it and checks its
+SHA-256 (`1f518043e252d6eda726386971d52eda26541ab936ea73a9783d73712b595f92`), and
+the patched files keep their FSF notices.
+
+- `patches/lombyte/0020-gas-absolute-unknown-symbol.patch` and
+  `patches/lombyte/0027-gas-inline-float-literals.patch` are unchanged copies of
+  patches of [Lombyte](https://github.com/lombyte-project/Lombyte)'s `sce-991111b`
+  stack, as carried by [OpenRAC/rac2-decomp](https://github.com/OpenRAC/rac2-decomp).
+  MIT License, Copyright (c) 2026 Mateusz Kłysz.
+- `patches/0000-rac5-pinned-base.patch` combines that stack (same notice) with the
+  compiler and assembler edits of OpenRAC/rac2-decomp, licensed GPL-3.0; the notice of
+  that project's earlier MIT releases is in its `THIRD_PARTY_NOTICES.md`.
+- The other patches in `tools/compiler/` are this project's, under its GPL-3.0
+  license.
+
+The MIT permission notice of the Lombyte patches:
+
+```
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
