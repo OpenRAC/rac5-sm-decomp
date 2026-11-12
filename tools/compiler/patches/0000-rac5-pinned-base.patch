@@ -1,0 +1,4098 @@
+diff -ruN a/gas/config/tc-mips.c b/gas/config/tc-mips.c
+--- a/gas/config/tc-mips.c
++++ b/gas/config/tc-mips.c
+@@ -591,6 +591,138 @@
+ 
+ enum mips_regclass { MIPS_GR_REG, MIPS_FP_REG, MIPS16_REG };
+ 
++static int insn_uses_fpr_exact PARAMS ((struct mips_cl_insn *ip,
++					      unsigned int reg));
++
++/* RAC2: count emitted slots since the latest code label. A separate
++   flag tracks whether a label has been seen.
++    */
++static int rac2_div_insns_since_label;
++static int rac2_div_label_defined;
++static symbolS *rac2_div_last_code_label;
++static segT rac2_div_code_label_segment;
++/* RAC2: the same incoming floor starts at the end of a branch group.
++   Measured against the SDK 3.01 oracle: conditional, branch-likely and
++   unconditional branches reset the padding distance once their delay slot
++   has been emitted; jumps (j, jal, jr, jalr) do not.  This is the same
++   minimum as the label floor, never an addition to it.
++    */
++static int rac2_div_insns_since_branch;
++static int rac2_div_branch_defined;
++static int rac2_div_branch_delay_pending;
++static segT rac2_div_branch_segment;
++static fragS *rac2_div_branch_end_frag;
++static valueT rac2_div_branch_end_offset;
++
++/* RAC2: a delay-carrying branch owns the padding origin; a jump does not.
++   The J-type opcodes 2/3 and SPECIAL funct 8/9 are the measured
++   non-triggering class.
++    */
++static int
++rac2_div_branch_p (ip)
++     struct mips_cl_insn *ip;
++{
++  unsigned long pinfo;
++  unsigned int opcode;
++
++  if (ip == 0 || ip->insn_mo == 0)
++    return 0;
++  pinfo = ip->insn_mo->pinfo;
++  if ((pinfo & (INSN_UNCOND_BRANCH_DELAY
++		| INSN_COND_BRANCH_DELAY
++		| INSN_COND_BRANCH_LIKELY)) == 0)
++    return 0;
++  opcode = ip->insn_opcode;
++  if ((opcode >> 26) == 0x02 || (opcode >> 26) == 0x03)
++    return 0;                                   /* j, jal */
++  if ((opcode >> 26) == 0x00
++      && ((opcode & 0x3F) == 0x08 || (opcode & 0x3F) == 0x09))
++    return 0;                                   /* jr, jalr */
++  return 1;
++}
++
++/* RAC2: count emitted four-byte slots between the end of the latest branch
++   group and the current position, when both remain in the current fragment.
++   The fallback counter covers a fragment boundary.  */
++static int
++rac2_div_branch_distance ()
++{
++  if (rac2_div_branch_end_frag != 0 && rac2_div_branch_end_frag == frag_now)
++    {
++      valueT here = (valueT) frag_now_fix ();
++      if (here >= rac2_div_branch_end_offset)
++	{
++	  valueT bytes = here - rac2_div_branch_end_offset;
++	  if ((bytes & 3) == 0)
++	    return bytes >= 8 ? 2 : (int) (bytes / 4);
++	}
++    }
++  return rac2_div_insns_since_branch;
++}
++
++/* RAC2: the delay slot of a branch just completed; the floor starts here.  */
++static void
++rac2_div_branch_end ()
++{
++  rac2_div_branch_defined = 1;
++  rac2_div_branch_segment = now_seg;
++  rac2_div_branch_end_frag = frag_now;
++  rac2_div_branch_end_offset = (valueT) frag_now_fix ();
++  rac2_div_insns_since_branch = 0;
++}
++
++
++
++/* RAC2: the measured SDK 3.01 padding family contains only COP1 single-
++   precision div.s (0x03), sqrt.s (0x04) and rsqrt.s (0x16). Other
++   single-precision operations and integer HI/LO div/divu do not trigger
++   this floor; the oracle rejects double-precision forms.
++    */
++static int
++rac2_div_erratum_p (ip)
++     struct mips_cl_insn *ip;
++{
++  if (ip == 0 || ip->insn_mo == 0)
++    return 0;
++  if ((ip->insn_opcode >> 26) != 0x11)              /* COP1 */
++    return 0;
++  if (((ip->insn_opcode >> 21) & 0x1F) != 0x10)     /* single precision */
++    return 0;
++  switch (ip->insn_opcode & 0x3F)
++    {
++    case 0x03:                                      /* div.s */
++    case 0x04:                                      /* sqrt.s */
++    case 0x16:                                      /* rsqrt.s */
++      return 1;
++    default:
++      return 0;
++    }
++}
++/* Count actual four-byte slots when the code label remains in this fragment.
++   This includes emitted .word data and fixed padding. Other fragments retain
++   the saturated instruction/nop fallback until relaxation is known. */
++static int
++rac2_div_code_distance ()
++{
++  if (rac2_div_last_code_label != 0
++      && rac2_div_code_label_segment == now_seg
++      && rac2_div_last_code_label->sy_frag == frag_now)
++    {
++      valueT here = (valueT) frag_now_fix ();
++      valueT start = S_GET_VALUE (rac2_div_last_code_label);
++      if (here >= start)
++        {
++          valueT bytes = here - start;
++          if ((bytes & 3) == 0)
++            return bytes >= 8 ? 2 : (int) (bytes / 4);
++        }
++    }
++  return rac2_div_insns_since_label;
++}
++
++
++static int rac2_mtc1_nop_ok PARAMS ((struct mips_cl_insn *ip));
++
+ static int insn_uses_reg PARAMS ((struct mips_cl_insn *ip,
+ 				  unsigned int reg, enum mips_regclass class));
+ static int reg_needs_delay PARAMS ((int));
+@@ -1389,6 +1521,7 @@
+   char *f;
+   fixS *fixp;
+   int nops = 0;
++  int rac2_div_keep_labels = 0;
+ 
+   /* Mark instruction labels in mips16 mode.  */
+   if (mips_opts.mips16)
+@@ -1425,7 +1558,11 @@
+ #define emit_nop()					\
+   (mips_opts.mips16					\
+    ? md_number_to_chars (frag_more (2), 0x6500, 2)	\
+-   : md_number_to_chars (frag_more (4), 0, 4))
++   : md_number_to_chars (frag_more (4), 0, 4),\
++   (rac2_div_insns_since_label < 2\
++    ? ++rac2_div_insns_since_label : rac2_div_insns_since_label),\
++   (rac2_div_insns_since_branch < 2\
++    ? ++rac2_div_insns_since_branch : rac2_div_insns_since_branch))
+ 
+       /* The previous insn might require a delay slot, depending upon
+ 	 the contents of the current insn.  */
+@@ -1475,20 +1612,20 @@
+              user specified delays!  */
+ 	  if (prev_pinfo & INSN_WRITE_FPR_T)
+ 	    {
+-	      if (mips_optimize == 0
+-		  || insn_uses_reg (ip,
+-				    ((prev_insn.insn_opcode >> OP_SH_FT)
+-				     & OP_MASK_FT),
+-				    MIPS_FP_REG))
++	      if ((mips_optimize == 0
++		  || insn_uses_fpr_exact (ip,
++					   ((prev_insn.insn_opcode >> OP_SH_FT)
++					    & OP_MASK_FT)))
++					   && rac2_mtc1_nop_ok (ip))
+ 		++nops;
+ 	    }
+ 	  else if (prev_pinfo & INSN_WRITE_FPR_S)
+ 	    {
+-	      if (mips_optimize == 0
+-		  || insn_uses_reg (ip,
+-				    ((prev_insn.insn_opcode >> OP_SH_FS)
+-				     & OP_MASK_FS),
+-				    MIPS_FP_REG))
++	      if ((mips_optimize == 0
++		  || insn_uses_fpr_exact (ip,
++					   ((prev_insn.insn_opcode >> OP_SH_FS)
++					    & OP_MASK_FS)))
++					   && rac2_mtc1_nop_ok (ip))
+ 		++nops;
+ 	    }
+ 	  else
+@@ -1571,12 +1708,74 @@
+ 	    nops += 1;
+ 	}
+ 
++      /* RAC2: require two emitted slots between a code label and a division-
++   family operation. This is a minimum, not an addition: an existing
++   coprocessor hazard nop contributes to the floor. No observed code
++   label means no label-driven padding.
++
++
++
++
++
++
++    */
++      if (rac2_div_label_defined
++	  && ! mips_opts.mips16
++	  && rac2_div_erratum_p (ip)
++	  && rac2_div_code_label_segment == now_seg
++	  && rac2_div_code_distance () < 2)
++	{
++	  int rac2_need = 2 - rac2_div_code_distance ();
++	  if (nops < rac2_need)
++	    nops = rac2_need;
++
++	  /* A division label denotes the inserted padding, as in the oracle. */
++	  if (insn_labels != NULL && ! mips_opts.noreorder
++	      && ! prev_insn_unreordered)
++	    rac2_div_keep_labels = 1;
++	}
++
++      /* RAC2: an immediately preceding sync.p also requires one nop before
++   this COP1 family. Match the exact mnemonic: sync and sync.l share
++   INSN_SYNC but do not trigger the measured rule. This is another
++   minimum, not an addition.
++
++    */
++      if (! mips_opts.mips16
++	  && rac2_div_erratum_p (ip)
++	  && prev_insn.insn_mo != 0
++	  && prev_insn.insn_mo != &dummy_opcode
++	  && strcmp (prev_insn.insn_mo->name, "sync.p") == 0
++	  && nops < 1)
++	nops = 1;
++
+       /* If the previous instruction was in a noreorder section, then
+          we don't want to insert the nop after all.  */
+       /* Itbl support may require additional care here. */
+       if (prev_insn_unreordered)
+ 	nops = 0;
+ 
++      /* RAC2: the floor also starts at the end of a branch group.  This test
++   runs after the noreorder reset on purpose: the measured site keeps its
++   branch and delay slot inside a compiler .set noreorder block and its
++   division in the following .set reorder block.  A division emitted inside
++   a noreorder region still receives no padding.
++    */
++      if (rac2_div_branch_defined
++	  && ! mips_opts.mips16
++	  && rac2_div_erratum_p (ip)
++	  && rac2_div_branch_segment == now_seg
++	  && rac2_div_branch_distance () < 2)
++	{
++	  int rac2_need = 2 - rac2_div_branch_distance ();
++	  if (nops < rac2_need)
++	    nops = rac2_need;
++
++	  if (insn_labels != NULL && ! mips_opts.noreorder
++	      && ! prev_insn_unreordered)
++	    rac2_div_keep_labels = 1;
++	}
++
+       /* There are two cases which require two intervening
+ 	 instructions: 1) setting the condition codes using a move to
+ 	 coprocessor instruction which requires a general coprocessor
+@@ -1646,7 +1845,7 @@
+ 	      frag_grow (40);
+ 	    }
+ 
+-	  for (l = insn_labels; l != NULL; l = l->next)
++	  for (l = rac2_div_keep_labels ? NULL : insn_labels; l != NULL; l = l->next)
+ 	    {
+ 	      assert (S_GET_SEGMENT (l->label) == now_seg);
+ 	      l->label->sy_frag = frag_now;
+@@ -2225,6 +2424,34 @@
+       prev_insn_unreordered = 1;
+     }
+ 
++  /* RAC2: count this instruction; saturate at two slots. */
++  if (rac2_div_insns_since_label < 2)
++    ++rac2_div_insns_since_label;
++
++  /* RAC2: count this instruction for the branch-group floor, then close the
++   group when the instruction just emitted was the delay slot of a branch.
++   In reorder mode the delay slot is filled by the very call that appends
++   the branch; in noreorder mode it is the next appended instruction.
++    */
++  if (rac2_div_insns_since_branch < 2)
++    ++rac2_div_insns_since_branch;
++
++  if (! mips_opts.mips16)
++    {
++      if (rac2_div_branch_delay_pending)
++	{
++	  rac2_div_branch_delay_pending = 0;
++	  rac2_div_branch_end ();
++	}
++      else if (place == NULL && rac2_div_branch_p (ip))
++	{
++	  if (mips_opts.noreorder)
++	    rac2_div_branch_delay_pending = 1;
++	  else
++	    rac2_div_branch_end ();
++	}
++    }
++
+   /* We just output an insn, so the next one doesn't have a label.  */
+   mips_clear_insn_labels ();
+ 
+@@ -2249,6 +2476,9 @@
+ {
+   if (! preserve)
+     {
++      /* RAC2: a forgotten instruction history also forgets a pending delay
++	 slot, so the branch floor cannot carry across a section change.  */
++      rac2_div_branch_delay_pending = 0;
+       prev_insn.insn_mo = &dummy_opcode;
+       prev_prev_insn.insn_mo = &dummy_opcode;
+       prev_nop_frag = NULL;
+@@ -2378,6 +2608,52 @@
+    string, and corresponding arguments.  */
+ 
+ #ifdef USE_STDARG
++/* Like insn_uses_reg, but without lumping an even/odd floating-point pair
++   together.  That lumping exists because the assembler cannot tell "reads both
++   $f0 and $f1" from "reads one of them", and it is needed for the load/store
++   case it was written for.  It is wrong for a coprocessor move: mtc1 into $f4
++   does not touch $f5, so pairing them makes the delay-slot search invent a
++   hazard nop that the original assembler never emits.  */
++static int
++insn_uses_fpr_exact (ip, reg)
++     struct mips_cl_insn *ip;
++     unsigned int reg;
++{
++  if (ip->insn_mo->pinfo & INSN_READ_FPR_S)
++    if (((ip->insn_opcode >> OP_SH_FS) & OP_MASK_FS) == reg)
++      return 1;
++  if (ip->insn_mo->pinfo & INSN_READ_FPR_T)
++    if (((ip->insn_opcode >> OP_SH_FT) & OP_MASK_FT) == reg)
++      return 1;
++  return 0;
++}
++
++/* Private compatibility restricted to measured producer/consumer roles.
++   Cleared history is not a function boundary. No game name/address policy. */
++static int
++rac2_mtc1_nop_ok (ip)
++     struct mips_cl_insn *ip;
++{
++  unsigned int gpr, fpr;
++  if (prev_insn.insn_mo == 0 || strcmp (prev_insn.insn_mo->name, "mtc1") != 0)
++    return 1;
++  if (prev_prev_insn.insn_mo != 0 && prev_prev_insn.insn_mo != &dummy_opcode)
++    return 1;
++  gpr = (prev_insn.insn_opcode >> OP_SH_RT) & OP_MASK_RT;
++  fpr = (prev_insn.insn_opcode >> OP_SH_FS) & OP_MASK_FS;
++  if (fpr != 0 || ip->insn_mo == 0)
++    return 1;
++  if (gpr == 4 && strcmp (ip->insn_mo->name, "cvt.s.w") == 0
++      && ((ip->insn_opcode >> OP_SH_FS) & OP_MASK_FS) == 0
++      && ((ip->insn_opcode >> OP_SH_FD) & OP_MASK_FD) == 0)
++    return 0;
++  if (gpr == 0 && strcmp (ip->insn_mo->name, "c.lt.s") == 0
++      && ((ip->insn_opcode >> OP_SH_FS) & OP_MASK_FS) == 12
++      && ((ip->insn_opcode >> OP_SH_FT) & OP_MASK_FT) == 0)
++    return 0;
++  return 1;
++}
++
+ static void
+ macro_build (char *place,
+ 	     int *counter,
+@@ -3035,6 +3311,80 @@
+             }
+         }
+ 
++      /* R5900 64-bit immediates are materialised by the original assembler
++         top-down in 16-bit fields: the first field is aligned so that its
++         top bit is the highest set bit of the value, and each following
++         field is aligned to the highest set bit that is still missing, with
++         the shifts between them merged (zero runs cost no instruction):
++
++             ori   rt, $zero, value >> s0
++             dsll  rt, rt, s0 - s1          # dsll32 when the shift is >= 32
++             ori   rt, rt, (value >> s1) & 0xffff
++             ...
++             dsll  rt, rt, sN               # last shift down to bit 0
++             ori   rt, rt, value & ((1 << sN) - 1)   # when those bits are set
++
++         0x0005353535353106 -> ori 0xa6a6 ; dsll 16 ; ori 0xa6a6 ; dsll 11 ;
++         ori 0x106, and 0x000000ff000000ff -> ori 0xff00 ; dsll 24 ; ori 0xff.
++         Every multi-instruction 64-bit constant in the game's expected
++         listings follows this rule, including the zero-middle GS masks the
++         first version of this change handled and values the generic search
++         below would build with lui/dsll32.  Two shapes keep their existing
++         expansion because the listings show them that way: a plain low mask
++         2^n - 1 (li -1 ; dsrl) and values whose high word is all ones.  */
++      {
++        unsigned long long wide = ((unsigned long long) (unsigned long)
++                                   (hi32.X_add_number & 0xffffffff)) << 32
++          | (unsigned long long) (unsigned long)
++            (lo32.X_add_number & 0xffffffff);
++
++        if ((hi32.X_add_number & 0xffffffff) != 0xffffffff
++            && (wide & (wide + 1)) != 0)
++          {
++            expressionS field;
++            int top, cur, next, amount;
++            unsigned long long rest;
++
++            top = 63;
++            while (((wide >> top) & 1) == 0)
++              top--;
++            cur = top - 15;
++            field.X_op = O_constant;
++            field.X_add_number = (valueT) (offsetT) (wide >> cur);
++            macro_build ((char *) NULL, counter, &field, "ori", "t,r,i",
++                         reg, 0, (int) BFD_RELOC_LO16);
++            for (;;)
++              {
++                rest = wide & ((1ULL << cur) - 1);
++                if (rest == 0)
++                  next = 0;
++                else
++                  {
++                    top = cur - 1;
++                    while (((rest >> top) & 1) == 0)
++                      top--;
++                    next = (top < 16) ? 0 : top - 15;
++                  }
++                amount = cur - next;
++                if (amount != 0)
++                  macro_build ((char *) NULL, counter, NULL,
++                               (amount >= 32) ? "dsll32" : "dsll", "d,w,<",
++                               reg, reg,
++                               (amount >= 32) ? amount - 32 : amount);
++                cur = next;
++                if (rest == 0)
++                  break;
++                field.X_add_number = (valueT) (offsetT)
++                  ((rest >> cur) & 0xffff);
++                macro_build ((char *) NULL, counter, &field, "ori", "t,r,i",
++                             reg, reg, (int) BFD_RELOC_LO16);
++                if (cur == 0)
++                  break;
++              }
++            return;
++          }
++      }
++
+       /* Check for 16bit shifted constant.  We know that hi32 is
+          non-zero, so start the mask on the first bit of the hi32
+          value.  */
+@@ -4166,8 +4516,15 @@
+ 	       addiu	$tempreg,$tempreg,<sym>	(BFD_RELOC_LO16)
+ 	     If we have a constant, we need two instructions anyhow,
+ 	     so we may as well always use the latter form.  */
++	  /* ASTRA P20 for the address form: in reorder mode a symbol whose
++	     size is still unknown (no .extern seen yet) gets the absolute
++	     lui/addiu pair in one register, as ld_st already does.  The
++	     deferred relaxation pair would resolve to gp at link time.  */
+ 	  if ((valueT) offset_expr.X_add_number >= MAX_GPREL_OFFSET
+-	      || nopic_need_relax (offset_expr.X_add_symbol, 1))
++	      || nopic_need_relax (offset_expr.X_add_symbol, 1)
++	      || (! mips_opts.noreorder
++		  && ! S_IS_DEFINED (offset_expr.X_add_symbol)
++		  && offset_expr.X_add_symbol->ecoff_extern_size == 0))
+ 	    p = NULL;
+ 	  else
+ 	    {
+@@ -4954,9 +5311,26 @@
+ 	     With a constant we always use the latter case.  */
+ 	  if (breg == 0)
+ 	    {
++	      /* ASTRA P20: in reorder mode the retail R5900 assembler
++		 decides at the use.  A symbol whose size is still unknown
++		 (no .extern seen yet) gets the absolute lui/<op> form; the
++		 deferred relaxation pair would resolve to gp at link time
++		 and does not match.  Inside a noreorder block (the compiler
++		 delay-slot pattern) the retail assembler emits the single
++		 gp-relative form instead.  */
+ 	      if ((valueT) offset_expr.X_add_number >= MAX_GPREL_OFFSET
+-		  || nopic_need_relax (offset_expr.X_add_symbol, 1))
++		  || nopic_need_relax (offset_expr.X_add_symbol, 1)
++		  || (! mips_opts.noreorder
++		      && ! S_IS_DEFINED (offset_expr.X_add_symbol)
++		      && offset_expr.X_add_symbol->ecoff_extern_size == 0))
+ 		p = NULL;
++	      else if (mips_opts.noreorder)
++		{
++		  macro_build ((char *) NULL, &icnt, &offset_expr, s, fmt,
++			       treg, (int) BFD_RELOC_MIPS_GPREL, GP);
++		  used_at = 0;
++		  return;
++		}
+ 	      else
+ 		{
+ 		  frag_grow (20);
+@@ -7899,13 +8273,10 @@
+ 
+ 		assert (length == (f64 ? 8 : 4));
+ 
+-		if (*args == 'f'
+-		    || (*args == 'l'
+-			&& (! USE_GLOBAL_POINTER_OPT
+-			    || mips_pic == EMBEDDED_PIC
+-			    || g_switch_value < 4
+-			    || (temp[0] == 0 && temp[1] == 0)
+-			    || (temp[2] == 0 && temp[3] == 0))))
++		/* The retail R5900/SN assembler always synthesizes an
++		   li.s constant inline (lui/ori/mtc1) rather than pooling
++		   it in .lit4.  Keep li.d (.lit8) pooling unchanged.  */
++		if (*args == 'f' || *args == 'l')
+ 		  {
+ 		    imm_expr.X_op = O_constant;
+ 		    if (! target_big_endian)
+@@ -11701,6 +12072,25 @@
+       if (new > 0)
+ 	memcpy (fixptr - old, fixptr, new);
+ 
++      /* ASTRA P20: the retail R5900 assembler expands a relaxable gp
++	 pair to the absolute form `lui base,0` + `op %lo(base)`.  The
++	 default expansion keeps a copy of the second instruction in the
++	 first slot (md_convert_frag can even be entered twice, which
++	 leaves two copies), so rebuild the first word from the base
++	 register of the second.  Only the 4/8-byte ld_st and la pairs
++	 are touched.  */
++      if (mips_pic == NO_PIC
++	  && old == 4 && new == 8
++	  && RELAX_RELOC2 (fragp->fr_subtype) == 4)
++	{
++	  unsigned char *pair = (unsigned char *) (fragp->fr_literal
++						   + fragp->fr_fix - old);
++	  unsigned long second = bfd_get_32 (stdoutput, pair + 4);
++	  unsigned long base = (second >> 21) & 0x1f;
++
++	  md_number_to_chars ((char *) pair, 0x3c000000UL | (base << 16), 4);
++	}
++
+       fragp->fr_fix += new - old;
+     }
+ }
+@@ -11759,6 +12149,17 @@
+   l->label = sym;
+   l->next = insn_labels;
+   insn_labels = l;
++
++  /* RAC2: a code label starts a new padding distance, even when no branch
++   targets it. */
++  /* A data symbol is not a possible destination in this code stream. */
++  if ((bfd_get_section_flags (stdoutput, now_seg) & SEC_CODE) != 0)
++    {
++      rac2_div_insns_since_label = 0;
++      rac2_div_label_defined = 1;
++      rac2_div_last_code_label = sym;
++      rac2_div_code_label_segment = now_seg;
++    }
+ }
+ 
+ #if defined (OBJ_ELF) || defined (OBJ_MAYBE_ELF)
+diff -ruN a/gcc/c-common.c b/gcc/c-common.c
+--- a/gcc/c-common.c
++++ b/gcc/c-common.c
+@@ -55,7 +55,7 @@
+ 	    A_NO_CHECK_MEMORY_USAGE, A_NO_INSTRUMENT_FUNCTION,
+ 	    A_CONSTRUCTOR, A_DESTRUCTOR, A_MODE, A_SECTION, A_ALIGNED,
+ 	    A_UNUSED, A_FORMAT, A_FORMAT_ARG, A_WEAK, A_ALIAS,
+-	    A_INIT_PRIORITY};
++	    A_INIT_PRIORITY, A_SDA, A_NOSDA};
+ 
+ enum format_type { printf_format_type, scanf_format_type,
+ 		   strftime_format_type };
+@@ -400,6 +400,9 @@
+   add_attribute (A_INIT_PRIORITY, "init_priority", 0, 1, 0);
+   add_attribute (A_NO_INSTRUMENT_FUNCTION, "no_instrument_function", 0, 0, 1);
+   add_attribute (A_NO_CHECK_MEMORY_USAGE, "no_check_memory_usage", 0, 0, 1);
++  /* SN port: SDA ATTR MODS */
++  add_attribute (A_SDA, "sda", 0, 0, 1);
++  add_attribute (A_NOSDA, "nosda", 0, 0, 1);
+ }
+ 
+ /* Process the attributes listed in ATTRIBUTES and PREFIX_ATTRIBUTES
+@@ -869,6 +872,33 @@
+ 	  declare_weak (decl);
+ 	  break;
+ 
++	/* SN port: SDA ATTR MODS (from SN 2.95.3 source, c-common.c)  */
++	case A_SDA:
++	  if (TREE_CODE (decl) == VAR_DECL)
++	    {
++	      if (DECL_NOSDA (decl))
++		error_with_decl (decl,
++				 "cannot have both sda and nosda attributes for `%s'");
++	      else
++		DECL_SDA (decl) = 1;
++	    }
++	  else
++	    error_with_decl (decl, "sda attribute not allowed for `%s'");
++	  break;
++
++	case A_NOSDA:
++	  if (TREE_CODE (decl) == VAR_DECL)
++	    {
++	      if (DECL_SDA (decl))
++		error_with_decl (decl,
++				 "cannot have both sda and nosda attributes for `%s'");
++	      else
++		DECL_NOSDA (decl) = 1;
++	    }
++	  else
++	    error_with_decl (decl, "nosda attribute not allowed for `%s'");
++	  break;
++
+ 	case A_ALIAS:
+ 	  if ((TREE_CODE (decl) == FUNCTION_DECL && DECL_INITIAL (decl))
+ 	      || (TREE_CODE (decl) != FUNCTION_DECL && ! DECL_EXTERNAL (decl)))
+diff -ruN a/gcc/calls.c b/gcc/calls.c
+--- a/gcc/calls.c
++++ b/gcc/calls.c
+@@ -24,6 +24,11 @@
+ #include "tree.h"
+ #include "flags.h"
+ #include "expr.h"
++/* ASTRA P15: opt-in suppression of Cygnus sibling-call expansion.  */
++extern char *mips_astra_no_sibcall;
++/* ASTRA P22: sibling calls are off by default like the retail compiler;
++   -mastra-sibcall re-enables them per unit.  */
++extern char *mips_astra_sibcall;
+ #include "regs.h"
+ #include "insn-flags.h"
+ #include "toplev.h"
+@@ -2028,6 +2033,7 @@
+ 	      || 1
+ #endif
+ 	      || flag_exceptions
++	      || ! mips_astra_sibcall
+ 	      || ! stmt_loop_nest_empty ()
+ 		 /* The structure value address is used and modified in the
+ 		    loop below.  It does not seem worth th effort to save and
+diff -ruN a/gcc/config/mips/mips.c b/gcc/config/mips/mips.c
+--- a/gcc/config/mips/mips.c
++++ b/gcc/config/mips/mips.c
+@@ -145,8 +145,47 @@
+   struct extern_list *next;	/* next external */
+   char *name;			/* name of the external */
+   int size;			/* size in bytes */
++  int r5900_bare_int_ref;	/* ASTRA P34: marked during final output */
+ } *extern_head = 0;
+ 
++/* ASTRA P34: opt-in R5900/GAS extern buffering.  The retail assembler needs
++   the size of a small-data-eligible external before the reference; GAS is
++   single-pass, so the compiler output is buffered and the selected .extern
++   declarations are emitted in front of it.  */
++char *mips_astra_r5900_extern_buffer;
++static FILE *r5900_real_asm_file;
++static FILE *r5900_body_asm_file;
++#define TARGET_R5900_GAS_EXTERN_BUFFER \
++  (TARGET_MIPS5900 && TARGET_GAS && TARGET_GP_OPT \
++   && mips_astra_r5900_extern_buffer)
++
++/* ASTRA P34: mark a bare integer memory reference to a GP-eligible symbol so
++   its .extern is emitted before the buffered body.  */
++static void
++mips_r5900_mark_bare_int_ref (addr)
++     rtx addr;
++{
++  struct extern_list *p;
++  rtx sym;
++
++  if (! TARGET_R5900_GAS_EXTERN_BUFFER)
++    return;
++
++  sym = 0;
++  if (GET_CODE (addr) == SYMBOL_REF)
++    sym = addr;
++
++  if (sym == 0 || ! SYMBOL_REF_FLAG (sym))
++    return;
++
++  for (p = extern_head; p != 0; p = p->next)
++    if (strcmp (p->name, XSTR (sym, 0)) == 0)
++      {
++	p->r5900_bare_int_ref = 1;
++	return;
++      }
++}
++
+ /* Name of the file containing the current function.  */
+ char *current_function_file = "";
+ 
+@@ -206,9 +245,21 @@
+ #endif
+ 
+ /* Strings to hold which cpu and instruction set architecture to use.  */
++/* ASTRA P15: opt-in suppression of sibling-call expansion.  */
++char *mips_astra_no_sibcall;
++/* ASTRA P22: re-enable sibling calls per unit.  */
++char *mips_astra_sibcall;
++/* ASTRA 0049: run the Cygnus sibcall pass's CFG cleanup without a
++   CALL_PLACEHOLDER (the pre-0049 behavior) per unit.  */
++char *mips_astra_cygnus_cfg;
+ char *mips_cpu_string;		/* for -mcpu=<xxx> */
+ char *mips_isa_string;		/* for -mips{1,2,3,4} */
+ char *mips_abi_string;		/* for -mabi={32,n32,64,eabi} */
++/* ASTRA P25: opt-in annulment of fall-through delay slots whose register
++   is the branch-tested one and is dead on the not-taken path.  */
++char *mips_astra_annul_dead_slots = 0;	/* ASTRA P54: opt-in again */
++/* ASTRA P21: opt-in retention of the save_restore_insns emission order.  */
++char *mips_astra_keep_frame_order = 0; /* RAC2: default OFF */
+ 
+ /* Whether we are generating mips16 code.  This is a synonym for
+    TARGET_MIPS16, and exists for use as an attribute.  */
+@@ -4669,7 +4720,7 @@
+ 
+   /* Saves/restores of general purpose registers on the r5900 use
+      a mode wider than word_mode.  */
+-  if (TARGET_MIPS5900)
++  if (0 && TARGET_MIPS5900) /* RAC2 : ancre TImode neutralisee */
+     mips_reg_mode[0] = TImode;
+ 
+   /* CYGNUS LOCAL law */
+@@ -5114,7 +5165,13 @@
+     }
+ 
+   else if (code == MEM)
+-    output_address (XEXP (op, 0));
++    {
++      if (TARGET_R5900_GAS_EXTERN_BUFFER
++	  && GET_MODE_CLASS (GET_MODE (op)) == MODE_INT)
++	mips_r5900_mark_bare_int_ref (XEXP (op, 0));
++
++      output_address (XEXP (op, 0));
++    }
+ 
+   else if (code == CONST_DOUBLE
+ 	   && GET_MODE_CLASS (GET_MODE (op)) == MODE_FLOAT)
+@@ -5294,6 +5351,28 @@
+   int len;
+   tree section_name;
+ 
++  /* ASTRA 0056: a variable the source marks `sda' is small data by
++     declaration, and SN's single-pass assembler needs its size before the
++     first reference to address it gp-relative.  The end-of-file list comes
++     too late for that, so emit its .extern here, at the first use, which is
++     ahead of the text of the function that uses it.  Unmarked externals keep
++     the end-of-file placement, where retail keeps them absolute.  */
++  if (TARGET_GP_OPT && file != 0
++      && TREE_CODE (decl) == VAR_DECL && DECL_SDA (decl)
++      && (len = int_size_in_bytes (TREE_TYPE (decl))) > 0)
++    {
++      tree name_tree = get_identifier (name);
++
++      if (! TREE_ASM_WRITTEN (name_tree))
++	{
++	  TREE_ASM_WRITTEN (name_tree) = 1;
++	  fputs ("\t.extern\t", file);
++	  assemble_name (file, name);
++	  fprintf (file, ", %d\n", len);
++	}
++      return 0;
++    }
++
+   if (TARGET_GP_OPT
+       && TREE_CODE (decl) != FUNCTION_DECL
+       && (len = int_size_in_bytes (TREE_TYPE (decl))) > 0
+@@ -5305,6 +5384,7 @@
+       p->next = extern_head;
+       p->name = name;
+       p->size = len;
++      p->r5900_bare_int_ref = 0;
+       extern_head = p;
+     }
+ 
+@@ -5321,6 +5401,8 @@
+       p->next = extern_head;
+       p->name = name;
+       p->size = -1;
++  p->r5900_bare_int_ref = 0;
++      p->r5900_bare_int_ref = 0;
+       extern_head = p;
+     }
+ #endif
+@@ -5586,7 +5668,19 @@
+     fprintf (stream, "\n%s -G value = %d, Cpu = %s, ISA = %d\n",
+ 	     ASM_COMMENT_START,
+ 	     mips_section_threshold, mips_cpu_string, mips_isa);
+-}
++
++  if (TARGET_R5900_GAS_EXTERN_BUFFER)
++    {
++      r5900_real_asm_file = stream;
++      r5900_body_asm_file = tmpfile ();
++
++      if (r5900_body_asm_file == 0)
++	pfatal_with_name ("R5900 assembly temporary file");
++
++      asm_out_file = r5900_body_asm_file;
++      asm_out_data_file = r5900_body_asm_file;
++      asm_out_text_file = r5900_body_asm_file;
++    }}
+ 
+ /* If we are optimizing the global pointer, emit the text section now and any
+    small externs which did not have .comm, etc that are needed.  Also, give a
+@@ -5601,38 +5695,70 @@
+   tree name_tree;
+   struct extern_list *p;
+   int len;
++  FILE *out;
++
++  out = (TARGET_R5900_GAS_EXTERN_BUFFER && r5900_real_asm_file != 0)
++	? r5900_real_asm_file : file;
+ 
+   if (HALF_PIC_P ())
+     {
+-      HALF_PIC_FINISH (file);
++      HALF_PIC_FINISH (out);
+     }
+ 
+   if (extern_head)
+     {
+-      fputs ("\n", file);
++      fputs ("\n", out);
+ 
+       for (p = extern_head; p != 0; p = p->next)
+ 	{
+ 	  name_tree = get_identifier (p->name);
+ 
+ 	  /* Positively ensure only one .extern for any given symbol.  */
+-	  if (! TREE_ASM_WRITTEN (name_tree))
++	  if (! TREE_ASM_WRITTEN (name_tree)
++	      && (! TARGET_R5900_GAS_EXTERN_BUFFER
++		  || p->r5900_bare_int_ref))
+ 	    {
+ 	      TREE_ASM_WRITTEN (name_tree) = 1;
+ #ifdef ASM_OUTPUT_UNDEF_FUNCTION
+ 	      if (p->size == -1)
+-		ASM_OUTPUT_UNDEF_FUNCTION (file, p->name);
++		ASM_OUTPUT_UNDEF_FUNCTION (out, p->name);
+ 	      else
+ #endif
+ 		{
+-		  fputs ("\t.extern\t", file);
+-		  assemble_name (file, p->name);
+-		  fprintf (file, ", %d\n", p->size);
++		  fputs ("\t.extern\t", out);
++		  assemble_name (out, p->name);
++		  fprintf (out, ", %d\n", p->size);
+ 		}
+ 	    }
+ 	}
+     }
+       
++  if (TARGET_R5900_GAS_EXTERN_BUFFER)
++    {
++      char copybuf[8192];
++      int clen;
++      FILE *body = r5900_body_asm_file;
++
++      asm_out_file = out;
++
++      if (body != 0)
++	{
++	  rewind (body);
++	  while ((clen = fread (copybuf, 1, sizeof (copybuf), body)) > 0)
++	    if ((int) fwrite (copybuf, 1, clen, out) != clen)
++	      pfatal_with_name (asm_file_name);
++
++	  r5900_body_asm_file = 0;
++	  if (fclose (body) != 0)
++	    fatal ("cannot close R5900 assembly buffer");
++	}
++
++      r5900_real_asm_file = 0;
++      asm_out_data_file = out;
++      asm_out_text_file = out;
++      return;
++    }
++
+   if (TARGET_FILE_SWITCHING && ! TARGET_MIPS16)
+     {
+       fprintf (file, "\n\t.text\n");
+@@ -6058,376 +6184,404 @@
+ 	  }
+     }
+ 
+-  /* Save GP registers if needed.  */
+-  if (mask)
+-    {
+-      /* Pick which pointer to use as a base register.  For small frames, just
+-	 use the stack pointer.  Otherwise, use a temporary register.  Save 2
+-	 cycles if the save area is near the end of a large frame, by reusing
+-	 the constant created in the prologue/epilogue to adjust the stack
+-	 frame.  */
+-
+-      gp_offset = current_frame_info.gp_sp_offset;
+-      end_offset
+-	= gp_offset - (current_frame_info.gp_reg_size
+-		       - GET_MODE_SIZE (mips_reg_mode[0]));
+-
+-      if (gp_offset < 0 || end_offset < 0)
+-	fatal ("gp_offset (%ld) or end_offset (%ld) is less than zero.",
+-	       (long) gp_offset, (long) end_offset);
+-
+-      /* If we see a large frame in mips16 mode, we save the registers
+-         before adjusting the stack pointer, and load them afterward.  */
+-      else if (TARGET_MIPS16 && large_offset > 32767)
+-	base_reg_rtx = stack_pointer_rtx, base_offset = large_offset;
+-
+-      else if (gp_offset < 32768)
+-	base_reg_rtx = stack_pointer_rtx, base_offset  = 0;
+-
+-      else if (large_reg != 0
+-	       && (unsigned HOST_WIDE_INT) (large_offset - gp_offset) < 32768
+-	       && (unsigned HOST_WIDE_INT) (large_offset - end_offset) < 32768)
+-	{
+-	  base_reg_rtx = gen_rtx (REG, Pmode, MIPS_TEMP2_REGNUM);
+-	  base_offset = large_offset;
+-	  if (file == 0)
+-	    {
+-	      if (Pmode == DImode)
+-		insn = emit_insn (gen_adddi3 (base_reg_rtx, large_reg,
+-					      stack_pointer_rtx));
+-	      else
+-		insn = emit_insn (gen_addsi3 (base_reg_rtx, large_reg,
+-					      stack_pointer_rtx));
+-	      if (store_p)
+-		RTX_FRAME_RELATED_P (insn) = 1;
+-	    }
+-	  else
+-	    fprintf (file, "\t%s\t%s,%s,%s\n",
+-		     Pmode == DImode ? "daddu" : "addu",
+-		     reg_names[MIPS_TEMP2_REGNUM],
+-		     reg_names[REGNO (large_reg)],
+-		     reg_names[STACK_POINTER_REGNUM]);
+-	}
+-
+-      else
+-	{
+-	  base_reg_rtx = gen_rtx (REG, Pmode, MIPS_TEMP2_REGNUM);
+-	  base_offset = gp_offset;
+-	  if (file == 0)
+-	    {
+-	      rtx gp_offset_rtx = GEN_INT (gp_offset);
+-
+-	      /* Instruction splitting doesn't preserve the RTX_FRAME_RELATED_P
+-		 bit, so make sure that we don't emit anything that can be
+-		 split.  */
+-	      /* ??? There is no DImode ori immediate pattern, so we can only
+-		 do this for 32 bit code.  */
+-	      if (large_int (gp_offset_rtx)
+-		  && GET_MODE (base_reg_rtx) == SImode)
+-		{
+-		  insn = emit_move_insn (base_reg_rtx,
+-					 GEN_INT (gp_offset & 0xffff0000));
+-		  if (store_p)
+-		    RTX_FRAME_RELATED_P (insn) = 1;
+-		  insn
+-		    = emit_insn (gen_iorsi3 (base_reg_rtx, base_reg_rtx,
+-					     GEN_INT (gp_offset & 0x0000ffff)));
+-		  if (store_p)
+-		    RTX_FRAME_RELATED_P (insn) = 1;
+-		}
+-	      else
+-		{
+-		  insn = emit_move_insn (base_reg_rtx, gp_offset_rtx);
+-		  if (store_p)
+-		    RTX_FRAME_RELATED_P (insn) = 1;
+-		}
+-
+-	      if (Pmode == DImode)
+-		insn = emit_insn (gen_adddi3 (base_reg_rtx, base_reg_rtx,
+-				 	      stack_pointer_rtx));
+-	      else
+-		insn = emit_insn (gen_addsi3 (base_reg_rtx, base_reg_rtx,
+-					      stack_pointer_rtx));
+-	      if (store_p)
+-		RTX_FRAME_RELATED_P (insn) = 1;
+-	    }
+-	  else
+-	    {
+-	      fprintf (file, "\tli\t%s,0x%.08lx\t# ",
+-		       reg_names[MIPS_TEMP2_REGNUM], (long) base_offset);
+-	      fprintf (file, HOST_WIDE_INT_PRINT_DEC, base_offset);
+-	      fprintf (file, "\n\t%s\t%s,%s,%s\n",
+-		       Pmode == DImode ? "daddu" : "addu",
+-		       reg_names[MIPS_TEMP2_REGNUM],
+-		       reg_names[MIPS_TEMP2_REGNUM],
+-		       reg_names[STACK_POINTER_REGNUM]);
+-	    }
+-	}
+-
+-      /* When we restore the registers in MIPS16 mode, then if we are
+-         using a frame pointer, and this is not a large frame, the
+-         current stack pointer will be offset by
+-         current_function_outgoing_args_size.  Doing it this way lets
+-         us avoid offsetting the frame pointer before copying it into
+-         the stack pointer; there is no instruction to set the stack
+-         pointer to the sum of a register and a constant.  */
+-      if (TARGET_MIPS16
+-	  && ! store_p
+-	  && frame_pointer_needed
+-	  && large_offset <= 32767)
+-	base_offset += current_function_outgoing_args_size;
+-
+-      for (regno = GP_REG_LAST; regno >= GP_REG_FIRST; regno--)
+-	if (BITSET_P (mask, regno - GP_REG_FIRST))
+-	  {
+-	    if (file == 0)
+-	      {
+-		rtx reg_rtx;
+-		rtx mem_rtx
+-		  = gen_rtx (MEM,
+-			     mips_reg_mode[regno],
+-			     gen_rtx (PLUS, Pmode, base_reg_rtx,
+-				      GEN_INT (gp_offset - base_offset)));
+-
+-		RTX_UNCHANGING_P (mem_rtx) = 1;
+-
+-		/* The mips16 does not have an instruction to load
+-                   $31, so we load $7 instead, and work things out
+-                   in the caller.  */
+-		if (TARGET_MIPS16 && ! store_p && regno == GP_REG_FIRST + 31)
+-		  reg_rtx = gen_rtx (REG, mips_reg_mode[7], GP_REG_FIRST + 7);
+-		/* The mips16 sometimes needs to save $18.  */
+-		else if (TARGET_MIPS16
+-			 && regno != GP_REG_FIRST + 31
+-			 && ! M16_REG_P (regno))
+-		  {
+-		    if (! store_p)
+-		      reg_rtx = gen_rtx (REG, mips_reg_mode[6], 6);
+-		    else
+-		      {
+-			reg_rtx = gen_rtx (REG, mips_reg_mode[3], 3);
+-			emit_move_insn (reg_rtx,
+-					gen_rtx (REG, mips_reg_mode[regno],
+-						 regno));
+-		      }
+-		  }
+-		else
+-		      reg_rtx = gen_rtx (REG,
+-					 mips_reg_mode[regno],
+-					 regno);
+-		if (store_p)
+-		  {
+-		    insn = emit_move_insn (mem_rtx, reg_rtx);
+-		    RTX_FRAME_RELATED_P (insn) = 1;
+-		  }
+-		else if (!TARGET_ABICALLS 
+-			 || (mips_abi != ABI_32 && mips_abi != ABI_O64)
+-			 || regno != (PIC_OFFSET_TABLE_REGNUM - GP_REG_FIRST))
+-		  {
+-		    emit_move_insn (reg_rtx, mem_rtx);
+-		    if (TARGET_MIPS16
+-			&& regno != GP_REG_FIRST + 31
+-			&& ! M16_REG_P (regno))
+-		      emit_move_insn (gen_rtx (REG, mips_reg_mode[regno],
+-					       regno),
+-				      reg_rtx);
+-		  }
+-	      }
+-	    else
+-	      {
+-		if (store_p || !TARGET_ABICALLS 
+-		    || (mips_abi != ABI_32 && mips_abi != ABI_O64)
+-		    || regno != (PIC_OFFSET_TABLE_REGNUM - GP_REG_FIRST))
+-		  {
+-		    int r = regno;
+-
+-		    /* The mips16 does not have an instruction to
+-                       load $31, so we load $7 instead, and work
+-                       things out in the caller.  */
+-		    if (TARGET_MIPS16 && ! store_p && r == GP_REG_FIRST + 31)
+-		      r = GP_REG_FIRST + 7;
+-		      /* The mips16 sometimes needs to save $18.  */
+-		    if (TARGET_MIPS16
+-			&& regno != GP_REG_FIRST + 31
+-			&& ! M16_REG_P (regno))
+-		      {
+-			if (! store_p)
+-			  r = GP_REG_FIRST + 6;
+-			else
+-			  {
+-			    r = GP_REG_FIRST + 3;
+-			    fprintf (file, "\tmove\t%s,%s\n",
+-				     reg_names[r], reg_names[regno]);
+-			  }
+-		      }
+-		    fprintf (file, "\t%s\t%s,",
+-			     (TARGET_64BIT
+-			      ? (store_p) ? "sd" : "ld"
+-			      : (store_p) ? "sw" : "lw"),
+-			     reg_names[r]);
+-		    fprintf (file, HOST_WIDE_INT_PRINT_DEC, 
+-			     gp_offset - base_offset);
+-		    fprintf (file, "(%s)\n", reg_names[REGNO(base_reg_rtx)]);
+-		    if (! store_p
+-			&& TARGET_MIPS16
+-			&& regno != GP_REG_FIRST + 31
+-			&& ! M16_REG_P (regno))
+-		      fprintf (file, "\tmove\t%s,%s\n",
+-			       reg_names[regno], reg_names[r]);
+-		  }
+-
+-	      }
+-	    gp_offset -= GET_MODE_SIZE (mips_reg_mode[0]);
+-	  }
+-    }
+-  else
+-    base_reg_rtx = 0, base_offset  = 0;
+-
+-  /* Save floating point registers if needed.  */
+-  if (fmask)
+-    {
+-      int fp_inc = (TARGET_FLOAT64 || TARGET_SINGLE_FLOAT) ? 1 : 2;
+-      int fp_size = fp_inc * UNITS_PER_FPREG;
+-
+-      /* Pick which pointer to use as a base register.  */
+-      fp_offset = current_frame_info.fp_sp_offset;
+-      end_offset = fp_offset - (current_frame_info.fp_reg_size - fp_size);
+-
+-      if (fp_offset < 0 || end_offset < 0)
+-	fatal ("fp_offset (%ld) or end_offset (%ld) is less than zero.",
+-	       (long) fp_offset, (long) end_offset);
+-
+-      else if (fp_offset < 32768)
+-	base_reg_rtx = stack_pointer_rtx, base_offset  = 0;
+-
+-      else if (base_reg_rtx != 0
+-	       && (unsigned HOST_WIDE_INT) (base_offset - fp_offset) < 32768
+-	       && (unsigned HOST_WIDE_INT) (base_offset - end_offset) < 32768)
+-	;			/* already set up for gp registers above */
+-
+-      else if (large_reg != (rtx)0
+-	       && (((unsigned HOST_WIDE_INT)(large_offset - fp_offset))  < 32768)
+-	       && (((unsigned HOST_WIDE_INT)(large_offset - end_offset)) < 32768))
+-	{
+-	  base_reg_rtx = gen_rtx (REG, Pmode, MIPS_TEMP2_REGNUM);
+-	  base_offset = large_offset;
+-	  if (file == 0)
+-	    {
+-	      if (Pmode == DImode)
+-		insn = emit_insn (gen_adddi3 (base_reg_rtx, large_reg,
+-					      stack_pointer_rtx));
+-	      else
+-		insn = emit_insn (gen_addsi3 (base_reg_rtx, large_reg,
+-					      stack_pointer_rtx));
+-	      if (store_p)
+-		RTX_FRAME_RELATED_P (insn) = 1;
+-	    }
+-
+-	  else
+-	    fprintf (file, "\t%s\t%s,%s,%s\n",
+-		     Pmode == DImode ? "daddu" : "addu",
+-		     reg_names[MIPS_TEMP2_REGNUM],
+-		     reg_names[REGNO (large_reg)],
+-		     reg_names[STACK_POINTER_REGNUM]);
+-	}
+-
+-      else
+-	{
+-	  base_reg_rtx = gen_rtx (REG, Pmode, MIPS_TEMP2_REGNUM);
+-	  base_offset = fp_offset;
+-	  if (file == 0)
+-	    {
+-	      rtx fp_offset_rtx = GEN_INT (fp_offset);
+-
+-	      /* Instruction splitting doesn't preserve the RTX_FRAME_RELATED_P
+-		 bit, so make sure that we don't emit anything that can be
+-		 split.  */
+-	      /* ??? There is no DImode ori immediate pattern, so we can only
+-		 do this for 32 bit code.  */
+-	      if (large_int (fp_offset_rtx)
+-		  && GET_MODE (base_reg_rtx) == SImode)
+-		{
+-		  insn = emit_move_insn (base_reg_rtx,
+-					 GEN_INT (fp_offset & 0xffff0000));
+-		  if (store_p)
+-		    RTX_FRAME_RELATED_P (insn) = 1;
+-		  insn = emit_insn (gen_iorsi3 (base_reg_rtx, base_reg_rtx,
+-						GEN_INT (fp_offset & 0x0000ffff)));
+-		  if (store_p)
+-		    RTX_FRAME_RELATED_P (insn) = 1;
+-		}
+-	      else
+-		{
+-		  insn = emit_move_insn (base_reg_rtx, fp_offset_rtx);
+-		  if (store_p)
+-		    RTX_FRAME_RELATED_P (insn) = 1;
+-		}
+-
+-	      if (store_p)
+-		RTX_FRAME_RELATED_P (insn) = 1;
+-	      if (Pmode == DImode)
+-		insn = emit_insn (gen_adddi3 (base_reg_rtx, base_reg_rtx,
+-					      stack_pointer_rtx));
+-	      else
+-		insn = emit_insn (gen_addsi3 (base_reg_rtx, base_reg_rtx,
+-					      stack_pointer_rtx));
+-	      if (store_p)
+-		RTX_FRAME_RELATED_P (insn) = 1;
+-	    }
+-	  else
+-	    {
+-	      fprintf (file, "\tli\t%s,0x%.08lx\t# ",
+-		       reg_names[MIPS_TEMP2_REGNUM], (long) base_offset);
+-	      fprintf (file, HOST_WIDE_INT_PRINT_DEC, base_offset);
+-	      fprintf (file, "\n\t%s\t%s,%s,%s\n",
+-		       Pmode == DImode ? "daddu" : "addu",
+-		       reg_names[MIPS_TEMP2_REGNUM],
+-		       reg_names[MIPS_TEMP2_REGNUM],
+-		       reg_names[STACK_POINTER_REGNUM]);
+-	    }
+-	}
+-
+-      /* This loop must iterate over the same space as its companion in
+-	 compute_frame_size.  */
+-      for (regno = (FP_REG_LAST - fp_inc + 1);
+-	   regno >= FP_REG_FIRST;
+-	   regno -= fp_inc)
+-	if (BITSET_P (fmask, regno - FP_REG_FIRST))
+-	  {
+-	    if (file == 0)
+-	      {
+-		enum machine_mode sz
+-		  = TARGET_SINGLE_FLOAT ? SFmode : DFmode;
+-		rtx reg_rtx = gen_rtx (REG, sz, regno);
+-		rtx mem_rtx = gen_rtx (MEM, sz,
+-				       gen_rtx (PLUS, Pmode, base_reg_rtx,
+-						GEN_INT (fp_offset
+-							 - base_offset)));
+-		RTX_UNCHANGING_P (mem_rtx) = 1;
++  /* RAC2 : FPR saves precede GPR saves; restores keep GPR before FPR.
++     Keep both emission blocks and their offsets/directions intact.  The
++     first FPR pass needs the base initialized before either block runs.  */
++  {
++    int rac2_save_pass;
++    base_reg_rtx = 0;
++    base_offset = 0;
++    for (rac2_save_pass = 0; rac2_save_pass < 2; rac2_save_pass++)
++      {
++        if ((store_p != 0) == (rac2_save_pass == 0))
++          {
++            /* Save floating point registers if needed.  */
++            if (fmask)
++              {
++                int fp_inc = (TARGET_FLOAT64 || TARGET_SINGLE_FLOAT) ? 1 : 2;
++                int fp_size = fp_inc * UNITS_PER_FPREG;
++
++                /* Pick which pointer to use as a base register.  */
++                fp_offset = current_frame_info.fp_sp_offset;
++                end_offset = fp_offset - (current_frame_info.fp_reg_size - fp_size);
++
++                if (fp_offset < 0 || end_offset < 0)
++          	fatal ("fp_offset (%ld) or end_offset (%ld) is less than zero.",
++          	       (long) fp_offset, (long) end_offset);
++
++                else if (fp_offset < 32768)
++          	base_reg_rtx = stack_pointer_rtx, base_offset  = 0;
++
++                else if (base_reg_rtx != 0
++          	       && (unsigned HOST_WIDE_INT) (base_offset - fp_offset) < 32768
++          	       && (unsigned HOST_WIDE_INT) (base_offset - end_offset) < 32768)
++          	;			/* reuse an already established save-area base */
++
++                else if (large_reg != (rtx)0
++          	       && (((unsigned HOST_WIDE_INT)(large_offset - fp_offset))  < 32768)
++          	       && (((unsigned HOST_WIDE_INT)(large_offset - end_offset)) < 32768))
++          	{
++          	  base_reg_rtx = gen_rtx (REG, Pmode, MIPS_TEMP2_REGNUM);
++          	  base_offset = large_offset;
++          	  if (file == 0)
++          	    {
++          	      if (Pmode == DImode)
++          		insn = emit_insn (gen_adddi3 (base_reg_rtx, large_reg,
++          					      stack_pointer_rtx));
++          	      else
++          		insn = emit_insn (gen_addsi3 (base_reg_rtx, large_reg,
++          					      stack_pointer_rtx));
++          	      if (store_p)
++          		RTX_FRAME_RELATED_P (insn) = 1;
++          	    }
++
++          	  else
++          	    fprintf (file, "\t%s\t%s,%s,%s\n",
++          		     Pmode == DImode ? "daddu" : "addu",
++          		     reg_names[MIPS_TEMP2_REGNUM],
++          		     reg_names[REGNO (large_reg)],
++          		     reg_names[STACK_POINTER_REGNUM]);
++          	}
++
++                else
++          	{
++          	  base_reg_rtx = gen_rtx (REG, Pmode, MIPS_TEMP2_REGNUM);
++          	  base_offset = fp_offset;
++          	  if (file == 0)
++          	    {
++          	      rtx fp_offset_rtx = GEN_INT (fp_offset);
++
++          	      /* Instruction splitting doesn't preserve the RTX_FRAME_RELATED_P
++          		 bit, so make sure that we don't emit anything that can be
++          		 split.  */
++          	      /* ??? There is no DImode ori immediate pattern, so we can only
++          		 do this for 32 bit code.  */
++          	      if (large_int (fp_offset_rtx)
++          		  && GET_MODE (base_reg_rtx) == SImode)
++          		{
++          		  insn = emit_move_insn (base_reg_rtx,
++          					 GEN_INT (fp_offset & 0xffff0000));
++          		  if (store_p)
++          		    RTX_FRAME_RELATED_P (insn) = 1;
++          		  insn = emit_insn (gen_iorsi3 (base_reg_rtx, base_reg_rtx,
++          						GEN_INT (fp_offset & 0x0000ffff)));
++          		  if (store_p)
++          		    RTX_FRAME_RELATED_P (insn) = 1;
++          		}
++          	      else
++          		{
++          		  insn = emit_move_insn (base_reg_rtx, fp_offset_rtx);
++          		  if (store_p)
++          		    RTX_FRAME_RELATED_P (insn) = 1;
++          		}
++
++          	      if (store_p)
++          		RTX_FRAME_RELATED_P (insn) = 1;
++          	      if (Pmode == DImode)
++          		insn = emit_insn (gen_adddi3 (base_reg_rtx, base_reg_rtx,
++          					      stack_pointer_rtx));
++          	      else
++          		insn = emit_insn (gen_addsi3 (base_reg_rtx, base_reg_rtx,
++          					      stack_pointer_rtx));
++          	      if (store_p)
++          		RTX_FRAME_RELATED_P (insn) = 1;
++          	    }
++          	  else
++          	    {
++          	      fprintf (file, "\tli\t%s,0x%.08lx\t# ",
++          		       reg_names[MIPS_TEMP2_REGNUM], (long) base_offset);
++          	      fprintf (file, HOST_WIDE_INT_PRINT_DEC, base_offset);
++          	      fprintf (file, "\n\t%s\t%s,%s,%s\n",
++          		       Pmode == DImode ? "daddu" : "addu",
++          		       reg_names[MIPS_TEMP2_REGNUM],
++          		       reg_names[MIPS_TEMP2_REGNUM],
++          		       reg_names[STACK_POINTER_REGNUM]);
++          	    }
++          	}
++
++                /* This loop must iterate over the same space as its companion in
++          	 compute_frame_size.  */
++                for (regno = (FP_REG_LAST - fp_inc + 1);
++          	   regno >= FP_REG_FIRST;
++          	   regno -= fp_inc)
++          	if (BITSET_P (fmask, regno - FP_REG_FIRST))
++          	  {
++          	    if (file == 0)
++          	      {
++          		enum machine_mode sz
++          		  = TARGET_SINGLE_FLOAT ? SFmode : DFmode;
++          		rtx reg_rtx = gen_rtx (REG, sz, regno);
++          		rtx mem_rtx = gen_rtx (MEM, sz,
++          				       gen_rtx (PLUS, Pmode, base_reg_rtx,
++          						GEN_INT (fp_offset
++          							 - base_offset)));
++          		RTX_UNCHANGING_P (mem_rtx) = 1;
++
++          		if (store_p)
++          		  {
++          		    insn = emit_move_insn (mem_rtx, reg_rtx);
++          		    RTX_FRAME_RELATED_P (insn) = 1;
++          		  }
++          		else
++          		  emit_move_insn (reg_rtx, mem_rtx);
++          	      }
++          	    else
++          	      {
++          		fprintf (file, "\t%s\t%s,",
++          			 (TARGET_SINGLE_FLOAT
++          			  ? (store_p ? "s.s" : "l.s")
++          			  : (store_p ? "s.d" : "l.d")),
++          			 reg_names[regno]);
++          		fprintf (file, HOST_WIDE_INT_PRINT_DEC,
++          			 fp_offset - base_offset);
++          		fprintf (file, "(%s)\n", reg_names[REGNO(base_reg_rtx)]);
++          	      }
++
++          	    fp_offset -= fp_size;
++          	  }
++              }
++          }
++        else
++          {
++            /* Save GP registers if needed.  */
++            if (mask)
++              {
++                /* Pick which pointer to use as a base register.  For small frames, just
++          	 use the stack pointer.  Otherwise, use a temporary register.  Save 2
++          	 cycles if the save area is near the end of a large frame, by reusing
++          	 the constant created in the prologue/epilogue to adjust the stack
++          	 frame.  */
++
++                gp_offset = current_frame_info.gp_sp_offset;
++                end_offset
++          	= gp_offset - (current_frame_info.gp_reg_size
++          		       - GET_MODE_SIZE (mips_reg_mode[0]));
++
++                if (gp_offset < 0 || end_offset < 0)
++          	fatal ("gp_offset (%ld) or end_offset (%ld) is less than zero.",
++          	       (long) gp_offset, (long) end_offset);
++
++                /* If we see a large frame in mips16 mode, we save the registers
++                   before adjusting the stack pointer, and load them afterward.  */
++                else if (TARGET_MIPS16 && large_offset > 32767)
++          	base_reg_rtx = stack_pointer_rtx, base_offset = large_offset;
++
++                else if (gp_offset < 32768)
++          	base_reg_rtx = stack_pointer_rtx, base_offset  = 0;
++
++                else if (large_reg != 0
++          	       && (unsigned HOST_WIDE_INT) (large_offset - gp_offset) < 32768
++          	       && (unsigned HOST_WIDE_INT) (large_offset - end_offset) < 32768)
++          	{
++          	  base_reg_rtx = gen_rtx (REG, Pmode, MIPS_TEMP2_REGNUM);
++          	  base_offset = large_offset;
++          	  if (file == 0)
++          	    {
++          	      if (Pmode == DImode)
++          		insn = emit_insn (gen_adddi3 (base_reg_rtx, large_reg,
++          					      stack_pointer_rtx));
++          	      else
++          		insn = emit_insn (gen_addsi3 (base_reg_rtx, large_reg,
++          					      stack_pointer_rtx));
++          	      if (store_p)
++          		RTX_FRAME_RELATED_P (insn) = 1;
++          	    }
++          	  else
++          	    fprintf (file, "\t%s\t%s,%s,%s\n",
++          		     Pmode == DImode ? "daddu" : "addu",
++          		     reg_names[MIPS_TEMP2_REGNUM],
++          		     reg_names[REGNO (large_reg)],
++          		     reg_names[STACK_POINTER_REGNUM]);
++          	}
++
++                else
++          	{
++          	  base_reg_rtx = gen_rtx (REG, Pmode, MIPS_TEMP2_REGNUM);
++          	  base_offset = gp_offset;
++          	  if (file == 0)
++          	    {
++          	      rtx gp_offset_rtx = GEN_INT (gp_offset);
++
++          	      /* Instruction splitting doesn't preserve the RTX_FRAME_RELATED_P
++          		 bit, so make sure that we don't emit anything that can be
++          		 split.  */
++          	      /* ??? There is no DImode ori immediate pattern, so we can only
++          		 do this for 32 bit code.  */
++          	      if (large_int (gp_offset_rtx)
++          		  && GET_MODE (base_reg_rtx) == SImode)
++          		{
++          		  insn = emit_move_insn (base_reg_rtx,
++          					 GEN_INT (gp_offset & 0xffff0000));
++          		  if (store_p)
++          		    RTX_FRAME_RELATED_P (insn) = 1;
++          		  insn
++          		    = emit_insn (gen_iorsi3 (base_reg_rtx, base_reg_rtx,
++          					     GEN_INT (gp_offset & 0x0000ffff)));
++          		  if (store_p)
++          		    RTX_FRAME_RELATED_P (insn) = 1;
++          		}
++          	      else
++          		{
++          		  insn = emit_move_insn (base_reg_rtx, gp_offset_rtx);
++          		  if (store_p)
++          		    RTX_FRAME_RELATED_P (insn) = 1;
++          		}
++
++          	      if (Pmode == DImode)
++          		insn = emit_insn (gen_adddi3 (base_reg_rtx, base_reg_rtx,
++          				 	      stack_pointer_rtx));
++          	      else
++          		insn = emit_insn (gen_addsi3 (base_reg_rtx, base_reg_rtx,
++          					      stack_pointer_rtx));
++          	      if (store_p)
++          		RTX_FRAME_RELATED_P (insn) = 1;
++          	    }
++          	  else
++          	    {
++          	      fprintf (file, "\tli\t%s,0x%.08lx\t# ",
++          		       reg_names[MIPS_TEMP2_REGNUM], (long) base_offset);
++          	      fprintf (file, HOST_WIDE_INT_PRINT_DEC, base_offset);
++          	      fprintf (file, "\n\t%s\t%s,%s,%s\n",
++          		       Pmode == DImode ? "daddu" : "addu",
++          		       reg_names[MIPS_TEMP2_REGNUM],
++          		       reg_names[MIPS_TEMP2_REGNUM],
++          		       reg_names[STACK_POINTER_REGNUM]);
++          	    }
++          	}
++
++                /* When we restore the registers in MIPS16 mode, then if we are
++                   using a frame pointer, and this is not a large frame, the
++                   current stack pointer will be offset by
++                   current_function_outgoing_args_size.  Doing it this way lets
++                   us avoid offsetting the frame pointer before copying it into
++                   the stack pointer; there is no instruction to set the stack
++                   pointer to the sum of a register and a constant.  */
++                if (TARGET_MIPS16
++          	  && ! store_p
++          	  && frame_pointer_needed
++          	  && large_offset <= 32767)
++          	base_offset += current_function_outgoing_args_size;
++
++                /* RAC2 : emission en ordre CROISSANT (comme le retail) ; la boucle
++          	 d origine descend depuis $ra. Meme disposition, offsets identiques. */
++                {
++          	int n_rac2 = 0, rr_rac2;
++          	for (rr_rac2 = GP_REG_FIRST; rr_rac2 <= GP_REG_LAST; rr_rac2++)
++          	  if (BITSET_P (mask, rr_rac2 - GP_REG_FIRST))
++          	    n_rac2++;
++          	if (n_rac2 > 1)
++          	  gp_offset -= GET_MODE_SIZE (mips_reg_mode[0]) * (n_rac2 - 1);
++                }
++                for (regno = GP_REG_FIRST; regno <= GP_REG_LAST; regno++)
++          	if (BITSET_P (mask, regno - GP_REG_FIRST))
++          	  {
++          	    if (file == 0)
++          	      {
++          		rtx reg_rtx;
++          		rtx mem_rtx
++          		  = gen_rtx (MEM,
++          			     mips_reg_mode[regno],
++          			     gen_rtx (PLUS, Pmode, base_reg_rtx,
++          				      GEN_INT (gp_offset - base_offset)));
++
++          		RTX_UNCHANGING_P (mem_rtx) = 1;
++
++          		/* The mips16 does not have an instruction to load
++                             $31, so we load $7 instead, and work things out
++                             in the caller.  */
++          		if (TARGET_MIPS16 && ! store_p && regno == GP_REG_FIRST + 31)
++          		  reg_rtx = gen_rtx (REG, mips_reg_mode[7], GP_REG_FIRST + 7);
++          		/* The mips16 sometimes needs to save $18.  */
++          		else if (TARGET_MIPS16
++          			 && regno != GP_REG_FIRST + 31
++          			 && ! M16_REG_P (regno))
++          		  {
++          		    if (! store_p)
++          		      reg_rtx = gen_rtx (REG, mips_reg_mode[6], 6);
++          		    else
++          		      {
++          			reg_rtx = gen_rtx (REG, mips_reg_mode[3], 3);
++          			emit_move_insn (reg_rtx,
++          					gen_rtx (REG, mips_reg_mode[regno],
++          						 regno));
++          		      }
++          		  }
++          		else
++          		      reg_rtx = gen_rtx (REG,
++          					 mips_reg_mode[regno],
++          					 regno);
++          		if (store_p)
++          		  {
++          		    insn = emit_move_insn (mem_rtx, reg_rtx);
++          		    RTX_FRAME_RELATED_P (insn) = 1;
++          		  }
++          		else if (!TARGET_ABICALLS 
++          			 || (mips_abi != ABI_32 && mips_abi != ABI_O64)
++          			 || regno != (PIC_OFFSET_TABLE_REGNUM - GP_REG_FIRST))
++          		  {
++          		    emit_move_insn (reg_rtx, mem_rtx);
++          		    if (TARGET_MIPS16
++          			&& regno != GP_REG_FIRST + 31
++          			&& ! M16_REG_P (regno))
++          		      emit_move_insn (gen_rtx (REG, mips_reg_mode[regno],
++          					       regno),
++          				      reg_rtx);
++          		  }
++          	      }
++          	    else
++          	      {
++          		if (store_p || !TARGET_ABICALLS 
++          		    || (mips_abi != ABI_32 && mips_abi != ABI_O64)
++          		    || regno != (PIC_OFFSET_TABLE_REGNUM - GP_REG_FIRST))
++          		  {
++          		    int r = regno;
++
++          		    /* The mips16 does not have an instruction to
++                                 load $31, so we load $7 instead, and work
++                                 things out in the caller.  */
++          		    if (TARGET_MIPS16 && ! store_p && r == GP_REG_FIRST + 31)
++          		      r = GP_REG_FIRST + 7;
++          		      /* The mips16 sometimes needs to save $18.  */
++          		    if (TARGET_MIPS16
++          			&& regno != GP_REG_FIRST + 31
++          			&& ! M16_REG_P (regno))
++          		      {
++          			if (! store_p)
++          			  r = GP_REG_FIRST + 6;
++          			else
++          			  {
++          			    r = GP_REG_FIRST + 3;
++          			    fprintf (file, "\tmove\t%s,%s\n",
++          				     reg_names[r], reg_names[regno]);
++          			  }
++          		      }
++          		    fprintf (file, "\t%s\t%s,",
++          			     (TARGET_64BIT
++          			      ? (store_p) ? "sd" : "ld"
++          			      : (store_p) ? "sw" : "lw"),
++          			     reg_names[r]);
++          		    fprintf (file, HOST_WIDE_INT_PRINT_DEC, 
++          			     gp_offset - base_offset);
++          		    fprintf (file, "(%s)\n", reg_names[REGNO(base_reg_rtx)]);
++          		    if (! store_p
++          			&& TARGET_MIPS16
++          			&& regno != GP_REG_FIRST + 31
++          			&& ! M16_REG_P (regno))
++          		      fprintf (file, "\tmove\t%s,%s\n",
++          			       reg_names[regno], reg_names[r]);
++          		  }
++
++          	      }
++          	    gp_offset += GET_MODE_SIZE (mips_reg_mode[0]);
++          	  }
++              }
++            else
++              base_reg_rtx = 0, base_offset  = 0;
+ 
+-		if (store_p)
+-		  {
+-		    insn = emit_move_insn (mem_rtx, reg_rtx);
+-		    RTX_FRAME_RELATED_P (insn) = 1;
+-		  }
+-		else
+-		  emit_move_insn (reg_rtx, mem_rtx);
+-	      }
+-	    else
+-	      {
+-		fprintf (file, "\t%s\t%s,",
+-			 (TARGET_SINGLE_FLOAT
+-			  ? (store_p ? "s.s" : "l.s")
+-			  : (store_p ? "s.d" : "l.d")),
+-			 reg_names[regno]);
+-		fprintf (file, HOST_WIDE_INT_PRINT_DEC,
+-			 fp_offset - base_offset);
+-		fprintf (file, "(%s)\n", reg_names[REGNO(base_reg_rtx)]);
+-	      }
++          }
++      }
++  }
+ 
+-	    fp_offset -= fp_size;
+-	  }
+-    }
+ }
+ 
+ /* Set up the stack and frame (if desired) for the function.  */
+@@ -7322,8 +7476,13 @@
+       /* For hosted applications, always put an object in small data if
+ 	 possible, as this gives the best performance.  */
+ 
+-      if (size > 0 && size <= mips_section_threshold)
++      /* SN port: sda/nosda attributes override the -G threshold.  */
++      if (TREE_CODE (decl) == VAR_DECL && DECL_NOSDA (decl))
++	;				/* never small data */
++      else if (size > 0 && size <= mips_section_threshold)
+ 	SMALL_DATA_SECTION ();
++      else if (TREE_CODE (decl) == VAR_DECL && DECL_SDA (decl) && size > 0)
++	SMALL_DATA_SECTION ();		/* force small data */
+       else if (((TREE_CODE (decl) == VAR_DECL
+ 		 && TREE_READONLY (decl) && !TREE_SIDE_EFFECTS (decl)
+ 		 && DECL_INITIAL (decl)
+@@ -8746,10 +8905,37 @@
+ 		  int distance 
+ 		    = n - seen_before [INSN_UID (XEXP (target, 0))];
+ 
+-		  for (; distance <= 6; distance++)
+-		    {
+-		      emit_insn_before (gen_nop (), insn);
+-		    }
++		  {
++		    /* ASTRA P38: the retail loop length counts the branch
++		       itself, and a single pad is placed before the preceding
++		       real instruction so the dbr backward scan sees that
++		       instruction first (a useful instruction can fill the
++		       slot; the NOP remains a fallback and stays in front of
++		       the branch).  When the preceding instruction cannot be a
++		       slot candidate (call/jump/sequence/absent), keep the
++		       historical count and placement.  */
++		    int stealable = 0;
++		    rtx prev = prev_nonnote_insn (insn);
++		    int pads = 0;
++		    int d;
++		    rtx anchor = insn;
++
++		    if (prev != 0
++			&& GET_CODE (prev) == INSN
++			&& GET_CODE (PATTERN (prev)) != USE
++			&& GET_CODE (PATTERN (prev)) != CLOBBER
++			&& GET_CODE (PATTERN (prev)) != SEQUENCE)
++		      stealable = 1;
++
++		    for (d = stealable ? distance + 1 : distance; d <= 6; d++)
++		      pads++;
++
++		    if (stealable)  /* ASTRA P41: anchor all pads */
++		      anchor = prev;
++
++		    while (pads-- > 0)
++		      emit_insn_before (gen_nop (), anchor);
++		  }
+ 		}
+ 	    }
+ 
+@@ -8764,7 +8950,222 @@
+ 	}
+     }
+ }
+- 
++
++/* ASTRA P19: the retail R5900 assembler lengthens every loop shorter than
++   seven instructions (counted from the loop label through the branch and
++   its delay slot) with NOPs placed immediately before the branch.  The pass
++   above runs before delay slot scheduling and discards its loop history at
++   calls, so the retail assembler supplied the padding for those loops.
++   Reproduce the assembler's rule here, after the delay slots are filled.  */
++
++void
++mips_r5900_pad_loops (first)
++     rtx first;
++{
++  rtx insn;
++  int i, n = 0;
++  int max_uid = get_max_uid ();
++  int *label_count = (int *) alloca (sizeof (int) * (max_uid + 1));
++
++  if (! TARGET_MIPS5900)
++    return;
++
++  for (i = 0; i <= max_uid; i++)
++    label_count[i] = -1;
++
++  for (insn = first; insn; insn = NEXT_INSN (insn))
++    {
++      enum rtx_code code = GET_CODE (insn);
++
++      if (code == CODE_LABEL)
++	{
++	  label_count[INSN_UID (insn)] = n;
++	  continue;
++	}
++
++      if (code == INSN && GET_CODE (PATTERN (insn)) == SEQUENCE)
++	{
++	  rtx branch = XVECEXP (PATTERN (insn), 0, 0);
++	  int length = XVECLEN (PATTERN (insn), 0);
++
++	  if (GET_CODE (branch) == JUMP_INSN)
++	    {
++	      rtx label = condjump_label (branch);
++	      int start = -1;
++
++	      if (label != 0 && GET_CODE (label) == LABEL_REF)
++		start = label_count[INSN_UID (XEXP (label, 0))];
++
++	      if (start >= 0)
++		{
++		  int loop = n - start + length;
++
++		  for (; loop < 7; loop++)
++		    emit_insn_before (gen_nop (), insn);
++		}
++	    }
++
++	  n += length;
++	  continue;
++	}
++
++      if (code == INSN)
++	{
++	  enum rtx_code pat = GET_CODE (PATTERN (insn));
++
++	  if (pat == USE || pat == CLOBBER)
++	    continue;
++	  /* Use the MD word count for a division-guard expansion. */
++	  n += pat == TRAP_IF ? get_attr_length (insn) : 1;
++	}
++      else if (code == JUMP_INSN
++	       && (GET_CODE (PATTERN (insn)) == ADDR_VEC
++		   || GET_CODE (PATTERN (insn)) == ADDR_DIFF_VEC))
++	continue;
++      else if (code == CALL_INSN || code == JUMP_INSN)
++	{
++	  /* ASTRA P46: a branch or call whose delay slot reorg left empty is
++	     emitted in reorder mode, and GAS appends its delay NOP, so it
++	     occupies two words.  A short loop closed by such a branch is
++	     padded like a filled one (the pads are emitted under noreorder,
++	     so GAS cannot move one into the empty slot).  */
++	  if (code == JUMP_INSN)
++	    {
++	      rtx label = condjump_label (insn);
++	      int start = -1;
++
++	      if (label != 0 && GET_CODE (label) == LABEL_REF)
++		start = label_count[INSN_UID (XEXP (label, 0))];
++
++	      if (start >= 0)
++		{
++		  int loop = n - start + 2;
++
++		  for (; loop < 7; loop++)
++		    emit_insn_before (gen_nop (), insn);
++		}
++	    }
++	  n += 2;
++	}
++    }
++}
++
++/* ASTRA P25: opt-in.  The retail compiler annuls a conditional branch
++   when its delay-slot instruction writes the register the branch tests
++   and that register is dead on the not-taken path (the branch-likely
++   form, for example `bnezl v0,L; move v0,zero`).  reorg only annuls when
++   it steals from a branch target; do the same for fall-through-filled
++   slots after scheduling, when the policy is selected.  */
++
++void
++mips_r5900_annul_dead_slots (first)
++     rtx first;
++{
++  rtx insn;
++
++  if (! TARGET_MIPS5900 || ! mips_astra_annul_dead_slots)
++    return;
++
++  for (insn = first; insn; insn = NEXT_INSN (insn))
++    {
++      rtx body, br, trial, set, dest, condition, p;
++      int safe = 0;
++
++      if (GET_CODE (insn) != INSN || GET_CODE (PATTERN (insn)) != SEQUENCE)
++	continue;
++      body = PATTERN (insn);
++      if (XVECLEN (body, 0) != 2)
++	continue;
++      br = XVECEXP (body, 0, 0);
++      if (GET_CODE (br) != JUMP_INSN || ! condjump_p (br)
++	  || INSN_ANNULLED_BRANCH_P (br))
++	continue;
++      trial = XVECEXP (body, 0, 1);
++      if (GET_CODE (trial) != INSN)
++	continue;
++      set = single_set (trial);
++      if (set == 0 || GET_CODE (SET_DEST (set)) != REG
++	  || GET_MODE (SET_DEST (set)) == BLKmode)
++	continue;
++      dest = SET_DEST (set);
++      if (dest == stack_pointer_rtx || dest == hard_frame_pointer_rtx
++	  || dest == frame_pointer_rtx)
++	continue;
++
++      /* Only when the delay-slot register is one the branch tests (the
++	 retail `bnez v0,L; move v0,zero` shape).  */
++      condition = get_condition (br, NULL_RTX);
++      if (condition == 0 || ! reg_mentioned_p (dest, condition))
++	continue;
++      /* SN late-fallback shape: NE zero-clear with a const0 delay source.  */
++      if (GET_CODE (condition) != NE
++	  || (XEXP (condition, 0) != const0_rtx
++	      && XEXP (condition, 1) != const0_rtx)
++	  || SET_SRC (set) != const0_rtx)
++	{
++	  /* ASTRA P40: get_condition may trace the tested register back to
++	     an arithmetic producer (e.g. slt) and report that comparison.
++	     Fall back to the branch's own comparison; if the branch tests
++	     this register against zero and the delay slot writes zero, the
++	     skipped write is a no-op on the not-taken path (not-taken of
++	     `ne dest,0` implies dest is zero), so the shape is safe.  */
++	  rtx own = 0;
++
++	  if (GET_CODE (PATTERN (br)) == SET
++	      && GET_CODE (SET_SRC (PATTERN (br))) == IF_THEN_ELSE)
++	    own = XEXP (SET_SRC (PATTERN (br)), 0);
++
++	  if (own != 0
++	      && GET_CODE (own) == NE
++	      && reg_mentioned_p (dest, own)
++	      && (XEXP (own, 0) == const0_rtx
++		  || XEXP (own, 1) == const0_rtx
++		  || (GET_CODE (XEXP (own, 0)) == REG
++		      && REGNO (XEXP (own, 0)) == 0)
++		  || (GET_CODE (XEXP (own, 1)) == REG
++		      && REGNO (XEXP (own, 1)) == 0))
++	      && (SET_SRC (set) == const0_rtx
++		  || (GET_CODE (SET_SRC (set)) == REG
++		      && REGNO (SET_SRC (set)) == 0)))
++	    safe = 1;
++	  else
++	    continue;
++	}
++
++      /* Walk the not-taken path: the register must be written before it
++	 is read (or be clobbered by a call).  */
++      for (p = NEXT_INSN (insn); p; p = NEXT_INSN (p))
++	{
++	  rtx inner;
++
++	  if (GET_CODE (p) == NOTE)
++	    continue;
++	  if (GET_CODE (p) == CODE_LABEL || GET_CODE (p) == BARRIER)
++	    break;
++	  if (GET_CODE (p) == JUMP_INSN)
++	    break;
++	  if (GET_CODE (p) == CALL_INSN)
++	    {
++	      if (call_used_regs[REGNO (dest)])
++		safe = 1;
++	      break;
++	    }
++	  if (GET_CODE (p) != INSN)
++	    continue;
++	  inner = single_set (p);
++	  if (inner != 0 && GET_CODE (SET_DEST (inner)) == REG
++	      && REGNO (SET_DEST (inner)) == REGNO (dest))
++	    {
++	      safe = 1;
++	      break;
++	    }
++	  if (reg_mentioned_p (dest, PATTERN (p)))
++	    break;
++	}
++      if (safe)
++	INSN_ANNULLED_BRANCH_P (br) = 1;
++    }
++}
+ 
+ /* Exported to toplev.c.
+ 
+@@ -8779,8 +9180,8 @@
+   rtx insn;
+   struct constant *constants;
+ 
+-  if (TARGET_MIPS5900)
+-    mips_r5900_lengthen_loops (first);
++  /* ASTRA P54: no mips_r5900_lengthen_loops here; Ps2EeAs pads short
++     loops when it assembles them, and padding them twice is wrong.  */
+       
+   if (! TARGET_MIPS16)
+     return;
+diff -ruN a/gcc/config/mips/mips.h b/gcc/config/mips/mips.h
+--- a/gcc/config/mips/mips.h
++++ b/gcc/config/mips/mips.h
+@@ -151,6 +151,12 @@
+ extern char *mips_no_mips16_string;	/* for -mno-mips16 */
+ extern char *mips_explicit_type_size_string;   /* for -mexplicit-type-size */
+ extern int mips_split_addresses;	/* perform high/lo_sum support */
++/* ASTRA P34: opt-in R5900/GAS extern buffering.  */
++extern char *mips_astra_r5900_extern_buffer;
++/* ASTRA P25: opt-in annulment of dead fall-through delay slots.  */
++extern char *mips_astra_annul_dead_slots;
++/* ASTRA P21: keep frame-related insns in scheduler program order.  */
++extern char *mips_astra_keep_frame_order;
+ extern int dslots_load_total;		/* total # load related delay slots */
+ extern int dslots_load_filled;		/* # filled load delay slots */
+ extern int dslots_jump_total;		/* total # jump related delay slots */
+@@ -593,11 +599,21 @@
+    will be set to the string `"512"'.
+ 
+ 	extern char *m88k_short_data;
+-	#define TARGET_OPTIONS { { "short-data-", &m88k_short_data } }  */
++
++#define TARGET_OPTIONS { { "short-data-", &m88k_short_data } }  */
++
++extern char *mips_astra_no_sibcall;
++/* ASTRA P22: sibling calls are off by default (retail behavior).  */
++extern char *mips_astra_sibcall;
++/* ASTRA 0049: opt back into the Cygnus sibcall pass's CFG cleanup.  */
++extern char *mips_astra_cygnus_cfg;
+ 
+ #define TARGET_OPTIONS							\
+ {									\
+   SUBTARGET_TARGET_OPTIONS						\
++  { "astra-no-sibcall", &mips_astra_no_sibcall },\
++  { "astra-sibcall", &mips_astra_sibcall },\
++  { "astra-cygnus-cfg", &mips_astra_cygnus_cfg },\
+   { "cpu=",	&mips_cpu_string	},				\
+   { "ips",	&mips_isa_string	},				\
+   { "entry",	&mips_entry_string	},				\
+@@ -610,7 +626,10 @@
+   { "max-skip-functions=",	&mips_max_skip_funcs_string },		\
+   /* END CYGNUS LOCAL */						\
+   { "no-mips16", &mips_no_mips16_string	},                              \
+-  { "explicit-type-size", &mips_explicit_type_size_string }		\
++  { "explicit-type-size", &mips_explicit_type_size_string },		\
++  { "astra-r5900-extern-buffer", &mips_astra_r5900_extern_buffer },		\
++  { "astra-keep-frame-order", &mips_astra_keep_frame_order },		\
++  { "astra-annul-dead-slots", &mips_astra_annul_dead_slots }		\
+ }
+ 
+ /* This is meant to be redefined in the host dependent files.  */
+@@ -724,14 +743,10 @@
+ 	fixed_regs[27] = call_used_regs[27] = 1;                        \
+ 	fixed_regs[30] = call_used_regs[30] = 1;                        \
+       }									\
+-    /* The r5900 has a second hilo register.  Expose them to the	\
+-       register allocators when compiling for the r5900.  */		\
+-    if (TARGET_MIPS5900)                                                \
+-      {									\
+-	fixed_regs[HI1_REGNUM] = 0;					\
+-	fixed_regs[LO1_REGNUM] = 0;					\
+-	fixed_regs[HILO1_REGNUM] = 0;					\
+-      }									\
++    /* The r5900 has a second hilo register (mult1/div1).  The retail	\
++       game code never uses it - 436 multiplies, none on pipeline 1 -	\
++       so it stays fixed and the allocators keep every product in the	\
++       first pair.  */							\
+     SUBTARGET_CONDITIONAL_REGISTER_USAGE				\
+   }									\
+ while (0)
+@@ -3375,6 +3390,13 @@
+       {									\
+         HALF_PIC_ENCODE (DECL);						\
+       }									\
++									\
++    /* SN port: sda/nosda attributes win over the size/section		\
++       heuristics above (reference side of the small-data decision).  */	\
++    if (TREE_CODE (DECL) == VAR_DECL && DECL_NOSDA (DECL))		\
++      SYMBOL_REF_FLAG (XEXP (DECL_RTL (DECL), 0)) = 0;			\
++    else if (TREE_CODE (DECL) == VAR_DECL && DECL_SDA (DECL))		\
++      SYMBOL_REF_FLAG (XEXP (DECL_RTL (DECL), 0)) = 1;			\
+   }									\
+ while (0)
+ 
+@@ -4814,6 +4836,16 @@
+    PC relative loads that are out of range.  */
+ #define MACHINE_DEPENDENT_REORG(X) machine_dependent_reorg (X)
+ 
++/* ASTRA P54: the R5900 short-loop padding is the assembler's.  The game
++   code is assembled by Ps2EeAs, which pads a short loop itself, so cc1 no
++   longer imitates it (mips_r5900_pad_loops is not called).  */
++
++/* ASTRA P25: opt-in annulment of dead fall-through delay slots.  */
++#define MACHINE_DEPENDENT_REORG_AFTER_DBR_2(X) mips_r5900_annul_dead_slots (X)
++extern void mips_r5900_annul_dead_slots ();
++#define MACHINE_DEPENDENT_REORG_AFTER_DBR(X) mips_r5900_pad_loops (X)
++extern void mips_r5900_pad_loops ();
++
+ /* We need to use a special set of functions to handle hard floating
+    point code in mips16 mode.  */
+ 
+diff -ruN a/gcc/config/mips/mips.md b/gcc/config/mips/mips.md
+--- a/gcc/config/mips/mips.md
++++ b/gcc/config/mips/mips.md
+@@ -5406,7 +5406,7 @@
+ 
+ (define_insn "movti_internal"
+   [(set (match_operand:TI 0 "nonimmediate_operand" "=d,d,d,R,m,d,d,d,d,d")
+-	(match_operand:TI 1 "movti_operand"         "d,R,m,d,d,J,K,L,M,i"))]
++	(match_operand:TI 1 "movti_operand"         "d,R,m,dJ,dJ,J,K,L,M,i"))]
+   "TARGET_MIPS5900
+    && (register_operand (operands[0], TImode)
+        || se_register_operand (operands[1], TImode)
+@@ -5416,8 +5416,8 @@
+   por %0,$0,%1
+   lq %0,%1
+   lq %0,%1
+-  sq %1,%0
+-  sq %1,%0
++  sq %z1,%0
++  sq %z1,%0
+   por %0,%.,%.
+   por\\t%0,%.,%.\;li\\t%0,%1 \\t\\t\\t# ori
+   por\\t%0,%.,%.\;li\\t%0,%1 \\t\\t\\t# lui
+diff -ruN a/gcc/cse.c b/gcc/cse.c
+--- a/gcc/cse.c
++++ b/gcc/cse.c
+@@ -1,5 +1,5 @@
+ /* Common subexpression elimination for GNU compiler.
+-   Copyright (C) 1987, 88, 89, 92-7, 1998 Free Software Foundation, Inc.
++   Copyright (C) 1987, 88, 89, 92-7, 1998, 1999 Free Software Foundation, Inc.
+ 
+ This file is part of GNU CC.
+ 
+@@ -34,6 +34,40 @@
+ #include "expr.h"
+ #include "toplev.h"
+ #include "output.h"
++#include "splay-tree.h"
++
++/* ASTRA Path B shims for the 2.9 tree: no fnotice, no do_float_handler.  */
++#define fnotice fprintf
++static int
++do_float_handler (fn, data)
++     void (*fn) PROTO ((PTR));
++     PTR data;
++{
++  jmp_buf buf;
++
++  if (setjmp (buf))
++    {
++      set_float_handler (NULL);
++      return 0;
++    }
++  set_float_handler (buf);
++  (*fn) (data);
++  set_float_handler (NULL);
++  return 1;
++}
++
++/* ASTRA Path B shim: the 2.9 tree's libiberty predates splay_tree_compare_ints.  */
++static int
++splay_tree_compare_ints (k1, k2)
++     splay_tree_key k1;
++     splay_tree_key k2;
++{
++  if ((int) k1 < (int) k2)
++    return -1;
++  else if ((int) k1 > (int) k2)
++    return 1;
++  return 0;
++}
+ 
+ /* The basic idea of common subexpression elimination is to go
+    through the code, keeping a record of expressions that would
+@@ -274,11 +308,6 @@
+ 
+ static rtx this_insn;
+ 
+-/* Index by register number, gives the quantity number
+-   of the register's current contents.  */
+-
+-static int *reg_qty;
+-
+ /* Index by register number, gives the number of the next (or
+    previous) register in the chain of registers sharing the same
+    value.
+@@ -290,19 +319,36 @@
+ static int *reg_next_eqv;
+ static int *reg_prev_eqv;
+ 
+-/* Index by register number, gives the number of times
+-   that register has been altered in the current basic block.  */
++struct cse_reg_info {
++  union {
++    /* The number of times the register has been altered in the current
++       basic block.  */
++    int reg_tick;
++    
++    /* The next cse_reg_info structure in the free list.  */
++    struct cse_reg_info* next;
++  } variant;
++
++  /* The REG_TICK value at which rtx's containing this register are
++     valid in the hash table.  If this does not equal the current
++     reg_tick value, such expressions existing in the hash table are
++     invalid.  */
++  int reg_in_table;
++
++  /* The quantity number of the register's current contents.  */
++  int reg_qty;
++};
+ 
+-static int *reg_tick;
++/* A free list of cse_reg_info entries.  */
++static struct cse_reg_info *cse_reg_info_free_list;
+ 
+-/* Index by register number, gives the reg_tick value at which
+-   rtx's containing this register are valid in the hash table.
+-   If this does not equal the current reg_tick value, such expressions
+-   existing in the hash table are invalid.
+-   If this is -1, no expressions containing this register have been
+-   entered in the table.  */
++/* A mapping from registers to cse_reg_info data structures.  */
++static splay_tree cse_reg_info_tree;
+ 
+-static int *reg_in_table;
++/* The last lookup we did into the cse_reg_info_tree.  This allows us
++   to cache repeated lookups.  */
++static int cached_regno;
++static struct cse_reg_info *cached_cse_reg_info;
+ 
+ /* A HARD_REG_SET containing all the hard registers for which there is 
+    currently a REG expression in the hash table.  Note the difference
+@@ -316,14 +362,6 @@
+ 
+ static HARD_REG_SET regs_invalidated_by_call;
+ 
+-/* Two vectors of ints:
+-   one containing max_reg -1's; the other max_reg + 500 (an approximation
+-   for max_qty) elements where element i contains i.
+-   These are used to initialize various other vectors fast.  */
+-
+-static int *all_minus_one;
+-static int *consec_ints;
+-
+ /* CUID of insn that starts the basic block currently being cse-processed.  */
+ 
+ static int cse_basic_block_start;
+@@ -447,7 +485,7 @@
+ 
+ #define HASH(X, M)	\
+  (GET_CODE (X) == REG && REGNO (X) >= FIRST_PSEUDO_REGISTER	\
+-  ? (((unsigned) REG << 7) + (unsigned) reg_qty[REGNO (X)]) % NBUCKETS	\
++  ? (((unsigned) REG << 7) + (unsigned) REG_QTY (REGNO (X))) % NBUCKETS	\
+   : canon_hash (X, M) % NBUCKETS)
+ 
+ /* Determine whether register number N is considered a fixed register for CSE.
+@@ -492,10 +530,29 @@
+       : 2)								\
+    : notreg_cost(X))
+ 
++/* Get the info associated with register N.  */
++
++#define GET_CSE_REG_INFO(N) 			\
++  (((N) == cached_regno && cached_cse_reg_info)	\
++   ? cached_cse_reg_info : get_cse_reg_info ((N)))
++
++/* Get the number of times this register has been updated in this
++   basic block.  */
++
++#define REG_TICK(N) ((GET_CSE_REG_INFO (N))->variant.reg_tick)
++
++/* Get the point at which REG was recorded in the table.  */
++
++#define REG_IN_TABLE(N) ((GET_CSE_REG_INFO (N))->reg_in_table)
++
++/* Get the quantity number for REG.  */
++
++#define REG_QTY(N) ((GET_CSE_REG_INFO (N))->reg_qty)
++
+ /* Determine if the quantity number for register X represents a valid index
+    into the `qty_...' variables.  */
+ 
+-#define REGNO_QTY_VALID_P(N) (reg_qty[N] != (N))
++#define REGNO_QTY_VALID_P(N) (REG_QTY (N) != (N))
+ 
+ #ifdef ADDRESS_COST
+ /* The ADDRESS_COST macro does not deal with ADDRESSOF nodes.  But,
+@@ -663,9 +720,33 @@
+ static void cse_set_around_loop	PROTO((rtx, rtx, rtx));
+ static rtx cse_basic_block	PROTO((rtx, rtx, struct branch_path *, int));
+ static void count_reg_usage	PROTO((rtx, int *, rtx, int));
++extern void dump_class          PROTO((struct table_elt*));
++static void check_fold_consts	PROTO((PTR));
++static struct cse_reg_info* get_cse_reg_info PROTO((int));
++static void free_cse_reg_info   PROTO((splay_tree_value));
++static void flush_hash_table	PROTO((void));
+ 
+ extern int rtx_equal_function_value_matters;
+ 
++/* Dump the expressions in the equivalence class indicated by CLASSP.
++   This function is used only for debugging.  */
++void
++dump_class (classp)
++     struct table_elt *classp;
++{
++  struct table_elt *elt;
++
++  fprintf (stderr, "Equivalence chain for ");
++  print_rtl (stderr, classp->exp);
++  fprintf (stderr, ": \n");
++  
++  for (elt = classp->first_same_value; elt; elt = elt->next_same_value)
++    {
++      print_rtl (stderr, elt->exp);
++      fprintf (stderr, "\n");
++    }
++}
++
+ /* Return an estimate of the cost of computing rtx X.
+    One use is in cse, to decide which expression to keep in the hash table.
+    Another is in rtl generation, to pick the cheapest way to multiply.
+@@ -787,6 +868,57 @@
+   return total;
+ }
+ 
++static struct cse_reg_info *
++get_cse_reg_info (regno)
++     int regno;
++{
++  struct cse_reg_info *cri;
++  splay_tree_node n;
++
++  /* See if we already have this entry.  */
++  n = splay_tree_lookup (cse_reg_info_tree, 
++			(splay_tree_key) regno);
++  if (n)
++    cri = (struct cse_reg_info *) (n->value);
++  else 
++    {
++      /* Get a new cse_reg_info structure.  */
++      if (cse_reg_info_free_list) 
++	{
++	  cri = cse_reg_info_free_list;
++	  cse_reg_info_free_list = cri->variant.next;
++	}
++      else
++	cri = (struct cse_reg_info *) xmalloc (sizeof (struct cse_reg_info));
++
++      /* Initialize it.  */
++      cri->variant.reg_tick = 0;
++      cri->reg_in_table = -1;
++      cri->reg_qty = regno;
++
++      splay_tree_insert (cse_reg_info_tree, 
++			 (splay_tree_key) regno, 
++			 (splay_tree_value) cri);
++    }
++
++  /* Cache this lookup; we tend to be looking up information about the
++     same register several times in a row.  */
++  cached_regno = regno;
++  cached_cse_reg_info = cri;
++
++  return cri;
++}
++
++static void
++free_cse_reg_info (v)
++     splay_tree_value v;
++{
++  struct cse_reg_info *cri = (struct cse_reg_info *) v;
++  
++  cri->variant.next = cse_reg_info_free_list;
++  cse_reg_info_free_list = cri;
++}
++
+ /* Clear the hash table and initialize each register with its own quantity,
+    for a new basic block.  */
+ 
+@@ -797,11 +929,15 @@
+ 
+   next_qty = max_reg;
+ 
+-  bzero ((char *) reg_tick, max_reg * sizeof (int));
++  if (cse_reg_info_tree) 
++    {
++      splay_tree_delete (cse_reg_info_tree);
++      cached_cse_reg_info = 0;
++    }
++
++  cse_reg_info_tree = splay_tree_new (splay_tree_compare_ints, 0, 
++				      free_cse_reg_info);
+ 
+-  bcopy ((char *) all_minus_one, (char *) reg_in_table,
+-	 max_reg * sizeof (int));
+-  bcopy ((char *) consec_ints, (char *) reg_qty, max_reg * sizeof (int));
+   CLEAR_HARD_REG_SET (hard_regs_in_table);
+ 
+   /* The per-quantity values used to be initialized here, but it is
+@@ -838,7 +974,7 @@
+   if (next_qty >= max_qty)
+     abort ();
+ 
+-  q = reg_qty[reg] = next_qty++;
++  q = REG_QTY (reg) = next_qty++;
+   qty_first_reg[q] = reg;
+   qty_last_reg[q] = reg;
+   qty_const[q] = qty_const_insn[q] = 0;
+@@ -855,13 +991,13 @@
+      register int new, old;
+ {
+   register int lastr, firstr;
+-  register int q = reg_qty[old];
++  register int q = REG_QTY (old);
+ 
+   /* Nothing should become eqv until it has a "non-invalid" qty number.  */
+   if (! REGNO_QTY_VALID_P (old))
+     abort ();
+ 
+-  reg_qty[new] = q;
++  REG_QTY (new) = q;
+   firstr = qty_first_reg[q];
+   lastr = qty_last_reg[q];
+ 
+@@ -915,7 +1051,7 @@
+ delete_reg_equiv (reg)
+      register int reg;
+ {
+-  register int q = reg_qty[reg];
++  register int q = REG_QTY (reg);
+   register int p, n;
+ 
+   /* If invalid, do nothing.  */
+@@ -934,7 +1070,7 @@
+   else
+     qty_first_reg[q] = n;
+ 
+-  reg_qty[reg] = reg;
++  REG_QTY (reg) = reg;
+ }
+ 
+ /* Remove any invalid expressions from the hash table
+@@ -972,10 +1108,10 @@
+ 
+       for (i = regno; i < endregno; i++)
+ 	{
+-	  if (reg_in_table[i] >= 0 && reg_in_table[i] != reg_tick[i])
++	  if (REG_IN_TABLE (i) >= 0 && REG_IN_TABLE (i) != REG_TICK (i))
+ 	    remove_invalid_refs (i);
+ 
+-	  reg_in_table[i] = reg_tick[i];
++	  REG_IN_TABLE (i) = REG_TICK (i);
+ 	}
+ 
+       return 0;
+@@ -989,19 +1125,19 @@
+     {
+       int i = REGNO (SUBREG_REG (x));
+ 
+-      if (reg_in_table[i] >= 0 && reg_in_table[i] != reg_tick[i])
++      if (REG_IN_TABLE (i) >= 0 && REG_IN_TABLE (i) != REG_TICK (i))
+ 	{
+ 	  /* If reg_tick has been incremented more than once since
+ 	     reg_in_table was last set, that means that the entire
+ 	     register has been set before, so discard anything memorized
+ 	     for the entrire register, including all SUBREG expressions.  */
+-	  if (reg_in_table[i] != reg_tick[i] - 1)
++	  if (REG_IN_TABLE (i) != REG_TICK (i) - 1)
+ 	    remove_invalid_refs (i);
+ 	  else
+ 	    remove_invalid_subreg_refs (i, SUBREG_WORD (x), GET_MODE (x));
+ 	}
+ 
+-      reg_in_table[i] = reg_tick[i];
++      REG_IN_TABLE (i) = REG_TICK (i);
+       return 0;
+     }
+ 
+@@ -1069,7 +1205,7 @@
+ 	 wrong mode for that equivalence, don't do anything here.  */
+ 
+       if (REGNO_QTY_VALID_P (regno)
+-	  && qty_mode[reg_qty[regno]] != GET_MODE (x))
++	  && qty_mode[REG_QTY (regno)] != GET_MODE (x))
+ 	return 0;
+ 
+       if (modified || ! REGNO_QTY_VALID_P (regno))
+@@ -1086,7 +1222,7 @@
+ 		}
+ 
+ 	  make_new_qty (regno);
+-	  qty_mode[reg_qty[regno]] = GET_MODE (x);
++	  qty_mode[REG_QTY (regno)] = GET_MODE (x);
+ 	  return 1;
+ 	}
+ 
+@@ -1111,9 +1247,9 @@
+ 	 for the full register.  Since we don't invalidate the SUBREG
+ 	 here first, we might have to bump up REG_TICK so that mention_regs
+ 	 will do the right thing.  */
+-      if (reg_in_table[regno] >= 0
+-	  && reg_tick[regno] == reg_in_table[regno] + 1)
+-	reg_tick[regno]++;
++      if (REG_IN_TABLE (regno) >= 0
++	  && REG_TICK (regno) == REG_IN_TABLE (regno) + 1)
++	REG_TICK (regno)++;
+       mention_regs (x);
+       return 1;
+     }
+@@ -1448,12 +1584,12 @@
+   if (elt->is_const && classp && GET_CODE (classp->exp) == REG
+       && GET_CODE (x) != REG)
+     {
+-      qty_const[reg_qty[REGNO (classp->exp)]]
+-	= gen_lowpart_if_possible (qty_mode[reg_qty[REGNO (classp->exp)]], x);
+-      qty_const_insn[reg_qty[REGNO (classp->exp)]] = this_insn;
++      qty_const[REG_QTY (REGNO (classp->exp))]
++	= gen_lowpart_if_possible (qty_mode[REG_QTY (REGNO (classp->exp))], x);
++      qty_const_insn[REG_QTY (REGNO (classp->exp))] = this_insn;
+     }
+ 
+-  else if (GET_CODE (x) == REG && classp && ! qty_const[reg_qty[REGNO (x)]]
++  else if (GET_CODE (x) == REG && classp && ! qty_const[REG_QTY (REGNO (x))]
+ 	   && ! elt->is_const)
+     {
+       register struct table_elt *p;
+@@ -1462,17 +1598,17 @@
+ 	{
+ 	  if (p->is_const && GET_CODE (p->exp) != REG)
+ 	    {
+-	      qty_const[reg_qty[REGNO (x)]]
++	      qty_const[REG_QTY (REGNO (x))]
+ 		= gen_lowpart_if_possible (GET_MODE (x), p->exp);
+-	      qty_const_insn[reg_qty[REGNO (x)]] = this_insn;
++	      qty_const_insn[REG_QTY (REGNO (x))] = this_insn;
+ 	      break;
+ 	    }
+ 	}
+     }
+ 
+-  else if (GET_CODE (x) == REG && qty_const[reg_qty[REGNO (x)]]
+-	   && GET_MODE (x) == qty_mode[reg_qty[REGNO (x)]])
+-    qty_const_insn[reg_qty[REGNO (x)]] = this_insn;
++  else if (GET_CODE (x) == REG && qty_const[REG_QTY (REGNO (x))]
++	   && GET_MODE (x) == qty_mode[REG_QTY (REGNO (x))])
++    qty_const_insn[REG_QTY (REGNO (x))] = this_insn;
+ 
+   /* If this is a constant with symbolic value,
+      and it has a term with an explicit integer value,
+@@ -1564,6 +1700,28 @@
+     }
+ }
+ 
++
++/* Flush the entire hash table.  */
++
++static void
++flush_hash_table ()
++{
++  int i;
++  struct table_elt *p;
++
++  for (i = 0; i < NBUCKETS; i++)
++    for (p = table[i]; p; p = table[i])
++      {
++	/* Note that invalidate can remove elements
++	   after P in the current hash chain.  */
++	if (GET_CODE (p->exp) == REG)
++	  invalidate (p->exp, p->mode);
++	else
++	  remove_from_table (p, i);
++      }
++}
++
++
+ /* Remove from the hash table, or mark as invalid,
+    all expressions whose values could be altered by storing in X.
+    X is a register, a subreg, or a memory reference with nonvarying address
+@@ -1607,7 +1765,7 @@
+ 	 overlap these registers.  */
+ 
+       delete_reg_equiv (regno);
+-      reg_tick[regno]++;
++      REG_TICK (regno)++;
+ 
+       if (regno >= FIRST_PSEUDO_REGISTER)
+ 	{
+@@ -1634,7 +1792,7 @@
+ 	      in_table |= TEST_HARD_REG_BIT (hard_regs_in_table, i);
+ 	      CLEAR_HARD_REG_BIT (hard_regs_in_table, i);
+ 	      delete_reg_equiv (i);
+-	      reg_tick[i]++;
++	      REG_TICK (i)++;
+ 	    }
+ 
+ 	  if (in_table)
+@@ -1783,8 +1941,8 @@
+      valid entries in the table, we have no work to do.  */
+ 
+   if (GET_CODE (x) != REG
+-      || reg_in_table[REGNO (x)] < 0
+-      || reg_in_table[REGNO (x)] != reg_tick[REGNO (x)])
++      || REG_IN_TABLE (REGNO (x)) < 0
++      || REG_IN_TABLE (REGNO (x)) != REG_TICK (REGNO (x)))
+     return;
+ 
+   /* Scan all hash chains looking for valid entries that mention X.
+@@ -1837,8 +1995,8 @@
+     if (TEST_HARD_REG_BIT (regs_invalidated_by_call, regno))
+       {
+ 	delete_reg_equiv (regno);
+-	if (reg_tick[regno] >= 0)
+-	  reg_tick[regno]++;
++	if (REG_TICK (regno) >= 0)
++	  REG_TICK (regno)++;
+ 
+ 	in_table |= (TEST_HARD_REG_BIT (hard_regs_in_table, regno) != 0);
+       }
+@@ -2010,7 +2168,7 @@
+ 	    do_not_record = 1;
+ 	    return 0;
+ 	  }
+-	hash += ((unsigned) REG << 7) + (unsigned) reg_qty[regno];
++	hash += ((unsigned) REG << 7) + (unsigned) REG_QTY (regno);
+ 	return hash;
+       }
+ 
+@@ -2202,15 +2360,15 @@
+ 	 equivalent.  We only have to validate if Y is a register.  */
+       if (CONSTANT_P (x) && GET_CODE (y) == REG
+ 	  && REGNO_QTY_VALID_P (REGNO (y))
+-	  && GET_MODE (y) == qty_mode[reg_qty[REGNO (y)]]
+-	  && rtx_equal_p (x, qty_const[reg_qty[REGNO (y)]])
+-	  && (! validate || reg_in_table[REGNO (y)] == reg_tick[REGNO (y)]))
++	  && GET_MODE (y) == qty_mode[REG_QTY (REGNO (y))]
++	  && rtx_equal_p (x, qty_const[REG_QTY (REGNO (y))])
++	  && (! validate || REG_IN_TABLE (REGNO (y)) == REG_TICK (REGNO (y))))
+ 	return 1;
+ 
+       if (CONSTANT_P (y) && code == REG
+ 	  && REGNO_QTY_VALID_P (REGNO (x))
+-	  && GET_MODE (x) == qty_mode[reg_qty[REGNO (x)]]
+-	  && rtx_equal_p (y, qty_const[reg_qty[REGNO (x)]]))
++	  && GET_MODE (x) == qty_mode[REG_QTY (REGNO (x))]
++	  && rtx_equal_p (y, qty_const[REG_QTY (REGNO (x))]))
+ 	return 1;
+ 
+       return 0;
+@@ -2247,14 +2405,14 @@
+ 	   equivalent.  If there are and we are not to validate, they
+ 	   are equivalent.  Otherwise, ensure all regs are up-to-date.  */
+ 
+-	if (reg_qty[REGNO (x)] != reg_qty[regno])
++	if (REG_QTY (REGNO (x)) != REG_QTY (regno))
+ 	  return 0;
+ 
+ 	if (! validate)
+ 	  return 1;
+ 
+ 	for (i = regno; i < endregno; i++)
+-	  if (reg_in_table[i] != reg_tick[i])
++	  if (REG_IN_TABLE (i) != REG_TICK (i))
+ 	    return 0;
+ 
+ 	return 1;
+@@ -2413,20 +2571,20 @@
+   if (GET_CODE (base) == REG
+       && qty_const != 0
+       && REGNO_QTY_VALID_P (REGNO (base))
+-      && qty_mode[reg_qty[REGNO (base)]] == GET_MODE (base)
+-      && qty_const[reg_qty[REGNO (base)]] != 0)
+-    base = qty_const[reg_qty[REGNO (base)]];
++      && qty_mode[REG_QTY (REGNO (base))] == GET_MODE (base)
++      && qty_const[REG_QTY (REGNO (base))] != 0)
++    base = qty_const[REG_QTY (REGNO (base))];
+   else if (GET_CODE (base) == PLUS
+ 	   && GET_CODE (XEXP (base, 1)) == CONST_INT
+ 	   && GET_CODE (XEXP (base, 0)) == REG
+ 	   && qty_const != 0
+ 	   && REGNO_QTY_VALID_P (REGNO (XEXP (base, 0)))
+-	   && (qty_mode[reg_qty[REGNO (XEXP (base, 0))]]
++	   && (qty_mode[REG_QTY (REGNO (XEXP (base, 0)))]
+ 	       == GET_MODE (XEXP (base, 0)))
+-	   && qty_const[reg_qty[REGNO (XEXP (base, 0))]])
++	   && qty_const[REG_QTY (REGNO (XEXP (base, 0)))])
+     {
+       start = INTVAL (XEXP (base, 1));
+-      base = qty_const[reg_qty[REGNO (XEXP (base, 0))]];
++      base = qty_const[REG_QTY (REGNO (XEXP (base, 0)))];
+     }
+   /* This can happen as the result of virtual register instantiation,
+      if the initial offset is too large to be a valid address.  */
+@@ -2435,16 +2593,16 @@
+ 	   && GET_CODE (XEXP (base, 1)) == REG
+ 	   && qty_const != 0
+ 	   && REGNO_QTY_VALID_P (REGNO (XEXP (base, 0)))
+-	   && (qty_mode[reg_qty[REGNO (XEXP (base, 0))]]
++	   && (qty_mode[REG_QTY (REGNO (XEXP (base, 0)))]
+ 	       == GET_MODE (XEXP (base, 0)))
+-	   && qty_const[reg_qty[REGNO (XEXP (base, 0))]]
++	   && qty_const[REG_QTY (REGNO (XEXP (base, 0)))]
+ 	   && REGNO_QTY_VALID_P (REGNO (XEXP (base, 1)))
+-	   && (qty_mode[reg_qty[REGNO (XEXP (base, 1))]]
++	   && (qty_mode[REG_QTY (REGNO (XEXP (base, 1)))]
+ 	       == GET_MODE (XEXP (base, 1)))
+-	   && qty_const[reg_qty[REGNO (XEXP (base, 1))]])
++	   && qty_const[REG_QTY (REGNO (XEXP (base, 1)))])
+     {
+-      rtx tem = qty_const[reg_qty[REGNO (XEXP (base, 1))]];
+-      base = qty_const[reg_qty[REGNO (XEXP (base, 0))]];
++      rtx tem = qty_const[REG_QTY (REGNO (XEXP (base, 1)))];
++      base = qty_const[REG_QTY (REGNO (XEXP (base, 0)))];
+ 
+       /* One of the two values must be a constant.  */
+       if (GET_CODE (base) != CONST_INT)
+@@ -2546,8 +2704,8 @@
+ 
+   if (GET_CODE (x) == REG
+       && REGNO_QTY_VALID_P (REGNO (x))
+-      && GET_MODE (x) == qty_mode[reg_qty[REGNO (x)]]
+-      && qty_const[reg_qty[REGNO (x)]] != 0)
++      && GET_MODE (x) == qty_mode[REG_QTY (REGNO (x))]
++      && qty_const[REG_QTY (REGNO (x))] != 0)
+     return 0;
+ 
+   if (GET_CODE (x) == PLUS
+@@ -2555,8 +2713,8 @@
+       && GET_CODE (XEXP (x, 0)) == REG
+       && REGNO_QTY_VALID_P (REGNO (XEXP (x, 0)))
+       && (GET_MODE (XEXP (x, 0))
+-	  == qty_mode[reg_qty[REGNO (XEXP (x, 0))]])
+-      && qty_const[reg_qty[REGNO (XEXP (x, 0))]])
++	  == qty_mode[REG_QTY (REGNO (XEXP (x, 0)))])
++      && qty_const[REG_QTY (REGNO (XEXP (x, 0)))])
+     return 0;
+ 
+   /* This can happen as the result of virtual register instantiation, if
+@@ -2569,12 +2727,12 @@
+       && GET_CODE (XEXP (x, 1)) == REG
+       && REGNO_QTY_VALID_P (REGNO (XEXP (x, 0)))
+       && (GET_MODE (XEXP (x, 0))
+-	  == qty_mode[reg_qty[REGNO (XEXP (x, 0))]])
+-      && qty_const[reg_qty[REGNO (XEXP (x, 0))]]
++	  == qty_mode[REG_QTY (REGNO (XEXP (x, 0)))])
++      && qty_const[REG_QTY (REGNO (XEXP (x, 0)))]
+       && REGNO_QTY_VALID_P (REGNO (XEXP (x, 1)))
+       && (GET_MODE (XEXP (x, 1))
+-	  == qty_mode[reg_qty[REGNO (XEXP (x, 1))]])
+-      && qty_const[reg_qty[REGNO (XEXP (x, 1))]])
++	  == qty_mode[REG_QTY (REGNO (XEXP (x, 1)))])
++      && qty_const[REG_QTY (REGNO (XEXP (x, 1)))])
+     return 0;
+ 
+   return rtx_varies_p (x);
+@@ -2630,10 +2788,10 @@
+ 	    || ! REGNO_QTY_VALID_P (REGNO (x)))
+ 	  return x;
+ 
+-	first = qty_first_reg[reg_qty[REGNO (x)]];
++	first = qty_first_reg[REG_QTY (REGNO (x))];
+ 	return (first >= FIRST_PSEUDO_REGISTER ? regno_reg_rtx[first]
+ 		: REGNO_REG_CLASS (first) == NO_REGS ? x
+-		: gen_rtx_REG (qty_mode[reg_qty[REGNO (x)]], first));
++		: gen_rtx_REG (qty_mode[REG_QTY (REGNO (x))], first));
+       }
+       
+     default:
+@@ -4574,6 +4732,28 @@
+     return gen_rtx_fmt_ee (code, mode, op0, op1);
+ }
+ 
++struct cfc_args
++{
++  /* Input */
++  rtx op0, op1;
++  /* Output */
++  int equal, op0lt, op1lt;
++};
++
++static void
++check_fold_consts (data)
++  PTR data;
++{
++  struct cfc_args * args = (struct cfc_args *) data;
++  REAL_VALUE_TYPE d0, d1;
++
++  REAL_VALUE_FROM_CONST_DOUBLE (d0, args->op0);
++  REAL_VALUE_FROM_CONST_DOUBLE (d1, args->op1);
++  args->equal = REAL_VALUES_EQUAL (d0, d1);
++  args->op0lt = REAL_VALUES_LESS (d0, d1);
++  args->op1lt = REAL_VALUES_LESS (d1, d0);
++}
++
+ /* Like simplify_binary_operation except used for relational operators.
+    MODE is the mode of the operands, not that of the result.  If MODE
+    is VOIDmode, both operands must also be VOIDmode and we compare the
+@@ -4635,19 +4815,20 @@
+   else if (GET_CODE (op0) == CONST_DOUBLE && GET_CODE (op1) == CONST_DOUBLE
+ 	   && GET_MODE_CLASS (GET_MODE (op0)) == MODE_FLOAT)
+     {
+-      REAL_VALUE_TYPE d0, d1;
+-      jmp_buf handler;
++      struct cfc_args args;
++
++      /* Setup input for check_fold_consts() */
++      args.op0 = op0;
++      args.op1 = op1;
+       
+-      if (setjmp (handler))
++      if (do_float_handler(check_fold_consts, (PTR) &args) == 0)
++	/* We got an exception from check_fold_consts() */
+ 	return 0;
+ 
+-      set_float_handler (handler);
+-      REAL_VALUE_FROM_CONST_DOUBLE (d0, op0);
+-      REAL_VALUE_FROM_CONST_DOUBLE (d1, op1);
+-      equal = REAL_VALUES_EQUAL (d0, d1);
+-      op0lt = op0ltu = REAL_VALUES_LESS (d0, d1);
+-      op1lt = op1ltu = REAL_VALUES_LESS (d1, d0);
+-      set_float_handler (NULL_PTR);
++      /* Receive output from check_fold_consts() */
++      equal = args.equal;
++      op0lt = op0ltu = args.op0lt;
++      op1lt = op1ltu = args.op1lt;
+     }
+ #endif  /* not REAL_IS_NOT_DOUBLE, or REAL_ARITHMETIC */
+ 
+@@ -4937,21 +5118,6 @@
+   switch (code)
+     {
+     case CONST:
+-      /* If the operand is a CONSTANT_P_RTX, see if what's inside it
+-	 is known to be constant and replace the whole thing with a
+-	 CONST_INT of either zero or one.  Note that this code assumes
+-	 that an insn that recognizes a CONST will also recognize a
+-	 CONST_INT, but that seems to be a safe assumption.  */
+-      if (GET_CODE (XEXP (x, 0)) == CONSTANT_P_RTX)
+-	{
+-	  x = equiv_constant (fold_rtx (XEXP (XEXP (x, 0), 0), 0));
+-	  return (x != 0 && (GET_CODE (x) == CONST_INT
+-			     || GET_CODE (x) == CONST_DOUBLE)
+-		  ? const1_rtx : const0_rtx);
+-	}
+-
+-      /* ... fall through ... */
+-
+     case CONST_INT:
+     case CONST_DOUBLE:
+     case SYMBOL_REF:
+@@ -5198,9 +5364,9 @@
+ 
+ 	if (GET_CODE (addr) == REG
+ 	    && REGNO_QTY_VALID_P (REGNO (addr))
+-	    && GET_MODE (addr) == qty_mode[reg_qty[REGNO (addr)]]
+-	    && qty_const[reg_qty[REGNO (addr)]] != 0)
+-	  addr = qty_const[reg_qty[REGNO (addr)]];
++	    && GET_MODE (addr) == qty_mode[REG_QTY (REGNO (addr))]
++	    && qty_const[REG_QTY (REGNO (addr))] != 0)
++	  addr = qty_const[REG_QTY (REGNO (addr))];
+ 
+ 	/* If address is constant, split it into a base and integer offset.  */
+ 	if (GET_CODE (addr) == SYMBOL_REF || GET_CODE (addr) == LABEL_REF)
+@@ -5293,7 +5459,11 @@
+ 		    /* Indicate this is a constant.  This isn't a 
+ 		       valid form of CONST, but it will only be used
+ 		       to fold the next insns and then discarded, so
+-		       it should be safe.  */
++		       it should be safe.
++
++		       Note this expression must be explicitly discarded,
++		       by cse_insn, else it may end up in a REG_EQUAL note
++		       and "escape" to cause problems elsewhere.  */
+ 		    return gen_rtx_CONST (GET_MODE (new), new);
+ 		  }
+ 	      }
+@@ -5338,12 +5508,12 @@
+ 	    /* This is the same as calling equiv_constant; it is duplicated
+ 	       here for speed.  */
+ 	    if (REGNO_QTY_VALID_P (REGNO (arg))
+-		&& qty_const[reg_qty[REGNO (arg)]] != 0
+-		&& GET_CODE (qty_const[reg_qty[REGNO (arg)]]) != REG
+-		&& GET_CODE (qty_const[reg_qty[REGNO (arg)]]) != PLUS)
++		&& qty_const[REG_QTY (REGNO (arg))] != 0
++		&& GET_CODE (qty_const[REG_QTY (REGNO (arg))]) != REG
++		&& GET_CODE (qty_const[REG_QTY (REGNO (arg))]) != PLUS)
+ 	      const_arg
+ 		= gen_lowpart_if_possible (GET_MODE (arg),
+-					   qty_const[reg_qty[REGNO (arg)]]);
++					   qty_const[REG_QTY (REGNO (arg))]);
+ 	    break;
+ 
+ 	  case CONST:
+@@ -5566,8 +5736,8 @@
+ 		  && (folded_arg0 == folded_arg1
+ 		      || (GET_CODE (folded_arg0) == REG
+ 			  && GET_CODE (folded_arg1) == REG
+-			  && (reg_qty[REGNO (folded_arg0)]
+-			      == reg_qty[REGNO (folded_arg1)]))
++			  && (REG_QTY (REGNO (folded_arg0))
++			      == REG_QTY (REGNO (folded_arg1))))
+ 		      || ((p0 = lookup (folded_arg0,
+ 					(safe_hash (folded_arg0, mode_arg0)
+ 					 % NBUCKETS), mode_arg0))
+@@ -5584,7 +5754,7 @@
+ 		 (we only check the reverse if not floating-point).  */
+ 	      else if (GET_CODE (folded_arg0) == REG)
+ 		{
+-		  int qty = reg_qty[REGNO (folded_arg0)];
++		  int qty = REG_QTY (REGNO (folded_arg0));
+ 
+ 		  if (REGNO_QTY_VALID_P (REGNO (folded_arg0))
+ 		      && (comparison_dominates_p (qty_comparison_code[qty], code)
+@@ -5596,7 +5766,7 @@
+ 			      && rtx_equal_p (qty_comparison_const[qty],
+ 					      const_arg1))
+ 			  || (GET_CODE (folded_arg1) == REG
+-			      && (reg_qty[REGNO (folded_arg1)]
++			      && (REG_QTY (REGNO (folded_arg1))
+ 				  == qty_comparison_qty[qty]))))
+ 		    return (comparison_dominates_p (qty_comparison_code[qty],
+ 						    code)
+@@ -5724,7 +5894,15 @@
+ 	     hence not save anything) or be incorrect.  */
+ 	  if (const_arg1 != 0 && GET_CODE (const_arg1) == CONST_INT
+ 	      && INTVAL (const_arg1) < 0
+-	      && - INTVAL (const_arg1) >= 0
++	      /* This used to test
++
++	         - INTVAL (const_arg1) >= 0
++
++		 But The Sun V5.0 compilers mis-compiled that test.  So
++		 instead we test for the problematic value in a more direct
++		 manner and hope the Sun compilers get it correct.  */
++	      && INTVAL (const_arg1) !=
++	        ((HOST_WIDE_INT) 1 << (HOST_BITS_PER_WIDE_INT - 1))
+ 	      && GET_CODE (folded_arg1) == REG)
+ 	    {
+ 	      rtx new_const = GEN_INT (- INTVAL (const_arg1));
+@@ -5871,6 +6049,12 @@
+ 					const_arg1 ? const_arg1 : folded_arg1,
+ 					const_arg2 ? const_arg2 : XEXP (x, 2));
+       break;
++
++    case 'x':
++      /* Always eliminate CONSTANT_P_RTX at this stage. */
++      if (code == CONSTANT_P_RTX)
++	return (const_arg0 ? const1_rtx : const0_rtx);
++      break;
+     }
+ 
+   return new ? new : x;
+@@ -5885,8 +6069,8 @@
+ {
+   if (GET_CODE (x) == REG
+       && REGNO_QTY_VALID_P (REGNO (x))
+-      && qty_const[reg_qty[REGNO (x)]])
+-    x = gen_lowpart_if_possible (GET_MODE (x), qty_const[reg_qty[REGNO (x)]]);
++      && qty_const[REG_QTY (REGNO (x))])
++    x = gen_lowpart_if_possible (GET_MODE (x), qty_const[REG_QTY (REGNO (x))]);
+ 
+   if (x == 0 || CONSTANT_P (x))
+     return x;
+@@ -6032,7 +6216,7 @@
+   /* If OP0 and OP1 are known equal, and either is a paradoxical SUBREG,
+      we know that they are also equal in the smaller mode (this is also
+      true for all smaller modes whether or not there is a SUBREG, but
+-     is not worth testing for with no SUBREG.  */
++     is not worth testing for with no SUBREG).  */
+ 
+   /* Note that GET_MODE (op0) may not equal MODE.  */
+   if (code == EQ && GET_CODE (op0) == SUBREG
+@@ -6165,7 +6349,7 @@
+ 	  op0_elt->in_struct = op0_in_struct;
+ 	}
+ 
+-      qty_comparison_code[reg_qty[REGNO (op0)]] = code;
++      qty_comparison_code[REG_QTY (REGNO (op0))] = code;
+       if (GET_CODE (op1) == REG)
+ 	{
+ 	  /* Look it up again--in case op0 and op1 are the same.  */
+@@ -6185,13 +6369,13 @@
+ 	      op1_elt->in_struct = op1_in_struct;
+ 	    }
+ 
+-	  qty_comparison_qty[reg_qty[REGNO (op0)]] = reg_qty[REGNO (op1)];
+-	  qty_comparison_const[reg_qty[REGNO (op0)]] = 0;
++	  qty_comparison_qty[REG_QTY (REGNO (op0))] = REG_QTY (REGNO (op1));
++	  qty_comparison_const[REG_QTY (REGNO (op0))] = 0;
+ 	}
+       else
+ 	{
+-	  qty_comparison_qty[reg_qty[REGNO (op0)]] = -1;
+-	  qty_comparison_const[reg_qty[REGNO (op0)]] = op1;
++	  qty_comparison_qty[REG_QTY (REGNO (op0))] = -1;
++	  qty_comparison_const[REG_QTY (REGNO (op0))] = op1;
+ 	}
+ 
+       return;
+@@ -7116,8 +7300,8 @@
+ 	 their lifetimes will likely abut instead of overlapping.  */
+       if (GET_CODE (dest) == REG
+ 	  && REGNO_QTY_VALID_P (REGNO (dest))
+-	  && qty_mode[reg_qty[REGNO (dest)]] == GET_MODE (dest)
+-	  && qty_first_reg[reg_qty[REGNO (dest)]] != REGNO (dest)
++	  && qty_mode[REG_QTY (REGNO (dest))] == GET_MODE (dest)
++	  && qty_first_reg[REG_QTY (REGNO (dest))] != REGNO (dest)
+ 	  && GET_CODE (src) == REG && REGNO (src) == REGNO (dest)
+ 	  /* Don't do this if the original insn had a hard reg as
+ 	     SET_SRC.  */
+@@ -7126,7 +7310,7 @@
+ 	/* We can't call canon_reg here because it won't do anything if
+ 	   SRC is a hard register.  */
+ 	{
+-	  int first = qty_first_reg[reg_qty[REGNO (src)]];
++	  int first = qty_first_reg[REG_QTY (REGNO (src))];
+ 	  rtx new_src
+ 	    = (first >= FIRST_PSEUDO_REGISTER
+ 	       ? regno_reg_rtx[first] : gen_rtx_REG (GET_MODE (src), first));
+@@ -7165,12 +7349,24 @@
+ 	 equivalent constant, we want to add a REG_NOTE.   We don't want
+ 	 to write a REG_EQUAL note for a constant pseudo since verifying that
+ 	 that pseudo hasn't been eliminated is a pain.  Such a note also
+-	 won't help anything.  */
++	 won't help anything. 
++
++	 Avoid a REG_EQUAL note for (CONST (MINUS (LABEL_REF) (LABEL_REF)))
++	 which can be created for a reference to a compile time computable
++	 entry in a jump table.  */
++
+       if (n_sets == 1 && src_const && GET_CODE (dest) == REG
+-	  && GET_CODE (src_const) != REG)
++	  && GET_CODE (src_const) != REG
++	  && ! (GET_CODE (src_const) == CONST
++		&& GET_CODE (XEXP (src_const, 0)) == MINUS
++		&& GET_CODE (XEXP (XEXP (src_const, 0), 0)) == LABEL_REF
++		&& GET_CODE (XEXP (XEXP (src_const, 0), 1)) == LABEL_REF))
+ 	{
+ 	  tem = find_reg_note (insn, REG_EQUAL, NULL_RTX);
+ 	  
++	  /* Make sure that the rtx is not shared with any other insn.  */
++	  src_const = copy_rtx (src_const);
++
+ 	  /* Record the actual constant value in a REG_EQUAL note, making
+ 	     a new one if one does not already exist.  */
+ 	  if (tem)
+@@ -7191,11 +7387,11 @@
+ 	     the last set for this quantity was for this register.  */
+ 
+ 	  if (REGNO_QTY_VALID_P (REGNO (dest))
+-	      && qty_const[reg_qty[REGNO (dest)]] == const0_rtx)
++	      && qty_const[REG_QTY (REGNO (dest))] == const0_rtx)
+ 	    {
+ 	      /* See if we previously had a REG_WAS_0 note.  */
+ 	      rtx note = find_reg_note (insn, REG_WAS_0, NULL_RTX);
+-	      rtx const_insn = qty_const_insn[reg_qty[REGNO (dest)]];
++	      rtx const_insn = qty_const_insn[REG_QTY (REGNO (dest))];
+ 
+ 	      if ((tem = single_set (const_insn)) != 0
+ 		  && rtx_equal_p (SET_DEST (tem), dest))
+@@ -7328,9 +7524,12 @@
+ 		 && GET_CODE (NEXT_INSN (p)) != BARRIER
+ 		 && GET_CODE (NEXT_INSN (p)) != CODE_LABEL)
+ 	    {
++	      /* Note, we must update P with the return value from
++		 delete_insn, otherwise we could get an infinite loop
++		 if NEXT_INSN (p) had INSN_DELETED_P set.  */
+ 	      if (GET_CODE (NEXT_INSN (p)) != NOTE
+ 		  || NOTE_LINE_NUMBER (NEXT_INSN (p)) == NOTE_INSN_DELETED)
+-		delete_insn (NEXT_INSN (p));
++		p = PREV_INSN (delete_insn (NEXT_INSN (p)));
+ 	      else
+ 		p = NEXT_INSN (p);
+ 	    }
+@@ -7452,7 +7651,12 @@
+ 	    enum machine_mode mode
+ 	      = GET_MODE (src) == VOIDmode ? GET_MODE (dest) : GET_MODE (src);
+ 
+-	    if (sets[i].src_elt == 0)
++	    /* Don't put a hard register source into the table if this is
++	       the last insn of a libcall.  */
++	    if (sets[i].src_elt == 0
++		&& (GET_CODE (src) != REG
++		    || REGNO (src) >= FIRST_PSEUDO_REGISTER
++		    || ! find_reg_note (insn, REG_RETVAL, NULL_RTX)))
+ 	      {
+ 		register struct table_elt *elt;
+ 
+@@ -7519,6 +7723,12 @@
+ 	  invalidate (XEXP (dest, 0), GET_MODE (dest));
+       }
+ 
++  /* A volatile ASM invalidates everything.  */
++  if (GET_CODE (insn) == INSN
++      && GET_CODE (PATTERN (insn)) == ASM_OPERANDS
++      && MEM_VOLATILE_P (PATTERN (insn)))
++    flush_hash_table ();
++
+   /* Make sure registers mentioned in destinations
+      are safe for use in an expression to be inserted.
+      This removes from the hash table
+@@ -7557,10 +7767,10 @@
+ 
+ 	      for (i = regno; i < endregno; i++)
+ 		{
+-		  if (reg_in_table[i] >= 0)
++		  if (REG_IN_TABLE (i) >= 0)
+ 		    {
+ 		      remove_invalid_refs (i);
+-		      reg_in_table[i] = -1;
++		      REG_IN_TABLE (i) = -1;
+ 		    }
+ 		}
+ 	    }
+@@ -7754,15 +7964,20 @@
+      then be used in the sequel and we may be changing a two-operand insn
+      into a three-operand insn.
+ 
+-     Also do not do this if we are operating on a copy of INSN.  */
++     Also do not do this if we are operating on a copy of INSN.
++
++     Also don't do this if INSN ends a libcall; this would cause an unrelated
++     register to be set in the middle of a libcall, and we then get bad code
++     if the libcall is deleted.  */
+ 
+   if (n_sets == 1 && sets[0].rtl && GET_CODE (SET_DEST (sets[0].rtl)) == REG
+       && NEXT_INSN (PREV_INSN (insn)) == insn
+       && GET_CODE (SET_SRC (sets[0].rtl)) == REG
+       && REGNO (SET_SRC (sets[0].rtl)) >= FIRST_PSEUDO_REGISTER
+       && REGNO_QTY_VALID_P (REGNO (SET_SRC (sets[0].rtl)))
+-      && (qty_first_reg[reg_qty[REGNO (SET_SRC (sets[0].rtl))]]
+-	  == REGNO (SET_DEST (sets[0].rtl))))
++      && (qty_first_reg[REG_QTY (REGNO (SET_SRC (sets[0].rtl)))]
++	  == REGNO (SET_DEST (sets[0].rtl)))
++      && ! find_reg_note (insn, REG_RETVAL, NULL_RTX))
+     {
+       rtx prev = PREV_INSN (insn);
+       while (prev && GET_CODE (prev) == NOTE)
+@@ -7836,7 +8051,7 @@
+   prev_insn = insn;
+ }
+ 
+-/* Remove from the ahsh table all expressions that reference memory.  */
++/* Remove from the hash table all expressions that reference memory.  */
+ static void
+ invalidate_memory ()
+ {
+@@ -7864,8 +8079,8 @@
+       && GET_CODE (XEXP (addr, 0)) == REG
+       && REGNO (XEXP (addr, 0)) == STACK_POINTER_REGNUM)
+     {
+-      if (reg_tick[STACK_POINTER_REGNUM] >= 0)
+-	reg_tick[STACK_POINTER_REGNUM]++;
++      if (REG_TICK (STACK_POINTER_REGNUM) >= 0)
++	REG_TICK (STACK_POINTER_REGNUM)++;
+ 
+       /* This should be *very* rare.  */
+       if (TEST_HARD_REG_BIT (hard_regs_in_table, STACK_POINTER_REGNUM))
+@@ -7974,7 +8189,7 @@
+       }
+ 
+     case REG:
+-      i = reg_qty[REGNO (x)];
++      i = REG_QTY (REGNO (x));
+ 
+       /* Return a constant or a constant register.  */
+       if (REGNO_QTY_VALID_P (REGNO (x))
+@@ -8532,20 +8747,8 @@
+ 
+   max_insn_uid = get_max_uid ();
+ 
+-  all_minus_one = (int *) alloca (nregs * sizeof (int));
+-  consec_ints = (int *) alloca (nregs * sizeof (int));
+-
+-  for (i = 0; i < nregs; i++)
+-    {
+-      all_minus_one[i] = -1;
+-      consec_ints[i] = i;
+-    }
+-
+   reg_next_eqv = (int *) alloca (nregs * sizeof (int));
+   reg_prev_eqv = (int *) alloca (nregs * sizeof (int));
+-  reg_qty = (int *) alloca (nregs * sizeof (int));
+-  reg_in_table = (int *) alloca (nregs * sizeof (int));
+-  reg_tick = (int *) alloca (nregs * sizeof (int));
+ 
+ #ifdef LOAD_EXTEND_OP
+ 
+@@ -8636,7 +8839,7 @@
+       max_qty = val.nsets * 2;
+       
+       if (file)
+-	fprintf (file, ";; Processing block from %d to %d, %d sets.\n",
++	fnotice (file, ";; Processing block from %d to %d, %d sets.\n",
+ 		 INSN_UID (insn), val.last ? INSN_UID (val.last) : 0,
+ 		 val.nsets);
+ 
+@@ -8733,8 +8936,6 @@
+   for (insn = from; insn != to; insn = NEXT_INSN (insn))
+     {
+       register enum rtx_code code = GET_CODE (insn);
+-      int i;
+-      struct table_elt *p;
+ 
+       /* If we have processed 1,000 insns, flush the hash table to
+ 	 avoid extreme quadratic behavior.  We must not include NOTEs
+@@ -8747,17 +8948,7 @@
+ 	 Perhaps for 2.9.  */
+       if (code != NOTE && num_insns++ > 1000)
+ 	{
+-	  for (i = 0; i < NBUCKETS; i++)
+-	    for (p = table[i]; p; p = table[i])
+-	      {
+-		/* Note that invalidate can remove elements
+-		   after P in the current hash chain.  */
+-		if (GET_CODE (p->exp) == REG)
+-		  invalidate (p->exp, p->mode);
+-		else
+-		  remove_from_table (p, i);
+-	      }
+-
++	  flush_hash_table ();
+ 	  num_insns = 0;
+ 	}
+ 
+diff -ruN a/gcc/haifa-sched.c b/gcc/haifa-sched.c
+--- a/gcc/haifa-sched.c
++++ b/gcc/haifa-sched.c
+@@ -3869,16 +3869,11 @@
+ 		  {
+ 		    for (u = reg_last_uses[i]; u; u = XEXP (u, 1))
+ 		      add_dependence (insn, XEXP (u, 0), REG_DEP_ANTI);
+-		    reg_last_uses[i] = 0;
+ 
+ 		    for (u = reg_last_sets[i]; u; u = XEXP (u, 1))
+ 		      add_dependence (insn, XEXP (u, 0), REG_DEP_ANTI);
+ 
+-		    if (global_regs[i])
+-		      for (u = reg_last_clobbers[i]; u; u = XEXP (u, 1))
+-		        add_dependence (insn, XEXP (u, 0), REG_DEP_ANTI);
+-
+-		    SET_REGNO_REG_SET (reg_pending_sets, i);
++		    SET_REGNO_REG_SET (reg_pending_clobbers, i);
+ 		  }
+ 	    }
+ 
+@@ -4065,7 +4060,18 @@
+   rtx link;
+   int tmp_class, tmp2_class, depend_count1, depend_count2;
+   int val, priority_val, spec_val, prob_val, weight_val;
++  extern char *mips_astra_keep_frame_order;
++
+ 
++  /* ASTRA P21: opt-in retention of the save_restore_insns emission order.
++     The retail compiler emits prologue saves and epilogue restores in the
++     order save_restore_insns produced them; the priority comparison
++     otherwise reorders independent saves (it can sink the $ra save past
++     the callee-saved ones).  Only enabled per unit: other units' retail
++     objects show the scheduler-reordered form.  */
++  if (mips_astra_keep_frame_order
++      && RTX_FRAME_RELATED_P (tmp) && RTX_FRAME_RELATED_P (tmp2))
++    return INSN_LUID (tmp) - INSN_LUID (tmp2);
+ 
+   /* prefer insn with higher priority */
+   priority_val = INSN_PRIORITY (tmp2) - INSN_PRIORITY (tmp);
+diff -ruN a/gcc/local-alloc.c b/gcc/local-alloc.c
+--- a/gcc/local-alloc.c
++++ b/gcc/local-alloc.c
+@@ -637,13 +637,11 @@
+ {
+   if (CONSTANT_P (x))
+     return 1;
+-  if (x == frame_pointer_rtx || x == hard_frame_pointer_rtx 
+-      || x == arg_pointer_rtx)
++  /* ASTRA PB1 (gcc-2.95.2): the hard frame pointer is not invariant here.  */
++  if (x == frame_pointer_rtx || x == arg_pointer_rtx)
+     return 1;
+   if (GET_CODE (x) == PLUS
+-      && (XEXP (x, 0) == frame_pointer_rtx 
+-	  || XEXP (x, 0) == hard_frame_pointer_rtx 
+-	  || XEXP (x, 0) == arg_pointer_rtx)
++      && (XEXP (x, 0) == frame_pointer_rtx || XEXP (x, 0) == arg_pointer_rtx)
+       && CONSTANT_P (XEXP (x, 1)))
+     return 1;
+   return 0;
+@@ -754,7 +752,9 @@
+ 	  && REG_N_SETS (regno) == 1
+ 	  && reg_equiv_init_insns[regno] != 0
+ 	  && reg_equiv_init_insns[regno] != const0_rtx
+-	  && ! find_reg_note (insn, REG_EQUIV, NULL_RTX)
++	  /* ASTRA PB1 (gcc-2.95.2): test the initialising insn's note.  */
++	  && ! find_reg_note (XEXP (reg_equiv_init_insns[regno], 0),
++			      REG_EQUIV, NULL_RTX)
+ 	  && ! contains_replace_regs (XEXP (dest, 0), reg_equiv_replace))
+ 	{
+ 	  rtx init_insn = XEXP (reg_equiv_init_insns[regno], 0);
+diff -ruN a/gcc/regclass.c b/gcc/regclass.c
+--- a/gcc/regclass.c
++++ b/gcc/regclass.c
+@@ -1182,6 +1182,7 @@
+ 	  rtx op = ops[i];
+ 	  enum machine_mode mode = modes[i];
+ 	  int allows_mem = 0;
++	  int allows_addr = 0;
+ 	  int win = 0;
+ 	  unsigned char c;
+ 
+@@ -1285,6 +1286,13 @@
+ 	      case '0':  case '1':  case '2':  case '3':  case '4':
+ 	      case '5':  case '6':  case '7':  case '8':  case '9':
+ 	      case 'p':
++		/* ASTRA PB2 (gcc-2.95.2): an address operand wants a register
++		   that can be the base of an address.  */
++		allows_addr = 1;
++		win = address_operand (op, GET_MODE (op));
++		classes[i]
++		  = reg_class_subunion[(int) classes[i]]
++		    [(int) BASE_REG_CLASS];
+ 		break;
+ 
+ 	      case 'm':  case 'o':  case 'V':
+@@ -1465,7 +1473,7 @@
+ 	  /* The only other way this alternative can be used is if this is a
+ 	     constant that could be placed into memory.  */
+ 
+-	  else if (CONSTANT_P (op) && allows_mem)
++	  else if (CONSTANT_P (op) && (allows_addr || allows_mem))
+ 	    alt_cost += MEMORY_MOVE_COST (mode, classes[i], 1);
+ 	  else
+ 	    alt_fail = 1;
+diff -ruN a/gcc/reload1.c b/gcc/reload1.c
+--- a/gcc/reload1.c
++++ b/gcc/reload1.c
+@@ -39,6 +39,10 @@
+ #include "real.h"
+ #include "toplev.h"
+ 
++#if !defined PREFERRED_STACK_BOUNDARY && defined STACK_BOUNDARY
++#define PREFERRED_STACK_BOUNDARY STACK_BOUNDARY
++#endif
++
+ /* This file contains the reload pass of the compiler, which is
+    run after register allocation has been done.  It checks that
+    each insn is valid (operands required to be in registers really
+@@ -426,7 +430,7 @@
+ static void delete_address_reloads	PROTO((rtx, rtx));
+ static void delete_address_reloads_1	PROTO((rtx, rtx, rtx));
+ static rtx inc_for_reload		PROTO((rtx, rtx, rtx, int));
+-static int constraint_accepts_reg_p	PROTO((char *, rtx));
++static int constraint_accepts_reg_p	PROTO((const char *, rtx));
+ static void reload_cse_regs_1		PROTO((rtx));
+ static void reload_cse_invalidate_regno	PROTO((int, enum machine_mode, int));
+ static int reload_cse_mem_conflict_p	PROTO((rtx, rtx));
+@@ -443,6 +447,9 @@
+ static void reload_combine_note_store PROTO((rtx, rtx));
+ static void reload_cse_move2add PROTO((rtx));
+ static void move2add_note_store PROTO((rtx, rtx));
++#ifdef AUTO_INC_DEC
++static void add_auto_inc_notes PROTO((rtx, rtx));
++#endif
+ 
+ /* Initialize the reload pass once per compilation.  */
+ 
+@@ -506,7 +513,8 @@
+ 
+   if (unused_insn_chains == 0)
+     {
+-      c = obstack_alloc (&reload_obstack, sizeof (struct insn_chain));
++      c = (struct insn_chain *)
++	obstack_alloc (&reload_obstack, sizeof (struct insn_chain));
+       c->live_before = OBSTACK_ALLOC_REG_SET (&reload_obstack);
+       c->live_after = OBSTACK_ALLOC_REG_SET (&reload_obstack);
+     }
+@@ -662,7 +670,7 @@
+   reg_max_ref_width = (int *) xmalloc (max_regno * sizeof (int));
+   bzero ((char *) reg_max_ref_width, max_regno * sizeof (int));
+   reg_old_renumber = (short *) xmalloc (max_regno * sizeof (short));
+-  bcopy (reg_renumber, reg_old_renumber, max_regno * sizeof (short));
++  bcopy ((PTR) reg_renumber, (PTR) reg_old_renumber, max_regno * sizeof (short));
+   pseudo_forbidden_regs
+     = (HARD_REG_SET *) xmalloc (max_regno * sizeof (HARD_REG_SET));
+   pseudo_previous_regs
+@@ -1124,11 +1132,13 @@
+      which are only valid during and after reload.  */
+   reload_completed = 1;
+ 
+-  /* Make a pass over all the insns and delete all USEs which we inserted
+-     only to tag a REG_EQUAL note on them.  Remove all REG_DEAD and REG_UNUSED
+-     notes.  Delete all CLOBBER insns and simplify (subreg (reg)) operands.
+-     Also remove all REG_RETVAL and REG_LIBCALL notes since they are no longer
+-     useful or accurate.  */
++  /* Make a pass over all the insns and delete all USEs which we
++     inserted only to tag a REG_EQUAL note on them.  Remove all
++     REG_DEAD and REG_UNUSED notes.  Delete all CLOBBER insns and
++     simplify (subreg (reg)) operands.  Also remove all REG_RETVAL and
++     REG_LIBCALL notes since they are no longer useful or accurate.
++     Strip and regenerate REG_INC notes that may have been moved
++     around.  */
+ 
+   for (insn = first; insn; insn = NEXT_INSN (insn))
+     if (GET_RTX_CLASS (GET_CODE (insn)) == 'i')
+@@ -1150,6 +1160,7 @@
+ 	  {
+ 	    if (REG_NOTE_KIND (*pnote) == REG_DEAD
+ 		|| REG_NOTE_KIND (*pnote) == REG_UNUSED
++		|| REG_NOTE_KIND (*pnote) == REG_INC
+ 		|| REG_NOTE_KIND (*pnote) == REG_RETVAL
+ 		|| REG_NOTE_KIND (*pnote) == REG_LIBCALL)
+ 	      *pnote = XEXP (*pnote, 1);
+@@ -1157,6 +1168,10 @@
+ 	      pnote = &XEXP (*pnote, 1);
+ 	  }
+ 
++#ifdef AUTO_INC_DEC
++	add_auto_inc_notes (insn, PATTERN (insn));
++#endif
++
+ 	/* And simplify (subreg (reg)) if it appears as an operand.  */
+ 	cleanup_subreg_operands (insn);
+       }
+@@ -1166,13 +1181,21 @@
+   if (flag_stack_check && ! STACK_CHECK_BUILTIN)
+     {
+       HOST_WIDE_INT size = get_frame_size () + STACK_CHECK_FIXED_FRAME_SIZE;
+-
++      static int verbose_warned = 0; 
++   
+       for (i = 0; i < FIRST_PSEUDO_REGISTER; i++)
+ 	if (regs_ever_live[i] && ! fixed_regs[i] && call_used_regs[i])
+ 	  size += UNITS_PER_WORD;
+ 
+       if (size > STACK_CHECK_MAX_FRAME_SIZE)
+-	warning ("frame size too large for reliable stack checking");
++	{ 
++	  warning ("frame size too large for reliable stack checking");
++	  if (! verbose_warned)
++	    {
++	      warning ("try reducing the number of local variables");
++	      verbose_warned = 1;
++	    }
++	}
+     }
+ 
+   /* Indicate that we no longer have known memory locations or constants.  */
+@@ -4121,26 +4144,6 @@
+      Among them, if REG_ALLOC_ORDER is defined, use that order.
+      Otherwise, prefer registers not preserved by calls.  */
+ 
+-/* CYGNUS LOCAL z8k */
+-#ifdef RELOAD_ALLOC_ORDER
+-  /* ??? This is a hack.  This will give poor code, but is used for the
+-     z8k because it is currently the only way to ensure that we will be
+-     able to satisfy all of the reloads.  Possible other solutions:
+-     - make reload keep track of how many groups of each size are needed,
+-       instead of just remembering the maximum group size
+-     - improve code for making group 4 reloads
+-     -- try looking for combinations of single register spills and potential
+-        reload regs (sample uncompleted code exists for this)
+-     -- try expanding an existing group 2 reload to a group 4 reload
+-     -- unallocate a group 2 reload, try to allocate the group 4 reload,
+-        then reallocate the group 2 reload, if one step fails then all do
+-     - add code to deal with overlapping register groups(?).  */
+-  for (i = 0; i < FIRST_PSEUDO_REGISTER; i++)
+-    potential_reload_regs[i] = reload_alloc_order[i];
+-#else
+-/* END CYGNUS LOCAL */
+-
+-
+ #ifdef REG_ALLOC_ORDER
+   for (i = 0; i < FIRST_PSEUDO_REGISTER; i++)
+     {
+@@ -4179,9 +4182,6 @@
+   for (i = 0; i < FIRST_PSEUDO_REGISTER; i++)
+     if (TEST_HARD_REG_BIT (bad_spill_regs, hard_reg_n_uses[i].regno))
+       potential_reload_regs[o++] = hard_reg_n_uses[i].regno;
+-/* CYGNUS LOCAL z8k */
+-#endif
+-/* END CYGNUS LOCAL */
+ }
+ 
+ /* Reload pseudo-registers into hard regs around each insn as needed.
+@@ -4404,17 +4404,37 @@
+ 			  break;
+ 			}
+ 		      if (n == 1)
+-			REG_NOTES (p) = gen_rtx_EXPR_LIST (REG_INC, reload_reg,
+-							   REG_NOTES (p));
++			{
++			  REG_NOTES (p)
++			    = gen_rtx_EXPR_LIST (REG_INC, reload_reg,
++						 REG_NOTES (p));
++			  /* Mark this as having an output reload so that the
++			     REG_INC processing code below won't invalidate
++			     the reload for inheritance.  */
++			  SET_HARD_REG_BIT (reg_is_output_reload,
++					    REGNO (reload_reg));
++			  reg_has_output_reload[REGNO (XEXP (in_reg, 0))] = 1;
++			}
+ 		      else
+ 			forget_old_reloads_1 (XEXP (in_reg, 0), NULL_RTX);
+ 		    }
++		  else if ((code == PRE_INC || code == PRE_DEC)
++			   && TEST_HARD_REG_BIT (reg_reloaded_valid,
++						 REGNO (reload_reg_rtx[i]))
++			   /* Make sure it is the inc/dec pseudo, and not
++			      some other (e.g. output operand) pseudo.  */
++			   && (reg_reloaded_contents[REGNO (reload_reg_rtx[i])]
++			       == REGNO (XEXP (in_reg, 0))))
++		    {
++		      SET_HARD_REG_BIT (reg_is_output_reload,
++					REGNO (reload_reg_rtx[i]));
++		      reg_has_output_reload[REGNO (XEXP (in_reg, 0))] = 1;
++		    }
+ 		}
+ 	    }
+-#if 0 /* ??? Is this code obsolete now?  Need to check carefully. */
+-	  /* Likewise for regs altered by auto-increment in this insn.
+-	     But note that the reg-notes are not changed by reloading:
+-	     they still contain the pseudo-regs, not the spill regs.  */
++	  /* If a pseudo that got a hard register is auto-incremented,
++	     we must purge records of copying it into pseudos without
++	     hard registers.  */
+ 	  for (x = REG_NOTES (insn); x; x = XEXP (x, 1))
+ 	    if (REG_NOTE_KIND (x) == REG_INC)
+ 	      {
+@@ -4429,7 +4449,6 @@
+ 		  forget_old_reloads_1 (XEXP (x, 0), NULL_RTX);
+ 	      }
+ #endif
+-#endif
+ 	}
+       /* A reload reg's contents are unknown after a label.  */
+       if (GET_CODE (insn) == CODE_LABEL)
+@@ -5185,12 +5204,6 @@
+   int i;
+   int copy = 0;
+ 
+-  /* ??? reload_reg_used is used to hold the registers that are not available
+-     as spill registers, including hard registers that are earlyclobbered
+-     in asms.  */
+-  if (TEST_HARD_REG_BIT (reload_reg_used, regno))
+-    return 0;
+-
+   if (out == const0_rtx)
+     {
+       copy = 1;
+@@ -5431,19 +5444,9 @@
+ 	 allocating the first one in such a way that we are not left with
+ 	 sufficient groups to handle the rest.  */
+ 
+-/* CYGNUS LOCAL z8k */
+-#ifndef RELOAD_ALLOC_ORDER
+-      /* If RELOAD_ALLOC_ORDER is defined, then we must always take spill
+-        registers in that defined order, so this round-robin must be
+-        disabled.  */
+-/* END CYGNUS LOCAL */
+-
+       if (noerror || ! force_group)
+ 	i = last_spill_reg;
+       else
+-/* CYGNUS LOCAL z8k */
+-#endif
+-/* END CYGNUS LOCAL */
+ 	i = -1;
+ 	  
+       for (count = 0; count < n_spills; count++)
+@@ -5791,6 +5794,7 @@
+       for (j = 0; j < n_reloads; j++)
+ 	{
+ 	  register int r = reload_order[j];
++	  rtx search_equiv = NULL_RTX;
+ 
+ 	  /* Ignore reloads that got marked inoperative.  */
+ 	  if (reload_out[r] == 0 && reload_in[r] == 0
+@@ -6020,9 +6024,23 @@
+ 		  || GET_CODE (reload_in[r]) == MEM)
+ 	      && (reload_nregs[r] == max_group_size
+ 		  || ! reg_classes_intersect_p (reload_reg_class[r], group_class)))
++	    search_equiv = reload_in[r];
++	  /* If this is an output reload from a simple move insn, look
++	     if an equivalence for the input is available.  */
++	  else if (inheritance && reload_in[r] == 0 && reload_out[r] != 0)
++	    {
++	      rtx set = single_set (insn);
++
++	      if (set
++		  && rtx_equal_p (reload_out[r], SET_DEST (set))
++		  && CONSTANT_P (SET_SRC (set)))
++		search_equiv = SET_SRC (set);
++	    }
++
++	  if (search_equiv)
+ 	    {
+ 	      register rtx equiv
+-		= find_equiv_reg (reload_in[r], insn, reload_reg_class[r],
++		= find_equiv_reg (search_equiv, insn, reload_reg_class[r],
+ 				  -1, NULL_PTR, 0, reload_mode[r]);
+ 	      int regno;
+ 
+@@ -6285,6 +6303,7 @@
+ 	     pass just to remove such reloads, make another pass, since the
+ 	     removal of one reload might allow us to inherit another one.  */
+ 	  else if ((! reload_out[r] || reload_out_reg[r])
++		   && reload_in[r]
+ 		   && remove_address_replacements (reload_in[r]) && pass)
+ 	    pass = 2;
+ 	}
+@@ -6846,6 +6865,7 @@
+ 		  int secondary_reload = reload_secondary_in_reload[j];
+ 		  rtx real_oldequiv = oldequiv;
+ 		  rtx real_old = old;
++		  rtx tmp;
+ 
+ 		  /* If OLDEQUIV is a pseudo with a MEM, get the real MEM
+ 		     and similarly for OLD.
+@@ -6854,30 +6874,42 @@
+ 		     equivalent MEM, we must fall back to reload_in, which
+ 		     will have all the necessary substitutions registered.
+ 		     Likewise for a pseudo that can't be replaced with its
+-		     equivalent constant.  */
++		     equivalent constant. 
++
++		     Take extra care for subregs of such pseudos.  Note that
++		     we cannot use reg_equiv_mem in this case because it is
++		     not in the right mode.  */
+ 				
+-		  if (GET_CODE (oldequiv) == REG
+-		      && REGNO (oldequiv) >= FIRST_PSEUDO_REGISTER
+-		      && (reg_equiv_memory_loc[REGNO (oldequiv)] != 0
+-			  || reg_equiv_constant[REGNO (oldequiv)] != 0))
++		  tmp = oldequiv;
++		  if (GET_CODE (tmp) == SUBREG)
++		    tmp = SUBREG_REG (tmp);
++		  if (GET_CODE (tmp) == REG
++		      && REGNO (tmp) >= FIRST_PSEUDO_REGISTER
++		      && (reg_equiv_memory_loc[REGNO (tmp)] != 0
++			  || reg_equiv_constant[REGNO (tmp)] != 0))
+ 		    {
+-		      if (! reg_equiv_mem[REGNO (oldequiv)]
+-			  || num_not_at_initial_offset)
++		      if (! reg_equiv_mem[REGNO (tmp)]
++			  || num_not_at_initial_offset
++			  || GET_CODE (oldequiv) == SUBREG)
+ 			real_oldequiv = reload_in[j];
+ 		      else
+-			real_oldequiv = reg_equiv_mem[REGNO (oldequiv)];
++			real_oldequiv = reg_equiv_mem[REGNO (tmp)];
+ 		    }
+ 
+-		  if (GET_CODE (old) == REG
+-		      && REGNO (old) >= FIRST_PSEUDO_REGISTER
+-		      && (reg_equiv_memory_loc[REGNO (old)] != 0
+-			  || reg_equiv_constant[REGNO (old)] != 0))
++		  tmp = old;
++		  if (GET_CODE (tmp) == SUBREG)
++		    tmp = SUBREG_REG (tmp);
++		  if (GET_CODE (tmp) == REG
++		      && REGNO (tmp) >= FIRST_PSEUDO_REGISTER
++		      && (reg_equiv_memory_loc[REGNO (tmp)] != 0
++			  || reg_equiv_constant[REGNO (tmp)] != 0))
+ 		    {
+-		      if (! reg_equiv_mem[REGNO (old)]
+-			  || num_not_at_initial_offset)
++		      if (! reg_equiv_mem[REGNO (tmp)]
++			  || num_not_at_initial_offset
++			  || GET_CODE (old) == SUBREG)
+ 			real_old = reload_in[j];
+ 		      else
+-			real_old = reg_equiv_mem[REGNO (old)];
++			real_old = reg_equiv_mem[REGNO (tmp)];
+ 		    }
+ 
+ 		  second_reload_reg = reload_reg_rtx[secondary_reload];
+@@ -7787,9 +7819,13 @@
+ 	 DEFINE_PEEPHOLE should be specified that recognizes the sequence
+ 	 we emit below.  */
+ 
++      code = (int) add_optab->handlers[(int) GET_MODE (out)].insn_code;
++
+       if (CONSTANT_P (op1) || GET_CODE (op1) == MEM || GET_CODE (op1) == SUBREG
+ 	  || (GET_CODE (op1) == REG
+-	      && REGNO (op1) >= FIRST_PSEUDO_REGISTER))
++             && REGNO (op1) >= FIRST_PSEUDO_REGISTER)
++         || (code != CODE_FOR_nothing
++             && ! (*insn_operand_predicate[code][2]) (op1, insn_operand_mode[code][2])))
+ 	tem = op0, op0 = op1, op1 = tem;
+ 
+       gen_reload (out, op0, opnum, type);
+@@ -8305,7 +8341,7 @@
+ 
+ static int
+ constraint_accepts_reg_p (string, reg)
+-     char *string;
++     const char *string;
+      rtx reg;
+ {
+   int value = 0;
+@@ -8721,6 +8757,14 @@
+ 	    reload_cse_invalidate_mem (callmem);
+ 	}
+ 
++      
++      /* Forget all the register values at a volatile asm.  */
++      if (GET_CODE (insn) == INSN
++	  && GET_CODE (PATTERN (insn)) == ASM_OPERANDS
++	  && MEM_VOLATILE_P (PATTERN (insn)))
++	for (i = 0; i < FIRST_PSEUDO_REGISTER; i++)
++	  reg_values[i] = 0;
++
+       body = PATTERN (insn);
+       if (GET_CODE (body) == SET)
+ 	{
+@@ -9079,7 +9123,7 @@
+ #ifdef REGISTER_CONSTRAINTS
+   int i,j;
+ 
+-  char *constraints[MAX_RECOG_OPERANDS];
++  const char *constraints[MAX_RECOG_OPERANDS];
+   
+   /* Vector recording how bad an alternative is.  */
+   int *alternative_reject;
+@@ -9113,7 +9157,7 @@
+     {
+       enum machine_mode mode;
+       int regno;
+-      char *p;
++      const char *p;
+ 
+       op_alt_regno[i] = (int *) alloca (recog_n_alternatives * sizeof (int));
+       for (j = 0; j < recog_n_alternatives; j++)
+@@ -9922,6 +9966,24 @@
+    reload_cse_move2add and move2add_note_store.  */
+ static int move2add_luid;
+ 
++/* Generate a CONST_INT and force it in the range of MODE.  */
++static rtx
++gen_mode_int (mode, value)
++     enum machine_mode mode;
++     HOST_WIDE_INT value;
++{
++  HOST_WIDE_INT cval = value & GET_MODE_MASK (mode);
++  int width = GET_MODE_BITSIZE (mode);
++
++  /* If MODE is narrower than HOST_WIDE_INT and CVAL is a negative number,
++     sign extend it.  */
++  if (width > 0 && width < HOST_BITS_PER_WIDE_INT
++      && (cval & ((HOST_WIDE_INT) 1 << (width - 1))) != 0)
++    cval |= (HOST_WIDE_INT) -1 << width;
++
++  return GEN_INT (cval);
++}
++
+ static void
+ reload_cse_move2add (first)
+      rtx first;
+@@ -9973,8 +10035,9 @@
+ 	      if (GET_CODE (src) == CONST_INT && reg_base_reg[regno] < 0)
+ 		{
+ 		  int success = 0;
+-		  rtx new_src = GEN_INT (INTVAL (src)
+-					 - INTVAL (reg_offset[regno]));
++		  rtx new_src
++		    = gen_mode_int (GET_MODE (reg),
++				    INTVAL (src) - INTVAL (reg_offset[regno]));
+ 		  /* (set (reg) (plus (reg) (const_int 0))) is not canonical;
+ 		     use (set (reg) (reg)) instead.
+ 		     We don't delete this insn, nor do we convert it into a
+@@ -10019,8 +10082,10 @@
+ 		      && GET_CODE (XEXP (SET_SRC (set), 1)) == CONST_INT)
+ 		    {
+ 		      rtx src3 = XEXP (SET_SRC (set), 1);
+-		      rtx new_src = GEN_INT (INTVAL (src3)
+-					     - INTVAL (reg_offset[regno]));
++		      rtx new_src
++			= gen_mode_int (GET_MODE (reg),
++					INTVAL (src3)
++					- INTVAL (reg_offset[regno]));
+ 		      int success = 0;
+ 
+ 		      if (new_src == const0_rtx)
+@@ -10158,3 +10223,33 @@
+ 	}
+     }
+ }
++
++#ifdef AUTO_INC_DEC
++static void
++add_auto_inc_notes (insn, x)
++     rtx insn;
++     rtx x;
++{
++  enum rtx_code code = GET_CODE (x);
++  char *fmt;
++  int i, j;
++
++  if (code == MEM && auto_inc_p (XEXP (x, 0)))
++    {
++      REG_NOTES (insn)
++	= gen_rtx_EXPR_LIST (REG_INC, XEXP (XEXP (x, 0), 0), REG_NOTES (insn));
++      return;
++    }
++
++  /* Scan all the operand sub-expressions.  */
++  fmt = GET_RTX_FORMAT (code);
++  for (i = GET_RTX_LENGTH (code) - 1; i >= 0; i--)
++    {
++      if (fmt[i] == 'e')
++	add_auto_inc_notes (insn, XEXP (x, i));
++      else if (fmt[i] == 'E')
++	for (j = XVECLEN (x, i) - 1; j >= 0; j--)
++	  add_auto_inc_notes (insn, XVECEXP (x, i, j));
++    }
++}
++#endif
+diff -ruN a/gcc/sched.c b/gcc/sched.c
+--- a/gcc/sched.c
++++ b/gcc/sched.c
+@@ -1842,6 +1842,12 @@
+   rtx link;
+   int tmp_class, tmp2_class;
+   int value;
++  extern char *mips_astra_keep_frame_order;
++
++  /* ASTRA P21: opt-in retention of the emission order (see haifa-sched.c).  */
++  if (mips_astra_keep_frame_order
++      && RTX_FRAME_RELATED_P (tmp) && RTX_FRAME_RELATED_P (tmp2))
++    return INSN_LUID (tmp) - INSN_LUID (tmp2);
+ 
+   /* Choose the instruction with the highest priority, if different.  */
+   if ((value = INSN_PRIORITY (tmp) - INSN_PRIORITY (tmp2)))
+diff -ruN a/gcc/sibcall.c b/gcc/sibcall.c
+--- a/gcc/sibcall.c
++++ b/gcc/sibcall.c
+@@ -317,6 +317,9 @@
+ 
+    Replace the CALL_PLACEHOLDER with an appropriate insn chain.  */
+ 
++/* ASTRA 0049: -mastra-cygnus-cfg restores the pre-0049 behavior.  */
++extern char *mips_astra_cygnus_cfg;
++
+ void
+ optimize_sibling_and_tail_recursive_calls ()
+ {
+@@ -330,6 +333,20 @@
+ 
+   insns = get_insns ();
+ 
++  /* ASTRA 0049: gcc-2.95.2 (and the SN compiler) have no such pass.  With
++     no CALL_PLACEHOLDER to resolve (sibling calls are off by default since
++     0022, so only tail recursion creates them) the jump_optimize_minimal
++     and CFG work below would only reshape the RTL before the first jump
++     pass: it deletes the jump to the return label after the last return,
++     which lets jump.c if-convert `return 1; ... return 0;' tails that SN
++     leaves as branches.  -mastra-cygnus-cfg keeps the old behavior.  */
++  for (insn = insns; insn; insn = NEXT_INSN (insn))
++    if (GET_CODE (insn) == CALL_INSN
++	&& GET_CODE (PATTERN (insn)) == CALL_PLACEHOLDER)
++      break;
++  if (insn == 0 && ! mips_astra_cygnus_cfg)
++    return;
++
+   /* We do not perform these calls when flag_exceptions is true, so this
+      is probably a NOP at the current time.  However, we may want to support
+      sibling and tail recursion optimizations in the future, so let's plan
+diff -ruN a/gcc/toplev.c b/gcc/toplev.c
+--- a/gcc/toplev.c
++++ b/gcc/toplev.c
+@@ -573,7 +573,9 @@
+ 
+ /* Nonzero means use the edge based lcm for gcse from morgans Book.  */
+ 
+-int flag_edge_lcm = 1;
++/* ASTRA P16: SN's GCSE predates edge-based LCM; make the parity default
++   equivalent to -fno-edge-lcm while retaining explicit -fedge-lcm.  */
++int flag_edge_lcm = 0;
+ 
+ /* Nonzero means when using the edge based lcm for gcse from morgans Book, 
+    also do the enhanced load motion, which trys to hoist loads by not
+@@ -4414,6 +4416,17 @@
+     }
+ #endif
+ 
++  /* If the machine needs a reorganization after delay slot scheduling, call
++     it.  The retail R5900 assembler lengthens short loops after the compiler
++     has filled delay slots; this hook reproduces that behavior in cc1.  */
++#ifdef MACHINE_DEPENDENT_REORG_AFTER_DBR
++  MACHINE_DEPENDENT_REORG_AFTER_DBR (insns);
++#endif
++#ifndef MACHINE_DEPENDENT_REORG_AFTER_DBR_2
++#define MACHINE_DEPENDENT_REORG_AFTER_DBR_2(X)
++#endif
++  MACHINE_DEPENDENT_REORG_AFTER_DBR_2 (insns);
++
+   /* Shorten branches.  */
+   TIMEVAR (shorten_branch_time,
+ 	   {
+@@ -4960,7 +4973,9 @@
+       flag_schedule_insns_after_reload = 1;
+ #endif
+       flag_regmove = 1;
+-      flag_strict_aliasing = 1;
++      /* The game-line SN oracle keeps alias set zero at -O2.  Retain
++         conservative aliasing unless -fstrict-aliasing is explicit.  */
++      flag_strict_aliasing = 0;
+     }
+ 
+   if (optimize >= 3)
+diff -ruN a/gcc/tree.h b/gcc/tree.h
+--- a/gcc/tree.h
++++ b/gcc/tree.h
+@@ -1244,6 +1244,10 @@
+ /* Used to indicate that this DECL has weak linkage.  */
+ #define DECL_WEAK(NODE) (DECL_CHECK (NODE)->decl.weak_flag)
+ 
++/* SN port: sda/nosda attributes (small-data placement).  */
++#define DECL_SDA(NODE) (DECL_CHECK (NODE)->decl.sda_flag)
++#define DECL_NOSDA(NODE) (DECL_CHECK (NODE)->decl.no_sda_flag)
++
+ /* Used in TREE_PUBLIC decls to indicate that copies of this DECL in
+    multiple translation units should be merged.  */
+ #define DECL_ONE_ONLY(NODE) (DECL_CHECK (NODE)->decl.transparent_union)
+@@ -1311,6 +1315,10 @@
+   unsigned artificial_flag : 1;
+   unsigned weak_flag : 1;
+ 
++  /* SN port: sda/nosda attributes force (or forbid) small-data placement.  */
++  unsigned sda_flag : 1;
++  unsigned no_sda_flag : 1;
++
+   unsigned lang_flag_0 : 1;
+   unsigned lang_flag_1 : 1;
+   unsigned lang_flag_2 : 1;
+diff -ruN a/include/obstack.h b/include/obstack.h
+--- a/include/obstack.h
++++ b/include/obstack.h
+@@ -417,7 +417,10 @@
+ ({ struct obstack *__o = (OBSTACK);					\
+    if (__o->next_free + sizeof (void *) > __o->chunk_limit)		\
+      _obstack_newchunk (__o, sizeof (void *));				\
+-   *((void **)__o->next_free)++ = ((void *)datum);			\
++	 if (!__o->alloc_failed) {                                           \
++      *((void **)__o->next_free) = ((void *)datum);                     \
++      __o->next_free += sizeof (void *);                                \
++	 } \
+    (void) 0; })
+ 
+ # define obstack_int_grow(OBSTACK,datum)				\
+diff -ruN a/gcc/c-gperf.h b/gcc/c-gperf.h
+--- a/gcc/c-gperf.h
++++ b/gcc/c-gperf.h
+@@ -0,0 +1,196 @@
++/* KR-C code produced by gperf version 2.7.1 (19981006 egcs) */
++/* Command-line: gperf -L KR-C -F , 0, 0 -p -j1 -i 1 -g -o -t -G -N is_reserved_word -k1,3,$ ../../gcc/c-parse.gperf  */
++/* Command-line: gperf -L KR-C -F ', 0, 0' -p -j1 -i 1 -g -o -t -N is_reserved_word -k1,3,$ c-parse.gperf  */ 
++struct resword { char *name; short token; enum rid rid; };
++
++#define TOTAL_KEYWORDS 83
++#define MIN_WORD_LENGTH 2
++#define MAX_WORD_LENGTH 20
++#define MIN_HASH_VALUE 8
++#define MAX_HASH_VALUE 141
++/* maximum key range = 134, duplicates = 0 */
++
++#ifdef __GNUC__
++__inline
++#endif
++static unsigned int
++hash (str, len)
++     register char *str;
++     register unsigned int len;
++{
++  static unsigned char asso_values[] =
++    {
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142,  35, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142,   1, 142,  90,   1,  28,
++       40,   6,   1,  24,   3,  13, 142,  36,  60,  14,
++       49,   3,   6, 142,  19,   8,   1,  50,  33,  11,
++        2,  23,   4, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142, 142, 142, 142, 142,
++      142, 142, 142, 142, 142, 142
++    };
++  register int hval = len;
++
++  switch (hval)
++    {
++      default:
++      case 3:
++        hval += asso_values[(unsigned char)str[2]];
++      case 2:
++      case 1:
++        hval += asso_values[(unsigned char)str[0]];
++        break;
++    }
++  return hval + asso_values[(unsigned char)str[len - 1]];
++}
++
++static struct resword wordlist[] =
++  {
++    {"", 0, 0}, {"", 0, 0}, {"", 0, 0}, {"", 0, 0}, {"", 0, 0}, {"", 0, 0}, {"", 0, 0}, {"", 0, 0},
++    {"out", TYPE_QUAL, RID_OUT},
++    {"", 0, 0},
++    {"float", TYPESPEC, RID_FLOAT},
++    {"__typeof", TYPEOF, NORID},
++    {"", 0, 0},
++    {"__typeof__", TYPEOF, NORID},
++    {"typeof", TYPEOF, NORID},
++    {"typedef", SCSPEC, RID_TYPEDEF},
++    {"if", IF, NORID},
++    {"short", TYPESPEC, RID_SHORT},
++    {"int", TYPESPEC, RID_INT},
++    {"sizeof", SIZEOF, NORID},
++    {"__signed__", TYPESPEC, RID_SIGNED},
++    {"__extension__", EXTENSION, NORID},
++    {"inout", TYPE_QUAL, RID_INOUT},
++    {"__imag__", IMAGPART, NORID},
++    {"else", ELSE, NORID},
++    {"__inline__", SCSPEC, RID_INLINE},
++    {"byref", TYPE_QUAL, RID_BYREF},
++    {"__iterator__", SCSPEC, RID_ITERATOR},
++    {"__inline", SCSPEC, RID_INLINE},
++    {"__real__", REALPART, NORID},
++    {"switch", SWITCH, NORID},
++    {"__restrict", TYPE_QUAL, RID_RESTRICT},
++    {"goto", GOTO, NORID},
++    {"__restrict__", TYPE_QUAL, RID_RESTRICT},
++    {"struct", STRUCT, NORID},
++    {"while", WHILE, NORID},
++    {"restrict", TYPE_QUAL, RID_RESTRICT},
++    {"__const", TYPE_QUAL, RID_CONST},
++    {"oneway", TYPE_QUAL, RID_ONEWAY},
++    {"__const__", TYPE_QUAL, RID_CONST},
++    {"__complex", TYPESPEC, RID_COMPLEX},
++    {"__complex__", TYPESPEC, RID_COMPLEX},
++    {"for", FOR, NORID},
++    {"__iterator", SCSPEC, RID_ITERATOR},
++    {"__imag", IMAGPART, NORID},
++    {"do", DO, NORID},
++    {"case", CASE, NORID},
++    {"__volatile__", TYPE_QUAL, RID_VOLATILE},
++    {"break", BREAK, NORID},
++    {"default", DEFAULT, NORID},
++    {"__volatile", TYPE_QUAL, RID_VOLATILE},
++    {"", 0, 0}, {"", 0, 0}, {"", 0, 0},
++    {"@defs", DEFS, NORID},
++    {"id", OBJECTNAME, RID_ID},
++    {"", 0, 0},
++    {"__signed", TYPESPEC, RID_SIGNED},
++    {"bycopy", TYPE_QUAL, RID_BYCOPY},
++    {"", 0, 0}, {"", 0, 0}, {"", 0, 0},
++    {"extern", SCSPEC, RID_EXTERN},
++    {"", 0, 0},
++    {"in", TYPE_QUAL, RID_IN},
++    {"", 0, 0},
++    {"@compatibility_alias", ALIAS, NORID},
++    {"", 0, 0},
++    {"@private", PRIVATE, NORID},
++    {"@selector", SELECTOR, NORID},
++    {"register", SCSPEC, RID_REGISTER},
++    {"__label__", LABEL, NORID},
++    {"", 0, 0}, {"", 0, 0},
++    {"enum", ENUM, NORID},
++    {"return", RETURN, NORID},
++    {"", 0, 0}, {"", 0, 0},
++    {"signed", TYPESPEC, RID_SIGNED},
++    {"", 0, 0}, {"", 0, 0}, {"", 0, 0}, {"", 0, 0},
++    {"const", TYPE_QUAL, RID_CONST},
++    {"", 0, 0},
++    {"inline", SCSPEC, RID_INLINE},
++    {"__real", REALPART, NORID},
++    {"", 0, 0}, {"", 0, 0}, {"", 0, 0},
++    {"void", TYPESPEC, RID_VOID},
++    {"continue", CONTINUE, NORID},
++    {"", 0, 0}, {"", 0, 0}, {"", 0, 0}, {"", 0, 0}, {"", 0, 0},
++    {"@encode", ENCODE, NORID},
++    {"auto", SCSPEC, RID_AUTO},
++    {"__asm__", ASM_KEYWORD, NORID},
++    {"@interface", INTERFACE, NORID},
++    {"__alignof", ALIGNOF, NORID},
++    {"double", TYPESPEC, RID_DOUBLE},
++    {"__alignof__", ALIGNOF, NORID},
++    {"@protected", PROTECTED, NORID},
++    {"__attribute__", ATTRIBUTE, NORID},
++    {"unsigned", TYPESPEC, RID_UNSIGNED},
++    {"volatile", TYPE_QUAL, RID_VOLATILE},
++    {"__attribute", ATTRIBUTE, NORID},
++    {"@class", CLASS, NORID},
++    {"__asm", ASM_KEYWORD, NORID},
++    {"", 0, 0}, {"", 0, 0},
++    {"@implementation", IMPLEMENTATION, NORID},
++    {"", 0, 0}, {"", 0, 0}, {"", 0, 0},
++    {"union", UNION, NORID},
++    {"", 0, 0}, {"", 0, 0},
++    {"@public", PUBLIC, NORID},
++    {"asm", ASM_KEYWORD, NORID},
++    {"", 0, 0},
++    {"@protocol", PROTOCOL, NORID},
++    {"", 0, 0}, {"", 0, 0}, {"", 0, 0}, {"", 0, 0},
++    {"@end", END, NORID},
++    {"", 0, 0}, {"", 0, 0}, {"", 0, 0},
++    {"static", SCSPEC, RID_STATIC},
++    {"", 0, 0}, {"", 0, 0}, {"", 0, 0}, {"", 0, 0},
++    {"long", TYPESPEC, RID_LONG},
++    {"", 0, 0}, {"", 0, 0}, {"", 0, 0},
++    {"char", TYPESPEC, RID_CHAR}
++  };
++
++#ifdef __GNUC__
++
++#endif
++struct resword *
++is_reserved_word (str, len)
++     register char *str;
++     register unsigned int len;
++{
++  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
++    {
++      register int key = hash (str, len);
++
++      if (key <= MAX_HASH_VALUE && key >= 0)
++        {
++          register char *s = wordlist[key].name;
++
++          if (*str == *s && !strcmp (str + 1, s + 1))
++            return &wordlist[key];
++        }
++    }
++  return 0;
++}

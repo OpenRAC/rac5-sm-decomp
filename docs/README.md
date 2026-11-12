@@ -62,6 +62,8 @@ Every doc of this repository, by folder. New here? Read [building.md](build/buil
 | `tools/boot_assembly.py` | Rebuild the boot `.text` and the file-backed load image |
 | `tools/snr2_assembly.py` | Rebuild the candidate code interval of every level placement |
 | `tools/boot_trial_gate.py` | The pinned complete-boot C gate |
+| `tools/compiler/build_gnu_ee.sh` | Rebuild the GNU EE tools of the gates from public sources and the published patches ([getting the tools](contributing/toolchain.md)) |
+| `tools/tool_pins.py` | Tool identity checks of the gates, and their `--unpinned-tools` mode |
 | `tools/level_program_gate.py` | The complete SNR2 program gate for the frontend and level 01 |
 | `tools/level_c_gate.py` | The shared-level, frontend and level-body C gate |
 | `tools/level_source_layout.py` | Check or restore the layout of `src/levels/` (module directories, original source file folders); name boot twin sources |

@@ -20,6 +20,7 @@ from c_source_policy import require_c_source
 from import_guard import check_import_call_identity, named_import_calls
 
 import cflags
+import tool_pins
 from boot_symbols import read_boot
 from compile_boot_trial import digest, normalized_digest, require_private_output, run
 from disc import IsoDisc, verify_disc
@@ -81,8 +82,8 @@ def profile_and_sources(cpp: Path, cc1: Path, gnu_as: Path) -> tuple[dict, list[
                                    "as": []}):
         raise ValueError("level C trial scope or compiler flags changed")
     for label, path in (("cpp", cpp), ("cc1", cc1), ("as", gnu_as)):
-        if digest(path) != base["tools"][f"{label}_sha256"]:
-            raise ValueError(f"{label} differs from pinned RAC5 compiler trial")
+        tool_pins.check(label, path, digest(path), base["tools"][f"{label}_sha256"],
+                        f"{label} differs from pinned RAC5 compiler trial")
     for row in (accepted, additional, frontend, *controls):
         source = ROOT / row["source"]
         if normalized_digest(source) != row["source_sha256_lf"]:
@@ -407,8 +408,8 @@ def check_extra_as(paths: dict[str, Path], level_profile: dict) -> None:
         entry = level_profile.get("extra_assemblers", {}).get(selector)
         if entry is None:
             raise ValueError(f"unknown --extra-as selector: {selector}")
-        if digest(path) != entry["tools"]["as_sha256"]:
-            raise ValueError(f"{selector} assembler differs from the pinned level trial")
+        tool_pins.check(f"{selector} assembler", path, digest(path), entry["tools"]["as_sha256"],
+                        f"{selector} assembler differs from the pinned level trial")
 
 
 def select_body_assembler(selector: str, default: Path,
@@ -868,6 +869,12 @@ def main() -> None:
     parser.add_argument("--extra-as", action="append", default=[],
                         metavar="NAME=PATH",
                         help="extra hash-pinned assembler selected by body_sources.tsv")
+    parser.add_argument("--unpinned-tools", action="store_true",
+                        help="record compilers and per-source assemblers whose "
+                             "SHA-256 differs from the pin (such as the GNU tools "
+                             "rebuilt by tools/compiler/build_gnu_ee.sh) instead of "
+                             "refusing them; every object must still match, and the "
+                             "run does not qualify a match")
     parser.add_argument("--refresh-bodies", action="store_true",
                         help="rewrite config/levels/bodies.tsv hashes after a full pass")
     parser.add_argument("--jobs", type=int, default=1,
@@ -879,6 +886,9 @@ def main() -> None:
         parser.error("--jobs must be between 1 and 16")
     if args.batch_link_size != 0 and not 2 <= args.batch_link_size <= 25:
         parser.error("--batch-link-size must be 0 or between 2 and 25")
+    if args.unpinned_tools and args.refresh_bodies:
+        parser.error("--refresh-bodies needs the pinned tools, not --unpinned-tools")
+    tool_pins.allow(args.unpinned_tools)
     OUTPUT.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps({"status": "incomplete", "counted_matches": 0},
                                  indent=2) + "\n", encoding="utf-8", newline="\n")
@@ -890,8 +900,8 @@ def main() -> None:
         entry = base_profile.get("extra_compilers", {}).get(selector)
         if entry is None:
             raise ValueError(f"unknown --extra-cc1 selector: {selector}")
-        if digest(path) != entry["tools"]["cc1_sha256"]:
-            raise ValueError(f"{selector} cc1 differs from the pinned compiler trial")
+        tool_pins.check(f"{selector} cc1", path, digest(path), entry["tools"]["cc1_sha256"],
+                        f"{selector} cc1 differs from the pinned compiler trial")
     extra_as = extra_as_paths(args.extra_as)
     check_extra_as(extra_as, profile)
     compile_sources(profile, sources, args.cpp, args.cc1, args.gnu_as,
@@ -1156,7 +1166,8 @@ def main() -> None:
               "provisional_controls": ["LEVEL_01.REL:0x190:24",
                                        "FRONTEND.REL:0x2CD8:12"],
               "runtime_measured_placements": ["FRONTEND.REL", "LEVEL_01.REL"],
-              "bodies": body_summary}
+              "bodies": body_summary,
+              **tool_pins.report_fields()}
     REPORT.write_text(json.dumps(report, indent=2) + "\n",
                       encoding="utf-8", newline="\n")
     if args.batch_link_size:
@@ -1168,6 +1179,8 @@ def main() -> None:
           f"{body_summary['unique_sources']} sources, "
           f"{body_summary['placement_bytes']} placement bytes; "
           "21/21 complete modules exact")
+    if tool_pins.summary():
+        print(tool_pins.summary())
 
 
 if __name__ == "__main__":

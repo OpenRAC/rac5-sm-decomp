@@ -20,6 +20,7 @@ from boot_promotion_audit import (catalogue_rows, input_fingerprint,
                                   verified_linker_alignment)
 from compile_boot_trial import PROFILE, add_extra_arguments, compile_objects
 from elf import inspect_elf
+import tool_pins
 
 ROOT = Path(__file__).resolve().parent.parent
 EXPORT = ROOT / "build/boot-compiled-objects"
@@ -78,6 +79,7 @@ def main() -> None:
     add_extra_arguments(parser)
     args = parser.parse_args()
 
+    tool_pins.allow(args.unpinned_tools)
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps({"gate": "boot_trial", "status": "incomplete",
                                   "counted_matches": 0}, indent=2) + "\n",
@@ -125,6 +127,7 @@ def main() -> None:
         "counted_bytes": accepted_bytes,
         "accepted_functions": [row["symbol"] for row in matches],
         "note": "full ELF metadata was regenerated from the pinned numeric catalogue; non-code loaded data came from retail; original compiler identity and full gameplay remain unverified",
+        **tool_pins.report_fields(),
     }
     if not report["raw_load_and_header_exact"] or not report["whole_elf_exact"]:
         raise ValueError("gate report does not reflect the measured complete boot")
@@ -134,6 +137,8 @@ def main() -> None:
           f"{witness_count()} C witnesses, {program['file_size']} exact raw "
           f"load bytes and complete ELF exact; {len(matches)} boot-only matches "
           f"({accepted_bytes} bytes)")
+    if tool_pins.summary():
+        print(tool_pins.summary())
 
 
 if __name__ == "__main__":

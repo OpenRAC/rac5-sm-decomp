@@ -12,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import boot_c_campaign  # noqa: E402
 from boot_trial_gate import accepted_body_bytes  # noqa: E402
 from progress_status import (  # noqa: E402
-    OUTPUT, ROOT, snapshot, summary_table)
+    OUTPUT, ROOT, public_evidence, snapshot, summary_table)
 
 
 class ProgressStatusTests(unittest.TestCase):
@@ -46,6 +46,12 @@ class ProgressStatusTests(unittest.TestCase):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn("bytematch.dev/OpenRAC/rac5-sm-decomp.svg", readme)
         self.assertNotIn("<!-- progress", readme)
+
+    def test_rejects_a_gate_run_with_unpinned_tools(self) -> None:
+        with self.assertRaisesRegex(ValueError, "boot gate ran with --unpinned-tools"):
+            public_evidence({"qualifying_tools": False}, {}, {})
+        with self.assertRaisesRegex(ValueError, "level C gate ran with --unpinned-tools"):
+            public_evidence({"qualifying_tools": True}, {}, {"qualifying_tools": False})
 
     def test_rejects_unproven_match_and_relocated_image(self) -> None:
         evidence = json.loads(OUTPUT.read_text(encoding="utf-8"))["evidence"]

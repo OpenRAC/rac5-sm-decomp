@@ -59,6 +59,14 @@ python3 tools/boot_trial_gate.py baserom/SCUS_976.15 \
   --output-dir /home/you/rac5-boot-trial
 ```
 
+`tools/compiler/build_gnu_ee.sh` rebuilds `cpp`, `cc1`, `as`, `span5` and `span5b`
+from public sources ([getting the tools](../contributing/toolchain.md)). A rebuilt
+binary has another SHA-256 than its pin unless it was built on the pins' host: add
+`--unpinned-tools`, and the gate records each differing compiler or per-source
+assembler instead of refusing it, still requires every object hash below, and reports
+`"qualifying_tools": false`. Such a run checks a change; the maintainer's run with
+the pinned tools qualifies it.
+
 The command checks the patch and tool identities, copies each public C source
 to the Linux work directory, compiles **every campaign object**, and requires
 their object hashes to match the measured campaign. Twenty-five objects assembled by

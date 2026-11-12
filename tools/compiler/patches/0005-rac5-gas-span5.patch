@@ -1,0 +1,194 @@
+--- a/gas/config/tc-mips.c
++++ b/gas/config/tc-mips.c
+@@ -1372,6 +1372,100 @@
+     }
+ }
+ 
++
++/* The retail R5900 assembler pads short loops: when a backward branch is
++   closer than five words to its target, it inserts nops immediately before
++   the branch so that the distance from the target to the branch (the branch
++   itself included, the delay slot excluded) is exactly five words.  The
++   rule applies inside a `.set noreorder' block too, which is where the
++   compiler emits its branches, and it is limited to backward branches: a
++   forward label has not been placed yet and is never padded.  A loop whose
++   body already contains a branch or jump is left alone.  */
++
++static int
++r5900_branch_or_jump_p (p)
++     bfd_byte *p;
++{
++  unsigned long insn = bfd_get_32 (stdoutput, p);
++  unsigned int op = (insn >> 26) & 0x3f;
++  unsigned int rt = (insn >> 16) & 0x1f;
++  unsigned int funct = insn & 0x3f;
++
++  if (op >= 2 && op <= 7)
++    return 1;			/* j jal beq bne blez bgtz */
++  if (op >= 0x14 && op <= 0x17)
++    return 1;			/* beql bnel blezl bgtzl */
++  if (op == 0 && (funct == 8 || funct == 9))
++    return 1;			/* jr jalr */
++  if (op == 1 && (rt <= 3 || (rt >= 0x10 && rt <= 0x13)))
++    return 1;			/* bltz .. bgezal, likely variants */
++  if ((op == 0x11 || op == 0x12) && rt <= 3)
++    return 1;			/* bc1f .. bc2t */
++  return 0;
++}
++
++
++/* True when INSN is a load or a store: its rs field is a memory base.  */
++
++static int
++r5900_is_memory_insn (insn)
++     unsigned long insn;
++{
++  unsigned int op = (insn >> 26) & 0x3f;
++
++  return (op == 0x1e || op == 0x1f
++	  || (op >= 0x20 && op <= 0x2e)
++	  || (op >= 0x30 && op <= 0x3f));
++}
++
++/* Number of nops to insert before the branch being appended, or 0.  */
++
++static int
++r5900_short_loop_nops (address_expr)
++     expressionS *address_expr;
++{
++  symbolS *sym;
++  fragS *frag;
++  offsetT target_off;
++  long bytes = 0;
++  int off, size;
++
++  if (address_expr == NULL || address_expr->X_op != O_symbol)
++    return 0;
++  sym = address_expr->X_add_symbol;
++  if (sym == NULL || sym->sy_frag == NULL
++      || sym->sy_frag == &zero_address_frag)
++    return 0;
++
++  frag = sym->sy_frag;
++  target_off = sym->sy_value.X_add_number;
++
++  for (;;)
++    {
++      size = (frag == frag_now) ? (int) frag_now_fix () : (int) frag->fr_fix;
++      if (size < target_off)
++	return 0;
++      for (off = target_off; off + 4 <= size; off += 4)
++	if (r5900_branch_or_jump_p ((bfd_byte *) frag->fr_literal + off))
++	  return 0;
++      bytes += size;
++      if (frag == frag_now)
++	break;
++      target_off = 0;
++      frag = frag->fr_next;
++      if (frag == NULL)
++	return 0;		/* forward target: never reached frag_now */
++    }
++
++  bytes -= sym->sy_value.X_add_number;
++  if (bytes < 0 || (bytes & 3) != 0)
++    return 0;
++  bytes /= 4;
++  if (bytes <= 3)
++    return (int) (4 - bytes);	/* target..branch spans five words */
++  return 0;
++}
++
+ /* Output an instruction.  PLACE is where to put the instruction; if
+    it is NULL, this uses frag_more to get room.  IP is the instruction
+    information.  ADDRESS_EXPR is an operand of the instruction to be
+@@ -1389,6 +1483,8 @@
+   char *f;
+   fixS *fixp;
+   int nops = 0;
++  int r5900_pad = 0;
++  int r5900_label_nop = 0;
+ 
+   /* Mark instruction labels in mips16 mode.  */
+   if (mips_opts.mips16)
+@@ -1397,7 +1493,32 @@
+   prev_pinfo = prev_insn.insn_mo->pinfo;
+   pinfo = ip->insn_mo->pinfo;
+ 
+-  if (place == NULL && (! mips_opts.noreorder || prev_nop_frag != NULL))
++  /* R5900 short-loop padding (retail Sony rule): pad backward branches so
++     that the target..branch distance is five words, delay slot excluded.  */
++  if (place == NULL
++      && ! mips_opts.mips16
++      && mips_cpu == 5900
++      && reloc_type == BFD_RELOC_16_PCREL_S2)
++    r5900_pad = r5900_short_loop_nops (address_expr);
++
++  /* Retail load -> base use at a branch-target label: one nop before the
++     labelled instruction.  gas never does this here because the EE has GPR
++     interlocks; the retail assembler does.  The rule is limited to a memory
++     base use (measured in ungetc: lw $a0,0x54($s0); nop; label:
++     lw $v0,0x38($a0)); a branch that compares the loaded register is not a
++     memory access and is not padded.  */
++  if (place == NULL
++      && ! mips_opts.mips16
++      && mips_cpu == 5900
++      && insn_labels != NULL
++      && (prev_pinfo & (INSN_LOAD_MEMORY_DELAY | INSN_LOAD_COPROC_DELAY)) != 0
++      && r5900_is_memory_insn (ip->insn_opcode)
++      && ((ip->insn_opcode >> OP_SH_RS) & OP_MASK_RS)
++	 == ((prev_insn.insn_opcode >> OP_SH_RT) & OP_MASK_RT))
++    r5900_label_nop = 1;
++
++  if (place == NULL && (! mips_opts.noreorder || prev_nop_frag != NULL
++			|| r5900_pad > 0 || r5900_label_nop > 0))
+     {
+       int prev_prev_nop;
+ 
+@@ -1432,7 +1553,8 @@
+       if (! mips_opts.mips16
+ 	  && mips_opts.isa < 4
+ 	  && (((prev_pinfo & INSN_LOAD_COPROC_DELAY)
+-               && ! cop_interlocks)
++               && ! cop_interlocks
++               && (mips_cpu != 5900 || mips_opts.noreorder))
+ 	      || (! gpr_interlocks
+ 		  && (prev_pinfo & INSN_LOAD_MEMORY_DELAY))))
+ 	{
+@@ -1452,7 +1574,8 @@
+       else if (! mips_opts.mips16
+ 	       && mips_opts.isa < 4
+ 	       && (((prev_pinfo & INSN_COPROC_MOVE_DELAY)
+-                    && ! cop_interlocks)
++                    && ! cop_interlocks
++                    && (mips_cpu != 5900 || mips_opts.noreorder))
+ 		   || (mips_opts.isa < 2
+ 		       && (prev_pinfo & INSN_COPROC_MEMORY_DELAY))))
+ 	{
+@@ -1511,7 +1634,8 @@
+       else if (! mips_opts.mips16
+ 	       && mips_opts.isa < 4
+ 	       && (prev_pinfo & INSN_WRITE_COND_CODE)
+-               && ! cop_interlocks)
++               && ! cop_interlocks
++               && (mips_cpu != 5900 || mips_opts.noreorder))
+ 	{
+ 	  /* The previous instruction sets the coprocessor condition
+ 	     codes, but does not require a general coprocessor delay
+@@ -1618,8 +1742,16 @@
+ 	  && ip->insn_opcode == (mips_opts.mips16 ? 0x6500 : 0))
+ 	--nops;
+ 
++      /* The short-loop pad is added on top of any hazard nop and is
++	 emitted even in noreorder mode.  */
++      if (r5900_pad > nops)
++	nops = r5900_pad;
++      if (r5900_label_nop > nops)
++	nops = r5900_label_nop;
++
+       /* Now emit the right number of NOP instructions.  */
+-      if (nops > 0 && ! mips_opts.noreorder)
++      if (nops > 0 && (! mips_opts.noreorder || r5900_pad > 0
++		       || r5900_label_nop > 0))
+ 	{
+ 	  fragS *old_frag;
+ 	  unsigned long old_frag_offset;

@@ -942,7 +942,7 @@
     },
     "span5": {
       "id": "rac5-boot-ee-as-span5-20261018",
-      "provenance": "The GNU EE assembler rebuilt from the GNU EE binutils source tree (gnu-ee-binutils-gcc-1.1, sha256 1f518043...) with the retail R5900 short-loop padding pass reimplemented locally (w14/A1/patch/0001-rac5-span5-source.patch, 194 lines): pads a short forward loop to a five-instruction target-to-branch span and inserts the load-to-base nop a branch target label needs. Its behaviour was measured against ee-as-sdk on the pinned corpus: 51 of 52 objects identical, the one difference a nop moved from 0x91C to 0x95C in __kernel_rem_pio2 (documented in w14/A1/RAPPORT.md). External binary, never rebuilt here and never committed.",
+      "provenance": "The GNU EE assembler rebuilt from the public GNU EE binutils source archive (gnu-ee-binutils-gcc-1.1, sha256 1f518043...) with Lombyte's 0020 and 0027 gas patches (tools/compiler/patches/lombyte/) and the retail R5900 short-loop padding pass reimplemented locally (tools/compiler/patches/0005-rac5-gas-span5.patch): pads a short backward loop to a five-instruction target-to-branch span and inserts the load-to-base nop a branch target label needs. tools/compiler/build_gnu_ee.sh span5 rebuilds it; the pinned binary was reproduced byte for byte on its build host (12 November 2026). Its behaviour was measured against ee-as-sdk on the pinned corpus: 51 of 52 objects identical, the one difference a nop moved from 0x91C to 0x95C in __kernel_rem_pio2 (18 October 2026).",
       "status": "measured per source; boot-only",
       "host": "linux",
       "tools": {
@@ -957,7 +957,7 @@
     },
     "span5b": {
       "id": "rac5-boot-ee-as-span5b-20261018",
-      "provenance": "The span5 assembler with the two fixes the wave-15 P01 sweep measured: dli -1 must expand as addiu zero,-1 + dsrl32, the form Ps2EeAs and the retail use, and a jal target must not suppress the short-loop pad the retail keeps (r5900_branch_or_jump_p counted jal as a blocking jump). Both fixes are source patches composed on the wave-14 span-5 pass (w15/P01/dli_patch.py, w15/P01/pad_patch.py, rebuild scripted). Non-regression measured: the four bodies already pinned under span5 (ungetc, _s2b, _multiply, __mdiff) reproduce byte-exact with this binary. External binary, never committed.",
+      "provenance": "The span5 assembler rules on the public archive without Lombyte's patches, with the two fixes measured on 18 October 2026 (tools/compiler/patches/0006-rac5-gas-span5b.patch): dli -1 expands as addiu zero,-1 + dsrl32, the form Ps2EeAs and the retail use, and a jal inside the span does not suppress the short-loop pad the retail keeps (r5900_branch_or_jump_p counted jal as a blocking jump). tools/compiler/build_gnu_ee.sh span5b rebuilds it; the pinned binary was reproduced byte for byte on its build host (12 November 2026). Non-regression measured: the four bodies pinned under span5 (ungetc, _s2b, _multiply, __mdiff) reproduce byte-exact with this binary.",
       "status": "measured per source; boot-only",
       "host": "linux",
       "tools": {
