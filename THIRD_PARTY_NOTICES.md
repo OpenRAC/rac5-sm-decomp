@@ -139,6 +139,9 @@ the patched files keep their FSF notices.
 - `patches/0000-rac5-pinned-base.patch` combines that stack (same notice) with the
   compiler and assembler edits of OpenRAC/rac2-decomp, licensed GPL-3.0; the notice of
   that project's earlier MIT releases is in its `THIRD_PARTY_NOTICES.md`.
+  `patches/0007-rac5-gnu-ee-trial.patch` and `patches/0008-rac5-gas-r5900-mfc1.patch`
+  carry further edits of that project, from its recipes at commits `7fccf735` and
+  `e07c4844`, under the same terms.
 - The other patches in `tools/compiler/` are this project's, under its GPL-3.0
   license.
 

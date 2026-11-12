@@ -43,7 +43,7 @@ Windows interop when that is available:
 
 ```sh
 python3 tools/boot_trial_gate.py baserom/SCUS_976.15 \
-  --cpp /path/to/cpp --cc1 /path/to/cc1 --as /path/to/as \
+  --cpp build/toolchain/pinned/cpp --cc1 build/toolchain/pinned/cc1 --as build/toolchain/pinned/as \
   --assembler /mnt/c/path/to/Ps2EeAs.exe \
   --linker /mnt/c/path/to/ld.exe \
   --extra-bin prodg2953=/mnt/c/path/to/ProDG/usr/local/sce/ee/gcc/bin \
@@ -54,16 +54,18 @@ python3 tools/boot_trial_gate.py baserom/SCUS_976.15 \
   --extra-bin gnu-ee-trial=/home/you/rac5-gnu-trial \
   --as-bin ee-sdk=/path/to/ee-sdk-assembler \
   --as-bin ps2eeas=/mnt/c/path/to/ProDG/ee/bin \
-  --as-bin span5=/home/you/rac5-span5 \
-  --as-bin span5b=/home/you/rac5-span5b \
+  --as-bin span5=build/toolchain/span5 \
+  --as-bin span5b=build/toolchain/span5b \
   --output-dir /home/you/rac5-boot-trial
 ```
 
-`tools/compiler/build_gnu_ee.sh` rebuilds `cpp`, `cc1`, `as`, `span5` and `span5b`
-from public sources ([getting the tools](../contributing/toolchain.md)). A rebuilt
-binary has another SHA-256 than its pin unless it was built on the pins' host: add
-`--unpinned-tools`, and the gate records each differing compiler or per-source
-assembler instead of refusing it, still requires every object hash below, and reports
+`tools/compiler/build_gnu_ee.sh` rebuilds `cpp`, `cc1`, `as`, `span5`, `span5b`
+and the `gnu-ee-trial` `cc1` from public sources; [getting the
+tools](../contributing/toolchain.md) also says what the `gnu-ee-trial` stage
+directory holds. A rebuilt binary has another SHA-256 than its pin (only `span5`
+and `span5b` match, on the host that built their pins): add `--unpinned-tools`,
+and the gate records each differing compiler or per-source assembler instead of
+refusing it, still requires every object hash below, and reports
 `"qualifying_tools": false`. Such a run checks a change; the maintainer's run with
 the pinned tools qualifies it.
 
