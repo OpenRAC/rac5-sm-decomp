@@ -225,6 +225,28 @@ What this toolchain has no spelling for. Measured: 128-bit computed constants (`
 are outside the pinned `cc1`; `add_call` is refused (`MAX_INTEGER_COMPUTATION_MODE = DImode`,
 `elf5900.h:33`); `register_precision` segfaults or is ignored; a register-fed `movn` needed the
 form in blocker 10. A missing two-`nop` pad is blocker 09, not this entry.
+On 12 November 2026, five boot bodies of the sound state layer were measured
+(USA `SCUS_976.15`): `SND_LevelInit__Fv`, `SND_MCPShutdown__Fv`,
+`SND_LevelShutdown__Fv`, `SND_MCPUpdate__FPC7MATRIX4T0` and
+`SND_LevelUpdate__FPC7MATRIX4T0`, 52 to 68 body bytes each, each followed by one
+zero alignment word. Each tests `g_SoundCtrl` and, on the unexpected state,
+executes a `break` with code 1 before it continues. A scan of the boot `.text`
+finds exactly five such instructions, one in each of these bodies; the other
+`break` instructions are the compiler's division guard (code 7, 47 sites) and one
+unrelated site. **Hypothesis:** the trap comes from a source-level assertion that
+this toolchain has no C spelling for. Measured: local rebuilds of the pinned
+chain and of `sdk991111` at `-O2 -G0` emit `break` only as the division guard,
+so no body reaches its trap (0 exact bodies; one compile per body and per
+compiler; `prodg2953` not tried). The rebuilt compiler binaries are not
+hash-identical to the pins; they reproduced the pinned object hashes of the
+accepted boot sources they were compared on, and no gate was run. The trap is
+not the only difference: the two shutdown bodies keep the base of the global in
+`$s0` across their call inside a 16-byte frame, which the rebuilt pinned chain
+does not do, and `sdk991111` turns the call of `SND_LevelInit__Fv` into a tail
+jump the retail does not have. No C is retained in `nonmatching/` for them: a
+body without the trap does not preserve the original behaviour. Reopen with a
+compiler builtin or source form that emits a code-1 `break`, or with a
+maintainer decision on whether this trap is handwritten assembly.
 
 ### Blocker 17
 
