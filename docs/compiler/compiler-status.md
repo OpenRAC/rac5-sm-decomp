@@ -523,9 +523,11 @@ product terms written `m0*s + m8*c`, which fixes the temporary order.
 The profile is a per-source selector (`gnu-ee-trial`, pinned in
 `config/boot/compiler_trial.json` with the driver, `cpp` and `cc1` SHA-256
 values) and only the three files carry a `config/cflags.txt` line. The stage
-directory is private (`/root/gnu-ee-trial-profile`), built by copying the
-pinned chain's `cpp`, the trial `cc1`, and the Sony SDK `xgcc` driver whose
-`-B` path selects them; it is not committed. Controls: the three sources fail
+directory holds the pinned chain's `cpp`, the trial `cc1` and the Sony SDK
+`xgcc` driver whose `-B` path selects them; it is not committed. The trial
+`cc1` is the one of OpenRAC/rac2-decomp's compiler recipe at commit `7fccf735`,
+and `tools/compiler/build_gnu_ee.sh gnu-ee-trial` rebuilds it from the same
+sources ([getting the tools](../contributing/toolchain.md)). Controls: the three sources fail
 under the pinned chain, the gate recompiles every other object with its
 declared chain and reproduces all other object pins unchanged, and the
 complete ELF is byte-exact.

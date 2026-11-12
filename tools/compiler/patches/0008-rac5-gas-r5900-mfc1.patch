@@ -1,0 +1,13 @@
+--- a/gas/config/tc-mips.c
++++ b/gas/config/tc-mips.c
+@@ -1569,7 +1569,9 @@
+       if (! mips_opts.mips16
+ 	  && mips_opts.isa < 4
+ 	  && (((prev_pinfo & INSN_LOAD_COPROC_DELAY)
+-               && ! cop_interlocks)
++               && ! cop_interlocks
++               && ! (mips_cpu == 5900
++                     && strcmp (prev_insn.insn_mo->name, "mfc1") == 0))
+ 	      || (! gpr_interlocks
+ 		  && (prev_pinfo & INSN_LOAD_MEMORY_DELAY))))
+ 	{

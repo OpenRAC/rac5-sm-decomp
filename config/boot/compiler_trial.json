@@ -791,7 +791,7 @@
     },
     "gnu-ee-trial": {
       "id": "rac5-boot-gnu-ee-trial-20261015",
-      "provenance": "The same locally reconstructed GNU EE chain as the pinned compiler (compiler-no-pad-20261015, the GNU 2.9-ee build described in docs/COMPILER-STATUS.md), built WITHOUT the RAC2 'increasing callee-saved saves' patch that the pinned cc1 carries. Stage directory holds that build's cc1 (sha256 37704f48...), the pinned chain's cpp and the Sony SDK xgcc driver, whose -B path selects this cc1. External binaries; pinned per source, never rebuilt here and never committed.",
+      "provenance": "The cc1 of OpenRAC/rac2-decomp's public compiler recipe at commit 7fccf735 (its tools/compiler/build.sh; RAC2's notes record this cc1 as 37704f48...): the GNU EE chain without the RAC2 'increasing callee-saved saves' edit that the pinned cc1 carries. tools/compiler/build_gnu_ee.sh gnu-ee-trial rebuilds it from the public archive with patches/0000-rac5-pinned-base.patch and patches/0007-rac5-gnu-ee-trial.patch, checked against the four source hashes of that recipe. Stage directory holds that cc1, the pinned chain's cpp and the Sony SDK xgcc driver, whose -B path selects this cc1. External binaries; pinned per source and never committed.",
       "status": "measured per source; boot-only",
       "host": "linux",
       "tools": {
@@ -862,7 +862,7 @@
     },
     "gnu-ee-trial-divpad": {
       "id": "rac5-level-gnu-ee-trial-upstream-saves-divpad-20261020",
-      "provenance": "The locally reconstructed GNU EE chain of the pinned compiler (compiler-no-pad-20261015, the GNU 2.9-ee build described in docs/COMPILER-STATUS.md) with two anchored edits on top of the project's own tools/compiler/patches/0002-rac5-div-pad.patch, collected in tools/compiler/patches/0003-rac5-upstream-saves-divpad.patch: the division padding hook no longer overwrites the tree's own loop padding hook (the two hooks are separated, AFTER_DBR keeps the loops and AFTER_DBR_3 does the divisions), and the RAC2 'increasing callee-saved saves' option is reverted so the prologue saves the general purpose registers before the floating point ones, which is the order the retail uses. The measured cause is the Quat_Slerp body of the levels: its prologue differs from the retail only by that order, and the first fifty-one instructions then match. The change is additive: the 177 accepted level bodies and their object hashes are unchanged by it. Pinned per source, never rebuilt here and never committed.",
+      "provenance": "The GNU EE chain of the pinned compiler (the public archive with patches/0000-rac5-pinned-base.patch and patches/0001-rac5-short-loop-six.patch) with two anchored edits on top of the project's own tools/compiler/patches/0002-rac5-div-pad.patch, collected in tools/compiler/patches/0003-rac5-upstream-saves-divpad.patch: the division padding hook no longer overwrites the tree's own loop padding hook (the two hooks are separated, AFTER_DBR keeps the loops and AFTER_DBR_3 does the divisions), and the RAC2 'increasing callee-saved saves' option is reverted so the prologue saves the general purpose registers before the floating point ones, which is the order the retail uses. The measured cause is the Quat_Slerp body of the levels: its prologue differs from the retail only by that order, and the first fifty-one instructions then match. The change is additive: the 177 accepted level bodies and their object hashes are unchanged by it. tools/compiler/build_gnu_ee.sh gnu-ee-trial-divpad rebuilds its cc1 from those four patches, which give the recorded sources exactly. Pinned per source and never committed.",
       "status": "measured per source; level-only",
       "host": "linux",
       "patch": {
@@ -887,7 +887,7 @@
     },
     "gnu-ee-trial-divpad-blockmove": {
       "id": "rac5-level-gnu-ee-trial-divpad-blockmove-loopcount-20261104",
-      "provenance": "Level-only opt-in copy of gnu-ee-trial-divpad (base cc1 SHA-256 d7f3fb64a496b231c0539d26666b90fb1916f6f4da1432bb649f0646fb758186). The project patch counts emitted load/store words of 32-byte R5900 block moves in the post-DBR short-loop pass instead of treating each RTL node as one word. Isolated linked comparisons reproduce 18/18 540-byte and 20/20 536-byte placements; all 140 previously accepted objects using the base divpad profile retain their pinned object SHA-256. Select this compiler only for individually measured level sources.",
+      "provenance": "Level-only opt-in copy of gnu-ee-trial-divpad (base cc1 SHA-256 d7f3fb64a496b231c0539d26666b90fb1916f6f4da1432bb649f0646fb758186). The project patch counts emitted load/store words of 32-byte R5900 block moves in the post-DBR short-loop pass instead of treating each RTL node as one word. Isolated linked comparisons reproduce 18/18 540-byte and 20/20 536-byte placements; all 140 previously accepted objects using the base divpad profile retain their pinned object SHA-256. Select this compiler only for individually measured level sources. tools/compiler/build_gnu_ee.sh gnu-ee-trial-divpad-blockmove rebuilds its cc1 (the gnu-ee-trial-divpad sources with that patch).",
       "status": "measured per source; level-only",
       "host": "linux",
       "patch": {

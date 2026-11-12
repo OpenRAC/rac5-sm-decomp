@@ -1,0 +1,232 @@
+--- a/gcc/config/mips/mips.c
++++ b/gcc/config/mips/mips.c
+@@ -6184,16 +6184,16 @@
+ 	  }
+     }
+ 
+-  /* RAC2 : FPR saves precede GPR saves; restores keep GPR before FPR.
++  /* RAC2 : GP block first in both directions, as the stock source emits it.
+      Keep both emission blocks and their offsets/directions intact.  The
+-     first FPR pass needs the base initialized before either block runs.  */
++     first GP pass needs the base initialized before either block runs.  */
+   {
+     int rac2_save_pass;
+     base_reg_rtx = 0;
+     base_offset = 0;
+     for (rac2_save_pass = 0; rac2_save_pass < 2; rac2_save_pass++)
+       {
+-        if ((store_p != 0) == (rac2_save_pass == 0))
++        if (rac2_save_pass != 0)
+           {
+             /* Save floating point registers if needed.  */
+             if (fmask)
+@@ -9172,6 +9172,146 @@
+    Do a final pass over the function, just before delayed branch
+    scheduling.  */
+ 
++/* RAC2 : replier une materialisation de zero TImode (por $rd,$0,$0) dans le
++   store qui la consomme lorsque ce store est sa derniere utilisation avant
++   reecriture du registre.  Le retail imprime alors une seule instruction
++   `sq $0,<off>(<base>)` (FUN_00282C88 : `j $31 ; sq $0,0($4)`, 8 octets ;
++   FUN_002E5FE0 : `sq $zero,0($v0)` dans sa boucle, bien que $a0 y soit
++   ensuite reemploye comme pointeur).  Quand le registre alimente plusieurs
++   stores, il est encore vivant apres le premier : le partage
++   `por $v0,$zero,$zero` + trois `sq $v0` subsiste, comme le retail.  */
++/* RAC2 : le zero TImode materialise peut aussi etre lu par la valeur de
++   retour (`use (reg/i ...)`).  Dans ce cas le store se replie quand meme sur
++   $zero ; le retour est rematerialise en clair dans l'insn de retour, ce qui
++   redonne le couple retail `sq $zero,<off>(<base>)` + `move $v0,$zero`.  */
++static rtx rac2_fvu_insn = 0;	/* le (use (reg/i ...)) reconnu */
++static rtx rac2_fvu_reg = 0;	/* son registre, mode compris */
++
++static int
++rac2_reg_live_after_store_p (insn, reg)
++     rtx insn;
++     rtx reg;
++{
++  rtx scan;
++  int past_control = 0;
++
++  rac2_fvu_insn = 0;
++  rac2_fvu_reg = 0;
++
++  for (scan = NEXT_INSN (insn); scan; scan = NEXT_INSN (scan))
++    {
++      rtx pat, set;
++
++      if (GET_CODE (scan) == JUMP_INSN || GET_CODE (scan) == CALL_INSN)
++	past_control = 1;
++
++      if (GET_CODE (scan) != INSN
++	  && GET_CODE (scan) != JUMP_INSN
++	  && GET_CODE (scan) != CALL_INSN)
++	continue;
++
++      pat = PATTERN (scan);
++      if (pat == 0 || GET_CODE (pat) == SEQUENCE)
++	continue;
++
++      if (reg_referenced_p (reg, pat))
++	{
++	  rtx used = GET_CODE (pat) == USE ? XEXP (pat, 0) : 0;
++
++	  /* Lecture par la valeur de retour, en ligne droite, une seule
++	     fois : le zero du store peut etre rematerialise pour le retour.  */
++	  if (used != 0 && GET_CODE (used) == REG
++	      && REGNO (used) == REGNO (reg)
++	      && REG_FUNCTION_VALUE_P (used)
++	      && past_control == 0
++	      && rac2_fvu_insn == 0)
++	    {
++	      rac2_fvu_insn = scan;
++	      rac2_fvu_reg = used;
++	      continue;			/* pas une lecture de donnees */
++	    }
++
++	  return 1;			/* consomme avant toute reecriture */
++	}
++
++      set = single_set (scan);
++      if (set != 0 && GET_CODE (SET_DEST (set)) == REG
++	  && REGNO (SET_DEST (set)) == REGNO (reg))
++	return rac2_fvu_insn != 0 ? 2 : 0;	/* reecrit : fin de vie */
++    }
++
++  return rac2_fvu_insn != 0 ? 2 : 0;
++}
++
++void
++rac2_fold_zero_ti_store (first)
++     rtx first;
++{
++  rtx insn;
++
++  for (insn = first; insn; insn = NEXT_INSN (insn))
++    {
++      rtx set, prev, pset, reg;
++      int steps, live;
++
++      if (GET_CODE (insn) != INSN)
++	continue;
++
++      set = single_set (insn);
++      if (set == 0
++	  || GET_CODE (SET_DEST (set)) != MEM
++	  || GET_MODE (SET_DEST (set)) != TImode
++	  || GET_CODE (SET_SRC (set)) != REG)
++	continue;
++
++      reg = SET_SRC (set);
++
++      live = rac2_reg_live_after_store_p (insn, reg);
++      if (live == 1)
++	continue;
++
++      /* Remonter dans le meme bloc vers la materialisation.  */
++      pset = 0;
++      for (prev = PREV_INSN (insn), steps = 0;
++	   prev != 0 && steps < 12;
++	   prev = PREV_INSN (prev), steps++)
++	{
++	  rtx cand;
++
++	  if (GET_CODE (prev) == NOTE)
++	    continue;
++	  if (GET_CODE (prev) != INSN)
++	    break;			/* etiquette, saut, appel, barriere */
++	  cand = single_set (prev);
++	  if (cand != 0 && rtx_equal_p (SET_DEST (cand), reg))
++	    {
++	      if (GET_MODE (SET_DEST (cand)) == TImode
++		  && ((GET_CODE (SET_SRC (cand)) == CONST_INT
++		       && INTVAL (SET_SRC (cand)) == 0)
++		      || (GET_CODE (SET_SRC (cand)) == REG
++			  && REGNO (SET_SRC (cand)) == 0)))
++		pset = prev;
++	      break;			/* ecriture du registre : on s'arrete la */
++	    }
++	  if (cand != 0 && reg_referenced_p (reg, PATTERN (prev)))
++	    break;			/* consommation avant le store : prudence */
++	}
++
++      if (pset == 0)
++	continue;
++
++      validate_change (insn, &SET_SRC (set), gen_rtx_REG (TImode, 0), 1);
++      if (live == 2)
++	validate_change (rac2_fvu_insn, &PATTERN (rac2_fvu_insn),
++			 gen_rtx (SET, VOIDmode, copy_rtx (rac2_fvu_reg),
++				  const0_rtx), 1);
++      if (! apply_change_group ())
++	continue;
++
++      delete_insn (pset);
++    }
++}
++
+ void
+ machine_dependent_reorg (first)
+      rtx first;
+--- a/gcc/config/mips/mips.h
++++ b/gcc/config/mips/mips.h
+@@ -4842,6 +4842,10 @@
+ 
+ /* ASTRA P25: opt-in annulment of dead fall-through delay slots.  */
+ #define MACHINE_DEPENDENT_REORG_AFTER_DBR_2(X) mips_r5900_annul_dead_slots (X)
++/* RAC2 : replier la materialisation d'un zero TImode avant la seconde
++   planification (voir rac2_fold_zero_ti_store dans mips.c).  */
++#define MACHINE_DEPENDENT_REORG_AFTER_RELOAD(X) rac2_fold_zero_ti_store (X)
++extern void rac2_fold_zero_ti_store ();
+ extern void mips_r5900_annul_dead_slots ();
+ #define MACHINE_DEPENDENT_REORG_AFTER_DBR(X) mips_r5900_pad_loops (X)
+ extern void mips_r5900_pad_loops ();
+--- a/gcc/config/mips/mips.md
++++ b/gcc/config/mips/mips.md
+@@ -90,7 +90,9 @@
+ ;;   The 3900, is (mostly) mips1, but does not have a manditory load delay
+ ;;   slot. 
+ (define_attr "dslot" "no,yes"
+-  (if_then_else (ior (eq_attr "type" "branch,jump,call,xfer,hilo,fcmp")
++  (if_then_else (ior (ior (eq_attr "type" "branch,jump,call,xfer,hilo,fcmp")
++			  (and (eq_attr "mode" "SF")
++			       (eq_attr "type" "fdiv,fsqrt,frsqrt")))
+ 		     (and (eq_attr "type" "load")
+ 			  (and (eq (symbol_ref "mips_isa") (const_int 1))
+ 			       (and (eq (symbol_ref "mips16") (const_int 0))
+@@ -5406,7 +5408,7 @@
+ 
+ (define_insn "movti_internal"
+   [(set (match_operand:TI 0 "nonimmediate_operand" "=d,d,d,R,m,d,d,d,d,d")
+-	(match_operand:TI 1 "movti_operand"         "d,R,m,dJ,dJ,J,K,L,M,i"))]
++	(match_operand:TI 1 "movti_operand"         "d,R,m,d,d,J,K,L,M,i"))]
+   "TARGET_MIPS5900
+    && (register_operand (operands[0], TImode)
+        || se_register_operand (operands[1], TImode)
+@@ -5416,8 +5418,8 @@
+   por %0,$0,%1
+   lq %0,%1
+   lq %0,%1
+-  sq %z1,%0
+-  sq %z1,%0
++  sq %1,%0
++  sq %1,%0
+   por %0,%.,%.
+   por\\t%0,%.,%.\;li\\t%0,%1 \\t\\t\\t# ori
+   por\\t%0,%.,%.\;li\\t%0,%1 \\t\\t\\t# lui
+--- a/gcc/toplev.c
++++ b/gcc/toplev.c
+@@ -4341,6 +4341,14 @@
+     }
+   /* END CYGNUS LOCAL */
+ 	  
++  /* RAC2 : replier la materialisation d'un zero TImode dans son store
++     avant la seconde planification, pour que la planification voie la
++     forme repliee (le retail imprime sq $0 en une instruction).  */
++#ifdef MACHINE_DEPENDENT_REORG_AFTER_RELOAD
++  if (optimize > 0)
++    MACHINE_DEPENDENT_REORG_AFTER_RELOAD (insns);
++#endif
++
+   if (optimize > 0 && flag_schedule_insns_after_reload)
+     {
+       if (sched2_dump)

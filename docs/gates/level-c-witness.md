@@ -327,14 +327,14 @@ What the campaign measured, beyond what the wave-22 campaign had:
 ```sh
 python3 tools/level_c_gate.py baserom/SCUS_976.15.iso \
   --boot baserom/SCUS_976.15 \
-  --cpp /path/to/cpp --cc1 /path/to/cc1 --as /path/to/as \
+  --cpp build/toolchain/pinned/cpp --cc1 build/toolchain/pinned/cc1 --as build/toolchain/pinned/as \
   --linker /mnt/c/path/to/ld.exe \
-  --extra-cc1 gnu-ee-trial=/path/to/gnu-ee-trial/cc1 \
-  --extra-cc1 gnu-ee-trial-divpad=/path/to/divpad/cc1 \
-  --extra-cc1 gnu-ee-trial-divpad-blockmove=/path/to/blockmove/cc1 \
+  --extra-cc1 gnu-ee-trial=build/toolchain/gnu-ee-trial/cc1 \
+  --extra-cc1 gnu-ee-trial-divpad=build/toolchain/gnu-ee-trial-divpad/cc1 \
+  --extra-cc1 gnu-ee-trial-divpad-blockmove=build/toolchain/gnu-ee-trial-divpad-blockmove/cc1 \
   --extra-cc1 sdk991111=/path/to/sdk/cc1 \
   --extra-cc1 sdk991111sync=/path/to/sdk-sync/cc1 \
-  --extra-as r5900-mfc1=/path/to/r5900-mfc1/as \
+  --extra-as r5900-mfc1=build/toolchain/r5900-mfc1/as \
   --extra-as ee-frozen=/path/to/ee-frozen/as \
   --extra-as ps2eeas=/mnt/c/path/to/Ps2EeAs.exe \
   --output-dir /home/you/rac5-level-c-trial
