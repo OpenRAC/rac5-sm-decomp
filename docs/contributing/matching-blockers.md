@@ -248,6 +248,14 @@ body without the trap does not preserve the original behaviour. Reopen with a
 compiler builtin or source form that emits a code-1 `break`, or with a
 maintainer decision on whether this trap is handwritten assembly.
 
+A later isolated probe on 12 November 2026 tried the ordinary C builtin
+`__builtin_trap()` with the pinned SN ProDG 3.01 compiler at `-S -O2 -G0`.
+It rejected the source with `__builtin_trap not supported by this target`;
+no instruction was emitted. The pinned `sdk991111` compiler and a local rebuild
+of the pinned chain (not hash-identical to its pins) gave the same diagnostic
+on the same three-line source. This rules out that builtin on these routes, not
+every possible source form. The five complete bodies were not retried.
+
 ### Blocker 17
 
 Compiler profiles and their measured effects. The boot carries three compilers: the pinned
