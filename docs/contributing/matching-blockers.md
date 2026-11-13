@@ -294,6 +294,42 @@ each has a normal return, no direct branch from its body into the remaining
 interval and no direct edge from outside into its interior. The later bytes
 stay in the assembly baseline and receive no C credit from that body.
 
+**Boot sound internal entries, 13 November 2026.** The 2,160-byte next-label
+interval of `SND_StopATRACInstance__FP13ATRACInstance` is not one function.
+The retained [12-byte setter](../../nonmatching/boot/SND_StopATRACInstance__FP13ATRACInstance.c)
+and seven address-named C candidates at `0x01E92AB0`, `0x01E92D78`,
+`0x01E92DE8`, `0x01E92E48`, `0x01E92E60`, `0x01E92E98` and `0x01E932D8`
+reproduce 656 compared bytes in independent SN links using rebuilt GNU EE
+tools with `-O2 -G0`. These are local witnesses, not accepted C. Direct calls,
+callback-address construction and independent returns corroborate separate
+entries; they do not exclude other indirect entries. The nonzero eight-byte
+gap at `0x01E92D70` remains unassigned in the assembly baseline.
+
+An isolated trial added the setter and the unpadded candidates at `0x01E92DE8`,
+`0x01E92E48`, `0x01E92E98` and `0x01E932D8`: five C objects supplying 356
+compiled bytes. The standard boot gate recompiled all 718 objects and reproduced
+the complete 856,120-byte ELF exactly, including the full code and load image.
+It ran with `--unpinned-tools` and reported `qualifying_tools: false`; no C was
+promoted. The committed profile and generated catalogue retain their existing
+scope pending a qualifying integration run. The unassigned gap stayed in the
+assembly baseline throughout the trial.
+
+The current boot catalogue requires an anonymous body to fill its owner span
+exactly. The 140-, 108- and 52-byte candidates at `0x01E92AB0`, `0x01E92D78`
+and `0x01E92E60` each have a following zero word and remain outside that gate.
+Reopen their integration only with a reviewed anonymous-boundary and trailing-word
+protocol; do not enlarge their body extents to absorb those words. Callback
+registration stores a 32-bit function address and a 64-bit payload. The retained
+callback `long` parameters are measured ABI carriers (64 bits on these rebuilt
+compilers), not recovered original declarations. A static trace through the
+same alternating callback banks reaches the indirect call at `0x01E94808`,
+which supplies a 32-bit result and a 64-bit payload. This corroborates the
+reconstructed calling convention; original source types and signedness still
+require review. Positional-record iteration supports
+a `0x58` stride; the larger trailing padding in a private caller sketch is not
+evidence for a shared layout. Promotion requires the qualified complete gate
+and semantic review of the chosen extents and contracts.
+
 **Internal join versus trailing alignment, 13 November 2026.** The retained
 [148-byte body at LEVEL_16:0x16BB98](../../nonmatching/levels/LEVEL_16_16BB98.c)
 still differs at the word at `+0x28` in all sixteen reviewed placements. The
