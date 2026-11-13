@@ -79,7 +79,7 @@ Counts are accepted sources on `master` on 12 November 2026.
 | `sdk991111sync`, `sdk991111sq`, `sdk-divpad` | 3 boot and 40 level, 1 boot, 10 boot sources | `sdk991111` with [`rac5-sync`](../../tools/compiler/rac5-sync), [`rac5-sq`](../../tools/compiler/rac5-sq) or `0002` | `build_gnu_ee.sh` with that selector |
 | `r5900-mfc1` assembler | 151 level sources | the pinned chain's assembler with [`0008-rac5-gas-r5900-mfc1.patch`](../../tools/compiler/patches/0008-rac5-gas-r5900-mfc1.patch), the assembler of OpenRAC/rac2-decomp's recipe at `e07c4844` | `build_gnu_ee.sh r5900-mfc1` |
 | `ee-sdk` assembler | 59 boot sources | the GNU assembler of the Sony EE SDK (2.9-ee-991111). `span5` assembles 57 of these sources to the same objects, all but `__kernel_rem_pio2` (one `nop` moved) and `__svfscanf` (16 more bytes); the public archive's own assembler, 33 (12 November 2026) | not available |
-| `ee-frozen` assembler | 3 level sources | a privately recovered EE assembler | not available |
+| `ee-frozen` assembler | 3 level sources | a privately recovered EE assembler, whose sources are not public; the public archive's own assembler, unpatched, assembles these three sources to the same objects (12 November 2026) | `build_gnu_ee.sh ee-frozen` builds that equivalent |
 | `prodg2953` | 35 boot sources | SN Systems ProDG for PlayStation 2 3.01 | your own copy |
 | `ps2eeas` (Ps2EeAs 1.8.19.316) | 25 boot and 116 level sources, the assembly baselines | SN Systems ProDG 2.0 | your own copy |
 | SN linker (`ee-ld.exe`) | the gates and the assembly baselines | SN Systems | your own copy |
@@ -92,10 +92,10 @@ directories serve `--extra-bin` as they are (`--extra-bin
 sdk991111=build/toolchain/sdk991111`).
 
 A gate compiles every accepted source, so it needs every route that some source
-selects: the complete gates still need the `ee-sdk` (boot) and `ee-frozen` (level)
-assemblers, which have no public source, and your own SN tools. Writing and
-compiling new C needs only the pinned chain; say in the pull request which tools
-you used.
+selects. With the script's tools, the level C gate needs only your own SN tools
+(`Ps2EeAs` and the linker); the boot gate also needs the `ee-sdk` assembler, which
+has no public source, and ProDG 3.01. Writing and compiling new C needs only the
+pinned chain; say in the pull request which tools you used.
 
 ## Where the patches come from
 

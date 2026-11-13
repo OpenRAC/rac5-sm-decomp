@@ -185,7 +185,7 @@
       "flags": {
         "as": []
       },
-      "provenance": "Private EE assembler recovered with the legally supplied toolchain used in the RAC1 workspace. On the pinned USA body at LEVEL_01:0x001940, the default GNU assembler emits 96 bytes and misses the retail floating-point latency and delay-slot schedule; this hash-pinned binary emits the exact 100-byte body at all 20 numbered level placements. It is selected only for the measured source, never globally, and the external binary is not distributed. A per-placement address variant of LEVEL_02_08EA20.c is exact at its own USA placement with the same route (November 2026)."
+      "provenance": "Private EE assembler recovered with the legally supplied toolchain used in the RAC1 workspace. On the pinned USA body at LEVEL_01:0x001940, the default GNU assembler emits 96 bytes and misses the retail floating-point latency and delay-slot schedule; this hash-pinned binary emits the exact 100-byte body at all 20 numbered level placements. It is selected only for the measured source, never globally, and the external binary is not distributed. A per-placement address variant of LEVEL_02_08EA20.c is exact at its own USA placement with the same route (November 2026). The unpatched assembler of the public gnu-ee-binutils-gcc-1.1 archive (tools/compiler/build_gnu_ee.sh ee-frozen) assembles the three accepted sources of this route to the same objects as this binary (12 November 2026), so a gate run with --unpinned-tools can use it in its place."
     },
     "ps2eeas": {
       "id": "rac5-level-ps2eeas-20261106",

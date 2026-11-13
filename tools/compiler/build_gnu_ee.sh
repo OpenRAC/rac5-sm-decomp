@@ -29,9 +29,12 @@
 #                 the same with tools/compiler/rac5-sync/rac5-sync-cc1.patch,
 #                 tools/compiler/rac5-sq/0001b-rac5-sregs-quad-and-order.patch or
 #                 patches/0002-rac5-div-pad.patch
+#   ee-frozen     not the sources of the recovered binary of that level route, which are not
+#                 public: the archive's own assembler without any patch, which assembles the
+#                 route's three sources to the same objects (measured 12 November 2026)
 # Default: all of them. OUT defaults to build/toolchain/ (ignored by Git) and receives
 # OUT/pinned/{cpp,cc1,as}, OUT/span5/as-rac5span5, OUT/span5b/as-rac5span5b, OUT/<trial>/cc1,
-# OUT/r5900-mfc1/as and OUT/<sdk>/{xgcc,cpp,cc1}, the names the gates look for.
+# OUT/r5900-mfc1/as, OUT/<sdk>/{xgcc,cpp,cc1} and OUT/ee-frozen/as, the names the gates look for.
 #
 # Run it on x86-64 Linux or WSL with a 32-bit capable gcc (gcc -m32), make, patch, curl and git.
 # It downloads gnu-ee-binutils-gcc-1.1.tar.gz and bison-1.28.tar.gz to build/downloads/ and
@@ -48,7 +51,7 @@ P=$HERE/patches
 OUT=${1:-$ROOT/build/toolchain}
 [ $# -gt 0 ] && shift
 ALL="pinned span5 span5b gnu-ee-trial gnu-ee-trial-divpad gnu-ee-trial-divpad-blockmove r5900-mfc1
-     sdk991111 sdk991111sync sdk991111sq sdk-divpad"
+     sdk991111 sdk991111sync sdk991111sq sdk-divpad ee-frozen"
 SELECTORS=${*:-$(echo $ALL)}
 DL=${DOWNLOADS:-$ROOT/build/downloads}
 W=${WORK:-/tmp/rac5-gnu-ee}
@@ -281,6 +284,13 @@ d57c5a32d08442ef73bb4701fd0ac2fbe2656efc49b54ba9169e6c19204b7834  gcc/config/mip
 SUMS
     build_sdk "$selector"
     ;;
+  ee-frozen)
+    tree "$selector"
+    sums "$selector" <<'SUMS'
+a0b3fa03a084d4382e6e9c4ca6b9184e3d21f726fb1406aa4d59eb50b8fbb5f1  gas/config/tc-mips.c
+SUMS
+    build_gas "$selector" "$OUT/$selector/as"
+    ;;
   *)
     echo "unknown selector: $selector ($(echo $ALL))"; exit 2 ;;
   esac
@@ -300,7 +310,7 @@ for selector in selectors:
     elif selector in ("span5", "span5b"):
         tools = boot["extra_assemblers"][selector]["tools"]
         rows.append((f"{selector}/{tools['assembler']}", tools["assembler_sha256"]))
-    elif selector == "r5900-mfc1":
+    elif selector in ("r5900-mfc1", "ee-frozen"):
         rows.append((f"{selector}/as", level["extra_assemblers"][selector]["tools"]["as_sha256"]))
     elif selector.startswith("sdk"):
         tools = boot["extra_compilers"][selector]["tools"]
