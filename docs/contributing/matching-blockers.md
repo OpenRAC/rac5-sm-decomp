@@ -169,6 +169,35 @@ the compiler is. `tools/compiler/patches/0002-rac5-div-pad.patch` and
 `d7f3fb64…`), which reproduced the 20 `Quat_Slerp` placements without regression on the 177
 accepted level sources (PR #97). `sdk-divpad` is the same idea for the SDK compiler.
 
+**Boot positional sound update, 13 November 2026.** The retained
+[candidate at `0x01E92B40`](../../nonmatching/boot/func_1E92B40.c) reproduces its
+proposed 560-byte extent in an independent SN link under rebuilt
+`gnu-ee-trial-divpad -O2 -G0`. On the same source, the default rebuilt GNU
+route emits 552 bytes with 453 equal byte positions in the compared prefix,
+first difference `+0x10`; `sdk-divpad` emits 560 bytes with 538 equal positions,
+first difference at entry. Division padding alone therefore does not explain
+all differences between these compiler bases. The unsigned all-ones handle
+sentinel, distinct volume-variable lifetimes and initialization order of the
+two addressable output words account for the measured source changes.
+
+A private per-source extension trial recompiled all 714 objects and reproduced
+the complete 856,120-byte boot ELF exactly. All 713 previous source/object pins
+and accepted-object routes were preserved. The run used `--unpinned-tools` and
+does not qualify this boot placement or expand the profile's documented scope.
+The GNU profile remains level-only in the committed metadata; the trial's
+replacement, selector and generated catalogue changes are not included here.
+
+Reopen integration with explicit profile-scope review, verified recipe/tool
+provenance, existing-object regression controls and a qualified complete boot
+gate; do not change the global route. The reconstructed wrapper declarations
+follow their accepted definitions, including the callback wrapper's word-based
+address parameters. The two direct callers pass one record pointer, ignore the
+return and iterate 64 records with stride `0x58`. Direct-flow and limited
+address-reference scans support `0x01E92B40..0x01E92D70` as a provisional owner;
+other indirect entries and original source types remain review obligations.
+The following eight bytes retain unknown ownership in the assembly baseline
+and are excluded from this source. No C is promoted.
+
 ### Blocker 10
 
 `movn`. An earlier note called it inaccessible; a 23 October 2026 measurement gives a source
