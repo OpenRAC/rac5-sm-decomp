@@ -86,7 +86,7 @@ class ToolPinsTests(unittest.TestCase):
             (ROOT / "config/levels/compiler_trial.json").read_text(encoding="utf-8"))
         names = {"pinned", *boot["extra_compilers"], *boot["extra_assemblers"],
                  *level["extra_assemblers"]}
-        for selector in ("gnu-ee-trial", "r5900-mfc1", "sdk991111", "sdk-divpad"):
+        for selector in ("gnu-ee-trial", "r5900-mfc1", "sdk991111", "sdk-divpad", "ee-frozen"):
             self.assertIn(selector, selectors)
         for selector in selectors:
             self.assertIn(selector, names)

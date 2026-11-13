@@ -335,7 +335,7 @@ python3 tools/level_c_gate.py baserom/SCUS_976.15.iso \
   --extra-cc1 sdk991111=build/toolchain/sdk991111/cc1 \
   --extra-cc1 sdk991111sync=build/toolchain/sdk991111sync/cc1 \
   --extra-as r5900-mfc1=build/toolchain/r5900-mfc1/as \
-  --extra-as ee-frozen=/path/to/ee-frozen/as \
+  --extra-as ee-frozen=build/toolchain/ee-frozen/as \
   --extra-as ps2eeas=/mnt/c/path/to/Ps2EeAs.exe \
   --output-dir /home/you/rac5-level-c-trial
 ```
