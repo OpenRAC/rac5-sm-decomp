@@ -5,9 +5,9 @@ after the private boot and level-program gates pass. It records **693 accepted
 boot C functions (88,948 bytes) in the 498,900-byte boot `.text`**, **one 476-byte C
 function in `FRONTEND.REL`**, plus **two shared C functions (8 + 72 bytes)
 at twenty numbered level placements** and, counted separately, the
-**68,501 accepted level-body placements**
-(7,460,252 placement bytes carried by 52,595 sources, 6,332,400 distinct-source
-bytes; **792,316 bytes in 6,223 relocation-masked shape units** when each shape
+**68,624 accepted level-body placements**
+(7,477,892 placement bytes carried by 52,712 sources, 6,349,008 distinct-source
+bytes; **795,872 bytes in 6,248 relocation-masked shape units** when each shape
 is counted once, at its largest per-module multiplicity, like the level
 denominator). The shared pair counts as two authored functions, not forty
 independent matches, and the level bodies are a scope of their own: one
@@ -130,7 +130,7 @@ The numerator is **880,752 accepted C bytes**: 88,948 in boot and
 reproduces all of its bytes at its own placement, at the shape's largest covered
 multiplicity in one module. The address-variant copies of one function in
 several levels are separate sources but one masked shape, so they count once;
-counting by source (6,332,400 bytes) credited them up to twenty times against a
+counting by source (6,349,008 bytes) credited them up to twenty times against a
 denominator that counts them once. The site rounds the resulting approximately
 **17.0297%** to **17.03%**. Until 2026-11-11 the report added the 162,944
 frontend candidate bytes a second time to the denominator, credited the shared

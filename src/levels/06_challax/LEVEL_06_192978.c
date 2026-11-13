@@ -7,7 +7,7 @@ typedef struct {
 } Owner;
 
 typedef struct {
-    int i_0;
+    char *i_0;
 } Inner;
 
 typedef struct {
@@ -16,12 +16,12 @@ typedef struct {
     Inner *p_58;
 } Rec;
 
-extern void func_192F48(Rec *a0, int value);
+extern void func_192F48(Rec *a0, char *value);
 
 void func_192978(Rec *a0)
 {
     Owner *p = a0->p_54;
-    int value = a0->p_58->i_0;
+    char *value = a0->p_58->i_0;
     float left = p->v_18 - 1.0f;
 
     p->v_18 = left;

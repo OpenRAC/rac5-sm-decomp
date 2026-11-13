@@ -919,3 +919,4 @@ src/levels/shared/LEVEL_01_1338DC.c  -malign-functions=2
 src/levels/shared/LEVEL_01_1338E4.c  -malign-functions=2
 src/levels/shared/LEVEL_01_1338EC.c  -malign-functions=2
 src/levels/shared/LEVEL_01_1338F4.c  -malign-functions=2
+src/levels/07_dreamtime/LEVEL_07_1FE2F0.c  -fno-expensive-optimizations

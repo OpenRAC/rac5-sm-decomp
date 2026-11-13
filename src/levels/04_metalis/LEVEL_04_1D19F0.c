@@ -1,7 +1,7 @@
 /* LEVEL_04:0x1D19F0 -- placement copy of LEVEL_01_1BEB30.c: returns 23 when a probe fails, otherwise runs a float-parameter helper and returns the result of a final helper. */
 
 int func_1D1940(void *a0);
-void func_030C50(void *a0, void *a1, int a2, int a3, int a4, float f0, float f1);
+int func_030C50(void *a0, void *a1, void * a2, int a3, int a4, float f0, float f1);
 int func_1D1A68(void *a0);
 
 struct B {

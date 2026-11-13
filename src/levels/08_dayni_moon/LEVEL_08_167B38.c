@@ -2,9 +2,9 @@
 typedef struct { char pad[0x58]; float *f_58; } Obj;
 extern Obj *D_002505EC;
 extern int func_233E00(float input);
-void func_167B38(void)
+int func_167B38(void)
 {
     float *p = D_002505EC->f_58;
 
-    func_233E00(*p);
+    return func_233E00(*p);
 }

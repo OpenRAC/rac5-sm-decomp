@@ -1,5 +1,5 @@
 extern unsigned int D_001EB054;
-extern unsigned int D_001EB07C;
+extern int D_001EB07C;
 
 void func_0ABDD8(void) {
     D_001EB054 = 0;

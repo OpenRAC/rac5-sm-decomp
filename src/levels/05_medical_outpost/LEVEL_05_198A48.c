@@ -4,14 +4,14 @@ typedef struct {
     float f18;
 } Inner;
 
-void func_199018(char *a0, int a1);
+void func_199018(char *a0, char *a1);
 
 void func_198A48(char *a0)
 {
     Inner *p = *(Inner **)(a0 + 0x54);
-    int *q = *(int **)(a0 + 0x58);
+    char **q = *(char ***)(a0 + 0x58);
     float f = p->f18 - 1.0f;
-    int v = q[0];
+    char *v = q[0];
 
     p->f18 = f;
     if (f <= 0.0f)
