@@ -9,7 +9,7 @@ tools are proprietary and stay your own.
 
 ## Quick start
 
-1. Use x86-64 Linux or WSL with Python 3.12, `make`, `patch`, `curl` and a gcc
+1. Use x86-64 Linux or WSL with Python 3.12, `make`, `patch`, `curl`, `git` and a gcc
    that can build 32-bit programs (`gcc -m32`; on Debian or Ubuntu install
    `gcc-multilib`).
 2. Build the GNU tools:
@@ -19,7 +19,9 @@ tools are proprietary and stay your own.
    ```
 
    It downloads the public GNU EE source archive (`gnu-ee-binutils-gcc-1.1`) and
-   bison 1.28 to `build/downloads/`, checks their SHA-256, applies the patches in
+   bison 1.28 to `build/downloads/` and clones the public snapshot of the SDK
+   compiler's sources (`SDK_SOURCE=` names a local clone instead), checks their
+   SHA-256 and commit, applies the patches in
    [`tools/compiler/patches/`](../../tools/compiler/patches), refuses to build
    when a patched source does not hash as recorded, and writes each tool to
    `build/toolchain/<selector>/` under the name the gates expect (for example
@@ -46,8 +48,9 @@ version), not only on its sources, and the pinned chain's binaries also embed th
 path of the work directory (`WORK`, default `/tmp/rac5-gnu-ee`) in their assertion
 messages. The script reproduces the pinned `span5` and `span5b` binaries byte for
 byte on the host that built them, and other hashes elsewhere. The pinned `cpp`,
-`cc1` and `as`, the trial compilers and `r5900-mfc1` were built in other build
-layouts, so the script's binaries differ from those pins wherever they are built.
+`cc1` and `as`, the trial and SDK compilers and `r5900-mfc1` were built in other
+build layouts, so the script's binaries differ from those pins wherever they are
+built.
 
 What has to be equal is the output. With `--unpinned-tools`,
 `tools/boot_trial_gate.py`, `tools/compile_boot_trial.py` and
@@ -72,8 +75,8 @@ Counts are accepted sources on `master` on 12 November 2026.
 | `gnu-ee-trial` | 4 boot sources, 2,449 level sources | the `cc1` of OpenRAC/rac2-decomp's compiler recipe at `7fccf735`: the archive with `0000` and [`0007-rac5-gnu-ee-trial.patch`](../../tools/compiler/patches/0007-rac5-gnu-ee-trial.patch) ([trial chain](../compiler/compiler-status.md#a-third-gnu-chain-the-pre-patch-trial-cc1)) | `build_gnu_ee.sh gnu-ee-trial` |
 | `gnu-ee-trial-divpad` | 1,324 level sources | the pinned chain with [`0002`](../../tools/compiler/patches/0002-rac5-div-pad.patch) and [`0003`](../../tools/compiler/patches/0003-rac5-upstream-saves-divpad.patch), which also reverts the ascending-save edit | `build_gnu_ee.sh gnu-ee-trial-divpad` |
 | `gnu-ee-trial-divpad-blockmove` | 248 level sources | `gnu-ee-trial-divpad` with [`0004`](../../tools/compiler/patches/0004-rac5-blockmove-loopcount.patch) | `build_gnu_ee.sh gnu-ee-trial-divpad-blockmove` |
-| `sdk991111` | 127 boot sources, 825 level sources | Sony EE-GCC 2.9-ee-991111-01 from the public snapshot [SSXModding/ps2-ee-toolchain](https://github.com/SSXModding/ps2-ee-toolchain) at `b595ded` | OpenRAC/rac2-decomp's `tools/compiler/sdk/build.py` |
-| `sdk991111sync`, `sdk991111sq`, `sdk-divpad` | 3 boot and 40 level, 1 boot, 10 boot sources | `sdk991111` with [`rac5-sync`](../../tools/compiler/rac5-sync), [`rac5-sq`](../../tools/compiler/rac5-sq) or `0002` | the RAC2 recipe plus that patch |
+| `sdk991111` | 127 boot sources, 825 level sources | Sony EE-GCC 2.9-ee-991111-01: the GPL sources of the SDK's GNU toolchain in the public snapshot [SSXModding/ps2-ee-toolchain](https://github.com/SSXModding/ps2-ee-toolchain) at `b595ded`, with [`sdk/bison-grammar.patch`](../../tools/compiler/patches/sdk/bison-grammar.patch), built like OpenRAC/rac2-decomp's `tools/compiler/sdk/build.py` | `build_gnu_ee.sh sdk991111` |
+| `sdk991111sync`, `sdk991111sq`, `sdk-divpad` | 3 boot and 40 level, 1 boot, 10 boot sources | `sdk991111` with [`rac5-sync`](../../tools/compiler/rac5-sync), [`rac5-sq`](../../tools/compiler/rac5-sq) or `0002` | `build_gnu_ee.sh` with that selector |
 | `r5900-mfc1` assembler | 151 level sources | the pinned chain's assembler with [`0008-rac5-gas-r5900-mfc1.patch`](../../tools/compiler/patches/0008-rac5-gas-r5900-mfc1.patch), the assembler of OpenRAC/rac2-decomp's recipe at `e07c4844` | `build_gnu_ee.sh r5900-mfc1` |
 | `ee-sdk` assembler | 59 boot sources | the GNU assembler of the Sony EE SDK (2.9-ee-991111). `span5` assembles 57 of these sources to the same objects, all but `__kernel_rem_pio2` (one `nop` moved) and `__svfscanf` (16 more bytes); the public archive's own assembler, 33 (12 November 2026) | not available |
 | `ee-frozen` assembler | 3 level sources | a privately recovered EE assembler | not available |
@@ -81,10 +84,12 @@ Counts are accepted sources on `master` on 12 November 2026.
 | `ps2eeas` (Ps2EeAs 1.8.19.316) | 25 boot and 116 level sources, the assembly baselines | SN Systems ProDG 2.0 | your own copy |
 | SN linker (`ee-ld.exe`) | the gates and the assembly baselines | SN Systems | your own copy |
 
-For the boot gate, `--extra-bin gnu-ee-trial=DIR` takes a directory that holds the
-SDK `xgcc` driver of `sdk991111`, `build/toolchain/pinned/cpp` and
+For the boot gate, `--extra-bin gnu-ee-trial=DIR` takes a directory that holds
+`build/toolchain/sdk991111/xgcc`, `build/toolchain/pinned/cpp` and
 `build/toolchain/gnu-ee-trial/cc1`; the level gate takes the `cc1` alone
-(`--extra-cc1 gnu-ee-trial=build/toolchain/gnu-ee-trial/cc1`).
+(`--extra-cc1 gnu-ee-trial=build/toolchain/gnu-ee-trial/cc1`). The SDK compilers'
+directories serve `--extra-bin` as they are (`--extra-bin
+sdk991111=build/toolchain/sdk991111`).
 
 A gate compiles every accepted source, so it needs every route that some source
 selects: the complete gates still need the `ee-sdk` (boot) and `ee-frozen` (level)
@@ -107,4 +112,13 @@ surrounding lines moved, so the script applies it with fuzz 3 and checks the res
 `0005` and `0006` are this project's R5900 assembler rules: short-loop
 padding to a five-word target-to-branch span, the load-to-base `nop` at a branch
 target, the `dli` form of `Ps2EeAs` and a `jal` that does not suppress the padding.
+`sdk/bison-grammar.patch` is the one of RAC2's SDK compiler recipe: it adds the type
+tag of four mid-rule actions in `gcc/c-parse.in`, which newer bisons require, and
+changes no generated code.
 The build script lists the hash of every patched source it checks.
+
+The SDK compiler's sources are GNU GCC and binutils as Cygnus modified them for the
+SDK, under the GPL: their files carry the FSF GPL notices and the trees their
+`COPYING` files. The snapshot holds those GPL toolchain trees only, no SDK
+libraries, headers or samples. The script fetches them and builds them locally:
+none of their source, and no binary, is in this repository.

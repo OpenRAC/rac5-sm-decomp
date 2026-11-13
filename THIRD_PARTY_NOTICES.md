@@ -142,8 +142,17 @@ the patched files keep their FSF notices.
   `patches/0007-rac5-gnu-ee-trial.patch` and `patches/0008-rac5-gas-r5900-mfc1.patch`
   carry further edits of that project, from its recipes at commits `7fccf735` and
   `e07c4844`, under the same terms.
+- `patches/sdk/bison-grammar.patch` comes from OpenRAC/rac2-decomp's SDK compiler
+  recipe (`tools/compiler/sdk/`), under the same terms as that project's other edits.
 - The other patches in `tools/compiler/` are this project's, under its GPL-3.0
   license.
+
+The SDK compiler selectors build Sony EE-GCC 2.9-ee-991111-01 from the public
+snapshot [SSXModding/ps2-ee-toolchain](https://github.com/SSXModding/ps2-ee-toolchain)
+at commit `b595ded606227e93b8c4a447446c1d2ac093827d`: GNU GCC and binutils trees
+(Free Software Foundation and Cygnus, GNU GPL version 2 or any later version, with
+their COPYING files). `tools/compiler/build_gnu_ee.sh` clones it at that commit; none
+of it is redistributed here.
 
 The MIT permission notice of the Lombyte patches:
 

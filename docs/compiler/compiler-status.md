@@ -164,12 +164,14 @@ the campaign still has one assembler and one object format. A pin that names
 neither host, or a host the tool does not implement, is rejected instead of
 guessed.
 
-The binary is never rebuilt here and never committed. It is RAC2's
+The binary is never committed. It is RAC2's
 `tools/compiler/sdk/build.py` output: the public snapshot
 `github.com/SSXModding/ps2-ee-toolchain` at `b595ded`, built for a 32-bit
 Linux host, with a `bison-grammar` patch that only lets the old grammar parse
 under a modern bison and changes no generated code. The driver reports
 `2.9-ee-991111`, and the profile pins `xgcc`, `cpp` and `cc1` by SHA-256.
+`tools/compiler/build_gnu_ee.sh sdk991111` rebuilds it the same way
+([getting the tools](../contributing/toolchain.md)).
 
 Five Q bodies are routed and each fills its owned interval exactly:
 

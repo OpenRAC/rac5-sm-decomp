@@ -745,7 +745,7 @@
     },
     "sdk991111": {
       "id": "rac5-boot-sony-ee-gcc-2.9-ee-991111-01",
-      "provenance": "Sony EE-GCC 2.9-ee-991111-01, the EE compiler of the PlayStation 2 SDK, rebuilt unmodified from the public snapshot github.com/SSXModding/ps2-ee-toolchain at b595ded by RAC2's tools/compiler/sdk/build.py (32-bit host build; its bison-grammar patch only lets an old grammar parse under a modern bison and changes no generated code). The driver reports 2.9-ee-991111. Pinned per source, never rebuilt here and never committed.",
+      "provenance": "Sony EE-GCC 2.9-ee-991111-01, the EE compiler of the PlayStation 2 SDK, rebuilt unmodified from the public snapshot github.com/SSXModding/ps2-ee-toolchain at b595ded by RAC2's tools/compiler/sdk/build.py (32-bit host build; its bison-grammar patch only lets an old grammar parse under a modern bison and changes no generated code). The driver reports 2.9-ee-991111. tools/compiler/build_gnu_ee.sh sdk991111 rebuilds it from the same snapshot and recipe (patches/sdk/bison-grammar.patch is that recipe's patch). Pinned per source and never committed.",
       "status": "measured per source; boot-only",
       "host": "linux",
       "tools": {
@@ -766,7 +766,7 @@
     },
     "sdk-divpad": {
       "id": "rac5-boot-sony-ee-gcc-2.9-ee-991111-divpad",
-      "provenance": "The same Sony EE-GCC 2.9-ee-991111-01 build as sdk991111 (public snapshot github.com/SSXModding/ps2-ee-toolchain at b595ded, RAC2's tools/compiler/sdk/build.py) with tools/compiler/patches/0002-rac5-div-pad.patch applied: four anchored edits make DIV/SQRT/RSQRT ineligible for a delay slot and insert two nops before every single-precision division. That is the retail rule measured over 208 COP1 sites -- each of the 22 sites in the SDK libm window carries exactly two nops, and no division is ever scheduled into a delay slot. The driver reports 2.9-ee-991111. Rebuilt deterministically from the patched source; pinned per source, never rebuilt here and never committed.",
+      "provenance": "The same Sony EE-GCC 2.9-ee-991111-01 build as sdk991111 (public snapshot github.com/SSXModding/ps2-ee-toolchain at b595ded, RAC2's tools/compiler/sdk/build.py) with tools/compiler/patches/0002-rac5-div-pad.patch applied: four anchored edits make DIV/SQRT/RSQRT ineligible for a delay slot and insert two nops before every single-precision division. That is the retail rule measured over 208 COP1 sites -- each of the 22 sites in the SDK libm window carries exactly two nops, and no division is ever scheduled into a delay slot. The driver reports 2.9-ee-991111. tools/compiler/build_gnu_ee.sh sdk-divpad rebuilds it from the same snapshot with that patch. Pinned per source and never committed.",
       "status": "measured per source; boot-only",
       "host": "linux",
       "patch": {
@@ -812,7 +812,7 @@
     },
     "sdk991111sync": {
       "id": "rac5-boot-sony-ee-gcc-2.9-ee-991111-01-rac5-sync",
-      "provenance": "Sony EE-GCC 2.9-ee-991111-01, rebuilt from the public snapshot github.com/SSXModding/ps2-ee-toolchain at b595ded with the exact recipe of extra_compilers.sdk991111 (RAC2 tools/compiler/sdk/build.py: i686 32-bit host build, bison 1.28, bison-grammar.patch), plus the RAC5 memory-barrier patch named below: two builtins, __builtin_rac5_sync () emitting `sync' and __builtin_rac5_sync_p () emitting `sync.p', each expanded in place as one UNSPEC_VOLATILE insn and nothing else. The driver xgcc and cpp are the pinned sdk991111 binaries byte for byte; only cc1 differs. Measured 2026-10-18 against SCUS_976.15: the three sync bodies below are byte-exact and the ten boot objects already routed to sdk991111 keep their exact object SHA-256. Pinned per source; the patch text and the cc1 hash jointly identify the binary.",
+      "provenance": "Sony EE-GCC 2.9-ee-991111-01, rebuilt from the public snapshot github.com/SSXModding/ps2-ee-toolchain at b595ded with the exact recipe of extra_compilers.sdk991111 (RAC2 tools/compiler/sdk/build.py: i686 32-bit host build, bison 1.28, bison-grammar.patch), plus the RAC5 memory-barrier patch named below: two builtins, __builtin_rac5_sync () emitting `sync' and __builtin_rac5_sync_p () emitting `sync.p', each expanded in place as one UNSPEC_VOLATILE insn and nothing else. The driver xgcc and cpp are the pinned sdk991111 binaries byte for byte; only cc1 differs. Measured 2026-10-18 against SCUS_976.15: the three sync bodies below are byte-exact and the ten boot objects already routed to sdk991111 keep their exact object SHA-256. Pinned per source; the patch text and the cc1 hash jointly identify the binary. tools/compiler/build_gnu_ee.sh sdk991111sync rebuilds it from the same snapshot with that patch.",
       "status": "measured per source; boot-only",
       "host": "linux",
       "tools": {
@@ -837,7 +837,7 @@
     },
     "sdk991111sq": {
       "id": "rac5-boot-sony-ee-gcc-2.9-ee-991111-01-rac5-sq",
-      "provenance": "Sony EE-GCC 2.9-ee-991111-01 rebuilt with the RAC2 recipe, plus the RAC5 quad-save patch: $s0-$s7 are saved as 16-byte sq slots while $ra keeps an 8-byte sd, which is the shape the retail prologues use (718 sq for $s* against 2723 sd, and $ra sd 1154 times against one sq). The literal Lombyte rule -- every GPR in TImode -- was measured and rejected because it turns $ra into sq too and then matches no non-leaf prologue. Driver and cpp are the pinned sdk991111 binaries byte for byte; only cc1 differs. Non-regression: the ten bodies already routed to the pinned compilers reproduce their object hashes, and the 131 SDK-routed sources were compared, so this is a per-source profile, never a replacement.",
+      "provenance": "Sony EE-GCC 2.9-ee-991111-01 rebuilt with the RAC2 recipe, plus the RAC5 quad-save patch: $s0-$s7 are saved as 16-byte sq slots while $ra keeps an 8-byte sd, which is the shape the retail prologues use (718 sq for $s* against 2723 sd, and $ra sd 1154 times against one sq). The literal Lombyte rule -- every GPR in TImode -- was measured and rejected because it turns $ra into sq too and then matches no non-leaf prologue. Driver and cpp are the pinned sdk991111 binaries byte for byte; only cc1 differs. Non-regression: the ten bodies already routed to the pinned compilers reproduce their object hashes, and the 131 SDK-routed sources were compared, so this is a per-source profile, never a replacement. tools/compiler/build_gnu_ee.sh sdk991111sq rebuilds it from the same snapshot with tools/compiler/rac5-sq/0001b-rac5-sregs-quad-and-order.patch.",
       "status": "measured per source; boot-only",
       "host": "linux",
       "tools": {
