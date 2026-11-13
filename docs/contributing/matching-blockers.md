@@ -219,6 +219,17 @@ On 2 November 2026, a fresh full-object recompilation found 19 more pinned
 `.mdebug`, while `.text` and relocations are identical. The profile now names
 both complete hashes for 25 measured objects; it does not normalize object bytes.
 
+**Level objects, 13 November 2026.** Rebuilding all 116 accepted level sources
+using pinned Ps2EeAs 1.8.19.316 reproduced their canonical Windows object
+hashes. Wine 10.0 produced different complete hashes, with every difference
+confined to non-loadable `.mdebug`; every byte outside that section, including
+code, relocations, symbols and ELF headers, remained equal. The level profile
+now records these exact alternatives in `object_sha256_alternates`, bound to
+each unchanged source and compiler/assembler route. The canonical Windows
+pins are preserved. Unknown variants and stale bindings remain errors; the
+compiled objects are never rewritten or normalized. This addresses host
+metadata, not an instruction mismatch or a new compiler profile.
+
 ### Blocker 16
 
 What this toolchain has no spelling for. Measured: 128-bit computed constants (`dsll32`/`or`)
@@ -282,6 +293,18 @@ Fourteen boot bodies promoted on 2 November 2026 end before their next code labe
 each has a normal return, no direct branch from its body into the remaining
 interval and no direct edge from outside into its interior. The later bytes
 stay in the assembly baseline and receive no C credit from that body.
+
+**Internal join versus trailing alignment, 13 November 2026.** The retained
+[148-byte body at LEVEL_16:0x16BB98](../../nonmatching/levels/LEVEL_16_16BB98.c)
+still differs at the word at `+0x28` in all sixteen reviewed placements. The
+compiled internal join is at `+0x48`, while retail enters at `+0x44`. Both
+GNU and SN outputs retain that internal difference. SN can additionally
+produce a 148-byte function symbol in a 152-byte text section whose last
+four bytes are zero and agree with the original padding. Admitting that tail
+alone would therefore not make this body match. Twenty accepted caller
+sources also declare incompatible argument/return contracts. Reopen with a
+new, measured source or toolchain explanation for the internal join and a
+coherent caller graph; neither equal length nor tail trimming is a remedy.
 
 ## Closed walls
 
@@ -1701,3 +1724,49 @@ An eighth round releases 135 held placements. The 241 placements of the shared s
 Copies of accepted shapes at pointer-only and nonzero-tail candidate bodies: 1,163 stay held because their callers or callees disagree with an accepted prototype. Eleven of them were found only by the accepted-tree review, because accepted callers call them by name with two arguments while the copied definition takes none, and one copy at `FRONTEND:0x0249D8` is left out because it would carry a `volatile` from the body it copies. About 1,650 held placements remain.
 
 Pointer-only and nonzero-tail bodies written as new C (11 November 2026): 680 placements in 59 forms stay held because their callers or callees disagree with an accepted prototype; 21 of the forward disagreements involve callees named after their boot twins, which the review saw only once it read definitions of any name. About 2,320 held placements remain.
+
+## Bounded USA level source updates (13 November 2026)
+
+The reviewed C now supplies 123 additional placements of at most 200 bytes,
+17,640 bytes by placement. This adds 117 source files, including one explicitly
+typed empty callback shared by four previously accepted 8-byte placements;
+those four bindings are not new coverage. Sixty-eight accepted sources also
+have coherent declarations and layouts with their previous complete object
+hashes preserved. The qualifying native Linux build checks 68,624 body
+placements from 52,712 sources, 15,543 named import sites and all 21 complete
+module files, with no mismatch. The change adds USA credit only.
+
+The 172-byte angle normalizer uses a measured per-source
+`-fno-expensive-optimizations` flag: the default common-subexpression lifetime
+kept a floating constant across `fmodf`, changing the frame and reload order.
+The source retains the real signed-angle and floating-point behavior; no
+compiler binary or global optimization setting changes.
+
+One hundred useful unaccepted representatives remain in `nonmatching/levels/`
+with their measured size, first differing word and reopening condition. Eight
+are byte-exact in isolation but remain uncredited because their contracts or
+input domains are not closed. Unmeasured address variants are not promoted or
+reported as individually tested. Further constraints established in this scope:
+
+- Wrappers that pass byte IDs other than 255 to an accepted unmasked shift
+  helper still need a producer/domain proof of IDs below 32. A byte argument
+  alone does not establish that range, even when the wrapper itself is exact.
+- The 88-byte table getter's nested five-cell view admits a sixth-cell access.
+  Its retained flat view remains nonmatching until the actual backing extent
+  and caller index domain are established.
+- The `LEVEL_01:0x096B20` return family has 430 accepted caller sources:
+  198 declare `void`, 231 `int`, and one declares a pointer and propagates it
+  through another pointer-returning wrapper. The reviewed result is a signed
+  index or creator index/failure value. Changing only the ignored-return
+  declarations leaves that pointer chain open; fourteen exact placements
+  therefore remain unaccepted.
+- `LEVEL_08:0x1AE3A8` is a composite 180-byte inventory interval with separate
+  complete bodies of 152 and 28 bytes, the latter independently referenced.
+  Treating the whole interval as one function would be incorrect.
+
+The native build used Wine 10.0 for the pinned SN assembler and a private
+`wibo` runtime for the same pinned SN linker. Three real multi-object batches
+and a local-library-call control produced completely identical ELF files
+under both linker runtimes before the full-module check. Known whole-object
+alternatives address only assembler debug metadata, as documented in blocker 15.
+The provisional masked-shape denominator and runtime-behavior limitations remain.

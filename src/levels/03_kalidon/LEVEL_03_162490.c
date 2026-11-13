@@ -1,10 +1,10 @@
 /* LEVEL_03:0x162490 -- picks a next state from a probe result. */
-typedef struct P { char pad[0x2C]; int v; } P;
+typedef struct P { char pad[0x2C]; void *v; } P;
 typedef struct Q { char pad[0x40]; unsigned char b; } Q;
 typedef struct O { char pad[0x45]; unsigned char st; char pad2[0xC]; P *p; Q *q; } O;
 extern int func_161FB8(O *);
 extern void func_162010(O *, int);
-extern int func_030E38(P *, O *, int, int, int, float, float);
+extern int func_030E38(P *, O *, void *, int, int, float, float);
 int func_162490(O *o)
 {
     P *p = o->p;

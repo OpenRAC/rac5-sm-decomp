@@ -400,5 +400,1051 @@
         "frontend_global": 163460
       }
     }
-  ]
+  ],
+  "object_sha256_alternates": {
+    "src/levels/01_pokitaru/LEVEL_01_0023B0.c": {
+      "source_sha256_lf": "f2b6a2e6d3a0e3be09182dc894ce5fc2be71950b05e6dac4478d0d57640045c6",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "69890a68d08d12b977c2083fc0df9ea512cfce66d74c7672327b100704112061",
+      "alternates": [
+        "c35ca0d9795f453e68992dfd1792d4bcafa122662ba5725b20e8b05ad951f3b3"
+      ]
+    },
+    "src/levels/01_pokitaru/LEVEL_01_004B28.c": {
+      "source_sha256_lf": "d0337bfabed9c466efdc393252e8d305085d1089ffbc22381d3208290237382e",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "ad42b2816945dcb757d7739c5abe30c9da64eae0c58efe6d20360397f79da840",
+      "alternates": [
+        "bc00b3989ec32f1b7e2506ee70914b3395fce8d71452c78701dfc6bab63ccf85"
+      ]
+    },
+    "src/levels/01_pokitaru/LEVEL_01_037710.c": {
+      "source_sha256_lf": "19b1a0bbee8a827fa465977b4480e3d23ab25bded0160869f48eab66a5b1926e",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "aa31be38685c50a0a7ffeddfe7e9ee0761db53c24332049605f73e3c9055266a",
+      "alternates": [
+        "5d2e14fcb2e65a5ef7af317d240224ab4047bcc7dfef9fecad50538a94e4e8c2"
+      ]
+    },
+    "src/levels/01_pokitaru/LEVEL_01_03B368.c": {
+      "source_sha256_lf": "9b60e8d579e2c35f80407eb12cb4cc99b6a1d0db712bb8cd684c38f788b734f3",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "e1a26fa95a3dfe8690950d652ea997a68265532c3977bc7a7d622b8194c25c45",
+      "alternates": [
+        "07b19a779715e7eceac007dbc0b92dd7ae04d48c22554c44c69ed6f5f3c67dc5"
+      ]
+    },
+    "src/levels/01_pokitaru/LEVEL_01_04B4C0.c": {
+      "source_sha256_lf": "e722d0bd4747b431161455dae9040e2a00021c7bd96d2ece525be4dad838d511",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "a714d94fbf4986223e2089d3b21a90a821dea5a136ca37170a9532c0669818ad",
+      "alternates": [
+        "4721f931747d901c4f9a487e4d03b104e6ac513148911ff3662b7d1bdd17bcf6"
+      ]
+    },
+    "src/levels/01_pokitaru/LEVEL_01_04B4E0.c": {
+      "source_sha256_lf": "7d72b68467796f30a03bf2751bf1513d1754948d8319e03446038c37056f6e18",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "91ebcc501346f9dadad81ef4cb18d4285fff9b169bb5764068dccd531273d20e",
+      "alternates": [
+        "24203bb7160b10b39be68292d261c2cffc3ae10eae76d721646e6b920ee5b18c"
+      ]
+    },
+    "src/levels/01_pokitaru/LEVEL_01_069148.c": {
+      "source_sha256_lf": "72f8dcf1eba8a77206d92aedc79a36b63db7022c460a23c82d3a34e5240b8846",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "ec258284d96ea374fc744997e4934089e784040aff528994fc3da2ffb69bab59",
+      "alternates": [
+        "83c9dd891bb2a28a3c7ab7591483d3c1d2010d34bbbc977009428888902a3804"
+      ]
+    },
+    "src/levels/01_pokitaru/LEVEL_01_0A9158.c": {
+      "source_sha256_lf": "504ba9a7aa7e6789928b0fe27f57a294d0676dbc47cb561f34260befef77e3b7",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "1fe907ae1b59f7562691a790895a5fd4f037cf13fd62f08e9c2978ca864f013e",
+      "alternates": [
+        "c687a4008be4a84b21c4d9dc1a0e29066a2153b444b0ddb21a89318c1b8ba09f"
+      ]
+    },
+    "src/levels/01_pokitaru/LEVEL_01_15A800.c": {
+      "source_sha256_lf": "ed9274d493ea891ee121a31889b1cb334c2afdeeb4b0acbd1143b96f1dd16d94",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "8d217416ff01f67154ac235a5bcfd51af0a04323461ac4efb577f961ea689671",
+      "alternates": [
+        "ee8e30e82843666b41598ba1b810fe04a90e07797ba338058868d87ee572c900"
+      ]
+    },
+    "src/levels/02_rykan_v/LEVEL_02_004B28.c": {
+      "source_sha256_lf": "4e429086fb86faee744ba65edf2a794d397f3d4c24732448ee0d38d790544ee6",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "690342ce9b2800df3cc26d24f2cde295a5193382f9e621f84f80c651b4839973",
+      "alternates": [
+        "f1c9b7b670c043fc4a226c80a14a9bfd67016278ce483293099db51b8ed316fd"
+      ]
+    },
+    "src/levels/02_rykan_v/LEVEL_02_03C158.c": {
+      "source_sha256_lf": "b3dde5dbf362e4fe16251219ae2ea22673ec1e26cf37ab5dc789a0d6988359de",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "a41815a91ddbabf2e5099860f296b382f32ee73e77ad2ee4f5d4f2ab0de551a6",
+      "alternates": [
+        "f934d1a6ba8b6fe5e6cebde122764b460a657427d12c2aa8886c11675657cf24"
+      ]
+    },
+    "src/levels/02_rykan_v/LEVEL_02_050448.c": {
+      "source_sha256_lf": "938ead08cafe374813e6fc2e2ea6a8f523fe824e72058435162b437fd354e87d",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "94b4f972495b47c265317a8e4d120238cc07471f47866ab9d496eddb4bce891d",
+      "alternates": [
+        "1a5ede49f80a82500e4cdf92dcaf964f65e9012a9fcbc08e423fc539289daf86"
+      ]
+    },
+    "src/levels/02_rykan_v/LEVEL_02_050468.c": {
+      "source_sha256_lf": "c1e8deb1f14143342553c18b3bab0229d911b605235b73e46a0f26ae0509f07c",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "7100938b0718fe00e5304558cee9cc35007f5ede86881aba39133f92c69e7659",
+      "alternates": [
+        "c3133d66570af13013a103e983b50a3b2fef6685613be9e236393748aa6cc90f"
+      ]
+    },
+    "src/levels/02_rykan_v/LEVEL_02_06E1E0.c": {
+      "source_sha256_lf": "1d93bd60748da0d20ec61d03eb57436af403a1afb9d1060d8a085640cc63a8b5",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "d5c6c0e76f990a4534ee5f037bd0c882d6bc545c619246ed90b3078c2860ced8",
+      "alternates": [
+        "1b4f2eef541ae7f54a50e0f974b1c03dea4ab0b1f59601a71f3a3d14753fd580"
+      ]
+    },
+    "src/levels/02_rykan_v/LEVEL_02_0AFA68.c": {
+      "source_sha256_lf": "192ac3e3db6d534748125a5fd59ed4433ab976d50bb5713afc9925276f4fa384",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "e1c7ba4d22a5d80561c25f410a67aafa8654b48c2f09142b7528e5b79ebbb121",
+      "alternates": [
+        "c85d6a80e4f4cdb2d50e130d939e3db068e7879dc0ea2a6464c924b059bcbb48"
+      ]
+    },
+    "src/levels/03_kalidon/LEVEL_03_004B60.c": {
+      "source_sha256_lf": "87dab9893fb61fe336f7828fa8a95cb795271193fb5fc850ee75d52f735a2e52",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "05eecfe273d9434a0b54de78b06e7d9e67e2f04c4f99f4146ac2e709c27d47ac",
+      "alternates": [
+        "9c32dddb74b8829677ddc0cf9bfa8c4255b86616b8ad371fd7e8c10e5d27359c"
+      ]
+    },
+    "src/levels/03_kalidon/LEVEL_03_035950.c": {
+      "source_sha256_lf": "3308500d7d999a264db203bd15990e26978c085852caa34238aba5b4bf4a370d",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "bd161309bbc4ff1c31bf4edce92c030d517b4f1c1f41934ec3c7e9a8ed5dae30",
+      "alternates": [
+        "30337f44d25dab63ae8c0284349ad0e202969892098b67c8a9792fef44b61b0a"
+      ]
+    },
+    "src/levels/03_kalidon/LEVEL_03_049780.c": {
+      "source_sha256_lf": "835aa8883ee45cac7d528a901f059fcbb1d858ec32aef063081099161ff2ab56",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "14badb9981fcb9d197cf0b2a2e6f8636453198abc573470eaa5f3f009587ffbb",
+      "alternates": [
+        "f3f4375ca07fa5299785eaa332a9f93a22c3f4eafe92d90db62b9b72123b9e83"
+      ]
+    },
+    "src/levels/03_kalidon/LEVEL_03_067AD0.c": {
+      "source_sha256_lf": "704999cf8eb7bd720cea4172623851feae114d77477567f12a3c52f743ba6196",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "438c53a9f0426cef9485a2da6ac2d6006c983f4f103792381127b573adc88fe9",
+      "alternates": [
+        "cbc1db7699bb9c3cd6447f79cf680714959692396d9a3b7107f4ce67edeadb2a"
+      ]
+    },
+    "src/levels/03_kalidon/LEVEL_03_0A8ED8.c": {
+      "source_sha256_lf": "c4a271e770fe2da385b1895ccb4bcb6b683202e2d4f59b379d3763133aed4694",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "545b5d430a974c19a71ce6408cfeaa9ac61bd37ced0494e847e01a1f11f3043e",
+      "alternates": [
+        "68bf0c121e486d7b28e9bb125cad08addd101b14b4cb76e4c57ee07d10cdcb80"
+      ]
+    },
+    "src/levels/04_metalis/LEVEL_04_004958.c": {
+      "source_sha256_lf": "3dcf3aca0e74cc945b35f0739e850de8b30ed6c65a631cbe30413658e5ba6613",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "17dbf61770b3c441a28b70b7de3f324b41ec65e024c84e35758efbb513ab27c2",
+      "alternates": [
+        "a2774ef995df7d30f79e3484a2e76810918cf2147c58f3111381c8bd6e8e5a0a"
+      ]
+    },
+    "src/levels/04_metalis/LEVEL_04_038D58.c": {
+      "source_sha256_lf": "8717e8b4df1bf31698455ff315a3920ed3c45028aad1133b03154878202975e5",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "b18117546da9a2bf91262b44a9abb458d5ff6ac4d01b68b1fe8ca6f7a6ad5d2e",
+      "alternates": [
+        "ccf3661200089fa9ee4499d69bb4abca1b0383a19242333819999d964ceda38f"
+      ]
+    },
+    "src/levels/04_metalis/LEVEL_04_04CEE0.c": {
+      "source_sha256_lf": "9414ce699023b7cc40a54c914a455585d2c60b3b35c62a563a1cb9420a7ee2de",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "c7296f8759ac2f28e873b02c1e58bd0f2469312bf453b9d1cadb22be9801b07b",
+      "alternates": [
+        "3c8fde664fc05f6a4a03fb2fb4963375a238b2b0d12278309996f85a147b1dfb"
+      ]
+    },
+    "src/levels/04_metalis/LEVEL_04_06ABB0.c": {
+      "source_sha256_lf": "6edaa3965d68f8428ef662151b25a7f221a7325adefc4a1e2e7f8e3ad60552ff",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "dc3b426217f94b33e70c23854f90c1ab0c5a56192c9e6b88deb73e498008432d",
+      "alternates": [
+        "b0f5a2fbba02d1b909e413b05846952b195627e9a4d3e3109eae4570e574cb63"
+      ]
+    },
+    "src/levels/04_metalis/LEVEL_04_0AE3A8.c": {
+      "source_sha256_lf": "12b0cce40743fd4098a5aa64011aab2ca9431fa8840c62ccccc30bdd73f78902",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "4929cfb67e13b8a14991204785f53ee91e5ebdabeb0562ac3ee8e6021990358b",
+      "alternates": [
+        "07aaec5c3c1e4d232cb96d174919aeefa09d92b0b236bb0e8765a1e4ee7b5d80"
+      ]
+    },
+    "src/levels/04_metalis/LEVEL_04_129AE8.c": {
+      "source_sha256_lf": "cb736c74e7aee49c692a3582f3a018be13146a3dc1499b7e0c32719942e88da1",
+      "profile": "gnu-ee-trial-divpad",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "270ab7b8728aaf2008aae554e929647a62e4d9b2b5766cb8f238103e6cfea7b3",
+      "alternates": [
+        "ab4f3629627183cc0e9e5ba4c5ece7bfc89da951f950992ca04cfe17ff2d4012"
+      ]
+    },
+    "src/levels/05_medical_outpost/LEVEL_05_004B28.c": {
+      "source_sha256_lf": "407c4f86579084f96a16aee349317865c7fbbc144c62fc58a1e9cb9f1e6a03bd",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "38044c2deb6ef3123e06c402473f333e90967a2508a43204b8b0d7e0302261e9",
+      "alternates": [
+        "1af331f15cd9df30a6243527e6bcbd20e0da7c90c3871271a217014bf2f4830f"
+      ]
+    },
+    "src/levels/05_medical_outpost/LEVEL_05_035420.c": {
+      "source_sha256_lf": "a14e8b5eaaca0312943aac4e89cfef8c847d18c3eb53b90a6890f5cb0eb5baff",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "695cf0ce4d9865dac069a38efc342b95f103ef5e67fce775ae56e9f80c13bcf6",
+      "alternates": [
+        "49939cab5e4e9312d131dbc014dd01a7710d3e660b660b860b963f78a4407920"
+      ]
+    },
+    "src/levels/05_medical_outpost/LEVEL_05_0490C0.c": {
+      "source_sha256_lf": "171885b97a9efe5baa7cbdba58c199f5910b4de1a3fa323da4496143cb407720",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "f4972a87c47932f60194998f1da00d745e2b1448e3a280787a07a0dd0bf8a357",
+      "alternates": [
+        "367f3159c17fd1024309de7020ab6b9c48394bf0f8814ef162d227c8049b9a6d"
+      ]
+    },
+    "src/levels/05_medical_outpost/LEVEL_05_066DB0.c": {
+      "source_sha256_lf": "29b0006d518d46b8ec698f3a919600f21c1c3c5d5e9b5b3705b7fbbf107df436",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "9285d4bf616c553c9abef95ed6b99a3ce4cc8348353a56f52aa20ca1e6c6bc2b",
+      "alternates": [
+        "ab83a0e8c80910fa5e2190d243ada5bf5302f36b827adb1d075c973db9b45321"
+      ]
+    },
+    "src/levels/05_medical_outpost/LEVEL_05_0A7718.c": {
+      "source_sha256_lf": "aee7075e78e90c6437550bc5949e1a35fa9deef79729be2e98b129a8453e6f60",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "5f8758523b2725fbec2595507a4a259917c73c9d8407c71fc062ede50a7c4d93",
+      "alternates": [
+        "8f606960de421cbc55a7e51c084627d78c89c7bf828419b0adcb707aab0f23df"
+      ]
+    },
+    "src/levels/06_challax/LEVEL_06_004B28.c": {
+      "source_sha256_lf": "14c3176b213dcb5dd9383e6618175bd12686bd871ee268f3513e6ecf76bc578e",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "56e56363e0ea7d9758f6606e1ba32233943586f9bc3ff60cf81405fdec493382",
+      "alternates": [
+        "cfa3be8b9a7921061f5e30893386a94a10557d066ab283390674e96fa0bd184d"
+      ]
+    },
+    "src/levels/06_challax/LEVEL_06_034160.c": {
+      "source_sha256_lf": "b80d172cd49b7d10a3024f9791eaac3cacc797a57488f63120a11325d3d8ab6e",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "f3fcac3062f4234723647421f1fab96b1e486693a4ca7ef9986823a26eefaf7d",
+      "alternates": [
+        "1b22185435178474a228801e82c479c01197f79c43b430cce6d8d5b132ce1fd4"
+      ]
+    },
+    "src/levels/06_challax/LEVEL_06_047BE8.c": {
+      "source_sha256_lf": "dce66d9e972dc6cf7fdbc1bc6cd19bbd5a5c3d30b8ea45e3cde35d12fdf6d991",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "c43c0cfd312461a0392072336c5ece02adaf4e141a9025fb60729570083bdc1c",
+      "alternates": [
+        "a1cd85078bd501f1f35ba486b563d9e96505070611e0f8c6eed064b52079fc57"
+      ]
+    },
+    "src/levels/06_challax/LEVEL_06_065F08.c": {
+      "source_sha256_lf": "07f2e4c058f0dccfade744518b4eda90f980b06e068051070c58c65b988ce86a",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "38a753c01619bade7c320fb78679a516c4ec74271cdcb613701e6422e8ff40b4",
+      "alternates": [
+        "058eec97ecb1cb60d92b5f4845234a26293c5452dad88e6dbc5050936470eafb"
+      ]
+    },
+    "src/levels/06_challax/LEVEL_06_0A3928.c": {
+      "source_sha256_lf": "b6ae03a2c1eb01e322a6350a73b8f2e29843234c42fb4587dc086de3319ee79d",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "2099c88c47668c6070d4071bebbb2425705b3aa0e8940fdb1d9bdba9d3a90766",
+      "alternates": [
+        "6ee41bbe23677da73597d0c48cb93883975dafc8ce2b83c30d36a4143e54db1a"
+      ]
+    },
+    "src/levels/07_dreamtime/LEVEL_07_004B28.c": {
+      "source_sha256_lf": "76ac2887499b044043f76c0db25b295ca2529776387ad169e3a6943320c67061",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "2383a7e60159100b3504f15c43476ecd2ae4735aaaec133d903e107c047b8e38",
+      "alternates": [
+        "b2e37ad97b053df9831455e34ca27b28097802f2fbf2844eddf9e18d297f4a96"
+      ]
+    },
+    "src/levels/07_dreamtime/LEVEL_07_037C40.c": {
+      "source_sha256_lf": "95d896a7f4a216222dd93a06b9c471bc35acb6668edd485dd0748a455160f467",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "4e0071c33c8170191d80d37bee3e166cfa770145277bb716cdd11862a0cc73d6",
+      "alternates": [
+        "76e15c2afadfec98f159c32bafba5c184efb9b5607088f9b167594e00674a6c1"
+      ]
+    },
+    "src/levels/07_dreamtime/LEVEL_07_04BA90.c": {
+      "source_sha256_lf": "ea4b3bf8db0cba22de1c4a0bada6205e260a211a70c63d6f60cfb06ff6b6d4bf",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "7da51e70fa16b6e603b35c86b86812756c7c526e8773b60b9813376ce651df93",
+      "alternates": [
+        "11403cca4e667a9f4a706ba9312eca916bf8e44ca7151d87ba827537defc789c"
+      ]
+    },
+    "src/levels/07_dreamtime/LEVEL_07_069E50.c": {
+      "source_sha256_lf": "85b2200301a7feec6c85581ce7515a6b2442e4c762c4826edaea6a5ea8258381",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "64ee543b5f0c471c0f9a5de568797b2cb6a4ec0c60ef63364355a9964adc96f5",
+      "alternates": [
+        "2c1231c60dc848a9a9d28475976ec097ee6ee21061e9d476f52b971ad9240858"
+      ]
+    },
+    "src/levels/07_dreamtime/LEVEL_07_0AB158.c": {
+      "source_sha256_lf": "d7c36b49a889ba1c280a736a4f6d8cb154609b7aae04d9a65931d8b3532fb08c",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "58bb065ce0199ef84f31b170534fb74b6251d2d200cb62f4ca06d69cabcd3328",
+      "alternates": [
+        "6ae7fd9109218757ef7f607b6f0143e426b84e66b7e2f4e03dc53b2b18dac7fa"
+      ]
+    },
+    "src/levels/08_dayni_moon/LEVEL_08_004B90.c": {
+      "source_sha256_lf": "4924264bf518d686487eda7c5475ed7b21d1ac119110ab36f0346ec103b9bf3e",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "6f52bf4459b8280da0e4f6eb515f310520c6b702ff956e0d841d6d72d53207c3",
+      "alternates": [
+        "ed2dd9d9e06806ea78443487a372d4bae6f0e91750111418e785a4dc194fdc41"
+      ]
+    },
+    "src/levels/08_dayni_moon/LEVEL_08_03C7E0.c": {
+      "source_sha256_lf": "b9abd29945defc9f1366f827df7f1ed4d21c5d30ab48262f3809f5b4f620a389",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "8b88781db396378fd1e50c62f66fdff0f5c430654c39a07392a0825c863c444d",
+      "alternates": [
+        "553f5a0a55ee048a45dcb08162000a8ffedf8b05c8aa553da78562262dfeb1ff"
+      ]
+    },
+    "src/levels/08_dayni_moon/LEVEL_08_0505C8.c": {
+      "source_sha256_lf": "0ae23506693a20c17ce87aef4c585adc6ca8bb68ee19ee03fded03088e9f50c4",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "cccc5a044c9156ef9e744b77c4324957ed4e7a3bcd0e97c84084897bb2de22c2",
+      "alternates": [
+        "aee4a5f03917e4f3b5d9304c96d3adb3e19a32f3a5ff53b9862ce43744a1f739"
+      ]
+    },
+    "src/levels/08_dayni_moon/LEVEL_08_06E990.c": {
+      "source_sha256_lf": "3c492361213744ccaf6106fb301b539b3b1774e900c4b11d6860edc013894d50",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "b4f1bf86fd8e94972ceeff78326ba7131e3d0125d95a97e68ded090eb8ed4f64",
+      "alternates": [
+        "5d9433e1140d811c966286210bcc00a7a04253d84621639a2948ed121e43cbc7"
+      ]
+    },
+    "src/levels/08_dayni_moon/LEVEL_08_0B3A90.c": {
+      "source_sha256_lf": "d50e54b2fd555e35b74db7a97bfa760c223b5f8600980c9dea7d84c6022c74fa",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "c2eedd5cec7538c90d688f4348380f1ad715a63f9d6f798b7fa136ef7e65cc54",
+      "alternates": [
+        "ef8f75f3d164b71597a84699be726665202cb377cc30f911d3cf552b86e94a25"
+      ]
+    },
+    "src/levels/09_inside_clank/LEVEL_09_004B28.c": {
+      "source_sha256_lf": "56db0cae88ae353abbec1a4f9a5bcc1c7bba445a94e709d19c6d9dc8e7c802c3",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "4d0a4a1e825e7e14a86b9c3c34062c28d7b9d66017ba0f6f15a52083b8aadf27",
+      "alternates": [
+        "4cffc5b8133199fdd9cc38763fef063053af3d7512d9826041aebd0b8486b373"
+      ]
+    },
+    "src/levels/09_inside_clank/LEVEL_09_033F18.c": {
+      "source_sha256_lf": "ece1fcd061627f876bf02720253ddada097d98050ee87a7a64839720c57bdaf1",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "8a64012c95f94d1af9f01a20b2bfacc4a7cdc651a1d35fec8881ad38a109fceb",
+      "alternates": [
+        "4bca501b25f12af8b2a42bbe78a7b07b678bcc50c06e277c37aa1148aa9df92b"
+      ]
+    },
+    "src/levels/09_inside_clank/LEVEL_09_0479A0.c": {
+      "source_sha256_lf": "f11e8650b82a2dfc8b457f6e47a57c32646f4f87c8b9812fddf0f3c82a30bad5",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "02ed3fdab991323ecd9dd64ad6cf51fa98c99c474dafb61fe336c7a632191eec",
+      "alternates": [
+        "6931701ceb8078d4327ed35053f67f75c73787f3487b5c66690852ae127676f4"
+      ]
+    },
+    "src/levels/09_inside_clank/LEVEL_09_065D48.c": {
+      "source_sha256_lf": "142c7fb0730352c578658049976bbf2f73343bf58503fd986aa94d7c5092d79a",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "309643e61cdecea98497214df240072d1a8bfcdbefd5aab8be6ab7536f8757b8",
+      "alternates": [
+        "a4366040ea05b7b7da8dd949c48449ff096e16c7782578fc11565b7d6ded1bf1"
+      ]
+    },
+    "src/levels/09_inside_clank/LEVEL_09_0A6408.c": {
+      "source_sha256_lf": "62bbc2124f2cce318bb5e76ee94b56135c4f6d8f06337cb8e86cc64e1e352227",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "f5e0b9594a1cd0099ba8cf9f5b5043ad18e8dcfd1a59ea58463bffd779b12d4f",
+      "alternates": [
+        "fe64367eddd2f61869b819628466aee55b4d5f5bf2232c32f35e9990d2265413"
+      ]
+    },
+    "src/levels/10_quodrona/LEVEL_10_000530.c": {
+      "source_sha256_lf": "44519b49161a74c1a4e90dacff31cb4fb71de8efe6e7c130675a6c21f2d4c61a",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "a9120e97fa25791d42da67e4c5e8e991b2ddff80351c26c355330b577aa471b1",
+      "alternates": [
+        "8d6084ca90cc60800f16cda043fc202aa43ebd19e9dcc2fa17d7acb39e904f57"
+      ]
+    },
+    "src/levels/10_quodrona/LEVEL_10_0048E8.c": {
+      "source_sha256_lf": "ea70b9b4ee1c81f3885d04e0e68f9ca9c88c2f3bdfeb30efb5529a91806412ac",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "59423dec6b6b9f3a192ba3f987b6eb09bd5e94854dc48afc58ecc2d6caf476bf",
+      "alternates": [
+        "0fb3bf49021170b4195f1838a4bf726e7812d4d20d6c5cff8814b107d67e14a8"
+      ]
+    },
+    "src/levels/10_quodrona/LEVEL_10_0360C0.c": {
+      "source_sha256_lf": "10aeb781d8cf348420d589955936cee2416538d97f211291a091d3413a04a883",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "0bc006da8bb2a96580bcebd7eb41c461393faa3047ce06fed1063ca8651d2d83",
+      "alternates": [
+        "f4607ac9fe137d3806dbd890a23f3aa3b4b02269c650fd9d747964c95fa9a255"
+      ]
+    },
+    "src/levels/10_quodrona/LEVEL_10_049BC8.c": {
+      "source_sha256_lf": "3b225c495d3fba7000b61446f6cc6f13ee136780317a75cce9e03a3f9762fadf",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "99dbbdec6aba2f40244993ea7bfb283eb929570520b560484f8f705386f8f42d",
+      "alternates": [
+        "d726370e002c71034e04f5c3f0d7396c4eb0a272ed054f5a789923feba10ef94"
+      ]
+    },
+    "src/levels/10_quodrona/LEVEL_10_067F78.c": {
+      "source_sha256_lf": "0c7d77eeb7a6f587daf5bcf15d1b2dd0e5ae82093c673ae9e9b23ec0f603b63e",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "275830c1334aeb23be5e05017ed46551fccf1816f93e43fda8653a9647cfee89",
+      "alternates": [
+        "1aa5fad5b87ed980e6500ae339cb4646f3689537eef33adbf10de14f85aad033"
+      ]
+    },
+    "src/levels/10_quodrona/LEVEL_10_0AA270.c": {
+      "source_sha256_lf": "5be3355042b8e087d6b8d473aecf64f90b5228d2b963e5b5a110bc14eefc1f75",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "8141c429ef6c32f031c54ff8d37a8d19811dfb923942a25d71db45623a8f209a",
+      "alternates": [
+        "1d98be542df7a1e7aacd6882b8005570289e560131ef9fe81811c5f66226b326"
+      ]
+    },
+    "src/levels/15_giant_clank_metalis/LEVEL_15_000550.c": {
+      "source_sha256_lf": "a867e6bfee084e10aff6bf93d3fd27d4683ba9192473081a4e395fce2ee6ec88",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "54279773d429356f7d6b6022d7de3e1952a6ba9ad202d4f7e530e4f92624efa3",
+      "alternates": [
+        "52ef823db220e236208e6f9ffa30303b624720710e766a3f60212d2b1f009923"
+      ]
+    },
+    "src/levels/15_giant_clank_metalis/LEVEL_15_004680.c": {
+      "source_sha256_lf": "2490a08afc21720515b8339598f852c0c000e012456209879c395f0c90d5f055",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "6471e4610f6c33d725b404b7dd23fdb60e95e5cd54bd3b926942b0835baa09cc",
+      "alternates": [
+        "3b1885f752640c61645cb7ee438b1dd866a3098299a8e647437fbb3cce68cc5d"
+      ]
+    },
+    "src/levels/15_giant_clank_metalis/LEVEL_15_02CE48.c": {
+      "source_sha256_lf": "a5a6afd9c4eeb62021daeee1f181bde5b8de03c170e3bd87fd3f07e50a926098",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "f997cc2ef066d69c8508c1aa646e82a19e8e420878751fabb91495e05ec88dac",
+      "alternates": [
+        "513ea7addafd66dd9c2fbefff85ecea719f0bf0932d1e7db10ccbb49b8105313"
+      ]
+    },
+    "src/levels/15_giant_clank_metalis/LEVEL_15_03D4A8.c": {
+      "source_sha256_lf": "7d2f573fc70efca8957e5501e71bfcd6afa8e96ecaa8b8288a7758ebaac33ff8",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "e47109dddb2449e3e24d2ee1bac73ee5b0ae1b2b94949f1e3eee6655c9d554ef",
+      "alternates": [
+        "984cd138824f10543bd2b102b2f48e96db9f6665d3a6c20d91c16e067efe4ac0"
+      ]
+    },
+    "src/levels/15_giant_clank_metalis/LEVEL_15_05A280.c": {
+      "source_sha256_lf": "a940dc3a89e2bbf712de3fadfda5ac63844bc755dd1d572ae1b64d92d2cbfbce",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "d6fd042db801fac999c40a66fff50f9fa1451ff4171303f000bdd93ce78e5783",
+      "alternates": [
+        "296dc5ad1f5b3b497c547285d31430b5e8e460e2889570df13cd27704d252787"
+      ]
+    },
+    "src/levels/15_giant_clank_metalis/LEVEL_15_089A20.c": {
+      "source_sha256_lf": "5a9196266f8ebb7266b8016e53243d7e45f6829b6b07e23c11de7621593968b4",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "99bdb845a1473fcb180ed55d10c12e3d5423d173410477dd564b0775188fce9b",
+      "alternates": [
+        "c65a40f5b725c0b8aa2719a52c0b5a72741f445307b8561936d6944288b31239"
+      ]
+    },
+    "src/levels/15_giant_clank_metalis/LEVEL_15_112648.c": {
+      "source_sha256_lf": "5696a6ec6cd270972a62b9b2419709416efa8d42bba8c4f0c17762702f44785c",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "c4648e5b98056fdbec3cdd8c115e8ea335be37e1e4d4a9b9578745f719d71cc5",
+      "alternates": [
+        "6645b43aace5de5a89c5766bd98f272d20a85defc50043ed6a905ff3dad52308"
+      ]
+    },
+    "src/levels/15_giant_clank_metalis/LEVEL_15_12A020.c": {
+      "source_sha256_lf": "8863076f025adf019749e300c6aae32279f7db4c72d310e163d02b91bf848468",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "aedaca5a758a409d1e688c8dcc1385e3a4e4fd4d4271949e2387e36e45261e64",
+      "alternates": [
+        "43ca01e825fff9b122b2264e4c4a2d10326d41c9fc3abe6314a8afa95c2d934e"
+      ]
+    },
+    "src/levels/15_giant_clank_metalis/LEVEL_15_12B008.c": {
+      "source_sha256_lf": "ee1634d1be137961e8d073917f1105600c27c80d48471864eef4f1091f9a811d",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "e3073d2f1a042a0c1162e26e819fe9d00a9439f80238e77fff092022ecf3a042",
+      "alternates": [
+        "f41e7dc2cdde30141478e6a5a42cd95ce5a89b4632ec2858c13f0a3b73a8956c"
+      ]
+    },
+    "src/levels/15_giant_clank_metalis/LEVEL_21_004680.c": {
+      "source_sha256_lf": "7db0304df26f955af50d5f317e885d6ae7019c5986d0fc0ed4e59760369dc90d",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "bee46cd2c8309c4c34fb700fbfbd848cd1ed39bfcbdf3fa44daa5ea0f8be8970",
+      "alternates": [
+        "060ce66fa5bc71b2ede22dfc6aee550207d89c17b3a1ee465db944bdc2b70cd6"
+      ]
+    },
+    "src/levels/15_giant_clank_metalis/LEVEL_21_02CE48.c": {
+      "source_sha256_lf": "f861a3d8f0340a2d505b254a69d227b8912c494abadde291c3269a2399554ae4",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "88108f51a14db3b1492f29b3908d5184573dc1d2b76cccc1e8c582f61c849654",
+      "alternates": [
+        "480fb35eb49520c2ec5a1d670a6d8071780f3cea8e1ce83fe5be30161d41de46"
+      ]
+    },
+    "src/levels/15_giant_clank_metalis/LEVEL_21_089A20.c": {
+      "source_sha256_lf": "2d9c5fd1100ed2be5c0a264596f495ca02fced028a84d6e342b855578c28430f",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "57ece8ef3708cf370282a5a154a310aa31ae01456ad84e556ae88fcf4bc747c9",
+      "alternates": [
+        "ce799b8958ee958b4cd8a51aa884231c7854f8d3115b778261973bb28b883ab7"
+      ]
+    },
+    "src/levels/16_multiplayer_01/LEVEL_16_004710.c": {
+      "source_sha256_lf": "e45e55f9f013c3b9fcd78a35b9f3689960db293427323599ef278ba35f4c4899",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "cca76fd8b0699dd498742fa8cb19dfe24849767f9088abf4f0a5a11521cf3e02",
+      "alternates": [
+        "d02c99436816c3f9c43e6196960af8da1cebf06d9eec0b77b9c2866962950745"
+      ]
+    },
+    "src/levels/16_multiplayer_01/LEVEL_16_046FF0.c": {
+      "source_sha256_lf": "ae93584cdfc613422da5d3033eca769d2e2d1e8fe349c78becbb49792ef7aff9",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "e8e9556a6566aa279dec7f3bb3199d119a1650115b504e24d861f821c7031e17",
+      "alternates": [
+        "bd84c5552d017303f624f9de5ae90e5c9a21440a40065cd4edc98585ee32c6e1"
+      ]
+    },
+    "src/levels/16_multiplayer_01/LEVEL_16_05BB50.c": {
+      "source_sha256_lf": "b61acfba63a784e380ca1bc5a05a2bd81046db270c6d7febeabfcfd8756248b2",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "a4a785d03ed844976f5148a7b7482724faa8e3bccd3c47499c1eeb932af70e5b",
+      "alternates": [
+        "489e8e24921f14df5341fa3ce2e9e34f12f2bfb01e7be998eeb821159b565d0f"
+      ]
+    },
+    "src/levels/16_multiplayer_01/LEVEL_16_097848.c": {
+      "source_sha256_lf": "6cc29b3022a57dfea7fe4884ae5a3494cfd516af8d191a0e43abc51614b66a61",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "f29385d8eb13da39c1cad26a2dc9ecc198d996890e2c29dcec823729058a3743",
+      "alternates": [
+        "bbf0457241585ea50ddee25845713ecb0c1b3cf52e355314eb7ea7a102d441d0"
+      ]
+    },
+    "src/levels/16_multiplayer_01/LEVEL_16_1642C8.c": {
+      "source_sha256_lf": "335935af0c999b36e98a92b736a23f9637928f25fd1d174f17cb2946be6a3598",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "07150992b2d3080a8bd3864ff89c0931413238259c2ce0883b239adeb4e17d87",
+      "alternates": [
+        "c7ddb97675fb45e569b357ea619549bc1d8bc5f360f75073d6e1267653ae7e74"
+      ]
+    },
+    "src/levels/17_multiplayer_02/LEVEL_17_004710.c": {
+      "source_sha256_lf": "12cf9ded6eba8eebc9f6c8aa24bbe8202ccb7c66102b6d8f12893a6cf6096ba7",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "b79d95edaa72c6fabe1d31dae06d6369787e76cf305822782aba4c71a38d3c70",
+      "alternates": [
+        "aa5ce2289ef12be165d77662357b1b2946577362ca7a7ca1b3e7729c4f8d7000"
+      ]
+    },
+    "src/levels/17_multiplayer_02/LEVEL_17_046850.c": {
+      "source_sha256_lf": "35578afac83481af898bc74e91ef276c1ae8f175b35ef9657dbe5b2757778a66",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "6a289c16239cb295f99c1b61d0b3b5c8819f52276e067dca1d583c180cd9cfb7",
+      "alternates": [
+        "a9b13c955f555ddc1123b4769fac945a1f4c4fc3c4d9b26b85d02b0f684a5dca"
+      ]
+    },
+    "src/levels/17_multiplayer_02/LEVEL_17_05B580.c": {
+      "source_sha256_lf": "b53202f3c652cef5da5d2ee82d14f04dc8fbb51c12cf79b23b291db470630973",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "eb67a7da120aa1bf2a2940b6bfe545e24ebc0c6f739f91aaceb6fb59bc6a25d1",
+      "alternates": [
+        "0cf2177e102aef7f87fa8b48da7cf789100495f7e96d724421c0b1e4322c6b29"
+      ]
+    },
+    "src/levels/17_multiplayer_02/LEVEL_17_096D40.c": {
+      "source_sha256_lf": "ac8b5627b113871ce8149e746db9ffa1a7795242136ccb86b2ed7ba6c085b1f2",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "e067bdeb92391159cfc851798ce6671c74b1b09cdc48b624605400d60b2ee625",
+      "alternates": [
+        "fb3545c5275698fd5a12dadf9ec466307cbe97db4e0da555e8ee491a741eb87a"
+      ]
+    },
+    "src/levels/17_multiplayer_02/LEVEL_17_15B0F0.c": {
+      "source_sha256_lf": "be4a2f9a930984cb89d76566acefa9c3408c22ee4c7406bb5d03caaf98ac63a2",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "67c70f92cdbdfa6bc7120ea4ffd19a63c04c29ca3d533d6036a3d5c14a0a7f86",
+      "alternates": [
+        "203e6014acb8f76d897055f3629c7f0d776668b0ca560ad9712d1a6ca998b85b"
+      ]
+    },
+    "src/levels/18_multiplayer_03/LEVEL_18_004780.c": {
+      "source_sha256_lf": "ab401b8bb4189423c30f86ba5beeb69a6a353023361b6926b3f191f6109ee898",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "752edb78bfa8707ccb82490e858248e3b52ada67e49f458dd1a5cc10aa05c142",
+      "alternates": [
+        "9fbd37280cbff323d7b91bdd269f1741022bf37ffd4acd413791d9dd5b1bb2b9"
+      ]
+    },
+    "src/levels/18_multiplayer_03/LEVEL_18_045830.c": {
+      "source_sha256_lf": "52d0ca6910fcb26ac9f82d4d5c55cc4be2ab2bfd3cc3fc2d4c6c03ae15b1a732",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "fddcd715faaf475a4e6fc3b6a745ffeb22f47cefdca0281a0cf3184816f2c045",
+      "alternates": [
+        "2ec30f68dd62cc05dcdc68a464f986d80784c6e71dca349a8f02de78d2eba33c"
+      ]
+    },
+    "src/levels/18_multiplayer_03/LEVEL_18_05A658.c": {
+      "source_sha256_lf": "b015a76d6270fabbfb47f74e4d00ae5aaadc00ff7ef5bcb02f7125d79b3e5766",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "19ad57bfd36fb1f0cf9551b208cf8861ff5de7af4c28c1bfeb5a62d2d1313d16",
+      "alternates": [
+        "6a6a3a07fb55b5006a6f7e3b9ed7f48ae582261968dcc4268d2a5b0df345a21b"
+      ]
+    },
+    "src/levels/18_multiplayer_03/LEVEL_18_096858.c": {
+      "source_sha256_lf": "c61d397d4fce5d48d3735429977cd00df4ef2ebf7c7153c2f349feead989b2e0",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "f198ac991ff812f0c20da65983161d9fabe5484adc1c1b364b838bdcb55393d5",
+      "alternates": [
+        "026f197e796dde470dc65cbb358692364bf7b3bef4871db20c7cbfa18ae29814"
+      ]
+    },
+    "src/levels/18_multiplayer_03/LEVEL_18_167760.c": {
+      "source_sha256_lf": "ef3a49f1629ef666a595d75fd6de6545b82fcd9b952d61be28fe48cd408cb4ac",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "a4132f6c3953607563e4ec5831af5f198bb0617c20fcb40793ab94fc9574aaa5",
+      "alternates": [
+        "aab117b9f5e3ef200cd2eabdd1236ec726bf2bc07abe683b1e57e312c276038f"
+      ]
+    },
+    "src/levels/19_multiplayer_04/LEVEL_19_004710.c": {
+      "source_sha256_lf": "be88e84e4aa38cb6d5f38e5951bacfcf994c051a6963aea3b203db8c46216a22",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "e7f6a6a899b0aad5542afce272be653870fb85159201c067f591b72536bea6a0",
+      "alternates": [
+        "2a6a3204300090e42145cc7b3ee772726061ceedcb9ef0d3ec8fe4ae9ba399be"
+      ]
+    },
+    "src/levels/19_multiplayer_04/LEVEL_19_046280.c": {
+      "source_sha256_lf": "d6ee92937eea99574836fccc326362b0f6d6e5b5b5cc9e7c9e1bd302639a0129",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "84a1056de3bb28eab18d53edc2ab7aba08b2806e8d51414bebd0bd06f2ca64c3",
+      "alternates": [
+        "8bfa8fc95fe7444dac4af62a60e5461b594e928faaa55fc9948c95b7f5096b3f"
+      ]
+    },
+    "src/levels/19_multiplayer_04/LEVEL_19_05AFB0.c": {
+      "source_sha256_lf": "d89aa6331e51796f95b489ac84bf91d4033940fea7f3396f388748a572307c13",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "747614321ee77acf48021c9fd21ec723fa1302ec165686b6b958cc3592fbbf3e",
+      "alternates": [
+        "296e2c03574f35724ddac8537f5519546608252fc830442114e03f65ccb2dc64"
+      ]
+    },
+    "src/levels/19_multiplayer_04/LEVEL_19_0970D8.c": {
+      "source_sha256_lf": "c21243e4e9903c5046c6fd199c73d45b2023e845f968623eb9541ac061664fb9",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "51523ac9fb70f11bf39d942c340031d24521ce0f4edeffb8ce6f56f9a99a273c",
+      "alternates": [
+        "55ecd9a0aa73ef3e71b7304176637a9c50e1a3f37c91aedc271a3f935c9c77c9"
+      ]
+    },
+    "src/levels/19_multiplayer_04/LEVEL_19_163670.c": {
+      "source_sha256_lf": "49fc47fde9e3eec6e5fd63ff3e8bedb721755756d7abb6f5d90e383d778b5755",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "944c9dc9daee597af66bd208479719fd36e54d8b3711e7f49a207f9dda227710",
+      "alternates": [
+        "c8f5333588585b5154ee4638c82373c76040d824358048e2115e9306501ee91f"
+      ]
+    },
+    "src/levels/20_multiplayer_lobby/LEVEL_20_0046D0.c": {
+      "source_sha256_lf": "8c687037d1546a5973ce8e26ebbfc04a1a738239e5a32331f436bc86c0f111af",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "70549fa21988604dc1af162a447ea7ae83ffb84a12e9e1d01c7da87299104730",
+      "alternates": [
+        "74d800163faedda80d9bc00dc7a569c63ec33d759cebd22423c40bcb89783cfe"
+      ]
+    },
+    "src/levels/20_multiplayer_lobby/LEVEL_20_041110.c": {
+      "source_sha256_lf": "46db48412259ddddc1a4ac7a6d07644332b3e2d8454deff172908aeb47b449f4",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "c7a01ac7ad6851b88b77ec5eb55dfa1f3803c210f597291f27832262b98fdea5",
+      "alternates": [
+        "b60c8dd02fae7eb420adf0d3f8121cda490139b0e40b64007f9426b5e10c5c65"
+      ]
+    },
+    "src/levels/20_multiplayer_lobby/LEVEL_20_055178.c": {
+      "source_sha256_lf": "c5ac352d948350c2f28e35bf152653c9201d0b404747c7986005440587c34e90",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "a7ba1ce9ce97693a0eaaccaa373de932667a3367961fed6d880547f6662baf14",
+      "alternates": [
+        "89c9e5a25a13a65d76ff2f37bdbf20899bf52537f710aa280b576d11a32654ed"
+      ]
+    },
+    "src/levels/20_multiplayer_lobby/LEVEL_20_081F40.c": {
+      "source_sha256_lf": "eba161a8d68d07488ad7a5bb90d99c4f01c7adb9bcdcb306dfe3908a1cc2bf63",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "944c190fec68faa8afe4cc2215df7473d1a565ab58ad7b1de78e265222d70aab",
+      "alternates": [
+        "a6c7817035138d5f814f2af6965437836cf17af1d252117876235c994842d927"
+      ]
+    },
+    "src/levels/22_skyboard_kalidon/LEVEL_22_0048A8.c": {
+      "source_sha256_lf": "8fbe32481f95aa7a3945901ba0075b7ea2130adbe4297ae588f21a72762c297d",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "db522b25e6e29300c478925151dfbc1672b79b921b92c02c6f3780cdc34c1b80",
+      "alternates": [
+        "58eb595565fd168d74e2cb5e745572a19cf5f9548da993d1e9fa836c129dbadf"
+      ]
+    },
+    "src/levels/22_skyboard_kalidon/LEVEL_22_02D660.c": {
+      "source_sha256_lf": "487f4fa1a0a085286e5b5ea4ba7714cf64489521efe4a3e129fb47bacf18f537",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "15c9efe3095397e3feb85edc47076b2786215d7c6574e940e3791a94d9fe5431",
+      "alternates": [
+        "8742238a4dfa3db4e3b4402b05bb51d8787e3b7293d16c5191c3b23cee0f1340"
+      ]
+    },
+    "src/levels/22_skyboard_kalidon/LEVEL_22_040F68.c": {
+      "source_sha256_lf": "7907999a98aab6f0160f9b46e40529e863e2db4828fd5c126cca2c2a25e9eff1",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "68082c591e739b8ce0fd633e4c5c51aa72bece0fff075d9eeb39800ef1c27b07",
+      "alternates": [
+        "31500e02311ed10bf3c0e56259f1013fdd89fc19ee588e98e9d5894b5981bbde"
+      ]
+    },
+    "src/levels/22_skyboard_kalidon/LEVEL_22_05ED50.c": {
+      "source_sha256_lf": "d0b0297a319b30353c73527eb7f4132911fd92ab0169da21800f2d4a5853adf1",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "71bc8b1ca0629855cd1a0cbfe6b3354662ced55eabbf7d81af2bf932b3907187",
+      "alternates": [
+        "8b8e9cf3c2e9c0655383292e921b31e455103389704d4d336ae4da395c6c7223"
+      ]
+    },
+    "src/levels/22_skyboard_kalidon/LEVEL_22_097768.c": {
+      "source_sha256_lf": "32ae5ed68415dd1c16a443d6c036e34bc81c99404fac0df224c662f4673a3025",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "20cbdd5a841a4a85f8081278622ce6d274c45c609b1098a67166a62d3d832bc7",
+      "alternates": [
+        "22390f9e3db6fe11e0c470e7771501fa7800d690419eda2a2992d5d963708935"
+      ]
+    },
+    "src/levels/23_skyboard_challax/LEVEL_23_004B38.c": {
+      "source_sha256_lf": "c1c39ff13046dd68f64cf947ced85dcc8f1d4e452b69d915c56f42890eafa0c2",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "a52c57ee7b3d5ae781f88746c9c7bf5dcda4ce7d2680fe0e18da17fdf347ff37",
+      "alternates": [
+        "cb2e250a5a328ad6ccee1a53cdeb1c4bae21bc5e041a85efb436175c950eed1d"
+      ]
+    },
+    "src/levels/23_skyboard_challax/LEVEL_23_030C40.c": {
+      "source_sha256_lf": "bb78ed217e5b7de7e66ca4cfd71d927977cecf91bea1e76cd512184bfaf52756",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "458e30b417baa21d9cb829e191f72b597aa2f58525a25b28ebaebfbb57fce8dd",
+      "alternates": [
+        "38e8d1aa3d0e8d733c6c228ca15403272a54438c7074647926f901c11b7d3640"
+      ]
+    },
+    "src/levels/23_skyboard_challax/LEVEL_23_0448A0.c": {
+      "source_sha256_lf": "c0f5df6eb21ca8890c11bd2ddf77fc83dd4785e688938b8c61ec9c5097d69917",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "c9aa3abc61f4ad09776fe88592b8d326be34504397e82b8481a4358081ec165b",
+      "alternates": [
+        "2f5d23abcfc0e9fbc2465d6431248f53b39bd7fdb4febe227bf6ecefdc035b84"
+      ]
+    },
+    "src/levels/23_skyboard_challax/LEVEL_23_062900.c": {
+      "source_sha256_lf": "a0f57bb303dfbb2e94d13c115354ec0c51c7688213c17a520d466c3820ec0f40",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "d4af80682e8d600b66cbce2ae32229dc0d9a22951ab252754077874fbd39c3bc",
+      "alternates": [
+        "4a81a7d7c57ab82b8ec3f2c02833df3d700f8eb7396fbf0bf1ca3d2029a3cc6e"
+      ]
+    },
+    "src/levels/23_skyboard_challax/LEVEL_23_09FEC8.c": {
+      "source_sha256_lf": "c3e599ce012a1dc5f0fcf0c22841f37988023e5950072edad79239f0e2780271",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "c924982f20a65cc9c71bdd86654644aff828a944d2ca94ba66dc3fe28aad3805",
+      "alternates": [
+        "cd4cc5b7364bd90933182a1b50f8a5cbedb3717efcedeba4521de1671915e00d"
+      ]
+    },
+    "src/levels/24_treehouse/LEVEL_24_004930.c": {
+      "source_sha256_lf": "8bd73bcda6c2582bea81364c2cc7f3d9e620f5f1feed20054a6d59af0be56249",
+      "profile": "gnu-ee-trial",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "7f94fcf5b18154b7addf10ce1507f2675d43c6914daafe04bb5aabfdce59ff19",
+      "alternates": [
+        "0d8fdb4bef5cbe440e57e12e9ab4a1a46fb24d0b149f8450f2c6f6a7b43cb0a6"
+      ]
+    },
+    "src/levels/24_treehouse/LEVEL_24_030808.c": {
+      "source_sha256_lf": "b1fb32f00cd2c6013d9a6f37cb6593966c5ea7e7688abda397bbc463b564437c",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "a41bb5c391bb7f71d4754587994a8a0330c11ebef1202728ad306e24584ff8fc",
+      "alternates": [
+        "7836cadd27ac8a554dcb76e3e8d7adf0cd84ab60738e97c476aeb1acff44c807"
+      ]
+    },
+    "src/levels/24_treehouse/LEVEL_24_0444A8.c": {
+      "source_sha256_lf": "c6ec3dafd002dba180facb347d11b68e8b85a51eec2f7641dcc9b5f786756362",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "2144726ee308904431e07521868e843530859496d4fc7b10dad153f4e74c744d",
+      "alternates": [
+        "8c0cbdb72f78d6fdd93e99f9285e43c92e752092917b917a7a2efb670eccd92d"
+      ]
+    },
+    "src/levels/24_treehouse/LEVEL_24_062798.c": {
+      "source_sha256_lf": "9cef3e6320f580c12806d65e46604b66ad94eb0e8cb9cfc6d02df3f59350e79e",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "b53522ed0afb70a2b7851505bf9fc00d4d6b13d783ddd1d669890c6f716b1124",
+      "alternates": [
+        "7a2c8a900c2e544e99f52ccbb78fdc2ea6ab53c87c326c9ac932f093474e149a"
+      ]
+    },
+    "src/levels/24_treehouse/LEVEL_24_0A29D0.c": {
+      "source_sha256_lf": "4b38a6302c46bcdc1e2306c8ba20301094b1fcb71a93f74bf4f53096fa555f63",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "152a5e5af852f9147648e13dc9c0ded3e39e7000ab3cea451c4fdc889d0d9de8",
+      "alternates": [
+        "aa6affe17e89c69f38e6f5a3ef42b3fd0c2369ba801cd4b6b326d3445ffe9e88"
+      ]
+    },
+    "src/levels/frontend/FRONTEND_00BDA8.c": {
+      "source_sha256_lf": "85c0b5fd5b0b976fdefe947dc3651263a03eb72562c0cc5064cc673ef6aaebc6",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "20eee2dc8bdbf00b98f4dd3e5e899bcbdb7f7512021ff4ab0ad9d27abd63aebd",
+      "alternates": [
+        "6b8a0633d54dac8277483abfc5512f2c545121f1a732377d79feee80d65036c2"
+      ]
+    },
+    "src/levels/frontend/FRONTEND_00C190.c": {
+      "source_sha256_lf": "97d75e0c345131a641510818d028cc6e5c4061f1de4cb724807e213eca6707cd",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "4d3d810e48dbd247deaf763b68ee67eff31f38323bf5e57f17accf4e538cec47",
+      "alternates": [
+        "6b9e8ae33aa94a364b3609136b4411ebdd0d5271bfabf30a3cabdfb5fbd539dc"
+      ]
+    },
+    "src/levels/shared/LEVEL_01_000768.c": {
+      "source_sha256_lf": "c051da20dd007080d53a5a7e07f650ad1b1f2d1e88374c567a2a67f2e6362355",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "7c2b5fbb5fad929067760a79ab314549c7ffe45a33ab5f96222e4303fc3766d0",
+      "alternates": [
+        "23442f225044f113f2d363b77126e9af4e5876eada467ae8b6d66dd43b614134"
+      ]
+    },
+    "src/levels/shared/LEVEL_01_03BC48.c": {
+      "source_sha256_lf": "009f27fcd14e11404f51f631acdfba1951136eb6b434b66a179ab5aacc30445a",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "58e5ff4bcb3f11e513946094e5836713ff2b8c2f3dbd2ca5b5d616ca100651d3",
+      "alternates": [
+        "86d7b40fd0c76881388f217670708ecd7adbd5fcc171d6559e2e284fa98918e6"
+      ]
+    },
+    "src/levels/shared/LEVEL_02_0023B0.c": {
+      "source_sha256_lf": "16a6fec1b16bb95252b19ed9fb0b229b1a12cac2469d7beec68073386483783c",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "7c4948a3962cf1ee14d4d6b016f320537cf947076e02ea508dd3db49be68e669",
+      "alternates": [
+        "722cec411f3f9dd318e7a74df49361ea114957378ee5baf80ab6e9592a834496"
+      ]
+    },
+    "src/levels/shared/LEVEL_03_0497A0.c": {
+      "source_sha256_lf": "dddb506bdea3fb8eb1f92b46cf12cb70f5a15a7907c2270cf985cbc722f16d79",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "88121924f620019d42855a2150e6e87f3a3ceea0445963bb2226e129bffdf0a7",
+      "alternates": [
+        "1dfdecc4271c05016b82f331258997ee453ac8a77bb70779b4db0266d693fa6b"
+      ]
+    },
+    "src/levels/shared/LEVEL_04_0005A8.c": {
+      "source_sha256_lf": "6358f093fe720905df4cb312e1a67a115e21ebc3d9232906883677bc3ad5cd8d",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "a02d0bf573c08688bd574e54623ad0d495a3f680481f7cfce8cb8c9cf7279d47",
+      "alternates": [
+        "734f8ab0ef27328375aa9d8d3bccc871218704e75183beea1c8b5261854644e2"
+      ]
+    },
+    "src/levels/shared/LEVEL_16_0004A8.c": {
+      "source_sha256_lf": "b830a3a5ef909a6c8f712f18e0c541102a7771ac98ed557503f38dd7105cdb2c",
+      "profile": "pinned",
+      "as": "ps2eeas",
+      "canonical_object_sha256": "297f8b505acbf17af61bc7dfff0e9616dfe783b4397a770a2923cc3fe201a01c",
+      "alternates": [
+        "f1beb9c7db9be7b47e0b7778a289995b12729a3af86fe081116af8f3783eca06"
+      ]
+    }
+  }
 }

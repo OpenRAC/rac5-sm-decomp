@@ -7,7 +7,7 @@ extern Ent D_001D7E60[][3][5];
 extern int func_139058(int v);
 extern int func_138630(Obj *o, int idx);
 extern int func_138408(int a, int b);
-extern int func_1390A8(int a, int b);
+extern unsigned int func_1390A8(unsigned int input, int enabled);
 void func_138490(Obj *o, int idx, Ent *out)
 {
     Info *info = o->info;

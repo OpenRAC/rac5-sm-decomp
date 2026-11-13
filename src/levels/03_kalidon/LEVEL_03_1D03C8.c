@@ -1,8 +1,8 @@
 /* LEVEL_03:0x1D03C8 -- picks a new state from a query result and applies it. */
 struct A {
     char pad[0x10];
-    int v10;
-    char f14[1];
+    void *v10;
+    char f14[8];
 };
 struct B {
     char pad[0x68];
@@ -17,7 +17,7 @@ struct Obj {
 };
 extern int func_1D0A80(struct Obj *o);
 extern void func_1CFE00(struct Obj *o, int s);
-extern int func_030E38(char *p, struct Obj *o, int v, int b, int z, float x, float y);
+extern int func_030E38(char *p, struct Obj *o, void * v, int b, int z, float x, float y);
 
 int func_1D03C8(struct Obj *o)
 {

@@ -7,7 +7,7 @@ typedef struct {
 } Timer;
 
 typedef struct {
-    int f_00;
+    char *f_00;
 } Word;
 
 typedef struct {
@@ -16,13 +16,13 @@ typedef struct {
     Word *f_58;
 } Obj;
 
-extern void func_1CFA28(Obj *a0, int a1);
+extern void func_1CFA28(Obj *a0, char *a1);
 
 void func_1CF458(Obj *a0)
 {
     Timer *p = a0->f_54;
     float f = p->f_18 - 1.0f;
-    int word = a0->f_58->f_00;
+    char *word = a0->f_58->f_00;
 
     p->f_18 = f;
     if (f <= 0.0f) {

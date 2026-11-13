@@ -427,6 +427,46 @@ def select_body_assembler(selector: str, default: Path,
     return path, entry["flags"]["as"]
 
 
+def body_object_alternates(rows: list[dict], level_profile: dict
+                           ) -> dict[str, tuple[str, ...]]:
+    """Validate measured whole-object alternatives against the current source table.
+
+    SN debug metadata can vary by host. Each alternative remains bound to one
+    exact source, compiler route, pinned SN assembler and canonical object.
+    Stale entries require explicit maintenance, including during a refresh.
+    """
+    entries = level_profile.get("object_sha256_alternates", {})
+    if not isinstance(entries, dict):
+        raise ValueError("level object hash alternatives must be a source map")
+    by_source = {row["source"]: row for row in rows}
+    fields = {"source_sha256_lf", "profile", "as", "canonical_object_sha256",
+              "alternates"}
+    result: dict[str, tuple[str, ...]] = {}
+    for source, entry in entries.items():
+        if (not isinstance(source, str) or not valid_source(source)
+                or source not in by_source):
+            raise ValueError(f"unknown level object hash alternative source: {source}")
+        if not isinstance(entry, dict) or set(entry) != fields:
+            raise ValueError(f"invalid level object hash alternative schema: {source}")
+        row = by_source[source]
+        hashes = entry["alternates"]
+        if (not isinstance(hashes, list) or not hashes
+                or any(not isinstance(value, str)
+                       or re.fullmatch(r"[0-9a-f]{64}", value) is None
+                       for value in [entry["source_sha256_lf"],
+                                     entry["canonical_object_sha256"], *hashes])
+                or len(hashes) != len(set(hashes))
+                or entry["canonical_object_sha256"] in hashes):
+            raise ValueError(f"invalid whole-object alternative hashes: {source}")
+        if (entry["as"] != "ps2eeas" or entry["profile"] not in BODY_PROFILES
+                or entry["source_sha256_lf"] != row["source_sha256_lf"]
+                or entry["profile"] != row["profile"] or entry["as"] != row["as"]
+                or entry["canonical_object_sha256"] != row["object_sha256"]):
+            raise ValueError(f"stale level object hash alternatives: {source}")
+        result[source] = tuple(hashes)
+    return result
+
+
 def compile_body_sources(rows: list[dict], args, extra_cc1: dict[str, Path],
                          extra_as: dict[str, Path], base_profile: dict,
                          level_profile: dict) -> dict[str, tuple[Path, dict, str]]:
@@ -437,6 +477,7 @@ def compile_body_sources(rows: list[dict], args, extra_cc1: dict[str, Path],
     flags = base_profile["flags"]["cc1"]
     per_source = cflags.load()
     by_source = {row["source"]: row for row in rows}
+    alternates = body_object_alternates(rows, level_profile)
 
     def compile_one(item: tuple[str, dict]) -> tuple[str, tuple[Path, dict, str]]:
         source_path, row = item
@@ -444,8 +485,10 @@ def compile_body_sources(rows: list[dict], args, extra_cc1: dict[str, Path],
         if not source.is_file():
             raise ValueError(f"level body source is missing: {source_path}")
         require_c_source(source.read_text(encoding="utf-8"), source_path)
-        if (not args.refresh_bodies
-                and normalized_digest(source) != row["source_sha256_lf"]):
+        source_hash = normalized_digest(source)
+        if source_path in alternates and source_hash != row["source_sha256_lf"]:
+            raise ValueError(f"stale level object hash alternatives: source changed: {source_path}")
+        if not args.refresh_bodies and source_hash != row["source_sha256_lf"]:
             raise ValueError(f"level body source differs from bodies.tsv: {source_path}")
         profile = row["profile"]
         cc1 = args.cc1 if profile == "pinned" else extra_cc1.get(profile)
@@ -476,7 +519,9 @@ def compile_body_sources(rows: list[dict], args, extra_cc1: dict[str, Path],
                    in defined_functions(read_object(obj)).values()):
             raise ValueError(f"level body has no global function at offset 0: {source_path}")
         object_digest = digest(obj)
-        if not args.refresh_bodies and object_digest != row["object_sha256"]:
+        if (object_digest != row["object_sha256"]
+                and object_digest not in alternates.get(source_path, ())
+                and (not args.refresh_bodies or source_path in alternates)):
             raise ValueError(f"level body object differs from bodies.tsv: {source_path}")
         published = OUTPUT / f"body_{stem}.o"
         shutil.copyfile(obj, published)
@@ -647,15 +692,27 @@ def place_body(rebuilt: bytes, body: bytes, start: int, end: int,
 
 
 def write_bodies(rows: list[dict],
-                 objects: dict[str, tuple[Path, dict, str]]) -> None:
+                 objects: dict[str, tuple[Path, dict, str]],
+                 level_profile: dict | None = None) -> None:
     """Rewrite the measured hashes of the source table after a full pass.
 
     The placement table holds no measurement, so it is left alone; the two
-    hash columns of the source table are the measured ones.
+    hash columns of the source table are the measured ones. A known whole-object
+    alternative preserves its canonical pin; compilation records retain the
+    actual observed hash.
     """
     source_sha = {row["source"]: normalized_digest(ROOT / row["source"])
                   for row in rows}
     object_sha = {source: value[2] for source, value in objects.items()}
+    alternates = body_object_alternates(rows, level_profile or {})
+    by_source = {row["source"]: row for row in rows}
+    for source, hashes in alternates.items():
+        row = by_source[source]
+        if (source_sha[source] != row["source_sha256_lf"]
+                or object_sha[source] not in (row["object_sha256"], *hashes)):
+            raise ValueError(f"stale level object hash alternatives: {source}")
+        # Keep the canonical whole-object pin when the observed variant is known.
+        object_sha[source] = row["object_sha256"]
     output = []
     for line in BODY_SOURCES.read_text(encoding="utf-8").splitlines():
         if not line or line.startswith("#") or line.startswith("source\t"):
@@ -1148,7 +1205,7 @@ def main() -> None:
         body_summary["batch_link_size"] = args.batch_link_size
         body_summary["body_batch_linker_invocations"] = batch_linker_invocations
     if args.refresh_bodies:
-        write_bodies(body_rows, body_objects)
+        write_bodies(body_rows, body_objects, profile)
         body_summary["table_sha256"] = digest(BODIES)
         body_summary["sources_table_sha256"] = digest(BODY_SOURCES)
     report = {"status": "passed_shared_frontend_and_level_bodies",

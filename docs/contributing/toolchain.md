@@ -12,6 +12,17 @@ tools are proprietary and stay your own.
 1. Use x86-64 Linux or WSL with Python 3.12, `make`, `patch`, `curl`, `git` and a gcc
    that can build 32-bit programs (`gcc -m32`; on Debian or Ubuntu install
    `gcc-multilib`).
+   The complete level C gate also needs Rabbitizer 1.16.2 in the Python
+   environment running it for its independent instruction-boundary checks:
+
+   ```sh
+   python3 -m venv build/gate-venv
+   . build/gate-venv/bin/activate
+   python -m pip install rabbitizer==1.16.2
+   ```
+
+   This environment stays under the ignored `build/` directory. The synthetic
+   source checks do not require Rabbitizer.
 2. Build the GNU tools:
 
    ```sh
@@ -56,12 +67,24 @@ What has to be equal is the output. With `--unpinned-tools`,
 `tools/boot_trial_gate.py`, `tools/compile_boot_trial.py` and
 `tools/level_c_gate.py` record a compiler or per-source assembler whose SHA-256
 differs from its pin instead of refusing it, and still require **every** compiled
-object to equal its pinned hash. A rebuilt tool that compiles any accepted source
+object to equal its pinned hash, or an explicitly measured complete-object
+alternative for that exact source and route. A rebuilt tool that compiles any accepted source
 differently still fails the gate. The report then says `"qualifying_tools": false`
 and lists the tools in `unpinned_tools`; such a run checks your work but does not
 qualify a match: `tools/progress_status.py --write` refuses its report and
 `--refresh-bodies` refuses the option. The SN assembler and linker of the link
 step always stay pinned.
+
+For 116 unchanged level sources assembled by the pinned Ps2EeAs 1.8.19.316,
+`config/levels/compiler_trial.json` also records measured Wine 10.0 object
+hashes in `object_sha256_alternates`. Their Windows and Wine outputs differ
+only inside non-loadable `.mdebug`; all other bytes, including code,
+relocations, symbols and ELF headers, were compared directly. The Windows
+canonical hashes remain in `body_sources.tsv`. Each alternative is bound to
+the source's LF hash, compiler profile, assembler and canonical object hash;
+an unknown or stale entry fails even during a refresh. The gate uses the real
+observed object and digest, and still requires the pinned tools, named import
+identities and complete retail modules. No object bytes are normalized.
 
 ## The tools
 

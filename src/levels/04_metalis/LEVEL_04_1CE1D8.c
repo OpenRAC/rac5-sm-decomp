@@ -7,7 +7,7 @@ struct Info {
 };
 struct Env {
     char pad[0x2C];
-    int f2C;
+    void *f2C;
 };
 struct Obj {
     char pad[0x45];
@@ -19,7 +19,7 @@ struct Obj {
 extern void func_080188(struct Obj *o, int a, int b, int c, float f, float g);
 extern int func_1CE8C8(struct Obj *o);
 extern void func_1CDCA0(struct Obj *o, int s);
-extern int func_030C50(struct Env *e, struct Obj *o, int a, int b, float f, float g, int c);
+extern int func_030C50(struct Env *e, struct Obj *o, void * a, int b, float f, float g, int c);
 
 int func_1CE1D8(struct Obj *o)
 {

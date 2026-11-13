@@ -2,6 +2,8 @@
 *.md text eol=lf
 *.json text eol=lf
 *.tsv text eol=lf
+# Empty final columns are intentional in this generated TSV.
+config/levels/shape_units.tsv whitespace=-blank-at-eol
 *.txt text eol=lf
 # The pinned 2.9 preprocessors read a line continuation as a backslash followed
 # by a line feed: in a CRLF checkout the backslash ends up before a carriage

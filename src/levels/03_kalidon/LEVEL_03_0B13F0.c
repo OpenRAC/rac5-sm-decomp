@@ -1,5 +1,5 @@
 extern unsigned int D_002147D4;
-extern unsigned int D_002147FC;
+extern int D_002147FC;
 
 void func_0B13F0(void) {
     D_002147D4 = 0;

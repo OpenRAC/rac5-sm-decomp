@@ -1,7 +1,7 @@
 /* LEVEL_01:0x1BEB30 -- returns 23 when a probe fails, otherwise runs a float-parameter helper and returns the result of a final helper. */
 
 int func_1BEA80(void *a0);
-void func_0311D0(void *a0, void *a1, int a2, int a3, int a4, float f0, float f1);
+int func_0311D0(void *a0, void *a1, void * a2, int a3, int a4, float f0, float f1);
 int func_1BEBA8(void *a0);
 
 struct B {

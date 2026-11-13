@@ -4,7 +4,7 @@ struct Info_1C3630 {
     char pad0[0x10];
     int f10;
     char pad1[0x1C];
-    int f30;
+    void *f30;
 };
 
 struct State_1C3630 {
@@ -25,7 +25,7 @@ struct Obj_1C3630 {
 };
 
 extern int func_01A490(int a0);
-extern int func_0311D0(struct Info_1C3630 *a0, struct Obj_1C3630 *a1, int a2, int a3, int a4, float f12, float f13);
+extern int func_0311D0(struct Info_1C3630 *a0, struct Obj_1C3630 *a1, void * a2, int a3, int a4, float f12, float f13);
 extern void func_08C610(void *a0, struct Obj_1C3630 *a1);
 extern void func_07D098(struct Obj_1C3630 *a0, struct State_1C3630 *a1, int a2);
 extern void func_08C788(void *a0, struct Obj_1C3630 *a1);

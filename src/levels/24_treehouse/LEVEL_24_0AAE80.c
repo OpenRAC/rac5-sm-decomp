@@ -1,5 +1,5 @@
 extern unsigned int D_001CCDD4;
-extern unsigned int D_001CCDFC;
+extern int D_001CCDFC;
 
 void func_0AAE80(void) {
     D_001CCDD4 = 0;

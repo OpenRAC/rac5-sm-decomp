@@ -12,7 +12,7 @@ struct Obj {
 };
 
 int func_1EE5B8(int a0);
-void func_030E38(void *a, struct Obj *o, int b, unsigned int c, int d, float f, float g);
+int func_030E38(void *a, struct Obj *o, void * b, unsigned int c, int d, float f, float g);
 int func_1EE6C0(struct Obj *o);
 
 int func_1EE648(struct Obj *o)

@@ -4,7 +4,7 @@ typedef struct {
 } A;
 
 typedef struct {
-    int f00;
+    char *f00;
 } B;
 
 typedef struct {
@@ -13,12 +13,12 @@ typedef struct {
     B *p58;
 } O;
 
-void func_1AF518(void *a0, int a1);
+void func_1AF518(void *a0, char *a1);
 
 void func_1AEF48(O *a0)
 {
     A *p = a0->p54;
-    int id = a0->p58->f00;
+    char *id = a0->p58->f00;
     float t = p->f18 - 1.0f;
 
     p->f18 = t;
