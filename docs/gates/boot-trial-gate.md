@@ -47,10 +47,10 @@ python3 tools/boot_trial_gate.py baserom/SCUS_976.15 \
   --assembler /mnt/c/path/to/Ps2EeAs.exe \
   --linker /mnt/c/path/to/ld.exe \
   --extra-bin prodg2953=/mnt/c/path/to/ProDG/usr/local/sce/ee/gcc/bin \
-  --extra-bin sdk991111=/home/you/rac5-sdk-compiler \
-  --extra-bin sdk-divpad=/home/you/rac5-sdk-divpad \
-  --extra-bin sdk991111sync=/home/you/rac5-sdk-sync \
-  --extra-bin sdk991111sq=/home/you/rac5-sdk-quadword \
+  --extra-bin sdk991111=build/toolchain/sdk991111 \
+  --extra-bin sdk-divpad=build/toolchain/sdk-divpad \
+  --extra-bin sdk991111sync=build/toolchain/sdk991111sync \
+  --extra-bin sdk991111sq=build/toolchain/sdk991111sq \
   --extra-bin gnu-ee-trial=/home/you/rac5-gnu-trial \
   --as-bin ee-sdk=/path/to/ee-sdk-assembler \
   --as-bin ps2eeas=/mnt/c/path/to/ProDG/ee/bin \
@@ -59,8 +59,8 @@ python3 tools/boot_trial_gate.py baserom/SCUS_976.15 \
   --output-dir /home/you/rac5-boot-trial
 ```
 
-`tools/compiler/build_gnu_ee.sh` rebuilds `cpp`, `cc1`, `as`, `span5`, `span5b`
-and the `gnu-ee-trial` `cc1` from public sources; [getting the
+`tools/compiler/build_gnu_ee.sh` rebuilds `cpp`, `cc1`, `as`, `span5`, `span5b`,
+the `gnu-ee-trial` `cc1` and the four SDK compilers from public sources; [getting the
 tools](../contributing/toolchain.md) also says what the `gnu-ee-trial` stage
 directory holds. A rebuilt binary has another SHA-256 than its pin (only `span5`
 and `span5b` match, on the host that built their pins): add `--unpinned-tools`,

@@ -332,8 +332,8 @@ python3 tools/level_c_gate.py baserom/SCUS_976.15.iso \
   --extra-cc1 gnu-ee-trial=build/toolchain/gnu-ee-trial/cc1 \
   --extra-cc1 gnu-ee-trial-divpad=build/toolchain/gnu-ee-trial-divpad/cc1 \
   --extra-cc1 gnu-ee-trial-divpad-blockmove=build/toolchain/gnu-ee-trial-divpad-blockmove/cc1 \
-  --extra-cc1 sdk991111=/path/to/sdk/cc1 \
-  --extra-cc1 sdk991111sync=/path/to/sdk-sync/cc1 \
+  --extra-cc1 sdk991111=build/toolchain/sdk991111/cc1 \
+  --extra-cc1 sdk991111sync=build/toolchain/sdk991111sync/cc1 \
   --extra-as r5900-mfc1=build/toolchain/r5900-mfc1/as \
   --extra-as ee-frozen=/path/to/ee-frozen/as \
   --extra-as ps2eeas=/mnt/c/path/to/Ps2EeAs.exe \

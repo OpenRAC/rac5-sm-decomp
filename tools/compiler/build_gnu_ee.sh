@@ -20,11 +20,20 @@
 #   r5900-mfc1    the level assembler of the same name: the archive + 0000
 #                 + patches/0008-rac5-gas-r5900-mfc1.patch, which gives the assembler sources of
 #                 rac2-decomp's recipe at commit e07c4844
+#   sdk991111     cpp, cc1 and the xgcc driver of Sony EE-GCC 2.9-ee-991111-01: the GPL sources of
+#                 the SDK's GNU toolchain, from the public snapshot SSXModding/ps2-ee-toolchain at
+#                 commit b595ded (fetched with git; SDK_SOURCE may name a local clone), with
+#                 patches/sdk/bison-grammar.patch, built as OpenRAC/rac2-decomp's
+#                 tools/compiler/sdk/build.py builds them
+#   sdk991111sync, sdk991111sq, sdk-divpad
+#                 the same with tools/compiler/rac5-sync/rac5-sync-cc1.patch,
+#                 tools/compiler/rac5-sq/0001b-rac5-sregs-quad-and-order.patch or
+#                 patches/0002-rac5-div-pad.patch
 # Default: all of them. OUT defaults to build/toolchain/ (ignored by Git) and receives
-# OUT/pinned/{cpp,cc1,as}, OUT/span5/as-rac5span5, OUT/span5b/as-rac5span5b, OUT/<trial>/cc1
-# and OUT/r5900-mfc1/as, the names the gates look for.
+# OUT/pinned/{cpp,cc1,as}, OUT/span5/as-rac5span5, OUT/span5b/as-rac5span5b, OUT/<trial>/cc1,
+# OUT/r5900-mfc1/as and OUT/<sdk>/{xgcc,cpp,cc1}, the names the gates look for.
 #
-# Run it on x86-64 Linux or WSL with a 32-bit capable gcc (gcc -m32), make, patch and curl.
+# Run it on x86-64 Linux or WSL with a 32-bit capable gcc (gcc -m32), make, patch, curl and git.
 # It downloads gnu-ee-binutils-gcc-1.1.tar.gz and bison-1.28.tar.gz to build/downloads/ and
 # checks them, refuses to build unless the patched sources hash as listed below, and prints
 # each binary's SHA-256 next to its pin. The binaries' hashes depend on the build host (the
@@ -38,8 +47,9 @@ HERE=$ROOT/tools/compiler
 P=$HERE/patches
 OUT=${1:-$ROOT/build/toolchain}
 [ $# -gt 0 ] && shift
-ALL="pinned span5 span5b gnu-ee-trial gnu-ee-trial-divpad gnu-ee-trial-divpad-blockmove r5900-mfc1"
-SELECTORS=${*:-$ALL}
+ALL="pinned span5 span5b gnu-ee-trial gnu-ee-trial-divpad gnu-ee-trial-divpad-blockmove r5900-mfc1
+     sdk991111 sdk991111sync sdk991111sq sdk-divpad"
+SELECTORS=${*:-$(echo $ALL)}
 DL=${DOWNLOADS:-$ROOT/build/downloads}
 W=${WORK:-/tmp/rac5-gnu-ee}
 J=$(nproc)
@@ -118,6 +128,49 @@ build_gcc() {  # build_gcc NAME TARGET...: configure NAME's tree out of tree, ma
     || { tail -30 "$W/$name.log"; exit 1; }
 }
 
+# Sony EE-GCC 2.9-ee-991111-01: the GPL GNU toolchain of the SDK, as the public snapshot keeps it
+# (only its ee/ tree is used). git checks the commit, so no archive hash is needed.
+SDK_REPO=https://github.com/SSXModding/ps2-ee-toolchain.git
+SDK_COMMIT=b595ded606227e93b8c4a447446c1d2ac093827d
+sdk_tree() {  # sdk_tree NAME PATCH...: the snapshot's ee/ tree with the grammar fix and PATCHes
+  local name=$1 spec strip; shift
+  if [ ! -d "$W/sdk.git" ]; then
+    git clone --quiet --bare "${SDK_SOURCE:-$SDK_REPO}" "$W/sdk.git"
+  fi
+  [ "$(git -C "$W/sdk.git" rev-parse --verify --quiet "$SDK_COMMIT^{commit}")" = "$SDK_COMMIT" ] \
+    || { echo "the SDK compiler snapshot lacks commit $SDK_COMMIT"; exit 1; }
+  rm -rf "$W/$name" && mkdir -p "$W/$name"
+  git -C "$W/sdk.git" archive "$SDK_COMMIT" ee | tar x -C "$W/$name"
+  mv "$W/$name/ee" "$W/$name/src"
+  for spec in "$P/sdk/bison-grammar.patch" "$@"; do
+    strip=1; grep -q '^+++ b/ee/' "$spec" && strip=2
+    (cd "$W/$name/src" && patch -p"$strip" -s --no-backup-if-mismatch < "$spec")
+  done
+}
+
+SDK_FLAGS="-O2 -fcommon -std=gnu89 -D_GNU_SOURCE"
+build_sdk() {  # build_sdk NAME: cc1, cpp and xgcc of NAME's SDK tree, the way RAC2's recipe does
+  local name=$1 b=$W/$1/build
+  ensure_bison
+  rm -rf "$b" && mkdir "$b"
+  (cd "$b" \
+     && printf '%s: override CFLAGS = -g\n' \
+          'version.o real.o getpwd.o mbchar.o dyn-string.o splay-tree.o obstack.o gcc.o mkstemp.o' \
+          > host-flags.mk \
+     && CC="gcc -m32" CXX="g++ -m32" CFLAGS="$SDK_FLAGS" bash "$W/$name/src/configure" \
+          --target=ee --host=i686-linux-gnu --build=i686-linux-gnu --disable-nls \
+          --enable-languages=c --without-headers --disable-sim --without-sim \
+          --prefix="$W/$name/install" \
+     && make -j"$J" all-libiberty \
+     && make -C gcc -f Makefile -f "$b/host-flags.mk" LANGUAGES=c \
+          "CC=gcc -m32" "CFLAGS=$SDK_FLAGS" BISON="$W/bison/bin/bison" \
+          insn-flags.h insn-codes.h insn-config.h \
+     && make -C gcc -f Makefile -f "$b/host-flags.mk" -j"$J" LANGUAGES=c "CC=gcc -m32" \
+          "CFLAGS=$SDK_FLAGS" BISON="$W/bison/bin/bison" cc1 cpp xgcc) > "$W/$name.log" 2>&1 \
+    || { tail -30 "$W/$name.log"; exit 1; }
+  mkdir -p "$OUT/$name" && cp "$b/gcc/xgcc" "$b/gcc/cpp" "$b/gcc/cc1" "$OUT/$name/"
+}
+
 # The source hashes of the trial chains (gcc/ only: their assembler is not used).
 TRIAL_SUMS='4a6a1ae14448e504eef4f58450973ebcd6c3ba45fdf204961642f0b97138fb8a  gcc/config/mips/mips.c
 87d59c06d047cf7252349cb02aebc266f8b4dcecd537c827e6ec3966a10bbfc3  gcc/config/mips/mips.h
@@ -192,8 +245,44 @@ SUMS
 SUMS
     build_gas "$selector" "$OUT/$selector/as"
     ;;
+  sdk991111)
+    sdk_tree "$selector"
+    sums "$selector" <<'SUMS'
+b1d98424682b11f59b1cd1c539a639cb7874cd3ca78b9cf0806a81dc4d1fd1ac  gcc/c-parse.in
+1cc5a1350be8bb84c1dd4057ad74b5da893359afb20ae6628c2c35f17e2befd5  gcc/config/mips/mips.c
+177caa696e7de5e58515d1500abce727f8783454b4522fd3e5cd3e0630b99acf  gcc/config/mips/mips.md
+SUMS
+    build_sdk "$selector"
+    ;;
+  sdk991111sync)
+    sdk_tree "$selector" "$HERE/rac5-sync/rac5-sync-cc1.patch"
+    sums "$selector" <<'SUMS'
+0b289ace3b41744159e694c4feb5d5d417e62098c7ce9de6dd957c87ec114f0e  gcc/tree.h
+6e269607f8acc32960ecc14411c81cd1e9c5af858ae1a2fe658e0e5ce2361ba2  gcc/c-decl.c
+4a2a36f6b23853faa2118b7926573393d4c0db3fa062f3237ea7ef4b8b9165a6  gcc/expr.c
+1bf75d88be2d93a865f2eeced15b90aec2c11c0a5ebea4e8d193f088a7fa11a4  gcc/config/mips/mips.md
+SUMS
+    build_sdk "$selector"
+    ;;
+  sdk991111sq)
+    sdk_tree "$selector" "$HERE/rac5-sq/0001b-rac5-sregs-quad-and-order.patch"
+    sums "$selector" <<'SUMS'
+bd48c981989a05c8eeec163644d10d662209baf43b60d2e80cc5bd4bcd2e5be9  gcc/config/mips/mips.c
+SUMS
+    build_sdk "$selector"
+    ;;
+  sdk-divpad)
+    sdk_tree "$selector" "$P/0002-rac5-div-pad.patch"
+    sums "$selector" <<'SUMS'
+1d529a688f9f629c6144940db3a82c3718c044b03f1920886a9924e5663ca25c  gcc/toplev.c
+88b7db2e1995f51cbca9c4a67ee820db56f3bb5975385e85e06c9b7552ead34c  gcc/config/mips/mips.c
+a7ee1344d9b95b6e962b136111dbb424b7f69cc0d690fd98e51202e72288448c  gcc/config/mips/mips.h
+d57c5a32d08442ef73bb4701fd0ac2fbe2656efc49b54ba9169e6c19204b7834  gcc/config/mips/mips.md
+SUMS
+    build_sdk "$selector"
+    ;;
   *)
-    echo "unknown selector: $selector ($ALL)"; exit 2 ;;
+    echo "unknown selector: $selector ($(echo $ALL))"; exit 2 ;;
   esac
 done
 
@@ -213,6 +302,10 @@ for selector in selectors:
         rows.append((f"{selector}/{tools['assembler']}", tools["assembler_sha256"]))
     elif selector == "r5900-mfc1":
         rows.append((f"{selector}/as", level["extra_assemblers"][selector]["tools"]["as_sha256"]))
+    elif selector.startswith("sdk"):
+        tools = boot["extra_compilers"][selector]["tools"]
+        rows += [(f"{selector}/xgcc", tools["driver_sha256"]),
+                 (f"{selector}/cpp", tools["cpp_sha256"]), (f"{selector}/cc1", tools["cc1_sha256"])]
     else:
         rows.append((f"{selector}/cc1", boot["extra_compilers"][selector]["tools"]["cc1_sha256"]))
 for name, pin in rows:

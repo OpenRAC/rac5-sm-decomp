@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import re
 import sys
 import tempfile
 import unittest
@@ -65,6 +66,7 @@ class ToolPinsTests(unittest.TestCase):
                       "0004-rac5-blockmove-loopcount.patch",
                       "0005-rac5-gas-span5.patch", "0006-rac5-gas-span5b.patch",
                       "0007-rac5-gnu-ee-trial.patch", "0008-rac5-gas-r5900-mfc1.patch",
+                      "sdk/bison-grammar.patch",
                       "lombyte/0020-gas-absolute-unknown-symbol.patch",
                       "lombyte/0027-gas-inline-float-literals.patch"):
             self.assertIn(patch, script)
@@ -77,16 +79,15 @@ class ToolPinsTests(unittest.TestCase):
 
     def test_every_selector_names_a_pinned_tool(self) -> None:
         script = (ROOT / "tools/compiler/build_gnu_ee.sh").read_text(encoding="utf-8")
-        line = next(row for row in script.splitlines() if row.startswith("ALL="))
-        selectors = line.split("=", 1)[1].strip('"').split()
+        selectors = re.search(r'^ALL="([^"]*)"', script, re.MULTILINE).group(1).split()
         boot = compile_boot_trial.json.loads(
             (ROOT / "config/boot/compiler_trial.json").read_text(encoding="utf-8"))
         level = compile_boot_trial.json.loads(
             (ROOT / "config/levels/compiler_trial.json").read_text(encoding="utf-8"))
         names = {"pinned", *boot["extra_compilers"], *boot["extra_assemblers"],
                  *level["extra_assemblers"]}
-        self.assertIn("gnu-ee-trial", selectors)
-        self.assertIn("r5900-mfc1", selectors)
+        for selector in ("gnu-ee-trial", "r5900-mfc1", "sdk991111", "sdk-divpad"):
+            self.assertIn(selector, selectors)
         for selector in selectors:
             self.assertIn(selector, names)
             self.assertIn(f"  {selector})", script.replace("|", ")\n  "))
