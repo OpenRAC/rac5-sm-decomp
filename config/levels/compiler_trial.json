@@ -382,7 +382,12 @@
         "src/levels/24_treehouse/LEVEL_24_014F18.c",
         "src/levels/24_treehouse/LEVEL_24_05B898.c",
         "src/levels/24_treehouse/LEVEL_24_073E98.c",
-        "src/levels/24_treehouse/LIGHT_Init__Fv_LEVEL_24.c"
+        "src/levels/24_treehouse/LIGHT_Init__Fv_LEVEL_24.c",
+        "src/levels/shared/LEVEL_02_040260.c",
+        "src/levels/22_skyboard_kalidon/LEVEL_22_053210.c",
+        "src/levels/22_skyboard_kalidon/LEVEL_22_0571F8.c",
+        "src/levels/23_skyboard_challax/LEVEL_23_056D40.c",
+        "src/levels/23_skyboard_challax/LEVEL_23_05ADA8.c"
       ],
       "tools": {
         "assembler": "Ps2EeAs.exe",

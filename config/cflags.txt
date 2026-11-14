@@ -1025,3 +1025,4 @@ src/boot/sscanf.c    prodg2953 -O2 -G0
 src/boot/strcasecmp.c    prodg2953 -O2 -G0
 src/boot/strncasecmp.c    prodg2953 as=ps2eeas -O2 -G0
 src/boot/vsnprintf.c    prodg2953 -O2 -G0
+src/levels/10_quodrona/LEVEL_10_1C9BA8.c  -mno-check-zero-division
