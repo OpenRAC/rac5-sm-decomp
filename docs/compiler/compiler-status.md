@@ -261,7 +261,9 @@ the definitions this route introduces, and neither may stay.
   (41/88 for `__do_global_dtors`, 26/120 for `__floatdidf`, 123/148 for
   `__cp_push_exception`). None of the 46 is exact under the pinned chain, so
   the family split holds, but the other 149 symbols are simply unwritten: the
-  reachable share is unknown, and the family is not uniform.
+  reachable share is unknown, and the family is not uniform. Written as GCC's
+  own `libgcc2.c` text instead, `__do_global_dtors` and `__floatdidf` are
+  exact under this pin (13 November 2026).
 - **The anchor is not the same compiler.** Re-enabling the RAC2 16-byte-save
   anchor scores 98/108 on `sceCdSyncS` and reaches 16 of those 46 bodies, but
   never the routed five. A widened stride is not the SDK compiler, and the

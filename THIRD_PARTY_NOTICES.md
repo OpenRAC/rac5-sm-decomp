@@ -122,6 +122,31 @@ Adapted files:
 - `src/levels/23_skyboard_challax/LEVEL_23_1BDD88.c`
 - `src/levels/24_treehouse/LEVEL_24_1BB620.c`
 
+## GCC runtime library (`src/boot/`)
+
+The boot sources below are GCC's own runtime library, `libgcc`, rebuilt from the
+public GCC text that OpenRAC/rac1-decomp vendors in
+[`src/libgcc/` at `ad970bb4`](https://github.com/OpenRAC/rac1-decomp/tree/ad970bb444a2cb90015ce331a1ec14007ce76b64/src/libgcc):
+`libgcc2.c`, `longlong.h` and `gbl-ctors.h` at GCC revision `31cf01446d`
+(1999-09-09), and GCC 2.95.3's `fp-bit.c` with rac1-decomp's two marked in-place
+changes. These files are licensed under GNU GPL version 2 or any later version
+with the libgcc linking exception. Each RAC5 file is that text cut by the line
+ranges its header records, plus the module selector and the target facts of a
+GCC build tree's `tconfig.h`, and it keeps the complete copyright, GPL and
+exception notices of every upstream file it uses. No Sony SDK source, headers or
+samples are used.
+
+| RAC5 source | Upstream module |
+| --- | --- |
+| `src/boot/__divdi3.c`, `src/boot/__moddi3.c`, `src/boot/__udivdi3.c`, `src/boot/__umoddi3.c`, `src/boot/__muldi3.c` | `libgcc2.c` `L_divdi3`, `L_moddi3`, `L_udivdi3`, `L_umoddi3` and `L_muldi3`, with the `longlong.h` definitions they include, among them the MIPS `umul_ppmm` primitive (see AGENTS.md) |
+| `src/boot/__fixdfdi.c` | `libgcc2.c` `L_fixdfdi` |
+| `src/boot/__do_global_dtors.c`, `src/boot/__do_global_ctors.c` | `libgcc2.c` `L__main` with `gbl-ctors.h`; `__do_global_dtors` names its static pointer by the retail data word that holds it, as `src/boot/__main.c` does for `__main` |
+| `src/boot/__unpack_f.c` | `fp-bit.c` `unpack_d` built with `FLOAT`, including rac1-decomp's backport of the `NO_DENORMALS` test from GCC trunk `2672543458` (2000-03-16) |
+
+`src/boot/__main.c`, `src/boot/__fixunsdfdi.c` and `src/boot/__floatdidf.c`, and
+the boot `fp-bit.c` adaptations that carry a notice, cite GCC 2.95.3 in their own
+headers.
+
 ## GNU EE compiler patches (`tools/compiler/`)
 
 The patches in `tools/compiler/` modify the public GNU EE source archive
