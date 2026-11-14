@@ -1282,3 +1282,17 @@ symbol; 93 retained attempts whose placements are now accepted left
 `nonmatching/levels/`. The prototype review finds 1,917 disagreeing caller/callee
 source pairs on `master` and the same 1,917 here, none introduced. No PAL
 placement is counted, and the distinct-function denominator remains unqualified.
+
+The remaining results of the same 14 November 2026 attempts add **1,491 more
+placements** (156,000 bytes by placement): 363 placements of 268 authored sources
+and 1,128 address variants. Counted by masked shape, accepted level bodies rise to
+862,044 bytes in 6,915 shape units. 1,428 placements use the pinned chain, 22
+`gnu-ee-trial`, 21 `sdk991111` and 20 `gnu-ee-trial-divpad`; three authored
+sources (23 placements) are exact only with the qualified `ps2eeas` assembler
+(none of them with the default one) and are recorded in
+`config/levels/compiler_trial.json`. 84 sources are boot twins and carry the boot
+symbol; 55 retained attempts whose placements are now accepted left
+`nonmatching/levels/`. 21 placements whose bytes compile exactly stay out because
+they start 4 bytes past an 8-byte boundary, where the qualified compilers cannot
+place a function. All 21 complete USA modules remain exact, and the prototype
+review still finds the 1,917 pairs of `master`, none introduced.
