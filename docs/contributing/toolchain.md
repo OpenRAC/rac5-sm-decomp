@@ -101,7 +101,7 @@ Counts are accepted sources on `master` on 12 November 2026.
 | `sdk991111` | 135 boot sources, 825 level sources | Sony EE-GCC 2.9-ee-991111-01: the GPL sources of the SDK's GNU toolchain in the public snapshot [SSXModding/ps2-ee-toolchain](https://github.com/SSXModding/ps2-ee-toolchain) at `b595ded`, with [`sdk/bison-grammar.patch`](../../tools/compiler/patches/sdk/bison-grammar.patch), built like OpenRAC/rac2-decomp's `tools/compiler/sdk/build.py` | `build_gnu_ee.sh sdk991111` |
 | `sdk991111sync`, `sdk991111sq`, `sdk-divpad` | 3 boot and 40 level, 1 boot, 10 boot sources | `sdk991111` with [`rac5-sync`](../../tools/compiler/rac5-sync), [`rac5-sq`](../../tools/compiler/rac5-sq) or `0002` | `build_gnu_ee.sh` with that selector |
 | `r5900-mfc1` assembler | 151 level sources | the pinned chain's assembler with [`0008-rac5-gas-r5900-mfc1.patch`](../../tools/compiler/patches/0008-rac5-gas-r5900-mfc1.patch), the assembler of OpenRAC/rac2-decomp's recipe at `e07c4844` | `build_gnu_ee.sh r5900-mfc1` |
-| `ee-sdk` assembler | 59 boot sources | the GNU assembler of the Sony EE SDK (2.9-ee-991111). `span5` assembles 57 of these sources to the same objects, all but `__kernel_rem_pio2` (one `nop` moved) and `__svfscanf` (16 more bytes); the public archive's own assembler, 33 (12 November 2026) | not available |
+| `ee-sdk` assembler | 59 boot sources | GNU assembler 2.9-ee-991111; the pinned binary is distributed in decomp.me's public `ee-gcc2.9-991111-01` archive. The public source rebuild and `span5` have measured differences and are not interchangeable with it. | extract the exact binary as described below |
 | `ee-frozen` assembler | 3 level sources | a privately recovered EE assembler, whose sources are not public; the public archive's own assembler, unpatched, assembles these three sources to the same objects (12 November 2026) | `build_gnu_ee.sh ee-frozen` builds that equivalent |
 | `prodg2953` | 35 boot sources | SN Systems ProDG for PlayStation 2 3.01 | your own copy |
 | `ps2eeas` (Ps2EeAs 1.8.19.316) | 25 boot and 116 level sources, the assembly baselines | SN Systems ProDG 2.0 | your own copy |
@@ -116,9 +116,70 @@ sdk991111=build/toolchain/sdk991111`).
 
 A gate compiles every accepted source, so it needs every route that some source
 selects. With the script's tools, the level C gate needs only your own SN tools
-(`Ps2EeAs` and the linker); the boot gate also needs the `ee-sdk` assembler, which
-has no public source, and ProDG 3.01. Writing and compiling new C needs only the
-pinned chain; say in the pull request which tools you used.
+(`Ps2EeAs` and the linker); the boot gate also needs the exact `ee-sdk` assembler
+below and your own ProDG 3.01. Writing and compiling new C needs only the pinned
+chain; say in the pull request which tools you used.
+
+## Exact ee-sdk assembler
+
+The [decomp.me compiler release](https://github.com/decompme/compilers/releases/tag/compilers)
+provides [ee-gcc2.9-991111-01.tar.xz](https://github.com/decompme/compilers/releases/download/compilers/ee-gcc2.9-991111-01.tar.xz).
+Its `ee/bin/as` has exactly the SHA-256 already pinned for `ee-sdk`:
+`296af123052ee39d175e5b3254102aafca105d4f6e975b351a13867f59b04019`.
+On 13 November 2026, it also reproduced all 42 pinned objects in the
+`sdk991111 as=ee-sdk` subset using the pinned SDK compiler. That subset test is
+not a complete boot gate. A subsequent complete run with this assembler, the
+public rebuilt compilers and the contributor's SN tools reproduced all 713
+campaign objects and the entire 856,120-byte boot ELF. That run used
+`--unpinned-tools` and reported `qualifying_tools: false`; it does not qualify
+new matches or replace the maintainer's run with pinned tools.
+
+On Linux or WSL, download the archive and extract only that assembler:
+
+```sh
+mkdir -p build/downloads build/toolchain/ee-sdk
+curl -fL https://github.com/decompme/compilers/releases/download/compilers/ee-gcc2.9-991111-01.tar.xz \
+  -o build/downloads/ee-gcc2.9-991111-01.tar.xz
+echo 'ed684fd98f89d36b0121caab311052089103e3b36241fcef4338cc9ea41c75b8  build/downloads/ee-gcc2.9-991111-01.tar.xz' | sha256sum -c -
+tar -xOf build/downloads/ee-gcc2.9-991111-01.tar.xz ee/bin/as \
+  > build/toolchain/ee-sdk/ee-as-sdk
+chmod +x build/toolchain/ee-sdk/ee-as-sdk
+echo '296af123052ee39d175e5b3254102aafca105d4f6e975b351a13867f59b04019  build/toolchain/ee-sdk/ee-as-sdk' | sha256sum -c -
+```
+
+Pass `--as-bin ee-sdk=build/toolchain/ee-sdk` to the boot gate, alongside its
+other required tool arguments. Keep both the archive and binary under ignored
+`build/`; neither belongs in a commit. Rebuilt compilers still need
+`--unpinned-tools` when their hashes differ: obtaining this exact assembler
+does not qualify the other tools or replace the complete-program checks.
+
+## ProDG standard headers
+
+A compiler-only ProDG package may omit `stddef.h` and `stdarg.h`, which the
+`__svfscanf` witness needs in addition to the two public newlib include paths
+already listed in `config/cflags.txt`. The generic GNU headers are available
+in [GCC 2.95.3's ginclude directory](https://github.com/gcc-mirror/gcc/tree/7f236610e99c7a11fb18f056b6446b3c7c40979c/gcc/ginclude).
+These are GCC headers, not Sony platform headers or SDK samples.
+
+If those files are missing, put `stddef.h`, `stdarg.h` and its MIPS companion
+`va-mips.h` from that exact commit under the ProDG libexec directory's `include/`
+subdirectory (`lib/gcc-lib/ee/2.95.3/include/`). The gate's existing `-B` path
+then finds them without changing the source or its configured flags. Their
+SHA-256 values are:
+
+```text
+23ed59b27cda4de82a312f98e85a258f29d61711beb873a42a1f8404558894ae  stddef.h
+ddef04fd12bf68996cd5f0b4dc14f0a9b32b971db663f11eb8a90eadb982a3dc  stdarg.h
+2610e1591656a950ccf3e2bd0a751f5819c7d852ddca0705158e0700589a14e0  va-mips.h
+```
+
+This setup reproduced `__svfscanf`'s current complete object pin with the
+pinned ProDG tools and exact `ee-sdk` assembler. Avoid globally exporting a
+DrvFs `CPATH` or `C_INCLUDE_PATH` to the whole mixed-host gate: the old 32-bit
+Linux preprocessors can fail to stat it with `Value too large for defined data
+type`. Install the headers for the Windows compiler instead, and leave the
+Linux compiler environment unchanged. Keep downloaded headers and tool
+installations private; do not add them to the repository.
 
 ## Where the patches come from
 
