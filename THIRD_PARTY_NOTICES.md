@@ -143,9 +143,20 @@ samples are used.
 | `src/boot/__do_global_dtors.c`, `src/boot/__do_global_ctors.c` | `libgcc2.c` `L__main` with `gbl-ctors.h`; `__do_global_dtors` names its static pointer by the retail data word that holds it, as `src/boot/__main.c` does for `__main` |
 | `src/boot/__unpack_f.c` | `fp-bit.c` `unpack_d` built with `FLOAT`, including rac1-decomp's backport of the `NO_DENORMALS` test from GCC trunk `2672543458` (2000-03-16) |
 
-`src/boot/__main.c`, `src/boot/__fixunsdfdi.c` and `src/boot/__floatdidf.c`, and
-the boot `fp-bit.c` adaptations that carry a notice, cite GCC 2.95.3 in their own
-headers.
+`src/boot/__main.c`, `src/boot/__fixunsdfdi.c` and `src/boot/__floatdidf.c`
+(`libgcc2.c`) and the boot `fp-bit.c` adaptations (`__pack_d.c`, `__unpack_d.c`,
+`__fpcmp_parts_d.c`, `__pack_f.c`, `dpsub.c`, `dpmul.c`, `dpdiv.c`, `dpcmp.c`,
+`litodp.c`, `dptoli.c`, `dptoul.c`, `dptofp.c`, `fptoui.c` and `fptodp.c` in
+`src/boot/`) adapt GCC 2.95.3 text; each carries the upstream notices and cites the
+public file.
+
+The boot's other GCC runtime functions are C written from the retail code: `dpadd`,
+`__make_dp` and `__make_fp`, the exception handling of `libgcc2.c` (`L_eh`) and
+`frame.c`, and the C++ support of `cp/exception.cc`, `cp/new*.cc`, `cp/tinfo.cc` and
+`cp/tinfo2.cc`. Compared on 14 November 2026 with the GCC text above and with the
+`frame.c` and `cp/` sources of the public `gnu-ee-binutils-gcc-1.1` archive, they
+reuse none of it beyond single assignment statements, so they carry no upstream
+notice.
 
 ## GNU EE compiler patches (`tools/compiler/`)
 
