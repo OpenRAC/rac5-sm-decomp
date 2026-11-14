@@ -936,3 +936,92 @@ src/levels/shared/LEVEL_01_1338E4.c  -malign-functions=2
 src/levels/shared/LEVEL_01_1338EC.c  -malign-functions=2
 src/levels/shared/LEVEL_01_1338F4.c  -malign-functions=2
 src/levels/07_dreamtime/LEVEL_07_1FE2F0.c  -fno-expensive-optimizations
+
+# Boot bodies of at most 200 bytes accepted on 14 November 2026. Each route is the
+# measured one: the pinned chain does not reproduce these bodies (their pinned
+# negative controls differ); bodies the pinned chain also reproduces keep it.
+src/boot/AllocTimerCounter.c    sdk991111 -O2 -G0
+src/boot/SetTimerHandler.c    sdk991111 -O2 -G0
+src/boot/StartTimerCounter.c    sdk991111 -O2 -G0
+src/boot/TimerUSec2BusClock.c    sdk991111 -O2 -G0
+src/boot/VEC_ConstructRotZMat3__FP7MATRIX3f.c    gnu-ee-trial -O2 -G0
+src/boot/VEC_MakeMat3FromYawPitch__FP7MATRIX3ff.c    gnu-ee-trial -O2 -G0
+src/boot/VEC_MakeMat3x4FromYawPitch__FP7MATRIX4ff.c    gnu-ee-trial -O2 -G0
+src/boot/_Balloc.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_InitAlarm.c    sdk991111 -O2 -G0
+src/boot/__deregister_frame_info.c    sdk991111 -O2 -G0
+src/boot/__dynamic_cast.c    sdk991111 -O2 -G0
+src/boot/__eq__C9type_infoRC9type_info.c    sdk991111 -O2 -G0
+src/boot/__malloc_lock.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/__sinit.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/__sread.c    prodg2953 -O2 -G0
+src/boot/__sseek.c    prodg2953 -O2 -G0
+src/boot/__swrite.c    prodg2953 -O2 -G0
+src/boot/__tfSc.c    sdk991111 -O2 -G0
+src/boot/__tfUc.c    sdk991111 -O2 -G0
+src/boot/__tfUi.c    sdk991111 -O2 -G0
+src/boot/__tfUl.c    sdk991111 -O2 -G0
+src/boot/__tfUs.c    sdk991111 -O2 -G0
+src/boot/__tfUx.c    sdk991111 -O2 -G0
+src/boot/__tfb.c    sdk991111 -O2 -G0
+src/boot/__tfc.c    sdk991111 -O2 -G0
+src/boot/__tfd.c    sdk991111 -O2 -G0
+src/boot/__tff.c    sdk991111 -O2 -G0
+src/boot/__tfi.c    sdk991111 -O2 -G0
+src/boot/__tfl.c    sdk991111 -O2 -G0
+src/boot/__tfr.c    sdk991111 -O2 -G0
+src/boot/__tfs.c    sdk991111 -O2 -G0
+src/boot/__tfv.c    sdk991111 -O2 -G0
+src/boot/__tfw.c    sdk991111 -O2 -G0
+src/boot/__tfx.c    sdk991111 -O2 -G0
+src/boot/_close_r.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_fstat_r.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_fwalk.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_lseek_r.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_ratio.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_read_r.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_sbrk_r.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_ulp.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/_write_r.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/asyncInit.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/asyncPs2fioOpen.c    prodg2953 -O2 -G0
+src/boot/asyncPs2fioRead.c    prodg2953 -O2 -G0
+src/boot/dcast__C14__si_type_infoRC9type_infoiPvPC9type_infoT3.c    sdk991111 -O2 -G0
+src/boot/free.c    prodg2953 -O2 -G0
+src/boot/hddsvcGetFreeSpace.c    prodg2953 -O2 -G0
+src/boot/itoa.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/kprintf.c    sdk991111 -O2 -G0
+src/boot/malloc.c    prodg2953 -O2 -G0
+src/boot/ps2fioAddSpaceToPartition.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/ps2fioBuildFilesystem.c    prodg2953 -O2 -G0
+src/boot/ps2fioClosePartition.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/ps2fioCreatePartition.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/ps2fioFormatPartition.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/ps2fioGetDeviceStatus.c    prodg2953 -O2 -G0
+src/boot/ps2fioGetFreeSpaceInMount.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/ps2fioInitializeDevice.c    prodg2953 -O2 -G0
+src/boot/ps2fioLoadModule.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/ps2fioLoadStartModule.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/ps2fioMkdir.c    prodg2953 -O2 -G0
+src/boot/ps2fioMountPartition.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/ps2fioOpen.c    prodg2953 -O2 -G0
+src/boot/ps2fioRemoveFile.c    prodg2953 -O2 -G0
+src/boot/ps2fioRemovePartition.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/ps2fioRename.c    prodg2953 -O2 -G0
+src/boot/ps2fioShutdownDevice.c    prodg2953 -O2 -G0
+src/boot/ps2fioWriteFileFromBuffer.c    sdk991111sq -O2 -G0
+src/boot/sceCdGetDiskType2.c    sdk991111 -O2 -G0
+src/boot/sceCdPowerOff.c    sdk991111 -O2 -G0
+src/boot/scePadSetMainMode.c    sdk991111 -O2 -G0
+src/boot/scePrintf.c    sdk991111 -O2 -G0
+src/boot/sceSdRemoteInit.c    sdk991111 -O2 -G0
+src/boot/sceSifGetNextRequest.c    sdk991111 -O2 -G0
+src/boot/sceSifRemoveRpc.c    sdk991111 -O2 -G0
+src/boot/sceSifRemoveRpcQueue.c    sdk991111 -O2 -G0
+src/boot/sceSifSearchModuleByName.c    sdk991111 -O2 -G0
+src/boot/sceSifUnloadModule.c    sdk991111 -O2 -G0
+src/boot/snprintf.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/sscanf.c    prodg2953 -O2 -G0
+src/boot/strcasecmp.c    prodg2953 -O2 -G0
+src/boot/strncasecmp.c    prodg2953 as=ps2eeas -O2 -G0
+src/boot/vsnprintf.c    prodg2953 -O2 -G0

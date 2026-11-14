@@ -1,0 +1,9 @@
+/* LEVEL_18:0x17DB88 -- placement copy of LEVEL_01_1B5FD0.c: clears the four-entry slot table. */
+extern int D_001BF8F0[4];
+void func_17DB88(void)
+{
+    int i;
+    for (i = 0; i != 4; i++) {
+        D_001BF8F0[i] = 0;
+    }
+}
