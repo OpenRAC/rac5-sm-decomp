@@ -7,7 +7,7 @@
   "boot": {
     "code_bytes": 498900,
     "zero_padding_bytes": 2760,
-    "accepted_c_bytes": 88948,
+    "accepted_c_bytes": 95784,
     "accepted_functions": [
       "MEMCARD_Idle__Fv",
       "MEMCARD_Busy__Fv",
@@ -378,9 +378,12 @@
       "snd_StreamSafeCheckCDIdle",
       "snd_StreamSafeCheckCDIdle_CB",
       "snd_GetLastLoadError",
+      "__do_global_dtors",
+      "__do_global_ctors",
       "__main",
       "__fixunsdfdi",
       "__floatdidf",
+      "__muldi3",
       "__pack_d",
       "__unpack_d",
       "dpadd",
@@ -395,6 +398,7 @@
       "__make_dp",
       "dptofp",
       "__pack_f",
+      "__unpack_f",
       "fptoui",
       "__make_fp",
       "fptodp",
@@ -701,9 +705,14 @@
       "sceDeci2Poll",
       "sceDeci2ExRecv",
       "sceDeci2ExSend",
-      "InitTLB"
+      "InitTLB",
+      "__divdi3",
+      "__fixdfdi",
+      "__moddi3",
+      "__udivdi3",
+      "__umoddi3"
     ],
-    "scoped_code_percent": 17.82882341
+    "scoped_code_percent": 19.19903788
   },
   "levels": {
     "placements": [
@@ -1058,8 +1067,8 @@
       "raw_load_sha256": "4f4fb8fe218317dbd7a2f65ca4e64934d743d03e673dbd75220937cfc6fd47fb",
       "whole_elf_size": 856120,
       "whole_elf_sha256": "d8f1794a5b4f6bd7f70ca62ae11fb790d1c300c2a877ef1aef4c1855fd6575ac",
-      "counted_matches": 693,
-      "counted_bytes": 88948,
+      "counted_matches": 702,
+      "counted_bytes": 95784,
       "accepted_functions": [
         "MEMCARD_Idle__Fv",
         "MEMCARD_Busy__Fv",
@@ -1430,9 +1439,12 @@
         "snd_StreamSafeCheckCDIdle",
         "snd_StreamSafeCheckCDIdle_CB",
         "snd_GetLastLoadError",
+        "__do_global_dtors",
+        "__do_global_ctors",
         "__main",
         "__fixunsdfdi",
         "__floatdidf",
+        "__muldi3",
         "__pack_d",
         "__unpack_d",
         "dpadd",
@@ -1447,6 +1459,7 @@
         "__make_dp",
         "dptofp",
         "__pack_f",
+        "__unpack_f",
         "fptoui",
         "__make_fp",
         "fptodp",
@@ -1753,7 +1766,12 @@
         "sceDeci2Poll",
         "sceDeci2ExRecv",
         "sceDeci2ExSend",
-        "InitTLB"
+        "InitTLB",
+        "__divdi3",
+        "__fixdfdi",
+        "__moddi3",
+        "__udivdi3",
+        "__umoddi3"
       ]
     },
     "level_gate_status": "passed_assembly_only",
@@ -2088,11 +2106,11 @@
   },
   "public_inputs_sha256": {
     "target": "043f3679a3a7f4e861986aeed303dd30e344c837c34303fc8591b71271a0f96f",
-    "compiler_profile": "a3e9501935eafe2797345dabf2d0fc631312688e0572472f235166a560f100a3",
-    "per_source_cflags": "7a600ca02b929f90d4e1a2bf88801fdaf0b2b61445f4686e8a65c1304d66567a",
+    "compiler_profile": "45a39d85e8110fd3ca1e4b11a416863eb877ea76875a8d9db73f55be63d28633",
+    "per_source_cflags": "47024a37f2da87d5a2701a4e9be260ec55aced39d8d89c7a0fab89036725837e",
     "level_code_catalogue": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
     "level_module_catalogue": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
-    "accepted_boot_c_sources_lf": "8473cb1f3e41ffde4fe252d81d9068d72e957e61a716f83d508365329c62916e",
+    "accepted_boot_c_sources_lf": "d8309ca8308fe4f5d92faf7fa9f62ab0ee4fb71dd8337583e689ad42698b2182",
     "level_compiler_profile": "2293f536aeb47359199f1b5c721f42ed322bf46f921543598f07ceb7498dbe7b",
     "accepted_level_c_source_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",
     "accepted_shared_buffer_c_source_lf": "8425fefc73b121bd3eb6ffc09e4c49bf6425958c0f5b63d638af3b11d6c6e387",

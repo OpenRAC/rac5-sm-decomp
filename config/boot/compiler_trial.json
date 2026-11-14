@@ -364,10 +364,14 @@
     "src/boot/__9type_infoPCc.c",
     "src/boot/__cp_eh_info.c",
     "src/boot/__cp_exception_info.c",
+    "src/boot/__divdi3.c",
+    "src/boot/__do_global_ctors.c",
+    "src/boot/__do_global_dtors.c",
     "src/boot/__eh_alloc.c",
     "src/boot/__eh_free.c",
     "src/boot/__eh_rtime_match.c",
     "src/boot/__errno.c",
+    "src/boot/__fixdfdi.c",
     "src/boot/__fixunsdfdi.c",
     "src/boot/__floatdidf.c",
     "src/boot/__fpcmp_parts_d.c",
@@ -397,6 +401,8 @@
     "src/boot/__make_fp.c",
     "src/boot/__malloc_unlock.c",
     "src/boot/__mdiff.c",
+    "src/boot/__moddi3.c",
+    "src/boot/__muldi3.c",
     "src/boot/__ne__C9type_infoRC9type_info.c",
     "src/boot/__nw__FUiPv.c",
     "src/boot/__pack_d.c",
@@ -435,8 +441,11 @@
     "src/boot/__tf9exception.c",
     "src/boot/__tf9type_info.c",
     "src/boot/__throw_type_match.c",
+    "src/boot/__udivdi3.c",
+    "src/boot/__umoddi3.c",
     "src/boot/__uncatch_exception.c",
     "src/boot/__unpack_d.c",
+    "src/boot/__unpack_f.c",
     "src/boot/__unwinding_cleanup.c",
     "src/boot/__vn__FUiPv.c",
     "src/boot/_b2d.c",
@@ -1048,5 +1057,5 @@
       "729eddaa2d038baddf897a9c8c501d96a53b6443aa1179b194bacd474a522fbb"
     ]
   },
-  "expected_objects": 713
+  "expected_objects": 722
 }

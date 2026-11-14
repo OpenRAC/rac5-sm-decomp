@@ -105,6 +105,22 @@ src/boot/ps2fioLseekPartition.c    sdk991111 -O2 -G0
 src/boot/sceDmaPutEnv.c    sdk991111 -O2 -G0
 src/boot/sceSifSendCmd.c    sdk991111 -O2 -G0
 
+# Route Q, the GCC runtime library's remaining libgcc2.c functions, from the
+# public GCC text like __main and __fixunsdfdi above. Each is exact under the
+# same Sony compiler and pinned GNU as. The pinned chain misses all eight: 15
+# differing words in __do_global_dtors, 40 in __do_global_ctors, 19 in
+# __fixdfdi, and __muldi3 and the four division functions come out 44 to 88
+# bytes longer. __unpack_f (fp-bit.c) is exact under both chains and keeps
+# the pinned one, like __unpack_d.
+src/boot/__divdi3.c    sdk991111 -O2 -G0
+src/boot/__do_global_ctors.c    sdk991111 -O2 -G0
+src/boot/__do_global_dtors.c    sdk991111 -O2 -G0
+src/boot/__fixdfdi.c    sdk991111 -O2 -G0
+src/boot/__moddi3.c    sdk991111 -O2 -G0
+src/boot/__muldi3.c    sdk991111 -O2 -G0
+src/boot/__udivdi3.c    sdk991111 -O2 -G0
+src/boot/__umoddi3.c    sdk991111 -O2 -G0
+
 # Route R, second bench: the three libm bodies that are exact only when the
 # Sony compiler's output is assembled by the SDK `as` with -G0. That assembler
 # otherwise lowers a `li.s` float to a GP-relative lit4 entry, which the

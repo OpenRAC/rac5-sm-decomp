@@ -30,6 +30,17 @@ compiler settings or level-format assumptions.
   handwritten assembly requires separate evidence and maintainer classification,
   never automatic C acceptance. File-scope assembler-name labels on declarations
   are permitted solely to name retail ELF symbols; they must emit no instructions.
+  Public runtime-library target primitives (for example GCC's original
+  `longlong.h` multiplication primitive) may be retained with their upstream
+  provenance and licence, as in OpenRAC/rac1-decomp and OpenRAC/rac2-decomp;
+  `tools/c_source_policy.py` accepts each reviewed primitive only in its exact
+  upstream form. A primitive is not a match: its compiled bytes are checked at
+  every linked place.
+- Check OpenRAC/rac1-decomp and OpenRAC/rac2-decomp before rejecting a source
+  method. Methods those projects accept as matching evidence are available here,
+  subject to the same sourcing, provenance and strict-build checks; cite their
+  rule in the pull request. As in RAC2, `volatile` stays limited to hardware
+  registers and memory that another context writes.
 - Do not infer this game's compiler, flags, function boundaries or level layout
   from RAC2. Record the evidence for each before changing the build.
 - A match requires the qualified toolchain to reproduce the complete retail
