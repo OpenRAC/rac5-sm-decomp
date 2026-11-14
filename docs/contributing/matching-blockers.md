@@ -1037,7 +1037,7 @@ twenty 36-byte-stride table clears (for example,
 [LEVEL_01:0x0744A0](../../src/levels/01_pokitaru/LEVEL_01_0744A0.c) (accepted 9 November 2026))
 first differ at byte 2 in global and table register allocation; twenty
 two-global initializers (for example,
-[LEVEL_01:0x0D1800](../../nonmatching/levels/LEVEL_01_0D1800.c))
+[LEVEL_01:0x0D1800](../../src/levels/01_pokitaru/LEVEL_01_0D1800.c) (accepted 14 November 2026))
 first differ at byte 6 in global address register and store scheduling.
 Each retained C links 56 bytes. Five other already qualified compiler
 routes failed both representatives. Reopen with evidenced table layout
@@ -1186,7 +1186,7 @@ five other qualified `cc1` routes did not match. Reopen with evidenced value
 lifetimes or a narrowly qualified compiler remedy.
 
 Four pointer-condition bodies remain nonmatching (for example,
-[`LEVEL_02:0x1D2090`](../../nonmatching/levels/LEVEL_02_1D2090.c)). The retained
+[`LEVEL_02:0x1D2090`](../../src/levels/02_rykan_v/LEVEL_02_1D2090.c) (accepted 14 November 2026)). The retained
 pinned C object has the correct 36-byte length but first differs at byte 2
 in the global-pointer and result registers. Nested conditionals, ternary and
 pointer-return forms did not select the retail registers; five other
@@ -1338,7 +1338,7 @@ One pure C exemplar per group remains under `nonmatching/levels/` with its
 linked length, first difference and reopening condition. None is exact, so
 the accepted placement tables and progress reports are unchanged.
 
-The [matrix-vector calculation](../../nonmatching/levels/LEVEL_01_126078.c)
+The [matrix-vector calculation](../../src/levels/shared/LEVEL_01_126078.c) (accepted 14 November 2026)
 links to the correct 136-byte length but still differs at byte 8 after a
 source-level load-order change. The
 [bitfield decoder](../../src/levels/shared/FRONTEND_00B928.c) (accepted 9 November 2026) links to the
@@ -1601,7 +1601,7 @@ Forty-eight representative pure-C attempts for selected bodies of at most 200 by
 
 - **Register lifetimes and call ABI.** The [frontend table lookup](../../src/levels/frontend/FRONTEND_01F1A0.c) (accepted 10 November 2026) links 104/104 bytes but swaps two temporary registers from byte 62; its caller's second-argument type also needs review. The [global fade selector](../../nonmatching/levels/LEVEL_02_069E68.c) links 148/152 bytes and changes the branch at byte 8 because the global pointer and stack bound have different lifetimes. The [global state initializer](../../nonmatching/levels/LEVEL_01_035988.c) links 100/104 bytes and first differs at byte 2 in its base-register allocation.
 - **Control flow, delay slots and returns.** The [byte-store helper](../../src/levels/01_pokitaru/LEVEL_01_133FE8.c) (accepted 9 November 2026) links 132/132 bytes but lacks the retail callee-argument move in the call delay slot at byte 52. The [copy wrapper](../../src/levels/01_pokitaru/LEVEL_01_1EBBD0.c) (accepted 9 November 2026) uses the qualified `sdk991111` profile and preserves the named `memcpy` import, yet links 120/124 bytes: after an exact 92-byte prefix it emits a tail jump instead of the retail call and return. The [signed clamp](../../nonmatching/levels/LEVEL_01_0B9D20.c) links 140/140 bytes but selects a shift where retail uses a signed comparison at byte 92.
-- **Layout, aliasing and store order.** The [twelve-byte record copy](../../src/levels/shared/FRONTEND_015E68.c) (accepted 9 November 2026) links 144/140 bytes and differs from entry, leaving its alignment and copy-before-guard ABI open. The [rotation matrix](../../nonmatching/levels/LEVEL_01_123F10.c) links 144/144 bytes but first changes the sine/cosine store and float-register schedule at byte 16. The [float-state initializer](../../src/levels/01_pokitaru/LEVEL_01_0589C0.c) (accepted 9 November 2026) links 192/196 bytes; constant loading and field-store order diverge from byte 13.
+- **Layout, aliasing and store order.** The [twelve-byte record copy](../../src/levels/shared/FRONTEND_015E68.c) (accepted 9 November 2026) links 144/140 bytes and differs from entry, leaving its alignment and copy-before-guard ABI open. The [rotation matrix](../../src/levels/shared/LEVEL_01_123F10.c) (accepted 14 November 2026) links 144/144 bytes but first changes the sine/cosine store and float-register schedule at byte 16. The [float-state initializer](../../src/levels/01_pokitaru/LEVEL_01_0589C0.c) (accepted 9 November 2026) links 192/196 bytes; constant loading and field-store order diverge from byte 13.
 - **Integer width and lowering.** The [packed 64-bit field return](../../src/levels/01_pokitaru/LEVEL_01_03B368.c) (accepted 11 November 2026) reproduces the initial unaligned load/copy but links 44/72 bytes; the remaining stack-word reconstruction and masks require a faithful source form. The [partial-product multiplication](../../nonmatching/levels/LEVEL_01_1EA410.c) has the correct 96-byte length but differs at entry in multiplier and register order. The [upper-coordinate helper](../../nonmatching/levels/LEVEL_01_0AD0C0.c) links 132/132 bytes and first differs at byte 26 in the operand order of two additions; preserve the original upper-Y calculation when reopening it.
 - **Assembler and alignment.** The [bit-mask helper](../../nonmatching/levels/LEVEL_02_0413B8.c) links 152/148 bytes with the qualified per-source `ps2eeas` route and first differs at byte 6. Its register/order mismatch and final alignment word remain unresolved; the GNU assembler gives a longer result.
 
@@ -1644,7 +1644,7 @@ In this reviewed USA selection, 42 representative pure-C attempts still differ f
 
 This USA selection covers the 40–76-byte bounded candidates whose relocation-masked form had no retained attempt. Nine representative pure-C attempts still differ from retail and earn no credit; 25 other forms are byte-exact but held for ABI review. Equal length is not a match.
 
-- **Loop induction.** The [pool-slot claim](../../nonmatching/levels/LEVEL_16_15D9A8.c) and its [0x2D0-displacement sibling](../../src/levels/shared/LEVEL_16_14D788.c) (accepted 9 November 2026) link 68/68 bytes under `sdk991111`, first difference +8: the retail keeps the pool base as the induction pointer and reads the slot flag by displacement, while the compiler folds the displacement into the pointer; the pinned and `gnu-ee-trial` profiles keep a separate counter (60 bytes). Find a loop or element form that keeps the displacement out of the induction variable.
+- **Loop induction.** The [pool-slot claim](../../src/levels/shared/LEVEL_16_15D9A8.c) (accepted 14 November 2026) and its [0x2D0-displacement sibling](../../src/levels/shared/LEVEL_16_14D788.c) (accepted 9 November 2026) link 68/68 bytes under `sdk991111`, first difference +8: the retail keeps the pool base as the induction pointer and reads the slot flag by displacement, while the compiler folds the displacement into the pointer; the pinned and `gnu-ee-trial` profiles keep a separate counter (60 bytes). Find a loop or element form that keeps the displacement out of the induction variable.
 - **Address constants and register choice.** The [clamped counter decrement](../../src/levels/18_multiplayer_03/LEVEL_18_114188.c) (accepted 9 November 2026) links 68/72 bytes, first difference +4: the retail adds the 0x18 field offset after materialising the global, the compiler folds it into the address constant. The [table-entry division](../../nonmatching/levels/LEVEL_10_173168.c) needs `gnu-ee-trial-divpad` for its division and links 72/72 bytes, first difference +8, with the index product in another register. The [timer start or stop](../../src/levels/10_quodrona/LEVEL_10_19B498.c) (accepted 11 November 2026) links 68/68 bytes, first difference +4: the retail places the float zero in the second float argument register; establish that parameter from callee or caller evidence before retrying.
 - **Branch and tail layout.** The [mode selector](../../nonmatching/levels/LEVEL_22_11BBC0.c) (68/68 bytes, +28) becomes a conditional move in every measured form and profile; the [identifier test](../../nonmatching/levels/LEVEL_07_1983A8.c) (68/72 bytes, +24) lacks the retail copy of the comparison into a second result register; the [kind-to-class mapping](../../nonmatching/levels/LEVEL_03_193860.c) (68/68 bytes, +28) keeps a separate case-3 block where the retail shares one return; the [leading-entry count](../../src/levels/16_multiplayer_01/LEVEL_16_168C98.c) (accepted 9 November 2026) (68/68 bytes, +4) fills the first delay slot with the counter reset instead of the list base. Recover the original statement shapes; do not add dead code.
 
@@ -1654,9 +1654,9 @@ This USA selection covers the 40–76-byte bounded candidates whose relocation-m
 
 Parallel attempts covered the 240 smallest relocation-masked forms of 61–120 bytes that had no retained attempt. Eighty-two representative pure-C attempts still differ from retail and earn no credit; 35 of them link at a different length. The eleven closest attempts (equal length, at most four differing words) are retained under `nonmatching/levels/` with their measured first difference and a reopening condition:
 
-- **Statement and scheduling order.** [LEVEL_04:0x14F6F8](../../src/levels/04_metalis/LEVEL_04_14F6F8.c) (accepted 9 November 2026) and [LEVEL_04:0x1DDE00](../../src/levels/04_metalis/LEVEL_04_1DDE00.c) (accepted 9 November 2026) schedule a load or a constant before the counter update; [LEVEL_16:0x15D590](../../src/levels/16_multiplayer_01/LEVEL_16_15D590.c) (accepted 9 November 2026) fills its first loop delay slot differently; [LEVEL_16:0x021FA8](../../nonmatching/levels/LEVEL_16_021FA8.c) leaves empty a delay slot in which the retail copies the table pointer.
+- **Statement and scheduling order.** [LEVEL_04:0x14F6F8](../../src/levels/04_metalis/LEVEL_04_14F6F8.c) (accepted 9 November 2026) and [LEVEL_04:0x1DDE00](../../src/levels/04_metalis/LEVEL_04_1DDE00.c) (accepted 9 November 2026) schedule a load or a constant before the counter update; [LEVEL_16:0x15D590](../../src/levels/16_multiplayer_01/LEVEL_16_15D590.c) (accepted 9 November 2026) fills its first loop delay slot differently; [LEVEL_16:0x021FA8](../../src/levels/16_multiplayer_01/LEVEL_16_021FA8.c) (accepted 14 November 2026) leaves empty a delay slot in which the retail copies the table pointer.
 - **Register order.** [LEVEL_15:0x029980](../../src/levels/15_giant_clank_metalis/CORE/Lightweight/LW_Model/LEVEL_15_029980.c) (accepted 9 November 2026) differs only in the order of two prologue saves under `gnu-ee-trial`; [LEVEL_07:0x1DC8A8](../../nonmatching/levels/LEVEL_07_1DC8A8.c) swaps the registers of two float constants; [LEVEL_01:0x000A08](../../src/levels/01_pokitaru/LEVEL_01_000A08.c) (accepted 11 November 2026) swaps two table-base loads.
-- **Boolean results and addresses.** [LEVEL_18:0x15A048](../../src/levels/18_multiplayer_03/LEVEL_18_15A048.c) (accepted 9 November 2026) and [LEVEL_18:0x159CF0](../../nonmatching/levels/LEVEL_18_159CF0.c) produce a different final flag test; [LEVEL_15:0x137288](../../src/levels/15_giant_clank_metalis/LEVEL_15_137288.c) (accepted 9 November 2026) differs only in the form of one stack temporary address; [LEVEL_22:0x10EE78](../../src/levels/22_skyboard_kalidon/LEVEL_22_10EE78.c) (accepted 9 November 2026) derives its flags pointer from another register.
+- **Boolean results and addresses.** [LEVEL_18:0x15A048](../../src/levels/18_multiplayer_03/LEVEL_18_15A048.c) (accepted 9 November 2026) and [LEVEL_18:0x159CF0](../../src/levels/18_multiplayer_03/LEVEL_18_159CF0.c) (accepted 14 November 2026) produce a different final flag test; [LEVEL_15:0x137288](../../src/levels/15_giant_clank_metalis/LEVEL_15_137288.c) (accepted 9 November 2026) differs only in the form of one stack temporary address; [LEVEL_22:0x10EE78](../../src/levels/22_skyboard_kalidon/LEVEL_22_10EE78.c) (accepted 9 November 2026) derives its flags pointer from another register.
 
 **ABI holds, separately uncredited.** In the same selection and the extended accepted families, 219 placements in 63 forms link byte-exact but disagree with an accepted callee definition or accepted callers: 78 conflicts differ only between pointer and integer arguments, 64 in the argument count and 49 in whether a value is returned. Many involve shared stubs such as `FRONTEND_0025B0.c` and `FRONTEND_001E08.c`. Reopen them together by reconciling those prototypes while keeping every accepted object hash, then relink each placement and rerun the complete-module gate.
 
@@ -1771,3 +1771,26 @@ and a local-library-call control produced completely identical ELF files
 under both linker runtimes before the full-module check. Known whole-object
 alternatives address only assembler debug metadata, as documented in blocker 15.
 The provisional masked-shape denominator and runtime-behavior limitations remain.
+
+### USA bodies of at most 200 bytes (14 November 2026)
+
+Every open level body of at most 200 bytes (1,154 relocation-masked forms, every
+candidate kind) and every open boot interval of at most 200 bytes outside the
+sound, wad, camera and mailbox prefixes (265) was attempted once more. **Levels:**
+713 forms were exact; 2,460 placements are accepted. 770 placements in 60 forms
+stay held because a placement declares a callee unlike its accepted definition
+(mostly a different argument list) or is defined unlike the declaration of an
+accepted caller (mostly an `int` result that the caller declares `void`); one
+representative of 50 of these forms is retained under `nonmatching/levels/` with
+the disagreement in its header, for a prototype reconciliation that edits the
+accepted side. 189 near misses within 30 differing words are retained there too.
+**Boot:** 124 bodies were exact; 118 are accepted. Six stay out:
+`radfsqrt` is exact only with `-ffast-math`, a per-source option without a
+measured cause yet; `sn_dereg_frame` ends 4 bytes past an 8-byte boundary with a
+nonzero word after it, so no aligned owner fits; the `sceKernelGetSystemTimeWide__Fv`
+interval holds a second, unnamed body at `0x01E863A8`, and one owner may hold only
+one catalogued body; `sceScfGetLocalTimefromRTC`, `LoadExecPS2` and
+`sceSifInitRebootNotify` end in a tail jump, and the boot gate counts only bodies
+that end in a normal return. The 34 nonmatching bodies of `0x01EC8400`-`0x01ED0EE0`
+are kernel system-call stubs that no C reproduces. 51 boot near misses within 30
+differing words are retained under `nonmatching/boot/`.

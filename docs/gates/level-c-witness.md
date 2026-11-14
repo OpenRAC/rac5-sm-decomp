@@ -1266,3 +1266,19 @@ default assembler) and are recorded in `config/levels/compiler_trial.json`. 112
 of the new sources are boot twins and carry the boot symbol. All 21 complete USA
 modules remain exact; no PAL placement is counted, and the distinct-function
 denominator remains unqualified.
+
+USA level bodies of at most 200 bytes, offered to new C across every candidate
+kind on 14 November 2026, add **2,460 placements** (216,996 bytes by placement):
+753 placements of 355 authored sources and 1,707 address variants generated from
+them with each level's callee and data names. Each placement links exactly and all
+21 complete USA modules remain exact. Counted by masked shape, accepted level
+bodies rise from 795,872 bytes in 6,248 shape units to 831,516 bytes in 6,632.
+2,366 placements use the pinned chain, 50 the qualified `sdk991111` profile, 32
+`gnu-ee-trial` and 12 `gnu-ee-trial-divpad`; four authored sources (75
+placements) are exact only with the qualified `ps2eeas` assembler (with the
+default assembler none of the four is exact) and are recorded in
+`config/levels/compiler_trial.json`. 213 sources are boot twins and carry the boot
+symbol; 93 retained attempts whose placements are now accepted left
+`nonmatching/levels/`. The prototype review finds 1,917 disagreeing caller/callee
+source pairs on `master` and the same 1,917 here, none introduced. No PAL
+placement is counted, and the distinct-function denominator remains unqualified.
