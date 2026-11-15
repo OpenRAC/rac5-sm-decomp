@@ -316,6 +316,34 @@ evidence of those live ranges, rather than repeating the tested local forms.
 compared positions agree, first difference +0x21. Its next useful experiment
 is recovery of the list/end-pointer representation, not a global profile change.
 
+A bounded follow-up on 15 November retained the same `PAR_Reset` attempt:
+keeping the block base live through direct field accesses and an explicit
+next-block value, then two store-order forms, still emits 232/236 bytes with
+first difference +0x21. Store order alone does not explain the missing body
+bytes or the extra live list-head value. Do not repeat those three forms.
+
+Two further retained boot sources reproduce their measured bodies after
+independent SN links: [`dlib_displist_set_texture_state`](../../nonmatching/boot/dlib_displist_set_texture_state__FP13DLIB_DISPLISTiUlUlUlUl.c)
+(204 bytes plus one zero alignment word, default GNU and `gnu-ee-trial`) and
+[`AdjustDLISTSize`](../../nonmatching/boot/AdjustDLISTSize__FUiPP6QWdataPUi.c)
+(240 bytes, default GNU). Both use `-O2 -G0` and the default GNU assembler;
+`AdjustDLISTSize` under `gnu-ee-trial` emits 244 bytes, 113 equal positions
+in the compared 240-byte prefix, first difference +0x58 in loop padding.
+The buffer-size fallback, optional outputs and original count expression
+are preserved; buffer capacity and local prefix types still need review.
+The combined nine-candidate experiment passed a fresh complete boot gate
+on the same master: 849 exact objects, 498,900 exact text bytes, 809,872
+exact load bytes and the full 856,120-byte ELF exact. The 820 accepted
+bodies stayed unchanged. This used unpinned tools; temporary metadata
+and flags were restored after archiving and no body was promoted.
+
+[`Quat_ConvertToMatrixInternal<MATRIX4>`](../../nonmatching/boot/Quat_ConvertToMatrixInternal__H1Z7MATRIX4_PX01PC4QUAT_v.c)
+remains nonmatching: 184 compiled/retail bytes, 98 equal positions, first
+difference at entry under the default GNU route and `gnu-ee-trial`. Earlier
+diagonal-first stores gave 81/184, first +2; capturing input components did
+not change that object. Natural matrix row order is retained. Reopen with
+evidence for coefficient temporary lifetimes or FP register allocation.
+
 Before promotion, review the local prefix types and caller domains.
 The seven direct `HIT_fread` callers use nonzero unit sizes, but indirect
 callers and extreme size-zero callback results leave division semantics open.
@@ -343,6 +371,14 @@ stay in the assembly baseline and receive no C credit from that body.
 Its temporary replacement ends at `0x01E755D0`; the further stack adjustment
 and zero word through `0x01E755D8` remain unexplained baseline bytes.
 Do not claim that entire next-label interval as a 272-byte C body.
+
+**USA boot quaternion boundary, 15 November 2026.** The named matrix
+conversion at `0x01E77F00` returns through `0x01E77FB8` (184 bytes), without
+an outgoing edge into its 56-byte nonzero tail. That tail has a distinct
+entry at `0x01E77FB8`, called by the accepted static initializer wrapper
+at `0x01E77FF0`; it remains in the baseline. There is no direct outside edge
+to the conversion's interior. The 240-byte next-label interval therefore
+does not describe a 240-byte matrix conversion body.
 
 **Internal join versus trailing alignment, 13 November 2026.** The retained
 [148-byte body at LEVEL_16:0x16BB98](../../nonmatching/levels/LEVEL_16_16BB98.c)
