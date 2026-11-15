@@ -95,6 +95,21 @@ retail copies pointer parameters with `daddu rd,rs,$zero`, a 64-bit copy, where 
 emits a 32-bit `move`. A tie that survives three formulations is a stopping signal, not a prompt
 for a fourth identical trial.
 
+**Boot measurements, 14 November 2026.** Two source causes behind "only the registers differ".
+(1) The declared return type of a callee: when a call's value is unused, a callee declared
+`int` keeps the result register out of reach of the next value computed after the call, where
+a `void` callee lets the compiler reuse it.
+[`GLOBALWAD_LoadPlayerWad`](../../nonmatching/boot/GLOBALWAD_LoadPlayerWad__F13PlayerWadType.c)
+goes from 509 to 512 of 512 bytes when `HIT_fclose__FPi` is declared `int`; the accepted source
+defines it `void` around a call whose value stays in the result register, so the prototype needs
+reconciling before integration. (2) One variable per value: giving the "active system" pointer
+of [`CAMERA_Update`](../../nonmatching/boot/CAMERA_Update__Fv.c) its own variable, instead of
+reusing the loop's, lets its address arithmetic share its register as retail does; and in
+[`SND_PlayPositionalSound`](../../nonmatching/boot/SND_PlayPositionalSound__FP14SND_PositionalUi.c)
+the order of two independent reads decides which saved register each gets (386 to 392 of 392
+under `gnu-ee-trial`). These are exact local witnesses after independent SN links, not accepted
+matches.
+
 ### Blocker 02
 
 The delay slot's filler and argument order. Symptom: an argument load or an input store sits one
@@ -134,6 +149,19 @@ the global (`float *dst = &D_00383770;`) keeps the page alive across a call and 
 materialisation **before** the call, in a callee-saved register, as the retail does. A field at
 `+0x10` is often a **distinct symbol**, not a member of the first object.
 
+**Boot camera unit, 14 November 2026.** The same remedy applies to the boot's current-camera
+pointer at `0x01EDE330`: declared as the single member of a record, it is reloaded after every
+member store, float stores included, as retail does. With it
+[`CAMERA_PreUpdate`](../../nonmatching/boot/CAMERA_PreUpdate__Fv.c) (114 to 144 of 144 bytes) and
+[`CAMERA_Update`](../../nonmatching/boot/CAMERA_Update__Fv.c) (255 to 444 of 444) are exact local
+witnesses under the rebuilt default route and `gnu-ee-trial`, and
+[`CAMERA_Reset`](../../nonmatching/boot/CAMERA_Reset__Fv.c) and
+[`CAMERA_SetFovX`](../../nonmatching/boot/CAMERA_SetFovX__Ff.c) need no byte-offset casts. The
+camera count in the next word is a distinct symbol: a two-member record shares one address
+register between both and loses retail's second `lui`. Two adjacent stores through one pointer
+value come out in the opposite order to the source in both `CAMERA_Update` and
+`CAMERA_SetFovX`.
+
 ### Blocker 06
 
 Sixteen-byte copies: a scalar `TImode` value. Measured: `lq`/`sq` come from the `movti_internal`
@@ -169,6 +197,15 @@ the compiler is. `tools/compiler/patches/0002-rac5-div-pad.patch` and
 `0003-rac5-upstream-saves-divpad.patch` define the `gnu-ee-trial-divpad` profile (cc1
 `d7f3fb64…`), which reproduced the 20 `Quat_Slerp` placements without regression on the 177
 accepted level sources (PR #97). `sdk-divpad` is the same idea for the SDK compiler.
+
+**Boot camera unit, 14 November 2026.** `gnu-ee-trial-divpad` pads every division. Retail boot
+code does not: in [`CAMERA_SetFovX`](../../nonmatching/boot/CAMERA_SetFovX__Ff.c) the square root
+after a subtraction has its two `nop`, while the division whose divisor the previous instruction
+has just loaded from memory has none. That source is instruction-for-instruction retail under
+this profile except for those two extra `nop` (241 of 280 bytes).
+[`CAMERA_Reset`](../../nonmatching/boot/CAMERA_Reset__Fv.c) is 452 of 452 under the same
+profile, which has no boot route, and 442 of 452 under the default route (prologue order only).
+Reopen with a measured padding rule and regression controls on the accepted level sources.
 
 ### Blocker 10
 
