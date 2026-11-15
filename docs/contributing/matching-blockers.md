@@ -283,6 +283,48 @@ The same profile left 498 other retained C bodies nonmatching in a 500-body
 comparison, so these two results do not justify a global compiler switch.
 Regenerate `progress/status.json` after changing source profiles.
 
+**Retained USA boot sources, 15 November 2026.** Seven sources under
+`nonmatching/boot/` reproduce their complete measured bodies in independent
+SN links with rebuilt GNU tools, `-O2 -G0`: `SYSTEM_SetDepthWrite__Fb`
+(240 bytes), `HIT_fread__FPvUiUiPi` (212), `TEXMGR_Initialize__Fv` (248),
+`VRAM_InitGraphics__Fv` (208), `MCPFONT_RegisterFontTextures__Fv` (216),
+`VEC_MakeMatFromYawPitchRoll__FP4VEC3N20fff` (208) and
+`Spiral_EmitJoint__FP12Spiral_GroupPC12Spiral_Pointb` (260). The last two
+need `gnu-ee-trial` for save order; the others also reproduce under the
+default route. `HIT_fread` additionally needs the existing
+`-mno-check-zero-division` option. These are retained, unaccepted sources;
+rebuilt tools do not qualify the profile or earn C credit.
+
+A temporary integration on master `37b245c6b` passed the complete boot gate:
+847 exact objects, 498,900 exact text bytes, 809,872 exact raw load bytes and
+the complete 856,120-byte ELF exact. Its 820 accepted bodies (108,824 bytes)
+were unchanged. The run used `--unpinned-tools`; the temporary integration
+and catalogue changes were removed from the retained-source contribution.
+Requalification and semantic review remain necessary before promotion.
+
+Useful source constraints: materializing the returned texture before
+publishing it resolves `TEXMGR_Initialize`'s address lifetime; member-store
+order resolves `VRAM_InitGraphics` (195/208, then 206/208, then exact).
+The retained font-width attempts remain different: `MCPFONT_FontStringPixelLength`
+emits 216 bytes against 208, 63 equal positions in the compared prefix,
+first difference +0x1C (hoisted constant and an extra saved register);
+`MCP_FontStringPixelLength` emits 216/216 bytes, 202 equal positions,
+first difference +0x31 (index/width register allocation). Reopen with new
+evidence of those live ranges, rather than repeating the tested local forms.
+`PAR_Reset__Fv` emits 232 bytes under the default route and 236 under
+`gnu-ee-trial`, against 240 retail bytes; respectively 101/232 and 104/236
+compared positions agree, first difference +0x21. Its next useful experiment
+is recovery of the list/end-pointer representation, not a global profile change.
+
+Before promotion, review the local prefix types and caller domains.
+The seven direct `HIT_fread` callers use nonzero unit sizes, but indirect
+callers and extreme size-zero callback results leave division semantics open.
+The direct `VRAM_InitGraphics` caller establishes the allocator's initial
+state; invalid or indirect entry states remain unproven. `Spiral_EmitJoint`
+requires nonempty, sufficiently allocated point storage, whose complete
+caller invariant is not yet established. Preserve the one-time font
+registration flag and its failed-lookup behavior.
+
 ### Blocker 18
 
 Body boundaries, `next_label` and alignment. Measured: a compiled prefix or a `next_label`
@@ -294,6 +336,13 @@ Fourteen boot bodies promoted on 2 November 2026 end before their next code labe
 each has a normal return, no direct branch from its body into the remaining
 interval and no direct edge from outside into its interior. The later bytes
 stay in the assembly baseline and receive no C credit from that body.
+
+**USA boot Spiral boundary, 15 November 2026.** The retained
+`Spiral_EmitJoint__FP12Spiral_GroupPC12Spiral_Pointb` body occupies
+`0x01E754C8..0x01E755CC` (260 bytes), followed by one zero alignment word.
+Its temporary replacement ends at `0x01E755D0`; the further stack adjustment
+and zero word through `0x01E755D8` remain unexplained baseline bytes.
+Do not claim that entire next-label interval as a 272-byte C body.
 
 **Internal join versus trailing alignment, 13 November 2026.** The retained
 [148-byte body at LEVEL_16:0x16BB98](../../nonmatching/levels/LEVEL_16_16BB98.c)
