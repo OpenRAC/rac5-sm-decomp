@@ -107,8 +107,11 @@ of [`CAMERA_Update`](../../nonmatching/boot/CAMERA_Update__Fv.c) its own variabl
 reusing the loop's, lets its address arithmetic share its register as retail does; and in
 [`SND_PlayPositionalSound`](../../nonmatching/boot/SND_PlayPositionalSound__FP14SND_PositionalUi.c)
 the order of two independent reads decides which saved register each gets (386 to 392 of 392
-under `gnu-ee-trial`). These are exact local witnesses after independent SN links, not accepted
-matches.
+under `gnu-ee-trial`). (3) Naming the object again:
+[`GLOBALWAD_SplitWadToIOP`](../../nonmatching/boot/GLOBALWAD_SplitWadToIOP__FP10WAD_HEADERPvUiRUi.c)
+goes from 270 to 360 of 360 bytes when its sizing loop reads `wad->entries[i]` although a local
+already holds `wad->entries`; the repeated address becomes the register copy retail keeps before
+the loop. These are exact local witnesses after independent SN links, not accepted matches.
 
 ### Blocker 02
 
@@ -206,6 +209,17 @@ this profile except for those two extra `nop` (241 of 280 bytes).
 [`CAMERA_Reset`](../../nonmatching/boot/CAMERA_Reset__Fv.c) is 452 of 452 under the same
 profile, which has no boot route, and 442 of 452 under the default route (prologue order only).
 Reopen with a measured padding rule and regression controls on the accepted level sources.
+A private rule that skips the padding after a load of either operand makes `CAMERA_SetFovX`
+exact but changes one accepted level body at its 20 placements (a divisor constant loaded just
+before a padded division), so that form is refuted.
+
+The existing level profile `gnu-ee-trial-divpad-blockmove` also reproduces
+[`GLOBALWAD_CopyAndFix`](../../nonmatching/boot/GLOBALWAD_CopyAndFix__FP15WAD_FILE_HEADERRP15WAD_FILE_HEADERPvUiRUi.c)
+(448 of 448; 230 under the default route, which pads its two record-copy loops), and every
+other boot witness of this date: `CAMERA_PreUpdate`, `CAMERA_Update`, `CAMERA_Reset`,
+`GLOBALWAD_LoadPlayerWad`, `GLOBALWAD_SplitWadToIOP` and the record overload of
+`SND_PlayPositionalSound`. One profile covering these camera, WAD and sound bodies is evidence
+for a boot route of that family; it is not a qualification.
 
 ### Blocker 10
 
