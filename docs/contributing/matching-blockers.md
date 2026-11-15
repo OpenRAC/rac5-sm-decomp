@@ -378,12 +378,19 @@ The earlier retained row-order source gave 98/184 equal positions, first
 difference at entry; diagonal-first stores gave 81/184, first +2, and
 capturing input components alone did not change that object. Those are
 superseded measurements, not a reason to alter the compiler. The new
-candidate has not been integrated into a complete boot gate: the prior
-849-object gate covers only the other nine candidates. A later integration
-must remove the canonical quaternion's absolute linker alias so that the
-compiled body owns it, while retaining the distinct `func_1E77FB8` alias.
-Qualification and complete-program verification remain pending; no C credit
-is added.
+candidate was then included in a temporary complete-boot integration with
+the other nine: **850 exact objects, 498,900 exact text bytes, 809,872 exact
+load bytes and the complete 856,120-byte ELF exact**. The canonical
+quaternion's absolute alias was removed for that experiment; its real
+compiled function symbol owns all 184 bytes, while the distinct
+`func_1E77FB8` alias and following initializer stay separate. All 840 prior
+replacement records and the 820 accepted bodies were unchanged. All ten
+candidates passed the mechanical promotion audit as ready for semantic
+review. The receipt, manifest, attribution checks and exact integration
+patch were archived, then the temporary metadata and flags were restored.
+This supersedes the earlier nine-candidate-only gate limit, but still uses
+unpinned tools: qualification and promotion remain pending, with no C credit
+added.
 
 All four quaternion components are read before the first output store.
 The internal body writes slots `0,1,2,4,5,6,8,9,10`; the accepted wrapper
