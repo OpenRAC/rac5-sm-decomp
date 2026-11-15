@@ -111,7 +111,15 @@ under `gnu-ee-trial`). (3) Naming the object again:
 [`GLOBALWAD_SplitWadToIOP`](../../nonmatching/boot/GLOBALWAD_SplitWadToIOP__FP10WAD_HEADERPvUiRUi.c)
 goes from 270 to 360 of 360 bytes when its sizing loop reads `wad->entries[i]` although a local
 already holds `wad->entries`; the repeated address becomes the register copy retail keeps before
-the loop. These are exact local witnesses after independent SN links, not accepted matches.
+the loop. In the same way
+[`SND_FadeAllATRAC`](../../nonmatching/boot/SND_FadeAllATRAC__Fff.c) (116 of 116 under
+`gnu-ee-trial`) is an indexed loop that names `g_AtracInstances[i]` at both calls, where a
+walking pointer moved the increment across the test. (4) Loop shape read from the control flow:
+[`SND_StopSoundsImmediate`](../../nonmatching/boot/SND_StopSoundsImmediate__Fb.c) goes from 176
+to 356 of 356 bytes as `while (flush() || busy)` with `busy` set at its declaration and an
+`int`-indexed scan; a signed comparison of two addresses at a loop end is the mark of a signed
+index, not of a pointer walk. These are exact local witnesses after independent SN links, not
+accepted matches.
 
 ### Blocker 02
 
