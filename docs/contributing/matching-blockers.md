@@ -330,7 +330,33 @@ independent SN links: [`dlib_displist_set_texture_state`](../../nonmatching/boot
 `AdjustDLISTSize` under `gnu-ee-trial` emits 244 bytes, 113 equal positions
 in the compared 240-byte prefix, first difference +0x58 in loop padding.
 The buffer-size fallback, optional outputs and original count expression
-are preserved; buffer capacity and local prefix types still need review.
+are preserved. The direct boot path's capacity is corroborated below;
+arbitrary inputs and local prefix types still need review.
+
+**Buffer semantics, reviewed 15 November 2026 ([PR #274](https://github.com/OpenRAC/rac5-sm-decomp/pull/274)).** `g_dlibBufferSize` is a
+one-list count N of 16-byte elements. The initializer at `0x01E93A68`
+allocates 32N bytes with requested 64-byte alignment; its direct boot
+initialization chain passes N=`0x16000`. The two direct cache-allocation
+sites (`0x01E65DA4`, `0x01E66BA0`) request `0x200000` bytes.
+`UpdateBufferCacheState` selects S=`0x6000` elements per list, leaving
+exactly that cache tail in the `0x2C0000`-byte allocation, assuming
+successful allocation and normal initialization. The optional count output
+is nevertheless `0x260000`, overstating that tail by `0x60000`; the reviewed
+caller discards it. Preserve the expression and do not describe its result
+as remaining capacity. Arbitrary requests can wrap or yield S=0, which
+selects the original N-sized lists. Allocation failure, alias writes and
+indirect or imported use remain outside this direct-path proof.
+
+**Texture-state storage, reviewed 15 November 2026.** All five direct boot
+sites select mode 1 and pass the same four 64-bit payloads. For a well-formed
+16-byte-aligned list, the helper advances its cursor by seven quadwords
+(112 bytes): two framing words, four payload pairs and a reserved next-tag
+slot. Six new quadwords are written; the old chain tag is separately
+copied/backpatched, while the final slot is reserved without a store.
+The retail stored template gives a four-pair count, but it resides in
+writable data; its runtime value is not proved invariant. The helper chain
+does not check capacity or previously open packet state. Valid prior tag
+storage, a suitable template and caller headroom remain review obligations.
 The combined nine-candidate experiment passed a fresh complete boot gate
 on the same master: 849 exact objects, 498,900 exact text bytes, 809,872
 exact load bytes and the full 856,120-byte ELF exact. The 820 accepted
@@ -341,8 +367,20 @@ and flags were restored after archiving and no body was promoted.
 remains nonmatching: 184 compiled/retail bytes, 98 equal positions, first
 difference at entry under the default GNU route and `gnu-ee-trial`. Earlier
 diagonal-first stores gave 81/184, first +2; capturing input components did
-not change that object. Natural matrix row order is retained. Reopen with
-evidence for coefficient temporary lifetimes or FP register allocation.
+not change that object. Natural matrix row order is retained. For a
+concrete later retry, compare the nine product temporaries already accepted
+in [`LEVEL_06_119B10.c`](../../src/levels/shared/LEVEL_06_119B10.c), adapting
+its packed MATRIX3 output to the boot's four-float MATRIX4 stride. That
+source has the same expressions but cannot be transplanted unchanged; no
+new matching measurement was performed in this semantic review.
+
+All four quaternion components are read before the first output store.
+The internal body writes slots `0,1,2,4,5,6,8,9,10`; the accepted wrapper
+fills the other seven slots, completing all sixteen floats. No normalization
+occurs, and this review establishes no unit-norm input invariant. The input
+snapshot permits ordinary overlap of valid readable/writable storage at the
+machine level; do not invent a disjointness requirement. Storage alignment
+and C object-lifetime/effective-type obligations still apply.
 
 Before promotion, review the local prefix types and caller domains.
 The seven direct `HIT_fread` callers use nonzero unit sizes, but indirect
@@ -378,7 +416,11 @@ an outgoing edge into its 56-byte nonzero tail. That tail has a distinct
 entry at `0x01E77FB8`, called by the accepted static initializer wrapper
 at `0x01E77FF0`; it remains in the baseline. There is no direct outside edge
 to the conversion's interior. The 240-byte next-label interval therefore
-does not describe a 240-byte matrix conversion body.
+does not describe a 240-byte matrix conversion body. A further aligned
+absolute-word scan of nonexecuting boot sections found only `.sndata`
+references to the conversion entry and static wrapper, none to the body's
+interior. This does not exclude constructed pointers or relocated level
+references and is not a universal indirect-entry proof.
 
 **Internal join versus trailing alignment, 13 November 2026.** The retained
 [148-byte body at LEVEL_16:0x16BB98](../../nonmatching/levels/LEVEL_16_16BB98.c)
