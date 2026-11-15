@@ -342,6 +342,43 @@ The same profile left 498 other retained C bodies nonmatching in a 500-body
 comparison, so these two results do not justify a global compiler switch.
 Regenerate `progress/status.json` after changing source profiles.
 
+**Boot memory-card helpers, 15 November 2026.** Four retained USA boot sources replace the
+14 November trials of the same names, measured after an independent SN link at their retail
+addresses under the rebuilt default GNU route, `gnu-ee-trial` and `sdk991111`, all with
+`-O2 -G0` and the same GNU assembler; the three routes agree on every linked text. Trials that
+kept one local copy, one pointer or a bitfield came out short: the setters lost a byte mask
+that retail keeps, the header updater lost two pointer copies.
+
+The cause is the source shape, not the compiler. Retail matches code that names the stored
+object again in each statement. For the
+[Dan-skin setter](../../nonmatching/boot/MEMCARD_SetDanSkinUnlocked__FUi.c) and
+[widescreen setter](../../nonmatching/boot/MEMCARD_SetWideScreenToMemcard__FUi.c),
+`flags &= ~BIT;` followed by `flags |= (enabled ? BIT : 0);` on the stored byte itself gives
+all 36 bytes: the second statement reuses the value the first one stored, the masked value
+therefore has two uses, and the byte extension between the two masks cannot be merged away.
+For the [header updater](../../nonmatching/boot/MEMCARD_SetHeaderDetail__FUiUiUiUiUi.c), four
+assignments that each index the header array again give all 52 bytes: the repeated address
+computations become register copies that stay separate. These three are exact local witnesses,
+not accepted matches. When a small accessor keeps a redundant mask, extension or register
+copy, try the repeated-object form before suspecting the compiler.
+
+The [hardcore setter](../../nonmatching/boot/MEMCARD_SetHardcoreModeBit__FUib.c) has the same
+two statements and is 48 compiled bytes, 30 equal positions, first difference at byte 16. Its
+mangled name carries a C++ `bool` parameter. Retail keeps a conditional move on the raw
+argument; a C `int` argument turns `enabled ? 1 : 0` into a comparison result that is ORed in.
+With a real `bool` parameter, the C++ front ends of three locally available SN packages
+(2.9-ee-991111, 2.95.2 and ProDG 2.95.3) each produce all 48 retail bytes from those two
+statements. The boot gate has no C++ route; this is the first boot body measured to need one,
+and `_GLOBAL_$I$SYSTEMS_memcard_ps2.cppBRcaaa` shows the unit was C++. Reopen when a C++ front
+end is qualified for boot sources.
+
+The [saving query](../../nonmatching/boot/MEMCARD_Saving__Fv.c) is unchanged: retail computes
+the comparison in one register and copies it to the result. About sixty C and C++ spellings of
+the same test (conditional expressions, `switch`, `goto`, inline helpers, `bool`, wider or
+narrower result types) give either the 48-byte form or an early-return form.
+`SND_IsATRACPaused__FP13ATRACInstance` has the same extra copy. Reopen with evidence for a
+second use of the comparison value or for the original helper structure.
+
 ### Blocker 18
 
 Body boundaries, `next_label` and alignment. Measured: a compiled prefix or a `next_label`
