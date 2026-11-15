@@ -1,19 +1,21 @@
 /* USA SCUS_976.15 boot, 0x01E77F00..0x01E77FB8: 184-byte body.
- * Reconstructed from the owner's retail code and the accepted named wrapper.
+ * Adapted from this repository's accepted LEVEL_06_119B10.c. Its explicit
+ * nine-product order and input snapshot are retained; the packed MATRIX3
+ * output is mapped to the measured four-float MATRIX4 row/column stride.
+ * Independent SN links reproduce all 184 body bytes under rebuilt default
+ * GNU and gnu-ee-trial, -O2 -G0, default GNU assembler. This supersedes the
+ * earlier 98/184 attempt without changing the compiler or adding C tricks.
  * The 240-byte next-label interval also contains a separately called 56-byte
- * static initializer. Those bytes are excluded; this body returns before it.
- * No direct outside branch enters this body's interior. MATRIX4 and QUAT
- * match the wrapper's 16-float/four-float definitions; only the nine rotation
- * coefficients are written here, with no normalization or translation stores.
- * Rebuilt default GNU and gnu-ee-trial, -O2 -G0, default GNU assembler,
- * independent SN links: 184 compiled bytes, 98/184 equal positions, first
- * difference at entry in input-load/register scheduling. Three source forms
- * were bounded: publishing the last diagonal first gives 81/184, first +2;
- * explicitly capturing quaternion components gives the same object; natural
- * matrix row order gives this retained result. No register binding or dummy
- * operation was used. Reopen with evidence for coefficient temporary
- * lifetimes or an independently measured floating-point allocation cause.
- * Not exact; no complete-program gate, promotion or matching credit.
+ * static initializer. It is excluded and remains in the assembly baseline.
+ * The accepted wrapper corroborates the 16-float matrix and four-float
+ * quaternion definitions and fills the other seven matrix slots itself.
+ * All quaternion components are captured before output stores; no restrict
+ * or disjointness requirement is added. Valid readable/writable storage,
+ * alignment and C object-lifetime/effective-type obligations still apply.
+ * This body evaluates the original polynomial without normalization; no
+ * unit-norm input invariant or universal indirect-entry proof is claimed.
+ * Local exactness with rebuilt tools is not qualification or promotion.
+ * No new complete-program gate or C matching credit is claimed here.
  */
 typedef struct { float m[16]; } MATRIX4;
 typedef struct { float x, y, z, w; } QUAT;
@@ -23,16 +25,17 @@ void Quat_ConvertToMatrixInternal__H1Z7MATRIX4_PX01PC4QUAT_v(MATRIX4 *m, const Q
     float x = q->x;
     float y = q->y;
     float z = q->z;
-    float xx = x * x;
     float w = q->w;
+    float xx = x * x;
     float yy = y * y;
     float zz = z * z;
-    float xw = x * w;
-    float zw = z * w;
     float xy = x * y;
-    float yw = y * w;
     float xz = x * z;
+    float xw = x * w;
     float yz = y * z;
+    float yw = y * w;
+    float zw = z * w;
+
     m->m[0] = 1.0f - 2.0f * (yy + zz);
     m->m[1] = 2.0f * (xy + zw);
     m->m[2] = 2.0f * (xz - yw);

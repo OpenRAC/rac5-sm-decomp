@@ -364,15 +364,26 @@ bodies stayed unchanged. This used unpinned tools; temporary metadata
 and flags were restored after archiving and no body was promoted.
 
 [`Quat_ConvertToMatrixInternal<MATRIX4>`](../../nonmatching/boot/Quat_ConvertToMatrixInternal__H1Z7MATRIX4_PX01PC4QUAT_v.c)
-remains nonmatching: 184 compiled/retail bytes, 98 equal positions, first
-difference at entry under the default GNU route and `gnu-ee-trial`. Earlier
-diagonal-first stores gave 81/184, first +2; capturing input components did
-not change that object. Natural matrix row order is retained. For a
-concrete later retry, compare the nine product temporaries already accepted
-in [`LEVEL_06_119B10.c`](../../src/levels/shared/LEVEL_06_119B10.c), adapting
-its packed MATRIX3 output to the boot's four-float MATRIX4 stride. That
-source has the same expressions but cannot be transplanted unchanged; no
-new matching measurement was performed in this semantic review.
+is now a **local exact candidate, 15 November 2026**. Adapting the explicit
+nine-product order and input snapshot already accepted in
+[`LEVEL_06_119B10.c`](../../src/levels/shared/LEVEL_06_119B10.c), with its
+packed MATRIX3 outputs mapped to the boot's four-float MATRIX4 stride,
+reproduces 184/184 bytes on the first retry. Independent SN links under
+rebuilt default GNU and `gnu-ee-trial`, `-O2 -G0`, default GNU assembler,
+agree. Both objects and linked ELFs have actual 184-byte text sections and
+184-byte non-absolute function symbols; no trimming, relocation or undefined
+external is involved. The separately called 56-byte initializer is excluded.
+
+The earlier retained row-order source gave 98/184 equal positions, first
+difference at entry; diagonal-first stores gave 81/184, first +2, and
+capturing input components alone did not change that object. Those are
+superseded measurements, not a reason to alter the compiler. The new
+candidate has not been integrated into a complete boot gate: the prior
+849-object gate covers only the other nine candidates. A later integration
+must remove the canonical quaternion's absolute linker alias so that the
+compiled body owns it, while retaining the distinct `func_1E77FB8` alias.
+Qualification and complete-program verification remain pending; no C credit
+is added.
 
 All four quaternion components are read before the first output store.
 The internal body writes slots `0,1,2,4,5,6,8,9,10`; the accepted wrapper
