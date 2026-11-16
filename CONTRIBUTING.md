@@ -69,6 +69,27 @@ progress from symbol names.
   Keep useful variants under `nonmatching/` with their provenance, without
   turning them into matching credit.
 
+## Checking documentation links
+
+Run `python tools/check_doc_links.py` to check relative Markdown destinations in
+`README.md`, `LEGAL.md`, `CONTRIBUTING.md` and `docs/**/*.md`. It needs only
+Python's standard library and no game inputs. Diagnostics use repository-relative
+source paths and line numbers; exit status is 1 when a destination is missing or
+outside the repository, otherwise 0. Existing directories are valid destinations.
+
+The scanner supports inline links/images, balanced parentheses, angle-delimited
+paths and single-line reference definitions (full, collapsed and shortcut uses).
+It decodes URL escapes and HTML entities, and ignores query strings and fragments
+when checking existence. External URLs, site-absolute paths and anchor-only links
+are skipped. Code spans, standalone fenced/indented code and HTML comments are
+ignored. This is not a complete CommonMark parser: nested block containers,
+multiline reference definitions and HTML links are outside its scope. It does not
+verify anchors, external resources, spelling case on case-insensitive filesystems,
+or whether a linked file supports the surrounding claim.
+
+This is a manual audit tool, not a CI gate. Review each finding before changing
+a reference; a missing historical source is not evidence for a replacement path.
+
 ## Review and promotion
 
 For boot candidates, run the [promotion audit](docs/gates/boot-promotion.md) after the

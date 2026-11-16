@@ -229,6 +229,35 @@ other boot witness of this date: `CAMERA_PreUpdate`, `CAMERA_Update`, `CAMERA_Re
 `SND_PlayPositionalSound`. One profile covering these camera, WAD and sound bodies is evidence
 for a boot route of that family; it is not a qualification.
 
+**Boot positional sound update, 13 November 2026.** The retained
+[candidate at `0x01E92B40`](../../nonmatching/boot/func_1E92B40.c) reproduces its
+proposed 560-byte extent in an independent SN link under rebuilt
+`gnu-ee-trial-divpad -O2 -G0`. On the same source, the default rebuilt GNU
+route emits 552 bytes with 453 equal byte positions in the compared prefix,
+first difference `+0x10`; `sdk-divpad` emits 560 bytes with 538 equal positions,
+first difference at entry. Division padding alone therefore does not explain
+all differences between these compiler bases. The unsigned all-ones handle
+sentinel, distinct volume-variable lifetimes and initialization order of the
+two addressable output words account for the measured source changes.
+
+A private per-source extension trial recompiled all 714 objects and reproduced
+the complete 856,120-byte boot ELF exactly. All 713 previous source/object pins
+and accepted-object routes were preserved. The run used `--unpinned-tools` and
+does not qualify this boot placement or expand the profile's documented scope.
+The GNU profile remains level-only in the committed metadata; the trial's
+replacement, selector and generated catalogue changes are not included here.
+
+Reopen integration with explicit profile-scope review, verified recipe/tool
+provenance, existing-object regression controls and a qualified complete boot
+gate; do not change the global route. The reconstructed wrapper declarations
+follow their accepted definitions, including the callback wrapper's word-based
+address parameters. The two direct callers pass one record pointer, ignore the
+return and iterate 64 records with stride `0x58`. Direct-flow and limited
+address-reference scans support `0x01E92B40..0x01E92D70` as a provisional owner;
+other indirect entries and original source types remain review obligations.
+The following eight bytes retain unknown ownership in the assembly baseline
+and are excluded from this source. No C is promoted.
+
 ### Blocker 10
 
 `movn`. An earlier note called it inaccessible; a 23 October 2026 measurement gives a source
@@ -379,6 +408,145 @@ narrower result types) give either the 48-byte form or an early-return form.
 `SND_IsATRACPaused__FP13ATRACInstance` has the same extra copy. Reopen with evidence for a
 second use of the comparison value or for the original helper structure.
 
+**Retained USA boot sources, 15 November 2026.** Seven sources under
+`nonmatching/boot/` reproduce their complete measured bodies in independent
+SN links with rebuilt GNU tools, `-O2 -G0`: `SYSTEM_SetDepthWrite__Fb`
+(240 bytes), `HIT_fread__FPvUiUiPi` (212), `TEXMGR_Initialize__Fv` (248),
+`VRAM_InitGraphics__Fv` (208), `MCPFONT_RegisterFontTextures__Fv` (216),
+`VEC_MakeMatFromYawPitchRoll__FP4VEC3N20fff` (208) and
+`Spiral_EmitJoint__FP12Spiral_GroupPC12Spiral_Pointb` (260). The last two
+need `gnu-ee-trial` for save order; the others also reproduce under the
+default route. `HIT_fread` additionally needs the existing
+`-mno-check-zero-division` option. These are retained, unaccepted sources;
+rebuilt tools do not qualify the profile or earn C credit.
+
+A temporary integration on master `37b245c6b` passed the complete boot gate:
+847 exact objects, 498,900 exact text bytes, 809,872 exact raw load bytes and
+the complete 856,120-byte ELF exact. Its 820 accepted bodies (108,824 bytes)
+were unchanged. The run used `--unpinned-tools`; the temporary integration
+and catalogue changes were removed from the retained-source contribution.
+Requalification and semantic review remain necessary before promotion.
+
+Useful source constraints: materializing the returned texture before
+publishing it resolves `TEXMGR_Initialize`'s address lifetime; member-store
+order resolves `VRAM_InitGraphics` (195/208, then 206/208, then exact).
+The retained font-width attempts remain different: `MCPFONT_FontStringPixelLength`
+emits 216 bytes against 208, 63 equal positions in the compared prefix,
+first difference +0x1C (hoisted constant and an extra saved register);
+`MCP_FontStringPixelLength` emits 216/216 bytes, 202 equal positions,
+first difference +0x31 (index/width register allocation). Reopen with new
+evidence of those live ranges, rather than repeating the tested local forms.
+`PAR_Reset__Fv` emits 232 bytes under the default route and 236 under
+`gnu-ee-trial`, against 240 retail bytes; respectively 101/232 and 104/236
+compared positions agree, first difference +0x21. Its next useful experiment
+is recovery of the list/end-pointer representation, not a global profile change.
+
+A bounded follow-up on 15 November retained the same `PAR_Reset` attempt:
+keeping the block base live through direct field accesses and an explicit
+next-block value, then two store-order forms, still emits 232/236 bytes with
+first difference +0x21. Store order alone does not explain the missing body
+bytes or the extra live list-head value. Do not repeat those three forms.
+
+Two further retained boot sources reproduce their measured bodies after
+independent SN links: [`dlib_displist_set_texture_state`](../../nonmatching/boot/dlib_displist_set_texture_state__FP13DLIB_DISPLISTiUlUlUlUl.c)
+(204 bytes plus one zero alignment word, default GNU and `gnu-ee-trial`) and
+[`AdjustDLISTSize`](../../nonmatching/boot/AdjustDLISTSize__FUiPP6QWdataPUi.c)
+(240 bytes, default GNU). Both use `-O2 -G0` and the default GNU assembler;
+`AdjustDLISTSize` under `gnu-ee-trial` emits 244 bytes, 113 equal positions
+in the compared 240-byte prefix, first difference +0x58 in loop padding.
+The buffer-size fallback, optional outputs and original count expression
+are preserved. The direct boot path's capacity is corroborated below;
+arbitrary inputs and local prefix types still need review.
+
+**Buffer semantics, reviewed 15 November 2026 ([PR #274](https://github.com/OpenRAC/rac5-sm-decomp/pull/274)).** `g_dlibBufferSize` is a
+one-list count N of 16-byte elements. The initializer at `0x01E93A68`
+allocates 32N bytes with requested 64-byte alignment; its direct boot
+initialization chain passes N=`0x16000`. The two direct cache-allocation
+sites (`0x01E65DA4`, `0x01E66BA0`) request `0x200000` bytes.
+`UpdateBufferCacheState` selects S=`0x6000` elements per list, leaving
+exactly that cache tail in the `0x2C0000`-byte allocation, assuming
+successful allocation and normal initialization. The optional count output
+is nevertheless `0x260000`, overstating that tail by `0x60000`; the reviewed
+caller discards it. Preserve the expression and do not describe its result
+as remaining capacity. Arbitrary requests can wrap or yield S=0, which
+selects the original N-sized lists. Allocation failure, alias writes and
+indirect or imported use remain outside this direct-path proof.
+
+**Texture-state storage, reviewed 15 November 2026.** All five direct boot
+sites select mode 1 and pass the same four 64-bit payloads. For a well-formed
+16-byte-aligned list, the helper advances its cursor by seven quadwords
+(112 bytes): two framing words, four payload pairs and a reserved next-tag
+slot. Six new quadwords are written; the old chain tag is separately
+copied/backpatched, while the final slot is reserved without a store.
+The retail stored template gives a four-pair count, but it resides in
+writable data; its runtime value is not proved invariant. The helper chain
+does not check capacity or previously open packet state. Valid prior tag
+storage, a suitable template and caller headroom remain review obligations.
+The combined nine-candidate experiment passed a fresh complete boot gate
+on the same master: 849 exact objects, 498,900 exact text bytes, 809,872
+exact load bytes and the full 856,120-byte ELF exact. The 820 accepted
+bodies stayed unchanged. This used unpinned tools; temporary metadata
+and flags were restored after archiving and no body was promoted.
+
+[`Quat_ConvertToMatrixInternal<MATRIX4>`](../../nonmatching/boot/Quat_ConvertToMatrixInternal__H1Z7MATRIX4_PX01PC4QUAT_v.c)
+is now a **local exact candidate, 15 November 2026**. Adapting the explicit
+nine-product order and input snapshot already accepted in
+[`LEVEL_06_119B10.c`](../../src/levels/shared/LEVEL_06_119B10.c), with its
+packed MATRIX3 outputs mapped to the boot's four-float MATRIX4 stride,
+reproduces 184/184 bytes on the first retry. Independent SN links under
+rebuilt default GNU and `gnu-ee-trial`, `-O2 -G0`, default GNU assembler,
+agree. Both objects and linked ELFs have actual 184-byte text sections and
+184-byte non-absolute function symbols; no trimming, relocation or undefined
+external is involved. The separately called 56-byte initializer is excluded.
+
+The earlier retained row-order source gave 98/184 equal positions, first
+difference at entry; diagonal-first stores gave 81/184, first +2, and
+capturing input components alone did not change that object. Those are
+superseded measurements, not a reason to alter the compiler. The new
+candidate was then included in a temporary complete-boot integration with
+the other nine: **850 exact objects, 498,900 exact text bytes, 809,872 exact
+load bytes and the complete 856,120-byte ELF exact**. The canonical
+quaternion's absolute alias was removed for that experiment; its real
+compiled function symbol owns all 184 bytes, while the distinct
+`func_1E77FB8` alias and following initializer stay separate. All 840 prior
+replacement records and the 820 accepted bodies were unchanged. All ten
+candidates passed the mechanical promotion audit as ready for semantic
+review. The receipt, manifest, attribution checks and exact integration
+patch were archived, then the temporary metadata and flags were restored.
+This supersedes the earlier nine-candidate-only gate limit, but still uses
+unpinned tools: qualification and promotion remain pending, with no C credit
+added.
+
+All four quaternion components are read before the first output store.
+The internal body writes slots `0,1,2,4,5,6,8,9,10`; the accepted wrapper
+fills the other seven slots, completing all sixteen floats. No normalization
+occurs, and this review establishes no unit-norm input invariant. The input
+snapshot permits ordinary overlap of valid readable/writable storage at the
+machine level; do not invent a disjointness requirement. Storage alignment
+and C object-lifetime/effective-type obligations still apply.
+
+Before promotion, review the local prefix types and caller domains.
+The seven direct `HIT_fread` callers use nonzero unit sizes, but indirect
+callers and extreme size-zero callback results leave division semantics open.
+
+**REL caller follow-up, 16 November 2026.** All 21 USA module hashes were
+checked against the catalogue. Their 5,579 named symbols and 85,694 named
+relocations contain no `HIT_fread__FPvUiUiPi` symbol or reference, so there
+are no named imported calls whose unit-size argument can be classified.
+Scans of the catalogued code found no fixed direct jump/call to the boot
+entry `0x01E8C858`; aligned payload-word scans found no absolute entry
+address either. The twenty numbered modules have separately placed,
+accepted local copies; those are not evidence about callers of the boot
+body. These bounded pre-relocation scans do not exclude split/constructed
+pointers, runtime dispatch or arbitrary indirect use. The divisor-domain
+hold therefore remains open; this is not proof that zero is unreachable.
+
+The direct `VRAM_InitGraphics` caller establishes the allocator's initial
+state; invalid or indirect entry states remain unproven. `Spiral_EmitJoint`
+requires nonempty, sufficiently allocated point storage, whose complete
+caller invariant is not yet established. Preserve the one-time font
+registration flag and its failed-lookup behavior.
+
 ### Blocker 18
 
 Body boundaries, `next_label` and alignment. Measured: a compiled prefix or a `next_label`
@@ -390,6 +558,61 @@ Fourteen boot bodies promoted on 2 November 2026 end before their next code labe
 each has a normal return, no direct branch from its body into the remaining
 interval and no direct edge from outside into its interior. The later bytes
 stay in the assembly baseline and receive no C credit from that body.
+
+**USA boot Spiral boundary, 15 November 2026.** The retained
+`Spiral_EmitJoint__FP12Spiral_GroupPC12Spiral_Pointb` body occupies
+`0x01E754C8..0x01E755CC` (260 bytes), followed by one zero alignment word.
+Its temporary replacement ends at `0x01E755D0`; the further stack adjustment
+and zero word through `0x01E755D8` remain unexplained baseline bytes.
+Do not claim that entire next-label interval as a 272-byte C body.
+
+**USA boot quaternion boundary, 15 November 2026.** The named matrix
+conversion at `0x01E77F00` returns through `0x01E77FB8` (184 bytes), without
+an outgoing edge into its 56-byte nonzero tail. That tail has a distinct
+entry at `0x01E77FB8`, called by the accepted static initializer wrapper
+at `0x01E77FF0`; it remains in the baseline. There is no direct outside edge
+to the conversion's interior. The 240-byte next-label interval therefore
+does not describe a 240-byte matrix conversion body. A further aligned
+absolute-word scan of nonexecuting boot sections found only `.sndata`
+references to the conversion entry and static wrapper, none to the body's
+interior. This does not exclude constructed pointers or relocated level
+references and is not a universal indirect-entry proof.
+
+**Boot sound internal entries, 13 November 2026.** The 2,160-byte next-label
+interval of `SND_StopATRACInstance__FP13ATRACInstance` is not one function.
+The retained [12-byte setter](../../nonmatching/boot/SND_StopATRACInstance__FP13ATRACInstance.c)
+and seven address-named C candidates at `0x01E92AB0`, `0x01E92D78`,
+`0x01E92DE8`, `0x01E92E48`, `0x01E92E60`, `0x01E92E98` and `0x01E932D8`
+reproduce 656 compared bytes in independent SN links using rebuilt GNU EE
+tools with `-O2 -G0`. These are local witnesses, not accepted C. Direct calls,
+callback-address construction and independent returns corroborate separate
+entries; they do not exclude other indirect entries. The nonzero eight-byte
+gap at `0x01E92D70` remains unassigned in the assembly baseline.
+
+An isolated trial added the setter and the unpadded candidates at `0x01E92DE8`,
+`0x01E92E48`, `0x01E92E98` and `0x01E932D8`: five C objects supplying 356
+compiled bytes. The standard boot gate recompiled all 718 objects and reproduced
+the complete 856,120-byte ELF exactly, including the full code and load image.
+It ran with `--unpinned-tools` and reported `qualifying_tools: false`; no C was
+promoted. The committed profile and generated catalogue retain their existing
+scope pending a qualifying integration run. The unassigned gap stayed in the
+assembly baseline throughout the trial.
+
+The current boot catalogue requires an anonymous body to fill its owner span
+exactly. The 140-, 108- and 52-byte candidates at `0x01E92AB0`, `0x01E92D78`
+and `0x01E92E60` each have a following zero word and remain outside that gate.
+Reopen their integration only with a reviewed anonymous-boundary and trailing-word
+protocol; do not enlarge their body extents to absorb those words. Callback
+registration stores a 32-bit function address and a 64-bit payload. The retained
+callback `long` parameters are measured ABI carriers (64 bits on these rebuilt
+compilers), not recovered original declarations. A static trace through the
+same alternating callback banks reaches the indirect call at `0x01E94808`,
+which supplies a 32-bit result and a 64-bit payload. This corroborates the
+reconstructed calling convention; original source types and signedness still
+require review. Positional-record iteration supports
+a `0x58` stride; the larger trailing padding in a private caller sketch is not
+evidence for a shared layout. Promotion requires the qualified complete gate
+and semantic review of the chosen extents and contracts.
 
 **Internal join versus trailing alignment, 13 November 2026.** The retained
 [148-byte body at LEVEL_16:0x16BB98](../../nonmatching/levels/LEVEL_16_16BB98.c)
