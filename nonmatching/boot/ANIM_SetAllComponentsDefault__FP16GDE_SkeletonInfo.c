@@ -1,24 +1,25 @@
-/* ANIM_SetAllComponentsDefault__FP16GDE_SkeletonInfo 0x01E89C70 (14 November
- * 2026).
- * Measured pinned: 10 differing words; first difference at 0x0.
- * Recover the observed types, statement order and lifetimes before retrying.
- * No matching credit.
+/* USA SCUS_976.15 boot: ANIM_SetAllComponentsDefault__FP16GDE_SkeletonInfo, 0x01E89C70.
+ * Observed body: 60 bytes, followed by one zero alignment word.
+ * Measured 14 November 2026: all 60 body bytes are exact after independent
+ * SN linking at the retail address under both the rebuilt default GNU route
+ * and gnu-ee-trial, with -O2 -G0 and the default GNU assembler.
+ * The default tools are rebuilt, not hash-qualified. This is an unaccepted
+ * witness: complete-program integration, boundaries, types and qualification
+ * require separate review. No promotion or matching credit is claimed here.
+ * Adapted from the accepted LEVEL_01 helper in this repository, with the boot
+ * globals and the accepted void FastMemCopy prototype. The unsigned count
+ * preserves the retail low-word multiplication without signed overflow.
+ * This is a local byte-offset view: count at +4 and default-component pointer
+ * at +0xC; it does not introduce a shared complete skeleton layout. The global
+ * skeleton pointer is written before reading those fields, as in retail.
+ * The typed field-view trial changes that order and remains nonmatching.
  */
-typedef struct {
-    unsigned char pad[4];
-    unsigned int bone_count;
-    unsigned char pad2[4];
-    void *defaults;
-} tSkeletonInfo;
+extern char *g_pSkeletonInfo;
+extern unsigned char boneComponents[];
+extern void FastMemCopy__FPvPCvUi(void *, const void *, unsigned int);
 
-extern tSkeletonInfo *g_pSkeletonInfo;
-extern char boneComponents[];
-extern void FastMemCopy__FPvPCvUi(void *dst, const void *src, unsigned int size);
-
-void ANIM_SetAllComponentsDefault__FP16GDE_SkeletonInfo(tSkeletonInfo *info) {
-    unsigned int count;
-
-    g_pSkeletonInfo = info;
-    count = info->bone_count;
-    FastMemCopy__FPvPCvUi(boneComponents, info->defaults, count * 3);
+void ANIM_SetAllComponentsDefault__FP16GDE_SkeletonInfo(char *skeleton) {
+    g_pSkeletonInfo = skeleton;
+    FastMemCopy__FPvPCvUi(boneComponents, *(void **)(skeleton + 0xC),
+                         *(unsigned int *)(skeleton + 4) * 3u);
 }

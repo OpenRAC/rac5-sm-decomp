@@ -170,6 +170,35 @@ the compiler is. `tools/compiler/patches/0002-rac5-div-pad.patch` and
 `d7f3fb64…`), which reproduced the 20 `Quat_Slerp` placements without regression on the 177
 accepted level sources (PR #97). `sdk-divpad` is the same idea for the SDK compiler.
 
+**Boot positional sound update, 13 November 2026.** The retained
+[candidate at `0x01E92B40`](../../nonmatching/boot/func_1E92B40.c) reproduces its
+proposed 560-byte extent in an independent SN link under rebuilt
+`gnu-ee-trial-divpad -O2 -G0`. On the same source, the default rebuilt GNU
+route emits 552 bytes with 453 equal byte positions in the compared prefix,
+first difference `+0x10`; `sdk-divpad` emits 560 bytes with 538 equal positions,
+first difference at entry. Division padding alone therefore does not explain
+all differences between these compiler bases. The unsigned all-ones handle
+sentinel, distinct volume-variable lifetimes and initialization order of the
+two addressable output words account for the measured source changes.
+
+A private per-source extension trial recompiled all 714 objects and reproduced
+the complete 856,120-byte boot ELF exactly. All 713 previous source/object pins
+and accepted-object routes were preserved. The run used `--unpinned-tools` and
+does not qualify this boot placement or expand the profile's documented scope.
+The GNU profile remains level-only in the committed metadata; the trial's
+replacement, selector and generated catalogue changes are not included here.
+
+Reopen integration with explicit profile-scope review, verified recipe/tool
+provenance, existing-object regression controls and a qualified complete boot
+gate; do not change the global route. The reconstructed wrapper declarations
+follow their accepted definitions, including the callback wrapper's word-based
+address parameters. The two direct callers pass one record pointer, ignore the
+return and iterate 64 records with stride `0x58`. Direct-flow and limited
+address-reference scans support `0x01E92B40..0x01E92D70` as a provisional owner;
+other indirect entries and original source types remain review obligations.
+The following eight bytes retain unknown ownership in the assembly baseline
+and are excluded from this source. No C is promoted.
+
 ### Blocker 10
 
 `movn`. An earlier note called it inaccessible; a 23 October 2026 measurement gives a source
@@ -452,6 +481,42 @@ absolute-word scan of nonexecuting boot sections found only `.sndata`
 references to the conversion entry and static wrapper, none to the body's
 interior. This does not exclude constructed pointers or relocated level
 references and is not a universal indirect-entry proof.
+
+**Boot sound internal entries, 13 November 2026.** The 2,160-byte next-label
+interval of `SND_StopATRACInstance__FP13ATRACInstance` is not one function.
+The retained [12-byte setter](../../nonmatching/boot/SND_StopATRACInstance__FP13ATRACInstance.c)
+and seven address-named C candidates at `0x01E92AB0`, `0x01E92D78`,
+`0x01E92DE8`, `0x01E92E48`, `0x01E92E60`, `0x01E92E98` and `0x01E932D8`
+reproduce 656 compared bytes in independent SN links using rebuilt GNU EE
+tools with `-O2 -G0`. These are local witnesses, not accepted C. Direct calls,
+callback-address construction and independent returns corroborate separate
+entries; they do not exclude other indirect entries. The nonzero eight-byte
+gap at `0x01E92D70` remains unassigned in the assembly baseline.
+
+An isolated trial added the setter and the unpadded candidates at `0x01E92DE8`,
+`0x01E92E48`, `0x01E92E98` and `0x01E932D8`: five C objects supplying 356
+compiled bytes. The standard boot gate recompiled all 718 objects and reproduced
+the complete 856,120-byte ELF exactly, including the full code and load image.
+It ran with `--unpinned-tools` and reported `qualifying_tools: false`; no C was
+promoted. The committed profile and generated catalogue retain their existing
+scope pending a qualifying integration run. The unassigned gap stayed in the
+assembly baseline throughout the trial.
+
+The current boot catalogue requires an anonymous body to fill its owner span
+exactly. The 140-, 108- and 52-byte candidates at `0x01E92AB0`, `0x01E92D78`
+and `0x01E92E60` each have a following zero word and remain outside that gate.
+Reopen their integration only with a reviewed anonymous-boundary and trailing-word
+protocol; do not enlarge their body extents to absorb those words. Callback
+registration stores a 32-bit function address and a 64-bit payload. The retained
+callback `long` parameters are measured ABI carriers (64 bits on these rebuilt
+compilers), not recovered original declarations. A static trace through the
+same alternating callback banks reaches the indirect call at `0x01E94808`,
+which supplies a 32-bit result and a 64-bit payload. This corroborates the
+reconstructed calling convention; original source types and signedness still
+require review. Positional-record iteration supports
+a `0x58` stride; the larger trailing padding in a private caller sketch is not
+evidence for a shared layout. Promotion requires the qualified complete gate
+and semantic review of the chosen extents and contracts.
 
 **Internal join versus trailing alignment, 13 November 2026.** The retained
 [148-byte body at LEVEL_16:0x16BB98](../../nonmatching/levels/LEVEL_16_16BB98.c)
