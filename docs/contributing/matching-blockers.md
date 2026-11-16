@@ -403,6 +403,19 @@ and C object-lifetime/effective-type obligations still apply.
 Before promotion, review the local prefix types and caller domains.
 The seven direct `HIT_fread` callers use nonzero unit sizes, but indirect
 callers and extreme size-zero callback results leave division semantics open.
+
+**REL caller follow-up, 16 November 2026.** All 21 USA module hashes were
+checked against the catalogue. Their 5,579 named symbols and 85,694 named
+relocations contain no `HIT_fread__FPvUiUiPi` symbol or reference, so there
+are no named imported calls whose unit-size argument can be classified.
+Scans of the catalogued code found no fixed direct jump/call to the boot
+entry `0x01E8C858`; aligned payload-word scans found no absolute entry
+address either. The twenty numbered modules have separately placed,
+accepted local copies; those are not evidence about callers of the boot
+body. These bounded pre-relocation scans do not exclude split/constructed
+pointers, runtime dispatch or arbitrary indirect use. The divisor-domain
+hold therefore remains open; this is not proof that zero is unreachable.
+
 The direct `VRAM_InitGraphics` caller establishes the allocator's initial
 state; invalid or indirect entry states remain unproven. `Spiral_EmitJoint`
 requires nonempty, sufficiently allocated point storage, whose complete
