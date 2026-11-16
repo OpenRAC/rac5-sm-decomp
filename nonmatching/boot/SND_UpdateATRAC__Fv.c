@@ -29,7 +29,8 @@
  *   bytes). Testing the field through the instance pointer gives 516 bytes.
  * The field at +0x5C is a float here; the accepted fade function stores
  * zero through an int. Field names are placeholders.
- */typedef struct {
+ */
+typedef struct {
     char _pad00[0x54];
     float fadeStart;
     float fadeEnd;

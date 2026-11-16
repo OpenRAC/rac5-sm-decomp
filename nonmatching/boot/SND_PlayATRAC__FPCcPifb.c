@@ -1,21 +1,29 @@
 /* USA SCUS_976.15 boot: SND_PlayATRAC__FPCcPifb, 0x01E92570.
  * Observed body: 460 bytes, followed by one zero alignment word.
- * Measured 15 November 2026, -O2 -G0, default GNU assembler, independent SN
- * link at the retail address:
- * - gnu-ee-trial and gnu-ee-trial-divpad-blockmove: 460 compiled bytes, 350
- *   equal positions, first differing byte +0xE0.
- * - rebuilt default GNU route: 460 bytes, 324 equal, first byte +0x08.
- * Not exact; no complete-program gate, promotion or C matching credit.
+ * Measured 16 November 2026: all 460 body bytes are exact after independent
+ * SN linking at the retail address under gnu-ee-trial, gnu-ee-trial-divpad
+ * and gnu-ee-trial-divpad-blockmove, with -O2 -G0 and the default GNU
+ * assembler. The rebuilt default GNU route is not exact (it saves the
+ * registers in the other order).
+ * The tools are rebuilt, not hash-qualified. This is an unaccepted witness:
+ * complete-program integration, boundaries, types and qualification require
+ * separate review. No promotion or matching credit is claimed here.
  * Starts or refreshes an ATRAC stream: resolves the stream identifier from
  * the name when none is given, fades an instance already playing it, or
  * takes a free instance, records name, volume and identifier and starts the
  * stream from the two VAG table entries the identifier selects.
- * Control flow, calls and stores are retail's. The difference is the
- * scheduling of the twelve-argument call: retail multiplies the low index
- * first and loads the table pointer and the base location once each.
- * Naming the two table words as locals changes nothing. The second
- * parameter is an identifier here; its mangled type is a pointer to int.
- * Reopen with evidence for the original argument expressions.
+ * Source shape, each point measured:
+ * - The table pointer and the base location are each the member of a
+ *   record. Retail reads both after the stores into the instance, which a
+ *   plain scalar global does not require; as scalars the compiler reads the
+ *   table pointer before those stores and multiplies the high index first
+ *   (350 of 460 equal).
+ * - The base location and the two table words are read into locals before
+ *   the playing mark is stored: retail stores that mark after the two table
+ *   reads. Reading them inside the call's arguments stores it first.
+ * The second parameter is an identifier here; its mangled type is a pointer
+ * to int. The two record types are placeholders: the two globals are 8
+ * bytes apart and may be members of one record.
  */
 typedef struct {
     unsigned int field00;
@@ -39,8 +47,10 @@ typedef struct {
     unsigned int loc;
 } VagEntry;
 
-extern VagEntry *g_VagWadEntries;
-extern unsigned int g_VAGWADLOC;
+typedef struct { VagEntry *entries; } VagEntryTable;
+typedef struct { unsigned int sector; } VagWadLocation;
+extern VagEntryTable g_VagWadEntries;
+extern VagWadLocation g_VAGWADLOC;
 extern ATRACInstance g_AtracInstances[];
 extern unsigned int SND_AtracOpen__FPCc(const char *name);
 extern int SND_IsATRACPlaying__FP13ATRACInstance(ATRACInstance *p);
@@ -55,8 +65,11 @@ ATRACInstance *SND_PlayATRAC__FPCcPifb(const char *name, unsigned int id, float 
     ATRACInstance *p;
     ATRACInstance *end;
     ATRACInstance *slot;
+    unsigned int loLoc;
+    unsigned int hiLoc;
+    unsigned int base;
 
-    if (g_VagWadEntries) {
+    if (g_VagWadEntries.entries) {
         slot = 0;
         if (!id) {
             id = SND_AtracOpen__FPCc(name);
@@ -86,12 +99,12 @@ ATRACInstance *SND_PlayATRAC__FPCcPifb(const char *name, unsigned int id, float 
             slot->volume = volume;
             slot->field60 = 0.0f;
             slot->field00 = id;
+            base = g_VAGWADLOC.sector;
+            loLoc = g_VagWadEntries.entries[id & 0xFFFF].loc;
+            hiLoc = g_VagWadEntries.entries[id >> 16].loc;
             slot->playing = 0xFFFFFFFF;
             snd_PlayVAGStreamByLocEx_CB(
-                g_VAGWADLOC + (g_VagWadEntries[id & 0xFFFF].loc >> 11),
-                g_VAGWADLOC + (g_VagWadEntries[id >> 16].loc >> 11),
-                g_VagWadEntries[id & 0xFFFF].loc & 0x7FF,
-                g_VagWadEntries[id >> 16].loc & 0x7FF,
+                base + (loLoc >> 11), base + (hiLoc >> 11), loLoc & 0x7FF, hiLoc & 0x7FF,
                 0x400, 0, loop ? 2 : 1, 0, 0, loop ? 0 : 4,
                 (int)func_1E92E48, (long long)slot);
             slot->loop = loop;
