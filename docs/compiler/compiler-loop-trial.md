@@ -23,17 +23,17 @@ shared runtime or compiler.
 The isolated patched `cc1` SHA-256 was
 `9614eceecbcb1f7a64cf3a4ad3c827b3e257ab6b1f934e42fcbc4ded0f0584d6`.
 With the same measured `cpp` and assembler, `-O2 -G0` now emits **one**
-`nop`. The C source in
-[`nonmatching/boot/fog_preupdate.c`](../../nonmatching/boot/fog_preupdate.c)
+`nop`. The trial's C source for
+[`FOG_PreUpdate__Fv`](../../src/boot/FOG_PreUpdate__Fv.c)
 produces object SHA-256
 `c2cb485df80e2e548499a984b4d9aeb753393dd8a958069255e42190631fc0f1`;
 the isolated linked interval matches **64/64 bytes**, SHA-256
 `f8a6560b8960c8d17085570344896f2e51ffea6285580cd0390579b61c6f7abe`.
 
 A second, independent loop shape provides another control.
-[`MCPFONT_FontStringLength__FPCc`](../../nonmatching/boot/mcpfont_string_length.c)
+[`MCPFONT_FontStringLength__FPCc`](../../src/boot/MCPFONT_FontStringLength__FPCc.c)
 at `0x01E67978` and
-[`MCP_FontStringLength__FPCc`](../../nonmatching/boot/mcp_string_length.c)
+[`MCP_FontStringLength__FPCc`](../../src/boot/MCP_FontStringLength__FPCc.c)
 at `0x01E67EE8` have identical retail 64-byte bodies. With the same authored
 indexed-string loop, the original threshold-seven `cc1` yields **48/64**
 equal bytes at either placement; threshold six yields **64/64** at each,
@@ -77,3 +77,15 @@ different boot function, `MEMCARD_Busy__Fv`, has since passed the limited
 [boot-only gate](../gates/boot-match-scope.md). The later
 [ByteMatch estimate](../../progress/README.md) uses only accepted C bytes and a
 provisional code denominator; it does not count these loop trials.
+
+**Status, 16 November 2026.** The trial's own source files were never
+committed. `FOG_PreUpdate__Fv`, `MCPFONT_FontStringLength__FPCc` and
+`MCP_FontStringLength__FPCc` became accepted boot C in
+[#214](https://github.com/OpenRAC/rac5-sm-decomp/pull/214) (6 November 2026),
+under the boot compiler profile whose pinned `cc1` includes this patch
+(`config/boot/compiler_trial.json`); the links above point to those accepted
+sources. Their pinned objects in `tools/boot_c_campaign.py` differ from the
+trial objects quoted here, so these measurements are history and the accepted
+pins are the current reference. The paragraph above describes the state before
+that change. `GLOBALWAD_ReleaseTransitionBank__Fv` remains a retained attempt
+under `nonmatching/boot/`.
