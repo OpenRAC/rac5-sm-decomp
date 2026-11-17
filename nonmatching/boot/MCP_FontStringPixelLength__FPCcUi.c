@@ -1,20 +1,21 @@
-/* USA SCUS_976.15 boot: MCP_FontStringPixelLength__FPCcUi, 0x01E67F80.
- * Reconstructed from the owner's retail code and callers/callees; no imported
- * implementation source. Observed body 216 bytes through 0x01E68058.
- * Measured 14 November 2026 with rebuilt default GNU and gnu-ee-trial,
- * -O2 -G0 and GNU assembler, independently SN-linked at the retail address:
- * 216 compiled bytes, 202/216 equal positions, first differing byte +0x31.
- * The remaining differences exchange the index and width registers in fourteen
- * instructions. Source-order and initialization forms did not remove the tie.
- * The four-byte glyph return and its byte-2 width are proven from both sides;
- * MCP_GetFontPage's int declaration matches the accepted boot definition.
- * The 0x90 control consumes two bytes; a nonzero page consumes the next byte
- * without an additional count check. These original behaviors are preserved.
- * Width wraps to sixteen bits after each glyph; its transient increment is
- * unsigned, local and not exposed to either call. The return is in 0..65535.
- * Reopen with evidence for the original accumulator/index representation or
- * a measured allocation cause with accepted-body controls. Not exact; no
- * complete-program gate, acceptance, promotion or matching credit.
+/* USA SCUS_976.15 boot: MCP_FontStringPixelLength__FPCcUi,
+ * 0x01E67F80..0x01E68058, observed 216-byte body, no trailing padding.
+ * Reconstructed from the owner's retail body, helper and reviewed callers.
+ * Measured 16 November 2026 with -O2 -G0 and independent SN links:
+ * rebuilt default GNU and gnu-ee-trial emit real 216-byte object text/FUNC
+ * symbols; independent links reproduce all 216 retail body bytes. These
+ * comparisons do not qualify a profile, promote C or confer matching credit.
+ * The original retained form emitted 216 bytes, 202 equal positions, first difference +0x31.
+ * A 16-bit stored total and a wide per-glyph temporary separate lifetimes:
+ * the spacing increment may reach 65536 before adding the glyph width and
+ * reducing the sum modulo 65536. Neither local is exposed to either call.
+ * The page helper keeps its int/unsigned-char interface. The glyph helper
+ * returns four unsigned bytes and accepts two unsigned-byte arguments; byte 2
+ * supplies its width. No implementation is imported.
+ * Byte 0x90 consumes itself and one following byte; a nonzero font page
+ * consumes another byte without an extra count check. Original out-of-count
+ * reads, unsigned index behavior and null/count-zero returns are preserved.
+ * Qualification, indirect-entry boundaries and semantic review remain open.
  */
 typedef struct {
     unsigned char field0;
@@ -28,8 +29,9 @@ extern MCPFontGlyph func_1E67D40(unsigned char, unsigned char);
 
 int MCP_FontStringPixelLength__FPCcUi(const char *text, unsigned int count) {
     unsigned int i;
-    unsigned int width;
+    unsigned short width;
     int page;
+    unsigned int glyph_width;
 
     if (text == 0)
         return 0;
@@ -39,11 +41,11 @@ int MCP_FontStringPixelLength__FPCcUi(const char *text, unsigned int count) {
             ++i;
             continue;
         }
-        ++width;
+        glyph_width = width + 1;
         page = MCP_GetFontPage__FUc((unsigned char)text[i]);
         if (page != 0)
             ++i;
-        width = (unsigned short)(width + func_1E67D40((unsigned char)text[i], (unsigned char)page).width);
+        width = (unsigned short)(glyph_width + func_1E67D40((unsigned char)text[i], (unsigned char)page).width);
     }
     return width;
 }
