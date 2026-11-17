@@ -371,6 +371,41 @@ The same profile left 498 other retained C bodies nonmatching in a 500-body
 comparison, so these two results do not justify a global compiler switch.
 Regenerate `progress/status.json` after changing source profiles.
 
+**Boot raw-block parsing and shared quaternion source, 17 November 2026.**
+The retained [TJZIP raw-block parser](../../nonmatching/boot/TJZIP_ParseRawDataBlock__FPPUcT0PUi.c)
+reproduces all 444 linked body bytes under rebuilt default GNU and
+`gnu-ee-trial`, with `-O2 -G0`, GNU assembly and independent SN links. Both
+actual object and linked FUNC/text extents are 444 bytes; the following zero
+alignment word is excluded. The source adapts the repository's accepted level
+parser, using the boot callback's proven byte-pointer argument and return
+type rather than copying an integer-return declaration. The Decompress
+symbol's callback type and all three indirect argument/result flows agree.
+Only the named callback, threshold and signature-table globals are required.
+
+Independent instruction/state checks cover 353 cases, including all nonzero
+short markers, extended lengths through 65,535, null/mutating callbacks,
+header-source redirection, overlapping byte buffers and shared cursor cells.
+Original reloads and sequential byte/CRC/cursor effects remain; no bulk-copy,
+capacity guard or callback-purity assumption is added. Valid live storage,
+capacities, callback contracts and the same-array threshold-minus-32 pointer
+domain remain obligations. Local raw equality does not qualify tools or
+promote the retained source.
+
+The existing [shared Quat_Slerp source](../../src/levels/shared/Quat_Slerp__FP4QUATPC4QUATT1f.c)
+was reused unchanged for the 416-byte boot placement. Its existing
+`gnu-ee-trial-divpad` level route reproduces all 416 linked boot bytes, with
+the complete object equal to the already accepted level object pin. Default
+GNU emits 400 bytes, 259/400 equal positions, first difference +0x8; ordinary
+trial emits 408 bytes, 279/408 equal positions, first +0xCC. The exact route
+retains one named `acosf` and three `sinf` calls and the observed `f12` input.
+There is one authored definition: no boot source duplicate, flag override or
+accepted-source change is introduced. The compiler route remains level-only;
+this standalone boot measurement is not a complete boot gate or qualification.
+Keep explicit placement acceptance separate from the source's directory.
+Input snapshots, partial-overlap ordering, unclamped dot products and original
+floating-point comparisons are preserved; host IEEE edge cases are not a
+substitute for EE runtime evidence.
+
 **Boot memory-card helpers, 15 November 2026.** Four retained USA boot sources replace the
 14 November trials of the same names, measured after an independent SN link at their retail
 addresses under the rebuilt default GNU route, `gnu-ee-trial` and `sdk991111`, all with
