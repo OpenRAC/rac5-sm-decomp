@@ -371,6 +371,37 @@ The same profile left 498 other retained C bodies nonmatching in a 500-body
 comparison, so these two results do not justify a global compiler switch.
 Regenerate `progress/status.json` after changing source profiles.
 
+**Boot draw dispatch and vector-angle timing, 17 November 2026.**
+The retained [DRAW_Render](../../nonmatching/boot/DRAW_Render__F10DRAW_LayerT0Ui.c)
+reproduces all 316 linked body bytes under rebuilt default GNU, `-O2 -G0`,
+GNU assembly and independent SN links. Trial emits 320 bytes, 270 equal
+positions in the compared 316-byte prefix, first difference +0x2C. The
+following zero word and separate 56-byte initializer are excluded. Separate
+original-layer and traversal-cursor lifetimes preserve the helper/callback
+order. The partial context view exposes unsigned halfword prefix counts,
+20-byte mesh records and callback heads; opaque fields remain opaque.
+Observed callers cover layers 0..31 in three ranges, with context zero.
+Callback payload is an opaque 32-bit ABI carrier; its historical type,
+ignored callback result, helper ignored-argument contracts, live node/storage
+and indirect-call domains remain review holds. Local raw equality is not
+qualification or accepted C credit.
+
+The retained [VEC_AngleBetweenVectors](../../nonmatching/boot/VEC_AngleBetweenVectors__FPC4VEC3T0b.c)
+emits 312 FUNC/text bytes under default GNU and ordinary trial: 174/312 equal
+positions, first difference +0x34 against its 316-byte retail body. Apart from
+three affected branch displacements, the missing word is a square-root
+dependency delay. The known division-padding compiler emits 320 bytes,
+216/316 equal positions, first +0x34; it changes both division and square-root
+spacing. The known SN assembler does not resolve this difference. No dummy C
+or edited compiler output is used. Reopen with independently justified
+square-root/division scheduling and regression controls, rather than another
+arithmetic spelling. The following zero word and 72 orphan bytes are excluded.
+The encoded C++ boolean is represented only by a 32-bit ABI carrier in its
+valid 0/1 domain; the sole observed caller supplies zero. The original C++
+route and indirect callers remain unproved. Zero-length behavior, inclusive
+clamps, the normalization bypass and original float operations are retained;
+no unit-vector, host IEEE or repaired-domain assumption is added.
+
 **Boot memory-card helpers, 15 November 2026.** Four retained USA boot sources replace the
 14 November trials of the same names, measured after an independent SN link at their retail
 addresses under the rebuilt default GNU route, `gnu-ee-trial` and `sdk991111`, all with
