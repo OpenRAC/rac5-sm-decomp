@@ -402,6 +402,87 @@ route and indirect callers remain unproved. Zero-length behavior, inclusive
 clamps, the normalization bypass and original float operations are retained;
 no unit-vector, host IEEE or repaired-domain assumption is added.
 
+**Boot raw-block parsing and shared quaternion source, 17 November 2026.**
+The retained [TJZIP raw-block parser](../../nonmatching/boot/TJZIP_ParseRawDataBlock__FPPUcT0PUi.c)
+reproduces all 444 linked body bytes under rebuilt default GNU and
+`gnu-ee-trial`, with `-O2 -G0`, GNU assembly and independent SN links. Both
+actual object and linked FUNC/text extents are 444 bytes; the following zero
+alignment word is excluded. The source adapts the repository's accepted level
+parser, using the boot callback's proven byte-pointer argument and return
+type rather than copying an integer-return declaration. The Decompress
+symbol's callback type and all three indirect argument/result flows agree.
+Only the named callback, threshold and signature-table globals are required.
+
+Independent instruction/state checks cover 353 cases, including all nonzero
+short markers, extended lengths through 65,535, null/mutating callbacks,
+header-source redirection, overlapping byte buffers and shared cursor cells.
+Original reloads and sequential byte/CRC/cursor effects remain; no bulk-copy,
+capacity guard or callback-purity assumption is added. Valid live storage,
+capacities, callback contracts and the same-array threshold-minus-32 pointer
+domain remain obligations. Local raw equality does not qualify tools or
+promote the retained source.
+
+The existing [shared Quat_Slerp source](../../src/levels/shared/Quat_Slerp__FP4QUATPC4QUATT1f.c)
+was reused unchanged for the 416-byte boot placement. Its existing
+`gnu-ee-trial-divpad` level route reproduces all 416 linked boot bytes, with
+the complete object equal to the already accepted level object pin. Default
+GNU emits 400 bytes, 259/400 equal positions, first difference +0x8; ordinary
+trial emits 408 bytes, 279/408 equal positions, first +0xCC. The exact route
+retains one named `acosf` and three `sinf` calls and the observed `f12` input.
+There is one authored definition: no boot source duplicate, flag override or
+accepted-source change is introduced. The compiler route remains level-only;
+this standalone boot measurement is not a complete boot gate or qualification.
+Keep explicit placement acceptance separate from the source's directory.
+Input snapshots, partial-overlap ordering, unclamped dot products and original
+floating-point comparisons are preserved; host IEEE edge cases are not a
+substitute for EE runtime evidence.
+
+**Further USA boot attempts, 17 November 2026.** Four retained sources use
+`-O2 -G0`, rebuilt GNU tools, GNU assembly and independent SN links. These are
+local measurements, not qualification or accepted C credit.
+
+| Source | Default GNU result | Remaining condition |
+| --- | --- | --- |
+| [Ascii2Sjis](../../nonmatching/boot/Ascii2Sjis__FUc.c) | 232/232 body bytes exact; trial agrees | Review the table access views and original caller domain before promotion. |
+| [PAR_PostInit](../../nonmatching/boot/PAR_PostInit__Fv.c) | 248/248 body bytes exact | Storage/capacity, allocation failure and indirect-caller invariants remain. |
+| [SIG_CalcCaseInsensitiveSignature](../../nonmatching/boot/SIG_CalcCaseInsensitiveSignature__FPCc.c) | 216 bytes, 121/216 equal positions, first difference +0x6 | Recover cached-control, raw-byte and cursor lifetimes and generated read scheduling. |
+| [DRAW_BeginUpdate](../../nonmatching/boot/DRAW_BeginUpdate__Fv.c) | 412 bytes, 247/412 equal positions against 420 retail bytes, first difference +0x62 | Reconcile the material-cache word type with its accepted zero writer. |
+
+For ASCII conversion, an effective punctuation-table index base and a used
+16-bit result joining the two lookup paths reproduce the body without register
+constraints. Only accessed halfword fields and an opaque remainder are exposed;
+no conversion-table initializers are imported. Independent checks cover all
+256 input bytes and their table-load traces, with additional synthetic tables.
+
+PAR initialization preserves the unconditional setup call, signed count guard,
+count reload after allocation, saved count across the pool calls, later byte and
+storage reloads, descriptor-page assignment and final lock store. Its second
+pool-count multiplication explicitly uses the observed low-32-bit wrap before
+target-int conversion. The existing allocator interface is reused and the two
+pool views remain opaque. Five thousand private mutable-helper scenarios
+corroborate these effects. Trial emits 252 bytes, 200/248 equal positions,
+first difference +0x2C; use default GNU for this local candidate.
+
+The signature function retains its separator lookahead quirk: a local cursor
+scans ahead, while the main cursor still advances by one byte. Repeated
+separators are not collapsed. Generated read scheduling remains different;
+result agreement on valid terminated strings is not an exact-body proof.
+Its observed 216-byte body excludes the following 16-byte tail containing
+nonzero words. Trial emits 224 bytes, 81/216 equal positions, first +0x6.
+Closed cursor/classification and iterator forms did not improve the retained C.
+
+DRAW uses the integer space-count views already established by accepted boot
+callers and keeps the accepted `DRAW_EndUpdate` int cache declaration. An
+unsigned-cache diagnostic reproduces all 420 bytes, but conflicts with that
+declaration and is not the retained boot candidate. A private declaration-only
+EndUpdate control preserves its complete pinned object; reviewed cache-word
+producers use an unsigned material argument and observed reads use equality.
+This supports a separate type-reconciliation review, not a silent change to a
+frozen interface. Trial leaves the correctly typed attempt at 416 bytes,
+249/416 equal positions, first +0x62. The following zero alignment word is
+excluded from the 420-byte observed body. Buffer/toggle/capacity and indirect
+entry obligations remain; do not add a dead use or register hint to gain bytes.
+
 **Boot memory-card helpers, 15 November 2026.** Four retained USA boot sources replace the
 14 November trials of the same names, measured after an independent SN link at their retail
 addresses under the rebuilt default GNU route, `gnu-ee-trial` and `sdk991111`, all with
@@ -432,6 +513,34 @@ statements. The boot gate has no C++ route; this is the first boot body measured
 and `_GLOBAL_$I$SYSTEMS_memcard_ps2.cppBRcaaa` shows the unit was C++. Reopen when a C++ front
 end is qualified for boot sources.
 
+**Boot mailbox, WAD lookup and sound helpers, 16 November 2026.** Six retained USA boot sources
+are exact after an independent SN link at their retail addresses under the rebuilt default GNU
+route and `gnu-ee-trial` (`-O2 -G0`, default GNU assembler); a seventh stays a measured trial.
+They are local witnesses, not accepted matches. Each one was a near miss or a discarded trial
+until its source shape changed:
+
+- [`MBOX_Send`](../../nonmatching/boot/MBOX_Send__FiP12HigMsgPacket.c),
+  [`MBOX_Poll`](../../nonmatching/boot/MBOX_Poll__FiPP12HigMsgPacket.c): a range test and a
+  one-bit signed flag test written as two early returns lose the negation of the flag and move
+  the failure return. Written as one condition, `if (index >= 16 || table[index].flag == 0)
+  return error;`, the negation stays and the failure return sits in the middle of the body.
+- [`MBOX_Create`](../../nonmatching/boot/MBOX_Create__FPCcUiPv.c): a signed index, a scan loop
+  with an empty body and a comparison with the bound after it. The result is a signed `int`:
+  a pointer or unsigned result loads the failure constant before the return instead of in its
+  delay slot. The accepted caller declares a pointer result and compiles identically either way.
+- [`GLOBALWAD_FindAssetsInWadBySignature`](../../nonmatching/boot/GLOBALWAD_FindAssetsInWadBySignature__FP13WadLocationIDUi14WAD_ASSET_TYPE13WadLocationID.c): when retail copies an
+  argument into a scratch register and loads small constants into that register only after each
+  call, the source has a second variable that starts as the argument and is assigned again
+  after every call, so it never lives across one.
+- [`SND_FindVag`](../../nonmatching/boot/SND_FindVag__FPCc.c): a second copy of a failure
+  constant at the end of the body, jumped over by the normal return, is a guard that wraps the
+  whole body (`if (table != 0) { ...; return found; } return -1;`), not an early return.
+- [`SND_Fixup`](../../nonmatching/boot/SND_Fixup__FUiPFP13WadLocationIDUi14WAD_ASSET_TYPE13WadLocationID_P15WAD_FILE_HEADER.c): the result is cleared before the call that
+  precedes its real assignment, and two adjacent stores are written in the opposite order.
+- [`SND_PauseAtrac`](../../nonmatching/boot/SND_PauseAtrac__Fbi.c) is still 160 compiled bytes
+  against 168: retail keeps its refusal path in line and one store out of a delay slot. Fifteen
+  forms of the refusal test did not change that. Its first parameter is a C++ `bool`.
+
 The [saving query](../../nonmatching/boot/MEMCARD_Saving__Fv.c) is unchanged: retail computes
 the comparison in one register and copies it to the result. About sixty C and C++ spellings of
 the same test (conditional expressions, `switch`, `goto`, inline helpers, `bool`, wider or
@@ -461,7 +570,7 @@ Requalification and semantic review remain necessary before promotion.
 Useful source constraints: materializing the returned texture before
 publishing it resolves `TEXMGR_Initialize`'s address lifetime; member-store
 order resolves `VRAM_InitGraphics` (195/208, then 206/208, then exact).
-The retained font-width attempts remain different: `MCPFONT_FontStringPixelLength`
+The original font-width attempts remained different: `MCPFONT_FontStringPixelLength`
 emits 216 bytes against 208, 63 equal positions in the compared prefix,
 first difference +0x1C (hoisted constant and an extra saved register);
 `MCP_FontStringPixelLength` emits 216/216 bytes, 202 equal positions,
@@ -477,6 +586,69 @@ keeping the block base live through direct field accesses and an explicit
 next-block value, then two store-order forms, still emits 232/236 bytes with
 first difference +0x21. Store order alone does not explain the missing body
 bytes or the extra live list-head value. Do not repeat those three forms.
+
+**Font-width resolution, 16 November 2026.** The retained
+[`MCPFONT_FontStringPixelLength`](../../nonmatching/boot/MCPFONT_FontStringPixelLength__FPCcUi.c)
+and [`MCP_FontStringPixelLength`](../../nonmatching/boot/MCP_FontStringPixelLength__FPCcUi.c)
+now reproduce all 208 and 216 bytes, respectively, with rebuilt default GNU
+and `gnu-ee-trial`, `-O2 -G0`, GNU assembly and independent SN links.
+MCPFONT's authored inline equality predicate removes the loop-held comparison
+constant and extra saved register, first reaching 194/208 equal positions.
+The source uses ordinary equality, with no explicit XOR or register constraint;
+the predicate is fully inlined and emits no extra function.
+
+Both functions then become locally exact by separating the 16-bit stored total
+from a wide per-glyph temporary. The temporary holds total + 1 (at most 65536)
+across the helper calls; adding the glyph byte then narrows the final sum.
+Neither local is exposed to the calls. This preserves wrapping, byte-prefix
+consumption, original out-of-count reads and the reviewed helper ABI.
+Allocation dumps explain the change: the wide temporary is allocated locally,
+while the narrow stored total does not cross either call and can reuse its
+register. The global index receives the other register. The prior single wide
+accumulator left both values to global allocation, which prioritized the index
+(21 weighted references over 66 instructions versus 10 over 32 for the width).
+Declaration/initialization changes and equivalent loop rewrites did not fix it.
+
+Independent checks verify actual object and linked text/FUNC sizes, exact raw
+body bytes, normal resolution of the two helper references and no absolute-symbol
+masks. Source and preprocessed C policy checks pass. A temporary integration
+passed with 842 exact objects, all 809,872 load bytes and the complete
+856,120-byte ELF exact. Both symbols were real compiled FUNC owners; all 840
+baseline replacement records and 820 accepted bodies stayed unchanged. Its
+mechanical audit leaves both ready for semantic review with no mechanical
+reason. Metadata was archived then restored; the receipt is historical for that
+restored checkout. The tools were unpinned: both sources remain in `nonmatching/`
+and no qualification or accepted C credit follows.
+This supersedes their earlier differing measurements, not the separate semantic
+and qualification obligations. Unchanged-body C/C++ frontend checks did not
+resolve either original attempt or identify the original compiler.
+
+For `PAR_Reset`, guarding a `do/while` traversal with the initial empty-list test
+still emits 232/236 bytes (default/trial), 87/90 equal positions, first difference
++0x21. A later ordinary iterator-object representation resolves the missing
+sentinel lifetime. Address-based comparison examines the current and finishing
+iterators, and a value-returned previous iterator snapshots the reverse link
+before node reset. Combining this with the previously measured two-link-pair
+reset order reproduces all 240 bytes under default GNU. `gnu-ee-trial` instead
+emits 244 bytes, 191 equal positions, first difference +0x98 at loop padding.
+The helpers are fully inlined list operations, with no extra observable use or
+register constraint. Independent semantic review found no new regression;
+4,096 private differential scenarios corroborate the preserved traversal,
+self-links, free-chain rebuild and callback-visible state. Malformed lists,
+arbitrary storage/capacity and indirect-entry boundaries remain open. This new
+PAR candidate was not covered by the 842-object font experiment above.
+
+A subsequent integration on 16 November includes all thirteen retained boot
+candidates: the previous ten plus both font-width functions and `PAR_Reset`.
+It passed with 853 exact objects, 498,900 exact text bytes, 809,872 exact load
+bytes and the complete 856,120-byte ELF exact. All thirteen candidates were
+attributed to real compiled FUNC symbols (2,884 body bytes), without absolute
+symbol masks; the separate quaternion initializer stayed in the baseline.
+All 840 previous replacement records and 820 accepted bodies stayed unchanged.
+The mechanical audit leaves all thirteen ready for semantic review, with no
+mechanical reason. The manifest, audit, attribution and integration patch were
+archived and all temporary metadata restored. This used unpinned tools, so
+qualification and promotion remain separate and no accepted C credit follows.
 
 Two further retained boot sources reproduce their measured bodies after
 independent SN links: [`dlib_displist_set_texture_state`](../../nonmatching/boot/dlib_displist_set_texture_state__FP13DLIB_DISPLISTiUlUlUlUl.c)
