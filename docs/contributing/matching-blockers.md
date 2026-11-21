@@ -458,7 +458,7 @@ Requalification and semantic review remain necessary before promotion.
 Useful source constraints: materializing the returned texture before
 publishing it resolves `TEXMGR_Initialize`'s address lifetime; member-store
 order resolves `VRAM_InitGraphics` (195/208, then 206/208, then exact).
-The retained font-width attempts remain different: `MCPFONT_FontStringPixelLength`
+The original font-width attempts remained different: `MCPFONT_FontStringPixelLength`
 emits 216 bytes against 208, 63 equal positions in the compared prefix,
 first difference +0x1C (hoisted constant and an extra saved register);
 `MCP_FontStringPixelLength` emits 216/216 bytes, 202 equal positions,
@@ -474,6 +474,69 @@ keeping the block base live through direct field accesses and an explicit
 next-block value, then two store-order forms, still emits 232/236 bytes with
 first difference +0x21. Store order alone does not explain the missing body
 bytes or the extra live list-head value. Do not repeat those three forms.
+
+**Font-width resolution, 16 November 2026.** The retained
+[`MCPFONT_FontStringPixelLength`](../../nonmatching/boot/MCPFONT_FontStringPixelLength__FPCcUi.c)
+and [`MCP_FontStringPixelLength`](../../nonmatching/boot/MCP_FontStringPixelLength__FPCcUi.c)
+now reproduce all 208 and 216 bytes, respectively, with rebuilt default GNU
+and `gnu-ee-trial`, `-O2 -G0`, GNU assembly and independent SN links.
+MCPFONT's authored inline equality predicate removes the loop-held comparison
+constant and extra saved register, first reaching 194/208 equal positions.
+The source uses ordinary equality, with no explicit XOR or register constraint;
+the predicate is fully inlined and emits no extra function.
+
+Both functions then become locally exact by separating the 16-bit stored total
+from a wide per-glyph temporary. The temporary holds total + 1 (at most 65536)
+across the helper calls; adding the glyph byte then narrows the final sum.
+Neither local is exposed to the calls. This preserves wrapping, byte-prefix
+consumption, original out-of-count reads and the reviewed helper ABI.
+Allocation dumps explain the change: the wide temporary is allocated locally,
+while the narrow stored total does not cross either call and can reuse its
+register. The global index receives the other register. The prior single wide
+accumulator left both values to global allocation, which prioritized the index
+(21 weighted references over 66 instructions versus 10 over 32 for the width).
+Declaration/initialization changes and equivalent loop rewrites did not fix it.
+
+Independent checks verify actual object and linked text/FUNC sizes, exact raw
+body bytes, normal resolution of the two helper references and no absolute-symbol
+masks. Source and preprocessed C policy checks pass. A temporary integration
+passed with 842 exact objects, all 809,872 load bytes and the complete
+856,120-byte ELF exact. Both symbols were real compiled FUNC owners; all 840
+baseline replacement records and 820 accepted bodies stayed unchanged. Its
+mechanical audit leaves both ready for semantic review with no mechanical
+reason. Metadata was archived then restored; the receipt is historical for that
+restored checkout. The tools were unpinned: both sources remain in `nonmatching/`
+and no qualification or accepted C credit follows.
+This supersedes their earlier differing measurements, not the separate semantic
+and qualification obligations. Unchanged-body C/C++ frontend checks did not
+resolve either original attempt or identify the original compiler.
+
+For `PAR_Reset`, guarding a `do/while` traversal with the initial empty-list test
+still emits 232/236 bytes (default/trial), 87/90 equal positions, first difference
++0x21. A later ordinary iterator-object representation resolves the missing
+sentinel lifetime. Address-based comparison examines the current and finishing
+iterators, and a value-returned previous iterator snapshots the reverse link
+before node reset. Combining this with the previously measured two-link-pair
+reset order reproduces all 240 bytes under default GNU. `gnu-ee-trial` instead
+emits 244 bytes, 191 equal positions, first difference +0x98 at loop padding.
+The helpers are fully inlined list operations, with no extra observable use or
+register constraint. Independent semantic review found no new regression;
+4,096 private differential scenarios corroborate the preserved traversal,
+self-links, free-chain rebuild and callback-visible state. Malformed lists,
+arbitrary storage/capacity and indirect-entry boundaries remain open. This new
+PAR candidate was not covered by the 842-object font experiment above.
+
+A subsequent integration on 16 November includes all thirteen retained boot
+candidates: the previous ten plus both font-width functions and `PAR_Reset`.
+It passed with 853 exact objects, 498,900 exact text bytes, 809,872 exact load
+bytes and the complete 856,120-byte ELF exact. All thirteen candidates were
+attributed to real compiled FUNC symbols (2,884 body bytes), without absolute
+symbol masks; the separate quaternion initializer stayed in the baseline.
+All 840 previous replacement records and 820 accepted bodies stayed unchanged.
+The mechanical audit leaves all thirteen ready for semantic review, with no
+mechanical reason. The manifest, audit, attribution and integration patch were
+archived and all temporary metadata restored. This used unpinned tools, so
+qualification and promotion remain separate and no accepted C credit follows.
 
 Two further retained boot sources reproduce their measured bodies after
 independent SN links: [`dlib_displist_set_texture_state`](../../nonmatching/boot/dlib_displist_set_texture_state__FP13DLIB_DISPLISTiUlUlUlUl.c)
