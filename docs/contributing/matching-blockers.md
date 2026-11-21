@@ -371,6 +371,52 @@ The same profile left 498 other retained C bodies nonmatching in a 500-body
 comparison, so these two results do not justify a global compiler switch.
 Regenerate `progress/status.json` after changing source profiles.
 
+**Further USA boot attempts, 17 November 2026.** Four retained sources use
+`-O2 -G0`, rebuilt GNU tools, GNU assembly and independent SN links. These are
+local measurements, not qualification or accepted C credit.
+
+| Source | Default GNU result | Remaining condition |
+| --- | --- | --- |
+| [Ascii2Sjis](../../nonmatching/boot/Ascii2Sjis__FUc.c) | 232/232 body bytes exact; trial agrees | Review the table access views and original caller domain before promotion. |
+| [PAR_PostInit](../../nonmatching/boot/PAR_PostInit__Fv.c) | 248/248 body bytes exact | Storage/capacity, allocation failure and indirect-caller invariants remain. |
+| [SIG_CalcCaseInsensitiveSignature](../../nonmatching/boot/SIG_CalcCaseInsensitiveSignature__FPCc.c) | 216 bytes, 121/216 equal positions, first difference +0x6 | Recover cached-control, raw-byte and cursor lifetimes and generated read scheduling. |
+| [DRAW_BeginUpdate](../../nonmatching/boot/DRAW_BeginUpdate__Fv.c) | 412 bytes, 247/412 equal positions against 420 retail bytes, first difference +0x62 | Reconcile the material-cache word type with its accepted zero writer. |
+
+For ASCII conversion, an effective punctuation-table index base and a used
+16-bit result joining the two lookup paths reproduce the body without register
+constraints. Only accessed halfword fields and an opaque remainder are exposed;
+no conversion-table initializers are imported. Independent checks cover all
+256 input bytes and their table-load traces, with additional synthetic tables.
+
+PAR initialization preserves the unconditional setup call, signed count guard,
+count reload after allocation, saved count across the pool calls, later byte and
+storage reloads, descriptor-page assignment and final lock store. Its second
+pool-count multiplication explicitly uses the observed low-32-bit wrap before
+target-int conversion. The existing allocator interface is reused and the two
+pool views remain opaque. Five thousand private mutable-helper scenarios
+corroborate these effects. Trial emits 252 bytes, 200/248 equal positions,
+first difference +0x2C; use default GNU for this local candidate.
+
+The signature function retains its separator lookahead quirk: a local cursor
+scans ahead, while the main cursor still advances by one byte. Repeated
+separators are not collapsed. Generated read scheduling remains different;
+result agreement on valid terminated strings is not an exact-body proof.
+Its observed 216-byte body excludes the following 16-byte tail containing
+nonzero words. Trial emits 224 bytes, 81/216 equal positions, first +0x6.
+Closed cursor/classification and iterator forms did not improve the retained C.
+
+DRAW uses the integer space-count views already established by accepted boot
+callers and keeps the accepted `DRAW_EndUpdate` int cache declaration. An
+unsigned-cache diagnostic reproduces all 420 bytes, but conflicts with that
+declaration and is not the retained boot candidate. A private declaration-only
+EndUpdate control preserves its complete pinned object; reviewed cache-word
+producers use an unsigned material argument and observed reads use equality.
+This supports a separate type-reconciliation review, not a silent change to a
+frozen interface. Trial leaves the correctly typed attempt at 416 bytes,
+249/416 equal positions, first +0x62. The following zero alignment word is
+excluded from the 420-byte observed body. Buffer/toggle/capacity and indirect
+entry obligations remain; do not add a dead use or register hint to gain bytes.
+
 **Boot memory-card helpers, 15 November 2026.** Four retained USA boot sources replace the
 14 November trials of the same names, measured after an independent SN link at their retail
 addresses under the rebuilt default GNU route, `gnu-ee-trial` and `sdk991111`, all with
