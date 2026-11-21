@@ -401,6 +401,34 @@ statements. The boot gate has no C++ route; this is the first boot body measured
 and `_GLOBAL_$I$SYSTEMS_memcard_ps2.cppBRcaaa` shows the unit was C++. Reopen when a C++ front
 end is qualified for boot sources.
 
+**Boot mailbox, WAD lookup and sound helpers, 16 November 2026.** Six retained USA boot sources
+are exact after an independent SN link at their retail addresses under the rebuilt default GNU
+route and `gnu-ee-trial` (`-O2 -G0`, default GNU assembler); a seventh stays a measured trial.
+They are local witnesses, not accepted matches. Each one was a near miss or a discarded trial
+until its source shape changed:
+
+- [`MBOX_Send`](../../nonmatching/boot/MBOX_Send__FiP12HigMsgPacket.c),
+  [`MBOX_Poll`](../../nonmatching/boot/MBOX_Poll__FiPP12HigMsgPacket.c): a range test and a
+  one-bit signed flag test written as two early returns lose the negation of the flag and move
+  the failure return. Written as one condition, `if (index >= 16 || table[index].flag == 0)
+  return error;`, the negation stays and the failure return sits in the middle of the body.
+- [`MBOX_Create`](../../nonmatching/boot/MBOX_Create__FPCcUiPv.c): a signed index, a scan loop
+  with an empty body and a comparison with the bound after it. The result is a signed `int`:
+  a pointer or unsigned result loads the failure constant before the return instead of in its
+  delay slot. The accepted caller declares a pointer result and compiles identically either way.
+- [`GLOBALWAD_FindAssetsInWadBySignature`](../../nonmatching/boot/GLOBALWAD_FindAssetsInWadBySignature__FP13WadLocationIDUi14WAD_ASSET_TYPE13WadLocationID.c): when retail copies an
+  argument into a scratch register and loads small constants into that register only after each
+  call, the source has a second variable that starts as the argument and is assigned again
+  after every call, so it never lives across one.
+- [`SND_FindVag`](../../nonmatching/boot/SND_FindVag__FPCc.c): a second copy of a failure
+  constant at the end of the body, jumped over by the normal return, is a guard that wraps the
+  whole body (`if (table != 0) { ...; return found; } return -1;`), not an early return.
+- [`SND_Fixup`](../../nonmatching/boot/SND_Fixup__FUiPFP13WadLocationIDUi14WAD_ASSET_TYPE13WadLocationID_P15WAD_FILE_HEADER.c): the result is cleared before the call that
+  precedes its real assignment, and two adjacent stores are written in the opposite order.
+- [`SND_PauseAtrac`](../../nonmatching/boot/SND_PauseAtrac__Fbi.c) is still 160 compiled bytes
+  against 168: retail keeps its refusal path in line and one store out of a delay slot. Fifteen
+  forms of the refusal test did not change that. Its first parameter is a C++ `bool`.
+
 The [saving query](../../nonmatching/boot/MEMCARD_Saving__Fv.c) is unchanged: retail computes
 the comparison in one register and copies it to the result. About sixty C and C++ spellings of
 the same test (conditional expressions, `switch`, `goto`, inline helpers, `bool`, wider or
