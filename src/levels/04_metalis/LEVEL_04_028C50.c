@@ -22,7 +22,7 @@ extern float D_00249F04;
 extern int func_0201F0(float *a, Vec3 *b, Vec3 *c, int d, int e, float f);
 extern void func_131DE8(Vec3 *out, float *matrix, Vec3 *in);
 
-int func_028C50(struct Obj0291A8 *o)
+int func_028C50(struct Obj0291A8 *o, int arg)
 {
     float lim;
     Vec3 p;

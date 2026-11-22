@@ -1354,4 +1354,19 @@ declaration or return type and stay exact at all of their placements; no reviewe
 family control source was edited. 150 placements in 34 forms stay held for
 prototype disagreements. All 21 complete USA modules remain exact, and the
 prototype review finds the same 1,916 disagreeing pairs as before, none introduced.
+
+USA level bodies of 801 to 1,500 bytes, offered to new C across every candidate kind
+on 22 November 2026, together with second attempts on near misses of up to 800
+bytes, add **633 placements** (391,292 bytes by placement) from 556 sources.
+Counted by masked shape, accepted level bodies rise from 1,002,236 bytes in 7,356
+shape units to 1,038,488 bytes in 7,426. 336 placements use the pinned chain, 153
+`gnu-ee-trial-divpad`, 120 `gnu-ee-trial`, 21 `sdk991111` and 3
+`gnu-ee-trial-divpad-blockmove`; 54 need `-mno-check-zero-division` and 24
+`-fno-gcse`. 13 placements are exact only with `ps2eeas` and 12 only with
+`r5900-mfc1`. 20 sources are boot twins and carry the boot symbol. 145 accepted
+sources change only a callee declaration or return type and stay exact at all of
+their placements; no reviewed family control source was edited. 116 placements in
+11 forms stay held for prototype disagreements. All 21 complete USA modules remain
+exact, and the prototype review finds 1,906 disagreeing pairs against 1,916
+before, none introduced.
 All 21 complete USA modules remain exact; the prototype review is unchanged.

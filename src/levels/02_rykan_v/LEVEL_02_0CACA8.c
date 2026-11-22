@@ -8,7 +8,7 @@ struct Obj {
 extern struct Obj D_003407C0;
 extern int D_0021535C;
 
-extern void func_0C0428(struct Obj *o, int a, int b, int c);
+extern int func_0C0428(struct Obj *o, int a, int b, int c);
 extern void func_0B5018(int a, void *buf, float f);
 extern int func_0C07A0(struct Obj *o, int a, int b, int c, int d);
 extern void func_0C0788(struct Obj *o, int a, unsigned int b);

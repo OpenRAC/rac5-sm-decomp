@@ -1,6 +1,6 @@
 extern char D_0024AA40[];
-extern void func_03C298(void *value);
+extern int func_03C298(void *value);
 
-void func_03C2C8(void) {
-    func_03C298(D_0024AA40);
+int func_03C2C8(void) {
+    return func_03C298(D_0024AA40);
 }

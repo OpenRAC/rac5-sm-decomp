@@ -1,6 +1,6 @@
 /* LEVEL_22:0x0FFA68 -- writes the input 4x4 matrix with each row scaled by one of three scalars and an identity last column. */
 
-void func_0FFA68(float *out, float *in, float sx, float sy, float sz)
+void func_0FFA68(float *out, float *in, int mode, float sx, float sy, float sz)
 {
     float t0, t1, t2, t4, t5, t6, t8, t9, t10, t12, t13, t14;
 
