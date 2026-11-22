@@ -15,7 +15,7 @@ extern unsigned char D_001ECC0C;
 extern unsigned char D_001ECC20[];
 extern unsigned char g_RENDEREFFECT_SWIRLY_Active;
 
-extern void func_0B6DC8(Ctx *ctx, int value, int flags, int zero);
+extern int func_0B6DC8(Ctx *ctx, int value, int flags, int zero);
 extern void func_0AB9B8(int id, Q *out, float f);
 extern int func_0B7140(Ctx *ctx, short a, short b, short c, short d);
 extern void func_0B7128(Ctx *ctx, int id, unsigned int color);

@@ -17,7 +17,7 @@ extern void func_02F9B0(void *out, float *state, float *other,
 extern int func_02FD98(void *out, void *actor, Vec3 *offset,
                         float *other, unsigned long flags, float amount);
 
-void func_02FCF0(float amount, char *out, char *actor, float *other,
+int func_02FCF0(float amount, char *out, char *actor, float *other,
                  unsigned long flags)
 {
     Vec3 offset;
@@ -29,5 +29,5 @@ void func_02FCF0(float amount, char *out, char *actor, float *other,
     offset.x *= scale;
     offset.y *= scale;
     offset.z *= scale;
-    func_02FD98(out, actor, &offset, other, flags, amount);
+    return func_02FD98(out, actor, &offset, other, flags, amount);
 }

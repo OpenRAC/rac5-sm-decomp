@@ -19,7 +19,7 @@ extern Obj D_0033EAB0;
 extern int D_0021468C;
 extern Game *D_002082AC;
 
-extern void func_0BBB78(Obj *o, int a, unsigned int b, int c);
+extern int func_0BBB78(Obj *o, int a, unsigned int b, int c);
 extern void func_0B0708(int id, Pair *out, float f);
 extern int func_0BBEF0(Obj *o, int a, int b, int c, int d);
 extern void func_0BBED8(Obj *o, int a, unsigned int b);

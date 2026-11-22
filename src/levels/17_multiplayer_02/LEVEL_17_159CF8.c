@@ -62,7 +62,7 @@ struct Obj {
 };
 
 extern Entry D_001CF6F8[];
-extern void func_074FD0(void *a, void *b, void *c);
+extern int func_074FD0(void *a, void *b, void *c);
 extern void func_086B98(Entry *e, Sub *s, Vec4 *a, Vec4 *b, unsigned int fl);
 
 static __inline__ int isFar(Vec4 *a, Vec4 *b)
@@ -115,7 +115,7 @@ int func_159CF8(Obj *o)
         fl |= 0x400;
     }
     fl2 = fl | 0x10;
-    if (((int (*)(Vec4 *, Vec4 *, Obj *))func_074FD0)(&p0, &p1, sub->owner_10) != 0) {
+    if (func_074FD0(&p0, &p1, sub->owner_10) != 0) {
         far = isFar(&p0, &p1);
         sub->far_0F = far;
         func_086B98(&D_001CF6F8[far], sub, &p0, &p1, fl2);

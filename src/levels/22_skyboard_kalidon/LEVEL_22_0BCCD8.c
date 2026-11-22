@@ -12,7 +12,7 @@ typedef struct {
 extern G D_00282398;
 extern int D_0016217C;
 extern E D_00162050[];
-extern void func_0A7FC0(G *g, int a, int b, int c);
+extern int func_0A7FC0(G *g, int a, int b, int c);
 extern void func_09CD18(int a, R4 *r, float f);
 extern int func_0A8338(G *g, int a, int b, int c, int d);
 extern void func_0A8320(G *g, int a, unsigned b);

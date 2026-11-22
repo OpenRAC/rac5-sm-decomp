@@ -1,0 +1,105 @@
+/* LEVEL_17:0x0C3310 -- placement copy of LEVEL_01_0D46D8.c: draws the text lines of a selection panel: fixed captions at four screen rectangles, the current entry's label (chosen by its kind) and an item description that follows the highlighted object. */
+typedef struct {
+    short x;
+    char pad2[6];
+    unsigned short w;
+    char padA[2];
+    unsigned short h;
+    char padE[2];
+} Rect;
+
+typedef struct {
+    int f0;
+    int f4;
+    int f8;
+    int kind;
+    int f10;
+    int f14;
+    char pad18[4];
+    unsigned char shown;
+} Panel;
+
+typedef struct {
+    char pad0[0x14];
+    int text;
+} Label;
+
+typedef struct {
+    char pad0[0x10];
+    int name;
+} Entry;
+
+extern Panel D_0026C138;
+extern char D_0026C158[];
+extern Label D_0026C200;
+extern char D_001BC990[];
+extern int D_001A5F2C;
+
+extern int sprintf(char *buf, const char *fmt, ...);
+extern void func_09C690(int a, unsigned int b, float c);
+extern void func_09C2F0(int id, void *out, float initial);
+extern char *func_10E8A8(int id);
+extern void func_0974A8(short a, short b, char *c);
+extern void func_098A88(short a, short b, char *c);
+extern void func_098378(short a, short b, char *c);
+extern int func_096208(int *value);
+extern void func_110440(int a, void *l, unsigned int c);
+extern Entry *func_021A90(int h, int k);
+extern int func_0001A8(int value);
+extern int func_000200(int value);
+extern int func_0968F8(char *dst, int id, char *s1, char *s2, char *s3);
+extern int func_0A8998(void *p);
+extern void func_0990B0(void *p);
+extern void func_0990E8(void *p);
+extern void func_0A89F0(void *value);
+
+void func_0C3310(void)
+{
+    Rect r;
+    char buf[256];
+    char *p;
+    int obj;
+
+    func_09C690(0x2F, 0xFFFFFFFF, 0.0f);
+    func_09C2F0(0x1D2, &r, 0.0f);
+    func_0974A8(r.x, r.h, func_10E8A8(0x223));
+    func_09C2F0(0x1C5, &r, 0.0f);
+    func_098A88(r.w, r.h, func_10E8A8(0x3F1));
+    func_09C2F0(0x1D0, &r, 0.0f);
+    func_098378(func_096208((int *)&r), r.h, func_10E8A8(0x3E8));
+    func_09C2F0(0x1CB, &r, 0.0f);
+    func_110440(0, &r, 0xFFFFFFFF);
+    if (D_0026C138.shown != 0) {
+        func_09C2F0(0x1CB, &r, 0.0f);
+        func_110440(1, &r, 0xFFFFFFFF);
+    }
+    switch (D_0026C138.kind) {
+    case 1:
+        sprintf(buf, func_10E8A8(0x3EC), D_0026C138.f10);
+        break;
+    case 4:
+        sprintf(buf, func_10E8A8(0x3ED), func_10E8A8(func_021A90(D_0026C138.f14, -1)->name));
+        break;
+    case 2:
+        func_0968F8(buf, 0x3EE, func_10E8A8(func_0001A8(D_0026C138.f14)), func_10E8A8(func_000200(D_0026C138.f14)), 0);
+        break;
+    }
+    p = buf;
+    func_09C2F0(0x1CF, &r, 0.0f);
+    func_0974A8(r.x, r.h, p);
+    obj = func_0A8998(D_0026C158);
+    if (obj != 0) {
+        D_0026C200.text = (int)func_10E8A8(D_0026C138.f4 + *(int *)(obj + 0xD0));
+        if (D_001A5F2C != obj) {
+            func_0990B0(&D_0026C200);
+            D_001A5F2C = obj;
+        }
+        func_0990E8(&D_0026C200);
+    }
+    sprintf(p, D_001BC990, func_10E8A8(0x3EF), D_0026C138.f8);
+    func_09C2F0(0x1CE, &r, 0.0f);
+    func_0974A8(r.x, r.h, p);
+    func_09C2F0(0x1CA, &r, 0.0f);
+    func_0974A8(r.x, r.h, func_10E8A8(D_0026C138.f0));
+    func_0A89F0(D_0026C158);
+}
