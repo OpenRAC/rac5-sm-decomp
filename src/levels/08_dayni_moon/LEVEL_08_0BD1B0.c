@@ -6,7 +6,7 @@ typedef struct {
 } Rec;
 
 extern Rec D_00376C08[];
-extern void func_0BD188(int a0);
+extern int func_0BD188(int a0);
 
 void func_0BD1B0(int a0, int a1, unsigned int a2)
 {

@@ -16,7 +16,7 @@ extern struct Fx_11E240 D_00204AE8;
 extern void *memset(void *s, int c, unsigned int n);
 extern void func_0930B8(void *dst, void *src, int n, int a3);
 extern void func_0874F0(void *a0, short *out, float f12);
-extern void func_093410(void *fx, short a1, short a2, short a3, short a4);
+extern int func_093410(void *fx, short a1, short a2, short a3, short a4);
 extern void func_0933F8(void *fx, void *a1, void *a2);
 extern int func_092F18(void *fx, unsigned int a1, unsigned int a2);
 extern int func_093190(void *fx);

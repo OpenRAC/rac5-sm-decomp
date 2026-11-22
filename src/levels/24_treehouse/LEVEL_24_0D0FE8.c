@@ -1,7 +1,7 @@
 /* LEVEL_24:0x0D0FE8 -- placement copy of LEVEL_01_0D7680.c: calls a test helper and dispatches on its result with code 0x22. */
 extern int func_018E58(int);
 extern int func_0B55F0(void);
-extern void func_0B4C38(int);
+extern int func_0B4C38(int);
 extern int func_0B5CC0(int a, int b);
 
 void func_0D0FE8(void)

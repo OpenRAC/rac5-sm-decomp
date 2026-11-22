@@ -1,7 +1,7 @@
 /* LEVEL_01:0x0D7680 -- calls a test helper and dispatches on its result with code 0x22. */
 extern int func_01A868(int);
 extern int func_0BBD30(void);
-extern void func_0BB3A8(int);
+extern int func_0BB3A8(int);
 extern int func_0BC400(int a, int b);
 
 void func_0D7680(void)

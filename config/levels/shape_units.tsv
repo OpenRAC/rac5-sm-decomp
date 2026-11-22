@@ -152,7 +152,7 @@ frontend	FRONTEND_020D88	function	192	1	1	1	1	1	src/levels/frontend/FRONTEND_020
 frontend	FRONTEND_022738	fragment	36	1	0	0	0	1			
 frontend	FRONTEND_022760	function	36	1	1	1	1	1	src/levels/frontend/FRONTEND_022760.c		
 frontend	FRONTEND_022784	fragment	8	1	0	0	0	1			
-frontend	FRONTEND_022790	function	48	1	0	1	0	1			
+frontend	FRONTEND_022790	function	48	1	1	1	1	1	src/levels/frontend/FRONTEND_022790.c		
 frontend	FRONTEND_0227C0	fragment	4	1	0	0	0	1			
 frontend	FRONTEND_022840	function	44	1	0	1	0	1			
 frontend	FRONTEND_022878	function	40	1	1	1	1	1	src/levels/frontend/FRONTEND_022878.c		
@@ -2349,7 +2349,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 08_dayni_moon	LEVEL_08_20FEF8	function	272	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_20FEF8.c		
 08_dayni_moon	LEVEL_08_210120	function	448	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_210120.c		
 08_dayni_moon	LEVEL_08_210318	fragment	44	1	0	0	0	1			
-08_dayni_moon	LEVEL_08_21D758	function	196	1	0	1	0	1			
+08_dayni_moon	LEVEL_08_21D758	function	196	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_21D758.c		
 08_dayni_moon	LEVEL_08_21D820	function	108	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_21D820.c		
 08_dayni_moon	LEVEL_08_21D890	function	108	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_21D890.c		
 08_dayni_moon	LEVEL_08_21D900	function	72	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_21D900.c		
@@ -3635,7 +3635,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 15_giant_clank_metalis	LEVEL_15_139E58	function	72	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_139F70	function	1184	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_139F70.c		
 15_giant_clank_metalis	LEVEL_15_13A410	function	672	1	0	1	0	1			MOBYS/GCS_WaveMiniGrid/GCS_WaveMiniGrid.cpp
-15_giant_clank_metalis	LEVEL_15_13BA48	function	164	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_13BA48	function	164	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_13BA48.c		
 15_giant_clank_metalis	LEVEL_15_13BB20	function	172	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_13BBD8	function	204	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_13BD00	function	3760	1	0	1	0	1			
@@ -4251,7 +4251,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 19_multiplayer_04	LEVEL_19_159D38	function	104	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_159D38.c		
 19_multiplayer_04	LEVEL_19_159DA0	function	304	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_159DA0.c		
 19_multiplayer_04	LEVEL_19_159ED0	function	100	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_159ED0.c		
-19_multiplayer_04	LEVEL_19_159F38	function	180	1	0	1	0	1			
+19_multiplayer_04	LEVEL_19_159F38	function	180	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_159F38.c		
 19_multiplayer_04	LEVEL_19_15A030	function	660	1	0	1	0	1			
 19_multiplayer_04	LEVEL_19_15A2C8	function	684	1	0	1	0	1			
 19_multiplayer_04	LEVEL_19_15A578	function	1032	1	0	1	0	1			
@@ -4430,7 +4430,7 @@ shared	FRONTEND_0004D8	function	44	1	1	1	1	20	src/levels/frontend/FRONTEND_0004D
 shared	FRONTEND_000508	function	528	1	0	1	0	20			
 shared	FRONTEND_0011A8	function	152	1	1	1	1	20	src/levels/frontend/FRONTEND_0011A8.c		
 shared	FRONTEND_001240	function	444	1	1	1	1	20	src/levels/frontend/FRONTEND_001240.c		
-shared	FRONTEND_001400	function	12	11	10	11	10	20	src/levels/frontend/FRONTEND_001400.c		
+shared	FRONTEND_001400	function	12	11	11	11	11	20	src/levels/frontend/FRONTEND_001400.c		
 shared	FRONTEND_001410	function	132	1	1	1	1	20	src/levels/frontend/FRONTEND_001410.c		
 shared	FRONTEND_001540	fragment	12	2	0	0	0	20			
 shared	FRONTEND_001550	function	696	1	0	1	0	20			
@@ -4543,6 +4543,7 @@ shared	FRONTEND_005FB8	fragment	4	4	0	0	0	20
 shared	FRONTEND_006468	function	80	1	1	1	1	20	src/levels/frontend/STAT_CPU_DONE__Fv_FRONTEND.c	STAT_CPU_DONE__Fv	
 shared	FRONTEND_0064B8	function	108	1	1	1	1	20	src/levels/frontend/STAT_GPU_DONE__FUi_FRONTEND.c	STAT_GPU_DONE__FUi	
 shared	FRONTEND_006528	function	44	1	1	1	1	20	src/levels/frontend/STAT_BeginFrame__Fv_FRONTEND.c	STAT_BeginFrame__Fv	
+shared	FRONTEND_006558	function	132	1	1	1	1	20	src/levels/frontend/STAT_EndFrame__Fv_FRONTEND.c	STAT_EndFrame__Fv	
 shared	FRONTEND_0065E8	function	12	1	1	1	1	20	src/levels/frontend/FRONTEND_0065E8.c		
 shared	FRONTEND_0065F8	function	12	1	1	1	1	20	src/levels/shared/FRONTEND_0065F8.c		
 shared	FRONTEND_006608	function	72	1	1	1	1	20	src/levels/frontend/sceDisplayWaitVblankStart__Fv_FRONTEND.c	sceDisplayWaitVblankStart__Fv	
@@ -4596,7 +4597,7 @@ shared	FRONTEND_00AB70	function	56	1	0	1	0	20
 shared	FRONTEND_00AC18	function	68	1	1	1	1	20	src/levels/shared/FRONTEND_00AC18.c		
 shared	FRONTEND_00AC60	function	24	1	1	1	1	20	src/levels/shared/FRONTEND_00AC60.c		
 shared	FRONTEND_00AC78	function	20	1	1	1	1	20	src/levels/shared/FRONTEND_00AC78.c		
-shared	FRONTEND_00AC90	function	12	1	0	1	0	8			
+shared	FRONTEND_00AC90	function	12	1	1	1	1	8	src/levels/shared/FRONTEND_00AC90.c		
 shared	FRONTEND_00AC9C	fragment	8	1	0	0	0	8			
 shared	FRONTEND_00ACA8	function	324	1	0	1	0	20			
 shared	FRONTEND_00AEEC	fragment	8	4	0	0	0	19			
@@ -4662,7 +4663,7 @@ shared	FRONTEND_00EEC0	function	1556	1	0	1	0	20
 shared	FRONTEND_00F4D8	function	1512	1	0	1	0	20			
 shared	FRONTEND_00FAC0	function	456	1	0	1	0	20			
 shared	FRONTEND_00FC88	function	732	1	0	1	0	20			
-shared	FRONTEND_00FF68	function	176	1	0	1	0	20			
+shared	FRONTEND_00FF68	function	176	1	1	1	1	20	src/levels/frontend/FRONTEND_00FF68.c		
 shared	FRONTEND_010018	function	360	1	0	1	0	20			
 shared	FRONTEND_010180	function	76	1	1	1	1	20	src/levels/frontend/FRONTEND_010180.c		
 shared	FRONTEND_0101CC	fragment	8	5	0	0	0	20			
@@ -4700,7 +4701,7 @@ shared	FRONTEND_012600	function	140	1	0	1	0	20
 shared	FRONTEND_012690	function	196	1	1	1	1	20	src/levels/frontend/FRONTEND_012690.c		
 shared	FRONTEND_012758	function	16	1	0	1	0	20			
 shared	FRONTEND_012768	fragment	4	2	0	0	0	20			
-shared	FRONTEND_012770	function	200	1	0	1	0	20			
+shared	FRONTEND_012770	function	200	1	1	1	1	20	src/levels/frontend/FRONTEND_012770.c		
 shared	FRONTEND_012848	function	412	1	0	1	0	20			
 shared	FRONTEND_0129E8	function	44	1	1	1	1	20	src/levels/shared/FRONTEND_0129E8.c		
 shared	FRONTEND_012A18	function	3632	1	0	1	0	20			
@@ -4762,7 +4763,7 @@ shared	FRONTEND_017318	function	80	1	0	1	0	20
 shared	FRONTEND_017368	function	124	1	1	1	1	20	src/levels/frontend/FRONTEND_017368.c		
 shared	FRONTEND_0173E8	function	104	1	0	1	0	20			
 shared	FRONTEND_017450	function	72	1	1	1	1	20	src/levels/frontend/FRONTEND_017450.c		
-shared	FRONTEND_017498	function	36	1	0	1	0	20			
+shared	FRONTEND_017498	function	36	1	1	1	1	20	src/levels/frontend/FRONTEND_017498.c		
 shared	FRONTEND_0174C0	function	236	1	0	1	0	20			
 shared	FRONTEND_017AB0	function	64	1	0	1	0	20			
 shared	FRONTEND_017AF0	function	96	1	1	1	1	20	src/levels/frontend/FRONTEND_017AF0.c		
@@ -4776,7 +4777,7 @@ shared	FRONTEND_017DF8	function	228	1	0	1	0	20
 shared	FRONTEND_017FB0	function	108	1	0	1	0	20			
 shared	FRONTEND_018090	function	108	1	0	1	0	20			
 shared	FRONTEND_018100	function	116	1	1	1	1	20	src/levels/frontend/FRONTEND_018100.c		
-shared	FRONTEND_018178	function	60	1	0	1	0	20			
+shared	FRONTEND_018178	function	60	1	1	1	1	20	src/levels/frontend/FRONTEND_018178.c		
 shared	FRONTEND_0181B8	function	108	1	0	1	0	20			
 shared	FRONTEND_018228	function	232	1	0	1	0	20			
 shared	FRONTEND_018330	function	104	1	0	1	0	20			
@@ -4804,7 +4805,7 @@ shared	FRONTEND_019400	fragment	12	1	0	0	0	20
 shared	FRONTEND_019500	function	12	4	4	4	4	20	src/levels/frontend/FRONTEND_019500.c		
 shared	FRONTEND_0197F8	function	52	2	2	2	2	20	src/levels/frontend/FRONTEND_0197F8.c		
 shared	FRONTEND_01B898	function	36	1	1	1	1	20	src/levels/frontend/FRONTEND_01B898.c		
-shared	FRONTEND_01B8C0	function	28	2	1	2	1	20	src/levels/frontend/FRONTEND_01B8C0.c		
+shared	FRONTEND_01B8C0	function	28	2	2	2	2	20	src/levels/frontend/FRONTEND_01B8C0.c		
 shared	FRONTEND_01BA78	function	16	4	4	4	4	20	src/levels/frontend/FRONTEND_01BA78.c		
 shared	FRONTEND_01C360	function	300	1	1	1	1	20	src/levels/frontend/FRONTEND_01C360.c		
 shared	FRONTEND_01C4B0	function	36	3	1	3	1	20	src/levels/frontend/FRONTEND_01C4B0.c		
@@ -4870,6 +4871,7 @@ shared	FRONTEND_01DEB0	function	296	1	0	1	0	20
 shared	FRONTEND_01DFF0	function	344	1	1	1	1	20	src/levels/frontend/HIT_fopen_internal__FPCcT0_FRONTEND.c	HIT_fopen_internal__FPCcT0	
 shared	FRONTEND_01E148	fragment	12	3	0	0	0	20			
 shared	FRONTEND_01E158	function	72	1	1	1	1	20	src/levels/frontend/HIT_fseek__FPii9SEEKPARAM_FRONTEND.c	HIT_fseek__FPii9SEEKPARAM	
+shared	FRONTEND_01E1A0	function	212	1	1	1	1	20	src/levels/frontend/HIT_fread__FPvUiUiPi_FRONTEND.c	HIT_fread__FPvUiUiPi	
 shared	FRONTEND_01E280	function	28	1	1	1	1	20	src/levels/frontend/HIT_fclose__FPi_FRONTEND.c	HIT_fclose__FPi	
 shared	FRONTEND_01E2A0	function	40	1	0	1	0	20			
 shared	FRONTEND_01E2D8	function	24	1	1	1	1	20	src/levels/shared/FRONTEND_01E2D8.c		
@@ -4901,7 +4903,7 @@ shared	FRONTEND_01F6F0	function	12	1	1	1	1	20	src/levels/shared/FRONTEND_01F6F0.
 shared	FRONTEND_01F700	function	112	1	1	1	1	20	src/levels/shared/FRONTEND_01F700.c		
 shared	FRONTEND_01F778	function	252	1	0	1	0	20			
 shared	FRONTEND_01F880	function	76	1	1	1	1	20	src/levels/frontend/FRONTEND_01F880.c		
-shared	FRONTEND_01F8E0	function	60	1	0	1	0	20			
+shared	FRONTEND_01F8E0	function	60	1	1	1	1	20	src/levels/shared/LEVEL_01_1326E8.c		
 shared	FRONTEND_01F928	function	24	1	1	1	1	20	src/levels/shared/FRONTEND_01F928.c		
 shared	FRONTEND_01F940	function	56	1	1	1	1	20	src/levels/shared/FRONTEND_01F940.c		
 shared	FRONTEND_01F9A0	function	984	1	0	1	0	20			
@@ -4910,7 +4912,7 @@ shared	FRONTEND_0205B8	function	120	1	0	1	0	20
 shared	FRONTEND_020638	function	24	1	1	1	1	20	src/levels/frontend/FRONTEND_020638.c		
 shared	FRONTEND_020650	function	24	2	2	2	2	20	src/levels/frontend/FRONTEND_020650.c		
 shared	FRONTEND_020668	function	48	1	1	1	1	20	src/levels/frontend/FRONTEND_020668.c		
-shared	FRONTEND_020698	function	64	1	0	1	0	20			
+shared	FRONTEND_020698	function	64	1	1	1	1	20	src/levels/frontend/FRONTEND_020698.c		
 shared	FRONTEND_0206D8	function	64	1	1	1	1	20	src/levels/frontend/FRONTEND_0206D8.c		
 shared	FRONTEND_020730	function	32	2	2	2	2	20	src/levels/frontend/FRONTEND_020730.c		
 shared	FRONTEND_020750	function	32	1	1	1	1	20	src/levels/frontend/FRONTEND_020750.c		
@@ -4932,7 +4934,7 @@ shared	FRONTEND_020A08	function	44	1	1	1	1	15	src/levels/shared/FRONTEND_020A08.
 shared	FRONTEND_020A38	function	176	1	1	1	1	15	src/levels/frontend/FRONTEND_020A38.c		
 shared	FRONTEND_020AE8	function	88	1	1	1	1	20	src/levels/frontend/FRONTEND_020AE8.c		
 shared	FRONTEND_020B40	function	64	1	1	1	1	20	src/levels/frontend/FRONTEND_020B40.c		
-shared	FRONTEND_020B80	function	36	1	0	1	0	15			
+shared	FRONTEND_020B80	function	36	1	1	1	1	15	src/levels/frontend/FRONTEND_020B80.c		
 shared	FRONTEND_020C40	function	324	1	0	1	0	6			
 shared	FRONTEND_020E48	function	152	1	1	1	1	20	src/levels/frontend/FRONTEND_020E48.c		
 shared	FRONTEND_020EE0	function	152	1	1	1	1	20	src/levels/frontend/FRONTEND_020EE0.c		
@@ -4947,7 +4949,7 @@ shared	FRONTEND_021168	function	32	1	1	1	1	20	src/levels/frontend/FRONTEND_02116
 shared	FRONTEND_021188	function	40	1	1	1	1	20	src/levels/frontend/FRONTEND_021188.c		
 shared	FRONTEND_0211B0	function	64	1	1	1	1	20	src/levels/frontend/FRONTEND_0211B0.c		
 shared	FRONTEND_0211F0	function	28	1	1	1	1	20	src/levels/frontend/FRONTEND_0211F0.c		
-shared	FRONTEND_021210	function	44	1	0	1	0	20			
+shared	FRONTEND_021210	function	44	1	1	1	1	20	src/levels/frontend/FRONTEND_021210.c		
 shared	FRONTEND_02123C	fragment	56	1	0	0	0	20			
 shared	FRONTEND_021274	function	8	1	1	1	1	20	src/levels/shared/LEVEL_01_1338D4.c		
 shared	FRONTEND_02127C	function	8	1	1	1	1	20	src/levels/shared/LEVEL_01_1338DC.c		
@@ -5102,7 +5104,7 @@ shared	FRONTEND_025740	function	52	1	1	1	1	20	src/levels/frontend/uncaught_excep
 shared	FRONTEND_025778	function	40	1	1	1	1	20	src/levels/shared/what__C9exception.c	what__C9exception	
 shared	FRONTEND_0257A0	function	48	5	5	5	5	20	src/levels/frontend/FRONTEND_0257A0.c		
 shared	FRONTEND_0257D0	function	20	4	4	4	4	20	src/levels/frontend/FRONTEND_0257D0.c		
-shared	FRONTEND_0257E8	function	80	14	3	14	3	20	src/levels/frontend/FRONTEND_0257E8.c		
+shared	FRONTEND_0257E8	function	80	14	14	14	14	20	src/levels/frontend/FRONTEND_0257E8.c		
 shared	FRONTEND_025880	function	64	2	2	2	2	20	src/levels/frontend/FRONTEND_025880.c		
 shared	FRONTEND_0258C0	function	68	1	1	1	1	20	src/levels/shared/FRONTEND_0258C0.c		
 shared	FRONTEND_025908	function	80	1	1	1	1	20	src/levels/shared/FRONTEND_025908.c		
@@ -5644,7 +5646,7 @@ shared	LEVEL_01_029750	function	52	1	1	1	1	19	src/levels/01_pokitaru/higIoWaitAs
 shared	LEVEL_01_029908	fragment	4	2	0	0	0	19			
 shared	LEVEL_01_029910	function	276	1	0	1	0	19			
 shared	LEVEL_01_02A118	function	64	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_02A118.c		
-shared	LEVEL_01_02A158	function	368	1	0	1	0	19			
+shared	LEVEL_01_02A158	function	368	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_02A158.c		
 shared	LEVEL_01_02A2C8	function	16	4	4	4	4	19	src/levels/01_pokitaru/LEVEL_01_02A2C8.c		
 shared	LEVEL_01_02A2D8	function	100	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_02A2D8.c		
 shared	LEVEL_01_02A340	function	104	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_02A340.c		
@@ -5683,7 +5685,7 @@ shared	LEVEL_01_02CCF0	function	520	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0
 shared	LEVEL_01_02CEF8	function	564	1	0	1	0	19			
 shared	LEVEL_01_02D130	function	148	1	0	1	0	19			
 shared	LEVEL_01_02D1C8	function	4156	1	0	1	0	19			
-shared	LEVEL_01_02E208	function	112	1	0	1	0	19			
+shared	LEVEL_01_02E208	function	112	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_02E208.c		
 shared	LEVEL_01_02E278	function	436	1	0	1	0	19			
 shared	LEVEL_01_02E488	function	164	1	0	1	0	19			
 shared	LEVEL_01_02E530	function	12	1	1	1	1	19	src/levels/shared/LEVEL_01_02E530.c		
@@ -6136,7 +6138,7 @@ shared	LEVEL_01_06A180	function	752	1	0	1	0	19
 shared	LEVEL_01_06A470	function	756	1	0	1	0	19			
 shared	LEVEL_01_06A768	function	48	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_06A768.c		
 shared	LEVEL_01_06A798	function	308	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_06A798.c		
-shared	LEVEL_01_06A8D0	function	308	1	0	1	0	19			
+shared	LEVEL_01_06A8D0	function	308	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_06A8D0.c		
 shared	LEVEL_01_06AA08	function	56	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_06AA08.c		
 shared	LEVEL_01_06AA40	function	320	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_06AA40.c		
 shared	LEVEL_01_06AB80	function	20	1	1	1	1	19	src/levels/shared/LEVEL_01_06AB80.c		
@@ -6622,7 +6624,6 @@ shared	LEVEL_01_0A0964	fragment	32	1	0	0	0	19
 shared	LEVEL_01_0A09C8	function	44	1	1	1	1	19	src/levels/01_pokitaru/DepthOffset__Q34scee3Psp2Gui_LEVEL_01.c	DepthOffset__Q34scee3Psp2Gui	
 shared	LEVEL_01_0A0AC0	function	184	1	0	1	0	19		FlushTexTransform__Q34scee3Psp2Guv	
 shared	LEVEL_01_0A0B78	function	32	1	1	1	1	19	src/levels/01_pokitaru/TexOffset__Q34scee3Psp2Guff_LEVEL_01.c	TexOffset__Q34scee3Psp2Guff	
-shared	LEVEL_01_0A0D68	function	132	1	1	1	1	20	src/levels/01_pokitaru/STAT_EndFrame__Fv_LEVEL_01.c	STAT_EndFrame__Fv	
 shared	LEVEL_01_0A0DF0	function	104	2	2	2	2	19	src/levels/01_pokitaru/LEVEL_01_0A0DF0.c		
 shared	LEVEL_01_0A0F30	function	96	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0A0F30.c		
 shared	LEVEL_01_0A1130	function	788	1	0	1	0	19			
@@ -6847,7 +6848,7 @@ shared	LEVEL_01_0BA240	function	40	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0B
 shared	LEVEL_01_0BA438	function	40	1	1	1	1	19	src/levels/shared/LEVEL_01_0BA438.c		
 shared	LEVEL_01_0BB2F0	function	80	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0BB2F0.c		
 shared	LEVEL_01_0BB340	function	100	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0BB340.c		
-shared	LEVEL_01_0BB3A8	function	96	1	0	1	0	19			
+shared	LEVEL_01_0BB3A8	function	96	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0BB3A8.c		
 shared	LEVEL_01_0BB420	function	56	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0BB420.c		
 shared	LEVEL_01_0BB458	fragment	4	1	0	0	0	19			
 shared	LEVEL_01_0BB460	function	40	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0BB460.c		
@@ -6959,7 +6960,7 @@ shared	LEVEL_01_0C5250	function	176	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0
 shared	LEVEL_01_0C5308	function	284	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C5308.c		
 shared	LEVEL_01_0C5428	function	104	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C5428.c		
 shared	LEVEL_01_0C5490	function	608	1	0	1	0	14			
-shared	LEVEL_01_0C56F0	function	480	1	0	1	0	14			
+shared	LEVEL_01_0C56F0	function	480	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0C56F0.c		
 shared	LEVEL_01_0C58D0	function	268	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0C58D0.c		
 shared	LEVEL_01_0C59E0	function	1304	1	0	1	0	14			
 shared	LEVEL_01_0C5EF8	function	260	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C5EF8.c		
@@ -7259,7 +7260,7 @@ shared	LEVEL_01_0F01C0	function	24	1	1	1	1	13	src/levels/shared/LEVEL_01_0F01C0.
 shared	LEVEL_01_0F01D8	function	24	1	1	1	1	12	src/levels/shared/LEVEL_01_0F01D8.c		
 shared	LEVEL_01_0F0210	function	84	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_0F0210.c		
 shared	LEVEL_01_0F0270	function	180	2	0	2	0	19			
-shared	LEVEL_01_0F0328	function	104	13	0	13	0	19			
+shared	LEVEL_01_0F0328	function	104	13	13	13	13	19	src/levels/01_pokitaru/LEVEL_01_0F0328.c		
 shared	LEVEL_01_0F0390	function	156	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_0F0390.c		
 shared	LEVEL_01_0F04C8	function	1160	1	0	1	0	12			
 shared	LEVEL_01_0F0980	function	12	1	1	1	1	13	src/levels/shared/LEVEL_01_0F0980.c		
@@ -7408,7 +7409,6 @@ shared	LEVEL_01_1178A0	function	1344	1	0	1	0	19
 shared	LEVEL_01_117DE0	function	1688	1	0	1	0	19			
 shared	LEVEL_01_118478	function	812	1	0	1	0	19			
 shared	LEVEL_01_119E20	fragment	28	1	0	0	0	19			
-shared	LEVEL_01_119FF0	function	212	1	1	1	1	20	src/levels/01_pokitaru/HIT_fread__FPvUiUiPi_LEVEL_01.c	HIT_fread__FPvUiUiPi	
 shared	LEVEL_01_11A0C8	function	124	1	1	1	1	19	src/levels/01_pokitaru/HIT_freadAsync__FPvUiUiPi_LEVEL_01.c	HIT_freadAsync__FPvUiUiPi	
 shared	LEVEL_01_11A588	function	104	1	1	1	1	18	src/levels/shared/LEVEL_01_11A588.c		
 shared	LEVEL_01_11A5F0	fragment	12	1	0	0	0	18			
@@ -7678,7 +7678,7 @@ shared	LEVEL_01_133230	function	108	1	0	1	0	19
 shared	LEVEL_01_1332A0	function	332	1	0	1	0	14			
 shared	LEVEL_01_1333F0	function	200	1	0	1	0	19			
 shared	LEVEL_01_1337B4	fragment	16	1	0	0	0	14			
-shared	LEVEL_01_133CC8	function	72	1	0	1	0	19			
+shared	LEVEL_01_133CC8	function	72	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_133CC8.c		
 shared	LEVEL_01_133FE8	function	132	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_133FE8.c		
 shared	LEVEL_01_134838	function	16	3	3	3	3	19	src/levels/01_pokitaru/LEVEL_01_134838.c		
 shared	LEVEL_01_134E78	function	100	1	1	1	1	14	src/levels/shared/LEVEL_01_134E78.c		
@@ -9530,7 +9530,7 @@ shared	LEVEL_04_0A2C40	fragment	20	1	0	0	0	2
 shared	LEVEL_04_0A2C58	function	3764	1	0	1	0	4			
 shared	LEVEL_04_0ADB30	function	68	1	1	1	1	2	src/levels/shared/LEVEL_04_0ADB30.c		
 shared	LEVEL_04_0B6F68	function	560	1	0	1	0	2			
-shared	LEVEL_04_0B7AA0	function	32	1	0	1	0	2			
+shared	LEVEL_04_0B7AA0	function	32	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0B7AA0.c		
 shared	LEVEL_04_0B7AC8	function	92	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0B7AC8.c		
 shared	LEVEL_04_0B7C88	function	44	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0B7C88.c		
 shared	LEVEL_04_0B7E80	function	52	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0B7E80.c		
@@ -9662,7 +9662,7 @@ shared	LEVEL_04_16F5C8	function	52	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_16F5
 shared	LEVEL_04_16F628	function	68	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_16F628.c		
 shared	LEVEL_04_16F6C8	function	40	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_16F6C8.c		
 shared	LEVEL_04_16F6F0	function	56	1	1	1	1	2	src/levels/shared/LEVEL_04_16F6F0.c		
-shared	LEVEL_04_16F730	function	156	1	0	1	0	2			
+shared	LEVEL_04_16F730	function	156	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_16F730.c		
 shared	LEVEL_04_16F7D0	function	152	1	0	1	0	2			
 shared	LEVEL_04_16F868	function	292	1	0	1	0	2			
 shared	LEVEL_04_16F990	function	224	1	0	1	0	2			
@@ -10988,7 +10988,7 @@ shared	LEVEL_16_11F938	function	48	1	0	1	0	5
 shared	LEVEL_16_11F968	function	240	1	0	1	0	5			
 shared	LEVEL_16_11FA90	function	248	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_11FA90.c		
 shared	LEVEL_16_11FB88	function	92	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_11FB88.c		
-shared	LEVEL_16_11FBE8	function	552	1	0	1	0	5			
+shared	LEVEL_16_11FBE8	function	552	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_11FBE8.c		
 shared	LEVEL_16_11FE10	function	968	1	0	1	0	5			
 shared	LEVEL_16_1201D8	function	96	1	0	1	0	5			
 shared	LEVEL_16_120238	function	32	1	0	1	0	5			
@@ -11032,7 +11032,7 @@ shared	LEVEL_16_122EB0	function	408	1	0	1	0	5
 shared	LEVEL_16_123048	function	880	1	0	1	0	5			
 shared	LEVEL_16_1233B8	function	376	1	0	1	0	5			
 shared	LEVEL_16_123530	function	348	1	0	1	0	5			
-shared	LEVEL_16_123690	function	64	1	0	1	0	5			
+shared	LEVEL_16_123690	function	64	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_123690.c		
 shared	LEVEL_16_1236D0	function	200	1	0	1	0	5			
 shared	LEVEL_16_123798	function	840	1	0	1	0	5			
 shared	LEVEL_16_123AE0	function	208	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_123AE0.c		

@@ -22,7 +22,7 @@ extern Tbl *D_0010BE50;
 extern char *strncpy(char *d, const char *s, unsigned int n);
 extern int func_01F700(char *a, unsigned int b, unsigned int c, unsigned int d);
 extern int func_01F9A0(char *a, int b, int c);
-extern void func_01F8E0(char *a, char *b);
+extern int func_01F8E0(char *a, char *b);
 extern char *func_01FDD0(int a, int b);
 extern char *func_01FE90(int a);
 extern char *func_01F778(int a);

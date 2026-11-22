@@ -4,7 +4,7 @@ extern int D_00153AE0;
 extern int D_00153AE4;
 extern int D_00153B48[2][4];
 extern unsigned char D_00153AEC;
-extern void func_08EF20(int ev, int arg);
+extern int func_08EF20(int ev, int arg);
 extern void func_0A1D68(void);
 extern void func_0A2720(int x);
 

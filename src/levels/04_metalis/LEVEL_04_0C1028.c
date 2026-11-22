@@ -12,7 +12,7 @@ extern void SND_PausePositionalSounds(int a) __asm__("SND_PausePositionalSounds_
 extern int SND_PauseAtrac(int a, int b) __asm__("SND_PauseAtrac__Fbi");
 extern void func_0C0F98(void);
 extern void func_1A96B8(int a, int b);
-extern void func_140148(void);
+extern int func_140148(void);
 
 void func_0C1028(void)
 {

@@ -2,7 +2,7 @@ extern char *D_001F60CC;
 int func_12E570(int);
 int func_12EAA0(void);
 void func_0D97C8(void);
-void func_12F1E8(void *);
+int func_12F1E8(void *);
 
 int func_12EE30(void *arg) {
     unsigned int result;
