@@ -1312,3 +1312,17 @@ family control source was edited. Counted by masked shape, accepted level bodies
 other qualified profiles. All 21 complete USA modules remain exact, and the
 prototype review finds 1,916 disagreeing pairs against 1,917 on `master`, none
 introduced. 191 held forms remain, mostly for argument-count disagreements.
+
+USA level bodies of 201 to 400 bytes, offered to new C across every candidate kind
+on 21 November 2026, add **1,633 placements** (475,736 bytes by placement) from
+1,453 sources: the exact authored bodies and the address variants generated from
+them with each level's callee and data names. Counted by masked shape, accepted
+level bodies rise from 867,832 bytes in 6,964 shape units to 946,520 bytes in
+7,231. 1,203 placements use the pinned chain, 265 `gnu-ee-trial`, 126
+`gnu-ee-trial-divpad` and 2 `gnu-ee-trial-divpad-blockmove`; 68 need `-fno-gcse`
+and 49 `-mno-check-zero-division`. 20 placements are exact only with the qualified
+`ps2eeas` assembler and 17 only with `r5900-mfc1`; both are recorded in
+`config/levels/compiler_trial.json`. 24 sources are boot twins and carry the boot
+symbol. 588 placements in 73 forms stay held for prototype disagreements. All 21
+complete USA modules remain exact, and the prototype review finds the same 1,916
+disagreeing pairs as before, none introduced.

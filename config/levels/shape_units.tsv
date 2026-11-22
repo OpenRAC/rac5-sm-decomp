@@ -53,7 +53,7 @@ frontend	FRONTEND_0061C0	function	64	1	1	1	1	1	src/levels/frontend/LoadMatrix__Q
 frontend	FRONTEND_006200	function	160	1	1	1	1	1	src/levels/frontend/LoadMatrix__Q34scee3Psp3GumPC7MATRIX4.c	LoadMatrix__Q34scee3Psp3GumPC7MATRIX4	
 frontend	FRONTEND_0062A0	function	44	1	1	1	1	1	src/levels/frontend/StoreMatrix__Q34scee3Psp3GumP14ScePspFMatrix4.c	StoreMatrix__Q34scee3Psp3GumP14ScePspFMatrix4	
 frontend	FRONTEND_0062CC	fragment	80	1	0	0	0	1			
-frontend	FRONTEND_006320	function	308	1	0	1	0	1		UpdateMatrix__Q34scee3Psp3Gumv	
+frontend	FRONTEND_006320	function	308	1	1	1	1	1	src/levels/frontend/UpdateMatrix__Q34scee3Psp3Gumv.c	UpdateMatrix__Q34scee3Psp3Gumv	
 frontend	FRONTEND_006454	fragment	16	1	0	0	0	1			
 frontend	FRONTEND_006650	function	96	1	1	1	1	1	src/levels/frontend/FRONTEND_006650.c		
 frontend	FRONTEND_006850	function	788	1	0	1	0	1			
@@ -99,7 +99,7 @@ frontend	FRONTEND_016C48	function	92	1	1	1	1	1	src/levels/frontend/FRONTEND_016C
 frontend	FRONTEND_0175F8	function	644	1	0	1	0	1			
 frontend	FRONTEND_0178A0	function	52	1	1	1	1	1	src/levels/frontend/FRONTEND_0178A0.c		
 frontend	FRONTEND_0178D8	function	68	1	1	1	1	1	src/levels/frontend/FRONTEND_0178D8.c		
-frontend	FRONTEND_017940	function	368	1	0	1	0	1			
+frontend	FRONTEND_017940	function	368	1	1	1	1	1	src/levels/frontend/FRONTEND_017940.c		
 frontend	FRONTEND_017C68	function	96	1	1	1	1	1	src/levels/frontend/FRONTEND_017C68.c		
 frontend	FRONTEND_017EE0	function	164	1	1	1	1	1	src/levels/frontend/FRONTEND_017EE0.c		
 frontend	FRONTEND_018020	function	108	1	1	1	1	1	src/levels/frontend/FRONTEND_018020.c		
@@ -124,7 +124,7 @@ frontend	FRONTEND_01B368	function	68	4	4	4	4	1	src/levels/frontend/FRONTEND_01B3
 frontend	FRONTEND_01B3B0	function	56	1	1	1	1	1	src/levels/frontend/FRONTEND_01B3B0.c		
 frontend	FRONTEND_01B3F0	function	60	1	1	1	1	1	src/levels/frontend/FRONTEND_01B3F0.c		
 frontend	FRONTEND_01B488	function	48	1	1	1	1	1	src/levels/frontend/FRONTEND_01B488.c		
-frontend	FRONTEND_01B4C8	function	248	1	0	1	0	1			
+frontend	FRONTEND_01B4C8	function	248	1	1	1	1	1	src/levels/frontend/FRONTEND_01B4C8.c		
 frontend	FRONTEND_01B660	function	244	1	0	1	0	1			
 frontend	FRONTEND_01B758	function	244	1	1	1	1	1	src/levels/frontend/FRONTEND_01B758.c		
 frontend	FRONTEND_01B8E0	function	316	1	1	1	1	1	src/levels/frontend/FRONTEND_01B8E0.c		
@@ -220,11 +220,11 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 01_pokitaru	LEVEL_01_15B440	function	756	1	0	1	0	1			
 01_pokitaru	LEVEL_01_15B738	function	800	1	0	1	0	1			
 01_pokitaru	LEVEL_01_15BA58	function	904	1	0	1	0	1			
-01_pokitaru	LEVEL_01_15BDE0	function	284	1	0	1	0	1			
+01_pokitaru	LEVEL_01_15BDE0	function	284	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_15BDE0.c		
 01_pokitaru	LEVEL_01_15BF00	function	56	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_15BF00.c		
 01_pokitaru	LEVEL_01_15BF38	function	76	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_15BF38.c		
 01_pokitaru	LEVEL_01_15BF88	function	88	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_15BF88.c		
-01_pokitaru	LEVEL_01_15BFE0	function	284	1	0	1	0	1			
+01_pokitaru	LEVEL_01_15BFE0	function	284	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_15BFE0.c		
 01_pokitaru	LEVEL_01_15C100	function	352	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_15C100.c		
 01_pokitaru	LEVEL_01_15C260	function	1676	1	0	1	0	1			
 01_pokitaru	LEVEL_01_15C8F0	function	108	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_15C8F0.c		
@@ -234,7 +234,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 01_pokitaru	LEVEL_01_15D2C0	function	224	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_15D2C0.c		
 01_pokitaru	LEVEL_01_15D3D0	function	48	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_15D3D0.c		
 01_pokitaru	LEVEL_01_15D420	function	112	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_15D420.c		
-01_pokitaru	LEVEL_01_15D498	function	376	1	0	1	0	1			
+01_pokitaru	LEVEL_01_15D498	function	376	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_15D498.c		
 01_pokitaru	LEVEL_01_15D610	function	224	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_15D610.c		
 01_pokitaru	LEVEL_01_15D6F0	function	736	1	0	1	0	1			
 01_pokitaru	LEVEL_01_165E78	function	852	1	0	1	0	1			
@@ -252,7 +252,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 01_pokitaru	LEVEL_01_168080	function	240	1	0	1	0	1			
 01_pokitaru	LEVEL_01_168170	function	60	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_168170.c		
 01_pokitaru	LEVEL_01_1683F8	function	40	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_1683F8.c		
-01_pokitaru	LEVEL_01_16EF10	function	252	1	0	1	0	1			
+01_pokitaru	LEVEL_01_16EF10	function	252	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_16EF10.c		
 01_pokitaru	LEVEL_01_188878	function	1380	1	0	1	0	1			
 01_pokitaru	LEVEL_01_188E18	function	408	1	0	1	0	1			
 01_pokitaru	LEVEL_01_188FB0	function	24	1	0	1	0	1			
@@ -359,7 +359,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 01_pokitaru	LEVEL_01_1C2B80	function	532	1	0	1	0	1			
 01_pokitaru	LEVEL_01_1C2D98	function	476	1	0	1	0	1			
 01_pokitaru	LEVEL_01_1C2F78	function	664	1	0	1	0	1			
-01_pokitaru	LEVEL_01_1C3210	function	224	1	0	1	0	1			
+01_pokitaru	LEVEL_01_1C3210	function	224	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_1C3210.c		
 01_pokitaru	LEVEL_01_1C32F0	function	256	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_1C32F0.c		
 01_pokitaru	LEVEL_01_1C33F0	function	572	1	0	1	0	1			
 01_pokitaru	LEVEL_01_1C3630	function	156	1	1	1	1	1	src/levels/01_pokitaru/LEVEL_01_1C3630.c		
@@ -408,7 +408,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 02_rykan_v	LEVEL_02_15DAB8	function	28	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_15DAB8.c		
 02_rykan_v	LEVEL_02_15DAD8	function	260	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_15DAD8.c		
 02_rykan_v	LEVEL_02_15DBE0	function	76	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_15DBE0.c		
-02_rykan_v	LEVEL_02_15DC30	function	248	1	0	1	0	1			
+02_rykan_v	LEVEL_02_15DC30	function	248	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_15DC30.c		
 02_rykan_v	LEVEL_02_15DD28	function	160	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_15DD28.c		
 02_rykan_v	LEVEL_02_15DDC8	function	256	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_15DDC8.c		
 02_rykan_v	LEVEL_02_15DEC8	function	184	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_15DEC8.c		
@@ -509,7 +509,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 02_rykan_v	LEVEL_02_1690A4	function	16	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1690B4	function	16	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1690CC	function	36	1	0	1	0	1			
-02_rykan_v	LEVEL_02_1690F0	function	276	1	0	1	0	1			
+02_rykan_v	LEVEL_02_1690F0	function	276	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1690F0.c		
 02_rykan_v	LEVEL_02_169208	function	768	1	0	1	0	1			
 02_rykan_v	LEVEL_02_169508	function	388	1	0	1	0	1			
 02_rykan_v	LEVEL_02_169690	function	552	1	0	1	0	1			
@@ -565,14 +565,14 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 02_rykan_v	LEVEL_02_16E178	function	108	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_16E178.c		
 02_rykan_v	LEVEL_02_16E1E8	function	36	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_16E1E8.c		
 02_rykan_v	LEVEL_02_16E210	function	612	1	0	1	0	1			
-02_rykan_v	LEVEL_02_16E4B0	function	256	1	0	1	0	1			
+02_rykan_v	LEVEL_02_16E4B0	function	256	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_16E4B0.c		
 02_rykan_v	LEVEL_02_16E5F8	function	200	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_16E5F8.c		
 02_rykan_v	LEVEL_02_16E730	function	604	1	0	1	0	1			
-02_rykan_v	LEVEL_02_16E9C8	function	380	1	0	1	0	1			
+02_rykan_v	LEVEL_02_16E9C8	function	380	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_16E9C8.c		
 02_rykan_v	LEVEL_02_16EB48	function	16	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_16EB48.c		
 02_rykan_v	LEVEL_02_16EB58	function	1212	1	0	1	0	1			
 02_rykan_v	LEVEL_02_16F018	function	40	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_16F018.c		
-02_rykan_v	LEVEL_02_16F098	function	300	1	0	1	0	1			
+02_rykan_v	LEVEL_02_16F098	function	300	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_16F098.c		
 02_rykan_v	LEVEL_02_16F2D0	function	52	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_16F2D0.c		
 02_rykan_v	LEVEL_02_16F310	function	168	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_16F310.c		
 02_rykan_v	LEVEL_02_16F3B8	function	568	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_16F3B8.c		
@@ -591,7 +591,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 02_rykan_v	LEVEL_02_17A8C0	function	92	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_17A8C0.c		
 02_rykan_v	LEVEL_02_17A920	function	1016	1	0	1	0	1			
 02_rykan_v	LEVEL_02_17AD18	function	272	1	0	1	0	1			
-02_rykan_v	LEVEL_02_17AE28	function	280	1	0	1	0	1			
+02_rykan_v	LEVEL_02_17AE28	function	280	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_17AE28.c		
 02_rykan_v	LEVEL_02_17AF40	function	324	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_17AF40.c		
 02_rykan_v	LEVEL_02_17B088	function	140	1	0	1	0	1			
 02_rykan_v	LEVEL_02_17B118	function	168	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_17B118.c		
@@ -657,7 +657,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 02_rykan_v	LEVEL_02_1A2898	function	156	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1A2898.c		
 02_rykan_v	LEVEL_02_1A2940	function	636	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1A2C18	function	248	1	0	1	0	1			
-02_rykan_v	LEVEL_02_1A2D18	function	352	1	0	1	0	1			
+02_rykan_v	LEVEL_02_1A2D18	function	352	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1A2D18.c		
 02_rykan_v	LEVEL_02_1A2E78	function	56	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1A2E78.c		
 02_rykan_v	LEVEL_02_1A2EB0	function	1628	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1A3510	function	40	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1A3510.c		
@@ -674,7 +674,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 02_rykan_v	LEVEL_02_1A4310	function	76	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1A4310.c		
 02_rykan_v	LEVEL_02_1A4360	function	60	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1A4360.c		
 02_rykan_v	LEVEL_02_1A43A0	function	456	1	0	1	0	1			
-02_rykan_v	LEVEL_02_1A45C0	function	244	1	0	1	0	1			
+02_rykan_v	LEVEL_02_1A45C0	function	244	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1A45C0.c		
 02_rykan_v	LEVEL_02_1A46C0	function	1332	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1A4BF8	function	496	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1A4DE8	function	76	2	2	2	2	1	src/levels/02_rykan_v/LEVEL_02_1A4DE8.c		
@@ -687,9 +687,9 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 02_rykan_v	LEVEL_02_1AB130	function	516	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1AB370	function	848	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1AB718	function	140	1	0	1	0	1			
-02_rykan_v	LEVEL_02_1AB7B0	function	212	1	0	1	0	1			
+02_rykan_v	LEVEL_02_1AB7B0	function	212	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1AB7B0.c		
 02_rykan_v	LEVEL_02_1AB888	function	236	1	0	1	0	1			
-02_rykan_v	LEVEL_02_1AB9D0	function	280	1	0	1	0	1			
+02_rykan_v	LEVEL_02_1AB9D0	function	280	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1AB9D0.c		
 02_rykan_v	LEVEL_02_1ABAF0	function	120	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1ABB68	function	144	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1AEA28	function	276	1	0	1	0	1			
@@ -740,7 +740,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 02_rykan_v	LEVEL_02_1B5528	function	32	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1B5528.c		
 02_rykan_v	LEVEL_02_1B5728	function	168	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1B5728.c		
 02_rykan_v	LEVEL_02_1B57F0	function	816	1	0	1	0	1			
-02_rykan_v	LEVEL_02_1B5B20	function	244	1	0	1	0	1			
+02_rykan_v	LEVEL_02_1B5B20	function	244	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1B5B20.c		
 02_rykan_v	LEVEL_02_1B5C18	function	88	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1B5C70	function	108	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1B5CDC	function	16	1	0	1	0	1			
@@ -812,7 +812,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 02_rykan_v	LEVEL_02_1C0860	function	836	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1C0BA8	function	40	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1C0BD0	function	32	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1C0BD0.c		
-02_rykan_v	LEVEL_02_1C0BF0	function	392	1	0	1	0	1			
+02_rykan_v	LEVEL_02_1C0BF0	function	392	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1C0BF0.c		
 02_rykan_v	LEVEL_02_1C0DD0	function	120	1	0	1	0	1			
 02_rykan_v	LEVEL_02_1C13C8	function	612	1	1	1	1	1	src/levels/02_rykan_v/LEVEL_02_1C13C8.c		
 02_rykan_v	LEVEL_02_1C1F78	function	1040	1	0	1	0	1			
@@ -866,7 +866,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 03_kalidon	LEVEL_03_140D08	function	116	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_140D08.c		
 03_kalidon	LEVEL_03_156B20	function	392	1	0	1	0	1			
 03_kalidon	LEVEL_03_156CF0	function	392	1	0	1	0	1			
-03_kalidon	LEVEL_03_156ED0	function	308	1	0	1	0	1			
+03_kalidon	LEVEL_03_156ED0	function	308	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_156ED0.c		
 03_kalidon	LEVEL_03_157010	function	996	1	0	1	0	1			
 03_kalidon	LEVEL_03_1573F8	function	1388	1	0	1	0	1			
 03_kalidon	LEVEL_03_157968	function	756	1	0	1	0	1			
@@ -981,13 +981,13 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 03_kalidon	LEVEL_03_18EE88	function	120	1	0	1	0	1			
 03_kalidon	LEVEL_03_18EF00	function	664	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_18EF00.c		
 03_kalidon	LEVEL_03_18F198	function	40	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_18F198.c		
-03_kalidon	LEVEL_03_18F218	function	312	1	0	1	0	1			
+03_kalidon	LEVEL_03_18F218	function	312	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_18F218.c		
 03_kalidon	LEVEL_03_18F358	function	992	1	0	1	0	1			
 03_kalidon	LEVEL_03_18F738	function	1108	1	0	1	0	1			
 03_kalidon	LEVEL_03_18FB90	function	132	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_18FB90.c		
 03_kalidon	LEVEL_03_18FC70	function	112	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_18FC70.c		
 03_kalidon	LEVEL_03_18FCE8	function	120	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_18FCE8.c		
-03_kalidon	LEVEL_03_18FDB8	function	384	1	0	1	0	1			
+03_kalidon	LEVEL_03_18FDB8	function	384	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_18FDB8.c		
 03_kalidon	LEVEL_03_18FF40	function	1176	1	0	1	0	1			
 03_kalidon	LEVEL_03_190430	function	2204	1	0	1	0	1			
 03_kalidon	LEVEL_03_190CD0	function	104	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_190CD0.c		
@@ -1012,11 +1012,11 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 03_kalidon	LEVEL_03_193F38	function	40	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_193F38.c		
 03_kalidon	LEVEL_03_193F60	function	100	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_193F60.c		
 03_kalidon	LEVEL_03_193FC8	function	1184	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_193FC8.c		
-03_kalidon	LEVEL_03_194488	function	308	1	0	1	0	1			
+03_kalidon	LEVEL_03_194488	function	308	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_194488.c		
 03_kalidon	LEVEL_03_1945F8	function	616	1	0	1	0	1			
 03_kalidon	LEVEL_03_194860	function	752	1	0	1	0	1			
 03_kalidon	LEVEL_03_194B50	function	528	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_194B50.c		
-03_kalidon	LEVEL_03_194D80	function	300	1	0	1	0	1			
+03_kalidon	LEVEL_03_194D80	function	300	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_194D80.c		
 03_kalidon	LEVEL_03_194EB8	function	528	1	0	1	0	1			
 03_kalidon	LEVEL_03_1950C8	function	60	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1950C8.c		
 03_kalidon	LEVEL_03_195160	function	468	1	0	1	0	1			
@@ -1031,9 +1031,9 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 03_kalidon	LEVEL_03_196098	function	44	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_196098.c		
 03_kalidon	LEVEL_03_1960C8	function	44	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1960C8.c		
 03_kalidon	LEVEL_03_1960F8	function	104	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1960F8.c		
-03_kalidon	LEVEL_03_196180	function	312	1	0	1	0	1			
+03_kalidon	LEVEL_03_196180	function	312	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_196180.c		
 03_kalidon	LEVEL_03_1962F0	function	2512	1	0	1	0	1			
-03_kalidon	LEVEL_03_196CC0	function	372	2	0	2	0	1			
+03_kalidon	LEVEL_03_196CC0	function	372	2	2	2	2	1	src/levels/03_kalidon/LEVEL_03_196CC0.c		
 03_kalidon	LEVEL_03_196E90	function	88	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_196E90.c		
 03_kalidon	LEVEL_03_196EF0	function	424	1	0	1	0	1			
 03_kalidon	LEVEL_03_1970F0	function	308	1	0	1	0	1			
@@ -1125,7 +1125,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 03_kalidon	LEVEL_03_1A1860	function	968	1	0	1	0	1			
 03_kalidon	LEVEL_03_1A1C28	function	240	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1A1C28.c		
 03_kalidon	LEVEL_03_1A1D18	function	412	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1A1D18.c		
-03_kalidon	LEVEL_03_1A1EB8	function	220	1	0	1	0	1			
+03_kalidon	LEVEL_03_1A1EB8	function	220	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1A1EB8.c		
 03_kalidon	LEVEL_03_1A1F98	function	88	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1A1F98.c		
 03_kalidon	LEVEL_03_1A1FF0	function	176	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1A1FF0.c		
 03_kalidon	LEVEL_03_1A20A0	function	64	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1A20A0.c		
@@ -1173,7 +1173,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 03_kalidon	LEVEL_03_1A61E8	function	80	1	0	1	0	1			
 03_kalidon	LEVEL_03_1A6238	function	80	1	0	1	0	1			
 03_kalidon	LEVEL_03_1A6288	function	28	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1A6288.c		
-03_kalidon	LEVEL_03_1A62E0	function	276	1	0	1	0	1			
+03_kalidon	LEVEL_03_1A62E0	function	276	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1A62E0.c		
 03_kalidon	LEVEL_03_1A63F8	function	16	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1A63F8.c		
 03_kalidon	LEVEL_03_1A6408	function	380	1	1	1	1	1	src/levels/03_kalidon/LEVEL_03_1A6408.c		
 03_kalidon	LEVEL_03_1A6608	function	700	1	0	1	0	1			
@@ -1307,7 +1307,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 03_kalidon	LEVEL_03_1D4B60	function	416	1	0	1	0	1			
 03_kalidon	LEVEL_03_1D4D00	function	424	1	0	1	0	1			
 03_kalidon	LEVEL_03_1D4EA8	function	124	2	2	2	2	1	src/levels/03_kalidon/LEVEL_03_1D4EA8.c		
-03_kalidon	LEVEL_03_1D4F28	function	244	2	0	2	0	1			
+03_kalidon	LEVEL_03_1D4F28	function	244	2	2	2	2	1	src/levels/03_kalidon/LEVEL_03_1D4F28.c		
 03_kalidon	LEVEL_03_1EC560	fragment	108	1	0	0	0	1			
 03_kalidon	LEVEL_03_1EDA50	function	1908	1	0	1	0	1			
 03_kalidon	LEVEL_03_1EE908	fragment	20	1	0	0	0	1			
@@ -1351,7 +1351,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 04_metalis	LEVEL_04_196490	function	116	1	1	1	1	1	src/levels/04_metalis/LEVEL_04_196490.c		
 04_metalis	LEVEL_04_196510	function	132	1	1	1	1	1	src/levels/04_metalis/LEVEL_04_196510.c		
 04_metalis	LEVEL_04_1A3A78	function	48	1	1	1	1	1	src/levels/04_metalis/LEVEL_04_1A3A78.c		
-04_metalis	LEVEL_04_1A3AB0	function	356	1	0	1	0	1			
+04_metalis	LEVEL_04_1A3AB0	function	356	1	1	1	1	1	src/levels/04_metalis/LEVEL_04_1A3AB0.c		
 04_metalis	LEVEL_04_1A3C18	function	912	1	0	1	0	1			
 04_metalis	LEVEL_04_1A3FA8	function	76	1	1	1	1	1	src/levels/04_metalis/LEVEL_04_1A3FA8.c		
 04_metalis	LEVEL_04_1A8850	fragment	12	1	0	0	0	1			
@@ -1398,7 +1398,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 05_medical_outpost	LEVEL_05_16A104	function	32	1	0	1	0	1			
 05_medical_outpost	LEVEL_05_16A128	function	292	1	0	1	0	1			
 05_medical_outpost	LEVEL_05_16A250	function	680	1	0	1	0	1			
-05_medical_outpost	LEVEL_05_16A4F8	function	248	1	0	1	0	1			
+05_medical_outpost	LEVEL_05_16A4F8	function	248	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_16A4F8.c		
 05_medical_outpost	LEVEL_05_16A5F0	function	784	1	0	1	0	1			
 05_medical_outpost	LEVEL_05_16A900	function	228	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_16A900.c		
 05_medical_outpost	LEVEL_05_16A9E8	function	1208	1	0	1	0	1			
@@ -1444,7 +1444,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 05_medical_outpost	LEVEL_05_17EF38	function	1260	1	0	1	0	1			
 05_medical_outpost	LEVEL_05_17F428	function	48	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_17F428.c		
 05_medical_outpost	LEVEL_05_17F458	function	1340	1	0	1	0	1			
-05_medical_outpost	LEVEL_05_17F9F0	function	360	1	0	1	0	1			
+05_medical_outpost	LEVEL_05_17F9F0	function	360	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_17F9F0.c		
 05_medical_outpost	LEVEL_05_17FB60	function	1612	1	0	1	0	1			
 05_medical_outpost	LEVEL_05_1801B0	function	264	1	0	1	0	1			
 05_medical_outpost	LEVEL_05_1802B8	function	732	1	0	1	0	1			
@@ -1541,7 +1541,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 05_medical_outpost	LEVEL_05_18E7D0	function	40	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_18E7D0.c		
 05_medical_outpost	LEVEL_05_18E7F8	function	40	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_18E7F8.c		
 05_medical_outpost	LEVEL_05_18E820	function	96	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_18E820.c		
-05_medical_outpost	LEVEL_05_18E880	function	272	1	0	1	0	1			
+05_medical_outpost	LEVEL_05_18E880	function	272	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_18E880.c		
 05_medical_outpost	LEVEL_05_199130	function	32	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_199130.c		
 05_medical_outpost	LEVEL_05_199188	function	168	1	1	1	1	1	src/levels/05_medical_outpost/LEVEL_05_199188.c		
 05_medical_outpost	LEVEL_05_199230	function	1452	1	0	1	0	1			
@@ -1587,7 +1587,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 06_challax	LEVEL_06_17C570	function	484	1	0	1	0	1			
 06_challax	LEVEL_06_17C760	function	788	1	0	1	0	1			
 06_challax	LEVEL_06_17CA78	function	144	1	0	1	0	1			
-06_challax	LEVEL_06_17DE30	function	292	1	0	1	0	1			
+06_challax	LEVEL_06_17DE30	function	292	1	1	1	1	1	src/levels/06_challax/LEVEL_06_17DE30.c		
 06_challax	LEVEL_06_17DF58	function	68	1	1	1	1	1	src/levels/06_challax/LEVEL_06_17DF58.c		
 06_challax	LEVEL_06_17E108	function	216	1	0	1	0	1			
 06_challax	LEVEL_06_17E1E8	function	256	1	0	1	0	1			
@@ -1614,7 +1614,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 06_challax	LEVEL_06_181958	function	288	1	1	1	1	1	src/levels/06_challax/LEVEL_06_181958.c		
 06_challax	LEVEL_06_181A78	function	180	1	1	1	1	1	src/levels/06_challax/LEVEL_06_181A78.c		
 06_challax	LEVEL_06_181B30	function	904	1	0	1	0	1			
-06_challax	LEVEL_06_181EB8	function	228	1	0	1	0	1			
+06_challax	LEVEL_06_181EB8	function	228	1	1	1	1	1	src/levels/06_challax/LEVEL_06_181EB8.c		
 06_challax	LEVEL_06_181FA0	function	296	1	0	1	0	1			
 06_challax	LEVEL_06_1820C8	function	1076	1	0	1	0	1			
 06_challax	LEVEL_06_182500	function	404	1	0	1	0	1			
@@ -1666,7 +1666,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 06_challax	LEVEL_06_188008	function	40	1	1	1	1	1	src/levels/06_challax/LEVEL_06_188008.c		
 06_challax	LEVEL_06_188270	function	64	1	1	1	1	1	src/levels/06_challax/LEVEL_06_188270.c		
 06_challax	LEVEL_06_1882B8	function	56	1	1	1	1	1	src/levels/06_challax/LEVEL_06_1882B8.c		
-06_challax	LEVEL_06_1882F0	function	220	1	0	1	0	1			
+06_challax	LEVEL_06_1882F0	function	220	1	1	1	1	1	src/levels/06_challax/LEVEL_06_1882F0.c		
 06_challax	LEVEL_06_1883D0	function	144	1	0	1	0	1			
 06_challax	LEVEL_06_188460	function	172	1	0	1	0	1			
 06_challax	LEVEL_06_18C460	function	128	1	0	1	0	1			
@@ -1845,7 +1845,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 07_dreamtime	LEVEL_07_180D0C	function	1060	1	0	1	0	1			
 07_dreamtime	LEVEL_07_181130	function	512	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_181130.c		
 07_dreamtime	LEVEL_07_197594	fragment	24	1	0	0	0	1			
-07_dreamtime	LEVEL_07_197720	function	376	1	0	1	0	1			
+07_dreamtime	LEVEL_07_197720	function	376	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_197720.c		
 07_dreamtime	LEVEL_07_1978A0	function	516	1	0	1	0	1			
 07_dreamtime	LEVEL_07_197B00	function	692	1	0	1	0	1			
 07_dreamtime	LEVEL_07_197DF0	function	976	1	0	1	0	1			
@@ -1872,7 +1872,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 07_dreamtime	LEVEL_07_19A188	function	464	1	0	1	0	1			
 07_dreamtime	LEVEL_07_19A358	function	40	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_19A358.c		
 07_dreamtime	LEVEL_07_19A380	function	692	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_19A380.c		
-07_dreamtime	LEVEL_07_19A658	function	220	1	0	1	0	1			
+07_dreamtime	LEVEL_07_19A658	function	220	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_19A658.c		
 07_dreamtime	LEVEL_07_19A738	function	168	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_19A738.c		
 07_dreamtime	LEVEL_07_19A7E0	function	772	1	0	1	0	1			
 07_dreamtime	LEVEL_07_19AAE8	function	656	1	0	1	0	1			
@@ -1908,7 +1908,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 07_dreamtime	LEVEL_07_1A0178	function	852	1	0	1	0	1			
 07_dreamtime	LEVEL_07_1A04D0	function	1372	1	0	1	0	1			
 07_dreamtime	LEVEL_07_1A0A30	function	60	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1A0A30.c		
-07_dreamtime	LEVEL_07_1A0A70	function	396	1	0	1	0	1			
+07_dreamtime	LEVEL_07_1A0A70	function	396	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1A0A70.c		
 07_dreamtime	LEVEL_07_1A0C20	function	480	1	0	1	0	1			
 07_dreamtime	LEVEL_07_1A0E08	function	1564	1	0	1	0	1			
 07_dreamtime	LEVEL_07_1A1428	function	208	1	0	1	0	1			
@@ -1929,7 +1929,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 07_dreamtime	LEVEL_07_1B7790	function	144	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1B7790.c		
 07_dreamtime	LEVEL_07_1B7820	function	148	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1B7820.c		
 07_dreamtime	LEVEL_07_1C11F0	function	824	1	0	1	0	1			
-07_dreamtime	LEVEL_07_1C1528	function	204	1	0	1	0	1			
+07_dreamtime	LEVEL_07_1C1528	function	204	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1C1528.c		
 07_dreamtime	LEVEL_07_1C15F8	function	148	1	0	1	0	1			
 07_dreamtime	LEVEL_07_1C16A0	function	76	1	0	1	0	1			
 07_dreamtime	LEVEL_07_1C16EC	function	36	1	0	1	0	1			
@@ -1966,14 +1966,14 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 07_dreamtime	LEVEL_07_1C3398	function	148	1	0	1	0	1			
 07_dreamtime	LEVEL_07_1C3468	function	44	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1C3468.c		
 07_dreamtime	LEVEL_07_1C34B8	function	200	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1C34B8.c		
-07_dreamtime	LEVEL_07_1C3580	function	392	1	0	1	0	1			
+07_dreamtime	LEVEL_07_1C3580	function	392	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1C3580.c		
 07_dreamtime	LEVEL_07_1C3708	function	44	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1C3708.c		
 07_dreamtime	LEVEL_07_1C3738	function	112	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1C3708.c		
-07_dreamtime	LEVEL_07_1C37A8	function	324	1	0	1	0	1			
+07_dreamtime	LEVEL_07_1C37A8	function	324	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1C37A8.c		
 07_dreamtime	LEVEL_07_1C38F0	fragment	32	1	1	0	0	1	src/levels/07_dreamtime/LEVEL_07_1C38F0.c		
 07_dreamtime	LEVEL_07_1C3910	function	136	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1C38F0.c		
-07_dreamtime	LEVEL_07_1C5908	function	248	1	0	1	0	1			
-07_dreamtime	LEVEL_07_1C5A08	function	284	1	0	1	0	1			
+07_dreamtime	LEVEL_07_1C5908	function	248	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1C5908.c		
+07_dreamtime	LEVEL_07_1C5A08	function	284	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1C5A08.c		
 07_dreamtime	LEVEL_07_1CF740	function	112	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1CF740.c		
 07_dreamtime	LEVEL_07_1F60C0	function	3076	1	0	1	0	1			
 07_dreamtime	LEVEL_07_1F6CC8	function	184	1	1	1	1	1	src/levels/07_dreamtime/LEVEL_07_1F6CC8.c		
@@ -2011,7 +2011,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 08_dayni_moon	LEVEL_08_16A200	function	72	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_16A200.c		
 08_dayni_moon	LEVEL_08_16A248	function	128	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_16A248.c		
 08_dayni_moon	LEVEL_08_16D8C0	function	48	2	1	2	1	1	src/levels/08_dayni_moon/LEVEL_08_16D8C0.c		
-08_dayni_moon	LEVEL_08_16E6E8	function	248	1	0	1	0	1			
+08_dayni_moon	LEVEL_08_16E6E8	function	248	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_16E6E8.c		
 08_dayni_moon	LEVEL_08_16E7E0	function	116	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_16E7E0.c		
 08_dayni_moon	LEVEL_08_16E858	function	616	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_16EAC0	function	552	1	0	1	0	1			
@@ -2073,12 +2073,12 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 08_dayni_moon	LEVEL_08_18DEC8	function	244	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_18DFC0	function	36	2	2	2	2	1	src/levels/08_dayni_moon/LEVEL_08_18DFC0.c		
 08_dayni_moon	LEVEL_08_18DFE8	function	740	1	0	1	0	1			
-08_dayni_moon	LEVEL_08_18E2D0	function	268	1	0	1	0	1			
+08_dayni_moon	LEVEL_08_18E2D0	function	268	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_18E2D0.c		
 08_dayni_moon	LEVEL_08_18E418	function	156	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_18E4B8	function	232	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_18E5A0	function	40	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_18E5A0.c		
 08_dayni_moon	LEVEL_08_198AD0	function	200	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_198AD0.c		
-08_dayni_moon	LEVEL_08_198B98	function	224	1	0	1	0	1			
+08_dayni_moon	LEVEL_08_198B98	function	224	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_198B98.c		
 08_dayni_moon	LEVEL_08_198C78	function	100	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_198CDC	function	132	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_198D60	function	48	1	0	1	0	1			
@@ -2118,7 +2118,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 08_dayni_moon	LEVEL_08_19B380	fragment	24	1	0	0	0	1			
 08_dayni_moon	LEVEL_08_19B398	function	64	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_19D840	fragment	4	1	0	0	0	1			
-08_dayni_moon	LEVEL_08_19ECD0	function	324	1	0	1	0	1			
+08_dayni_moon	LEVEL_08_19ECD0	function	324	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_19ECD0.c		
 08_dayni_moon	LEVEL_08_19EE78	function	72	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_19EE78.c		
 08_dayni_moon	LEVEL_08_19EEC0	function	288	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_19EEC0.c		
 08_dayni_moon	LEVEL_08_19EFE0	function	108	1	0	1	0	1			
@@ -2134,7 +2134,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 08_dayni_moon	LEVEL_08_1ABE38	function	352	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1ABF98	fragment	108	1	0	0	0	1			
 08_dayni_moon	LEVEL_08_1AC008	function	68	1	0	1	0	1			
-08_dayni_moon	LEVEL_08_1AC0A8	function	312	1	0	1	0	1			
+08_dayni_moon	LEVEL_08_1AC0A8	function	312	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1AC0A8.c		
 08_dayni_moon	LEVEL_08_1AC1E8	function	844	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1AC538	function	68	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1AC5D8	function	408	1	0	1	0	1			
@@ -2164,8 +2164,8 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 08_dayni_moon	LEVEL_08_1AEB70	function	16	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1AEB80	function	16	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1AEB90	function	16	1	0	1	0	1			
-08_dayni_moon	LEVEL_08_1AEBE0	function	344	1	0	1	0	1			
-08_dayni_moon	LEVEL_08_1AED38	function	256	1	0	1	0	1			
+08_dayni_moon	LEVEL_08_1AEBE0	function	344	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1AEBE0.c		
+08_dayni_moon	LEVEL_08_1AED38	function	256	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1AED38.c		
 08_dayni_moon	LEVEL_08_1AEE38	function	844	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1AF188	function	1476	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1AF750	function	960	1	0	1	0	1			
@@ -2214,16 +2214,16 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 08_dayni_moon	LEVEL_08_1B50F0	function	68	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1B50F0.c		
 08_dayni_moon	LEVEL_08_1B5140	function	96	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1B5140.c		
 08_dayni_moon	LEVEL_08_1B51A0	function	56	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1B51A0.c		
-08_dayni_moon	LEVEL_08_1B5230	function	320	1	0	1	0	1			
-08_dayni_moon	LEVEL_08_1B5670	function	332	1	0	1	0	1			
+08_dayni_moon	LEVEL_08_1B5230	function	320	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1B5230.c		
+08_dayni_moon	LEVEL_08_1B5670	function	332	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1B5670.c		
 08_dayni_moon	LEVEL_08_1B5828	function	196	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1B5828.c		
-08_dayni_moon	LEVEL_08_1B5970	function	324	1	0	1	0	1			
+08_dayni_moon	LEVEL_08_1B5970	function	324	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1B5970.c		
 08_dayni_moon	LEVEL_08_1B5AF8	function	724	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1B5E08	function	436	2	2	2	2	1	src/levels/08_dayni_moon/LEVEL_08_1B5E08.c		
 08_dayni_moon	LEVEL_08_1B5FF8	function	48	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1B5FF8.c		
 08_dayni_moon	LEVEL_08_1B6028	function	840	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1B6370	function	160	1	0	1	0	1			
-08_dayni_moon	LEVEL_08_1B6478	function	264	1	0	1	0	1			
+08_dayni_moon	LEVEL_08_1B6478	function	264	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1B6478.c		
 08_dayni_moon	LEVEL_08_1B6580	function	896	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1B6900	function	524	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1B6900.c		
 08_dayni_moon	LEVEL_08_1B6B10	function	160	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1B6B10.c		
@@ -2234,7 +2234,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 08_dayni_moon	LEVEL_08_1B7AD0	function	828	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1B7E10	function	160	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1B7E10.c		
 08_dayni_moon	LEVEL_08_1BFAB0	function	356	1	0	1	0	1			
-08_dayni_moon	LEVEL_08_1BFC18	function	232	1	0	1	0	1			
+08_dayni_moon	LEVEL_08_1BFC18	function	232	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1BFC18.c		
 08_dayni_moon	LEVEL_08_1BFD00	function	128	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1BFD80	function	512	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1BFF80	function	136	1	0	1	0	1			
@@ -2281,7 +2281,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 08_dayni_moon	LEVEL_08_1C8938	function	68	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1C8938.c		
 08_dayni_moon	LEVEL_08_1C8990	function	160	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1C8990.c		
 08_dayni_moon	LEVEL_08_1C8A30	function	1852	1	0	1	0	1			
-08_dayni_moon	LEVEL_08_1C9170	function	224	1	0	1	0	1			
+08_dayni_moon	LEVEL_08_1C9170	function	224	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1C9170.c		
 08_dayni_moon	LEVEL_08_1C9250	function	1160	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_1C96F8	function	128	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1C96F8.c		
 08_dayni_moon	LEVEL_08_1C9780	function	232	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_1C9780.c		
@@ -2333,7 +2333,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 08_dayni_moon	LEVEL_08_202960	function	88	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_202960.c		
 08_dayni_moon	LEVEL_08_2029B8	function	780	1	0	1	0	1			
 08_dayni_moon	LEVEL_08_202CC8	function	76	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_202CC8.c		
-08_dayni_moon	LEVEL_08_202D18	function	384	1	0	1	0	1			
+08_dayni_moon	LEVEL_08_202D18	function	384	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_202D18.c		
 08_dayni_moon	LEVEL_08_202E98	function	104	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_202E98.c		
 08_dayni_moon	LEVEL_08_202F00	function	32	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_202F00.c		
 08_dayni_moon	LEVEL_08_202F28	function	88	1	1	1	1	1	src/levels/08_dayni_moon/LEVEL_08_202F28.c		
@@ -2401,7 +2401,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 09_inside_clank	LEVEL_09_17DFC0	function	436	1	0	1	0	1			
 09_inside_clank	LEVEL_09_17E1B8	function	1012	1	0	1	0	1			
 09_inside_clank	LEVEL_09_17E5B0	function	40	1	1	1	1	1	src/levels/09_inside_clank/LEVEL_09_17E5B0.c		
-09_inside_clank	LEVEL_09_17E630	function	320	1	0	1	0	1			
+09_inside_clank	LEVEL_09_17E630	function	320	1	1	1	1	1	src/levels/09_inside_clank/LEVEL_09_17E630.c		
 09_inside_clank	LEVEL_09_17E770	function	44	1	1	1	1	1	src/levels/09_inside_clank/LEVEL_09_17E770.c		
 09_inside_clank	LEVEL_09_17E7A0	function	888	1	0	1	0	1			
 09_inside_clank	LEVEL_09_17EB18	function	108	1	1	1	1	1	src/levels/09_inside_clank/LEVEL_09_17EB18.c		
@@ -2477,7 +2477,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 09_inside_clank	LEVEL_09_18F0F0	function	1736	1	0	1	0	1			
 09_inside_clank	LEVEL_09_18F7B8	function	340	1	1	1	1	1	src/levels/09_inside_clank/LEVEL_09_18F7B8.c		
 09_inside_clank	LEVEL_09_19EA00	function	788	1	0	1	0	1			
-09_inside_clank	LEVEL_09_19ED18	function	212	1	0	1	0	1			
+09_inside_clank	LEVEL_09_19ED18	function	212	1	1	1	1	1	src/levels/09_inside_clank/LEVEL_09_19ED18.c		
 09_inside_clank	LEVEL_09_19EDF0	function	132	1	0	1	0	1			
 09_inside_clank	LEVEL_09_19EE74	function	20	1	0	1	0	1			
 09_inside_clank	LEVEL_09_19EE88	function	76	1	0	1	0	1			
@@ -2502,11 +2502,11 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 09_inside_clank	LEVEL_09_1A0298	function	416	1	0	1	0	1			
 09_inside_clank	LEVEL_09_1A0438	function	44	1	0	1	0	1			
 09_inside_clank	LEVEL_09_1A0468	function	368	1	0	1	0	1			
-09_inside_clank	LEVEL_09_1A05D8	function	292	1	0	1	0	1			
+09_inside_clank	LEVEL_09_1A05D8	function	292	1	1	1	1	1	src/levels/09_inside_clank/LEVEL_09_1A05D8.c		
 09_inside_clank	LEVEL_09_1A0718	function	44	1	0	1	0	1			
 09_inside_clank	LEVEL_09_1A0748	function	68	1	1	1	1	1	src/levels/09_inside_clank/LEVEL_09_1A0748.c		
 09_inside_clank	LEVEL_09_1A0790	function	864	1	0	1	0	1			
-09_inside_clank	LEVEL_09_1A2C38	function	356	1	0	1	0	1			
+09_inside_clank	LEVEL_09_1A2C38	function	356	1	1	1	1	1	src/levels/09_inside_clank/LEVEL_09_1A2C38.c		
 09_inside_clank	LEVEL_09_1A2DA8	function	376	1	1	1	1	1	src/levels/09_inside_clank/LEVEL_09_1A2DA8.c		
 09_inside_clank	LEVEL_09_1A32B8	function	116	1	1	1	1	1	src/levels/09_inside_clank/LEVEL_09_1A32B8.c		
 09_inside_clank	LEVEL_09_1A3338	function	248	1	0	1	0	1			
@@ -2595,7 +2595,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 10_quodrona	LEVEL_10_1668A8	function	2852	1	0	1	0	1			
 10_quodrona	LEVEL_10_1673D0	function	364	1	0	1	0	1			
 10_quodrona	LEVEL_10_167540	function	228	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_167540.c		
-10_quodrona	LEVEL_10_167668	function	336	1	0	1	0	1			
+10_quodrona	LEVEL_10_167668	function	336	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_167668.c		
 10_quodrona	LEVEL_10_1677B8	function	1204	1	0	1	0	1			
 10_quodrona	LEVEL_10_167C70	function	236	1	0	1	0	1			
 10_quodrona	LEVEL_10_167D60	function	3660	1	0	1	0	1			
@@ -2607,7 +2607,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 10_quodrona	LEVEL_10_169818	function	348	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_169818.c		
 10_quodrona	LEVEL_10_169978	function	224	1	0	1	0	1			
 10_quodrona	LEVEL_10_169A58	function	128	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_169A58.c		
-10_quodrona	LEVEL_10_169C00	function	260	1	0	1	0	1			
+10_quodrona	LEVEL_10_169C00	function	260	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_169C00.c		
 10_quodrona	LEVEL_10_169D10	function	424	1	0	1	0	1			
 10_quodrona	LEVEL_10_169EB8	function	268	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_169EB8.c		
 10_quodrona	LEVEL_10_169FC8	function	32	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_169FC8.c		
@@ -2699,7 +2699,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 10_quodrona	LEVEL_10_17F6B8	function	84	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_17F6B8.c		
 10_quodrona	LEVEL_10_17F710	function	156	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_17F710.c		
 10_quodrona	LEVEL_10_18B5F0	function	100	1	0	1	0	1			
-10_quodrona	LEVEL_10_18B660	function	216	1	0	1	0	1			
+10_quodrona	LEVEL_10_18B660	function	216	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_18B660.c		
 10_quodrona	LEVEL_10_18B790	function	656	1	0	1	0	1			
 10_quodrona	LEVEL_10_18BA58	function	1536	1	0	1	0	1			
 10_quodrona	LEVEL_10_18C090	function	412	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_18C090.c		
@@ -2797,7 +2797,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 10_quodrona	LEVEL_10_19CC58	function	884	1	0	1	0	1			
 10_quodrona	LEVEL_10_19CFD0	function	116	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_19CFD0.c		
 10_quodrona	LEVEL_10_19D048	function	676	1	0	1	0	1			
-10_quodrona	LEVEL_10_19D2F0	function	284	1	0	1	0	1			
+10_quodrona	LEVEL_10_19D2F0	function	284	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_19D2F0.c		
 10_quodrona	LEVEL_10_19D410	function	16	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_19D410.c		
 10_quodrona	LEVEL_10_19D468	function	236	1	0	1	0	1			
 10_quodrona	LEVEL_10_19D558	function	140	1	0	1	0	1			
@@ -2830,14 +2830,14 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 10_quodrona	LEVEL_10_1A0FA8	function	80	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1A0F90.c		
 10_quodrona	LEVEL_10_1A5138	function	1192	1	0	1	0	1			
 10_quodrona	LEVEL_10_1A55E0	function	84	1	0	1	0	1			
-10_quodrona	LEVEL_10_1A5638	function	224	1	0	1	0	1			
+10_quodrona	LEVEL_10_1A5638	function	224	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1A5638.c		
 10_quodrona	LEVEL_10_1A5718	function	180	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1A5718.c		
 10_quodrona	LEVEL_10_1A57D0	function	276	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1A57D0.c		
 10_quodrona	LEVEL_10_1A58E8	function	276	1	0	1	0	1			
 10_quodrona	LEVEL_10_1A5A00	function	312	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1A5A00.c		
 10_quodrona	LEVEL_10_1A5B38	function	92	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1A5B38.c		
 10_quodrona	LEVEL_10_1A5B98	function	348	1	0	1	0	1			
-10_quodrona	LEVEL_10_1A5CF8	function	224	1	0	1	0	1			
+10_quodrona	LEVEL_10_1A5CF8	function	224	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1A5CF8.c		
 10_quodrona	LEVEL_10_1A5E30	function	268	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1A5E30.c		
 10_quodrona	LEVEL_10_1A5F60	function	848	1	0	1	0	1			
 10_quodrona	LEVEL_10_1A62B0	function	308	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1A62B0.c		
@@ -2944,18 +2944,18 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 10_quodrona	LEVEL_10_1AC630	function	88	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1AC630.c		
 10_quodrona	LEVEL_10_1AC860	function	44	1	0	1	0	1			
 10_quodrona	LEVEL_10_1AC890	function	548	1	0	1	0	1			
-10_quodrona	LEVEL_10_1B20A0	function	248	1	0	1	0	1			
+10_quodrona	LEVEL_10_1B20A0	function	248	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1B20A0.c		
 10_quodrona	LEVEL_10_1B2198	fragment	4	1	0	0	0	1			
 10_quodrona	LEVEL_10_1B21A0	function	12	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1B21A0.c		
 10_quodrona	LEVEL_10_1B21B0	function	68	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1B21B0.c		
 10_quodrona	LEVEL_10_1B21F8	function	300	1	0	1	0	1			
 10_quodrona	LEVEL_10_1B2328	function	804	1	0	1	0	1			
-10_quodrona	LEVEL_10_1B33E0	function	248	1	0	1	0	1			
+10_quodrona	LEVEL_10_1B33E0	function	248	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1B33E0.c		
 10_quodrona	LEVEL_10_1B34D8	function	60	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1B34D8.c		
 10_quodrona	LEVEL_10_1BB5D0	function	156	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1BB5D0.c		
 10_quodrona	LEVEL_10_1BB678	function	916	1	0	1	0	1			
 10_quodrona	LEVEL_10_1BBA10	function	200	1	0	1	0	1			
-10_quodrona	LEVEL_10_1BBE80	function	224	1	0	1	0	1			
+10_quodrona	LEVEL_10_1BBE80	function	224	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1BBE80.c		
 10_quodrona	LEVEL_10_1BD8E0	function	148	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1BD8E0.c		
 10_quodrona	LEVEL_10_1BDA40	function	132	1	1	1	1	1	src/levels/10_quodrona/LEVEL_10_1BDA40.c		
 10_quodrona	LEVEL_10_1BDAE8	function	300	1	0	1	0	1			
@@ -3166,7 +3166,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 15_giant_clank_metalis	LEVEL_15_0F93D8	function	216	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_0F93D8.c		
 15_giant_clank_metalis	LEVEL_15_0F94B0	function	316	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_0F95F0	function	404	1	0	1	0	1			
-15_giant_clank_metalis	LEVEL_15_0F9788	function	240	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_0F9788	function	240	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_0F9788.c		
 15_giant_clank_metalis	LEVEL_15_0F9878	function	356	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_0F9878.c		
 15_giant_clank_metalis	LEVEL_15_0F99E0	function	344	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_0F9B38	function	284	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_0F9B38.c		
@@ -3231,11 +3231,11 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 15_giant_clank_metalis	LEVEL_15_0FFB58	function	596	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_0FFDB8	function	240	1	1	1	1	1	src/levels/15_giant_clank_metalis/MOBYS/GCS/GCS_Enemy/LEVEL_15_0FFDB8.c		MOBYS/GCS/GCS_Enemy.cpp
 15_giant_clank_metalis	LEVEL_15_0FFF00	function	372	1	0	1	0	1			
-15_giant_clank_metalis	LEVEL_15_100078	function	220	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_100078	function	220	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_100078.c		
 15_giant_clank_metalis	LEVEL_15_100158	function	320	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_100298	function	408	1	0	1	0	1			
-15_giant_clank_metalis	LEVEL_15_100430	function	244	1	0	1	0	1			
-15_giant_clank_metalis	LEVEL_15_100528	function	360	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_100430	function	244	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_100430.c		
+15_giant_clank_metalis	LEVEL_15_100528	function	360	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_100528.c		
 15_giant_clank_metalis	LEVEL_15_100690	function	348	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_1007F0	function	248	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_1007F0.c		
 15_giant_clank_metalis	LEVEL_15_1008E8	function	36	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_1008E8.c		
@@ -3255,7 +3255,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 15_giant_clank_metalis	LEVEL_15_102BA0	function	24	2	2	2	2	1	src/levels/15_giant_clank_metalis/LEVEL_15_102BA0.c		
 15_giant_clank_metalis	LEVEL_15_102BB8	function	448	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_102D78	function	660	1	0	1	0	1			
-15_giant_clank_metalis	LEVEL_15_103010	function	216	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_103010	function	216	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_103010.c		
 15_giant_clank_metalis	LEVEL_15_1030E8	function	396	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_103278	function	116	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_1032F0	function	248	1	0	1	0	1			
@@ -3268,7 +3268,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 15_giant_clank_metalis	LEVEL_15_103E90	function	220	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_103E90.c		
 15_giant_clank_metalis	LEVEL_15_103F70	function	320	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_1040B0	function	408	1	0	1	0	1			
-15_giant_clank_metalis	LEVEL_15_104248	function	244	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_104248	function	244	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_104248.c		
 15_giant_clank_metalis	LEVEL_15_104340	function	360	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_104340.c		
 15_giant_clank_metalis	LEVEL_15_1044A8	function	348	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_1044A8.c		
 15_giant_clank_metalis	LEVEL_15_104608	function	680	1	0	1	0	1			
@@ -3293,7 +3293,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 15_giant_clank_metalis	LEVEL_15_106420	function	836	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_1067D0	function	172	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_1067D0.c		
 15_giant_clank_metalis	LEVEL_15_106880	function	100	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_106880.c		
-15_giant_clank_metalis	LEVEL_15_1068E8	function	392	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_1068E8	function	392	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_1068E8.c		
 15_giant_clank_metalis	LEVEL_15_106A90	function	1452	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_107050	function	756	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_107348	function	844	1	0	1	0	1			
@@ -3325,19 +3325,19 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 15_giant_clank_metalis	LEVEL_15_10B8F8	function	528	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_10BB08	function	24	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_10BB08.c		
 15_giant_clank_metalis	LEVEL_15_10BB20	function	504	1	0	1	0	1			
-15_giant_clank_metalis	LEVEL_15_10BD18	function	384	1	0	1	0	1			
-15_giant_clank_metalis	LEVEL_15_10BE98	function	252	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_10BD18	function	384	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_10BD18.c		
+15_giant_clank_metalis	LEVEL_15_10BE98	function	252	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_10BE98.c		
 15_giant_clank_metalis	LEVEL_15_10BFA0	function	1260	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_10C490	function	248	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_10C588	function	16	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_10C588.c		
 15_giant_clank_metalis	LEVEL_15_10C598	function	788	1	0	1	0	1			
-15_giant_clank_metalis	LEVEL_15_10C8B0	function	272	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_10C8B0	function	272	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_10C8B0.c		
 15_giant_clank_metalis	LEVEL_15_10C9C0	function	964	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_10CE10	function	1320	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_10D358	function	232	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_10D440	function	128	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_10D4C0	function	68	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_10D4C0.c		
-15_giant_clank_metalis	LEVEL_15_10D508	function	360	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_10D508	function	360	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_10D508.c		
 15_giant_clank_metalis	LEVEL_15_10D670	function	216	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_10D670.c		
 15_giant_clank_metalis	LEVEL_15_10D748	function	120	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_10D7C0	function	72	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_10D7C0.c		
@@ -3376,7 +3376,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 15_giant_clank_metalis	LEVEL_15_112A30	function	2012	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_113228	function	448	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_1133E8	function	656	1	0	1	0	1			
-15_giant_clank_metalis	LEVEL_15_113678	function	216	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_113678	function	216	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_113678.c		
 15_giant_clank_metalis	LEVEL_15_113750	function	352	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_1138B0	function	116	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_113928	function	304	1	0	1	0	1			
@@ -3416,7 +3416,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 15_giant_clank_metalis	LEVEL_15_11D540	function	60	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_11D540.c		
 15_giant_clank_metalis	LEVEL_15_11D580	function	44	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_11D5D0	function	1412	1	0	1	0	1			
-15_giant_clank_metalis	LEVEL_15_11DBB0	function	352	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_11DBB0	function	352	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_11DBB0.c		
 15_giant_clank_metalis	LEVEL_15_11DD10	function	136	1	1	1	1	1	src/levels/15_giant_clank_metalis/MOBYS/GCS/GCS_Laser/LEVEL_15_11DD10.c		MOBYS/GCS/GCS_Laser.cpp
 15_giant_clank_metalis	LEVEL_15_11DDA0	function	256	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_11DDA0.c		
 15_giant_clank_metalis	LEVEL_15_11DEA8	function	3356	1	0	1	0	1			
@@ -3481,7 +3481,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 15_giant_clank_metalis	LEVEL_15_1286D8	function	28	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_1286D8.c		
 15_giant_clank_metalis	LEVEL_15_128718	function	364	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_128718.c		
 15_giant_clank_metalis	LEVEL_15_128888	function	44	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_128888.c		
-15_giant_clank_metalis	LEVEL_15_1288B8	function	220	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_1288B8	function	220	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_1288B8.c		
 15_giant_clank_metalis	LEVEL_15_128998	function	88	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_128998.c		
 15_giant_clank_metalis	LEVEL_15_128A48	function	92	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_128AA8	function	2564	1	0	1	0	1			
@@ -3531,8 +3531,8 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 15_giant_clank_metalis	LEVEL_15_130748	function	216	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_130748.c		
 15_giant_clank_metalis	LEVEL_15_130820	function	316	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_130960	function	404	1	0	1	0	1			
-15_giant_clank_metalis	LEVEL_15_130AF8	function	240	1	0	1	0	1			
-15_giant_clank_metalis	LEVEL_15_130BE8	function	356	1	0	1	0	1			
+15_giant_clank_metalis	LEVEL_15_130AF8	function	240	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_130AF8.c		
+15_giant_clank_metalis	LEVEL_15_130BE8	function	356	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_130BE8.c		
 15_giant_clank_metalis	LEVEL_15_130D50	function	344	1	0	1	0	1			
 15_giant_clank_metalis	LEVEL_15_130EA8	function	312	1	1	1	1	1	src/levels/15_giant_clank_metalis/LEVEL_15_130EA8.c		
 15_giant_clank_metalis	LEVEL_15_130FE0	fragment	16	1	1	0	0	1	src/levels/15_giant_clank_metalis/LEVEL_15_130EA8.c		
@@ -3663,7 +3663,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 16_multiplayer_01	LEVEL_16_1361B0	function	72	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_1361B0.c		
 16_multiplayer_01	LEVEL_16_137E10	fragment	12	2	0	0	0	1			
 16_multiplayer_01	LEVEL_16_137E20	function	92	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_137E20.c		
-16_multiplayer_01	LEVEL_16_137E80	function	308	1	0	1	0	1			
+16_multiplayer_01	LEVEL_16_137E80	function	308	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_137E80.c		
 16_multiplayer_01	LEVEL_16_137FB8	function	192	1	0	1	0	1			
 16_multiplayer_01	LEVEL_16_138078	function	168	1	0	1	0	1			
 16_multiplayer_01	LEVEL_16_138120	function	16	1	0	1	0	1			
@@ -3682,7 +3682,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 16_multiplayer_01	LEVEL_16_1382A0	function	32	1	0	1	0	1			
 16_multiplayer_01	LEVEL_16_1382C8	function	184	1	0	1	0	1			
 16_multiplayer_01	LEVEL_16_138380	function	540	1	0	1	0	1			
-16_multiplayer_01	LEVEL_16_1385A0	function	396	1	0	1	0	1			
+16_multiplayer_01	LEVEL_16_1385A0	function	396	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_1385A0.c		
 16_multiplayer_01	LEVEL_16_1387E0	function	572	1	0	1	0	1			
 16_multiplayer_01	LEVEL_16_138A20	function	476	1	0	1	0	1			
 16_multiplayer_01	LEVEL_16_138C00	function	152	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_138C00.c		
@@ -3754,7 +3754,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 16_multiplayer_01	LEVEL_16_157330	function	100	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_157330.c		
 16_multiplayer_01	LEVEL_16_157510	function	112	1	0	1	0	1			
 16_multiplayer_01	LEVEL_16_157580	function	336	1	0	1	0	1			
-16_multiplayer_01	LEVEL_16_1593E0	function	216	1	0	1	0	1			
+16_multiplayer_01	LEVEL_16_1593E0	function	216	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_1593E0.c		
 16_multiplayer_01	LEVEL_16_1594C0	function	1132	1	0	1	0	1			
 16_multiplayer_01	LEVEL_16_159930	function	116	1	0	1	0	1			
 16_multiplayer_01	LEVEL_16_1599A8	function	60	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_1599A8.c		
@@ -3803,7 +3803,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 16_multiplayer_01	LEVEL_16_1639B8	function	140	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_1639B8.c		
 16_multiplayer_01	LEVEL_16_163A48	function	160	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_163A48.c		
 16_multiplayer_01	LEVEL_16_166140	function	392	1	0	1	0	1			
-16_multiplayer_01	LEVEL_16_1662D0	function	280	1	0	1	0	1			
+16_multiplayer_01	LEVEL_16_1662D0	function	280	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_1662D0.c		
 16_multiplayer_01	LEVEL_16_1663E8	function	1168	1	0	1	0	1			
 16_multiplayer_01	LEVEL_16_166878	function	112	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_166878.c		
 16_multiplayer_01	LEVEL_16_1668E8	function	248	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_1668E8.c		
@@ -3865,7 +3865,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 16_multiplayer_01	LEVEL_16_16FB28	function	584	1	0	1	0	1			
 16_multiplayer_01	LEVEL_16_16FD70	function	28	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_16FD70.c		
 16_multiplayer_01	LEVEL_16_16FD90	function	1276	1	0	1	0	1			
-16_multiplayer_01	LEVEL_16_170290	function	268	1	0	1	0	1			
+16_multiplayer_01	LEVEL_16_170290	function	268	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_170290.c		
 16_multiplayer_01	LEVEL_16_1703A0	function	240	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_1703A0.c		
 16_multiplayer_01	LEVEL_16_170490	function	88	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_170490.c		
 16_multiplayer_01	LEVEL_16_1704F0	function	100	1	1	1	1	1	src/levels/16_multiplayer_01/LEVEL_16_1704F0.c		
@@ -3918,7 +3918,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 17_multiplayer_02	LEVEL_17_14E970	function	104	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_14E970.c		
 17_multiplayer_02	LEVEL_17_14E9D8	function	280	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_14EAF0	function	336	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_14EAF0.c		
-17_multiplayer_02	LEVEL_17_14EC40	function	396	1	0	1	0	1			
+17_multiplayer_02	LEVEL_17_14EC40	function	396	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_14EC40.c		
 17_multiplayer_02	LEVEL_17_14EDD0	function	220	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_14EEB0	function	528	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_14F0C0	function	76	1	0	1	0	1			
@@ -3927,7 +3927,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 17_multiplayer_02	LEVEL_17_14F1F0	function	148	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_14F1F0.c		
 17_multiplayer_02	LEVEL_17_14F288	function	96	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_14F288.c		
 17_multiplayer_02	LEVEL_17_14F2E8	function	188	1	0	1	0	1			
-17_multiplayer_02	LEVEL_17_14F3A8	function	276	1	0	1	0	1			
+17_multiplayer_02	LEVEL_17_14F3A8	function	276	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_14F3A8.c		
 17_multiplayer_02	LEVEL_17_14F508	function	100	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_14F508.c		
 17_multiplayer_02	LEVEL_17_14F590	function	520	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_14F798	function	176	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_14F798.c		
@@ -3955,10 +3955,10 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 17_multiplayer_02	LEVEL_17_152750	function	2336	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_153070	function	400	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_153200	function	156	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_153200.c		
-17_multiplayer_02	LEVEL_17_153300	function	228	1	0	1	0	1			
+17_multiplayer_02	LEVEL_17_153300	function	228	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_153300.c		
 17_multiplayer_02	LEVEL_17_1533F0	function	424	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_153598	function	1092	1	0	1	0	1			
-17_multiplayer_02	LEVEL_17_1539E0	function	296	1	0	1	0	1			
+17_multiplayer_02	LEVEL_17_1539E0	function	296	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_1539E0.c		
 17_multiplayer_02	LEVEL_17_166510	function	1020	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_16A318	function	696	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_16A5D0	function	92	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_16A5D0.c		
@@ -3976,7 +3976,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 17_multiplayer_02	LEVEL_17_16ADD0	function	1360	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_16B390	function	740	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_16DEC8	function	116	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_16DEC8.c		
-17_multiplayer_02	LEVEL_17_16DF40	function	328	1	0	1	0	1			
+17_multiplayer_02	LEVEL_17_16DF40	function	328	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_16DF40.c		
 17_multiplayer_02	LEVEL_17_16E088	function	188	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_16E088.c		
 17_multiplayer_02	LEVEL_17_16E148	function	96	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_16E1A8	function	108	1	0	1	0	1			
@@ -3997,7 +3997,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 17_multiplayer_02	LEVEL_17_16E40C	function	40	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_16E434	function	120	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_16E4C8	function	508	1	0	1	0	1			
-17_multiplayer_02	LEVEL_17_16E6C8	function	364	1	0	1	0	1			
+17_multiplayer_02	LEVEL_17_16E6C8	function	364	1	1	1	1	1	src/levels/17_multiplayer_02/LEVEL_17_16E6C8.c		
 17_multiplayer_02	LEVEL_17_16E838	function	1188	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_16ECE0	function	996	1	0	1	0	1			
 17_multiplayer_02	LEVEL_17_16F0C8	function	1196	1	0	1	0	1			
@@ -4081,7 +4081,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 18_multiplayer_03	LEVEL_18_1581C8	function	224	1	0	1	0	1			
 18_multiplayer_03	LEVEL_18_1582A8	function	596	1	0	1	0	1			
 18_multiplayer_03	LEVEL_18_158500	function	24	1	1	1	1	1	src/levels/18_multiplayer_03/LEVEL_18_158500.c		
-18_multiplayer_03	LEVEL_18_158518	function	396	1	0	1	0	1			
+18_multiplayer_03	LEVEL_18_158518	function	396	1	1	1	1	1	src/levels/18_multiplayer_03/LEVEL_18_158518.c		
 18_multiplayer_03	LEVEL_18_1586A8	function	404	1	1	1	1	1	src/levels/18_multiplayer_03/LEVEL_18_1586A8.c		
 18_multiplayer_03	LEVEL_18_158840	function	460	1	0	1	0	1			
 18_multiplayer_03	LEVEL_18_158A10	function	292	1	0	1	0	1			
@@ -4166,7 +4166,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 18_multiplayer_03	LEVEL_18_17A710	function	84	1	1	1	1	1	src/levels/18_multiplayer_03/LEVEL_18_17A710.c		
 18_multiplayer_03	LEVEL_18_17A768	function	44	1	1	1	1	1	src/levels/18_multiplayer_03/LEVEL_18_17A768.c		
 18_multiplayer_03	LEVEL_18_17A7B8	function	92	1	1	1	1	1	src/levels/18_multiplayer_03/LEVEL_18_17A7B8.c		
-18_multiplayer_03	LEVEL_18_17A818	function	392	1	0	1	0	1			
+18_multiplayer_03	LEVEL_18_17A818	function	392	1	1	1	1	1	src/levels/18_multiplayer_03/LEVEL_18_17A818.c		
 18_multiplayer_03	LEVEL_18_17A9A0	function	44	1	1	1	1	1	src/levels/18_multiplayer_03/LEVEL_18_17A9A0.c		
 18_multiplayer_03	LEVEL_18_17A9D0	function	112	1	1	1	1	1	src/levels/18_multiplayer_03/LEVEL_18_17A9A0.c		
 18_multiplayer_03	LEVEL_18_17AA40	function	324	1	1	1	1	1	src/levels/18_multiplayer_03/LEVEL_18_17AA40.c		
@@ -4200,7 +4200,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 19_multiplayer_04	LEVEL_19_149D38	function	200	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_149D38.c		
 19_multiplayer_04	LEVEL_19_149E40	function	132	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_149E40.c		
 19_multiplayer_04	LEVEL_19_149EC8	function	920	1	0	1	0	1			
-19_multiplayer_04	LEVEL_19_14A338	function	252	1	0	1	0	1			
+19_multiplayer_04	LEVEL_19_14A338	function	252	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_14A338.c		
 19_multiplayer_04	LEVEL_19_14A438	function	1288	1	0	1	0	1			
 19_multiplayer_04	LEVEL_19_14A940	function	112	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_14A940.c		
 19_multiplayer_04	LEVEL_19_153CC0	fragment	12	1	0	0	0	1			
@@ -4259,7 +4259,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 19_multiplayer_04	LEVEL_19_15A9C8	function	104	2	1	2	1	1	src/levels/19_multiplayer_04/LEVEL_19_15A980.c		
 19_multiplayer_04	LEVEL_19_15AA88	function	584	1	0	1	0	1			
 19_multiplayer_04	LEVEL_19_15AD08	function	60	1	0	1	0	1			
-19_multiplayer_04	LEVEL_19_15AD50	function	304	1	0	1	0	1			
+19_multiplayer_04	LEVEL_19_15AD50	function	304	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_15AD50.c		
 19_multiplayer_04	LEVEL_19_15AE80	fragment	72	1	0	0	0	1			
 19_multiplayer_04	LEVEL_19_15AEC8	function	116	1	0	1	0	1			
 19_multiplayer_04	LEVEL_19_15AF3C	function	404	1	0	1	0	1			
@@ -4288,7 +4288,7 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 19_multiplayer_04	LEVEL_19_15D040	function	124	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_15D040.c		
 19_multiplayer_04	LEVEL_19_15D0C0	function	128	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_15D0C0.c		
 19_multiplayer_04	LEVEL_19_15D140	function	24	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_15D140.c		
-19_multiplayer_04	LEVEL_19_15D158	function	320	1	0	1	0	1			
+19_multiplayer_04	LEVEL_19_15D158	function	320	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_15D158.c		
 19_multiplayer_04	LEVEL_19_15D298	function	12	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_15D298.c		
 19_multiplayer_04	LEVEL_19_15D2A8	function	128	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_15D2A8.c		
 19_multiplayer_04	LEVEL_19_15D328	function	44	1	1	1	1	1	src/levels/19_multiplayer_04/LEVEL_19_15D328.c		
@@ -4402,16 +4402,16 @@ frontend	alignment_padding	padding	2100	1	0	0	0	1
 24_treehouse	LEVEL_24_1731B0	function	284	1	0	1	0	1			
 24_treehouse	LEVEL_24_1732D8	function	32	1	1	1	1	1	src/levels/24_treehouse/LEVEL_24_1732D8.c		
 24_treehouse	LEVEL_24_1732F8	function	320	1	0	1	0	1			
-24_treehouse	LEVEL_24_1995C0	function	324	1	0	1	0	1			
-24_treehouse	LEVEL_24_199768	function	316	1	0	1	0	1			
+24_treehouse	LEVEL_24_1995C0	function	324	1	1	1	1	1	src/levels/24_treehouse/LEVEL_24_1995C0.c		
+24_treehouse	LEVEL_24_199768	function	316	1	1	1	1	1	src/levels/24_treehouse/LEVEL_24_199768.c		
 24_treehouse	LEVEL_24_199980	function	528	1	0	1	0	1			
 24_treehouse	LEVEL_24_199B90	function	108	1	0	1	0	1			
 24_treehouse	LEVEL_24_199C00	function	836	1	0	1	0	1			
 24_treehouse	LEVEL_24_199F48	function	96	1	0	1	0	1			
 24_treehouse	LEVEL_24_19A080	function	148	1	1	1	1	1	src/levels/24_treehouse/LEVEL_24_19A080.c		
 24_treehouse	LEVEL_24_19A198	function	148	1	1	1	1	1	src/levels/24_treehouse/LEVEL_24_19A198.c		
-24_treehouse	LEVEL_24_19A2B0	function	336	1	0	1	0	1			
-24_treehouse	LEVEL_24_19A460	function	400	1	0	1	0	1			
+24_treehouse	LEVEL_24_19A2B0	function	336	1	1	1	1	1	src/levels/24_treehouse/LEVEL_24_19A2B0.c		
+24_treehouse	LEVEL_24_19A460	function	400	1	1	1	1	1	src/levels/24_treehouse/LEVEL_24_19A460.c		
 24_treehouse	LEVEL_24_19A6A0	function	184	1	1	1	1	1	src/levels/24_treehouse/LEVEL_24_19A6A0.c		
 24_treehouse	LEVEL_24_19A760	function	80	1	0	1	0	1			
 24_treehouse	LEVEL_24_19A7B0	function	436	1	0	1	0	1			
@@ -4486,7 +4486,7 @@ shared	FRONTEND_003600	function	52	1	1	1	1	20	src/levels/frontend/FRONTEND_00360
 shared	FRONTEND_003638	function	152	1	1	1	1	20	src/levels/frontend/FRONTEND_003638.c		
 shared	FRONTEND_0036D8	function	28	94	58	94	58	20	src/levels/frontend/FRONTEND_0036D8.c		MOBYS/GCS/GCS.cpp
 shared	FRONTEND_0036F8	function	252	1	1	1	1	15	src/levels/frontend/FRONTEND_0036F8.c		
-shared	FRONTEND_0037F8	function	252	1	0	1	0	15			
+shared	FRONTEND_0037F8	function	252	1	1	1	1	15	src/levels/frontend/FRONTEND_0037F8.c		
 shared	FRONTEND_003918	function	48	1	1	1	1	20	src/levels/frontend/FRONTEND_003918.c		
 shared	FRONTEND_003968	function	52	1	1	1	1	20	src/levels/frontend/FRONTEND_003968.c		
 shared	FRONTEND_003A50	function	192	1	1	1	1	20	src/levels/frontend/FRONTEND_003A50.c		
@@ -4526,7 +4526,7 @@ shared	FRONTEND_0059C0	function	20	1	0	1	0	20
 shared	FRONTEND_0059D4	fragment	8	1	0	0	0	20			
 shared	FRONTEND_0059E0	function	108	1	1	1	1	20	src/levels/frontend/sceGimPictureFindChildChunk__FPC11SceGimChunkii_FRONTEND.c	sceGimPictureFindChildChunk__FPC11SceGimChunkii	
 shared	FRONTEND_005A50	function	8	1	1	1	1	20	src/levels/shared/FRONTEND_005A50.c		
-shared	FRONTEND_005A58	function	356	1	0	1	0	20		sceGimPictureLoad__FP13SceGimPicturePC11SceGimChunk	
+shared	FRONTEND_005A58	function	356	1	1	1	1	20	src/levels/frontend/sceGimPictureLoad__FP13SceGimPicturePC11SceGimChunk_FRONTEND.c	sceGimPictureLoad__FP13SceGimPicturePC11SceGimChunk	
 shared	FRONTEND_005BC0	function	168	1	1	1	1	20	src/levels/frontend/sceGimPictureLoadFile__FP13SceGimPicturePCvii_FRONTEND.c	sceGimPictureLoadFile__FP13SceGimPicturePCvii	
 shared	FRONTEND_005C68	function	20	1	1	1	1	20	src/levels/shared/FRONTEND_005C68.c		
 shared	FRONTEND_005C80	function	20	1	1	1	1	20	src/levels/shared/FRONTEND_005C80.c		
@@ -4620,7 +4620,7 @@ shared	FRONTEND_00B658	function	20	1	1	1	1	20	src/levels/shared/LEVEL_01_0A8798.
 shared	FRONTEND_00B690	function	104	1	1	1	1	20	src/levels/shared/LEVEL_01_0A8860.c		
 shared	FRONTEND_00B720	function	148	1	0	1	0	20			
 shared	FRONTEND_00B7B4	fragment	8	1	0	0	0	20			
-shared	FRONTEND_00B7C0	function	276	1	0	1	0	20			
+shared	FRONTEND_00B7C0	function	276	1	1	1	1	20	src/levels/frontend/FRONTEND_00B7C0.c		
 shared	FRONTEND_00B8F0	function	16	1	1	1	1	20	src/levels/frontend/FRONTEND_00B8F0.c		
 shared	FRONTEND_00B928	function	104	1	1	1	1	20	src/levels/shared/FRONTEND_00B928.c		
 shared	FRONTEND_00B990	function	316	1	1	1	1	20	src/levels/frontend/FRONTEND_00B990.c		
@@ -4718,7 +4718,7 @@ shared	FRONTEND_0145C8	function	100	1	1	1	1	20	src/levels/frontend/FRONTEND_0145
 shared	FRONTEND_014630	function	364	1	1	1	1	20	src/levels/frontend/FRONTEND_014630.c		
 shared	FRONTEND_0147C0	function	120	1	0	1	0	20			
 shared	FRONTEND_014838	function	168	1	0	1	0	20			
-shared	FRONTEND_0148E0	function	216	1	0	1	0	20			
+shared	FRONTEND_0148E0	function	216	1	1	1	1	20	src/levels/frontend/FRONTEND_0148E0.c		
 shared	FRONTEND_0149B8	function	20	1	1	1	1	20	src/levels/frontend/FRONTEND_0149B8.c		
 shared	FRONTEND_0149D0	function	1084	1	0	1	0	20			
 shared	FRONTEND_014E10	function	72	1	1	1	1	20	src/levels/shared/FRONTEND_014E10.c		
@@ -4764,7 +4764,7 @@ shared	FRONTEND_017368	function	124	1	1	1	1	20	src/levels/frontend/FRONTEND_0173
 shared	FRONTEND_0173E8	function	104	1	0	1	0	20			
 shared	FRONTEND_017450	function	72	1	1	1	1	20	src/levels/frontend/FRONTEND_017450.c		
 shared	FRONTEND_017498	function	36	1	1	1	1	20	src/levels/frontend/FRONTEND_017498.c		
-shared	FRONTEND_0174C0	function	236	1	0	1	0	20			
+shared	FRONTEND_0174C0	function	236	1	1	1	1	20	src/levels/frontend/FRONTEND_0174C0.c		
 shared	FRONTEND_017AB0	function	64	1	0	1	0	20			
 shared	FRONTEND_017AF0	function	96	1	1	1	1	20	src/levels/frontend/FRONTEND_017AF0.c		
 shared	FRONTEND_017B50	function	52	1	1	1	1	20	src/levels/frontend/FRONTEND_017B50.c		
@@ -5037,7 +5037,7 @@ shared	FRONTEND_023808	function	88	1	1	1	1	20	src/levels/frontend/dpadd_FRONTEND
 shared	FRONTEND_023860	function	100	1	1	1	1	20	src/levels/frontend/dpsub_FRONTEND.c	dpsub	
 shared	FRONTEND_0238C8	function	680	1	1	1	1	20	src/levels/frontend/FRONTEND_0238C8.c	dpmul	
 shared	FRONTEND_023B70	function	360	1	0	1	0	20		dpdiv	
-shared	FRONTEND_023CD8	function	276	1	0	1	0	20		__fpcmp_parts_d	
+shared	FRONTEND_023CD8	function	276	1	1	1	1	20	src/levels/shared/__fpcmp_parts_d.c	__fpcmp_parts_d	
 shared	FRONTEND_023DF0	function	76	1	1	1	1	20	src/levels/frontend/dpcmp_FRONTEND.c	dpcmp	
 shared	FRONTEND_023E40	function	184	1	0	1	0	20		litodp	
 shared	FRONTEND_023EF8	fragment	4	4	0	0	0	20			
@@ -5473,8 +5473,8 @@ shared	LEVEL_01_01C628	function	492	1	0	1	0	12
 shared	LEVEL_01_01C818	function	428	1	0	1	0	12			
 shared	LEVEL_01_01C9C8	function	424	1	0	1	0	12			
 shared	LEVEL_01_01CB70	function	408	1	0	1	0	11			
-shared	LEVEL_01_01CD08	function	316	1	0	1	0	19			
-shared	LEVEL_01_01CE48	function	276	1	0	1	0	19			
+shared	LEVEL_01_01CD08	function	316	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_01CD08.c		
+shared	LEVEL_01_01CE48	function	276	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_01CE48.c		
 shared	LEVEL_01_01CF60	function	432	1	0	1	0	19			
 shared	LEVEL_01_01D110	function	204	1	1	1	1	19	src/levels/shared/LEVEL_01_01D110.c		
 shared	LEVEL_01_01D1E0	function	712	1	0	1	0	19			
@@ -5633,7 +5633,7 @@ shared	LEVEL_01_028BD8	function	60	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_02
 shared	LEVEL_01_028C70	function	332	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_028C70.c		
 shared	LEVEL_01_028DC0	function	80	1	1	1	1	18	src/levels/01_pokitaru/LEVEL_01_028DC0.c		
 shared	LEVEL_01_028E10	function	916	1	1	1	1	18	src/levels/01_pokitaru/LEVEL_01_028E10.c		
-shared	LEVEL_01_0291A8	function	252	1	0	1	0	19			
+shared	LEVEL_01_0291A8	function	252	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0291A8.c		
 shared	LEVEL_01_0292A8	function	152	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0292A8.c		
 shared	LEVEL_01_029340	function	208	1	1	1	1	19	src/levels/shared/LEVEL_01_029340.c		
 shared	LEVEL_01_029410	function	84	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_029410.c		
@@ -5829,7 +5829,7 @@ shared	LEVEL_01_03A100	function	600	1	1	1	1	9	src/levels/01_pokitaru/LEVEL_01_03
 shared	LEVEL_01_03A358	function	8	1	1	1	1	19	src/levels/shared/LEVEL_01_03A358.c		
 shared	LEVEL_01_03A360	function	8	1	1	1	1	19	src/levels/shared/LEVEL_08_03F430.c		
 shared	LEVEL_01_03A368	fragment	4	1	0	0	0	18			
-shared	LEVEL_01_03A370	function	248	1	0	1	0	19			
+shared	LEVEL_01_03A370	function	248	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_03A370.c		
 shared	LEVEL_01_03A470	function	112	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_03A470.c		
 shared	LEVEL_01_03A4E8	function	188	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_03A4E8.c		
 shared	LEVEL_01_03A5A8	function	2932	1	0	1	0	18			
@@ -5870,7 +5870,7 @@ shared	LEVEL_01_03C450	function	148	1	0	1	0	19
 shared	LEVEL_01_03C4E8	function	16	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_3C4E8.c		
 shared	LEVEL_01_03C4F8	function	40	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_03C4F8.c		
 shared	LEVEL_01_03C520	function	148	1	0	1	0	14			
-shared	LEVEL_01_03C5C0	function	372	1	0	1	0	19			
+shared	LEVEL_01_03C5C0	function	372	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_03C5C0.c		
 shared	LEVEL_01_03C738	function	216	1	0	1	0	19			
 shared	LEVEL_01_03C810	function	5760	1	0	1	0	13			
 shared	LEVEL_01_03DE90	function	356	1	0	1	0	19			
@@ -5977,12 +5977,12 @@ shared	LEVEL_01_04FC98	function	420	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0
 shared	LEVEL_01_04FE70	function	384	1	0	1	0	14			
 shared	LEVEL_01_04FFF0	function	136	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_04FFF0.c		
 shared	LEVEL_01_050078	function	52	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_050078.c		
-shared	LEVEL_01_0500B0	function	220	1	0	1	0	14			
+shared	LEVEL_01_0500B0	function	220	1	1	1	1	14	src/levels/shared/LEVEL_01_0500B0.c		
 shared	LEVEL_01_050190	function	220	1	0	1	0	14			
 shared	LEVEL_01_050270	function	2348	1	0	1	0	14			
 shared	LEVEL_01_050BF8	function	464	1	0	1	0	19			
 shared	LEVEL_01_050DC8	function	12	6	6	6	6	19	src/levels/01_pokitaru/LEVEL_01_050DC8.c		
-shared	LEVEL_01_050DD8	function	292	1	0	1	0	19			
+shared	LEVEL_01_050DD8	function	292	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_050DD8.c		
 shared	LEVEL_01_050F30	function	200	1	0	1	0	19			
 shared	LEVEL_01_050FF8	function	208	1	0	1	0	19			
 shared	LEVEL_01_0510C8	function	1668	1	0	1	0	19			
@@ -6011,7 +6011,7 @@ shared	LEVEL_01_054B90	function	204	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0
 shared	LEVEL_01_054C60	function	228	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_054C60.c		
 shared	LEVEL_01_054D48	function	336	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_054D48.c		
 shared	LEVEL_01_054E98	function	160	1	1	1	1	19	src/levels/shared/LEVEL_01_054E98.c		
-shared	LEVEL_01_054F38	function	224	1	0	1	0	19			
+shared	LEVEL_01_054F38	function	224	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_054F38.c		
 shared	LEVEL_01_055018	function	196	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_055018.c		
 shared	LEVEL_01_0550E0	function	1616	1	0	1	0	19			
 shared	LEVEL_01_055730	function	408	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_055730.c		
@@ -6040,14 +6040,14 @@ shared	LEVEL_01_057818	function	604	1	0	1	0	19
 shared	LEVEL_01_057A78	function	568	1	0	1	0	19			
 shared	LEVEL_01_057CB0	function	36	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_057CB0.c		
 shared	LEVEL_01_057D00	function	284	1	0	1	0	19			
-shared	LEVEL_01_057E20	function	232	1	0	1	0	19			
+shared	LEVEL_01_057E20	function	232	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_057E20.c		
 shared	LEVEL_01_057F08	function	784	1	0	1	0	14			
 shared	LEVEL_01_058218	function	704	1	0	1	0	19			
 shared	LEVEL_01_0584D8	function	312	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0584D8.c		
 shared	LEVEL_01_058610	function	296	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_058610.c		
 shared	LEVEL_01_058738	function	60	1	1	1	1	19	src/levels/shared/LEVEL_01_058738.c		
 shared	LEVEL_01_058778	function	304	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_058778.c		
-shared	LEVEL_01_0588A8	function	280	1	0	1	0	14			
+shared	LEVEL_01_0588A8	function	280	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0588A8.c		
 shared	LEVEL_01_0589C0	function	196	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0589C0.c		
 shared	LEVEL_01_058A88	function	888	1	0	1	0	19			
 shared	LEVEL_01_058E00	function	244	1	0	1	0	19			
@@ -6109,7 +6109,7 @@ shared	LEVEL_01_064F88	fragment	4	1	0	0	0	17
 shared	LEVEL_01_064F90	function	100	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_064F90.c		
 shared	LEVEL_01_065028	function	372	1	0	1	0	19			
 shared	LEVEL_01_0651A0	function	1968	1	0	1	0	14			
-shared	LEVEL_01_065950	function	344	1	0	1	0	18			
+shared	LEVEL_01_065950	function	344	1	1	1	1	18	src/levels/01_pokitaru/LEVEL_01_065950.c		
 shared	LEVEL_01_065B00	function	176	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_065B00.c		
 shared	LEVEL_01_065BB0	function	136	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_065BB0.c		
 shared	LEVEL_01_065C38	function	1260	1	0	1	0	14			
@@ -6130,7 +6130,7 @@ shared	LEVEL_01_069148	function	112	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0
 shared	LEVEL_01_0691B8	function	612	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0691B8.c		
 shared	LEVEL_01_069420	function	128	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_069420.c		
 shared	LEVEL_01_0694A0	function	992	1	0	1	0	19			
-shared	LEVEL_01_069970	function	204	1	0	1	0	14			
+shared	LEVEL_01_069970	function	204	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_069970.c		
 shared	LEVEL_01_069A40	function	348	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_069A40.c		
 shared	LEVEL_01_069BA0	function	1060	1	0	1	0	19			
 shared	LEVEL_01_069FC8	function	440	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_069FC8.c		
@@ -6163,7 +6163,7 @@ shared	LEVEL_01_06AFD8	function	16	1	1	1	1	19	src/levels/shared/LEVEL_01_06AFD8.
 shared	LEVEL_01_06AFE8	function	536	1	0	1	0	19			
 shared	LEVEL_01_06B258	function	1784	1	0	1	0	16			
 shared	LEVEL_01_06B950	function	468	1	0	1	0	12			
-shared	LEVEL_01_06BBD8	function	280	1	0	1	0	13			
+shared	LEVEL_01_06BBD8	function	280	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_06BBD8.c		
 shared	LEVEL_01_06BCF0	function	124	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_06BCF0.c		
 shared	LEVEL_01_06BD70	function	116	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_06BD70.c		
 shared	LEVEL_01_06BDE8	function	156	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_06BDE8.c		
@@ -6501,11 +6501,11 @@ shared	LEVEL_01_091AF8	function	2860	1	0	1	0	19
 shared	LEVEL_01_092628	function	2812	1	0	1	0	19			
 shared	LEVEL_01_093128	function	2140	1	0	1	0	19			
 shared	LEVEL_01_093988	function	296	1	0	1	0	19			
-shared	LEVEL_01_093AB0	function	276	1	0	1	0	19			
+shared	LEVEL_01_093AB0	function	276	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_093AB0.c		
 shared	LEVEL_01_093BC8	function	276	1	0	1	0	19			
 shared	LEVEL_01_093EA8	function	172	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_093EA8.c		
 shared	LEVEL_01_093F58	function	320	1	0	1	0	19		MATERIAL_RegisterForUpdate__FP12Material_PS2	
-shared	LEVEL_01_094098	function	280	1	0	1	0	19			
+shared	LEVEL_01_094098	function	280	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_094098.c		
 shared	LEVEL_01_0941B0	function	1472	1	0	1	0	19			
 shared	LEVEL_01_0947C8	function	516	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0947C8.c		
 shared	LEVEL_01_0949D0	function	856	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0949D0.c		
@@ -6582,7 +6582,7 @@ shared	LEVEL_01_09B310	function	64	1	0	1	0	16
 shared	LEVEL_01_09B350	function	344	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_09B350.c		
 shared	LEVEL_01_09B4A8	function	2828	1	0	1	0	17			
 shared	LEVEL_01_09BFB8	function	72	1	0	1	0	17			
-shared	LEVEL_01_09C000	function	380	1	0	1	0	13			
+shared	LEVEL_01_09C000	function	380	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_09C000.c		
 shared	LEVEL_01_09C180	function	2088	1	0	1	0	12			
 shared	LEVEL_01_09C9A8	fragment	4	3	0	0	0	16			
 shared	LEVEL_01_09C9B0	function	608	1	0	1	0	16			
@@ -6632,7 +6632,7 @@ shared	LEVEL_01_0A1880	function	228	1	0	1	0	19
 shared	LEVEL_01_0A1968	function	184	1	0	1	0	19		SYSTEM_BuildUploadVecs__FP6QWdataUiP4VEC4Ui	
 shared	LEVEL_01_0A1A20	function	528	1	0	1	0	19		SYSTEM_BuildMatrixUploadCallList__FP6QWdata15PS2_MATRIX_SLOTPC8MATRIX43b	
 shared	LEVEL_01_0A1D08	function	460	1	1	1	1	19	src/levels/01_pokitaru/SYSTEM_ActivateMicrocode__F13PS2_MICROCODE_LEVEL_01.c	SYSTEM_ActivateMicrocode__F13PS2_MICROCODE	
-shared	LEVEL_01_0A1ED8	function	276	1	0	1	0	19			
+shared	LEVEL_01_0A1ED8	function	276	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0A1ED8.c		
 shared	LEVEL_01_0A2630	function	948	1	0	1	0	19		UTIL_Draw3DTexturedQuad__FP4VEC3P4VEC2T0T1T0T1T0T1Ui	
 shared	LEVEL_01_0A2A00	function	156	1	0	1	0	19		sceKernelGetSystemTimeLow__Fv	
 shared	LEVEL_01_0A32A0	function	68	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0A32A0.c		
@@ -6671,7 +6671,7 @@ shared	LEVEL_01_0A7330	function	48	1	0	1	0	19
 shared	LEVEL_01_0A7360	function	68	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0A7360.c		
 shared	LEVEL_01_0A73A8	function	40	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0A73A8.c		
 shared	LEVEL_01_0A73D0	fragment	24	1	1	0	0	19	src/levels/01_pokitaru/LEVEL_01_0A73A8.c		
-shared	LEVEL_01_0A73E8	function	392	1	0	1	0	19			
+shared	LEVEL_01_0A73E8	function	392	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0A73E8.c		
 shared	LEVEL_01_0A7570	function	84	1	0	1	0	19			
 shared	LEVEL_01_0A75C8	function	72	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0A75C8.c		
 shared	LEVEL_01_0A7610	function	144	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0A7610.c		
@@ -6709,7 +6709,7 @@ shared	LEVEL_01_0AFDA8	function	520	1	0	1	0	14
 shared	LEVEL_01_0AFFE8	function	80	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0AFFE8.c		
 shared	LEVEL_01_0B00D0	function	496	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0B00D0.c		
 shared	LEVEL_01_0B02C0	function	440	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0B02C0.c		
-shared	LEVEL_01_0B0478	function	376	1	0	1	0	19			
+shared	LEVEL_01_0B0478	function	376	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0B0478.c		
 shared	LEVEL_01_0B05F0	function	552	1	0	1	0	19			
 shared	LEVEL_01_0B0818	function	792	1	0	1	0	19			HUD/hud.cpp
 shared	LEVEL_01_0B0F90	function	1244	1	0	1	0	19			
@@ -6742,7 +6742,7 @@ shared	LEVEL_01_0B2EF8	function	24	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0B
 shared	LEVEL_01_0B2F10	function	164	1	0	1	0	19			
 shared	LEVEL_01_0B2FB4	fragment	16	1	0	0	0	17			
 shared	LEVEL_01_0B2FC8	function	32	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0B2FC8.c		
-shared	LEVEL_01_0B2FF0	function	300	1	0	1	0	19			
+shared	LEVEL_01_0B2FF0	function	300	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0B2FF0.c		
 shared	LEVEL_01_0B3120	function	52	4	4	4	4	19	src/levels/01_pokitaru/LEVEL_01_0B3120.c		
 shared	LEVEL_01_0B3230	function	96	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0B3230.c		
 shared	LEVEL_01_0B3290	function	636	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0B3290.c		
@@ -6932,7 +6932,7 @@ shared	LEVEL_01_0C3530	function	352	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0
 shared	LEVEL_01_0C36E8	function	132	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C36E8.c		
 shared	LEVEL_01_0C3770	function	156	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C3770.c		
 shared	LEVEL_01_0C3810	function	72	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C3810.c		
-shared	LEVEL_01_0C3928	function	296	2	0	2	0	19			
+shared	LEVEL_01_0C3928	function	296	2	2	2	2	19	src/levels/01_pokitaru/LEVEL_01_0C3928.c		
 shared	LEVEL_01_0C3AA8	function	180	1	0	1	0	19			
 shared	LEVEL_01_0C3B60	function	448	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C3B60.c		
 shared	LEVEL_01_0C3D20	function	240	1	0	1	0	19			
@@ -6948,7 +6948,7 @@ shared	LEVEL_01_0C4678	function	224	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0
 shared	LEVEL_01_0C4758	function	44	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C4758.c		
 shared	LEVEL_01_0C4838	function	160	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0C4838.c		
 shared	LEVEL_01_0C48D8	function	68	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C48D8.c		
-shared	LEVEL_01_0C4948	function	256	1	0	1	0	14			
+shared	LEVEL_01_0C4948	function	256	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_0C4948.c		
 shared	LEVEL_01_0C4AA8	function	292	1	0	1	0	19			
 shared	LEVEL_01_0C4BD0	function	508	1	0	1	0	19			
 shared	LEVEL_01_0C4DD0	function	288	1	0	1	0	19			
@@ -6972,7 +6972,7 @@ shared	LEVEL_01_0C6C30	function	120	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0
 shared	LEVEL_01_0C75F8	function	644	1	0	1	0	19			
 shared	LEVEL_01_0C78A0	function	88	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C78A0.c		
 shared	LEVEL_01_0C78F8	function	68	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C78F8.c		
-shared	LEVEL_01_0C7960	function	292	1	0	1	0	19			
+shared	LEVEL_01_0C7960	function	292	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C7960.c		
 shared	LEVEL_01_0C7C40	function	104	1	0	1	0	19			
 shared	LEVEL_01_0C7EC0	function	136	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C7EC0.c		
 shared	LEVEL_01_0C7FE0	function	116	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C7FE0.c		
@@ -7024,7 +7024,7 @@ shared	LEVEL_01_0CC818	function	348	1	0	1	0	19
 shared	LEVEL_01_0CC9D0	function	788	1	0	1	0	19			
 shared	LEVEL_01_0CCCE8	function	960	1	0	1	0	19			
 shared	LEVEL_01_0CD0A8	function	472	1	0	1	0	19			
-shared	LEVEL_01_0CD280	function	316	1	0	1	0	19			
+shared	LEVEL_01_0CD280	function	316	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0CD280.c		
 shared	LEVEL_01_0CD3C0	function	308	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0CD3C0.c		
 shared	LEVEL_01_0CD4F8	function	288	1	0	1	0	19			
 shared	LEVEL_01_0CD618	function	232	1	0	1	0	19			
@@ -7036,7 +7036,7 @@ shared	LEVEL_01_0CE318	function	756	1	0	1	0	19
 shared	LEVEL_01_0CE610	function	344	1	0	1	0	19			
 shared	LEVEL_01_0CE790	function	472	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0CE790.c		
 shared	LEVEL_01_0CE968	function	164	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0CE968.c		
-shared	LEVEL_01_0CEA68	function	392	1	0	1	0	19			
+shared	LEVEL_01_0CEA68	function	392	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0CEA68.c		
 shared	LEVEL_01_0CEBF0	function	364	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0CEBF0.c		
 shared	LEVEL_01_0CED60	function	96	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0CED60.c		
 shared	LEVEL_01_0CEDC0	function	52	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0CEDC0.c		
@@ -7089,7 +7089,7 @@ shared	LEVEL_01_0D50E0	function	88	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0D
 shared	LEVEL_01_0D5160	function	1244	1	0	1	0	19			
 shared	LEVEL_01_0D5640	function	40	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0D5640.c		
 shared	LEVEL_01_0D5668	function	1084	1	0	1	0	19			
-shared	LEVEL_01_0D5AA8	function	240	1	0	1	0	19			
+shared	LEVEL_01_0D5AA8	function	240	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0D5AA8.c		
 shared	LEVEL_01_0D5C98	function	168	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0D5C98.c		
 shared	LEVEL_01_0D5D40	function	480	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0D5D40.c		
 shared	LEVEL_01_0D6020	function	152	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0D6020.c		
@@ -7132,7 +7132,7 @@ shared	LEVEL_01_0D9170	function	140	1	0	1	0	19
 shared	LEVEL_01_0D9200	function	28	1	1	1	1	19	src/levels/shared/LEVEL_01_0D9200.c		
 shared	LEVEL_01_0D9220	function	40	1	1	1	1	19	src/levels/shared/LEVEL_01_0D9220.c		
 shared	LEVEL_01_0D9248	function	176	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0D9248.c		
-shared	LEVEL_01_0D92F8	function	400	1	0	1	0	19			
+shared	LEVEL_01_0D92F8	function	400	1	1	1	1	19	src/levels/shared/LEVEL_01_0D92F8.c		
 shared	LEVEL_01_0D9488	function	244	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0D9488.c		
 shared	LEVEL_01_0D9580	function	532	1	0	1	0	19			
 shared	LEVEL_01_0D9798	function	328	1	0	1	0	19			
@@ -7154,7 +7154,7 @@ shared	LEVEL_01_0DC120	function	200	1	0	1	0	19
 shared	LEVEL_01_0DC240	function	448	1	0	1	0	17			
 shared	LEVEL_01_0DC400	function	1064	1	0	1	0	17			
 shared	LEVEL_01_0DC828	function	364	1	1	1	1	11	src/levels/01_pokitaru/LEVEL_01_0DC828.c		
-shared	LEVEL_01_0DC998	function	264	1	0	1	0	11			
+shared	LEVEL_01_0DC998	function	264	1	1	1	1	11	src/levels/01_pokitaru/LEVEL_01_0DC998.c		
 shared	LEVEL_01_0DCAF8	function	808	1	0	1	0	16			
 shared	LEVEL_01_0DCE20	function	516	1	0	1	0	16			
 shared	LEVEL_01_0DD080	function	184	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0DD080.c		
@@ -7399,7 +7399,7 @@ shared	LEVEL_01_115FF8	function	424	1	1	1	1	19	src/levels/shared/LEVEL_01_115FF8
 shared	LEVEL_01_1161A0	function	788	1	0	1	0	19			
 shared	LEVEL_01_1164B8	function	1056	1	0	1	0	12			
 shared	LEVEL_01_1168D8	function	1208	1	0	1	0	19			
-shared	LEVEL_01_116D90	function	396	1	0	1	0	19			
+shared	LEVEL_01_116D90	function	396	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_116D90.c		
 shared	LEVEL_01_116F20	function	572	1	0	1	0	19			
 shared	LEVEL_01_117160	function	88	2	2	2	2	19	src/levels/01_pokitaru/LEVEL_01_117160.c		
 shared	LEVEL_01_1171B8	fragment	20	1	0	0	0	18			
@@ -7413,7 +7413,7 @@ shared	LEVEL_01_11A0C8	function	124	1	1	1	1	19	src/levels/01_pokitaru/HIT_freadA
 shared	LEVEL_01_11A588	function	104	1	1	1	1	18	src/levels/shared/LEVEL_01_11A588.c		
 shared	LEVEL_01_11A5F0	fragment	12	1	0	0	0	18			
 shared	LEVEL_01_11A600	function	488	1	1	1	1	19	src/levels/shared/LEVEL_01_11A600.c		
-shared	LEVEL_01_11A7E8	function	292	1	0	1	0	19			
+shared	LEVEL_01_11A7E8	function	292	1	1	1	1	19	src/levels/shared/LEVEL_01_11A7E8.c		
 shared	LEVEL_01_11A910	function	552	1	1	1	1	19	src/levels/shared/LEVEL_01_11A910.c		
 shared	LEVEL_01_11AB38	function	480	1	1	1	1	19	src/levels/shared/LEVEL_04_1260A0.c		
 shared	LEVEL_01_11AD20	function	268	1	1	1	1	12	src/levels/shared/LEVEL_01_11AD20.c		
@@ -7433,7 +7433,7 @@ shared	LEVEL_01_11BFC8	function	160	1	0	1	0	19
 shared	LEVEL_01_11C068	function	196	1	0	1	0	19			
 shared	LEVEL_01_11C130	function	336	1	0	1	0	19			
 shared	LEVEL_01_11C280	function	124	1	0	1	0	19			
-shared	LEVEL_01_11C300	function	264	1	0	1	0	19			
+shared	LEVEL_01_11C300	function	264	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_11C300.c		
 shared	LEVEL_01_11C410	function	776	1	1	1	1	19	src/levels/shared/LEVEL_01_11C410.c		
 shared	LEVEL_01_11C718	function	280	1	1	1	1	13	src/levels/shared/LEVEL_01_11C718.c		
 shared	LEVEL_01_11C830	function	512	1	1	1	1	19	src/levels/shared/LEVEL_01_11C830.c		
@@ -7453,7 +7453,7 @@ shared	LEVEL_01_11E140	function	1168	1	0	1	0	19
 shared	LEVEL_01_11E5D0	function	232	1	0	1	0	19			
 shared	LEVEL_01_11E6B8	function	212	1	1	1	1	19	src/levels/shared/LEVEL_01_11E6B8.c		
 shared	LEVEL_01_11E790	function	536	1	0	1	0	19			
-shared	LEVEL_01_11E9A8	function	264	1	0	1	0	19			
+shared	LEVEL_01_11E9A8	function	264	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_11E9A8.c		
 shared	LEVEL_01_11EAB0	function	180	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_11EAB0.c		
 shared	LEVEL_01_11EB64	fragment	8	2	0	0	0	18			
 shared	LEVEL_01_11EB70	function	252	1	1	1	1	19	src/levels/shared/LEVEL_15_0E27C0.c		
@@ -7481,7 +7481,7 @@ shared	LEVEL_01_121900	function	280	1	1	1	1	19	src/levels/shared/LEVEL_15_0E6620
 shared	LEVEL_01_121A18	fragment	12	2	0	0	0	19			
 shared	LEVEL_01_121A28	function	448	1	0	1	0	19			
 shared	LEVEL_01_121BE8	function	632	1	1	1	1	13	src/levels/shared/LEVEL_03_11FDF0.c		
-shared	LEVEL_01_121E68	function	344	1	0	1	0	13			
+shared	LEVEL_01_121E68	function	344	1	1	1	1	13	src/levels/shared/LEVEL_01_121E68.c		
 shared	LEVEL_01_121FC8	function	628	1	0	1	0	13			
 shared	LEVEL_01_12223C	fragment	32	1	0	0	0	12			
 shared	LEVEL_01_122260	function	732	1	0	1	0	12			
@@ -7519,7 +7519,7 @@ shared	LEVEL_01_124138	function	116	1	0	1	0	19		VEC_ConstructRotZMat3__FP7MATRIX
 shared	LEVEL_01_124208	function	72	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_124208.c		
 shared	LEVEL_01_124250	fragment	4	1	0	0	0	14			
 shared	LEVEL_01_124258	function	2008	1	1	1	1	13	src/levels/shared/VEC_InverseMat4__FP7MATRIX4PC7MATRIX4.c	VEC_InverseMat4__FP7MATRIX4PC7MATRIX4	
-shared	LEVEL_01_124A30	function	348	1	0	1	0	13		VEC_MultiplyMatrix3__FP7MATRIX3PC7MATRIX3T1	
+shared	LEVEL_01_124A30	function	348	1	1	1	1	13	src/levels/shared/VEC_MultiplyMatrix3__FP7MATRIX3PC7MATRIX3T1.c	VEC_MultiplyMatrix3__FP7MATRIX3PC7MATRIX3T1	
 shared	LEVEL_01_124B98	function	348	1	1	1	1	19	src/levels/shared/LEVEL_01_124B98.c		
 shared	LEVEL_01_124CF8	function	348	1	1	1	1	3	src/levels/shared/LEVEL_01_124CF8.c		
 shared	LEVEL_01_124E58	function	348	1	1	1	1	19	src/levels/shared/LEVEL_04_130CC0.c		
@@ -7563,7 +7563,7 @@ shared	LEVEL_01_126C40	function	248	1	1	1	1	12	src/levels/shared/LEVEL_01_126C40
 shared	LEVEL_01_126D38	function	132	1	0	1	0	19			
 shared	LEVEL_01_126DC8	function	232	1	0	1	0	11			
 shared	LEVEL_01_126EB0	function	180	1	1	1	1	12	src/levels/shared/LEVEL_01_126EB0.c		
-shared	LEVEL_01_126F70	function	296	1	0	1	0	12			
+shared	LEVEL_01_126F70	function	296	1	1	1	1	12	src/levels/shared/LEVEL_01_126F70.c		
 shared	LEVEL_01_1270A0	function	664	1	1	1	1	19	src/levels/shared/LEVEL_01_1270A0.c		
 shared	LEVEL_01_127338	function	608	1	1	1	1	19	src/levels/shared/LEVEL_01_127338.c		
 shared	LEVEL_01_127598	function	560	1	1	1	1	19	src/levels/shared/VEC_LookAtUpLeft__FP4VEC3T0PC4VEC3.c	VEC_LookAtUpLeft__FP4VEC3T0PC4VEC3	
@@ -7574,7 +7574,7 @@ shared	LEVEL_01_127EF8	function	544	1	1	1	1	13	src/levels/shared/LEVEL_01_127EF8
 shared	LEVEL_01_128118	function	544	2	2	2	2	17	src/levels/shared/LEVEL_01_128118.c		
 shared	LEVEL_01_128338	function	568	1	1	1	1	12	src/levels/shared/LEVEL_01_128338.c		
 shared	LEVEL_01_128570	function	568	1	1	1	1	17	src/levels/shared/LEVEL_01_128570.c		
-shared	LEVEL_01_1287A8	function	348	1	0	1	0	13			
+shared	LEVEL_01_1287A8	function	348	1	1	1	1	13	src/levels/shared/LEVEL_01_1287A8.c		
 shared	LEVEL_01_128904	fragment	24	1	0	0	0	12			
 shared	LEVEL_01_128920	function	348	1	1	1	1	12	src/levels/shared/LEVEL_01_128920.c		
 shared	LEVEL_01_128A88	function	196	1	0	1	0	19			
@@ -7704,7 +7704,7 @@ shared	LEVEL_01_138510	function	72	2	2	2	2	16	src/levels/shared/LEVEL_01_138510.
 shared	LEVEL_01_138558	function	92	2	2	2	2	16	src/levels/01_pokitaru/LEVEL_01_138558.c		
 shared	LEVEL_01_1385D8	function	800	1	0	1	0	12			
 shared	LEVEL_01_138900	function	140	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_138900.c		
-shared	LEVEL_01_138990	function	264	1	0	1	0	12			
+shared	LEVEL_01_138990	function	264	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_138990.c		
 shared	LEVEL_01_138A98	function	112	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_138A98.c		
 shared	LEVEL_01_138BD0	function	180	1	0	1	0	12			
 shared	LEVEL_01_138C90	function	372	1	0	1	0	12			
@@ -7712,7 +7712,7 @@ shared	LEVEL_01_138E08	function	492	1	0	1	0	12
 shared	LEVEL_01_138FF8	function	648	1	0	1	0	12			
 shared	LEVEL_01_139280	function	64	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_139280.c		
 shared	LEVEL_01_1392C0	function	204	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1392C0.c		
-shared	LEVEL_01_1393F0	function	220	1	0	1	0	12			
+shared	LEVEL_01_1393F0	function	220	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1393F0.c		
 shared	LEVEL_01_1394D0	function	204	1	0	1	0	12			
 shared	LEVEL_01_1395A0	function	164	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1395A0.c		
 shared	LEVEL_01_139648	function	400	1	0	1	0	12			
@@ -7758,7 +7758,7 @@ shared	LEVEL_01_13E820	function	1080	1	0	1	0	12
 shared	LEVEL_01_13EC58	function	660	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_13EC58.c		
 shared	LEVEL_01_13EEF0	function	672	1	0	1	0	12			
 shared	LEVEL_01_13F190	function	1572	1	0	1	0	12			
-shared	LEVEL_01_13F7B8	function	224	1	0	1	0	12			
+shared	LEVEL_01_13F7B8	function	224	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_13F7B8.c		
 shared	LEVEL_01_13F898	function	272	1	0	1	0	12			
 shared	LEVEL_01_13F9A8	function	1184	1	0	1	0	12			
 shared	LEVEL_01_13FEA0	function	144	1	0	1	0	12			
@@ -7805,19 +7805,19 @@ shared	LEVEL_01_14583C	function	64	1	0	1	0	16
 shared	LEVEL_01_14587C	function	104	1	0	1	0	16			
 shared	LEVEL_01_1458E4	function	40	1	0	1	0	16			
 shared	LEVEL_01_14590C	function	1224	1	0	1	0	12			
-shared	LEVEL_01_145DD8	function	336	1	0	1	0	12			
+shared	LEVEL_01_145DD8	function	336	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_145DD8.c		
 shared	LEVEL_01_145F28	function	80	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_145F28.c		
 shared	LEVEL_01_145F78	function	56	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_145F78.c		
 shared	LEVEL_01_145FB0	function	248	1	0	1	0	16			
 shared	LEVEL_01_1460A8	function	100	3	3	3	3	16	src/levels/01_pokitaru/LEVEL_01_1460A8.c		
-shared	LEVEL_01_146130	function	316	1	0	1	0	16			
+shared	LEVEL_01_146130	function	316	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_146130.c		
 shared	LEVEL_01_1462A0	function	568	1	0	1	0	12			
 shared	LEVEL_01_1464D8	function	828	1	0	1	0	16			
 shared	LEVEL_01_146818	function	220	1	0	1	0	12			
 shared	LEVEL_01_1468F8	function	232	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_1468F8.c		
 shared	LEVEL_01_146A70	function	920	1	0	1	0	16			
 shared	LEVEL_01_146EC0	function	44	1	1	1	1	17	src/levels/shared/LEVEL_01_146EC0.c		
-shared	LEVEL_01_146EF0	function	356	1	0	1	0	17			
+shared	LEVEL_01_146EF0	function	356	1	1	1	1	17	src/levels/01_pokitaru/LEVEL_01_146EF0.c		
 shared	LEVEL_01_147058	function	88	1	1	1	1	17	src/levels/01_pokitaru/LEVEL_01_147058.c		
 shared	LEVEL_01_1470B0	function	4016	1	0	1	0	13			
 shared	LEVEL_01_148060	function	268	1	0	1	0	17			
@@ -7835,12 +7835,12 @@ shared	LEVEL_01_148AB8	function	1188	1	0	1	0	13
 shared	LEVEL_01_148F60	function	8424	1	0	1	0	13			
 shared	LEVEL_01_14B048	function	552	1	0	1	0	13			
 shared	LEVEL_01_14B270	function	9196	1	0	1	0	13			
-shared	LEVEL_01_14D660	function	352	1	0	1	0	17			
+shared	LEVEL_01_14D660	function	352	1	1	1	1	17	src/levels/01_pokitaru/LEVEL_01_14D660.c		
 shared	LEVEL_01_14D7C0	function	1400	1	0	1	0	13			
 shared	LEVEL_01_14DD38	function	104	1	1	1	1	17	src/levels/01_pokitaru/LEVEL_01_14DD38.c		
 shared	LEVEL_01_14DDA0	function	128	1	1	1	1	17	src/levels/01_pokitaru/LEVEL_01_14DDA0.c		
-shared	LEVEL_01_14DE20	function	224	1	0	1	0	17			
-shared	LEVEL_01_14DF58	function	316	1	0	1	0	16			
+shared	LEVEL_01_14DE20	function	224	1	1	1	1	17	src/levels/shared/LEVEL_01_14DE20.c		
+shared	LEVEL_01_14DF58	function	316	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_14DF58.c		
 shared	LEVEL_01_14E098	function	40	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_14E098.c		
 shared	LEVEL_01_14E0C0	function	32	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_14E0C0.c		
 shared	LEVEL_01_14E0E0	function	4072	1	0	1	0	12			
@@ -7890,7 +7890,7 @@ shared	LEVEL_01_154F28	function	668	1	0	1	0	11
 shared	LEVEL_01_1551E8	function	572	1	0	1	0	11			
 shared	LEVEL_01_155428	function	36	1	1	1	1	11	src/levels/01_pokitaru/LEVEL_01_155428.c		
 shared	LEVEL_01_155458	function	352	1	1	1	1	11	src/levels/01_pokitaru/LEVEL_01_155458.c		
-shared	LEVEL_01_1555B8	function	256	1	0	1	0	11			
+shared	LEVEL_01_1555B8	function	256	1	1	1	1	11	src/levels/01_pokitaru/LEVEL_01_1555B8.c		
 shared	LEVEL_01_155718	function	44	1	1	1	1	11	src/levels/01_pokitaru/LEVEL_01_155718.c		
 shared	LEVEL_01_1557C0	function	452	1	0	1	0	4			
 shared	LEVEL_01_155990	function	508	1	0	1	0	4			
@@ -7898,7 +7898,7 @@ shared	LEVEL_01_155B90	function	504	1	0	1	0	4
 shared	LEVEL_01_155D88	function	196	1	1	1	1	6	src/levels/01_pokitaru/LEVEL_01_155D88.c		
 shared	LEVEL_01_155EA8	function	56	1	1	1	1	4	src/levels/01_pokitaru/LEVEL_01_155EA8.c		
 shared	LEVEL_01_155EE8	function	740	1	0	1	0	4			
-shared	LEVEL_01_156298	function	212	1	0	1	0	16			
+shared	LEVEL_01_156298	function	212	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_156298.c		
 shared	LEVEL_01_1563A0	function	1396	1	0	1	0	12			
 shared	LEVEL_01_156918	function	536	1	0	1	0	16			
 shared	LEVEL_01_156B30	function	548	1	0	1	0	12			
@@ -7926,7 +7926,7 @@ shared	LEVEL_01_15A7B8	function	72	2	2	2	2	2	src/levels/01_pokitaru/LEVEL_01_15A
 shared	LEVEL_01_15D068	function	32	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_15D068.c		
 shared	LEVEL_01_15D210	function	172	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_15D210.c		
 shared	LEVEL_01_15D3A0	function	44	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_15D3A0.c		
-shared	LEVEL_01_15DA38	function	364	1	0	1	0	2			
+shared	LEVEL_01_15DA38	function	364	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_15DA38.c		
 shared	LEVEL_01_15DBA8	function	760	1	0	1	0	2			
 shared	LEVEL_01_15DEA0	function	56	2	2	2	2	6	src/levels/01_pokitaru/LEVEL_01_15DEA0.c		
 shared	LEVEL_01_15DED8	function	516	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_15DED8.c		
@@ -7959,12 +7959,12 @@ shared	LEVEL_01_160780	function	112	1	1	1	1	9	src/levels/01_pokitaru/LEVEL_01_16
 shared	LEVEL_01_1607F0	function	104	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_1607F0.c		
 shared	LEVEL_01_160858	function	6160	2	0	2	0	14			
 shared	LEVEL_01_162088	fragment	20	1	0	0	0	16			
-shared	LEVEL_01_1620A0	function	220	1	0	1	0	16			
+shared	LEVEL_01_1620A0	function	220	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_1620A0.c		
 shared	LEVEL_01_162180	function	36	1	0	1	0	16			
 shared	LEVEL_01_1621A8	function	96	1	0	1	0	16			
 shared	LEVEL_01_162208	function	1544	1	0	1	0	12			
 shared	LEVEL_01_162810	function	104	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_162810.c		
-shared	LEVEL_01_162878	function	236	1	0	1	0	16			
+shared	LEVEL_01_162878	function	236	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_162878.c		
 shared	LEVEL_01_162968	function	312	1	0	1	0	12			
 shared	LEVEL_01_162AA0	function	72	1	1	1	1	16	src/levels/shared/LEVEL_01_162AA0.c		
 shared	LEVEL_01_162B40	function	3680	1	0	1	0	16			
@@ -7987,7 +7987,7 @@ shared	LEVEL_01_165DB0	function	8	1	1	1	1	3	src/levels/shared/LEVEL_01_165DB0.c
 shared	LEVEL_01_165DC0	function	92	1	1	1	1	3	src/levels/01_pokitaru/LEVEL_01_165DC0.c		
 shared	LEVEL_01_168208	function	12	1	1	1	1	3	src/levels/shared/LEVEL_01_168208.c		
 shared	LEVEL_01_168218	function	76	1	1	1	1	3	src/levels/01_pokitaru/LEVEL_01_168218.c		
-shared	LEVEL_01_168268	function	400	1	0	1	0	3			
+shared	LEVEL_01_168268	function	400	1	1	1	1	3	src/levels/01_pokitaru/LEVEL_01_168268.c		
 shared	LEVEL_01_1684E8	function	1308	1	0	1	0	16			
 shared	LEVEL_01_168A08	function	324	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_168A08.c		
 shared	LEVEL_01_168B50	function	3824	1	0	1	0	16			
@@ -7998,7 +7998,7 @@ shared	LEVEL_01_16AA48	function	192	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_1
 shared	LEVEL_01_16AB60	function	100	1	1	1	1	16	src/levels/shared/LEVEL_01_16AB60.c		
 shared	LEVEL_01_16ABC8	function	76	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_16ABC8.c		
 shared	LEVEL_01_16AC18	function	580	1	0	1	0	16			
-shared	LEVEL_01_16AE60	function	284	1	0	1	0	16			
+shared	LEVEL_01_16AE60	function	284	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_16AE60.c		
 shared	LEVEL_01_16AF80	function	156	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_16AF80.c		
 shared	LEVEL_01_16B020	function	76	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_16B020.c		
 shared	LEVEL_01_16B070	function	264	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_16B070.c		
@@ -8026,7 +8026,7 @@ shared	LEVEL_01_16CA90	function	204	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1
 shared	LEVEL_01_16CB60	function	196	1	1	1	1	6	src/levels/01_pokitaru/LEVEL_01_16CB60.c		
 shared	LEVEL_01_16CC28	function	40	1	1	1	1	12	src/levels/shared/LEVEL_01_16CC28.c		
 shared	LEVEL_01_16CC50	function	80	1	1	1	1	9	src/levels/shared/LEVEL_01_16CC50.c		
-shared	LEVEL_01_16CCA0	function	324	1	0	1	0	12			
+shared	LEVEL_01_16CCA0	function	324	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_16CCA0.c		
 shared	LEVEL_01_16CDE8	function	124	1	1	1	1	10	src/levels/shared/LEVEL_01_16CDE8.c		
 shared	LEVEL_01_16CE68	function	524	1	0	1	0	12			
 shared	LEVEL_01_16D078	function	356	1	0	1	0	12			
@@ -8097,7 +8097,7 @@ shared	LEVEL_01_171E20	function	40	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_171
 shared	LEVEL_01_171E48	function	588	1	0	1	0	2			
 shared	LEVEL_01_172098	function	40	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_172098.c		
 shared	LEVEL_01_1720F8	function	264	1	0	1	0	2			
-shared	LEVEL_01_172200	function	304	1	0	1	0	2			
+shared	LEVEL_01_172200	function	304	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_172200.c		
 shared	LEVEL_01_172350	function	292	1	0	1	0	12			
 shared	LEVEL_01_172478	function	80	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_172478.c		
 shared	LEVEL_01_1724C8	function	148	1	0	1	0	16			
@@ -8111,7 +8111,7 @@ shared	LEVEL_01_174B98	function	60	1	0	1	0	16
 shared	LEVEL_01_174BD8	function	976	1	0	1	0	16			
 shared	LEVEL_01_174FA8	function	848	1	0	1	0	16			
 shared	LEVEL_01_175350	function	72	3	3	3	3	7	src/levels/01_pokitaru/LEVEL_01_175350.c		
-shared	LEVEL_01_175398	function	228	2	0	2	0	7			
+shared	LEVEL_01_175398	function	228	2	2	2	2	7	src/levels/01_pokitaru/MOBYS/FlyingCarLightweightDirectional/FlyingCarLightweightDirectional/LEVEL_01_175398.c		
 shared	LEVEL_01_175480	function	200	1	1	1	1	7	src/levels/shared/LEVEL_01_175480.c		
 shared	LEVEL_01_175548	function	740	1	0	1	0	7			
 shared	LEVEL_01_175830	function	564	1	0	1	0	7			
@@ -8125,7 +8125,7 @@ shared	LEVEL_01_176B08	function	1988	1	0	1	0	6
 shared	LEVEL_01_1772D0	function	480	1	0	1	0	6			
 shared	LEVEL_01_1774B8	function	356	1	0	1	0	6			
 shared	LEVEL_01_1776C0	function	228	1	0	1	0	5			MOBYS/FlyingCarLightweightPathed/FlyingCarLightweightPathed.cpp
-shared	LEVEL_01_1777A8	function	232	1	0	1	0	5			
+shared	LEVEL_01_1777A8	function	232	1	1	1	1	5	src/levels/shared/LEVEL_01_1777A8.c		
 shared	LEVEL_01_177890	function	600	1	0	1	0	5			
 shared	LEVEL_01_177AE8	function	616	1	0	1	0	5			
 shared	LEVEL_01_177D50	function	2388	1	0	1	0	5			
@@ -8145,7 +8145,7 @@ shared	LEVEL_01_17A5E8	function	884	1	0	1	0	13
 shared	LEVEL_01_17A960	function	820	1	0	1	0	13			
 shared	LEVEL_01_17AC98	function	56	1	1	1	1	13	src/levels/shared/LEVEL_01_17AC98.c		
 shared	LEVEL_01_17ACD0	function	52	1	1	1	1	13	src/levels/shared/LEVEL_01_17ACD0.c		
-shared	LEVEL_01_17AD08	function	312	1	0	1	0	13			
+shared	LEVEL_01_17AD08	function	312	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_17AD08.c		
 shared	LEVEL_01_17AE40	function	396	1	0	1	0	13			
 shared	LEVEL_01_17AFD0	function	216	1	0	1	0	13			
 shared	LEVEL_01_17B0A8	function	420	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_17B0A8.c		
@@ -8154,7 +8154,7 @@ shared	LEVEL_01_17B288	function	892	1	0	1	0	5
 shared	LEVEL_01_17B608	function	800	1	0	1	0	5			
 shared	LEVEL_01_17B928	function	28	2	2	2	2	6	src/levels/01_pokitaru/LEVEL_01_17B928.c		
 shared	LEVEL_01_17B948	function	540	4	4	4	4	9	src/levels/01_pokitaru/LEVEL_01_17B948.c		
-shared	LEVEL_01_17BB98	function	204	1	0	1	0	10			
+shared	LEVEL_01_17BB98	function	204	1	1	1	1	10	src/levels/01_pokitaru/LEVEL_01_17BB98.c		
 shared	LEVEL_01_17BC68	function	96	1	1	1	1	10	src/levels/01_pokitaru/LEVEL_01_17BC68.c		
 shared	LEVEL_01_17BCC8	function	80	1	1	1	1	10	src/levels/01_pokitaru/LEVEL_01_17BCC8.c		
 shared	LEVEL_01_17BD18	function	12	1	1	1	1	10	src/levels/shared/LEVEL_01_17BD18.c		
@@ -8170,7 +8170,7 @@ shared	LEVEL_01_17CB10	function	44	1	1	1	1	17	src/levels/shared/LEVEL_01_17CB10.
 shared	LEVEL_01_17CB40	function	72	1	1	1	1	17	src/levels/01_pokitaru/LEVEL_01_17CB40.c		
 shared	LEVEL_01_17CB88	function	376	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_17CB88.c		
 shared	LEVEL_01_17CD58	function	260	1	1	1	1	4	src/levels/01_pokitaru/LEVEL_01_17CD58.c		
-shared	LEVEL_01_17CE68	function	364	1	0	1	0	4			
+shared	LEVEL_01_17CE68	function	364	1	1	1	1	4	src/levels/01_pokitaru/LEVEL_01_17CE68.c		
 shared	LEVEL_01_17D030	function	140	1	1	1	1	9	src/levels/01_pokitaru/LEVEL_01_17D030.c		
 shared	LEVEL_01_17D0C8	function	168	1	1	1	1	9	src/levels/01_pokitaru/LEVEL_01_17D0C8.c		
 shared	LEVEL_01_17D1C8	function	112	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_17D1C8.c		
@@ -8195,7 +8195,7 @@ shared	LEVEL_01_17DEE8	function	396	1	0	1	0	12
 shared	LEVEL_01_17E078	function	360	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_17E078.c		
 shared	LEVEL_01_17E200	function	132	1	1	1	1	12	src/levels/shared/LEVEL_01_17E200.c		
 shared	LEVEL_01_17E288	function	480	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_17E288.c		
-shared	LEVEL_01_17E468	function	244	1	0	1	0	12			
+shared	LEVEL_01_17E468	function	244	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_17E468.c		
 shared	LEVEL_01_17E560	function	140	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_17E560.c		
 shared	LEVEL_01_17E5F0	function	56	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_17E5F0.c		
 shared	LEVEL_01_17E628	function	256	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_17E628.c		
@@ -8222,7 +8222,7 @@ shared	LEVEL_01_183EC8	function	172	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1
 shared	LEVEL_01_183F78	function	336	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_183F78.c		
 shared	LEVEL_01_1840C8	function	96	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_183F78.c		
 shared	LEVEL_01_184128	function	164	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_184128.c		
-shared	LEVEL_01_1841D0	function	248	1	0	1	0	12			
+shared	LEVEL_01_1841D0	function	248	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1841D0.c		
 shared	LEVEL_01_1842C8	function	224	1	0	1	0	12			
 shared	LEVEL_01_1843A8	function	136	1	0	1	0	12			
 shared	LEVEL_01_184430	function	836	1	0	1	0	12			
@@ -8249,7 +8249,7 @@ shared	LEVEL_01_1882F0	function	72	1	1	1	1	12	src/levels/shared/LEVEL_01_1882F0.
 shared	LEVEL_01_188338	function	52	1	1	1	1	12	src/levels/shared/LEVEL_01_188338.c		
 shared	LEVEL_01_188370	function	56	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_188370.c		
 shared	LEVEL_01_1883C8	function	1108	1	0	1	0	12			
-shared	LEVEL_01_18B628	function	328	1	0	1	0	3			
+shared	LEVEL_01_18B628	function	328	1	1	1	1	3	src/levels/01_pokitaru/LEVEL_01_18B628.c		
 shared	LEVEL_01_18B778	function	528	1	0	1	0	3			
 shared	LEVEL_01_18B988	function	80	1	1	1	1	3	src/levels/shared/LEVEL_01_18B988.c		
 shared	LEVEL_01_18B9D8	function	508	1	1	1	1	3	src/levels/01_pokitaru/LEVEL_01_18B9D8.c		
@@ -8273,7 +8273,7 @@ shared	LEVEL_01_18D3A8	function	244	1	0	1	0	18
 shared	LEVEL_01_18D4A0	function	132	1	0	1	0	18			
 shared	LEVEL_01_18D538	function	448	1	0	1	0	18			
 shared	LEVEL_01_18D750	function	68	1	1	1	1	4	src/levels/01_pokitaru/LEVEL_01_18D750.c		
-shared	LEVEL_01_18DB98	function	292	1	0	1	0	2			
+shared	LEVEL_01_18DB98	function	292	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_18DB98.c		
 shared	LEVEL_01_18DCC8	function	112	1	0	1	0	2			
 shared	LEVEL_01_18DD38	function	68	1	0	1	0	2			
 shared	LEVEL_01_18DDD8	function	28	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_18DDD8.c		
@@ -8321,8 +8321,8 @@ shared	LEVEL_01_195450	function	780	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_1
 shared	LEVEL_01_195760	function	308	1	0	1	0	16			
 shared	LEVEL_01_195898	function	112	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_195898.c		
 shared	LEVEL_01_195908	function	72	1	1	1	1	16	src/levels/shared/LEVEL_01_195908.c		
-shared	LEVEL_01_195950	function	268	1	0	1	0	16			
-shared	LEVEL_01_195A80	function	332	1	0	1	0	16			
+shared	LEVEL_01_195950	function	268	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_195950.c		
+shared	LEVEL_01_195A80	function	332	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_195A80.c		
 shared	LEVEL_01_195BD0	function	84	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_195BD0.c		
 shared	LEVEL_01_195C28	function	372	1	0	1	0	16			
 shared	LEVEL_01_195D9C	function	324	1	0	1	0	16			
@@ -8347,7 +8347,7 @@ shared	LEVEL_01_197080	function	16	1	1	1	1	16	src/levels/shared/LEVEL_01_197080.
 shared	LEVEL_01_197090	function	332	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_197090.c		
 shared	LEVEL_01_1971E0	function	400	1	0	1	0	12			
 shared	LEVEL_01_197490	function	1068	1	0	1	0	12			
-shared	LEVEL_01_1978D0	function	252	1	0	1	0	12			
+shared	LEVEL_01_1978D0	function	252	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1978D0.c		
 shared	LEVEL_01_1979D0	function	388	1	0	1	0	12			
 shared	LEVEL_01_197B58	function	104	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_197B58.c		
 shared	LEVEL_01_197BC0	function	544	1	0	1	0	12			
@@ -8466,7 +8466,7 @@ shared	LEVEL_01_1A2B08	function	164	1	1	1	1	8	src/levels/01_pokitaru/LEVEL_01_1A
 shared	LEVEL_01_1A2BB0	function	480	1	1	1	1	8	src/levels/01_pokitaru/LEVEL_01_1A2BB0.c		
 shared	LEVEL_01_1A2D90	function	472	1	1	1	1	8	src/levels/01_pokitaru/LEVEL_01_1A2D90.c		
 shared	LEVEL_01_1A2FC0	function	144	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_1A2FC0.c		
-shared	LEVEL_01_1A30B8	function	232	1	0	1	0	12			
+shared	LEVEL_01_1A30B8	function	232	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1A30B8.c		
 shared	LEVEL_01_1A31A8	function	1916	1	0	1	0	12			
 shared	LEVEL_01_1A3928	function	700	1	0	1	0	12			
 shared	LEVEL_01_1A3BE8	function	448	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1A3BE8.c		
@@ -8539,7 +8539,7 @@ shared	LEVEL_01_1AF2E8	function	112	2	2	2	2	12	src/levels/01_pokitaru/LEVEL_01_1
 shared	LEVEL_01_1AF358	function	364	1	0	1	0	12			
 shared	LEVEL_01_1AF4C8	function	1776	1	0	1	0	12			
 shared	LEVEL_01_1AFBB8	function	112	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1AFBB8.c		
-shared	LEVEL_01_1AFD68	function	400	1	0	1	0	12			
+shared	LEVEL_01_1AFD68	function	400	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1AFD68.c		
 shared	LEVEL_01_1B03E0	function	648	1	0	1	0	3			
 shared	LEVEL_01_1B0670	function	84	1	1	1	1	3	src/levels/01_pokitaru/LEVEL_01_1B0670.c		
 shared	LEVEL_01_1B0720	function	540	1	1	1	1	16	src/levels/01_pokitaru/LEVEL_01_1B0720.c		
@@ -8559,18 +8559,17 @@ shared	LEVEL_01_1B29A8	function	1036	1	0	1	0	14
 shared	LEVEL_01_1B2DB8	function	64	1	0	1	0	14			
 shared	LEVEL_01_1B2E50	function	172	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_1B2E50.c		
 shared	LEVEL_01_1B2F00	function	56	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_1B2F00.c		
-shared	LEVEL_01_1B2F38	function	392	1	0	1	0	13			
 shared	LEVEL_01_1B30C0	fragment	488	1	0	0	0	9			
 shared	LEVEL_01_1B32A8	function	448	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_1B32A8.c		
 shared	LEVEL_01_1B3468	function	168	1	0	1	0	13			
 shared	LEVEL_01_1B3568	function	52	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1B3568.c		
-shared	LEVEL_01_1B3608	function	328	1	0	1	0	13			
+shared	LEVEL_01_1B3608	function	328	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_1B3608.c		
 shared	LEVEL_01_1B3750	function	32	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_1B3750.c		
 shared	LEVEL_01_1B3770	function	1444	1	0	1	0	12			
-shared	LEVEL_01_1B3D18	function	248	1	0	1	0	12			
+shared	LEVEL_01_1B3D18	function	248	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1B3D18.c		
 shared	LEVEL_01_1B3E10	function	160	1	0	1	0	13			
 shared	LEVEL_01_1B3EB0	function	704	1	0	1	0	13			
-shared	LEVEL_01_1B4170	function	248	1	0	1	0	13			
+shared	LEVEL_01_1B4170	function	248	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_1B4170.c		
 shared	LEVEL_01_1B4268	function	112	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_1B4268.c		
 shared	LEVEL_01_1B4330	function	628	1	0	1	0	13			
 shared	LEVEL_01_1B4600	function	628	1	0	1	0	13			
@@ -8626,9 +8625,9 @@ shared	LEVEL_01_1B8BC8	function	1296	1	0	1	0	11
 shared	LEVEL_01_1B90D8	function	360	1	0	1	0	11			
 shared	LEVEL_01_1B9240	function	1524	1	0	1	0	11			
 shared	LEVEL_01_1B9838	function	48	1	1	1	1	11	src/levels/01_pokitaru/LEVEL_01_1B9838.c		
-shared	LEVEL_01_1B98C0	function	220	1	0	1	0	2			
+shared	LEVEL_01_1B98C0	function	220	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_1B98C0.c		
 shared	LEVEL_01_1B99A0	function	640	1	0	1	0	2			
-shared	LEVEL_01_1B9C20	function	232	1	0	1	0	2			
+shared	LEVEL_01_1B9C20	function	232	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_1B9C20.c		
 shared	LEVEL_01_1B9D08	function	340	1	0	1	0	2			
 shared	LEVEL_01_1B9E60	function	140	1	0	1	0	2			
 shared	LEVEL_01_1B9EEC	function	64	1	0	1	0	2			
@@ -8667,7 +8666,7 @@ shared	LEVEL_01_1BBE58	function	384	1	0	1	0	2
 shared	LEVEL_01_1BBFD8	function	344	1	0	1	0	2			
 shared	LEVEL_01_1BC130	function	208	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_1BC130.c		
 shared	LEVEL_01_1BC200	function	32	2	2	2	2	3	src/levels/01_pokitaru/LEVEL_01_1BC200.c		
-shared	LEVEL_01_1BC220	function	380	4	0	4	0	10			
+shared	LEVEL_01_1BC220	function	380	4	4	4	4	10	src/levels/01_pokitaru/LEVEL_01_1BC220.c		
 shared	LEVEL_01_1BC3F8	function	652	1	0	1	0	2			
 shared	LEVEL_01_1BC688	function	748	1	0	1	0	2			
 shared	LEVEL_01_1BC978	function	176	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_1BC978.c		
@@ -8735,7 +8734,7 @@ shared	LEVEL_01_1BE468	function	556	1	0	1	0	2
 shared	LEVEL_01_1BE698	function	996	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_1BE698.c		
 shared	LEVEL_01_1BEA80	function	172	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_1BEA80.c		
 shared	LEVEL_01_1BEB30	function	120	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_1BEB30.c		
-shared	LEVEL_01_1BEBA8	function	256	1	0	1	0	2			
+shared	LEVEL_01_1BEBA8	function	256	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_1BEBA8.c		
 shared	LEVEL_01_1BECA8	function	200	1	0	1	0	2			
 shared	LEVEL_01_1BED70	function	52	1	1	1	1	2	src/levels/shared/LEVEL_01_1BED70.c		
 shared	LEVEL_01_1BEDA8	function	36	1	1	1	1	2	src/levels/shared/LEVEL_01_1BEDA8.c		
@@ -8746,7 +8745,7 @@ shared	LEVEL_01_1BEFC8	function	500	1	0	1	0	2
 shared	LEVEL_01_1BF1C0	function	200	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_1BF1C0.c		
 shared	LEVEL_01_1BF288	function	848	1	0	1	0	3			
 shared	LEVEL_01_1BF5D8	function	36	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_1BF5D8.c		
-shared	LEVEL_01_1BF600	function	292	1	0	1	0	2			
+shared	LEVEL_01_1BF600	function	292	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_1BF600.c		
 shared	LEVEL_01_1BF8A8	function	40	2	2	2	2	3	src/levels/01_pokitaru/LEVEL_01_1BF8A8.c		
 shared	LEVEL_01_1BFAA0	function	1152	1	0	1	0	4			
 shared	LEVEL_01_1BFF20	function	212	1	1	1	1	4	src/levels/01_pokitaru/LEVEL_01_1BFF20.c		
@@ -8768,7 +8767,7 @@ shared	LEVEL_01_1C56C8	function	116	1	1	1	1	4	src/levels/01_pokitaru/LEVEL_01_1C
 shared	LEVEL_01_1C5798	function	1012	1	0	1	0	12			
 shared	LEVEL_01_1C5B90	function	372	1	1	1	1	12	src/levels/01_pokitaru/LEVEL_01_1C5B90.c		
 shared	LEVEL_01_1C5D48	function	612	1	0	1	0	12			
-shared	LEVEL_01_1C6008	function	384	1	0	1	0	10			
+shared	LEVEL_01_1C6008	function	384	1	1	1	1	10	src/levels/01_pokitaru/LEVEL_01_1C6008.c		
 shared	LEVEL_01_1C61E8	function	664	1	0	1	0	10			
 shared	LEVEL_01_1C6480	function	84	6	6	6	6	14	src/levels/01_pokitaru/LEVEL_01_1C6480.c		
 shared	LEVEL_01_1C6530	function	268	1	1	1	1	2	src/levels/01_pokitaru/LEVEL_01_1C6530.c		
@@ -8848,7 +8847,7 @@ shared	LEVEL_01_1CD688	function	104	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_1
 shared	LEVEL_01_1CD6F0	function	48	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_1CD6F0.c		
 shared	LEVEL_01_1CD720	function	176	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_1CD720.c		
 shared	LEVEL_01_1CD7D0	function	88	1	1	1	1	10	src/levels/01_pokitaru/LEVEL_01_1CD7D0.c		
-shared	LEVEL_01_1CD828	function	364	1	0	1	0	10			
+shared	LEVEL_01_1CD828	function	364	1	1	1	1	10	src/levels/01_pokitaru/LEVEL_01_1CD828.c		
 shared	LEVEL_01_1CD998	function	108	1	1	1	1	14	src/levels/shared/LEVEL_01_1CD998.c		
 shared	LEVEL_01_1CDA10	function	404	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_1CDA10.c		
 shared	LEVEL_01_1CDBC8	function	496	1	0	1	0	13			
@@ -8935,7 +8934,7 @@ shared	LEVEL_01_1D78D0	function	132	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_1
 shared	LEVEL_01_1D7958	function	472	1	0	1	0	13			
 shared	LEVEL_01_1D7B30	function	4176	1	0	1	0	12			
 shared	LEVEL_01_1D8B80	function	836	1	0	1	0	13			
-shared	LEVEL_01_1D8EC8	function	268	1	0	1	0	13			
+shared	LEVEL_01_1D8EC8	function	268	1	1	1	1	13	src/levels/shared/LEVEL_01_1D8EC8.c		
 shared	LEVEL_01_1D8FD8	function	308	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_1D8FD8.c		
 shared	LEVEL_01_1D9110	function	2004	1	0	1	0	12			
 shared	LEVEL_01_1D98E8	function	216	1	1	1	1	13	src/levels/01_pokitaru/LEVEL_01_1D98E8.c		
@@ -8952,7 +8951,7 @@ shared	LEVEL_01_1DB4E0	function	316	1	0	1	0	14
 shared	LEVEL_01_1DB620	function	88	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_1DB620.c		
 shared	LEVEL_01_1DB678	function	80	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_1DB678.c		
 shared	LEVEL_01_1DB6C8	function	36	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_1DB6C8.c		
-shared	LEVEL_01_1DB6F0	function	268	1	0	1	0	14			
+shared	LEVEL_01_1DB6F0	function	268	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_1DB6F0.c		
 shared	LEVEL_01_1DB820	function	168	1	0	1	0	14			
 shared	LEVEL_01_1DB8C8	function	212	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_1DB8C8.c		
 shared	LEVEL_01_1DB9F8	function	1116	1	0	1	0	13			
@@ -9082,7 +9081,7 @@ shared	LEVEL_02_036BB0	function	92	1	1	1	1	3	src/levels/02_rykan_v/LEVEL_02_036B
 shared	LEVEL_02_036C10	function	908	1	0	1	0	3			
 shared	LEVEL_02_036FA0	function	740	1	0	1	0	3			
 shared	LEVEL_02_037288	function	124	1	1	1	1	3	src/levels/02_rykan_v/LEVEL_02_037288.c		
-shared	LEVEL_02_037308	function	368	1	0	1	0	3			
+shared	LEVEL_02_037308	function	368	1	1	1	1	3	src/levels/02_rykan_v/LEVEL_02_037308.c		
 shared	LEVEL_02_037478	function	556	1	0	1	0	3			
 shared	LEVEL_02_037710	function	48	2	2	2	2	3	src/levels/shared/LEVEL_02_037710.c		
 shared	LEVEL_02_037CF0	function	348	1	1	1	1	3	src/levels/02_rykan_v/LEVEL_02_037CF0.c		
@@ -9162,8 +9161,8 @@ shared	LEVEL_02_1655D0	function	56	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_1655
 shared	LEVEL_02_165608	function	224	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_165608.c		
 shared	LEVEL_02_1656E8	function	412	1	0	1	0	3			
 shared	LEVEL_02_165890	function	76	1	1	1	1	3	src/levels/02_rykan_v/LEVEL_02_165890.c		
-shared	LEVEL_02_165900	function	364	1	0	1	0	2			
-shared	LEVEL_02_165AA8	function	296	1	0	1	0	2			
+shared	LEVEL_02_165900	function	364	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_165900.c		
+shared	LEVEL_02_165AA8	function	296	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_165AA8.c		
 shared	LEVEL_02_165BD0	function	340	1	0	1	0	2			
 shared	LEVEL_02_165D28	function	176	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_165D28.c		
 shared	LEVEL_02_16F9D0	function	20	1	1	1	1	4	src/levels/shared/LEVEL_02_16F9D0.c		
@@ -9207,20 +9206,20 @@ shared	LEVEL_02_18F628	function	76	1	1	1	1	10	src/levels/02_rykan_v/LEVEL_02_18F
 shared	LEVEL_02_18F6B8	function	296	1	0	1	0	10			
 shared	LEVEL_02_18F7E0	function	392	1	0	1	0	10			
 shared	LEVEL_02_191B18	function	12	1	1	1	1	9	src/levels/shared/LEVEL_02_191B18.c		
-shared	LEVEL_02_191B78	function	308	1	0	1	0	7			
+shared	LEVEL_02_191B78	function	308	1	1	1	1	7	src/levels/02_rykan_v/LEVEL_02_191B78.c		
 shared	LEVEL_02_191CE8	function	1288	1	0	1	0	9			
 shared	LEVEL_02_1929D8	function	116	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_1929D8.c		
 shared	LEVEL_02_192A88	function	1012	1	0	1	0	2			
 shared	LEVEL_02_192E80	function	540	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_192E80.c		
 shared	LEVEL_02_1930A0	function	96	1	0	1	0	2			
 shared	LEVEL_02_1A51D0	function	112	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_1A51D0.c		
-shared	LEVEL_02_1ABC50	function	360	1	0	1	0	2			
+shared	LEVEL_02_1ABC50	function	360	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_1ABC50.c		
 shared	LEVEL_02_1ABDC0	function	300	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_1ABDC0.c		
 shared	LEVEL_02_1ABEF0	function	212	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_1ABEF0.c		
 shared	LEVEL_02_1ABFC8	function	48	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_1ABFC8.c		
 shared	LEVEL_02_1AED20	function	28	2	2	2	2	9	src/levels/02_rykan_v/LEVEL_02_1AED20.c		
 shared	LEVEL_02_1B54B0	function	120	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_1B54B0.c		
-shared	LEVEL_02_1B5548	function	392	1	0	1	0	2			
+shared	LEVEL_02_1B5548	function	392	1	1	1	1	2	src/levels/02_rykan_v/LEVEL_02_1B5548.c		
 shared	LEVEL_02_1B7A78	function	376	2	0	2	0	5			
 shared	LEVEL_02_1BE984	function	16	1	0	1	0	2			
 shared	LEVEL_02_1C0E68	function	472	1	0	1	0	2			
@@ -9267,6 +9266,7 @@ shared	LEVEL_02_1D2B88	function	104	1	1	1	1	4	src/levels/02_rykan_v/LEVEL_02_1D2
 shared	LEVEL_02_1D2BF0	function	716	1	0	1	0	4			
 shared	LEVEL_02_1D2EC0	function	28	1	1	1	1	4	src/levels/02_rykan_v/LEVEL_02_1D2EC0.c		
 shared	LEVEL_02_1D2F18	function	508	1	0	1	0	4			
+shared	LEVEL_02_1D3220	function	392	1	1	1	1	13	src/levels/02_rykan_v/LEVEL_02_1D3220.c		
 shared	LEVEL_02_1D33A8	function	52	1	1	1	1	4	src/levels/02_rykan_v/LEVEL_02_1D33A8.c		
 shared	LEVEL_02_1D33E0	function	480	1	1	1	1	4	src/levels/02_rykan_v/LEVEL_02_1D33A8.c		
 shared	LEVEL_02_1DB6A0	function	96	1	1	1	1	5	src/levels/02_rykan_v/LEVEL_02_1DB6A0.c		
@@ -9290,7 +9290,7 @@ shared	LEVEL_03_04BF88	function	76	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_04BF
 shared	LEVEL_03_05A2F8	function	336	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_05A2F8.c		
 shared	LEVEL_03_05A448	function	220	1	0	1	0	7			
 shared	LEVEL_03_05A528	function	172	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_05A528.c		
-shared	LEVEL_03_05A5D8	function	300	1	0	1	0	7			
+shared	LEVEL_03_05A5D8	function	300	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_05A5D8.c		
 shared	LEVEL_03_05A708	function	112	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_05A708.c		
 shared	LEVEL_03_05A778	function	24	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_05A778.c		
 shared	LEVEL_03_0970D8	function	296	1	0	1	0	8			ENGINE/par.cpp
@@ -9322,7 +9322,7 @@ shared	LEVEL_03_140FFC	function	16	1	0	1	0	7
 shared	LEVEL_03_141010	function	212	1	0	1	0	2			
 shared	LEVEL_03_1410E8	function	44	1	1	1	1	2	src/levels/03_kalidon/LEVEL_03_1410E8.c		
 shared	LEVEL_03_141118	function	804	1	0	1	0	2			
-shared	LEVEL_03_141440	function	272	1	0	1	0	2			
+shared	LEVEL_03_141440	function	272	1	1	1	1	2	src/levels/03_kalidon/LEVEL_03_141440.c		
 shared	LEVEL_03_141550	function	128	1	1	1	1	2	src/levels/03_kalidon/LEVEL_03_141550.c		
 shared	LEVEL_03_1415D0	function	100	1	1	1	1	2	src/levels/03_kalidon/LEVEL_03_141550.c		
 shared	LEVEL_03_141638	function	992	1	0	1	0	2			
@@ -9344,7 +9344,7 @@ shared	LEVEL_03_1776D8	function	956	1	0	1	0	7
 shared	LEVEL_03_177A98	function	384	1	0	1	0	7			
 shared	LEVEL_03_177C18	function	72	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_177C18.c		
 shared	LEVEL_03_177C60	function	160	1	0	1	0	7			MOBYS/GrindrailBomb/GrindrailBomb.cpp
-shared	LEVEL_03_177D00	function	228	1	0	1	0	7			
+shared	LEVEL_03_177D00	function	228	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_177D00.c		
 shared	LEVEL_03_177DE8	function	52	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_177DE8.c		
 shared	LEVEL_03_177E20	function	140	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_177E20.c		
 shared	LEVEL_03_177EB0	function	72	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_177EB0.c		
@@ -9365,7 +9365,7 @@ shared	LEVEL_03_178BB0	function	108	1	0	1	0	8
 shared	LEVEL_03_178C20	function	760	1	0	1	0	8			
 shared	LEVEL_03_178F20	function	56	1	1	1	1	10	src/levels/shared/LEVEL_03_178F20.c		
 shared	LEVEL_03_178FD0	function	16	1	1	1	1	7	src/levels/shared/LEVEL_03_178FD0.c		
-shared	LEVEL_03_178FE0	function	204	1	0	1	0	7			MOBYS/GrindrailGate/GrindrailGate.cpp
+shared	LEVEL_03_178FE0	function	204	1	1	1	1	7	src/levels/03_kalidon/MOBYS/GrindrailGate/GrindrailGate/LEVEL_03_178FE0.c		MOBYS/GrindrailGate/GrindrailGate.cpp
 shared	LEVEL_03_1790B0	function	296	1	0	1	0	7			
 shared	LEVEL_03_1791D8	function	100	2	2	2	2	7	src/levels/03_kalidon/LEVEL_03_1791D8.c		
 shared	LEVEL_03_179240	function	144	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_179240.c		
@@ -9377,7 +9377,7 @@ shared	LEVEL_03_179878	function	24	1	1	1	1	7	src/levels/shared/LEVEL_03_179878.c
 shared	LEVEL_03_1798F8	function	52	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_1798F8.c		
 shared	LEVEL_03_179930	function	24	1	1	1	1	7	src/levels/shared/LEVEL_03_179930.c		
 shared	LEVEL_03_179948	function	32	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_179948.c		
-shared	LEVEL_03_179968	function	216	1	0	1	0	7			
+shared	LEVEL_03_179968	function	216	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_179968.c		
 shared	LEVEL_03_179A40	function	172	1	0	1	0	7			
 shared	LEVEL_03_179AF0	function	96	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_179AF0.c		
 shared	LEVEL_03_179B70	function	16	1	1	1	1	6	src/levels/shared/LEVEL_03_179B70.c		
@@ -9393,11 +9393,11 @@ shared	LEVEL_03_17AF10	function	176	1	0	1	0	7
 shared	LEVEL_03_17AFC0	function	268	1	0	1	0	7			
 shared	LEVEL_03_17B0D0	function	100	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_17B0D0.c		
 shared	LEVEL_03_17B1A0	function	180	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_17B1A0.c		
-shared	LEVEL_03_17B318	function	216	1	0	1	0	7			
+shared	LEVEL_03_17B318	function	216	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_17B318.c		
 shared	LEVEL_03_17B3F0	function	172	1	1	1	1	7	src/levels/03_kalidon/LEVEL_03_17B3F0.c		
 shared	LEVEL_03_1896F8	function	344	1	0	1	0	2			
 shared	LEVEL_03_189858	function	424	1	0	1	0	2			
-shared	LEVEL_03_18D520	function	272	1	0	1	0	2			
+shared	LEVEL_03_18D520	function	272	1	1	1	1	2	src/levels/shared/LEVEL_03_18D520.c		
 shared	LEVEL_03_18D638	function	512	1	0	1	0	2			
 shared	LEVEL_03_18D838	function	724	1	0	1	0	2			
 shared	LEVEL_03_18DB10	function	40	1	1	1	1	2	src/levels/03_kalidon/LEVEL_03_18DB10.c		
@@ -9408,7 +9408,7 @@ shared	LEVEL_03_18DF40	function	148	1	0	1	0	2
 shared	LEVEL_03_197638	function	1392	1	0	1	0	2			
 shared	LEVEL_03_197BA8	function	276	1	1	1	1	2	src/levels/03_kalidon/LEVEL_03_197BA8.c		
 shared	LEVEL_03_199BE8	function	356	1	0	1	0	3			
-shared	LEVEL_03_199DB0	function	288	1	0	1	0	3			
+shared	LEVEL_03_199DB0	function	288	1	1	1	1	3	src/levels/03_kalidon/LEVEL_03_199DB0.c		
 shared	LEVEL_03_1A2578	function	72	2	2	2	2	3	src/levels/03_kalidon/LEVEL_03_1A2578.c		
 shared	LEVEL_03_1A7048	function	540	1	0	1	0	5			
 shared	LEVEL_03_1A7398	function	820	1	0	1	0	5			
@@ -9417,7 +9417,7 @@ shared	LEVEL_03_1A8250	function	584	1	0	1	0	5
 shared	LEVEL_03_1A8498	function	784	1	0	1	0	5			
 shared	LEVEL_03_1A87A8	function	748	1	0	1	0	5			
 shared	LEVEL_03_1AE218	function	144	1	1	1	1	4	src/levels/03_kalidon/LEVEL_03_1AE218.c		
-shared	LEVEL_03_1AE2B0	function	256	1	0	1	0	4			
+shared	LEVEL_03_1AE2B0	function	256	1	1	1	1	4	src/levels/03_kalidon/LEVEL_03_1AE2B0.c		
 shared	LEVEL_03_1BFB10	function	248	1	0	1	0	3			
 shared	LEVEL_03_1C1BB0	function	776	1	0	1	0	3			
 shared	LEVEL_03_1C1EC0	function	192	1	0	1	0	3			
@@ -9482,12 +9482,12 @@ shared	LEVEL_04_032680	function	92	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0326
 shared	LEVEL_04_0326E0	function	216	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0326E0.c		
 shared	LEVEL_04_0327B8	function	68	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0327B8.c		
 shared	LEVEL_04_032800	function	144	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_032800.c		
-shared	LEVEL_04_032890	function	312	1	0	1	0	2			
+shared	LEVEL_04_032890	function	312	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_032890.c		
 shared	LEVEL_04_0329C8	function	208	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0329C8.c		
 shared	LEVEL_04_032A98	function	704	1	0	1	0	2			
 shared	LEVEL_04_032D58	function	260	1	0	1	0	2			
 shared	LEVEL_04_033858	function	136	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_033858.c		
-shared	LEVEL_04_034560	function	216	1	0	1	0	2			
+shared	LEVEL_04_034560	function	216	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_034560.c		
 shared	LEVEL_04_034638	function	280	1	1	1	1	2	src/levels/shared/LEVEL_04_034638.c		
 shared	LEVEL_04_074150	function	144	1	0	1	0	3			
 shared	LEVEL_04_0741E0	function	768	1	0	1	0	3			
@@ -9535,7 +9535,7 @@ shared	LEVEL_04_0B7AC8	function	92	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0B7A
 shared	LEVEL_04_0B7C88	function	44	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0B7C88.c		
 shared	LEVEL_04_0B7E80	function	52	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0B7E80.c		
 shared	LEVEL_04_0B8568	function	28	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0B8568.c		
-shared	LEVEL_04_0B8590	function	248	1	0	1	0	2			
+shared	LEVEL_04_0B8590	function	248	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0B8590.c		
 shared	LEVEL_04_0BB080	function	108	1	0	1	0	7			
 shared	LEVEL_04_0BB0F0	function	72	1	1	1	1	7	src/levels/04_metalis/LEVEL_04_0BB0F0.c		
 shared	LEVEL_04_0BB138	function	56	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_0BB138.c		
@@ -9545,7 +9545,7 @@ shared	LEVEL_04_0ED050	function	460	1	0	1	0	3
 shared	LEVEL_04_0ED220	function	488	1	0	1	0	3			
 shared	LEVEL_04_0F0588	fragment	12	1	0	0	0	8			
 shared	LEVEL_04_0F45C8	function	92	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_0F45C8.c		
-shared	LEVEL_04_0F4628	function	228	1	0	1	0	3			
+shared	LEVEL_04_0F4628	function	228	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_0F4628.c		
 shared	LEVEL_04_0F4718	function	48	1	0	1	0	3			
 shared	LEVEL_04_0F4748	fragment	7124	1	0	0	0	3			
 shared	LEVEL_04_105E40	function	3656	1	0	1	0	2			
@@ -9623,7 +9623,7 @@ shared	LEVEL_04_165528	function	16	1	1	1	1	3	src/levels/shared/LEVEL_04_165528.c
 shared	LEVEL_04_165538	function	48	1	0	1	0	3			
 shared	LEVEL_04_165568	function	20	1	1	1	1	3	src/levels/shared/LEVEL_04_165568.c		
 shared	LEVEL_04_165580	function	72	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_165580.c		
-shared	LEVEL_04_1655D0	function	292	1	0	1	0	3			
+shared	LEVEL_04_1655D0	function	292	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1655D0.c		
 shared	LEVEL_04_1656F8	function	68	1	1	1	1	3	src/levels/shared/LEVEL_04_1656F8.c		
 shared	LEVEL_04_165740	function	48	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_165740.c		
 shared	LEVEL_04_1657C8	function	300	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1657C8.c		
@@ -9643,7 +9643,7 @@ shared	LEVEL_04_1667B8	function	552	1	0	1	0	2
 shared	LEVEL_04_1669E0	function	584	1	0	1	0	2			
 shared	LEVEL_04_166ED8	function	32	1	0	1	0	2			
 shared	LEVEL_04_166EF8	function	176	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_166EF8.c		
-shared	LEVEL_04_166FC8	function	248	1	0	1	0	2			
+shared	LEVEL_04_166FC8	function	248	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_166FC8.c		
 shared	LEVEL_04_1670C0	function	116	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1670C0.c		
 shared	LEVEL_04_167138	function	572	1	0	1	0	2			
 shared	LEVEL_04_167378	function	552	1	0	1	0	2			
@@ -9664,13 +9664,13 @@ shared	LEVEL_04_16F6C8	function	40	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_16F6
 shared	LEVEL_04_16F6F0	function	56	1	1	1	1	2	src/levels/shared/LEVEL_04_16F6F0.c		
 shared	LEVEL_04_16F730	function	156	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_16F730.c		
 shared	LEVEL_04_16F7D0	function	152	1	0	1	0	2			
-shared	LEVEL_04_16F868	function	292	1	0	1	0	2			
+shared	LEVEL_04_16F868	function	292	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_16F868.c		
 shared	LEVEL_04_16F990	function	224	1	0	1	0	2			
 shared	LEVEL_04_16FA78	function	860	1	0	1	0	2			
 shared	LEVEL_04_16FDD8	function	436	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_16FDD8.c		
 shared	LEVEL_04_16FF90	function	492	1	0	1	0	2			
 shared	LEVEL_04_170180	function	916	1	0	1	0	2			
-shared	LEVEL_04_170518	function	280	1	0	1	0	2			
+shared	LEVEL_04_170518	function	280	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_170518.c		
 shared	LEVEL_04_170688	function	92	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_170688.c		
 shared	LEVEL_04_170708	function	52	1	0	1	0	2			
 shared	LEVEL_04_17073C	function	16	2	0	2	0	6			
@@ -9688,7 +9688,7 @@ shared	LEVEL_04_170F78	function	140	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_170
 shared	LEVEL_04_171008	function	48	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_171008.c		
 shared	LEVEL_04_171090	function	32	1	1	1	1	2	src/levels/shared/LEVEL_04_171090.c		
 shared	LEVEL_04_1710C0	function	52	2	2	2	2	2	src/levels/04_metalis/LEVEL_04_1710C0.c		
-shared	LEVEL_04_1710F8	function	252	1	0	1	0	2			
+shared	LEVEL_04_1710F8	function	252	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1710F8.c		
 shared	LEVEL_04_1711F8	function	900	1	0	1	0	2			
 shared	LEVEL_04_1715A0	function	48	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1715A0.c		
 shared	LEVEL_04_171628	function	40	1	1	1	1	2	src/levels/shared/LEVEL_04_171628.c		
@@ -9703,7 +9703,7 @@ shared	LEVEL_04_171E18	function	60	1	0	1	0	2
 shared	LEVEL_04_171E54	function	284	1	0	1	0	2			
 shared	LEVEL_04_171F98	function	128	1	0	1	0	2			
 shared	LEVEL_04_172018	function	44	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_172018.c		
-shared	LEVEL_04_176288	function	288	1	0	1	0	2			
+shared	LEVEL_04_176288	function	288	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_176288.c		
 shared	LEVEL_04_1763E0	function	208	1	0	1	0	2			
 shared	LEVEL_04_1764B0	function	16	1	0	1	0	2			
 shared	LEVEL_04_1764C0	function	16	1	0	1	0	2			
@@ -9742,7 +9742,7 @@ shared	LEVEL_04_17AFC0	function	16	1	1	1	1	2	src/levels/shared/LEVEL_04_17AFC0.c
 shared	LEVEL_04_17AFD8	function	56	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_17AFD8.c		
 shared	LEVEL_04_17B010	function	556	1	0	1	0	2			
 shared	LEVEL_04_17B240	function	116	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_17B240.c		
-shared	LEVEL_04_17B310	function	344	1	0	1	0	2			
+shared	LEVEL_04_17B310	function	344	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_17B310.c		
 shared	LEVEL_04_17B468	function	156	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_17B468.c		
 shared	LEVEL_04_17B508	function	948	1	0	1	0	2			
 shared	LEVEL_04_17B8C0	function	484	1	0	1	0	2			
@@ -9818,9 +9818,9 @@ shared	LEVEL_04_19ADE8	function	256	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_19A
 shared	LEVEL_04_19AEE8	function	612	1	0	1	0	2			
 shared	LEVEL_04_19B1A8	function	232	1	0	1	0	2			
 shared	LEVEL_04_19B2D0	function	636	1	0	1	0	2			
-shared	LEVEL_04_19B558	function	296	1	0	1	0	2			
+shared	LEVEL_04_19B558	function	296	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_19B558.c		
 shared	LEVEL_04_19B680	function	40	1	1	1	1	2	src/levels/shared/LEVEL_04_19B680.c		
-shared	LEVEL_04_19B6A8	function	292	1	0	1	0	2			
+shared	LEVEL_04_19B6A8	function	292	1	1	1	1	2	src/levels/shared/LEVEL_04_19B6A8.c		
 shared	LEVEL_04_19B7D0	function	12	2	1	1	1	2	src/levels/shared/LEVEL_04_19B7D0.c		
 shared	LEVEL_04_19B810	function	180	1	0	1	0	2			
 shared	LEVEL_04_19B8C8	function	864	1	0	1	0	2			
@@ -9828,7 +9828,7 @@ shared	LEVEL_04_19BC38	function	300	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_19B
 shared	LEVEL_04_19BD68	function	64	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_19BD68.c		
 shared	LEVEL_04_19BE00	function	196	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_19BE00.c		
 shared	LEVEL_04_19BED0	function	1936	1	0	1	0	2			
-shared	LEVEL_04_19C660	function	224	1	0	1	0	2			
+shared	LEVEL_04_19C660	function	224	1	1	1	1	2	src/levels/shared/LEVEL_04_19C660.c		
 shared	LEVEL_04_19C740	function	432	1	0	1	0	2			
 shared	LEVEL_04_19C8F0	function	148	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_19C8F0.c		
 shared	LEVEL_04_19C988	function	184	1	1	1	1	2	src/levels/shared/LEVEL_04_19C988.c		
@@ -9854,7 +9854,7 @@ shared	LEVEL_04_1A4990	function	880	1	0	1	0	2
 shared	LEVEL_04_1A4D00	function	148	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1A4D00.c		
 shared	LEVEL_04_1A4D98	function	56	2	2	2	2	3	src/levels/04_metalis/LEVEL_04_1A4D98.c		
 shared	LEVEL_04_1A4DD0	function	468	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1A4DD0.c		
-shared	LEVEL_04_1A4FC8	function	228	1	0	1	0	2			
+shared	LEVEL_04_1A4FC8	function	228	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1A4FC8.c		
 shared	LEVEL_04_1A5CE8	function	100	1	1	1	1	5	src/levels/04_metalis/LEVEL_04_1A5CE8.c		
 shared	LEVEL_04_1A8E1C	fragment	8	1	0	0	0	3			
 shared	LEVEL_04_1B11C8	function	128	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1B11C8.c		
@@ -9880,7 +9880,7 @@ shared	LEVEL_04_1BC924	function	52	1	0	1	0	2
 shared	LEVEL_04_1BC958	function	172	1	0	1	0	2			
 shared	LEVEL_04_1BCA04	function	92	1	0	1	0	2			
 shared	LEVEL_04_1BCA60	function	684	1	0	1	0	2			
-shared	LEVEL_04_1BCD10	function	216	1	0	1	0	2			
+shared	LEVEL_04_1BCD10	function	216	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1BCD10.c		
 shared	LEVEL_04_1BCDE8	function	308	1	0	1	0	2			
 shared	LEVEL_04_1BCF20	function	116	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1BCF20.c		
 shared	LEVEL_04_1BCFD0	function	308	1	1	1	1	2	src/levels/shared/LEVEL_04_1BCFD0.c		
@@ -9896,7 +9896,7 @@ shared	LEVEL_04_1C33E0	function	276	1	0	1	0	3
 shared	LEVEL_04_1C34F8	function	324	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1C34F8.c		
 shared	LEVEL_04_1C3640	function	60	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1C3640.c		
 shared	LEVEL_04_1C3680	function	112	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1C3680.c		
-shared	LEVEL_04_1C3708	function	248	1	0	1	0	3			
+shared	LEVEL_04_1C3708	function	248	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1C3708.c		
 shared	LEVEL_04_1C3800	function	104	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1C3800.c		
 shared	LEVEL_04_1C3868	function	132	1	0	1	0	3			
 shared	LEVEL_04_1C38EC	function	776	1	0	1	0	3			
@@ -9966,10 +9966,10 @@ shared	LEVEL_04_1C7C28	function	480	1	0	1	0	3
 shared	LEVEL_04_1C7E08	function	92	1	0	1	0	3			
 shared	LEVEL_04_1C7E68	function	32	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1C7E68.c		
 shared	LEVEL_04_1C7E88	function	500	1	1	1	1	3	src/levels/shared/LEVEL_04_1C7E88.c		
-shared	LEVEL_04_1C80D8	function	380	1	0	1	0	3			
+shared	LEVEL_04_1C80D8	function	380	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1C80D8.c		
 shared	LEVEL_04_1C8270	function	44	1	1	1	1	3	src/levels/shared/LEVEL_04_1C8270.c		
 shared	LEVEL_04_1C8358	function	52	2	2	2	2	4	src/levels/04_metalis/LEVEL_04_1C8358.c		
-shared	LEVEL_04_1C83E8	function	376	3	0	3	0	3			
+shared	LEVEL_04_1C83E8	function	376	3	3	3	3	3	src/levels/04_metalis/LEVEL_04_1C83E8.c		
 shared	LEVEL_04_1C8578	function	44	1	1	1	1	3	src/levels/shared/LEVEL_04_1C8578.c		
 shared	LEVEL_04_1C8808	function	12	1	1	1	1	3	src/levels/shared/LEVEL_04_1C8808.c		
 shared	LEVEL_04_1C8818	function	12	1	1	1	1	3	src/levels/shared/LEVEL_04_1C8818.c		
@@ -9977,7 +9977,7 @@ shared	LEVEL_04_1C8828	function	212	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1C8
 shared	LEVEL_04_1C8940	function	248	1	0	1	0	3			
 shared	LEVEL_04_1C8A38	function	228	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1C8A38.c		
 shared	LEVEL_04_1C8D40	function	124	1	1	1	1	3	src/levels/04_metalis/LEVEL_04_1C8D40.c		
-shared	LEVEL_04_1D4828	function	316	1	0	1	0	2			
+shared	LEVEL_04_1D4828	function	316	1	1	1	1	2	src/levels/shared/LEVEL_04_1D4828.c		
 shared	LEVEL_04_1D4970	function	1044	1	0	1	0	2			
 shared	LEVEL_04_1D4D88	function	164	1	1	1	1	2	src/levels/shared/LEVEL_04_1D4D88.c		
 shared	LEVEL_04_1D4E30	function	116	1	1	1	1	2	src/levels/shared/LEVEL_04_1D4E30.c		
@@ -10027,7 +10027,7 @@ shared	LEVEL_04_1D8668	function	44	1	1	1	1	2	src/levels/shared/LEVEL_04_1D8668.c
 shared	LEVEL_04_1D8698	function	44	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1D8698.c		
 shared	LEVEL_04_1D86C8	function	1448	1	0	1	0	2			
 shared	LEVEL_04_1D8C70	function	376	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1D8C70.c		
-shared	LEVEL_04_1D8DE8	function	392	1	0	1	0	2			
+shared	LEVEL_04_1D8DE8	function	392	1	1	1	1	2	src/levels/shared/LEVEL_04_1D8DE8.c		
 shared	LEVEL_04_1D8F70	function	132	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1D8F70.c		
 shared	LEVEL_04_1D8FF8	function	788	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1D8FF8.c		
 shared	LEVEL_04_1DCDF0	function	596	1	0	1	0	2			
@@ -10042,7 +10042,7 @@ shared	LEVEL_04_1DD6E8	function	468	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1DD
 shared	LEVEL_04_1DD8C0	function	216	1	0	1	0	2			
 shared	LEVEL_04_1DD998	function	92	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1DD998.c		
 shared	LEVEL_04_1DD9F8	function	376	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1DD9F8.c		
-shared	LEVEL_04_1DDB70	function	392	1	0	1	0	2			
+shared	LEVEL_04_1DDB70	function	392	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1DDB70.c		
 shared	LEVEL_04_1DDCF8	function	128	1	0	1	0	2			
 shared	LEVEL_04_1DDD78	function	132	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1DDD78.c		
 shared	LEVEL_04_1DDE00	function	92	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1DDE00.c		
@@ -10058,7 +10058,7 @@ shared	LEVEL_04_1E2428	function	248	1	0	1	0	2
 shared	LEVEL_04_1E2520	function	956	1	0	1	0	2			
 shared	LEVEL_04_1E28E0	function	120	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1E28E0.c		
 shared	LEVEL_04_1E2958	function	32	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1E2958.c		
-shared	LEVEL_04_1E2978	function	228	1	0	1	0	2			
+shared	LEVEL_04_1E2978	function	228	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1E2978.c		
 shared	LEVEL_04_1E2A60	function	304	1	0	1	0	2			
 shared	LEVEL_04_1E4710	function	224	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1E4710.c		
 shared	LEVEL_04_1E47F0	function	552	1	0	1	0	2			
@@ -10131,7 +10131,7 @@ shared	LEVEL_05_1220A0	fragment	36	1	0	0	0	8
 shared	LEVEL_05_124694	fragment	24	1	0	0	0	5			
 shared	LEVEL_05_151ED8	function	380	1	0	1	0	4			
 shared	LEVEL_05_152058	function	44	1	1	1	1	4	src/levels/05_medical_outpost/LEVEL_05_152058.c		
-shared	LEVEL_05_152088	function	372	1	0	1	0	4			
+shared	LEVEL_05_152088	function	372	1	1	1	1	4	src/levels/05_medical_outpost/LEVEL_05_152088.c		
 shared	LEVEL_05_152200	function	24	1	1	1	1	4	src/levels/shared/LEVEL_05_152200.c		
 shared	LEVEL_05_152218	function	152	1	1	1	1	4	src/levels/05_medical_outpost/LEVEL_05_152218.c		
 shared	LEVEL_05_162498	function	260	1	1	1	1	2	src/levels/05_medical_outpost/LEVEL_05_162498.c		
@@ -10213,7 +10213,7 @@ shared	LEVEL_06_16E178	function	108	1	0	1	0	2
 shared	LEVEL_06_16E1E8	function	40	1	1	1	1	2	src/levels/06_challax/LEVEL_06_16E1E8.c		
 shared	LEVEL_06_16E210	function	104	1	1	1	1	2	src/levels/06_challax/LEVEL_06_16E1E8.c		
 shared	LEVEL_06_16E2A8	function	468	1	1	1	1	2	src/levels/06_challax/LEVEL_06_16E2A8.c		
-shared	LEVEL_06_16E480	function	384	1	0	1	0	2			
+shared	LEVEL_06_16E480	function	384	1	1	1	1	2	src/levels/06_challax/LEVEL_06_16E480.c		
 shared	LEVEL_06_16E658	function	108	2	2	2	2	6	src/levels/shared/LEVEL_06_16E658.c		
 shared	LEVEL_06_16E6D0	function	972	1	0	1	0	3			
 shared	LEVEL_06_16EAA0	function	884	1	0	1	0	2			
@@ -10260,7 +10260,7 @@ shared	LEVEL_06_199928	function	720	1	0	1	0	2
 shared	LEVEL_06_199BF8	function	44	1	1	1	1	2	src/levels/06_challax/LEVEL_06_199BF8.c		
 shared	LEVEL_06_199CA0	function	80	1	1	1	1	2	src/levels/06_challax/LEVEL_06_199CA0.c		
 shared	LEVEL_06_199F30	function	20	1	1	1	1	2	src/levels/shared/LEVEL_06_199F30.c		
-shared	LEVEL_06_199F50	function	272	1	0	1	0	2			
+shared	LEVEL_06_199F50	function	272	1	1	1	1	2	src/levels/06_challax/LEVEL_06_199F50.c		
 shared	LEVEL_06_19A068	function	516	1	0	1	0	2			
 shared	LEVEL_06_19A270	function	968	1	0	1	0	2			
 shared	LEVEL_06_19A638	fragment	64	1	0	0	0	4			
@@ -10339,7 +10339,7 @@ shared	LEVEL_08_16DA88	function	236	1	1	1	1	2	src/levels/08_dayni_moon/LEVEL_08_
 shared	LEVEL_08_19A420	function	424	2	2	2	2	2	src/levels/08_dayni_moon/LEVEL_08_19A420.c		
 shared	LEVEL_08_19F780	function	668	1	1	1	1	2	src/levels/08_dayni_moon/LEVEL_08_19F780.c		
 shared	LEVEL_08_1AEBC8	function	24	1	0	1	0	2			
-shared	LEVEL_08_1B7F08	function	228	1	0	1	0	2			
+shared	LEVEL_08_1B7F08	function	228	1	1	1	1	2	src/levels/08_dayni_moon/LEVEL_08_1B7F08.c		
 shared	LEVEL_08_1B7FF8	function	252	1	1	1	1	2	src/levels/08_dayni_moon/LEVEL_08_1B7FF8.c		
 shared	LEVEL_08_1B80F8	function	28	1	1	1	1	2	src/levels/08_dayni_moon/LEVEL_08_1B80F8.c		
 shared	LEVEL_08_1B8118	function	480	1	1	1	1	2	src/levels/08_dayni_moon/LEVEL_08_1B8118.c		
@@ -10350,7 +10350,7 @@ shared	LEVEL_08_1C26F0	function	100	1	1	1	1	2	src/levels/08_dayni_moon/LEVEL_08_
 shared	LEVEL_08_20A480	function	260	1	1	1	1	3	src/levels/08_dayni_moon/LEVEL_08_20A480.c		
 shared	LEVEL_08_20F468	function	80	1	1	1	1	2	src/levels/08_dayni_moon/LEVEL_08_20F468.c		
 shared	LEVEL_08_20F4B8	function	344	1	0	1	0	2			CORE/Lightweight/LW_Anim.cpp
-shared	LEVEL_08_20F610	function	236	1	0	1	0	2			CORE/Lightweight/LW_Anim.cpp
+shared	LEVEL_08_20F610	function	236	1	1	1	1	2	src/levels/08_dayni_moon/CORE/Lightweight/LW_Anim/LEVEL_08_20F610.c		CORE/Lightweight/LW_Anim.cpp
 shared	LEVEL_08_20F710	function	120	1	1	1	1	2	src/levels/shared/CORE/Lightweight/LW_Anim/LEVEL_08_20F710.c		CORE/Lightweight/LW_Anim.cpp
 shared	LEVEL_08_20F788	function	260	1	1	1	1	2	src/levels/08_dayni_moon/CORE/Lightweight/LW_Anim/LEVEL_08_20F788.c		CORE/Lightweight/LW_Anim.cpp
 shared	LEVEL_08_20F898	function	44	1	1	1	1	2	src/levels/08_dayni_moon/CORE/Lightweight/LW_Anim/LEVEL_08_20F898.c		CORE/Lightweight/LW_Anim.cpp
@@ -10459,7 +10459,7 @@ shared	LEVEL_16_0164E8	function	332	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL
 shared	LEVEL_16_016638	function	68	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_016638.c		
 shared	LEVEL_16_016CE8	function	176	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_016CE8.c		
 shared	LEVEL_16_017870	function	192	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_017870.c		
-shared	LEVEL_16_017930	function	244	1	0	1	0	5			
+shared	LEVEL_16_017930	function	244	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_017930.c		
 shared	LEVEL_16_017A28	function	676	1	0	1	0	5			
 shared	LEVEL_16_017D28	function	76	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_017CD0.c		
 shared	LEVEL_16_017D78	function	1908	1	0	1	0	5			
@@ -10477,7 +10477,7 @@ shared	LEVEL_16_0211E8	function	636	1	0	1	0	5
 shared	LEVEL_16_021640	function	36	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_021640.c		
 shared	LEVEL_16_021758	function	312	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_021758.c		
 shared	LEVEL_16_0218F8	function	264	1	0	1	0	4			
-shared	LEVEL_16_021A00	function	288	1	0	1	0	5			
+shared	LEVEL_16_021A00	function	288	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_021A00.c		
 shared	LEVEL_16_021D08	function	424	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_021D08.c		
 shared	LEVEL_16_021EB0	function	96	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_021EB0.c		
 shared	LEVEL_16_021F50	function	88	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_021F50.c		
@@ -10539,7 +10539,7 @@ shared	LEVEL_16_037F38	function	104	1	1	1	1	5	src/levels/shared/LEVEL_16_037F38.
 shared	LEVEL_16_0381F0	function	12	1	1	1	1	4	src/levels/shared/LEVEL_16_0381F0.c		
 shared	LEVEL_16_038228	function	8	1	1	1	1	4	src/levels/shared/LEVEL_16_038228.c		
 shared	LEVEL_16_038230	function	92	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_038230.c		
-shared	LEVEL_16_038290	function	212	1	0	1	0	4			
+shared	LEVEL_16_038290	function	212	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_038290.c		
 shared	LEVEL_16_0383B8	function	100	1	0	1	0	5			
 shared	LEVEL_16_0385A0	function	64	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_0385A0.c		
 shared	LEVEL_16_0385E0	function	164	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_0385E0.c		
@@ -10607,7 +10607,7 @@ shared	LEVEL_16_05C418	function	208	1	0	1	0	5
 shared	LEVEL_16_05CA70	function	456	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_05CA70.c		
 shared	LEVEL_16_05D4F8	function	328	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_05D4F8.c		
 shared	LEVEL_16_05D658	function	48	1	1	1	1	5	src/levels/shared/LEVEL_16_05D658.c		
-shared	LEVEL_16_05D698	function	380	1	0	1	0	5			
+shared	LEVEL_16_05D698	function	380	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_05D698.c		
 shared	LEVEL_16_05D818	function	244	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_05D818.c		
 shared	LEVEL_16_05E498	function	476	1	0	1	0	4			
 shared	LEVEL_16_05E8B8	fragment	4	1	0	0	0	3			
@@ -10751,7 +10751,7 @@ shared	LEVEL_16_0AF9F8	function	548	1	0	1	0	5
 shared	LEVEL_16_0AFC20	function	680	1	0	1	0	5			
 shared	LEVEL_16_0AFEC8	function	44	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_0AFEC8.c		
 shared	LEVEL_16_0B3CF0	function	260	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_0B3CF0.c		
-shared	LEVEL_16_0B3E48	function	268	1	0	1	0	5			
+shared	LEVEL_16_0B3E48	function	268	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_0B3E48.c		
 shared	LEVEL_16_0B49A0	function	436	1	0	1	0	5			
 shared	LEVEL_16_0B7F50	function	32	2	1	2	1	5	src/levels/16_multiplayer_01/LEVEL_16_0B7F50.c		
 shared	LEVEL_16_0B7F70	function	96	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_0B7F70.c		
@@ -10969,7 +10969,7 @@ shared	LEVEL_16_11EA20	function	124	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL
 shared	LEVEL_16_11EAA0	function	60	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_11EAA0.c		
 shared	LEVEL_16_11EB40	function	856	1	0	1	0	5			
 shared	LEVEL_16_11EE98	function	384	1	0	1	0	5			
-shared	LEVEL_16_11F018	function	232	1	0	1	0	5			
+shared	LEVEL_16_11F018	function	232	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_11F018.c		
 shared	LEVEL_16_11F100	function	140	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_11F100.c		
 shared	LEVEL_16_11F1A0	function	64	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_11F1A0.c		
 shared	LEVEL_16_11F1E0	function	44	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_11F1E0.c		
@@ -11010,7 +11010,7 @@ shared	LEVEL_16_120F60	function	40	1	0	1	0	5
 shared	LEVEL_16_120F88	function	348	1	0	1	0	5			
 shared	LEVEL_16_1210E8	function	584	1	0	1	0	5			
 shared	LEVEL_16_121330	function	308	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_121330.c		
-shared	LEVEL_16_121468	function	320	1	0	1	0	5			
+shared	LEVEL_16_121468	function	320	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_121468.c		
 shared	LEVEL_16_1215A8	function	184	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_1215A8.c		
 shared	LEVEL_16_121668	function	472	1	0	1	0	5			
 shared	LEVEL_16_1218A0	function	116	1	0	1	0	5			
@@ -11031,7 +11031,7 @@ shared	LEVEL_16_122D20	function	396	1	0	1	0	5
 shared	LEVEL_16_122EB0	function	408	1	0	1	0	5			
 shared	LEVEL_16_123048	function	880	1	0	1	0	5			
 shared	LEVEL_16_1233B8	function	376	1	0	1	0	5			
-shared	LEVEL_16_123530	function	348	1	0	1	0	5			
+shared	LEVEL_16_123530	function	348	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_123530.c		
 shared	LEVEL_16_123690	function	64	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_123690.c		
 shared	LEVEL_16_1236D0	function	200	1	0	1	0	5			
 shared	LEVEL_16_123798	function	840	1	0	1	0	5			
@@ -11062,7 +11062,7 @@ shared	LEVEL_16_126E38	function	2180	1	0	1	0	4
 shared	LEVEL_16_127768	function	2020	1	0	1	0	4			
 shared	LEVEL_16_128018	function	788	1	0	1	0	4			
 shared	LEVEL_16_128338	function	128	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_128338.c		
-shared	LEVEL_16_1283B8	function	252	1	0	1	0	4			
+shared	LEVEL_16_1283B8	function	252	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_1283B8.c		
 shared	LEVEL_16_1286A0	function	1724	1	0	1	0	4			
 shared	LEVEL_16_12A61C	function	1224	1	0	1	0	4			
 shared	LEVEL_16_12AAE8	function	408	1	0	1	0	4			
@@ -11121,7 +11121,7 @@ shared	LEVEL_16_1411D0	function	2032	1	0	1	0	4
 shared	LEVEL_16_1419C0	function	780	1	0	1	0	4			
 shared	LEVEL_16_141CD0	function	524	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_141CD0.c		
 shared	LEVEL_16_1421C8	function	184	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_1421C8.c		
-shared	LEVEL_16_142488	function	284	1	0	1	0	4			
+shared	LEVEL_16_142488	function	284	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_142488.c		
 shared	LEVEL_16_1425B0	function	72	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_1425B0.c		
 shared	LEVEL_16_1425F8	function	436	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_1425F8.c		
 shared	LEVEL_16_1427B0	function	492	1	0	1	0	4			
@@ -11175,7 +11175,7 @@ shared	LEVEL_16_14E620	function	344	1	0	1	0	4
 shared	LEVEL_16_14EAF0	function	792	1	0	1	0	4			
 shared	LEVEL_16_14EE08	function	216	1	0	1	0	4			
 shared	LEVEL_16_14EEE0	function	584	1	0	1	0	4			
-shared	LEVEL_16_14FCD0	function	296	1	0	1	0	4			
+shared	LEVEL_16_14FCD0	function	296	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_14FCD0.c		
 shared	LEVEL_16_14FE00	function	44	1	0	1	0	4			
 shared	LEVEL_16_14FE30	function	468	1	0	1	0	4			
 shared	LEVEL_16_150010	function	268	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_150010.c		
@@ -11200,7 +11200,7 @@ shared	LEVEL_16_154500	function	1268	1	0	1	0	3
 shared	LEVEL_16_154A50	fragment	12	1	0	0	0	2			
 shared	LEVEL_16_1580A0	function	332	1	0	1	0	2			
 shared	LEVEL_16_158820	function	56	1	1	1	1	4	src/levels/shared/LEVEL_16_158820.c		
-shared	LEVEL_16_1588D8	function	356	1	0	1	0	4			
+shared	LEVEL_16_1588D8	function	356	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_1588D8.c		
 shared	LEVEL_16_158A98	function	432	1	0	1	0	4			
 shared	LEVEL_16_158C50	function	108	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_158C50.c		
 shared	LEVEL_16_158CC8	function	152	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_158CC8.c		
@@ -11285,7 +11285,7 @@ shared	LEVEL_16_16D098	function	364	2	2	2	2	4	src/levels/16_multiplayer_01/LEVEL
 shared	LEVEL_16_16D208	function	296	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_16D208.c		
 shared	LEVEL_16_16D3C8	function	876	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_16D3C8.c		
 shared	LEVEL_16_16D738	function	44	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_16D738.c		
-shared	LEVEL_16_16D950	function	352	1	0	1	0	4			
+shared	LEVEL_16_16D950	function	352	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_16D950.c		
 shared	LEVEL_16_16DCB8	function	436	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_16DCB8.c		
 shared	LEVEL_16_16DFE0	function	248	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_16DFE0.c		
 shared	LEVEL_16_16E170	function	496	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_16E170.c		
@@ -11330,7 +11330,7 @@ shared	LEVEL_16_17EC90	function	56	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_
 shared	LEVEL_16_17ECC8	function	308	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_17ECC8.c		
 shared	LEVEL_16_17EE00	function	640	1	0	1	0	4			
 shared	LEVEL_16_17F080	function	964	1	0	1	0	4			
-shared	LEVEL_16_17F448	function	224	1	0	1	0	4			
+shared	LEVEL_16_17F448	function	224	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_17F448.c		
 shared	LEVEL_16_17F5A8	function	172	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_17F5A8.c		
 shared	LEVEL_16_17F658	function	164	1	0	1	0	4			
 shared	LEVEL_16_17F728	function	80	1	1	1	1	4	src/levels/16_multiplayer_01/LEVEL_16_17F728.c		
@@ -11373,7 +11373,7 @@ shared	LEVEL_17_0180AC	fragment	72	1	0	0	0	2
 shared	LEVEL_17_03798C	fragment	16	1	0	0	0	4			
 shared	LEVEL_17_049410	function	468	1	0	1	0	3			
 shared	LEVEL_17_0495E4	fragment	16	1	0	0	0	2			
-shared	LEVEL_17_076AF8	function	204	1	0	1	0	3			
+shared	LEVEL_17_076AF8	function	204	1	1	1	1	3	src/levels/17_multiplayer_02/LEVEL_17_076AF8.c		
 shared	LEVEL_17_11608C	fragment	16	1	0	0	0	3			
 shared	LEVEL_17_116D94	fragment	8	1	0	0	0	2			
 shared	LEVEL_17_117FB8	fragment	596	1	0	0	0	3			
@@ -11400,7 +11400,7 @@ shared	LEVEL_17_15D160	function	92	1	1	1	1	3	src/levels/17_multiplayer_02/LEVEL_
 shared	LEVEL_17_15D1C0	function	208	1	1	1	1	3	src/levels/17_multiplayer_02/LEVEL_17_15D1C0.c		
 shared	LEVEL_17_15D290	function	896	1	0	1	0	3			
 shared	LEVEL_17_15D620	function	224	1	1	1	1	3	src/levels/17_multiplayer_02/LEVEL_17_15D620.c		
-shared	LEVEL_17_15D700	function	396	1	0	1	0	3			
+shared	LEVEL_17_15D700	function	396	1	1	1	1	3	src/levels/17_multiplayer_02/LEVEL_17_15D700.c		
 shared	LEVEL_17_15D890	function	188	1	1	1	1	3	src/levels/17_multiplayer_02/LEVEL_17_15D890.c		
 shared	LEVEL_17_15D950	function	1112	2	2	2	2	3	src/levels/17_multiplayer_02/LEVEL_17_15D950.c		
 shared	LEVEL_17_15DEA0	function	792	1	0	1	0	3			
@@ -11453,7 +11453,7 @@ shared	LEVEL_22_1059B8	function	96	1	1	1	1	2	src/levels/22_skyboard_kalidon/LEVE
 shared	LEVEL_22_105EC0	function	160	1	1	1	1	19	src/levels/22_skyboard_kalidon/LEVEL_22_105EC0.c		
 shared	LEVEL_22_105F60	function	1112	1	0	1	0	2			
 shared	LEVEL_22_1063B8	function	220	1	1	1	1	2	src/levels/22_skyboard_kalidon/LEVEL_22_1063B8.c		
-shared	LEVEL_22_106498	function	220	1	0	1	0	2			
+shared	LEVEL_22_106498	function	220	1	1	1	1	2	src/levels/22_skyboard_kalidon/LEVEL_22_106498.c		
 shared	LEVEL_22_106578	function	280	1	1	1	1	2	src/levels/22_skyboard_kalidon/LEVEL_22_106578.c		
 shared	LEVEL_22_10D520	function	452	1	0	1	0	2			
 shared	LEVEL_22_10D6F0	function	48	1	1	1	1	2	src/levels/22_skyboard_kalidon/LEVEL_22_10D6F0.c		
@@ -11591,10 +11591,10 @@ shared	LEVEL_22_132F40	function	12	1	1	1	1	2	src/levels/shared/LEVEL_22_132F40.c
 shared	LEVEL_22_132F50	function	16	1	1	1	1	2	src/levels/shared/LEVEL_22_132F50.c		
 shared	LEVEL_22_132F60	function	12	1	1	1	1	2	src/levels/shared/LEVEL_22_132F60.c		
 shared	LEVEL_22_132F90	function	24	1	1	1	1	2	src/levels/shared/LEVEL_22_132F90.c		
-shared	LEVEL_22_132FA8	function	388	1	0	1	0	2			
-shared	LEVEL_22_133130	function	380	1	0	1	0	2			
+shared	LEVEL_22_132FA8	function	388	1	1	1	1	2	src/levels/22_skyboard_kalidon/LEVEL_22_132FA8.c		
+shared	LEVEL_22_133130	function	380	1	1	1	1	2	src/levels/22_skyboard_kalidon/LEVEL_22_133130.c		
 shared	LEVEL_22_1332B0	function	504	1	1	1	1	2	src/levels/22_skyboard_kalidon/LEVEL_22_1332B0.c		
-shared	LEVEL_22_1334A8	function	400	1	0	1	0	2			
+shared	LEVEL_22_1334A8	function	400	1	1	1	1	2	src/levels/22_skyboard_kalidon/LEVEL_22_1334A8.c		
 shared	LEVEL_22_133658	function	796	1	0	1	0	2			
 shared	LEVEL_22_136F40	function	32	1	1	1	1	2	src/levels/22_skyboard_kalidon/LEVEL_22_136F40.c		
 shared	LEVEL_22_137350	function	80	1	1	1	1	2	src/levels/22_skyboard_kalidon/LEVEL_22_137350.c		
