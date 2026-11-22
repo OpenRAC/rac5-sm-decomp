@@ -60,7 +60,7 @@ frontend	FRONTEND_006850	function	788	1	0	1	0	1
 frontend	FRONTEND_006B68	function	768	1	0	1	0	1			
 frontend	FRONTEND_007080	function	176	1	1	1	1	1	src/levels/frontend/SYSTEM_ThroughmodeMatrixIsDirty__Fv.c	SYSTEM_ThroughmodeMatrixIsDirty__Fv	
 frontend	FRONTEND_007130	function	176	1	1	1	1	1	src/levels/frontend/SYSTEM_ScreenMatrixIsDirty__Fv.c	SYSTEM_ScreenMatrixIsDirty__Fv	
-frontend	FRONTEND_0071E0	function	460	1	0	1	0	1		SYSTEM_ActivateMicrocode__F13PS2_MICROCODE	
+frontend	FRONTEND_0071E0	function	460	1	1	1	1	1	src/levels/frontend/SYSTEM_ActivateMicrocode__F13PS2_MICROCODE_FRONTEND.c	SYSTEM_ActivateMicrocode__F13PS2_MICROCODE	
 frontend	FRONTEND_0079EC	fragment	16	1	0	0	0	1			
 frontend	FRONTEND_007A18	function	56	1	1	1	1	1	src/levels/frontend/UTIL_SetupTextureState__Fv.c	UTIL_SetupTextureState__Fv	
 frontend	FRONTEND_008E00	fragment	12	1	0	0	0	1			
@@ -72,7 +72,7 @@ frontend	FRONTEND_00ADF0	function	252	1	0	1	0	1
 frontend	FRONTEND_00B66C	fragment	32	1	0	0	0	1			
 frontend	FRONTEND_00B6F8	fragment	36	1	0	0	0	1			
 frontend	FRONTEND_00B8D4	fragment	8	1	0	0	0	1			
-frontend	FRONTEND_00BAD0	function	404	1	0	1	0	1			
+frontend	FRONTEND_00BAD0	function	404	1	1	1	1	1	src/levels/frontend/FRONTEND_00BAD0.c		
 frontend	FRONTEND_00BC88	function	92	1	1	1	1	1	src/levels/frontend/FRONTEND_00BC88.c		
 frontend	FRONTEND_00EA5C	fragment	16	1	0	0	0	1			
 frontend	FRONTEND_00EE3C	fragment	32	1	0	0	0	1			
@@ -4816,10 +4816,10 @@ shared	FRONTEND_01C690	function	28	1	1	1	1	20	src/levels/shared/sceKernelTotalFr
 shared	FRONTEND_01C6B0	function	160	1	1	1	1	20	src/levels/frontend/FRONTEND_01C6B0.c		
 shared	FRONTEND_01C750	function	44	1	1	1	1	20	src/levels/frontend/FRONTEND_01C750.c		
 shared	FRONTEND_01C780	function	48	1	1	1	1	20	src/levels/frontend/MEM_AddAssetUsage__F12MEMAssetTypeUi_FRONTEND.c	MEM_AddAssetUsage__F12MEMAssetTypeUi	
-shared	FRONTEND_01C7C0	function	140	1	0	1	0	20		MEM_memalign__FUiUi12MEMAssetTypePcUi	
+shared	FRONTEND_01C7C0	function	140	1	1	1	1	20	src/levels/frontend/MEM_memalign__FUiUi12MEMAssetTypePcUi.c	MEM_memalign__FUiUi12MEMAssetTypePcUi	
 shared	FRONTEND_01C84C	fragment	24	1	0	0	0	20			
 shared	FRONTEND_01C870	function	52	1	1	1	1	20	src/levels/frontend/MEM_malloc__FUi12MEMAssetTypePcUi_FRONTEND.c	MEM_malloc__FUi12MEMAssetTypePcUi	
-shared	FRONTEND_01C8A8	function	52	1	0	1	0	20		MEM_free__FPvPcUi	
+shared	FRONTEND_01C8A8	function	52	1	1	1	1	20	src/levels/frontend/MEM_free__FPvPcUi.c	MEM_free__FPvPcUi	
 shared	FRONTEND_01C9B8	fragment	4	1	0	0	0	20			
 shared	FRONTEND_01C9C0	function	160	1	0	1	0	20			
 shared	FRONTEND_01CA60	function	156	1	0	1	0	20			
@@ -5028,10 +5028,10 @@ shared	FRONTEND_023060	function	176	1	0	1	0	20		__do_global_ctors
 shared	FRONTEND_023110	function	236	1	1	1	1	20	src/levels/frontend/__fixunsdfdi_FRONTEND.c	__fixunsdfdi	
 shared	FRONTEND_023200	function	244	1	1	1	1	20	src/levels/frontend/FRONTEND_023200.c		
 shared	FRONTEND_0232F8	function	152	1	1	1	1	20	src/levels/frontend/__floatdidf_FRONTEND.c	__floatdidf	
-shared	FRONTEND_023390	function	96	1	0	1	0	20		__muldi3	
+shared	FRONTEND_023390	function	96	1	1	1	1	20	src/levels/frontend/__muldi3.c	__muldi3	
 shared	FRONTEND_0233F0	function	8	1	0	1	0	20			
 shared	FRONTEND_0233F8	function	300	1	0	1	0	20		__pack_d	
-shared	FRONTEND_023528	function	156	1	0	1	0	20			
+shared	FRONTEND_023528	function	156	1	1	1	1	20	src/levels/frontend/FRONTEND_023528.c		
 shared	FRONTEND_0235C8	function	576	1	0	1	0	20			
 shared	FRONTEND_023808	function	88	1	1	1	1	20	src/levels/frontend/dpadd_FRONTEND.c	dpadd	
 shared	FRONTEND_023860	function	100	1	1	1	1	20	src/levels/frontend/dpsub_FRONTEND.c	dpsub	
@@ -5058,7 +5058,7 @@ shared	FRONTEND_0241E0	function	24	1	0	1	0	20
 shared	FRONTEND_0241F8	function	16	1	0	1	0	20			
 shared	FRONTEND_024208	function	36	1	1	1	1	20	src/levels/frontend/__terminate_FRONTEND.c	__terminate	
 shared	FRONTEND_024230	function	44	1	1	1	1	20	src/levels/shared/__throw_type_match.c	__throw_type_match	
-shared	FRONTEND_024268	function	84	1	0	1	0	20			
+shared	FRONTEND_024268	function	84	1	1	1	1	20	src/levels/frontend/FRONTEND_024268.c		
 shared	FRONTEND_0242C0	function	36	1	1	1	1	20	src/levels/frontend/__get_eh_context_FRONTEND.c	__get_eh_context	
 shared	FRONTEND_0242E8	function	40	1	1	1	1	20	src/levels/frontend/FRONTEND_0242E8.c		
 shared	FRONTEND_024310	function	40	1	1	1	1	20	src/levels/frontend/FRONTEND_024310.c		
@@ -5071,17 +5071,17 @@ shared	FRONTEND_0246A0	function	8	1	1	1	1	20	src/levels/shared/LEVEL_01_1EB918.c
 shared	FRONTEND_0246A8	function	8	1	1	1	1	20	src/levels/shared/LEVEL_01_1EB920.c		
 shared	FRONTEND_0246B0	function	216	1	1	1	1	20	src/levels/shared/FRONTEND_0246B0.c		
 shared	FRONTEND_024788	function	324	1	1	1	1	20	src/levels/shared/FRONTEND_024788.c		
-shared	FRONTEND_0248D0	function	136	1	0	1	0	20			
+shared	FRONTEND_0248D0	function	136	1	1	1	1	20	src/levels/frontend/FRONTEND_0248D0.c		
 shared	FRONTEND_024958	function	124	1	1	1	1	20	src/levels/frontend/FRONTEND_024958.c		
 shared	FRONTEND_0249D8	function	140	1	1	1	1	20	src/levels/frontend/FRONTEND_0249D8.c		
-shared	FRONTEND_024A70	function	816	1	0	1	0	20			
-shared	FRONTEND_024DA0	function	476	1	0	1	0	20		__throw	
-shared	FRONTEND_024F80	function	484	1	0	1	0	20		__rethrow	
+shared	FRONTEND_024A70	function	816	1	1	1	1	20	src/levels/frontend/FRONTEND_024A70.c		
+shared	FRONTEND_024DA0	function	476	1	1	1	1	20	src/levels/frontend/__throw.c	__throw	
+shared	FRONTEND_024F80	function	484	1	1	1	1	20	src/levels/frontend/__rethrow.c	__rethrow	
 shared	FRONTEND_025168	function	24	2	0	2	0	20			
 shared	FRONTEND_025180	function	16	1	0	1	0	20			
 shared	FRONTEND_025190	function	16	3	3	3	3	20	src/levels/frontend/FRONTEND_025190.c		
 shared	FRONTEND_0251C8	function	36	1	1	1	1	20	src/levels/frontend/__cp_exception_info_FRONTEND.c	__cp_exception_info	
-shared	FRONTEND_0251F0	function	32	1	0	1	0	20		__cp_eh_info	
+shared	FRONTEND_0251F0	function	32	1	1	1	1	20	src/levels/frontend/__cp_eh_info.c	__cp_eh_info	
 shared	FRONTEND_025210	function	56	1	1	1	1	20	src/levels/frontend/__start_cp_handler_FRONTEND.c	__start_cp_handler	
 shared	FRONTEND_025248	function	40	1	1	1	1	20	src/levels/frontend/__eh_alloc_FRONTEND.c	__eh_alloc	
 shared	FRONTEND_025270	function	28	1	1	1	1	20	src/levels/shared/__eh_free.c	__eh_free	
@@ -5108,13 +5108,13 @@ shared	FRONTEND_0257E8	function	80	14	14	14	14	20	src/levels/frontend/FRONTEND_0
 shared	FRONTEND_025880	function	64	2	2	2	2	20	src/levels/frontend/FRONTEND_025880.c		
 shared	FRONTEND_0258C0	function	68	1	1	1	1	20	src/levels/shared/FRONTEND_0258C0.c		
 shared	FRONTEND_025908	function	80	1	1	1	1	20	src/levels/shared/FRONTEND_025908.c		
-shared	FRONTEND_025958	function	252	1	0	1	0	20			
-shared	FRONTEND_025A58	function	612	1	0	1	0	20			
+shared	FRONTEND_025958	function	252	1	1	1	1	20	src/levels/frontend/FRONTEND_025958.c		
+shared	FRONTEND_025A58	function	612	1	1	1	1	20	src/levels/frontend/FRONTEND_025A58.c		
 shared	FRONTEND_025CC0	function	72	1	1	1	1	20	src/levels/shared/FRONTEND_025CC0.c		
 shared	FRONTEND_025D08	function	136	1	1	1	1	20	src/levels/shared/FRONTEND_025D08.c		
 shared	FRONTEND_025D90	function	316	1	1	1	1	20	src/levels/frontend/FRONTEND_025D90.c		
-shared	FRONTEND_025ED0	function	228	1	0	1	0	20			
-shared	FRONTEND_025FB8	function	260	1	0	1	0	20			
+shared	FRONTEND_025ED0	function	228	1	1	1	1	20	src/levels/frontend/FRONTEND_025ED0.c		
+shared	FRONTEND_025FB8	function	260	1	1	1	1	20	src/levels/frontend/FRONTEND_025FB8.c		
 shared	FRONTEND_0260C0	function	156	1	0	1	0	20			
 shared	FRONTEND_02615C	function	20	1	0	1	0	20			
 shared	FRONTEND_026170	function	16	1	0	1	0	20			
@@ -5134,7 +5134,7 @@ shared	FRONTEND_026434	function	8	1	0	1	0	20
 shared	FRONTEND_02643C	fragment	68	1	0	0	0	20			
 shared	FRONTEND_026480	function	120	1	0	1	0	20		__deregister_frame_info	
 shared	FRONTEND_0264F8	function	472	1	1	1	1	20	src/levels/frontend/FRONTEND_0264F8.c		
-shared	FRONTEND_0266D0	function	372	1	0	1	0	20			
+shared	FRONTEND_0266D0	function	372	1	1	1	1	20	src/levels/frontend/FRONTEND_0266D0.c		
 shared	FRONTEND_026848	function	48	1	1	1	1	20	src/levels/frontend/FRONTEND_026848.c	_$_9type_info	
 shared	FRONTEND_026878	function	64	1	0	1	0	20		__eq__C9type_infoRC9type_info	
 shared	FRONTEND_0268B8	function	36	1	1	1	1	20	src/levels/frontend/__rtti_class_FRONTEND.c	__rtti_class	
@@ -5579,7 +5579,7 @@ shared	LEVEL_01_026D38	function	240	1	1	1	1	9	src/levels/01_pokitaru/LEVEL_01_02
 shared	LEVEL_01_026E28	function	156	1	1	1	1	15	src/levels/01_pokitaru/LEVEL_01_026E28.c		
 shared	LEVEL_01_026EC8	function	156	1	1	1	1	10	src/levels/01_pokitaru/LEVEL_01_026EC8.c		
 shared	LEVEL_01_026FC0	function	32	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_026FC0.c		
-shared	LEVEL_01_026FE0	function	28	1	0	1	0	19		FastMemCopy__FPvPCvUi	
+shared	LEVEL_01_026FE0	function	28	1	1	1	1	19	src/levels/01_pokitaru/FastMemCopy__FPvPCvUi.c	FastMemCopy__FPvPCvUi	
 shared	LEVEL_01_026FFC	fragment	24	1	0	0	0	19			
 shared	LEVEL_01_0274B0	function	32	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0274B0.c		
 shared	LEVEL_01_0274D0	function	84	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0274D0.c		
@@ -7515,7 +7515,7 @@ shared	LEVEL_01_123E80	function	144	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_1
 shared	LEVEL_01_123F10	function	144	1	1	1	1	19	src/levels/shared/LEVEL_01_123F10.c		
 shared	LEVEL_01_123FA0	function	240	1	1	1	1	18	src/levels/shared/LEVEL_01_123FA0.c		
 shared	LEVEL_01_1240C0	function	116	1	1	1	1	19	src/levels/shared/LEVEL_01_1240C0.c		
-shared	LEVEL_01_124138	function	116	1	0	1	0	19		VEC_ConstructRotZMat3__FP7MATRIX3f	
+shared	LEVEL_01_124138	function	116	1	1	1	1	19	src/levels/01_pokitaru/VEC_ConstructRotZMat3__FP7MATRIX3f.c	VEC_ConstructRotZMat3__FP7MATRIX3f	
 shared	LEVEL_01_124208	function	72	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_124208.c		
 shared	LEVEL_01_124250	fragment	4	1	0	0	0	14			
 shared	LEVEL_01_124258	function	2008	1	1	1	1	13	src/levels/shared/VEC_InverseMat4__FP7MATRIX4PC7MATRIX4.c	VEC_InverseMat4__FP7MATRIX4PC7MATRIX4	

@@ -935,7 +935,7 @@ excluded from its C size.
 | [`0x0149D0`](../../nonmatching/levels/FRONTEND_0149D0.c), 1,084 bytes | Pinned GNU EE links 1,064 bytes, first difference at byte 4; eleven calls retain their order but three branches are missing. | Recover the omitted control-flow paths and live ranges. |
 | [`0x016CD8`](../../nonmatching/levels/FRONTEND_016CD8.c), 1,012 bytes | Pinned GNU EE links 1,012 bytes, first difference at byte 470; the remaining register allocation differs despite equal length. | Recover the C expression and temporary lifetime that select the retail general registers. |
 | [`0x01F9A0`](../../nonmatching/levels/FRONTEND_01F9A0.c), 984 bytes | Pinned GNU EE links 968 bytes, first difference at byte 12. | Recover the parameter and local-variable live ranges. |
-| [`0x024A70`](../../nonmatching/levels/FRONTEND_024A70.c), 816 bytes | `sdk991111` links 760 bytes, first difference at byte 8; its frame agrees more closely than GNU's but the body is incomplete. | Reconstruct the packed node traversal and saved-value lifetimes. |
+| [`0x024A70`](../../src/levels/frontend/FRONTEND_024A70.c) (accepted 22 November 2026), 816 bytes | `sdk991111` links 760 bytes, first difference at byte 8; its frame agrees more closely than GNU's but the body is incomplete. | Reconstruct the packed node traversal and saved-value lifetimes. |
 
 ## R5900 quad-save level prologues (4 November 2026)
 
@@ -1671,7 +1671,7 @@ Seventeen other reviewed C hypotheses from the same 140–196-byte scope
 remain in `nonmatching/` with their first difference and reopening
 condition. The [164-byte float clamp](../../src/levels/01_pokitaru/LEVEL_01_0023B0.c) (accepted 9 November 2026)
 differs only in one branch destination after natural C restructuring.
-The [double classifier](../../nonmatching/levels/FRONTEND_023528.c) has a
+The [double classifier](../../src/levels/frontend/FRONTEND_023528.c) (accepted 22 November 2026) has a
 152-byte Ghidra body followed by a nonzero word inside the 156-byte
 candidate interval; no credit is claimed for that extra word or its
 unresolved ownership. Five qualified `cc1` routes did not resolve the
@@ -2326,6 +2326,22 @@ one catalogued body; `sceScfGetLocalTimefromRTC`, `LoadExecPS2` and
 that end in a normal return. The 34 nonmatching bodies of `0x01EC8400`-`0x01ED0EE0`
 are kernel system-call stubs that no C reproduces. 51 boot near misses within 30
 differing words are retained under `nonmatching/boot/`.
+
+### Sister-decompilation twins (22 November 2026)
+
+A scan of every unmatched USA function against the matched C of OpenRAC/rac1,
+rac2, rac3, rac4 and Secret Agent Clank, and against this project's own matched C,
+found 63 exact relocation-masked twins in sister projects (16.5 KB) and 51 inside
+Size Matters; near twins at 95% of masked words are absent, so the games' own code
+differs and the twins are almost all runtime and Sony library code. After leaving
+out other contributors' reserved boot entries: **27 boot functions** (8,580
+bytes) and **19 level placements** are accepted from these ports. Not accepted:
+`sceSifInitCmd` is exact but ends in a tail jump; `__throw` and `__rethrow` in the
+boot need `-fexceptions`, which adds a `.data` frame table the boot gate does not
+take; `VEC_InverseMat4` is exact only under `gnu-ee-trial-divpad`, which is not a
+boot route; `sceCdRead` (23 words) and `atexit` (20 words) differ; `sceGsResetPath`,
+`sceGsSyncPath` and `sceSifCallRpc` rely on inline assembly in their sister source.
+The retained ones are under `nonmatching/`.
 
 ### USA bodies of 201 to 400 bytes (21 November 2026)
 

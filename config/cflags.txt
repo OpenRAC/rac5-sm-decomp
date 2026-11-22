@@ -1160,3 +1160,33 @@ src/levels/24_treehouse/LEVEL_24_1972A0.c  -fno-gcse
 src/levels/24_treehouse/LEVEL_24_1977D8.c  -fno-gcse
 src/levels/24_treehouse/LEVEL_24_1995C0.c  -fno-gcse
 src/levels/24_treehouse/LEVEL_24_19A2B0.c  -fno-gcse
+src/levels/frontend/FRONTEND_0248D0.c  -fexceptions
+src/levels/frontend/__throw.c  -fexceptions
+src/levels/frontend/__rethrow.c  -fexceptions
+
+# Boot bodies ported on 22 November 2026 from byte-identical C of sister OpenRAC
+# decompilations and of this project's level sources. Each route is the measured
+# one: the pinned chain does not reproduce these bodies (their pinned negative
+# controls differ); bodies the pinned chain also reproduces keep it.
+src/boot/InitThread.c    sdk991111 -O2 -G0
+src/boot/LIGHT_Init__Fv.c    as=ps2eeas
+src/boot/RatchetShipExhaust_EmitParticles__FiUiUiP31RatchetShipExhaust_JointStoragef.c    gnu-ee-trial -O2 -G0
+src/boot/SetTimerAlarm.c    sdk991111 -O2 -G0
+src/boot/__cp_push_exception.c    sdk991111 -O2 -G0
+src/boot/__cplus_type_matcher.c    sdk991111 -O2 -G0
+src/boot/_free_r.c    prodg2953 -O2 -G0
+src/boot/_lshift.c    prodg2953 as=span5 -O2 -G0
+src/boot/_pow5mult.c    prodg2953 -O2 -G0
+src/boot/iAllocTimerCounter.c    sdk991111 -O2 -G0
+src/boot/iSetTimerAlarm.c    sdk991111 -O2 -G0
+src/boot/iStartTimerCounter.c    sdk991111 -O2 -G0
+src/boot/sceCdDiskReady.c    sdk991111 -O2 -G0
+src/boot/sceCdDiskReady_old.c    sdk991111 -O2 -G0
+src/boot/sceGimPictureGetImagePixels__FP13SceGimPictureii.c    -mno-check-zero-division
+src/boot/sceGsSetDefDispEnv.c    sdk991111 -O2 -G0
+src/boot/scePadRead.c    sdk991111 -O2 -G0
+src/boot/scePadSetActDirect.c    sdk991111 -O2 -G0
+src/boot/sceSifInitIopHeap.c    sdk991111 -O2 -G0 -fno-schedule-insns
+src/boot/sceSifStopModule.c    sdk991111 -O2 -G0
+src/boot/sceTtyRead.c    sdk991111 -O2 -G0
+src/boot/sceTtyWrite.c    sdk991111 -O2 -G0
