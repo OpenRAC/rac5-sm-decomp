@@ -11,7 +11,7 @@ extern Rec D_37ACA8;
 extern char D_37ACB8[];
 extern char D_37ACF0[];
 extern void func_146D80(void *a);
-extern void func_0D1C00(void *a);
+extern void *func_0D1C00(void *a);
 extern void func_0D1FF8(void *a, int mode);
 extern void func_0D1BD8(void *a, int mode);
 

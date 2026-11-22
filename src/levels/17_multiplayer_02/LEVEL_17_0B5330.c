@@ -10,7 +10,7 @@ extern char D_0026AC78[];
 extern char D_0026ACB0[];
 
 void func_111490(void *x);
-void func_0B4E88(void *x);
+void *func_0B4E88(void *x);
 void func_0B5280(void *x, int y);
 void func_0B4E60(void *x, int y);
 

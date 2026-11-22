@@ -1254,3 +1254,15 @@ src/levels/23_skyboard_challax/LEVEL_23_0B0AB8.c  -mno-check-zero-division
 src/levels/23_skyboard_challax/LEVEL_23_19CDC8.c  -mno-check-zero-division
 src/levels/24_treehouse/LEVEL_24_0B35B0.c  -mno-check-zero-division
 src/levels/24_treehouse/LEVEL_24_19B930.c  -mno-check-zero-division
+src/levels/02_rykan_v/LEVEL_02_164FC8.c  -fno-gcse
+src/levels/02_rykan_v/LEVEL_02_1656E8.c  -fno-gcse
+src/levels/02_rykan_v/LEVEL_02_169CE0.c  -fno-gcse
+src/levels/04_metalis/LEVEL_04_194450.c  -fno-gcse
+src/levels/04_metalis/LEVEL_04_1F2CD8.c  -fno-gcse
+src/levels/07_dreamtime/LEVEL_07_15A290.c  -fno-gcse
+src/levels/07_dreamtime/LEVEL_07_15A9B0.c  -fno-gcse
+src/levels/08_dayni_moon/LEVEL_08_21D048.c  -fno-gcse
+src/levels/09_inside_clank/LEVEL_09_14F4C8.c  -fno-gcse
+src/levels/09_inside_clank/LEVEL_09_14FAD0.c  -fno-gcse
+src/levels/10_quodrona/LEVEL_10_198C88.c  -fno-gcse
+src/levels/18_multiplayer_03/LEVEL_18_15B878.c  -fno-gcse

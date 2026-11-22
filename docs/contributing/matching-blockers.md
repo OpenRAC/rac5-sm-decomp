@@ -943,7 +943,7 @@ excluded from its C size.
 | [`0x00FC88`](../../nonmatching/levels/FRONTEND_00FC88.c), 732 bytes | `gnu-ee-trial` links 736 bytes, first difference at byte 8. | Recover lifetimes of the module base, flags pointer and checksum. |
 | [`0x011AD8`](../../nonmatching/levels/FRONTEND_011AD8.c), 744 bytes | `sdk991111sq` links 760 bytes, first difference at byte 0; its stack frame and final tail calls differ. | Find a measured source/profile that retains the retail quadword frame and call endings. |
 | [`0x0149D0`](../../nonmatching/levels/FRONTEND_0149D0.c), 1,084 bytes | Pinned GNU EE links 1,064 bytes, first difference at byte 4; eleven calls retain their order but three branches are missing. | Recover the omitted control-flow paths and live ranges. |
-| [`0x016CD8`](../../nonmatching/levels/FRONTEND_016CD8.c), 1,012 bytes | Pinned GNU EE links 1,012 bytes, first difference at byte 470; the remaining register allocation differs despite equal length. | Recover the C expression and temporary lifetime that select the retail general registers. |
+| [`0x016CD8`](../../src/levels/frontend/FRONTEND_016CD8.c) (accepted 22 November 2026), 1,012 bytes | Pinned GNU EE links 1,012 bytes, first difference at byte 470; the remaining register allocation differs despite equal length. | Recover the C expression and temporary lifetime that select the retail general registers. |
 | [`0x01F9A0`](../../nonmatching/levels/FRONTEND_01F9A0.c), 984 bytes | Pinned GNU EE links 968 bytes, first difference at byte 12. | Recover the parameter and local-variable live ranges. |
 | [`0x024A70`](../../src/levels/frontend/FRONTEND_024A70.c) (accepted 22 November 2026), 816 bytes | `sdk991111` links 760 bytes, first difference at byte 8; its frame agrees more closely than GNU's but the body is incomplete. | Reconstruct the packed node traversal and saved-value lifetimes. |
 
@@ -1118,7 +1118,7 @@ These candidate entries have source-level C retained under `nonmatching/levels/`
 | [`0x003600`](../../src/levels/frontend/FRONTEND_003600.c) (accepted 9 November 2026) | 52 B | pinned: 48 B, first difference +6 | Recover the global flag store and imported-call argument register order. |
 | [`0x005618`](../../src/levels/frontend/FRONTEND_005618.c) (accepted 11 November 2026) | 56 B | sdk991111: 56 B, first difference +22 | Recover the branch-dependent global-pointer load and selected field offset. |
 | [`0x006120`](../../src/levels/frontend/MatrixMode__Q34scee3Psp3GumQ44scee3Psp2Gu11EMatrixType.c) (accepted 9 November 2026) | 56 B | pinned: 56 B, first difference +2 | Recover the state-table base and index register lifetimes across the three updates. |
-| [`0x00AB70`](../../nonmatching/levels/FRONTEND_00AB70.c) | 56 B | pinned: 56 B, first difference +2 | Recover the record-stride multiply and argument-bank setup for the local call. |
+| [`0x00AB70`](../../src/levels/frontend/FRONTEND_00AB70.c) (accepted 22 November 2026) | 56 B | pinned: 56 B, first difference +2 | Recover the record-stride multiply and argument-bank setup for the local call. |
 | [`0x01E380`](../../src/levels/frontend/FRONTEND_01E380.c) (accepted 11 November 2026) | 60 B | pinned: 60 B, first difference +11 | Recover the masked-index register and final record comparison control flow. |
 | [`0x020698`](../../src/levels/frontend/FRONTEND_020698.c) (accepted 21 November 2026) | 64 B | pinned: 60 B, first difference +8 | Recover the flag set/clear branch and the two pointer reload lifetimes. |
 | [`0x020918`](../../nonmatching/levels/FRONTEND_020918.c) | 44 B | pinned: 40 B, first difference +2 | Recover the mask-expression order and the retail literal/register lifetimes. |
@@ -1383,7 +1383,7 @@ keep useful C attempts under `nonmatching/levels/` without match credit:
   Direct C folds both masks into 28 bytes. Reopen these families with source
   or compiler evidence for the original value lifetimes and scheduling.
 - Three isolated condition bodies (for example,
-  [`LEVEL_04:0x0B7C58`](../../nonmatching/levels/LEVEL_04_0B7C58.c)) link at 40
+  [`LEVEL_04:0x0B7C58`](../../src/levels/04_metalis/LEVEL_04_0B7C58.c) (accepted 22 November 2026)) link at 40
   instead of 44 bytes, first differing at byte 4. Recover the original
   condition form before retrying.
 
@@ -1552,7 +1552,7 @@ match credit. The largest recurring blockers are:
   pinned C links 56 bytes but first differs in the post-call branch
   and field load at byte 35.
 - Twenty 24-byte-stride call wrappers (for example,
-  [LEVEL_01:0x0A6000](../../nonmatching/levels/LEVEL_01_0A6000.c)):
+  [LEVEL_01:0x0A6000](../../src/levels/01_pokitaru/LEVEL_01_0A6000.c) (accepted 22 November 2026)):
   pinned C links 56 bytes but first differs at byte 2 in register
   allocation for the stride and data base.
 - Sixteen indexed record lookups (for example,
@@ -1721,7 +1721,7 @@ representative. Reopen with a natural source form or qualified compiler
 route that preserves the signed comparison.
 
 Four byte-conjunction bodies also remain nonmatching (for example,
-[`LEVEL_16:0x078A30`](../../nonmatching/levels/LEVEL_16_078A30.c)). The retained
+[`LEVEL_16:0x078A30`](../../src/levels/16_multiplayer_01/LEVEL_16_078A30.c) (accepted 22 November 2026)). The retained
 40-byte C first differs at byte 24: a conditional move replaces the retail
 boolean conversion and register copies. Wide and local-return variants and
 five other qualified `cc1` routes did not match. Reopen with evidenced value
@@ -2197,7 +2197,7 @@ This USA selection covers the 40–76-byte bounded candidates whose relocation-m
 Parallel attempts covered the 240 smallest relocation-masked forms of 61–120 bytes that had no retained attempt. Eighty-two representative pure-C attempts still differ from retail and earn no credit; 35 of them link at a different length. The eleven closest attempts (equal length, at most four differing words) are retained under `nonmatching/levels/` with their measured first difference and a reopening condition:
 
 - **Statement and scheduling order.** [LEVEL_04:0x14F6F8](../../src/levels/04_metalis/LEVEL_04_14F6F8.c) (accepted 9 November 2026) and [LEVEL_04:0x1DDE00](../../src/levels/04_metalis/LEVEL_04_1DDE00.c) (accepted 9 November 2026) schedule a load or a constant before the counter update; [LEVEL_16:0x15D590](../../src/levels/16_multiplayer_01/LEVEL_16_15D590.c) (accepted 9 November 2026) fills its first loop delay slot differently; [LEVEL_16:0x021FA8](../../src/levels/16_multiplayer_01/LEVEL_16_021FA8.c) (accepted 14 November 2026) leaves empty a delay slot in which the retail copies the table pointer.
-- **Register order.** [LEVEL_15:0x029980](../../src/levels/15_giant_clank_metalis/CORE/Lightweight/LW_Model/LEVEL_15_029980.c) (accepted 9 November 2026) differs only in the order of two prologue saves under `gnu-ee-trial`; [LEVEL_07:0x1DC8A8](../../nonmatching/levels/LEVEL_07_1DC8A8.c) swaps the registers of two float constants; [LEVEL_01:0x000A08](../../src/levels/01_pokitaru/LEVEL_01_000A08.c) (accepted 11 November 2026) swaps two table-base loads.
+- **Register order.** [LEVEL_15:0x029980](../../src/levels/15_giant_clank_metalis/CORE/Lightweight/LW_Model/LEVEL_15_029980.c) (accepted 9 November 2026) differs only in the order of two prologue saves under `gnu-ee-trial`; [LEVEL_07:0x1DC8A8](../../src/levels/07_dreamtime/LEVEL_07_1DC8A8.c) (accepted 22 November 2026) swaps the registers of two float constants; [LEVEL_01:0x000A08](../../src/levels/01_pokitaru/LEVEL_01_000A08.c) (accepted 11 November 2026) swaps two table-base loads.
 - **Boolean results and addresses.** [LEVEL_18:0x15A048](../../src/levels/18_multiplayer_03/LEVEL_18_15A048.c) (accepted 9 November 2026) and [LEVEL_18:0x159CF0](../../src/levels/18_multiplayer_03/LEVEL_18_159CF0.c) (accepted 14 November 2026) produce a different final flag test; [LEVEL_15:0x137288](../../src/levels/15_giant_clank_metalis/LEVEL_15_137288.c) (accepted 9 November 2026) differs only in the form of one stack temporary address; [LEVEL_22:0x10EE78](../../src/levels/22_skyboard_kalidon/LEVEL_22_10EE78.c) (accepted 9 November 2026) derives its flags pointer from another register.
 
 **ABI holds, separately uncredited.** In the same selection and the extended accepted families, 219 placements in 63 forms link byte-exact but disagree with an accepted callee definition or accepted callers: 78 conflicts differ only between pointer and integer arguments, 64 in the argument count and 49 in whether a value is returned. Many involve shared stubs such as `FRONTEND_0025B0.c` and `FRONTEND_001E08.c`. Reopen them together by reconciling those prototypes while keeping every accepted object hash, then relink each placement and rerun the complete-module gate.
@@ -2350,6 +2350,13 @@ recorded with them. Several retries needed a callee whose accepted definition wa
 `void` to return the value its tail call leaves in `$v0`; every accepted caller of
 such a callee now declares that return type. 116 placements in 11 forms stay held
 for prototype disagreements.
+
+A further pass took 302 near misses: 177 retries that had stayed nonmatching, 24
+misses of 801 to 1,500 bytes within 30 aligned words or with the retail instruction
+sequence, and 101 misses of 401 to 800 bytes at 11 to 30 aligned words. 77 became
+exact (45 of the earlier retries, 26 of the 401-800 byte misses and 6 of the large
+bodies), and 74 of them are accepted with 364 address variants. One entry is exact
+only with a per-file `-fno-force-mem`, which is not a recorded option; it is left out.
 
 ### USA bodies of 401 to 800 bytes (22 November 2026)
 

@@ -1,0 +1,32 @@
+/* LEVEL_06:0x074838 -- placement copy of LEVEL_04_07E0B8.c: fills three random pairs in the record, then picks a random angle and stores its cosine and signed sine. */
+typedef struct {
+    float f_00;
+    float f_04;
+    float pairs[3][2];
+} Obj;
+
+extern int rand(void);
+extern float cosf(float x);
+extern float sqrtf(float x);
+
+void func_074838(Obj *o)
+{
+    int i;
+    float a;
+    float c;
+    float s;
+    float two_pi;
+
+    for (i = 0; i < 3; i++) {
+        o->pairs[i][0] = (float)rand() * 4.6566123e-10f;
+        o->pairs[i][1] = (float)rand() * 4.6566123e-10f;
+    }
+    two_pi = 6.2831855f;
+    a = (float)rand() * 4.656613e-10f * two_pi + -3.1415927f;
+    c = cosf(a);
+    s = __builtin_sqrtf(1.0f - c * c);
+    if (a < 0.0f)
+        s = -s;
+    o->f_00 = c;
+    o->f_04 = s;
+}

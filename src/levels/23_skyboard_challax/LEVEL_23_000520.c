@@ -6,11 +6,11 @@ typedef struct {
 
 extern Row D_001DE680[];
 
-void func_0004F8(int a, int b);
+unsigned int func_0004F8(int a, int b);
 
-void func_000520(int index)
+unsigned int func_000520(int index)
 {
     Row row = D_001DE680[index];
 
-    func_0004F8(row.i[3], row.i[1]);
+    return func_0004F8(row.i[3], row.i[1]);
 }
