@@ -4,7 +4,7 @@ extern char D_001E1890[];
 
 int func_10D7C8(char *a0, int a1, int a2, int a3);
 
-int func_02CB10(int a0, int a1, int a2, int a3)
+void func_02CB10(int a0, int a1, int a2, int a3)
 {
     int prod;
     int r;
@@ -13,5 +13,4 @@ int func_02CB10(int a0, int a1, int a2, int a3)
     do {
         r = func_10D7C8(D_001E1890, a0, a1, prod);
     } while (r == 0);
-    return r;
 }

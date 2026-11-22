@@ -49,7 +49,7 @@ struct Obj {
 };
 
 extern Entry D_00238AF8[];
-extern void func_0823F0(void *a, void *b, void *c);
+extern int func_0823F0(void *a, void *b, void *c);
 extern void func_0955E0(Entry *e, Node *n, Vec4 *a, Vec4 *b, unsigned int fl);
 extern void func_07D188(Obj *o, float t, unsigned int idx);
 

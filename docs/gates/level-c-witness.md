@@ -1338,4 +1338,20 @@ with. Counted by masked shape, accepted level bodies rise from 946,520 bytes in
 7,231 shape units to 951,724 bytes in 7,250. Fifteen ported placements stay held
 for prototype disagreements and six whose extent is not an inventory interval
 (or only matches with a hand-set extent) are retained under `nonmatching/levels/`.
+
+USA level bodies of 401 to 800 bytes, offered to new C across every candidate kind
+on 22 November 2026, together with byte-exact forms held earlier for callee
+prototype disagreements and four near misses that are exact under another
+qualified route, add **408 placements** (178,192 bytes by placement) from 384
+sources. Counted by masked shape, accepted level bodies rise from 951,724 bytes in
+7,250 shape units to 1,002,236 bytes in 7,356. 251 placements use the pinned chain,
+105 `gnu-ee-trial`, 47 `gnu-ee-trial-divpad` and 5
+`gnu-ee-trial-divpad-blockmove`; 23 need `-fno-gcse` and one
+`-mno-check-zero-division`. 49 placements are exact only with the qualified
+`ps2eeas` assembler, whose object hashes were recorded from a minimal environment,
+and one only with `r5900-mfc1`. 33 accepted sources change only a callee
+declaration or return type and stay exact at all of their placements; no reviewed
+family control source was edited. 150 placements in 34 forms stay held for
+prototype disagreements. All 21 complete USA modules remain exact, and the
+prototype review finds the same 1,916 disagreeing pairs as before, none introduced.
 All 21 complete USA modules remain exact; the prototype review is unchanged.

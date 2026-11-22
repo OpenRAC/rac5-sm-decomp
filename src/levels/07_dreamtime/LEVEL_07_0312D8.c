@@ -4,11 +4,11 @@ struct P031F80 {
     unsigned char b2C;
 };
 
-extern int func_031E30(void *a, float *b, int c, int d);
+extern int func_031E30(void *a, float *b, int c);
 extern int func_032368(void *a, float *b, int c);
 extern void func_031378(void *a, float *b, int c, int d);
 
-int func_0312D8(struct P031F80 *p, float *v, int x, int a3)
+int func_0312D8(struct P031F80 *p, float *v, int x)
 {
     float loc[4];
     int r;
@@ -18,7 +18,7 @@ int func_0312D8(struct P031F80 *p, float *v, int x, int a3)
     loc[1] = v[1];
     loc[2] = v[2];
     loc[3] = v[3];
-    r = func_031E30(p, loc, p->b2C, a3);
+    r = func_031E30(p, loc, p->b2C);
     s = func_032368(p, loc, r);
     func_031378(p, loc, r, x);
     return (s ^ 1) & 0xFF;

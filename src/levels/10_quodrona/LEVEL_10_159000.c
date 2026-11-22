@@ -30,7 +30,7 @@ Data *func_1E1348(void *x, int flag, Obj *o);
 void func_1A4748(Data *d, Obj *o);
 void func_1590D8(Obj *o);
 
-void func_159000(Obj *o)
+void func_159000(Obj *o, float step)
 {
     Node *n = o->node;
 

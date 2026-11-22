@@ -1190,3 +1190,27 @@ src/boot/sceSifInitIopHeap.c    sdk991111 -O2 -G0 -fno-schedule-insns
 src/boot/sceSifStopModule.c    sdk991111 -O2 -G0
 src/boot/sceTtyRead.c    sdk991111 -O2 -G0
 src/boot/sceTtyWrite.c    sdk991111 -O2 -G0
+src/levels/01_pokitaru/LEVEL_01_0593D8.c  -fno-gcse
+src/levels/01_pokitaru/LEVEL_01_158710.c  -mno-check-zero-division
+src/levels/02_rykan_v/LEVEL_02_05E300.c  -fno-gcse
+src/levels/02_rykan_v/LEVEL_02_1A39B8.c  -fno-gcse
+src/levels/02_rykan_v/LEVEL_02_1A4FF8.c  -fno-gcse
+src/levels/02_rykan_v/LEVEL_02_1B7430.c  -fno-gcse
+src/levels/03_kalidon/LEVEL_03_057848.c  -fno-gcse
+src/levels/04_metalis/LEVEL_04_05AD98.c  -fno-gcse
+src/levels/05_medical_outpost/LEVEL_05_056FB0.c  -fno-gcse
+src/levels/06_challax/LEVEL_06_055C88.c  -fno-gcse
+src/levels/06_challax/LEVEL_06_1B0520.c  -fno-gcse
+src/levels/07_dreamtime/LEVEL_07_059BB8.c  -fno-gcse
+src/levels/08_dayni_moon/LEVEL_08_05E6F0.c  -fno-gcse
+src/levels/09_inside_clank/LEVEL_09_055AC8.c  -fno-gcse
+src/levels/10_quodrona/LEVEL_10_057C90.c  -fno-gcse
+src/levels/10_quodrona/LEVEL_10_15F5D0.c  -fno-gcse
+src/levels/10_quodrona/LEVEL_10_18C650.c  -fno-gcse
+src/levels/10_quodrona/LEVEL_10_18FFE0.c  -fno-gcse
+src/levels/15_giant_clank_metalis/LEVEL_15_04A668.c  -fno-gcse
+src/levels/18_multiplayer_03/LEVEL_18_1456B8.c  -fno-gcse
+src/levels/15_giant_clank_metalis/LEVEL_21_04A668.c  -fno-gcse
+src/levels/22_skyboard_kalidon/LEVEL_22_04EBD0.c  -fno-gcse
+src/levels/23_skyboard_challax/LEVEL_23_052700.c  -fno-gcse
+src/levels/24_treehouse/LEVEL_24_052518.c  -fno-gcse
