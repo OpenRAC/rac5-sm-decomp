@@ -10,7 +10,7 @@ extern char D_003187B8[];
 extern char D_003187F0[];
 
 void func_12BF18(void *x);
-void func_0C15D8(void *x);
+void *func_0C15D8(void *x);
 void func_0C19D0(void *x, int y);
 void func_0C15B0(void *x, int y);
 

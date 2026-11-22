@@ -1,4 +1,4 @@
-/* LEVEL_17.REL:0x02D698 -- scales a local vector before dispatch. */
+/* LEVEL_17.REL:0x02D698 -- scales a local vector before dispatch and returns the dispatch result. */
 typedef struct {
     float x;
     float y;
@@ -17,8 +17,8 @@ extern void func_02D358(void *out, float *state, float *other,
 extern int func_02D740(void *out, void *actor, Vec3 *offset,
                         float *other, unsigned long flags, float amount);
 
-void func_02D698(float amount, char *out, char *actor, float *other,
-                 unsigned long flags)
+int func_02D698(float amount, char *out, char *actor, float *other,
+                unsigned long flags)
 {
     Vec3 offset;
     float scale;
@@ -29,5 +29,5 @@ void func_02D698(float amount, char *out, char *actor, float *other,
     offset.x *= scale;
     offset.y *= scale;
     offset.z *= scale;
-    func_02D740(out, actor, &offset, other, flags, amount);
+    return func_02D740(out, actor, &offset, other, flags, amount);
 }

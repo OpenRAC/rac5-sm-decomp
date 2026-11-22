@@ -8,7 +8,7 @@ typedef struct {
 
 extern int func_127300(unsigned int tag, unsigned int mask, float value);
 
-void func_165480(Rec *a0)
+void func_165480(Rec *a0, float scale)
 {
     a0->r_6C = func_127300(0xFF000055, 0xFF00CC00, a0->v_70);
 }

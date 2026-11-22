@@ -23,7 +23,7 @@ extern char D_00243278[];
 extern char D_002432B0[];
 
 extern void func_0F4710(void *);
-extern void func_0A7320(void *);
+extern void *func_0A7320(void *);
 extern void func_0A7718(void *, int);
 extern void func_0A72F8(void *, int);
 

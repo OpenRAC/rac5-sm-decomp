@@ -1369,4 +1369,16 @@ their placements; no reviewed family control source was edited. 116 placements i
 11 forms stay held for prototype disagreements. All 21 complete USA modules remain
 exact, and the prototype review finds 1,906 disagreeing pairs against 1,916
 before, none introduced.
+
+A further pass on near misses of up to 1,500 bytes, on 22 November 2026, adds
+**438 placements** (174,948 bytes by placement) from 438 sources: earlier retries
+that had stayed nonmatching, and 401-800 byte misses within 30 aligned words.
+Counted by masked shape, accepted level bodies rise from 1,038,488 bytes in 7,426
+shape units to 1,066,172 bytes in 7,495. 240 placements use the pinned chain, 155
+`gnu-ee-trial`, 22 `gnu-ee-trial-divpad` and 21 `gnu-ee-trial-divpad-blockmove`;
+12 need `-fno-gcse`. 28 accepted sources change only a callee declaration or return
+type and stay exact at all of their placements. 45 placements in 4 forms stay held
+for prototype disagreements. All 21 complete USA modules remain exact, and the
+prototype review finds 1,904 disagreeing pairs against 1,906 before, none
+introduced.
 All 21 complete USA modules remain exact; the prototype review is unchanged.

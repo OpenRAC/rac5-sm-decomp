@@ -8,7 +8,7 @@ typedef struct {
 
 extern int func_11A440(unsigned int a0, unsigned int a1, float f);
 
-void func_14F980(Obj *a0)
+void func_14F980(Obj *a0, float scale)
 {
     a0->f_6C = func_11A440(0xFF000055, 0xFF00CC00, a0->f_70);
 }

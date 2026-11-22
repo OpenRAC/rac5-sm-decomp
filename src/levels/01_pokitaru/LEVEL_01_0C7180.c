@@ -12,7 +12,7 @@ extern int D_32BA38;
 extern int D_32BA70;
 
 extern void func_135848(int *p);
-extern void func_0C6CD8(int *p);
+extern void *func_0C6CD8(int *p);
 extern void func_0C70D0(int *p, int n);
 extern void func_0C6CB0(int *p, int n);
 

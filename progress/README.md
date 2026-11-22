@@ -5,9 +5,9 @@ after the private boot and level-program gates pass. It records **847 accepted
 boot C functions (117,404 bytes) in the 498,900-byte boot `.text`**, **one 476-byte C
 function in `FRONTEND.REL`**, plus **two shared C functions (8 + 72 bytes)
 at twenty numbered level placements** and, counted separately, the
-**75,906 accepted level-body placements**
-(8,972,440 placement bytes carried by 59,194 sources, 7,664,184 distinct-source
-bytes; **1,038,488 bytes in 7,426 relocation-masked shape units** when each shape
+**76,344 accepted level-body placements**
+(9,147,388 placement bytes carried by 59,632 sources, 7,839,132 distinct-source
+bytes; **1,066,172 bytes in 7,495 relocation-masked shape units** when each shape
 is counted once, at its largest per-module multiplicity, like the level
 denominator). The shared pair counts as two authored functions, not forty
 independent matches, and the level bodies are a scope of their own: one
@@ -125,14 +125,14 @@ final branch or jump is code. Every relocation-masked shape counts once at its
 largest multiplicity in one module; unbounded bytes stay per module. (The audit
 itself keeps the 1,420,532 bytes outside its units unique in every module, for
 5,756,360 bytes.)
-The numerator is **1,155,380 accepted C bytes**: 117,404 in boot and
-1,037,976 in the level modules. A piece counts as matched when accepted C
+The numerator is **1,183,064 accepted C bytes**: 117,404 in boot and
+1,065,660 in the level modules. A piece counts as matched when accepted C
 reproduces all of its bytes at its own placement, at the shape's largest covered
 multiplicity in one module. The address-variant copies of one function in
 several levels are separate sources but one masked shape, so they count once;
-counting by source (7,664,184 bytes) credited them up to twenty times against a
+counting by source (7,839,132 bytes) credited them up to twenty times against a
 denominator that counts them once. The site rounds the resulting approximately
-**22.3398%** to **22.34%**. Until 2026-11-11 the report added the 162,944
+**22.8750%** to **22.88%**. Until 2026-11-11 the report added the 162,944
 frontend candidate bytes a second time to the denominator, credited the shared
 and frontend C functions, already in the placement table, twice, counted the
 code outside candidate units once per module and counted zero alignment padding
@@ -160,10 +160,10 @@ source. The categories partition the same tiles: boot, the level modules, each
 module's own directory and the shared code.
 
 ByteMatch's function counts use the same units as its code bytes:
-**8,313 of 14,409 candidate functions**, from the 1,315 candidate boot code
+**8,382 of 14,409 candidate functions**, from the 1,315 candidate boot code
 intervals (847 accepted) and the 13,094 candidate level functions of the map
 (the 11,499 shape units of the audit and 1,595 `no_return` entries), each shape
-counted once at its largest per-module multiplicity (7,466 covered by accepted C). Fragments, unlabeled
+counted once at its largest per-module multiplicity (7,535 covered by accepted C). Fragments, unlabeled
 tails and unbounded bytes count as code, not as functions. These are candidate functions,
 not a reviewed function catalogue: a masked shape can still cover different data
 roles or C definitions, a `no_return` interval can hold more than one function,

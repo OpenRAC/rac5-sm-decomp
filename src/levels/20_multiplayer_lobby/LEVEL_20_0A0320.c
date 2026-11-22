@@ -12,7 +12,7 @@ extern int D_19D1B8;
 extern int D_19D1F0;
 
 extern void func_0E4D00(int *p);
-extern void func_09FE78(int *p);
+extern void *func_09FE78(int *p);
 extern void func_0A0270(int *p, int n);
 extern void func_09FE50(int *p, int n);
 
