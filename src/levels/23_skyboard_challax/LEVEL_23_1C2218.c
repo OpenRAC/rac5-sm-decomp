@@ -1,0 +1,17 @@
+/* LEVEL_23:0x1C2218 -- placement copy of FRONTEND_0257E8.c. */
+extern char D_00366E30[];
+extern char D_001F8AB8[];
+extern char D_00366E08[];
+
+int func_1C1768(void);
+void func_1C1170(void *, int, int);
+
+void *func_1C2218(void)
+{
+    if (*(int *)D_00366E30 == 0)
+    {
+        func_1C1768();
+        func_1C1170((void *)D_00366E30, (int)D_001F8AB8, (int)D_00366E08);
+    }
+    return (void *)D_00366E30;
+}

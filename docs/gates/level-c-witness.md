@@ -1296,3 +1296,19 @@ symbol; 55 retained attempts whose placements are now accepted left
 they start 4 bytes past an 8-byte boundary, where the qualified compilers cannot
 place a function. All 21 complete USA modules remain exact, and the prototype
 review still finds the 1,917 pairs of `master`, none introduced.
+
+Prototype reconciliation of byte-exact level forms that were held for caller/callee
+disagreements, on 21 November 2026, adds **638 placements** (71,128 bytes by
+placement) from 610 sources, in 32 of the 223 held forms. The fixes are: held
+declarations take the accepted definition's return class; two parameterless
+accepted stubs become typed stub sources with their callers' argument classes
+(their 99 placements stay exact); where only return types disagreed, the held
+definition takes the accepted callers' return type when that stays exact, and
+otherwise 295 accepted callers that declared a `void` callee now declare the value
+it returns, each edited caller still exact at all of its placements. No reviewed
+family control source was edited. Counted by masked shape, accepted level bodies rise from 862,044 bytes in
+6,915 shape units to 867,832 bytes in 6,964. 380 placements use the pinned chain,
+232 `sdk991111`, 22 the pinned chain with `-mno-check-zero-division`, and four
+other qualified profiles. All 21 complete USA modules remain exact, and the
+prototype review finds 1,916 disagreeing pairs against 1,917 on `master`, none
+introduced. 191 held forms remain, mostly for argument-count disagreements.

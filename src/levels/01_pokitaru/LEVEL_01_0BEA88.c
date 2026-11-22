@@ -46,7 +46,7 @@ extern float D_001FDB58;
 
 extern void func_0AC4B0(short x, short y, short w, short h, unsigned int c);
 extern void func_0A8CA0(unsigned int c);
-extern void func_0AE658(int id, int f);
+extern int func_0AE658(int id, int f);
 extern void func_0AEAA8(int a, unsigned int b, float c);
 extern void func_0AE708(int a, R *r, float c);
 extern int func_0A8680(R *r);

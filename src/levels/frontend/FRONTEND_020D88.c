@@ -6,7 +6,7 @@ int func_0205B8(int);
 int func_020AE8(void);
 void func_003E10(void);
 void func_020BE0(void);
-void func_021210(void *);
+int func_021210(void *);
 
 int func_020D88(void *a0, void *a1)
 {

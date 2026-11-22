@@ -319,6 +319,16 @@ pins are preserved. Unknown variants and stale bindings remain errors; the
 compiled objects are never rewritten or normalized. This addresses host
 metadata, not an instruction mismatch or a new compiler profile.
 
+On 21 November 2026 the same pinned binary, run on a Windows 10 host through WSL
+interop, produced a third complete hash for 194 level objects: one `.mdebug` byte
+differs (a register-mask word reads `0x20C0` where the canonical object has
+`0x30C0`), and every byte outside that section is equal; the input assembly is
+identical and repeated runs give the same output. A clean `master` checkout fails
+the level gate on this host in the same way. The level gate was run once with that
+difference tolerated locally (not committed) and all 21 complete modules were
+exact. These hashes are not recorded as alternatives until a second host
+reproduces them.
+
 ### Blocker 16
 
 What this toolchain has no spelling for. Measured: 128-bit computed constants (`dsll32`/`or`)
@@ -1005,7 +1015,7 @@ provisional where the retail callee has not established them.
 | [`LEVEL_01:0x068DB8`](../../nonmatching/levels/LEVEL_01_068DB8.c), 912 bytes | Pinned GNU EE: 872 bytes; first difference at byte 282 in local float/register scheduling. Eight local calls retain their order. | Recover the two angle temporaries and record-tail pointer lifetime, then the later field stores. | The accepted angle helper's pointer roles are aligned; other record fields and helper prototypes remain provisional. |
 | [`LEVEL_01:0x08C960`](../../nonmatching/levels/LEVEL_01_08C960.c), 924 bytes | Pinned GNU EE: 912 bytes; first difference at byte 0; the C frame is `0x120` against retail `0xE0`. Three named calls retain their order. | Recover display-list payload layout and register lifetimes before further placements. | Two payloads and the display-list packet structure remain layout hypotheses; named data imports are distinct from calls. |
 | [`LEVEL_01:0x098FD0`](../../nonmatching/levels/LEVEL_01_098FD0.c), 852 bytes | Pinned GNU EE: 812 bytes; first difference at byte 4. Six local calls retain their order. | Recover record-base and slot-index live ranges and missing call-argument setup. | The unaligned 64-byte copy is expressed in C; the last callee prototype and record layout remain provisional. |
-| [`LEVEL_01:0x0B9E90`](../../nonmatching/levels/LEVEL_01_0B9E90.c), 200 bytes | Pinned GNU EE with source-specific `-mno-check-zero-division`: 200 bytes, first difference at body byte 118, 46/50 words identical; without that flag the linked body is 208 bytes. | Recover the argument-register live ranges for `right - 16` and constant `2`, then reprove all 20 related placements. | The local helper's integer return is supported by retail arithmetic and preserves all 21 accepted helper poses; the UI record layout remains provisional. |
+| [`LEVEL_01:0x0B9E90`](../../src/levels/01_pokitaru/LEVEL_01_0B9E90.c) (accepted 21 November 2026), 200 bytes | Pinned GNU EE with source-specific `-mno-check-zero-division`: 200 bytes, first difference at body byte 118, 46/50 words identical; without that flag the linked body is 208 bytes. | Recover the argument-register live ranges for `right - 16` and constant `2`, then reprove all 20 related placements. | The local helper's integer return is supported by retail arithmetic and preserves all 21 accepted helper poses; the UI record layout remains provisional. |
 | [`LEVEL_01:0x19CEB0`](../../src/levels/01_pokitaru/LEVEL_01_19CEB0.c) (accepted 11 November 2026), 436 bytes | `gnu-ee-trial`: 428 bytes; first difference at byte 76 in the x-coordinate load. Four local calls are eight bytes early in the C. | Recover the x/y/z load-and-store order while preserving callee register flow. | The local callee's detailed prototype is an ABI hypothesis from retail register use. |
 | [`LEVEL_01:0x1B4330`](../../nonmatching/levels/LEVEL_01_1B4330.c), 628 bytes | `gnu-ee-trial-divpad`: 588 bytes; first difference at byte 6 in register allocation. | Recover basis-local scheduling and record-search control flow before other placements. | One `sqrtf` import and two local calls are measured; record and service types remain provisional. |
 | [`LEVEL_01:0x1CAAE8`](../../nonmatching/levels/LEVEL_01_1CAAE8.c), 296 bytes | Pinned GNU EE: 276 bytes; first difference at byte 1 in the object-pointer register (`t4` retail, `t2` compiled). | Recover the pointer and float-temporary lifetimes or copy shape, then relink the pilot. | No calls or imports; both lazy record initializations are retained but field roles are provisional. |
@@ -1100,7 +1110,7 @@ These candidate entries have source-level C retained under `nonmatching/levels/`
 | [`0x006120`](../../src/levels/frontend/MatrixMode__Q34scee3Psp3GumQ44scee3Psp2Gu11EMatrixType.c) (accepted 9 November 2026) | 56 B | pinned: 56 B, first difference +2 | Recover the state-table base and index register lifetimes across the three updates. |
 | [`0x00AB70`](../../nonmatching/levels/FRONTEND_00AB70.c) | 56 B | pinned: 56 B, first difference +2 | Recover the record-stride multiply and argument-bank setup for the local call. |
 | [`0x01E380`](../../src/levels/frontend/FRONTEND_01E380.c) (accepted 11 November 2026) | 60 B | pinned: 60 B, first difference +11 | Recover the masked-index register and final record comparison control flow. |
-| [`0x020698`](../../nonmatching/levels/FRONTEND_020698.c) | 64 B | pinned: 60 B, first difference +8 | Recover the flag set/clear branch and the two pointer reload lifetimes. |
+| [`0x020698`](../../src/levels/frontend/FRONTEND_020698.c) (accepted 21 November 2026) | 64 B | pinned: 60 B, first difference +8 | Recover the flag set/clear branch and the two pointer reload lifetimes. |
 | [`0x020918`](../../nonmatching/levels/FRONTEND_020918.c) | 44 B | pinned: 40 B, first difference +2 | Recover the mask-expression order and the retail literal/register lifetimes. |
 | [`0x0209B0`](../../src/levels/frontend/FRONTEND_0209B0.c) (accepted 9 November 2026) | 48 B | pinned: 44 B, first difference +20 | Recover the conditional masked return without shortening away the retail conditional move. |
 | [`0x021188`](../../src/levels/frontend/FRONTEND_021188.c) (accepted 9 November 2026) | 40 B | pinned: 40 B, first difference +28 | Recover the null-check and sign-test branch layout without the branch-likely shortening. |
@@ -1617,7 +1627,7 @@ and the [table search](../../src/levels/02_rykan_v/LEVEL_02_027F08.c); correctin
 the declared width of `g_bRenderPlayerShadow` recovered five more
 placements. Another 230 complete candidate bodies retain measured C in
 `nonmatching/`, with their first difference and reopening condition in
-the source comments. For example, the [flag update](../../nonmatching/levels/LEVEL_01_132CD8.c)
+the source comments. For example, the [flag update](../../src/levels/01_pokitaru/LEVEL_01_132CD8.c) (accepted 21 November 2026)
 still differs in branch-likely scheduling. Nine candidate entries lacked
 a Ghidra function at their start; they receive neither C credit nor an
 invented boundary until reviewed further.

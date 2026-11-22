@@ -19,7 +19,7 @@ extern void func_0AE230(char *p);
 extern void func_12E988(int a);
 extern int func_12DB88(char *a, char *b, char *c, int d);
 extern int func_12E120(char *a, int b, int c);
-extern void func_12E060(char *a, char *b);
+extern int func_12E060(char *a, char *b);
 extern void func_0169B0(void);
 extern int func_026148(int a, int b);
 extern void func_01A578(int a);

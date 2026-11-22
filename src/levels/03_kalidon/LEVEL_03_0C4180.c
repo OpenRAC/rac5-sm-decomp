@@ -10,7 +10,7 @@ extern int D_00218A1C;
 
 extern void func_0B9900(struct Obj *o, int a, int b, int c);
 extern void func_0AE488(int a, void *buf, float f);
-extern void func_0B9C78(struct Obj *o, int a, int b, int c, int d);
+extern int func_0B9C78(struct Obj *o, int a, int b, int c, int d);
 extern void func_0B9C60(struct Obj *o, int a, unsigned int b);
 extern int func_0B9780(char *object, int first, int second);
 extern int func_0B9860(struct Obj *o, int a, int b);

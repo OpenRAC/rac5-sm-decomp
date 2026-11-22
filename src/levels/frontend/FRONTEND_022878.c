@@ -1,6 +1,6 @@
 extern char *D_0010BE50;
 
-void func_022790(char *, int);
+int func_022790(char *, int);
 
 void func_022878(int a)
 {

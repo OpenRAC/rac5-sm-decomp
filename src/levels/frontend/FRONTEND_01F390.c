@@ -12,7 +12,7 @@ typedef struct Owner {
 
 extern char D_00109928[];
 extern int func_01DFF0(int key, char *name);
-extern void func_01E1A0(Entry *e, unsigned int a, int b, int h);
+extern int func_01E1A0(Entry *e, unsigned int a, int b, int h);
 extern int func_01F150(Entry *e);
 extern int func_01F460(Owner *o, Entry *e);
 extern void func_01E280(int h);
