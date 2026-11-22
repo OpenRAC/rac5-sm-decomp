@@ -2295,7 +2295,7 @@
         "table": "config/levels/bodies.tsv",
         "table_sha256": "8d0c50aa0cc12edaabc9e70371ca6c1e2b3a682680af6d4b416aa96cea5b5dc4",
         "sources_table": "config/levels/body_sources.tsv",
-        "sources_table_sha256": "5c1d6481fa03d2d36630fdac6089d12a66e2c57eec3fde46dca8ff238270d6d9",
+        "sources_table_sha256": "6a0e804d120fc9b8e8c6219471ed995245588809b3c067ac1d0bdb8d985b28d5",
         "placements": 74865,
         "unique_sources": 58254,
         "placement_bytes": 8402956,

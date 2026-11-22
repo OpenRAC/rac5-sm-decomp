@@ -322,12 +322,22 @@ metadata, not an instruction mismatch or a new compiler profile.
 On 21 November 2026 the same pinned binary, run on a Windows 10 host through WSL
 interop, produced a third complete hash for 194 level objects: one `.mdebug` byte
 differs (a register-mask word reads `0x20C0` where the canonical object has
-`0x30C0`), and every byte outside that section is equal; the input assembly is
-identical and repeated runs give the same output. A clean `master` checkout fails
-the level gate on this host in the same way. The level gate was run once with that
-difference tolerated locally (not committed) and all 21 complete modules were
-exact. These hashes are not recorded as alternatives until a second host
-reproduces them.
+`0x30C0`), and every byte outside that section is equal. On 22 November 2026 the
+cause was measured on that host: the bit (`0x1000` of the word) depends on the
+Windows environment the assembler starts with, not on the input assembly or the
+working directory. Started from the full environment of the calling shell (about
+one hundred variables) it is clear; started from a minimal environment
+(`SYSTEMROOT` and `PATH` only, or a WSL session launched from one) it is set. No
+single variable and no environment size alone flips it, which is consistent with
+a read of uninitialized memory. The recorded tables follow different conventions:
+every level hash except twenty matches the set bit, and all 50 `ps2eeas` boot
+hashes match the clear bit, so on that host the level gate passes from a minimal
+environment and the boot gate from the full one. The twenty level objects pinned on
+21 November (PR #287) had recorded the clear bit; their `object_sha256` values were
+refreshed with `--refresh-bodies` from a minimal environment, and the complete
+level gate then passed with all 21 modules exact and no tolerance. When recording a
+new `Ps2EeAs` hash, check that the bit agrees with the other hashes of the same
+table.
 
 ### Blocker 16
 
