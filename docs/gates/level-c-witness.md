@@ -1326,3 +1326,16 @@ and 49 `-mno-check-zero-division`. 20 placements are exact only with the qualifi
 symbol. 588 placements in 73 forms stay held for prototype disagreements. All 21
 complete USA modules remain exact, and the prototype review finds the same 1,916
 disagreeing pairs as before, none introduced.
+
+Ports of byte-identical C, on 22 November 2026, add **19 placements** (5,204
+bytes): level bodies whose relocation-masked bytes equal a function already
+matched in C by a sister OpenRAC decompilation (mostly OpenRAC/rac2-decomp's GCC
+runtime: exception handling, frame tables and soft-float in `FRONTEND`) or by this
+project's own boot sources. Each source cites the file it was ported from in its
+first line; upstream notices are listed in `THIRD_PARTY_NOTICES.md`. Three of them
+use `-fexceptions`, the option OpenRAC/rac2-decomp compiles the same functions
+with. Counted by masked shape, accepted level bodies rise from 946,520 bytes in
+7,231 shape units to 951,724 bytes in 7,250. Fifteen ported placements stay held
+for prototype disagreements and six whose extent is not an inventory interval
+(or only matches with a hand-set extent) are retained under `nonmatching/levels/`.
+All 21 complete USA modules remain exact; the prototype review is unchanged.
