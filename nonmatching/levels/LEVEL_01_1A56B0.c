@@ -1,0 +1,102 @@
+/* USA LEVEL_01.REL:0x1A56B0, 640-byte candidate (22 November 2026).
+ * Measured gnu-ee-trial: 14 differing words; first difference at +0x7C.
+ * Recover the observed types, statement order and lifetimes before retrying
+ * the same mismatch class. No matching credit.
+ */
+typedef struct Link {
+    char pad_00[0x54];
+    struct Eff *eff_54;
+} Link;
+
+typedef struct Eff {
+    int target_00;
+    unsigned char hold_04;
+    char pad_05[3];
+    float v_08;
+    float v_0C;
+    float v_10;
+    float v_14;
+    float v_18;
+    Link *link_1C;
+    unsigned char on_20;
+    unsigned char on_21;
+    unsigned char on_22;
+    unsigned char on_23;
+    unsigned char on_24;
+    unsigned char flag_25;
+    unsigned char arm_26;
+    unsigned char done_27;
+    float fade_28;
+    int chan_2C;
+} Eff;
+
+typedef struct {
+    char pad_00[0x45];
+    unsigned char state_45;
+    char pad_46[0xE];
+    Eff *eff_54;
+} Obj;
+
+extern void func_01A2A0(float *v);
+extern int func_084708(void *a, float *p);
+extern void func_003888(int a0, int a1, float f12, float f13);
+extern void func_0036E8(int a0, int a1, float f12, float f13);
+extern void func_003718(int a0, int a1, float f12, float f13);
+extern void func_003BF0(void);
+extern void func_003748(int a, float x, float y, int b);
+extern void func_0033A8(int a);
+extern void func_003838(int a0, int a1, float f12, float f13);
+
+#define CHAN(e, fn, val) \
+    if ((e)->hold_04 != 0 || (e)->fade_28 <= 0.0f) { \
+        fn((e)->chan_2C, 2, (val), 1.0f); \
+    } else { \
+        fn((e)->chan_2C, 0, (val), (e)->fade_28); \
+    }
+
+void func_1A56B0(Obj *o)
+{
+    Eff *e;
+    float v[3];
+
+    e = o->eff_54;
+    if (e->flag_25 != 0) {
+        if (o->state_45 == 1) {
+            func_01A2A0(v);
+            if (func_084708((void *)e->target_00, v) == 0) {
+                o->state_45 = 0;
+                if (e->link_1C != 0) {
+                    e->link_1C->eff_54->flag_25 = 1;
+                }
+            }
+            if (e->on_21 != 0) {
+                CHAN(e, func_003888, e->v_08)
+            }
+            if (e->on_22 != 0) {
+                CHAN(e, func_0036E8, e->v_0C)
+            }
+            if (e->on_23 != 0) {
+                CHAN(e, func_003718, e->v_10)
+            }
+            if (e->on_20 != 0) {
+                func_003BF0();
+                func_003748(e->chan_2C, e->v_18, e->fade_28 * 0.25f, 0);
+                func_0033A8(0);
+            }
+            if (e->on_24 != 0) {
+                CHAN(e, func_003838, e->v_14)
+            }
+        } else if (e->arm_26 != 0) {
+            if (e->done_27 == 0) {
+                func_01A2A0(v);
+                if (func_084708((void *)e->target_00, v) != 0) {
+                    if (e->link_1C != 0) {
+                        e->link_1C->eff_54->flag_25 = 0;
+                    }
+                    o->state_45 = 1;
+                    e->done_27 = 1;
+                }
+            }
+        }
+    }
+}

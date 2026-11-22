@@ -18,7 +18,7 @@ typedef struct {
 } Obj;
 
 extern int func_030140(Rec *object, Obj *owner);
-extern void func_014850(char *a0, char *a1, int a2);
+extern int func_014850(char *a0, char *a1, int a2, float f);
 extern void func_19A1F0(Obj *o);
 
 int func_198AD0(Obj *o)
