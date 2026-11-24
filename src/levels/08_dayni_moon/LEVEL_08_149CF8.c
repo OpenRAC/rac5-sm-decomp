@@ -1,4 +1,4 @@
-/* LEVEL_08:0x149CF8 -- placement copy of LEVEL_01_138900.c: when the linked target has a handler in its class, calls it with the global scale (multiplied by a factor in modes 1 and 2) and the object data. */
+/* LEVEL_08:0x149CF8 -- placement copy of LEVEL_01_138900.hitClass: when the linked target has a handler in its class, calls it with the global scale (multiplied by a factor in modes 1 and 2) and the object data. */
 typedef struct Class {
     char pad_00[0x20];
     void (*fn)(float scale, void *target, int a, int b, void *c, void *d, void *e);
@@ -9,29 +9,30 @@ typedef struct Target {
     Class *cls;
 } Target;
 
-typedef struct Sub {
-    int mode;
-    float scale;
-    int b;
-    int c;
-} Sub;
+typedef struct DamageInfo {
+    int kind;
+    float damage;
+    int element;
+    int hitClass;
+} DamageInfo;
 
-typedef struct Cfg {
+typedef struct DamageTable {
     char pad_00[0x140];
-    Sub sub;
-} Cfg;
+    DamageInfo entry20;
+} DamageTable;
 
-extern Cfg D_002629D8;
+/* The attack damage table: 259 entries of 16 bytes (kind, damage, element, hit class). */
+extern DamageTable D_002629D8;
 extern float D_001E0630;
 
-static __inline__ int GetMode(Cfg *c)
+static __inline__ int GetMode(DamageTable *c)
 {
-    return c->sub.mode;
+    return c->entry20.kind;
 }
 
 static __inline__ int GetModeG(void)
 {
-    return D_002629D8.sub.mode;
+    return D_002629D8.entry20.kind;
 }
 
 void func_149CF8(char *obj)
@@ -40,8 +41,8 @@ void func_149CF8(char *obj)
     Target *target;
     Class *cls;
     void *pos;
-    Cfg *c;
-    Sub *s;
+    DamageTable *c;
+    DamageInfo *s;
     float f;
 
     data = *(char **)(obj + 0x58);
@@ -56,11 +57,11 @@ void func_149CF8(char *obj)
         return;
     }
     c = &D_002629D8;
-    s = &c->sub;
+    s = &c->entry20;
     if (GetMode(c) >= 0 && GetMode(c) >= 2 && GetMode(c) == 2) {
-        f = s->scale * 0.5f;
+        f = s->damage * 0.5f;
     } else {
-        f = s->scale;
+        f = s->damage;
     }
-    cls->fn(f, target, s->b, s->c, pos, data, obj);
+    cls->fn(f, target, s->element, s->hitClass, pos, data, obj);
 }

@@ -61,19 +61,20 @@ typedef struct {
 } Info;
 
 typedef struct {
-    int mode;
-    float f;
-    int a;
-    int b;
-} Cfg;
+    int kind;
+    float damage;
+    int element;
+    int hitClass;
+} DamageInfo;
 
 typedef struct {
     char pad0[0xF90];
-    Cfg cfg;
-} Game;
+    DamageInfo entry249;
+} DamageTable;
 
 extern Table *D_001F0890;
-extern Game D_00202958;
+/* The attack damage table: 259 entries of 16 bytes (kind, damage, element, hit class). */
+extern DamageTable D_00202958;
 
 extern int rand(void);
 extern int func_185C50(Obj *o);
@@ -126,8 +127,8 @@ Obj *func_184BF0(float scale, int kind, Obj *owner, int flag)
     Info *info;
     Model *m;
     Obj *ow;
-    Game *g;
-    Cfg *c;
+    DamageTable *g;
+    DamageInfo *c;
     unsigned int t;
     float cap;
     float f;
@@ -166,20 +167,20 @@ Obj *func_184BF0(float scale, int kind, Obj *owner, int flag)
     m = ow->model;
     if (m->cb != 0) {
         g = &D_00202958;
-        c = &g->cfg;
-        switch (c->mode) {
+        c = &g->entry249;
+        switch (c->kind) {
         case 0:
         case 1:
-            f = c->f;
+            f = c->damage;
             break;
         case 2:
-            f = c->f * 0.5f;
+            f = c->damage * 0.5f;
             break;
         default:
-            f = c->f;
+            f = c->damage;
             break;
         }
-        m->cb(f, ow, c->a, c->b, 0, 0, fx);
+        m->cb(f, ow, c->element, c->hitClass, 0, 0, fx);
     }
 done:
     return fx;

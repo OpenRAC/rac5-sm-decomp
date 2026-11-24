@@ -1,15 +1,15 @@
 /* LEVEL_04:0x19ED48 -- placement copy of LEVEL_01_193A58.c: fires an object's spawn callback and finishes the pending request when the owner matches. */
-typedef struct Sub {
-    int mode;
-    float scale;
-    int f_08;
-    int f_0C;
-} Sub;
+typedef struct DamageInfo {
+    int kind;
+    float damage;
+    int element;
+    int hitClass;
+} DamageInfo;
 
-typedef struct Gl {
+typedef struct DamageTable {
     char pad_00[0x530];
-    Sub sub;
-} Gl;
+    DamageInfo entry83;
+} DamageTable;
 
 typedef struct Cb {
     char pad_00[0x20];
@@ -29,7 +29,7 @@ typedef struct Req {
 typedef struct Own {
     char pad_00[0x40];
     Cb *cb;
-    Gl *g;
+    DamageTable *g;
     char pad_44[0x10];
     Req *req;
 } Own;
@@ -37,7 +37,7 @@ typedef struct Own {
 typedef struct Tgt {
     char pad_00[0x40];
     Cb *cb;
-    Gl *g;
+    DamageTable *g;
 } Tgt;
 
 typedef struct Ent {
@@ -53,7 +53,8 @@ typedef struct Ref {
     int f_3C;
 } Ref;
 
-extern Gl D_002326D8;
+/* The attack damage table: 259 entries of 16 bytes (kind, damage, element, hit class). */
+extern DamageTable D_002326D8;
 extern unsigned char D_00221E8C;
 extern unsigned char D_00221E8D;
 extern struct { char pad[8]; unsigned char cnt; } D_0024B730;
@@ -69,10 +70,10 @@ void func_19ED48(Own *o, Tgt *t)
     Req *r;
     Ref *ref;
     int res;
-    Sub *s;
+    DamageInfo *s;
     Ent *e;
     Cb *cb;
-    Gl *g;
+    DamageTable *g;
     float f;
 
     if (*(int *)((char *)o->cb + 0x24) != (int)0xECFD0651) {
@@ -85,17 +86,17 @@ void func_19ED48(Own *o, Tgt *t)
         res = -1;
     } else {
         g = &D_002326D8;
-        s = &g->sub;
-        if (s->mode < 0) {
-            f = s->scale;
-        } else if (s->mode < 2) {
-            f = s->scale;
-        } else if (s->mode == 2) {
-            f = s->scale * 0.5f;
+        s = &g->entry83;
+        if (s->kind < 0) {
+            f = s->damage;
+        } else if (s->kind < 2) {
+            f = s->damage;
+        } else if (s->kind == 2) {
+            f = s->damage * 0.5f;
         } else {
-            f = s->scale;
+            f = s->damage;
         }
-        res = cb->fn(t, s->f_08, f, s->f_0C, 0, 0, o);
+        res = cb->fn(t, s->element, f, s->hitClass, 0, 0, o);
     }
     if (D_00221E8C) {
         if (D_00221E8D) {

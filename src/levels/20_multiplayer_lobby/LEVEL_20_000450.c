@@ -1,11 +1,12 @@
-/* 000450 -- one return, block form. */
+/* LEVEL_20:0x000450 -- returns the armour defence of an armour set: the damage reduction of each of
+   the eight sets (set 0 is no armour), zero past the eighth. */
 extern float D_001214B0[];
-float func_000450(int a0)
+float func_000450(int set)
 {
     float r;
 
-    if (a0 < 8)
-        r = D_001214B0[a0];
+    if (set < 8)
+        r = D_001214B0[set];
     else
         r = 0.0f;
     return r;

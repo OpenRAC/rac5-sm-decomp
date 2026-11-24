@@ -47,6 +47,7 @@ Every doc of this repository, by folder. New here? Read [building.md](build/buil
 
 | Doc | What it covers |
 |---|---|
+| [level-data-tables.md](research/level-data-tables.md) | Gadget records, attack damage and armour defence tables |
 | [level-function-inventory.md](research/level-function-inventory.md) | SNR2 function boundaries and the shared-code audit |
 | [multiworld-crosscheck.md](research/multiworld-crosscheck.md) | Cross-check against the public address map |
 
