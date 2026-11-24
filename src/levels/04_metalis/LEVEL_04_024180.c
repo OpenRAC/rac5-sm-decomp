@@ -1,19 +1,21 @@
-typedef struct Record {
+typedef struct GadgetRecord {
     int pad_00;
-    int state;
+    int type;
     char pad_08[0x50];
-} Record;
+} GadgetRecord;
 
-extern Record D_0020C758[];
+/* The 25 gadget records, 0x58 bytes each: +0x00 the internal name, +0x04 the type (1 gadget, 2 weapon,
+   3 item), +0x10 eight upgrade-level stat blocks, +0x3C the upgrade level (0..7). */
+extern GadgetRecord D_0020C758[];
 
-Record *func_024180(unsigned int index, int step)
+GadgetRecord *func_024180(unsigned int slot, int step)
 {
     step++;
-    if (index < 25) {
+    if (slot < 25) {
         if (step >= 0) {
             if (step < 2) {
-                if (D_0020C758[step + index].state == 2)
-                    return &D_0020C758[index] + step;
+                if (D_0020C758[step + slot].type == 2)
+                    return &D_0020C758[slot] + step;
             }
         }
     }

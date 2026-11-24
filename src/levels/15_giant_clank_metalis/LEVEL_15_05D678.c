@@ -30,15 +30,16 @@ struct Obj {
 };
 
 typedef struct {
-    int mode;
-    float scale;
-    int a;
-    int b;
-} Row;
+    int kind;
+    float damage;
+    int element;
+    int hitClass;
+} DamageInfo;
 
 extern int D_0014AD44;
 extern Slot D_00182118[];
-extern Row D_0016D4D8[];
+/* The attack damage table: 259 entries of 16 bytes (kind, damage, element, hit class). */
+extern DamageInfo D_0016D4D8[];
 extern char D_0016C5F8[];
 extern char D_0016C618[];
 
@@ -73,7 +74,7 @@ void func_05D6C8(Obj *o)
     char *p2;
     Vtbl *vt;
     int (*fn)(void *, float, int, int, void *, void *, Obj *);
-    Row *row;
+    DamageInfo *row;
     float f;
 
     s = func_05D678(o);
@@ -105,19 +106,19 @@ void func_05D6C8(Obj *o)
     row = &D_0016D4D8[s->index];
     p1 = D_0016C5F8;
     p2 = D_0016C618;
-    switch (row->mode) {
+    switch (row->kind) {
     case 0:
     case 1:
-        f = row->scale;
+        f = row->damage;
         break;
     case 2:
-        f = row->scale * 0.5f;
+        f = row->damage * 0.5f;
         break;
     default:
-        f = row->scale;
+        f = row->damage;
         break;
     }
-    n = fn(own, f, row->a, row->b, p1, p2, o);
+    n = fn(own, f, row->element, row->hitClass, p1, p2, o);
     if (s->p10 != 0 && s->p14 != 0)
         func_013970(s->p14, s->p10, s->owner, n);
     if (n == 3)

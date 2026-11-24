@@ -1,5 +1,6 @@
-/* LEVEL_23:06E060 -- forwards the selected table row's values to the level's
+/* LEVEL_23:06E060 -- forwards the selected damage entry's hit class and damage to the level's
    routine. */
+/* The attack damage table: 259 entries of 16 bytes (kind, damage, element, hit class). */
 extern char D_001EBED8[];
 extern void func_06DEA8(void *a0, void *a1, void *a2, void *a3, float f12,
                         float f13);

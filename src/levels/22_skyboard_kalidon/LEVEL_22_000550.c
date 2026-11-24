@@ -1,6 +1,7 @@
-/* LEVEL_22.REL @ 0x000550 — 44 octets, lwc1 */
+/* LEVEL_22:0x000550 -- returns the armour defence of an armour set: the damage reduction of each of
+   the eight sets (set 0 is no armour), zero past the eighth. */
 extern float D_00168930[];
-float func_000550(int a0)
+float func_000550(int set)
 {
-    return (a0 < 8) ? D_00168930[a0] : 0.0f;
+    return (set < 8) ? D_00168930[set] : 0.0f;
 }

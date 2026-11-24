@@ -8,10 +8,10 @@ typedef struct {
 
 typedef struct {
     int kind;
-    float f;
-    int a;
-    int b;
-} Entry;
+    float damage;
+    int element;
+    int hitClass;
+} DamageInfo;
 
 typedef struct {
     char pad0[0x59C];
@@ -33,7 +33,8 @@ struct Obj {
     Info *info;
 };
 
-extern Entry D_002629D8[];
+/* The attack damage table: 259 entries of 16 bytes (kind, damage, element, hit class). */
+extern DamageInfo D_002629D8[];
 extern int func_01CD60(Obj **out, int a, float *p, int b, int c, int d, int e, float f);
 extern void func_0167E8(Root *r, int a, Obj *o, int ret);
 extern float sqrtf(float);
@@ -48,7 +49,7 @@ void func_176428(Obj *a, float *p)
     n = func_01CD60(list, 0x10, p, 0x129, 0x101, 0x36, 1, 2.0f);
     for (i = 0; i < n; i++) {
         Obj *o = list[i];
-        Entry *e;
+        DamageInfo *e;
         float d[3];
         float len;
         float *op;
@@ -71,20 +72,20 @@ void func_176428(Obj *a, float *p)
             d[1] = d[1] * inv;
             d[2] = d[2] * inv;
         }
-        e = (Entry *)((char *)D_002629D8 + ((info->idx + 0xAE) << 4));
+        e = (DamageInfo *)((char *)D_002629D8 + ((info->idx + 0xAE) << 4));
         switch (e->kind) {
         case 0:
         case 1:
-            f = e->f;
+            f = e->damage;
             break;
         case 2:
-            f = e->f * 0.5f;
+            f = e->damage * 0.5f;
             break;
         default:
-            f = e->f;
+            f = e->damage;
             break;
         }
-        r = o->vt->fn(o, e->a, e->b, a->pos, f, d, a);
+        r = o->vt->fn(o, e->element, e->hitClass, a->pos, f, d, a);
         func_0167E8(a->info->root, 9, o, r);
     }
 }

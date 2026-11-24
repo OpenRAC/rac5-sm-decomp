@@ -1,9 +1,8 @@
-/* LEVEL_02:0x000710 -- rend la i-ieme case d'une table de huit
-   flottants, ou zero hors de la plage. */
-
+/* LEVEL_02:0x000710 -- returns the armour defence of an armour set: the damage reduction of each of
+   the eight sets (set 0 is no armour), zero past the eighth. */
 extern float D_00220430[];
 
-float func_000710(int i)
+float func_000710(int set)
 {
-    return i < 8 ? D_00220430[i] : 0.0f;
+    return set < 8 ? D_00220430[set] : 0.0f;
 }

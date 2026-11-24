@@ -22,14 +22,15 @@ struct Item {
     Link *link;
 };
 
-typedef struct Row {
-    int mode;
-    float scale;
-    int a;
-    int b;
-} Row;
+typedef struct DamageInfo {
+    int kind;
+    float damage;
+    int element;
+    int hitClass;
+} DamageInfo;
 
-extern Row D_001E9AD8[];
+/* The attack damage table: 259 entries of 16 bytes (kind, damage, element, hit class). */
+extern DamageInfo D_001E9AD8[];
 
 extern unsigned int func_01A9D8(Item **buf, int cap, float *pos, int p6, int p7, int p8, int one);
 extern int func_014EF8(Item *item);
@@ -64,7 +65,7 @@ unsigned int func_127060(float *pos, int idx, Item *skip, int x, int y, int p6, 
     Cls *cls;
     float *fwd;
     float *atp;
-    Row *r;
+    DamageInfo *r;
     float len2;
     float inv;
     float scale;
@@ -99,17 +100,17 @@ unsigned int func_127060(float *pos, int idx, Item *skip, int x, int y, int p6, 
                 if (cls->handler == 0) {
                     result = -1;
                 } else {
-                    r = (Row *)((char *)D_001E9AD8 + off);
-                    if (r->mode < 0) {
-                        scale = r->scale;
-                    } else if (r->mode < 2) {
-                        scale = r->scale;
-                    } else if (r->mode == 2) {
-                        scale = r->scale * 0.5f;
+                    r = (DamageInfo *)((char *)D_001E9AD8 + off);
+                    if (r->kind < 0) {
+                        scale = r->damage;
+                    } else if (r->kind < 2) {
+                        scale = r->damage;
+                    } else if (r->kind == 2) {
+                        scale = r->damage * 0.5f;
                     } else {
-                        scale = r->scale;
+                        scale = r->damage;
                     }
-                    result = cls->handler(scale, o, r->a, r->b, atp, fw, skip);
+                    result = cls->handler(scale, o, r->element, r->hitClass, atp, fw, skip);
                 }
                 if (x != 0 && y != 0) {
                     func_014E20(x, y, o, result);

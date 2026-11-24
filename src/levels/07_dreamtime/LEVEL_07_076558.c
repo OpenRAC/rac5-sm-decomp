@@ -1,17 +1,18 @@
 typedef struct {
-    int f00;
-    float f04;
-    int f08;
-    int f0C;
-} E;
+    int kind;
+    float damage;
+    int element;
+    int hitClass;
+} DamageInfo;
 
-extern E D_0022DA58[];
+/* The attack damage table: 259 entries of 16 bytes (kind, damage, element, hit class). */
+extern DamageInfo D_0022DA58[];
 
 void func_0763A0(int a0, int a1, int a2, int a3, float f12, float f13);
 
 void func_076558(int a0, int a1, int a2, int a3, float f12)
 {
-    E *e = &D_0022DA58[a1];
+    DamageInfo *e = &D_0022DA58[a1];
 
-    func_0763A0(a0, a2, a3, e->f0C, e->f04, f12);
+    func_0763A0(a0, a2, a3, e->hitClass, e->damage, f12);
 }

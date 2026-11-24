@@ -15,11 +15,11 @@ struct Owner {
     int (*fn20)(struct Body *a0, int a1, int a2, float *a3, char *t0, struct Obj *t1, float f12);
 };
 
-struct Ent {
-    int mode;
-    float f4;
-    int f8;
-    int fC;
+struct DamageInfo {
+    int kind;
+    float damage;
+    int element;
+    int hitClass;
 };
 
 struct State {
@@ -35,9 +35,10 @@ struct Obj {
     struct State *f58;
 };
 
-extern struct Ent D_0022DA58[];
+/* The attack damage table: 259 entries of 16 bytes (kind, damage, element, hit class). */
+extern struct DamageInfo D_0022DA58[];
 
-static __inline__ struct Ent *Pick(struct Ent *base)
+static __inline__ struct DamageInfo *Pick(struct DamageInfo *base)
 {
     return base + 19;
 }
@@ -47,7 +48,7 @@ void func_13B918(struct Obj *o)
 {
     struct State *s = o->f58;
     struct Body *l;
-    struct Ent *e;
+    struct DamageInfo *e;
     float f;
     int r;
 
@@ -68,19 +69,19 @@ call:
             r = -1;
         } else {
             e = Pick(D_0022DA58);
-            switch (e->mode) {
+            switch (e->kind) {
             case 0:
             case 1:
-                f = e->f4;
+                f = e->damage;
                 break;
             case 2:
-                f = e->f4 * 0.5f;
+                f = e->damage * 0.5f;
                 break;
             default:
-                f = e->f4;
+                f = e->damage;
                 break;
             }
-            r = w->fn20(l, e->f8, e->fC, pos, sub, o, f);
+            r = w->fn20(l, e->element, e->hitClass, pos, sub, o, f);
         }
         if (r == 3)
             func_07E7F0(o, 1);

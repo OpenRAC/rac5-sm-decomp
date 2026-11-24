@@ -1,9 +1,9 @@
-/* LEVEL_23.REL:0x000710 -- reads one entry of the eight-float table, or
-   zero past its end. */
+/* LEVEL_23:0x000710 -- returns the armour defence of an armour set: the damage reduction of each of
+   the eight sets (set 0 is no armour), zero past the eighth. */
 extern float D_001DE630[];
 
-float func_000710(int i)
+float func_000710(int set)
 {
-    if (i < 8) return D_001DE630[i];
+    if (set < 8) return D_001DE630[set];
     return 0.0f;
 }

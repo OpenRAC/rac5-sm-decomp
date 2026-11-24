@@ -1,15 +1,15 @@
 /* LEVEL_03:0x1B6CF0 -- placement copy of LEVEL_01_1A3BE8.c: finds nearby objects, triggers their callbacks and plays an effect for each. */
-typedef struct Sub {
-    int mode;
-    float scale;
-    int f_08;
-    int f_0C;
-} Sub;
+typedef struct DamageInfo {
+    int kind;
+    float damage;
+    int element;
+    int hitClass;
+} DamageInfo;
 
-typedef struct Gl {
+typedef struct DamageTable {
     char pad_00[0xEF0];
-    Sub sub;
-} Gl;
+    DamageInfo entry239;
+} DamageTable;
 
 typedef struct Cb {
     char pad_00[0x20];
@@ -38,7 +38,8 @@ typedef struct Ent {
     float f_20;
 } Ent;
 
-extern Gl D_00231C58;
+/* The attack damage table: 259 entries of 16 bytes (kind, damage, element, hit class). */
+extern DamageTable D_00231C58;
 
 extern int func_01C150(Tgt **buf, int n, float *pos, int a, int b, int c, int d, float r);
 extern Ent *func_024108(int a);
@@ -55,8 +56,8 @@ void func_1B6CF0(Own *o)
     unsigned n;
     Tgt *t;
     Cb *cb;
-    Sub *s;
-    Gl *g;
+    DamageInfo *s;
+    DamageTable *g;
     Ent *e;
     int res;
     float f;
@@ -78,17 +79,17 @@ void func_1B6CF0(Own *o)
                     res = -1;
                 } else {
                     g = &D_00231C58;
-                    s = &g->sub;
-                    if (s->mode < 0) {
-                        f = s->scale;
-                    } else if (s->mode < 2) {
-                        f = s->scale;
-                    } else if (s->mode == 2) {
-                        f = s->scale * h;
+                    s = &g->entry239;
+                    if (s->kind < 0) {
+                        f = s->damage;
+                    } else if (s->kind < 2) {
+                        f = s->damage;
+                    } else if (s->kind == 2) {
+                        f = s->damage * h;
                     } else {
-                        f = s->scale;
+                        f = s->damage;
                     }
-                    res = cb->fn(t, s->f_08, f, s->f_0C, 0, 0, o);
+                    res = cb->fn(t, s->element, f, s->hitClass, 0, 0, o);
                 }
                 func_015D70(*o->req, 0xF, t, res);
                 func_0EE1C8(0x23, vec);
