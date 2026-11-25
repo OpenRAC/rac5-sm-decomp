@@ -1,7 +1,7 @@
 /* LEVEL_18:0x0B7DF0 -- placement copy of LEVEL_16_0B8E18.c: level start-up chain ending with event 0x59. */
 extern char D_001B04B8[];
 extern void func_0A8488(void *);
-extern void func_10E728(int);
+extern int func_10E728(int);
 extern int func_0AAFF8(void);
 extern int func_111AA0(int);
 extern int func_115370(int);

@@ -43,7 +43,7 @@ extern unsigned int func_01C3E8(Item **buf, int cap, float *pos, int p6, int p7,
 extern float func_193920(Item *item);
 extern int func_015E60(Item *item);
 extern int func_03C370(int first, int skip);
-extern void func_015D88(int a, int b, Item *item, int result);
+extern int func_015D88(int a, int b, Item *item, int result);
 extern void func_1DA560(Own *o, Item *item, int a, int b);
 
 void func_1971E0(Own *o, float f)

@@ -43,7 +43,7 @@ extern void func_0807D0(void);
 extern void func_014A40(void);
 extern void func_02BD40(void);
 extern void func_07CDD0(void);
-extern void func_090670(void);
+extern int func_090670(void);
 extern void func_000B58(int a);
 extern char *func_000CB0(void);
 extern void SND_LevelUpdate__FPC7MATRIX4T0(char *a, char *b);

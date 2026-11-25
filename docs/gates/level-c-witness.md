@@ -1409,3 +1409,20 @@ only declare the parameter they already passed through a cast. No reviewed famil
 control source was edited. 304 placements in 20 forms stay held for prototype
 disagreements. All 21 complete USA modules remain exact, and the prototype review
 finds 1,779 disagreeing pairs against 1,846 before, none introduced.
+
+The byte-exact forms still held after those two passes, aligned with the accepted
+prototypes on the same day, add **1,002 placements** (124,064 bytes by placement)
+from 1,002 sources, most of them one-call forwarding functions. Counted by masked
+shape, accepted level bodies rise from 1,117,864 bytes in 7,701 shape units to
+1,125,904 bytes in 7,758. 982 placements use the pinned chain and 20
+`gnu-ee-trial`. Each new source declares its callees as their accepted
+definitions: a forwarding function that passes its own arguments on now also takes
+and passes the extra arguments its callee reads, a call through a cast that already
+had the definition's type is written as a plain call, and the remaining calls keep
+their compiled type through a cast. 93 accepted sources change a callee declaration
+the same way (62 only the declaration, 31 with a cast at the call) and stay exact
+at all of their placements; no reviewed family control source was edited.
+73 placements in 7 forms stay held, among them callers whose floating-point or
+64-bit view of a callee disagrees with its definition. All 21 complete USA modules
+remain exact, and the prototype review finds the same 1,779 disagreeing pairs as
+before, none introduced.

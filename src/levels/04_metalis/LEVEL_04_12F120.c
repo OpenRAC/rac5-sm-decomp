@@ -9,7 +9,7 @@ struct Mat1232B8 {
     float p[3];
 };
 
-void func_12EF10(float *q, struct Mat1232B8 *m);
+void func_12EF10(float *q);
 void func_12EBE0(float *out, float *a, float *b, float t);
 void func_12EDA8(struct Mat1232B8 *m, float *q);
 
@@ -29,8 +29,8 @@ void func_12F120(struct Mat1232B8 *dst, struct Mat1232B8 *src, struct Mat1232B8 
 
     vcopy(pos, src->p);
     if (t < 1.0f) {
-        func_12EF10(qa, src);
-        func_12EF10(qb, other);
+        ((void (*)(float *q, struct Mat1232B8 *m))func_12EF10)(qa, src);
+        ((void (*)(float *q, struct Mat1232B8 *m))func_12EF10)(qb, other);
         func_12EBE0(qc, qa, qb, t);
         func_12EDA8(dst, qc);
     } else {

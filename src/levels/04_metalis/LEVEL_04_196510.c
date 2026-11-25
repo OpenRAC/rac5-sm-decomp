@@ -15,7 +15,7 @@ extern int D_00234170;
 extern unsigned char func_027310(unsigned int index);
 extern int func_027098(int a, int b);
 extern void func_06D5E8(int a, int b);
-extern void func_13F720(int a);
+extern int func_13F720(int a);
 extern void func_14F840(char *object, unsigned int index);
 extern void func_07FAE8(Obj *o, int mode);
 
