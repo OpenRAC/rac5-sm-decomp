@@ -9,7 +9,10 @@
  * Reconstructed from the retail boot. It appends light data at the current
  * display list write position by calling the larger overload with a 0x400
  * limit, then stores the returned end as the new write position and sets the
- * second display list pointer to 16 bytes past it. It returns the new end.
+ * second display list pointer to 16 bytes past it. It is declared void, as
+ * the accepted wrapper LIGHT_SetupLightsNearPoint__FPC4VEC314LIGHTING_MODELUiPC9NodeLight
+ * declares it; the new end is still in the result register on return, but
+ * no caller is known to use it. Still 112/112 on both routes (26 November).
  * The current write position has to be read into its own local before the
  * call; reading it inside the argument list changes the argument shuffling.
  */
@@ -27,7 +30,7 @@ LIGHT_SetupLightsNearPoint__FPUiUiPC4VEC314LIGHTING_MODELUiPC9NodeLightUiPC16Dir
     unsigned int count, const void *node_light, unsigned int n_directional,
     const void *directional, unsigned int n_point, const void *point);
 
-unsigned int *
+void
 LIGHT_SetupLightsNearPoint__FPC4VEC314LIGHTING_MODELUiPC9NodeLightUiPC16DirectionalLightUiPC10PointLight(
     const void *position, int model, unsigned int count, const void *node_light,
     unsigned int n_directional, const void *directional, unsigned int n_point,
@@ -40,5 +43,4 @@ LIGHT_SetupLightsNearPoint__FPC4VEC314LIGHTING_MODELUiPC9NodeLightUiPC16Directio
             n_directional, directional, n_point, point);
     dl->limit = end + 4;
     dl->cursor = end;
-    return end;
 }

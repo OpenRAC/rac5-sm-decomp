@@ -1,16 +1,22 @@
 /* USA SCUS_976.15 boot: MCPI_InitializeMcpGlobals__Fv, 0x01E64D38.
  * Observed body: 344 bytes; it fills its interval.
- * Measured 17 November 2026: not exact. Compiled 344 bytes under the pinned route,
- * 82/86 words equal; independent linking gives 326/344 bytes equal, first difference at byte 244 (gnu-ee-trial: 194/344, first at byte 120).
- * Not exact; no complete-program gate, promotion or C matching credit.
+ * Measured 26 November 2026: all 344 body bytes are exact after independent
+ * SN linking at the retail address under the rebuilt default GNU route with
+ * -O2 -G0 and the default GNU assembler (gnu-ee-trial: 185/344, first
+ * difference at byte 120). The default tools are rebuilt, not hash-qualified.
+ * This is an unaccepted witness: complete-program integration, boundaries,
+ * types and qualification require separate review. No promotion or matching
+ * credit is claimed here.
  * Reconstructed from the retail boot. Initialises the memory-card global block: state
  * fields, the current thread id, two -1 slots, resets a queue, clears the callback array,
  * stores five table pointers and finally calls HEROSKIN_Init.
- * The remaining difference is only instruction scheduling: retail materialises the five
- * table address halves together before the low halves and puts the 0x10000 base addition
- * after the first pointer store; the compiled code interleaves them, and retail recomputes
- * the global base after the loop and loads the queue address low half later.
- * Reopen with a source shape that changes that address-generation order.
+ * Two declarations decided it. HEROSKIN_Init__Fv is declared void, as its
+ * exact retained definition is (declared int, the body was 342 of 344 bytes:
+ * the compiler orders the table address halves differently). The two font
+ * tables are the reference symbols FontTableNormal (0x01EDDB20) and
+ * FontTableJapanNormal (0x01EDDF20); the 17 November trial named them one
+ * page too high, which the linked comparison counted as a scheduling
+ * difference.
  */
 typedef struct {
     int f0;
@@ -71,15 +77,15 @@ typedef struct {
 
 extern McpGlobals g_McpGlobals;
 extern char D_01F5F814[];
-extern char D_01EEDB20[];
-extern char D_01EEDF20[];
+extern char FontTableNormal[];
+extern char FontTableJapanNormal[];
 extern char MCPTRANS_planetNames[];
 extern char MCPTRANS_cityNames[];
 extern char MCPTRANS_mpHelpHints[];
 extern int GetThreadId(void);
 extern void Reset__t5Queue2Z14tHUDPROMQ_NODEUi8(void *q);
 extern void CB_ARRAY_Init__FP14tCB_ARRAY_DATA(void *d);
-extern int HEROSKIN_Init__Fv(void);
+extern void HEROSKIN_Init__Fv(void);
 
 void MCPI_InitializeMcpGlobals__Fv(void) {
     unsigned int i;
@@ -120,8 +126,8 @@ void MCPI_InitializeMcpGlobals__Fv(void) {
     g_McpGlobals.f4C = 0;
     g_McpGlobals.f48 = 0;
     CB_ARRAY_Init__FP14tCB_ARRAY_DATA(g_McpGlobals.f1C4);
-    g_McpGlobals.f1AC = D_01EEDB20;
-    g_McpGlobals.f1B0 = D_01EEDF20;
+    g_McpGlobals.f1AC = FontTableNormal;
+    g_McpGlobals.f1B0 = FontTableJapanNormal;
     g_McpGlobals.f1B4 = MCPTRANS_planetNames;
     g_McpGlobals.f1B8 = MCPTRANS_cityNames;
     g_McpGlobals.f1BC = MCPTRANS_mpHelpHints;

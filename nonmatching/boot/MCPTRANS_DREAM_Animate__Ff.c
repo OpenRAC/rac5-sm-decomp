@@ -16,19 +16,24 @@
  * The destination is reached through a pointer taken just before the
  * expression, and its y and z members are named with the x member written
  * between them (stores come out in reverse source order).
+ * Names, 26 November 2026: mcptrans_dream_active and mcptrans_dream_sound
+ * are the names already used on master; the drag vector is the argument
+ * of GCSPAR_StreckSetDragMotion and the destination vector mirrors
+ * mcptrans_fall_dstVec of the accepted MCPTRANS_FALL_Animate__Ff. The
+ * other values have no evidence for a name yet and keep their addresses.
  */
 typedef struct { float x, y, z; } VEC3;
-extern float mcptrans_dream_rateA;
-extern float mcptrans_dream_velZ;
-extern float mcptrans_dream_t;
-extern float mcptrans_dream_ramp;
-extern float mcptrans_dream_k1;
-extern float mcptrans_dream_k3;
-extern float mcptrans_dream_k4;
-extern float mcptrans_dream_k5;
-extern unsigned char mcptrans_dream_flag;
+extern float D_01EF07DC;
+extern float D_01EF07E0;
+extern float D_01EF0850;
+extern float D_01EF0854;
+extern float D_01EF07E4;
+extern float D_01EF07E8;
+extern float D_01EF07EC;
+extern float D_01EF07F4;
+extern unsigned char D_01EF07F0;
 extern unsigned char mcptrans_dream_active;
-extern VEC3 mcptrans_dream_dst;
+extern VEC3 mcptrans_dream_dstVec;
 extern VEC3 mcptrans_dream_drag;
 extern float sinf(float);
 extern void GCSPAR_StreckSetDragMotion__FRC4VEC3(const VEC3 *);
@@ -38,14 +43,14 @@ extern void MCPTRANS_DREAM_StartSound__Fv(void);
 void MCPTRANS_DREAM_Animate__Ff(float dt) {
     float v;
     VEC3 *d;
-    mcptrans_dream_velZ += mcptrans_dream_rateA * dt;
-    mcptrans_dream_t += dt;
-    if (mcptrans_dream_flag != 0)
-        mcptrans_dream_ramp = mcptrans_dream_k5 * mcptrans_dream_t;
-    d = &mcptrans_dream_dst;
-    v = mcptrans_dream_k1 + sinf(mcptrans_dream_t * mcptrans_dream_k3) * mcptrans_dream_k4 - mcptrans_dream_ramp;
+    D_01EF07E0 += D_01EF07DC * dt;
+    D_01EF0850 += dt;
+    if (D_01EF07F0 != 0)
+        D_01EF0854 = D_01EF07F4 * D_01EF0850;
+    d = &mcptrans_dream_dstVec;
+    v = D_01EF07E4 + sinf(D_01EF0850 * D_01EF07E8) * D_01EF07EC - D_01EF0854;
     d->y = v;
-    mcptrans_dream_dst.x = v;
+    mcptrans_dream_dstVec.x = v;
     d->z = v;
     GCSPAR_StreckSetDragMotion__FRC4VEC3(&mcptrans_dream_drag);
     MCPTRANS_DREAM_SpeckEmitterUpdate__Fv();

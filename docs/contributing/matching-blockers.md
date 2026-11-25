@@ -2413,20 +2413,24 @@ with `ps2eeas` were first recorded from a full environment and were refreshed on
 ### USA boot bodies of 112–444 bytes (17 November 2026)
 
 Twenty open boot bodies of 112 to 444 bytes were attempted and are retained
-under `nonmatching/boot/`. Eleven reproduce every body byte after an
+under `nonmatching/boot/`. Twelve reproduce every body byte after an
 independent SN link at the retail address: the three transition
 `*_StartSound__Fv` bodies, `VID_InitBink__Fv`,
 `MCP_FontPrintWindowSetStructDefaults`, `LIGHT_SetupLightsNearPoint`,
 `HEROSKIN_Init__Fv`, `TEXMGR_SetColorIndexWithColorTo` and
 `MCPTRANS_DREAM_Animate__Ff` under the rebuilt default GNU route and
-`gnu-ee-trial`; `WAD_FindAssetsBySignature` and `PS2HEAP_Free__FPv` under the
-default route only. On 25 November 2026 a complete boot gate on master
-`ef75f8a07` with these eleven bodies linked as provisional owners (default
-route, `--unpinned-tools`) passed: 878 exact objects, `.text` and the loaded
-segment exact, complete ELF exact; the 847 accepted bodies are unchanged and
-the promotion audit lists the eleven as ready for semantic review. The rebuilt
-tools are not hash-qualified, so nothing is promoted. Source shapes that
-mattered:
+`gnu-ee-trial`; `WAD_FindAssetsBySignature`, `PS2HEAP_Free__FPv` and (since
+26 November) `MCPI_InitializeMcpGlobals__Fv` under the default route only.
+On 26 November 2026 a complete boot gate on master `ef75f8a07` with these
+twelve bodies linked as provisional owners (default route,
+`--unpinned-tools`) passed: 879 exact objects, `.text` and the loaded segment
+exact, complete ELF exact; the 847 accepted bodies are unchanged and the
+promotion audit lists the twelve as ready for semantic review. The rebuilt
+tools are not hash-qualified, so nothing is promoted. A static review of the
+retail boot found no direct transfer into the interior of any of the twelve
+bodies; the bytes after the shorter bodies are separately called static
+initializers or unreachable stack-adjustment fragments, left to the assembly
+baseline. Source shapes that mattered:
 
 - `WAD_FindAssetsBySignature`: the entry type is kept in a local that the
   loop exit tests, and the null test after the loop is made on a copy of the
@@ -2446,6 +2450,18 @@ mattered:
   `SND_ConstructPositionalSound` definition lists twelve parameters while its
   mangled name and accepted level callers have thirteen (two `bool`); this
   needs its own review.
+- Declarations reviewed on 26 November 2026: `MCPI_InitializeMcpGlobals__Fv`
+  was parked as a scheduling difference after about twenty source forms, but
+  the cause was two declarations. Declaring the callee `HEROSKIN_Init__Fv`
+  `void`, as its exact definition is, fixes the order of the table address
+  halves (326 to 342 of 344 bytes), and the two remaining bytes were two font
+  tables named one 0x10000 page too high (`D_01EEDB20`/`D_01EEDF20` instead of
+  the reference symbols `FontTableNormal`/`FontTableJapanNormal`). Before
+  calling a difference "scheduling", compare the linked relocation fields and
+  the callee declarations with their definitions. `LIGHT_SetupLightsNearPoint`
+  is now `void`, as the accepted wrapper declares it (still exact).
+  `MCPTRANS_DREAM_Animate__Ff` keeps names only where existing sources or a
+  callee give evidence; the other values keep their addresses.
 - Still open: the update counter `material_current` is compared unsigned in
   `MATERIAL_RegisterForUpdate`, while `MATERIAL_Init` declares it `int`. The
   boot program accesses that word only in these two functions, and
@@ -2453,10 +2469,9 @@ mattered:
   evidence of its type; aligning the accepted declaration changes no bytes
   but is left to review of that accepted file.
 
-The nine others stay measured trials with their remaining difference in the
+The eight others stay measured trials with their remaining difference in the
 header: loop delay-slot filling (`UTIL_GS_WRITE_FIFO`), the 128-bit `sq`
-prologue with `$fp` (`MCPFONT_DrawTextureSimpleArea`), the order of two
-address materialisations (`MCPI_InitializeMcpGlobals`), one size register
+prologue with `$fp` (`MCPFONT_DrawTextureSimpleArea`), one size register
 (`PS2HEAP_Malloc`), a 128-bit zero kept in a register
 (`SYSTEM_UploadMatrix`), merged identical switch states
 (`MEMCARD_ProcessClientRequests`), a double comparison constant built in
