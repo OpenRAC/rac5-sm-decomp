@@ -37,7 +37,7 @@ extern Counter D_0023A330;
 extern void func_1E0240(float f, Obj *o, int a, int b);
 extern void func_07CCA0(Obj *o, int x);
 extern void func_014810(char *p, Obj *o, int a, int b, int c);
-extern long func_07A270(Obj *o);
+extern int func_07A270(Obj *o);
 extern void func_07A178(Obj *o, unsigned int mask, char *tbl, int x);
 extern void func_1D1E70(float a, float b, char *p, Obj *o, int c, int d, int e);
 extern void func_164290(Obj *o, int x);

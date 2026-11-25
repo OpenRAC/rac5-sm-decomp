@@ -2,7 +2,7 @@
 
 char *func_080CF0(int size);
 char *func_081050(char *p);
-float func_033ED8(int v);
+float func_033ED8(long v);
 void func_11A728(float *out, float f);
 void func_11BF00(char *a0, char *a1, float *a2);
 

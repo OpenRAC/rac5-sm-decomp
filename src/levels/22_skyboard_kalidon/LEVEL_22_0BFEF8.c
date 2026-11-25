@@ -12,7 +12,7 @@ extern char D_00163969[];
 
 extern int func_0C7760(char *a);
 extern void func_01F460(int a, long b);
-extern void func_01F4A8(int a, long b);
+extern char *func_01F4A8(int a, int b);
 extern int func_0BFCB8(void);
 extern int func_01F870(int a);
 extern void func_01F8A0(int a, int b, long c);

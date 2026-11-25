@@ -16,7 +16,7 @@ typedef struct {
 extern Input *D_0020D12C;
 extern float fabsf(float);
 
-extern float func_038AD0(int);
+extern float func_038AD0(long);
 extern int func_08B4F0(int);
 extern int func_08B528(int);
 extern int func_038A70(Obj *);

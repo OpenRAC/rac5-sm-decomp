@@ -1,6 +1,6 @@
 /* LEVEL_23:0x17D1F0 -- placement copy of LEVEL_22_130510.c: calls two helpers, optionally calls a float helper, then decrements a float field and calls a final helper when it is not positive. */
 
-extern void func_0B30D0(int a0);
+extern int func_0B30D0(int a0);
 extern void func_09CD40(int a0, unsigned int a1, int a2, int a3, int a4, int a5);
 extern void func_05ADA8(float f0);
 extern void func_17CAE0(char *a0, unsigned int a1, unsigned int a2);

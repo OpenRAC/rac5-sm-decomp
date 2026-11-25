@@ -55,7 +55,7 @@ extern char *D_001F0894;
 extern Entry D_00216E78[];
 
 extern int func_0183A0(void *a, void *b, unsigned short *c, unsigned char *out);
-extern void func_07E810(float *a, float *b, Obj *o);
+extern int func_07E810(float *a, float *b, Obj *o);
 extern void func_091CC8(Entry *e, Node *n, float *a, float *b, unsigned int flags);
 
 static __inline__ void CopyMat(float *d, float *s)

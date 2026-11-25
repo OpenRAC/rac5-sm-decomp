@@ -4,7 +4,7 @@ extern char D_00365160[];
 extern char D_001F4A20[];
 extern float ceilf(float x);
 extern int sprintf(char *buf, const char *fmt, ...);
-extern void func_0B30D0(int a);
+extern int func_0B30D0(int a);
 extern void func_17CAE0(Obj *o, int a, int b);
 extern void func_05ADA8(float f);
 extern int func_09CDA8(int a);

@@ -2,9 +2,9 @@
 
 extern char D_000EBCA0[];
 extern void func_0987D0(unsigned int *buf, unsigned int v, unsigned int tbl, int n, int a, int b, unsigned int c);
-extern void func_0989A8(unsigned int *buf);
+extern int func_0989A8(unsigned int *buf);
 
-void func_0EC878(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int a3, unsigned int t0)
+int func_0EC878(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int a3, unsigned int t0)
 {
     unsigned int buf[4];
     unsigned int x3;
@@ -22,5 +22,5 @@ void func_0EC878(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int
     a0 = a0 | x3;
     a0 = a0 | x4;
     func_0987D0(buf, a0 | 5, (unsigned int)D_000EBCA0, 0x24, 0, -1, 0);
-    func_0989A8(buf);
+    return func_0989A8(buf);
 }

@@ -4,8 +4,8 @@
  * Recheck stack object types and the argument-copy order against callers. No matching credit.
  */
 extern void func_1FF240(double *, char *);
-extern long long func_1FF2E0(char *, char *, char *);
-extern double func_1FF110(long long);
+extern char *func_1FF2E0(char *, char *, char *);
+extern double func_1FF110(char *);
 
 double dpsub(double first, double second) {
     char left[32];
@@ -13,7 +13,7 @@ double dpsub(double first, double second) {
     char output[32];
     double a = first;
     double b = second;
-    long long value;
+    char *value;
     func_1FF240(&a, left);
     func_1FF240(&b, right);
     *(unsigned int *)(right + 4) ^= 1u;

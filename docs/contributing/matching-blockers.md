@@ -1127,7 +1127,7 @@ These candidate entries have source-level C retained under `nonmatching/levels/`
 | [`0x021A00`](../../src/levels/frontend/FRONTEND_021A00.c) (accepted 9 November 2026) | 44 B | pinned: 44 B, first difference +8 | Recover the bounds-failure branch and stride-calculation lifetime. |
 | [`0x021C40`](../../src/levels/frontend/FRONTEND_021C40.c) (accepted 9 November 2026) | 52 B | sdk991111: 52 B, first difference +10 | Recover the bounds-failure branch while retaining the indexed comparison and SDK compiler route. |
 | [`0x024140`](../../nonmatching/levels/FRONTEND_024140.c) | 64 B | pinned: 64 B, first difference +12 | Recover the local float store versus output-pointer setup around the first call. |
-| [`0x026878`](../../nonmatching/levels/FRONTEND_026878.c) | 64 B | pinned: 48 B, first difference +0 | Recover the saved-register frame and comparison-result lifetime around the imported strcmp call. |
+| [`0x026878`](../../src/levels/shared/__eq__C9type_infoRC9type_info_shared.c) (accepted 25 November 2026) | 64 B | pinned: 48 B, first difference +0 | Recover the saved-register frame and comparison-result lifetime around the imported strcmp call. |
 | [`0x0275D0`](../../src/levels/frontend/FRONTEND_0275D0.c) (accepted 11 November 2026) | 52 B | pinned: 52 B, first difference +2 | Recover the lazy-initialization pointer test and its address/register lifetimes without an artificial null check. |
 
 The previous `FRONTEND:0x020968` attempt linked to 24 bytes and first differed at
@@ -1983,7 +1983,7 @@ Eleven other representative C attempts remain under `nonmatching/levels/`
 with measured first differences and reopening conditions. The
 [related record lookup](../../nonmatching/levels/LEVEL_01_0246D0.c) links 80
 rather than 84 bytes after adopting the same record base, while the
-[global table scan](../../nonmatching/levels/LEVEL_01_079BD0.c) has the correct
+[global table scan](../../src/levels/01_pokitaru/LEVEL_01_079BD0.c) (accepted 25 November 2026) has the correct
 72-byte length but first differs at byte 6 in register allocation. The other
 195 candidate sites receive no match credit. One masked group also has ten
 normalized Ghidra pseudocode variants, so its apparent structural similarity

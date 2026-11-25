@@ -3,7 +3,7 @@ extern char D_0023E540[];
 
 int func_039910(void *);
 
-void func_039918(void)
+int func_039918(void)
 {
-    func_039910(D_0023E540);
+    return func_039910(D_0023E540);
 }

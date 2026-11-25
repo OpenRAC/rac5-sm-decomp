@@ -7,7 +7,7 @@ extern void func_0292A8(Rec *a0, float k);
 extern void func_0294F0(Rec *p, float v);
 extern void func_029410(Rec *a0);
 
-void func_029548(Rec *o, int enable, int arg, float k)
+void func_029548(Rec *o, int enable, float k, int arg)
 {
     if (enable != 0) {
         func_029468(o, 1);

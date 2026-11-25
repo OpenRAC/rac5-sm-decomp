@@ -1,6 +1,6 @@
 /* LEVEL_22:0x1302B8 -- calls two helpers, optionally calls a float helper, then decrements a float field and calls a final helper when it reaches zero. */
 
-extern void func_0AA7E0(int a0);
+extern int func_0AA7E0(int a0);
 extern void func_0945E0(int a0, unsigned int a1, int a2, int a3, int a4, int a5);
 extern void func_0571F8(float f0);
 extern void func_12FE00(char *a0, unsigned int a1, unsigned int a2);

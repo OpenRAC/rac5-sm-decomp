@@ -1,0 +1,23 @@
+/* LEVEL_09:0x0C4698 -- placement copy of LEVEL_24_0C0CB0.c: placement copy of LEVEL_01_0C73E8.c: resets the object, stores three looked-up ids and a cleared byte in globals and runs the object step 0x18. */
+extern int D_001EAA00;
+extern int D_001EAA04;
+extern int D_001EAA08;
+extern char D_001EAA10;
+
+struct Obj {
+    char pad00[0x10];
+};
+
+extern void func_12E610(struct Obj *p);
+extern int func_12B448(int id);
+extern void func_12E660(struct Obj *p, int v);
+
+void func_0C4698(struct Obj *o)
+{
+    func_12E610(o);
+    D_001EAA00 = func_12B448(0xA85);
+    D_001EAA04 = func_12B448(0x30A);
+    D_001EAA08 = func_12B448(0x219);
+    D_001EAA10 = 0;
+    func_12E660(o, 0x18);
+}

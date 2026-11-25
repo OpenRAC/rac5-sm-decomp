@@ -14,7 +14,7 @@ extern Big D_002E7040;
 extern int D_00250AB4;
 extern float sinf(float x);
 extern float cosf(float x);
-extern void func_0F6D60(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int a3, unsigned int t0, unsigned int t1, unsigned int t2);
+extern int func_0F6D60(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int a3, unsigned int t0, unsigned int t1, unsigned int t2);
 
 void func_181528(void)
 {
@@ -27,5 +27,5 @@ void func_181528(void)
         D_003E5A40[i].c = cosf(x);
         x += 0.33069396f;
     }
-    D_00250AB4 = ((int (*)(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int))func_0F6D60)(0xB, D_002E7040.w268, 0, 0, 1, 1, 3);
+    D_00250AB4 = func_0F6D60(0xB, D_002E7040.w268, 0, 0, 1, 1, 3);
 }

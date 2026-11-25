@@ -15,7 +15,7 @@ typedef struct O {
     char pad5C[0x14];
     float f70;
 } O;
-extern void func_0AA7E0(int a);
+extern int func_0AA7E0(int a);
 extern void func_0945E0(int a, int b, int c, int d, int e, int f);
 extern void func_0571F8(float f);
 extern int func_052938(void);

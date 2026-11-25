@@ -1,9 +1,9 @@
 /* LEVEL_05:0x1DD168 -- placement copy of LEVEL_01_1EDD70.c: runs the check and returns the fourth argument when it passed, else null. */
-extern int func_1DD0C0(int a, int b, int c);
+extern int func_1DD0C0(int a, int b);
 
 int dcast__C16__user_type_infoRC9type_infoiPvPC9type_infoT3(int a, int b, int c, int d)
 {
-    if (func_1DD0C0(a, b, c) == 0) {
+    if (func_1DD0C0(a, b) == 0) {
         d = 0;
     }
     return d;

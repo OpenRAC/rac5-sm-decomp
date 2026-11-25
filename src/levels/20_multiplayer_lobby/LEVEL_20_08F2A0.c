@@ -1,11 +1,11 @@
-extern void func_08F260(void);
+extern void func_08F260(int index);
 extern int func_0DFD50(unsigned int, int);
 extern int D_0010CE24;
 extern int D_0010CE28;
 
-void func_08F2A0(void)
+void func_08F2A0(int index)
 {
-    func_08F260();
+    func_08F260(index);
     D_0010CE24 = func_0DFD50(0x769c2290U, 8);
     D_0010CE28 = func_0DFD50(0x42d66b4dU, 8);
 }

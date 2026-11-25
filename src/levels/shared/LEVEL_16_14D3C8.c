@@ -17,7 +17,7 @@ typedef struct {
     Tab *tab;
 } Ctx;
 
-int func_14D3C8(Ctx *c)
+int func_14D3C8(Ctx *c, float dt)
 {
     Tab *t = c->tab;
     Item *it;

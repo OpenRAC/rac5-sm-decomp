@@ -9,7 +9,7 @@ extern void func_10FA10(char *p);
 extern void func_0FD820(char *p);
 extern void func_0FD9C8(char *p);
 extern void func_11D580();
-extern void func_13E970();
+extern void func_13E970(char *p);
 
 void func_10E858(void *a0, char *a1)
 {

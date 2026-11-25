@@ -61,7 +61,7 @@ extern unsigned char D_001DFF6C;
 extern float D_0020CAC8[3];
 extern Entry D_00216E78[];
 extern void *memset(void *p, int c, unsigned int n);
-extern void func_07E810(Vec4 *a, Vec4 *b, Obj *c);
+extern int func_07E810(Vec4 *a, Vec4 *b, Obj *c);
 extern void func_091CC8(Entry *e, Node *n, Vec4 *a, Vec4 *b, unsigned int fl);
 
 static __inline__ int Fix(int *p)

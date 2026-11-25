@@ -3,7 +3,7 @@ extern unsigned D_0021F578[4];
 extern unsigned D_0021F588[4];
 extern float D_0021F598[];
 extern int func_12CE78(int *a, int *b);
-extern int func_12D4D8(int a, int b, int c);
+extern int func_12D4D8(int a, int b);
 extern int func_203908(float x);
 
 int func_12D138(int a, int b, int idx)
@@ -16,7 +16,7 @@ int func_12D138(int a, int b, int idx)
     if (!func_12CE78(&x, &y))
         return 0;
     if (idx < 0)
-        k = func_12D4D8(x, y, idx);
+        k = func_12D4D8(x, y);
     else
         k = idx;
     tab = D_0021F578;

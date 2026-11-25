@@ -1,5 +1,5 @@
-extern void func_0FAA80(void);
+extern int func_0FAA80(int index);
 
-void func_10FCA8(void) {
-    func_0FAA80();
+int func_10FCA8(int index) {
+    return func_0FAA80(index);
 }
