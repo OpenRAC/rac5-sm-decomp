@@ -27,7 +27,7 @@ extern int D_001ED970;
 extern Cfg *D_001C73AC;
 
 extern void func_0B3250(int a);
-extern void func_0B30D0(int a);
+extern int func_0B30D0(int a);
 extern void func_09CD40(int a, unsigned b, int c, int d, int e, int f);
 extern int func_120208(int a, int b, int c, unsigned char *d, int e, int f);
 extern void func_0B3260(void);

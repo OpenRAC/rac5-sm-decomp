@@ -1,5 +1,5 @@
 /* LEVEL_04:0x140190 -- placement copy of FRONTEND_021668.c: clears a pending flag pair after one call, returns 1 if it was set. */
-extern unsigned char D_002204A8; extern int D_002204A0; extern void func_13FE48(int);
+extern unsigned char D_002204A8; extern int D_002204A0; extern int func_13FE48(int);
 int func_140190(void)
 {
     int *p = &D_002204A0;

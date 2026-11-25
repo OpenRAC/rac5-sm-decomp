@@ -10,7 +10,7 @@ struct Obj14 {
 };
 
 int func_0B83B8(void);
-void func_0AA7E0(int v);
+int func_0AA7E0(int v);
 void func_130A30(struct Obj14 *p);
 void *func_109980(int id);
 void func_0B8268(void *a, void *b);

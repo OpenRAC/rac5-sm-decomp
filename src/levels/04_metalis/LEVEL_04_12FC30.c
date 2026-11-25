@@ -1,6 +1,6 @@
-extern void func_12FB20(float a, float b, float c, float d);
+extern void func_12FB20(int a0, float a, float b, float c, float d);
 
 void f(int a0, float *v, float x)
 {
-    func_12FB20(v[0], v[1], v[2], x);
+    func_12FB20(a0, v[0], v[1], v[2], x);
 }

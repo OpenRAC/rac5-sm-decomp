@@ -61,7 +61,7 @@ typedef struct {
 
 extern Rec D_00216E78[];
 
-extern void func_07E810(Vec3 *a, Vec3 *b, int w);
+extern int func_07E810(Vec3 *a, Vec3 *b, void *w);
 extern void func_091CC8(Rec *r, Emit *e, Vec3 *a, Vec3 *b, unsigned int bits);
 
 static __inline__ void Unlink(Emit *e)

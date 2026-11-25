@@ -16,7 +16,7 @@ extern struct Obj D_0019D9D8;
 extern struct Tab D_0012A150[];
 extern char D_001121D8[];
 
-extern void func_0930B8(struct Obj *o, char *a, int b, int c);
+extern int func_0930B8(struct Obj *o, char *a, int b, int c);
 extern void func_0874F0(int a, void *buf, float f);
 extern int func_093410(struct Obj *o, int a, int b, int c, int d);
 extern void func_0933F8(struct Obj *o, int a, unsigned int b);

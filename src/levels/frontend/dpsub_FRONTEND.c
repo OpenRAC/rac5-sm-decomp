@@ -3,8 +3,8 @@
  * Recheck stack object types and the argument-copy order against callers. No matching credit.
  */
 extern void func_023528(double *, char *);
-extern long long func_0235C8(char *, char *, char *);
-extern double func_0233F8(long long);
+extern char *func_0235C8(char *, char *, char *);
+extern double func_0233F8(char *);
 
 double dpsub(double first, double second) {
     char left[32];
@@ -12,7 +12,7 @@ double dpsub(double first, double second) {
     char output[32];
     double a = first;
     double b = second;
-    long long value;
+    char *value;
     func_023528(&a, left);
     func_023528(&b, right);
     *(unsigned int *)(right + 4) ^= 1u;

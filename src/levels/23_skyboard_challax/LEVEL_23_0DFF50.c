@@ -4,10 +4,10 @@ extern unsigned char D_000DEE70[];
 extern unsigned char D_000DEDE0[];
 
 void func_08C368(unsigned char *buf, unsigned int mask, unsigned int tbl, int n, int a, int b, unsigned int c);
-void func_08C540(unsigned char *buf);
+int func_08C540(unsigned char *buf);
 
-void func_0DFF50(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int a3, unsigned int t0, unsigned int t1,
-                 unsigned int t2)
+int func_0DFF50(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int a3, unsigned int t0, unsigned int t1,
+                unsigned int t2)
 {
     unsigned char buf[16];
     unsigned int x3;
@@ -28,5 +28,5 @@ void func_0DFF50(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int
     t2 = t2 << 6;
     a0 = a0 | t2;
     func_08C368(buf, a0 | 0x21, (unsigned int)D_000DEE70, 0x24, 0, -1, (unsigned int)D_000DEDE0);
-    func_08C540(buf);
+    return func_08C540(buf);
 }

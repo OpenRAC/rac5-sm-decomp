@@ -1382,3 +1382,17 @@ for prototype disagreements. All 21 complete USA modules remain exact, and the
 prototype review finds 1,904 disagreeing pairs against 1,906 before, none
 introduced.
 All 21 complete USA modules remain exact; the prototype review is unchanged.
+
+Byte-exact forms held earlier for callee prototype disagreements, revisited on
+25 November 2026, add **1,138 placements** (204,384 bytes by placement) from
+1,135 sources. Counted by masked shape, accepted level bodies rise from 1,066,172
+bytes in 7,495 shape units to 1,089,816 bytes in 7,590. 982 placements use the
+pinned chain, 108 `gnu-ee-trial`, 42 `sdk991111` and 6 `gnu-ee-trial-divpad`; 64
+need `-fno-gcse`. 15 placements are exact only with `ps2eeas`, whose object hashes
+were recorded from a minimal environment, and 21 only with `r5900-mfc1`. 428
+accepted sources change a callee declaration, return type or parameter list so
+that each caller agrees with its callee's definition, and stay exact at all of
+their placements; no reviewed family control source was edited. 771 placements in
+18 forms stay held for prototype disagreements. All 21 complete USA modules remain
+exact, and the prototype review finds 1,846 disagreeing pairs against 1,904 before,
+none introduced.

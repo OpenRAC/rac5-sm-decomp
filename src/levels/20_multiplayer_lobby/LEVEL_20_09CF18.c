@@ -19,7 +19,7 @@ struct Panel0C3530 {
 extern struct Panel0C3530 D_0019A800;
 extern char D_0010F760[];
 
-extern void func_0930B8(struct Panel0C3530 *p, void *src, int n, int z);
+extern int func_0930B8(struct Panel0C3530 *p, void *src, int n, int z);
 extern void func_0874F0(int id, struct Rect0C3530 *r, float f);
 extern int func_093410(struct Panel0C3530 *p, int x, int y, int w, int h);
 extern void func_0933F8(struct Panel0C3530 *p, int id, unsigned int color);

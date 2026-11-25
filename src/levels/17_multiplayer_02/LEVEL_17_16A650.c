@@ -27,7 +27,7 @@ typedef struct {
 } Obj;
 
 extern void func_16ACE8(Obj *o);
-extern void func_11D3A8(int a0, float a, float b);
+extern void func_11D3A8(float a, float b, int a0);
 extern void func_14F288(void *record);
 extern void func_16A948(Obj *o);
 
@@ -41,7 +41,7 @@ int func_16A650(Obj *o, float dt, int a1, int a2, int a3, int a4, Other *other)
     s = o->inner;
     s->f14 = s->f14 - dt;
     func_16ACE8(o);
-    func_11D3A8(s->f28, s->f14, 125.0f);
+    ((void (*)(int, float, float))func_11D3A8)(s->f28, s->f14, 125.0f);
     if (s->f14 <= 0.0f) {
         if (s->f04 != 0) {
             func_14F288(s->f04);

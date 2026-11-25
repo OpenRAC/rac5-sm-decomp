@@ -1,8 +1,8 @@
 /* LEVEL_04:0x0269C8 -- placement copy of LEVEL_01_026D38.c: builds a normalized direction from an object position to a point and forwards it with its length. */
 extern float sqrtf(float);
-extern void func_0268E8(float *, float *, float);
+extern int func_0268E8(float *, float *, float);
 
-void func_0269C8(float *obj, float *p)
+int func_0269C8(float *obj, float *p)
 {
     float d[3];
     float len;
@@ -22,5 +22,5 @@ void func_0269C8(float *obj, float *p)
         d[2] = d[2] * inv;
         len = r;
     }
-    func_0268E8(obj, d, len);
+    return func_0268E8(obj, d, len);
 }

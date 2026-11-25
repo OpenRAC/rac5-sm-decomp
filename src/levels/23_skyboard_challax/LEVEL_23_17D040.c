@@ -1,6 +1,6 @@
 /* LEVEL_23:0x17D040 -- placement copy of LEVEL_22_130360.c: counts down a timer field, calls two helpers when a flag is set, and dispatches on zero. */
 
-void func_0B30D0(int a0);
+int func_0B30D0(int a0);
 void func_09CD40(int a0, unsigned int a1, int a2, int a3, int t0, int t1);
 void func_05ADA8(float f12);
 int func_09CD78(int a0);

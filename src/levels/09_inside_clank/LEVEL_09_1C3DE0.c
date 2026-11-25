@@ -4,7 +4,7 @@ typedef struct {
 } Obj;
 
 extern float D_002190AC;
-extern int func_079108(Obj *a, int b);
+extern void func_079108(Obj *a, int b);
 
 int f(Obj *a0)
 {

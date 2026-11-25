@@ -1,7 +1,7 @@
 /* LEVEL_15:0x0F73D0 -- starts four setup calls, then decays a timer and retriggers a callback. */
 extern void func_0979C8(int a, int b);
 extern void func_0AA660(int a);
-extern void func_09C980(int a);
+extern int func_09C980(int a);
 extern void func_0976C0(int a);
 extern int func_093E00(void);
 extern char D_002A8B58[];

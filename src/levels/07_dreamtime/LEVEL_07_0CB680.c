@@ -1,5 +1,5 @@
 extern long long func_1361F0(void);
-extern void func_136208(long long);
+extern void func_136208(int);
 extern void func_0C67B8(void);
 extern void func_136550(int);
 extern unsigned char D_002081D1;
@@ -7,7 +7,7 @@ extern char *D_002082AC;
 
 void func_0CB680(void)
 {
-    long long value = func_1361F0();
+    int value = ((int (*)(void))func_1361F0)();
     func_136208(0);
     if (D_002081D1 != 0) {
         func_0C67B8();

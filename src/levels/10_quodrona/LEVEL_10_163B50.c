@@ -14,7 +14,7 @@ extern Big D_002A11C0;
 extern int D_002103FC;
 extern float sinf(float x);
 extern float cosf(float x);
-extern void func_0EC9A8(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int a3, unsigned int t0, unsigned int t1, unsigned int t2);
+extern int func_0EC9A8(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int a3, unsigned int t0, unsigned int t1, unsigned int t2);
 
 void func_163B50(void)
 {

@@ -13,7 +13,7 @@ extern char D_002045E9[];
 
 extern int func_0D9220(char *a);
 extern int func_024628(int a, long b);
-extern void func_024670(int a, long b);
+extern char *func_024670(int a, int b);
 extern int func_0D1778(void);
 extern int func_024A38(int a);
 extern void func_024A68(int a, int b, long c);
