@@ -5,7 +5,7 @@ extern int D_001D7D50[];
 extern int D_001D7D5C;
 extern int D_001D7D60;
 extern int func_1A6218(unsigned int value);
-extern int func_1AEB20(unsigned int value);
+extern void func_1AEB20(unsigned int value);
 extern int func_11FB68(unsigned int value);
 
 void func_12D6B0(void)
@@ -14,7 +14,7 @@ void func_12D6B0(void)
     int *p = &D_001D7D5C;
 
     *p = func_1A6218(((unsigned int)D_00263C80[82] << 16) | 0xE8005041u);
-    D_001D7D60 = func_1AEB20(((unsigned int)D_00263C80[20] << 16) | 0xE00050D9u);
+    D_001D7D60 = ((int (*)(unsigned int value))func_1AEB20)(((unsigned int)D_00263C80[20] << 16) | 0xE00050D9u);
     for (i = 0; i < 3; i++) {
         D_001D7D50[i] = func_11FB68(D_001EBB10[i]);
     }
