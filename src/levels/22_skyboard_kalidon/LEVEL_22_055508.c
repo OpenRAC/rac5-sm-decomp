@@ -5,7 +5,7 @@ extern char D_0018AB78[];
 
 int func_057DD8(void);
 void func_0573D0(void *a0, int a1, int a2);
-void func_0D5840(void *a0, void *a1);
+void func_0D5840(int a0, void *a1);
 void func_06F718(void *a0, int a1, int a2, int a3, float f12, float f13);
 
 void func_055508(void *a0)

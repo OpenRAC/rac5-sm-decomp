@@ -1,6 +1,6 @@
 extern float D_001E0000[];
 
-extern int func_1003E0(void *, float, float, float);
+extern void func_1003E0(void *, float, float, float);
 
 void func_011890(void)
 {

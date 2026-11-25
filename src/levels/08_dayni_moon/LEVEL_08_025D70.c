@@ -2,13 +2,13 @@
 extern char D_002566C0[];
 extern char D_002566D0[];
 extern int snprintf(char *, unsigned int, const char *, ...);
-extern void func_029D00(char *, int, int, int);
+extern int func_029D00(char *, int, int, int);
 
-void func_025D70(char *value)
+int func_025D70(char *value)
 {
     char buf[256];
 
     snprintf(buf, sizeof(buf), D_002566C0, D_002566D0, value);
     buf[255] = 0;
-    func_029D00(buf, 1, 0, 0);
+    return func_029D00(buf, 1, 0, 0);
 }

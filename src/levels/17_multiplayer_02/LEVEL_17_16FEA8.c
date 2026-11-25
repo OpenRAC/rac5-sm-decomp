@@ -58,7 +58,7 @@ typedef struct {
 extern char D_001C9FE8[];
 extern Pool D_001CF6F8[];
 
-extern int func_170488(void);
+extern int func_170488(Obj *o);
 extern int func_16ECE0(Obj *o);
 extern void func_16E838(Obj *o, int arg, int mode);
 extern int func_02E428(float f, void *cfg, Obj *o, char *data, int n);
@@ -94,7 +94,7 @@ void func_16FEA8(Obj *o)
 
     cfg = o->cfg;
     rec = o->rec;
-    if (func_170488() == 0) {
+    if (func_170488(o) == 0) {
         func_16E838(o, o->b45, 3);
         return;
     }

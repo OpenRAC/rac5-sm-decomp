@@ -5,9 +5,9 @@ extern char D_000E6600[];
 extern char D_000E6488[];
 
 void func_0987D0(unsigned int *record, unsigned int first, unsigned int second, int third, int fourth, int fifth, unsigned int sixth);
-void func_0989A8(void *buf);
+int func_0989A8(void *buf);
 
-void func_0E6CF8(unsigned int a, unsigned int b, unsigned int c)
+int func_0E6CF8(unsigned int a, unsigned int b, unsigned int c)
 {
     unsigned int buf[4];
     unsigned int word;
@@ -25,5 +25,5 @@ void func_0E6CF8(unsigned int a, unsigned int b, unsigned int c)
     word = word | u;
     word = word | low;
     func_0987D0(buf, word | 4, (unsigned int)D_000E6600, 0x40, 0, -1, (unsigned int)D_000E6488);
-    func_0989A8(buf);
+    return func_0989A8(buf);
 }

@@ -4,7 +4,7 @@ extern char D_0021D810[];
 extern int D_0021D858[];
 extern char D_0021D870[];
 extern char D_0021D888[];
-void func_1C3A90(char *a, char *b, int c, void *d, char *e);
+void *func_1C3A90(char *a, char *b, int c, void *d, char *e);
 
 void func_1B7790(void *self)
 {

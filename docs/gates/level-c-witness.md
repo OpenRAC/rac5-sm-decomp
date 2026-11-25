@@ -1396,3 +1396,16 @@ their placements; no reviewed family control source was edited. 771 placements i
 18 forms stay held for prototype disagreements. All 21 complete USA modules remain
 exact, and the prototype review finds 1,846 disagreeing pairs against 1,904 before,
 none introduced.
+
+The rest of those held forms, on the same day, add **1,073 placements** (214,972
+bytes by placement) from 1,071 sources. Counted by masked shape, accepted level
+bodies rise from 1,089,816 bytes in 7,590 shape units to 1,117,864 bytes in 7,701.
+887 placements use the pinned chain, 105 `gnu-ee-trial`, 79 `gnu-ee-trial-divpad`
+and 2 `gnu-ee-trial-divpad-blockmove`; 24 need `-fno-gcse`. 21 placements are exact
+only with `ps2eeas` and 2 only with `r5900-mfc1`. 21 sources are boot twins and
+carry the boot symbol. 616 accepted sources change a callee declaration, return
+type or parameter list and stay exact at all of their placements; fifteen of them
+only declare the parameter they already passed through a cast. No reviewed family
+control source was edited. 304 placements in 20 forms stay held for prototype
+disagreements. All 21 complete USA modules remain exact, and the prototype review
+finds 1,779 disagreeing pairs against 1,846 before, none introduced.

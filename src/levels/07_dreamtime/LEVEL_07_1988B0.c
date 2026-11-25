@@ -7,8 +7,8 @@ typedef struct { char pad00[0x30]; Vec3 pos; } Marker;
 
 extern Vec3 D_00238DF0;
 extern Marker D_0024AA40;
-extern int func_01AA20(void);
-extern int func_086800(void *res, int arg);
+extern void *func_01AA20(void);
+extern int func_086800(void *res, void *arg);
 extern void func_198960(Obj *o, Vec3 *pos);
 
 static __inline__ void Copy3(float *d, float *s)

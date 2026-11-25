@@ -60,7 +60,7 @@ extern Listener *D_00221E4C;
 extern Ctx D_0023D8E0;
 extern ThreeWords D_00231808;
 
-extern int func_197C68(void);
+extern int func_197C68(Obj *obj);
 extern int func_07F9D0(Rec *rec, int tag, Obj *obj, int mode);
 extern void func_077EA8(void *context, void *object, int mode, const ThreeWords *first, const ThreeWords *second);
 extern void func_083E30(Obj *obj, Listener *l, float a, float b, float c, float d, int e, int f, int g, int h, int i, int j);
@@ -94,7 +94,7 @@ int func_19CCE8(Obj *o)
 
     f = o->fx_58;
     if (o->kind_45 == 1) {
-        f->h_10 = func_197C68();
+        f->h_10 = func_197C68(o);
     } else {
         rec = FindRec(0xAE8C7B5D);
         if (rec == 0) {

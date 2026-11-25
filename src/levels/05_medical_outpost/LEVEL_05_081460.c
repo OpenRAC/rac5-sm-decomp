@@ -62,7 +62,7 @@ extern void func_0A3E18(int a);
 extern Obj05_081460 *func_082BE8(unsigned int id);
 extern void func_121920(V05_081460 *out, Item05_081460 *it, float *v);
 extern void func_08A3F8(int a);
-extern void func_08A598(V05_081460 *v, int a, int b, char *data);
+extern int func_08A598(V05_081460 *v, int a, int b, char *data);
 extern void func_083448(Item05_081460 *it, Obj05_081460 *o, int a, int b, int c, int d, int e);
 extern void Gum_MatrixMode(int mode) __asm__("MatrixMode__Q34scee3Psp3GumQ44scee3Psp2Gu11EMatrixType");
 extern void Gum_LoadIdentity(void) __asm__("LoadIdentity__Q34scee3Psp3Gumv");

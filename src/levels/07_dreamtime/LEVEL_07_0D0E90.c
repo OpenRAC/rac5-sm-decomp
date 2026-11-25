@@ -18,7 +18,7 @@ extern unsigned char g_RENDEREFFECT_SWIRLY_Active;
 extern int func_0BBB78(Ctx *ctx, int value, int flags, int zero);
 extern void func_0B0708(int id, Q *out, float f);
 extern int func_0BBEF0(Ctx *ctx, short a, short b, short c, short d);
-extern void func_0BBED8(Ctx *ctx, int id, unsigned int color);
+extern int func_0BBED8(Ctx *ctx, int id, unsigned int color);
 extern int func_0BB9F8(Ctx *ctx, unsigned int a, unsigned int b);
 extern int func_0BBAD8(Ctx *ctx, int a, int b);
 extern int func_0D0E58(int index);

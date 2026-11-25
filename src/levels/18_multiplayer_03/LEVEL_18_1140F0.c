@@ -1,7 +1,7 @@
 extern int D_001B97C0[];
-void func_1140F0(int value);
+extern char *func_10DFE0(int id);
 
-void func_1140F0(int index)
+char *func_1140F0(int index)
 {
-    func_10DFE0(D_001B97C0[index]);
+    return func_10DFE0(D_001B97C0[index]);
 }

@@ -4,20 +4,20 @@ extern unsigned int D_00155498;
 extern char D_0016CCE0[];
 extern char D_0016CCF0[];
 extern char D_0016CD00[];
-extern void func_06C498();
+extern void func_06C498(void *a0, unsigned int a1, void *a2, int a3);
 
-void func_06C500(void *a0, int a1, int a2)
+void func_06C500(void *a0, unsigned int a1, int a2, int a3)
 {
     if (D_00155498 < 0x10) {
         switch (a2) {
         case 0:
-            func_06C498(a0, a1, D_0016CD00);
+            func_06C498(a0, a1, D_0016CD00, a3);
             break;
         case 1:
-            func_06C498(a0, a1, D_0016CCE0);
+            func_06C498(a0, a1, D_0016CCE0, a3);
             break;
         case 2:
-            func_06C498(a0, a1, D_0016CCF0);
+            func_06C498(a0, a1, D_0016CCF0, a3);
             break;
         }
     }

@@ -1,10 +1,10 @@
-extern long long func_13E930(int);
-extern void func_0DC800(int, long long, long long, long long);
+extern int func_13E930(int);
+extern void func_0DC800(int, int, int, int);
 
 void func_0C6330(int a)
 {
-    long long first = func_13E930(a);
-    long long second = func_13E930(0x30b);
-    long long third = func_13E930(0x218);
+    int first = func_13E930(a);
+    int second = func_13E930(0x30b);
+    int third = func_13E930(0x218);
     func_0DC800(3, first, second, third);
 }

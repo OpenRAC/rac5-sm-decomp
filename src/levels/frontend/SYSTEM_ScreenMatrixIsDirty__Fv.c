@@ -17,7 +17,7 @@ struct DbDlist {
 extern int g_CurLoadedScreenMatrix;
 extern struct DbDlist db_dlist;
 extern struct Pk16 g_cntTag;
-extern void *func_005FA0(void);
+extern void *func_005FA0(int type);
 extern void func_006E68(int a, void *b);
 
 void SYSTEM_ScreenMatrixIsDirty__Fv(void)
@@ -29,7 +29,7 @@ void SYSTEM_ScreenMatrixIsDirty__Fv(void)
     if (g_CurLoadedScreenMatrix != 4) {
         return;
     }
-    r = func_005FA0();
+    r = func_005FA0(4);
     if (r == 0) {
         return;
     }

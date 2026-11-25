@@ -20,7 +20,7 @@ struct Slot {
     char pad8[4];
     void (*onTick)(Obj *);
     int p10;
-    int p14;
+    void *p14;
     int index;
 };
 
@@ -48,7 +48,7 @@ extern float func_077698(Obj *, float *, int);
 extern void func_06F468(float *, float);
 extern void func_073F88(Obj *, unsigned int, int, int);
 extern void func_06F050(Slot *);
-extern void func_014E20(int, int, Obj *, int);
+extern int func_014E20(void *, int, Obj *, int);
 
 Slot *func_06F1A8(Obj *o)
 {

@@ -17,7 +17,7 @@ extern unsigned int func_0056E8(int pad);
 extern int func_0145C8(int index);
 extern int func_001B40(int a0, int a1);
 extern void func_001AE0(int state, int arg);
-extern void func_012200(Menu *m, unsigned int bits);
+extern int func_012200(Menu *m, unsigned int bits);
 extern void *func_019500(void);
 extern int func_019510(void);
 extern void func_011F40(void *obj);

@@ -1,6 +1,6 @@
 extern int D_0021F6CC;
 
-int func_131288(void)
+int func_131288(int a)
 {
     int *p = (int *)D_0021F6CC;
 

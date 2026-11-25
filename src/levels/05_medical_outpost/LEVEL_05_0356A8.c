@@ -8,7 +8,7 @@ extern void func_035608(char *obj);
 extern void func_063F58(void);
 extern void func_0517C0(void);
 extern int func_107F80(unsigned int value);
-extern void func_109C08(unsigned int value);
+extern int func_109C08(unsigned int value);
 extern void func_035250(void);
 
 void func_0356A8(void)
@@ -18,6 +18,6 @@ void func_0356A8(void)
     func_0517C0();
     D_001E3974 = func_107F80(((unsigned int)D_00283C80[27] << 16) | 0xA00010C1u);
     D_001E3978 = func_107F80(((unsigned int)D_00283C80[11] << 16) | 0xA00010C1u);
-    D_001E3970 = ((int (*)(unsigned int))func_109C08)(((unsigned int)D_00283C80[48] << 16) | 0xA0001041u);
+    D_001E3970 = func_109C08(((unsigned int)D_00283C80[48] << 16) | 0xA0001041u);
     func_035250();
 }

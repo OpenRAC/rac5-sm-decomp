@@ -20,7 +20,7 @@ typedef struct Own {
     char pad_00[0x30];
     float pos[3];
     char pad_3C[0x1C];
-    int *req;
+    void **req;
 } Own;
 
 typedef struct Tgt {
@@ -45,7 +45,7 @@ extern int func_01AEF8(Tgt **buf, int n, float *pos, int a, int b, int c, int d,
 extern Ent *func_0222D8(int a);
 extern void func_077DD0(Own *o, Ent *e, int a, int b, int c, int d, int e2, int f, float f0, float f1, float f2, float f3);
 extern void func_077BB0(Tgt *t, float *v, int a, int b);
-extern void func_014E98(int a, int b, Tgt *t, int c);
+extern int func_014E98(void *a, int b, Tgt *t, int c);
 extern void func_0E2818(int a, float *v);
 
 void func_184EE0(Own *o)

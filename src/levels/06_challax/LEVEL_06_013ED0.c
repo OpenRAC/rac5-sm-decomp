@@ -5,12 +5,15 @@ typedef struct {
 
 extern int func_013F28(Obj *a, float *buf, int c, int d, int e);
 
-void f(Obj *a0, float *a1, int a2)
+int func_013ED0(Obj *a0, float *a1, int a2, float f)
 {
     float buf;
+    int r;
 
-    if (func_013F28(a0, &buf, a2, 0x38, 0))
+    r = func_013F28(a0, &buf, a2, 0x38, 0);
+    if (r)
         a0->v = buf;
     if (a1)
         *a1 = buf;
+    return r;
 }

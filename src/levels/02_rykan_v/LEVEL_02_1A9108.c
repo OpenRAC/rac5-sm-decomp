@@ -63,7 +63,7 @@ extern int func_024F88(int a, int b);
 extern unsigned int func_024B98(unsigned int a);
 extern void func_0872A0(Own *o, Ent *e, int a, int b, int c, int d, int e2, int f, float f0, float f1, float f2, float f3);
 extern void func_1EF1F8(Own *o, Tgt *t, int a, int b);
-extern void func_016950(int *p, int a, Tgt *t, int b);
+extern int func_016950(int *p, int a, Tgt *t, int b);
 
 void func_1A9108(Own *o, Tgt *t)
 {

@@ -70,7 +70,7 @@ struct Obj {
 
 extern Entry D_001FB5F8[];
 extern void func_177EC8(void);
-extern void func_07C030(void *a, void *b, void *c);
+extern int func_07C030(void *a, void *b, void *c);
 extern void func_08E370(Entry *e, Sub *s, Vec4 *a, Vec4 *b, unsigned int fl);
 
 static __inline__ int isFar(Vec4 *a, Vec4 *b)

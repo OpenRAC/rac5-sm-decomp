@@ -27,7 +27,7 @@ static inline void Copy4(float *d, float *s)
 }
 
 extern int func_01CD48(float h, Hit **out, int max, float *p, int a, int b, int c, int d);
-extern void func_014EC0(Obj *o, float a, float b, float c);
+extern int func_014EC0(Obj *o, float a, float b, float c);
 
 void func_014DA0(Obj *o, float a, float b, float c)
 {
