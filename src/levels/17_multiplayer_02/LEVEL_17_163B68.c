@@ -19,7 +19,7 @@ extern int func_1123D8(int x);
 extern int func_021FE0(int i, int x, int k);
 extern unsigned int *func_021D80(int x);
 extern int func_021E50(int i, int x, int j, int k);
-extern void func_021DB0(int i, int x, int k);
+extern int func_021DB0(int i, int x, int k);
 extern void func_020DE8(char *s, int i);
 extern char *func_10E8A8(int id);
 extern int *func_021A90(int i, int k);

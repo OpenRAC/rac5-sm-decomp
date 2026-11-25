@@ -22,7 +22,7 @@ extern char D_001EE388[];
 extern int func_0B80E0(struct Panel0C3530 *p, void *src, int n, int z);
 extern void func_0ACCC8(int id, struct Rect0C3530 *r, float f);
 extern int func_0B8438(struct Panel0C3530 *p, int x, int y, int w, int h);
-extern void func_0B8420(struct Panel0C3530 *p, int id, unsigned int color);
+extern int func_0B8420(struct Panel0C3530 *p, int id, unsigned int color);
 extern int func_0B7F40(char *object, int first, int second);
 extern int func_026430(unsigned int i);
 extern int func_0C08C8(unsigned int i);

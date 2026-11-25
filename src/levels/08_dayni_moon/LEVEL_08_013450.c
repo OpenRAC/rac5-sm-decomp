@@ -19,7 +19,7 @@ struct Seg0133E8 {
 
 extern void func_08A0B0(float *a, float *b, struct Src0133E8 *s);
 extern void func_089D60(float *a, float *b, struct Src0133E8 *s);
-extern void func_089D30(float *a, float *b, struct Src0133E8 *s);
+extern int func_089D30(float *a, float *b, struct Src0133E8 *s);
 
 static __inline__ void Sub0133E8(float *a, float *b)
 {

@@ -2,7 +2,7 @@
 extern float sqrtf(float x);
 
 typedef struct Item Item;
-typedef long (*Handler)(float scale, Item *item, int a, int b, float *pos, float *dir, Item *skip);
+typedef int (*Handler)(float scale, Item *item, int a, int b, float *pos, float *dir, Item *skip);
 
 typedef struct Cls {
     char pad_00[0x20];
@@ -35,7 +35,7 @@ extern DamageInfo D_00221CE8[];
 extern unsigned int func_01BA68(Item **buf, int cap, float *pos, int p6, int p7, int p8, int one);
 extern int func_016038(Item *item);
 extern int func_03AA58(int first, Item *skip);
-extern void func_015F60(int a, int b, Item *item, long result);
+extern int func_015F60(void *a, int b, Item *item, int result);
 
 static __inline__ void Copy3(float *dst, float *src)
 {
@@ -69,7 +69,7 @@ unsigned int func_12F3C0(float *pos, int idx, Item *skip, int x, int y, int p6, 
     float len2;
     float inv;
     float scale;
-    long result;
+    int result;
 
     n = func_01BA68(buf, 0x10, pos, p6, p7, p8, 1);
     i = 0;
@@ -113,7 +113,7 @@ unsigned int func_12F3C0(float *pos, int idx, Item *skip, int x, int y, int p6, 
                     result = cls->handler(scale, o, r->element, r->hitClass, atp, fw, skip);
                 }
                 if (x != 0 && y != 0) {
-                    func_015F60(x, y, o, result);
+                    func_015F60((void *)x, y, o, result);
                 }
             }
             i++;

@@ -15,7 +15,7 @@ extern char *func_021710(int row, int column);
 extern int func_021758(unsigned int a0, int a1);
 extern int func_0BFE48(void);
 extern int func_021A48(int a);
-extern void func_021A78(int a, int b, long c);
+extern int func_021A78(int a, int b, int c);
 extern void func_020AB0(char *a, int b);
 extern void func_0C0AD8(void);
 

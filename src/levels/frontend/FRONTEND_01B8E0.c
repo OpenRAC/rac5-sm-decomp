@@ -21,7 +21,7 @@ extern struct Pair01B8E0 D_00031D40[];
 
 int func_012418(void *o, void *src, int a, int b);
 int func_012770(void *o, int a, int b, int c, int d);
-void func_012758(void *o, int a, unsigned int b);
+int func_012758(void *o, int a, unsigned int b);
 int func_012340(void *o, unsigned int a, unsigned int b);
 int func_012370(void *o, int a, int b);
 void func_012848(void *o, unsigned int a, unsigned int b, int c, int d, int e, int f, int g, int h, unsigned int i);

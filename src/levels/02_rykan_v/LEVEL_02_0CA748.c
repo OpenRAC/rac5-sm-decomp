@@ -22,7 +22,7 @@ extern Game *D_00208C2C;
 extern int func_0C0428(Obj *o, int a, unsigned int b, int c);
 extern void func_0B5018(int id, Pair *out, float f);
 extern int func_0C07A0(Obj *o, int a, int b, int c, int d);
-extern void func_0C0788(Obj *o, int a, unsigned int b);
+extern int func_0C0788(Obj *o, int a, unsigned int b);
 extern int func_0C02A8(char *object, int first, int second);
 extern int func_0C0388(Obj *o, int a, int b);
 extern int func_138860(int i);

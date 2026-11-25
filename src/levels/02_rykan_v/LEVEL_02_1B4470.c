@@ -2,7 +2,7 @@
 
 extern void func_01AC80(float *out);
 extern int func_08B060(int a0, float *a1);
-extern int func_031B88(void *a0, void *a1, int a2, int a3, int t0, float f12, float f13);
+extern int func_031B88(void *a0, void *a1, int a2, int a3, float f12, float f13, int t0);
 extern char *func_01ACC0(void);
 
 int func_1B4470(char *a0)
@@ -32,7 +32,7 @@ int func_1B4470(char *a0)
     if (func_08B060(*(int *)(s0 + 0x10), v) == 0) {
         return 3;
     }
-    r = func_031B88(s0, a0, *(int *)(s0 + 0x30), *(unsigned char *)(s2 + 0x54), 0, 0.9f, 1.85f);
+    r = func_031B88(s0, a0, *(int *)(s0 + 0x30), *(unsigned char *)(s2 + 0x54), 0.9f, 1.85f, 0);
     if (r == 0) {
         pa = (float *)(a0 + 0x30);
         p = func_01ACC0();

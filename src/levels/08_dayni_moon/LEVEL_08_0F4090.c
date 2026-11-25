@@ -22,7 +22,7 @@ typedef struct {
 } Sub_t;
 
 typedef struct {
-    void (*cb)(void);
+    void (*cb)(void *);
     char pad0[0xC - 4];
     V3_t pos;
     char pad1[0x30 - 0x18];
@@ -37,7 +37,7 @@ typedef struct {
 extern Tbl_t D_002E7040;
 extern Spawn_t *func_09BAE8(int a, int b, int c, int d, int e);
 extern void func_0F42E8(Spawn_t *s);
-extern void func_0F41A8(void);
+extern void func_0F41A8(void *);
 
 int func_0F4090(Spawn_t **out, Def_t *def, Src_t *src, int kind, int flag)
 {

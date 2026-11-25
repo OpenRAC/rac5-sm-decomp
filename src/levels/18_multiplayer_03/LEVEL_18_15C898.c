@@ -14,7 +14,7 @@ typedef struct {
 
 extern void func_15B3C8(Rec *);
 
-void func_15C898(Rec *a0)
+void func_15C898(Rec *a0, float dt)
 {
     Node *n = a0->p_58;
 

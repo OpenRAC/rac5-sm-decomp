@@ -1,8 +1,8 @@
-extern void func_084078(void *, void *, int, void *, void *, void *, void *, void *);
+extern int func_084078(char *, int, int, void *, int, int, int, int);
 
-void TEXMGR_LoadTextureFromMemory__FPCUcUibN22P29tTEXMGR_ALPHA_COLOR_TOLERANCE(void *a, void *b, void *c, void *d, void *e, void *f)
+int TEXMGR_LoadTextureFromMemory__FPCUcUibN22P29tTEXMGR_ALPHA_COLOR_TOLERANCE(char *a, int b, int c, int d, int e, int f)
 {
     char scratch[16];
     scratch[0] = 0;
-    func_084078(a, b, 0, scratch, c, d, e, f);
+    return func_084078(a, b, 0, scratch, c, d, e, f);
 }

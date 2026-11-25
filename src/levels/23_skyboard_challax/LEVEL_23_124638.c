@@ -1,6 +1,6 @@
 extern int D_001DA44C;
 
-int func_124638(void)
+int func_124638(int a)
 {
     int *p = (int *)D_001DA44C;
 

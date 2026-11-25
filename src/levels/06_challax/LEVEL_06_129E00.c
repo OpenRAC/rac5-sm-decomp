@@ -1,6 +1,6 @@
 /* LEVEL_06:0x129E00 -- placement copy of LEVEL_01_133730.c: placement copy of FRONTEND_0210C0.c: checks a slot record's two sentinel fields and reports whether the second is not below the first. */
 extern char *D_001F5C4C;
-extern int func_129590(void);
+extern int func_129590(int a);
 extern int func_1294D0(void);
 
 int func_129E00(void)
@@ -14,7 +14,7 @@ int func_129E00(void)
     if (*(unsigned int *)(D_001F5C4C + 0xA8) == 0xFFFFFFFF) {
         return 0;
     }
-    if (((int (*)(int))func_129590)(1) == 0) {
+    if (func_129590(1) == 0) {
         return 0;
     }
     if (((int (*)(int))func_1294D0)(1) != 0) {

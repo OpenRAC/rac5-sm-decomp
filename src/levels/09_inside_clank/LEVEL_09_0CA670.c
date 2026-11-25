@@ -19,7 +19,7 @@ extern char D_001EBA48[];
 extern int func_0B6DE8(struct Obj *o, char *a, int b, int c);
 extern void func_0AB9B8(int a, void *buf, float f);
 extern int func_0B7140(struct Obj *o, int a, int b, int c, int d);
-extern void func_0B7128(struct Obj *o, int a, unsigned int b);
+extern int func_0B7128(struct Obj *o, int a, unsigned int b);
 extern int func_0B6C48(struct Obj *o, int a, int b);
 extern int func_0B6D28(struct Obj *o, int a, int b);
 extern int func_0B74F0(int a, int b, int c, int d, int e, int f, int g, int h, unsigned int i);

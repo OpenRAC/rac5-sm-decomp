@@ -20,7 +20,7 @@ PRIVATE_SUFFIXES = (
 # contents are checked separately; all other tracked files retain the strict
 # one-megabyte default.
 LARGE_TRACKED = {
-    "config/levels/body_sources.tsv": 12_000_000,
+    "config/levels/body_sources.tsv": 16_000_000,
     "config/levels/bodies.tsv": 8_000_000,
     "progress/report.json": 6_000_000,
 }

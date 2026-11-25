@@ -1,5 +1,5 @@
-extern void func_022CE0(void);
+extern void func_022CE0(void *object, int value);
 
 void func_039AA0(void *object, int value) {
-    func_022CE0();
+    func_022CE0(object, value);
 }

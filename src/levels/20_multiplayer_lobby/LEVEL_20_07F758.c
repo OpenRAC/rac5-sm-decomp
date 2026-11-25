@@ -1,7 +1,7 @@
 typedef struct { unsigned char bytes[24]; } Entry;
 extern Entry D_0018E7E8[];
-extern void func_07F600(Entry *entry);
+extern void func_07F600(Entry *entry, int value);
 
-void func_07F758(unsigned int index) {
-    func_07F600(&D_0018E7E8[index]);
+void func_07F758(unsigned int index, int value) {
+    func_07F600(&D_0018E7E8[index], value);
 }

@@ -2,8 +2,8 @@
 
 extern char D_00211CE8[];
 
-int func_081000(void *a0, void *a1, int a2, int a3, int a4, int a5, int a6, int a7,
-                float f12, float f13, float f14, float f15);
+void func_081000(void *a0, void *a1, int a2, int a3, int a4, int a5, int a6, int a7,
+                 float f12, float f13, float f14, float f15);
 void func_027F90(void *a0);
 
 void func_1C9018(char *a0)

@@ -4,20 +4,20 @@ extern unsigned int D_0020E798;
 extern char D_00228760[];
 extern char D_00228770[];
 extern char D_00228780[];
-extern void func_0798D0();
+extern void func_0798D0(void *a0, unsigned int a1, void *a2, int a3);
 
-void func_079938(void *a0, int a1, int a2)
+void func_079938(void *a0, unsigned int a1, int a2, int a3)
 {
     if (D_0020E798 < 0x10) {
         switch (a2) {
         case 0:
-            func_0798D0(a0, a1, D_00228780);
+            func_0798D0(a0, a1, D_00228780, a3);
             break;
         case 1:
-            func_0798D0(a0, a1, D_00228760);
+            func_0798D0(a0, a1, D_00228760, a3);
             break;
         case 2:
-            func_0798D0(a0, a1, D_00228770);
+            func_0798D0(a0, a1, D_00228770, a3);
             break;
         }
     }

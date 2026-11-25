@@ -1,4 +1,4 @@
-extern void func_015380(void *, void *, void *, void *);
+extern int func_015380(void *, void *, void *, void *);
 extern void func_09E220(void);
 
 typedef struct {

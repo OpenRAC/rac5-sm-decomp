@@ -69,7 +69,7 @@ extern int D_0021B094;
 extern Entry D_00244FF8[];
 extern void *memset(void *p, int c, unsigned int n);
 extern void func_15A848(Obj *o, int ref);
-extern void func_083F28(Vec4 *a, Vec4 *b, Obj *o);
+extern int func_083F28(Vec4 *a, Vec4 *b, Obj *o);
 extern void func_0973F8(Entry *e, Node *n, Vec4 *a, Vec4 *b, unsigned int fl);
 extern void func_15A748(Obj *o, float f);
 

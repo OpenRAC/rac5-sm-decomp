@@ -79,7 +79,7 @@ extern Item *func_021710(int id, int v);
 extern unsigned int func_0211D8(unsigned int index);
 extern void func_072BC8(Obj *o, Marker *m, int a, int b, int c, int d, int e, int f, float f0, float f1, float f2, float f3);
 extern void func_18E1E8(Obj *o, Ctx *c, int w, int x);
-extern void func_014C70(Res *r, int id, Ctx *c, int res);
+extern int func_014C70(Res *r, int id, Ctx *c, int res);
 
 void func_160F78(Obj *o, Ctx *c)
 {

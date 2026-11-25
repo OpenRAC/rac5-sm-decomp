@@ -2,8 +2,8 @@
 
 extern char D_0021DB40[];
 
-int func_082B38(void *a0, void *a1, int a2, int a3, int a4, int a5, int a6, int a7,
-                float f12, float f13, float f14, float f15);
+void func_082B38(void *a0, void *a1, int a2, int a3, int a4, int a5, int a6, int a7,
+                 float f12, float f13, float f14, float f15);
 void func_028A98(void *a0);
 
 void func_1D1F50(char *a0)

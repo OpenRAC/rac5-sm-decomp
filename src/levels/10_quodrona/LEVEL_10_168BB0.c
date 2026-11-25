@@ -3,9 +3,9 @@
 extern unsigned char D_00167D60[];
 
 void func_096CB8(unsigned char *buf, unsigned int mask, unsigned char *tbl, int n, int a, int b, unsigned char *c);
-void func_096E90(unsigned char *buf);
+int func_096E90(unsigned char *buf);
 
-void func_168BB0(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int a3, unsigned int t0, unsigned int t1)
+int func_168BB0(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int a3, unsigned int t0, unsigned int t1)
 {
     unsigned char buf[16];
     unsigned int x3;
@@ -25,5 +25,5 @@ void func_168BB0(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int
     a0 = a0 | x4;
     a0 = a0 | x5;
     func_096CB8(buf, a0 | 5, D_00167D60, 0x40, 0, -1, 0);
-    func_096E90(buf);
+    return func_096E90(buf);
 }

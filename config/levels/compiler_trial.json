@@ -209,7 +209,9 @@
         "src/levels/15_giant_clank_metalis/LEVEL_21_13F340.c",
         "src/levels/22_skyboard_kalidon/LEVEL_22_149A00.c",
         "src/levels/23_skyboard_challax/LEVEL_23_1BDA88.c",
-        "src/levels/24_treehouse/LEVEL_24_1BB320.c"
+        "src/levels/24_treehouse/LEVEL_24_1BB320.c",
+        "src/levels/04_metalis/LEVEL_04_197C68.c",
+        "src/levels/08_dayni_moon/LEVEL_08_1B8998.c"
       ],
       "tools": {
         "assembler": "as",
@@ -535,7 +537,28 @@
         "src/levels/15_giant_clank_metalis/LEVEL_21_030C58.c",
         "src/levels/22_skyboard_kalidon/LEVEL_22_0345C8.c",
         "src/levels/23_skyboard_challax/LEVEL_23_037F00.c",
-        "src/levels/24_treehouse/LEVEL_24_037B08.c"
+        "src/levels/24_treehouse/LEVEL_24_037B08.c",
+        "src/levels/01_pokitaru/LEVEL_01_023D48.c",
+        "src/levels/02_rykan_v/LEVEL_02_0246A8.c",
+        "src/levels/03_kalidon/LEVEL_03_023AB0.c",
+        "src/levels/04_metalis/LEVEL_04_0239C8.c",
+        "src/levels/05_medical_outpost/LEVEL_05_022CE0.c",
+        "src/levels/06_challax/LEVEL_06_0222E8.c",
+        "src/levels/07_dreamtime/LEVEL_07_0241A8.c",
+        "src/levels/08_dayni_moon/LEVEL_08_024460.c",
+        "src/levels/09_inside_clank/LEVEL_09_022ED8.c",
+        "src/levels/10_quodrona/LEVEL_10_023548.c",
+        "src/levels/10_quodrona/LEVEL_10_1E1D10.c",
+        "src/levels/15_giant_clank_metalis/LEVEL_15_01E1D0.c",
+        "src/levels/16_multiplayer_01/LEVEL_16_021698.c",
+        "src/levels/17_multiplayer_02/LEVEL_17_021018.c",
+        "src/levels/18_multiplayer_03/LEVEL_18_020CE0.c",
+        "src/levels/19_multiplayer_04/LEVEL_19_0212D8.c",
+        "src/levels/20_multiplayer_lobby/LEVEL_20_01E4B8.c",
+        "src/levels/15_giant_clank_metalis/LEVEL_21_01E1D0.c",
+        "src/levels/22_skyboard_kalidon/LEVEL_22_01EC88.c",
+        "src/levels/23_skyboard_challax/LEVEL_23_021EF0.c",
+        "src/levels/24_treehouse/LEVEL_24_021AC0.c"
       ],
       "tools": {
         "assembler": "Ps2EeAs.exe",

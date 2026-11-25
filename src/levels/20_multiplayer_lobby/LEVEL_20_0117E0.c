@@ -2,7 +2,7 @@
 extern float D_00135BE8;
 extern char D_00135C20[];
 
-extern int func_0DA2F8(void *, float, float, float);
+extern void func_0DA2F8(void *, float, float, float);
 
 void func_0117E0(void)
 {

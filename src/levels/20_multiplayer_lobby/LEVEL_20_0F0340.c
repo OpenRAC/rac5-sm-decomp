@@ -17,7 +17,7 @@ extern void *memset(void *s, int c, unsigned int n);
 extern int func_0930B8(void *dst, void *src, int n, int a3);
 extern void func_0874F0(void *a0, short *out, float f12);
 extern int func_093410(void *fx, short a1, short a2, short a3, short a4);
-extern void func_0933F8(void *fx, void *a1, void *a2);
+extern int func_0933F8(void *fx, int a1, int a2);
 extern int func_092F18(void *fx, unsigned int a1, unsigned int a2);
 extern int func_093190(void *fx);
 
@@ -32,7 +32,7 @@ void func_0F0340(void *a0, void *a1, void *a2, int (*a3)(int, void *), int t0)
     D_00204AE8.f_48 = t0;
     func_0874F0(a0, v, 0.0f);
     func_093410(&D_00204AE8, v[0], v[2], v[4], v[6]);
-    func_0933F8(&D_00204AE8, a1, a2);
+    func_0933F8(&D_00204AE8, (int)a1, (int)a2);
     func_092F18(&D_00204AE8, 0x40602020, 0xFFB07050);
     for (i = 0; i < 100; i++) {
         if (a3(i, &D_00204AE8) == 0) {

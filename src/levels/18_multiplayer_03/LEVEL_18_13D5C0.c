@@ -46,7 +46,7 @@ extern Row D_001CF1A8[];
 extern float D_001E09B0;
 extern float sqrtf(float x);
 extern unsigned int func_01A0A0(Ent **out, int max, float *pos, int a3, int a4, int a5, int a6, float range);
-extern void func_014C70(Owner *o, int kind, Ent *e, int r);
+extern int func_014C70(Owner *o, int kind, Ent *e, int r);
 
 static inline void vsub(float *o, float *a, float *b)
 {

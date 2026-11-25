@@ -25,7 +25,7 @@ extern int D_001F0B3C;
 extern int func_0B4418(struct Obj *o, int a, int b, int c);
 extern void func_0A8ED8(int a, void *buf, float f);
 extern int func_0B4790(struct Obj *o, int a, int b, int c, int d);
-extern void func_0B4778(struct Obj *o, int a, unsigned int b);
+extern int func_0B4778(struct Obj *o, int a, unsigned int b);
 extern int func_0B4298(char *object, int first, int second);
 extern int func_0B4378(struct Obj *o, int a, int b);
 extern int func_128C80(int a);

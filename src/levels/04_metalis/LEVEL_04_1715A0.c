@@ -6,9 +6,9 @@ typedef struct {
     float f_08;
 } Obj;
 
-extern void func_1299D0(void *a0, void *a1, float a2, float a3, float a4);
+extern int func_1299D0(void *a0, void *a1, float a2, float a3, float a4);
 
-void func_1715A0(Obj *a0, void *a1, void *a2, float x)
+int func_1715A0(Obj *a0, void *a1, void *a2, float x)
 {
-    func_1299D0(a1, a2, a0->f_00, a0->f_08, x);
+    return func_1299D0(a1, a2, a0->f_00, a0->f_08, x);
 }

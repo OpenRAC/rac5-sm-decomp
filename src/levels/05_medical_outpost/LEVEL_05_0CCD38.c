@@ -15,7 +15,7 @@ extern E D_001F2050[];
 extern int func_0B80C0(G *g, int a, int b, int c);
 extern void func_0ACCC8(int a, R4 *r, float f);
 extern int func_0B8438(G *g, int a, int b, int c, int d);
-extern void func_0B8420(G *g, int a, unsigned b);
+extern int func_0B8420(G *g, int a, unsigned b);
 extern int func_0B7F40(char *object, int first, int second);
 extern int func_0261F0(int a, int b);
 extern int func_0263C0(int a);

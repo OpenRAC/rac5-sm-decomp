@@ -36,7 +36,7 @@ struct Obj {
 /* The attack damage table: 259 entries of 16 bytes (kind, damage, element, hit class). */
 extern DamageInfo D_0022DCD8[];
 extern int func_01CD48(Obj **out, int a, float *p, int b, int c, int d, int e, float f);
-extern void func_016950(Root *r, int a, Obj *o, int ret);
+extern int func_016950(Root *r, int a, Obj *o, int ret);
 extern float sqrtf(float);
 
 void func_178F00(Obj *a, float *p)
