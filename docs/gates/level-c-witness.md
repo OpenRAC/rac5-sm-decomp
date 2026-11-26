@@ -52,14 +52,14 @@ extent, the six named imports, local fixups, complete FRONTEND.REL file and the
 previously measured relocated-image hash. This qualifies that **one frontend
 placement**, not a general frontend compiler profile or gameplay equivalence.
 
-## Wave-17 level bodies
+## First level-body scope (19 October 2026)
 
 `config/levels/bodies.tsv` records **210 placements** (13,128 module bytes)
 carried by **158 sources**: 157 author files (since moved into the per-module
 directories of [`src/levels/`](../../src/levels/README.md)) plus the shared
 `func_00000100.c`. The placements cover all 21 modules (the frontend and the
-twenty numbered levels). Eight wave-17 lots measured them; three placements
-proved independently by two lots (`LEVEL_02.REL` `0x3EE08`, `0x23A28`,
+twenty numbered levels). Eight translation batches measured them; three placements
+proved independently by two batches (`LEVEL_02.REL` `0x3EE08`, `0x23A28`,
 `0x7F4A0`) appear once in the table.
 
 Each row is one placement: module, offset, size, source, source SHA-256 (LF),
@@ -80,22 +80,22 @@ preceded by two nops (cc1 SHA-256 `d7f3fb64…`). The opt-in
 `gnu-ee-trial-divpad-blockmove` also qualifies 32-byte block-move loop
 padding.
 `sdk991111` and `sdk991111sync` are the Sony EE-GCC 2.9-ee-991111 builds the
-boot campaign already pins (cc1 SHA-256 `1305725c…` and `eaf94d2a…`); a few
+boot trial profile already pins (cc1 SHA-256 `1305725c…` and `eaf94d2a…`); a few
 level bodies only match under them — the game compiler of the sibling
 projects is a lever here too — and they are selected per source, never
 globally. Most rows use the pinned GNU `gnu-ee-trial-20261015` assembler;
 two measured sources select separately pinned `r5900-mfc1` and `ee-frozen`
 routes.
 
-Symbol resolution is deliberately narrower than the wave-17 harness. An
+Symbol resolution is deliberately narrower than the 19 October 2026 harness. An
 undefined name resolves from the module import table (address 0), the module
 export table (its measured offset), or the name itself
 (`func_/D_<address>`). The gate never reads a symbol address from the retail
-bytes it is proving. Forty-three placements (26 lot sources) used placeholder
+bytes it is proving. Forty-three placements (26 batch sources) used placeholder
 names (`level_data_a`, `sub_target`, …) that the harness had resolved from
 retail relocation sites; those bodies were renamed once into address-carrying
 names, with one file per placement where the address differs, and the original
-lot source is named in a header comment. The byte comparison proves each
+batch source is named in a header comment. The byte comparison proves each
 renamed source exactly like the others.
 
 **A body that carries an absolute address is not portable.** The twelve-byte
@@ -108,7 +108,7 @@ placement, with the address the retail uses written into the symbol name. The
 immediate of a load or a store is signed, so the address read from the retail
 bytes is `(lui << 16) + sign_extended(offset)`.
 
-**A claim is a hypothesis, not a proof.** Two lots may produce different
+**A claim is a hypothesis, not a proof.** Two batches may produce different
 sources for the same placement, and the first one written is not necessarily
 the one that reproduces the retail bytes. Every candidate source of a
 placement is therefore replayed at that placement, and the row is dropped when
@@ -116,27 +116,27 @@ none of them proves.
 
 The three pre-existing accepted functions and two controls keep their original
 scope: **556 unique C body bytes** (8 + 72 shared, 476 frontend) and **2,076
-placement bytes**. The wave-17 bodies are a separate scope: **210 placements**,
+placement bytes**. The 19 October 2026 bodies are a separate scope: **210 placements**,
 **13,128 placement bytes**, and **10,560 bytes** of distinct source (a source
-counted once). Do not add the scopes together: 20 wave-17 rows are the already
-counted `0x100` eight-byte body, re-proved from the lots' own sources.
+counted once). Do not add the scopes together: 20 of those rows are the already
+counted `0x100` eight-byte body, re-proved from the batches' own sources.
 
 The rest of each module is supplied by the pinned retail input. No game bytes,
 compiler binaries or linked outputs are committed.
 
-## Wave-19 level bodies
+## Expanded level-body scope (20 October 2026)
 
 At the October 2026 snapshot, `config/levels/bodies.tsv` recorded **7,997 placements** (384,676 module
-bytes) carried by **1,658 sources**, on top of the wave-17 ones, and all 21
+bytes) carried by **1,658 sources**, on top of the 19 October 2026 ones, and all 21
 complete module hashes still match. The placements name their source; the
 source's own two hashes, its compiler profile and its assembler live once per
 source in `config/levels/body_sources.tsv`, so a body carried by hundreds of
 placements does not repeat them hundreds of times.
 
-The wave-18 campaign worked the levels again with a wider queue: 601 bounded
+On 20 October 2026 the levels were worked again with a wider queue: 601 bounded
 candidates over the 21 modules, taken from the same
 `level_function_inventory` bounds, ranked by the number of placements that
-carry the same raw body. Fourteen translation lots produced the bodies, and
+carry the same raw body. Fourteen translation batches produced the bodies, and
 the shared families were then expanded: for every accepted body, the 21
 modules were searched for the candidate placements that carry the same body
 bytes, and each one was proved on its own by compiling the same source,
@@ -150,11 +150,11 @@ helper and the `memset`-plus-counter ring buffer. One authored source
 therefore carries many placements, which is why the placement count grows
 much faster than the number of sources.
 
-The wave-20 scope is separate from the wave-17 one: **7,997 placements**,
+The 20 October 2026 scope is separate from the 19 October 2026 one: **7,997 placements**,
 **384,676 placement bytes** and **120,444 bytes** of distinct source (a source
-counted once). The two scopes are not added together: the 210 wave-17 rows
+counted once). The two scopes are not added together: the 210 earlier rows
 are part of the 7,997, and 20 of them are the already counted `0x100`
-eight-byte body re-proved from the lots' own sources.
+eight-byte body re-proved from the batches' own sources.
 
 ### The `Quat_Slerp` body and a fourth compiler
 
@@ -175,8 +175,8 @@ pinned per source as `gnu-ee-trial-divpad` and
 additive: the 177 level bodies accepted before it recompile to byte-identical
 objects under the new `cc1`.
 
-Three hundred and forty bodies in the wave-18 queue are larger than 412
-bytes, a band the wave-17 campaign never attempted. Most of that band stays
+Three hundred and forty bodies in the 20 October 2026 queue are larger than 412
+bytes, a band the 19 October 2026 scope never attempted. Most of that band stays
 unmatched: the instruction sequence of those bodies is right, but GCC 2.9
 allocates the floating-point registers differently from the retail code.
 That is an allocator difference, not a source difference, and it is parked
@@ -184,7 +184,7 @@ with its first difference and a reopening condition rather than counted.
 
 ### The sixty-four byte copy, and what the sibling projects had already solved
 
-The `FRONTEND.REL:0x0061C0` body was parked for a whole wave: it copies
+The `FRONTEND.REL:0x0061C0` body was parked for a whole pass: it copies
 sixty-four bytes, and the retail does it with four `lq` and four `sq` — the
 sixteen-byte moves of the R5900. Every attempt had tried `mode(TF)`,
 `aligned(16)` and `vector_size(16)` on their own and none of them produced
@@ -225,21 +225,21 @@ twice, puts the global's address first:
 ```
 
 The body is then byte-identical to the retail, all sixty-four bytes, and it
-is counted with the pinned compiler. The lesson is recorded for the next
-waves: `lq`/`sq` mean a **scalar** `TImode` value, and a register that is
+is counted with the pinned compiler. The lesson is recorded for later
+passes: `lq`/`sq` mean a **scalar** `TImode` value, and a register that is
 merely inverted is an order of creation, not an allocator difference.
 
-### The wave-21 campaign, and the form of a float copy
+### Sixteen-byte move families (first 21 October 2026 pass)
 
 That lesson opened a whole class, and the class was measured before it was
 cut up: of the bounded candidates of the twenty-one modules, **1,089
 families** carry a sixteen byte move, at **1,511 placements**. Eighteen
-translation lots took them, and the root **re-proved every claimed row
+translation batches took them, and the integrator **re-proved every claimed row
 itself**, at its own placement and under its own profile, before anything
-entered the repository. The wave added **469 placements** and left **198
+entered the repository. The pass added **469 placements** and left **198
 measured failures**, each with its cause.
 
-The form the campaign measured is not "a copy of floats". The `ldl`/`ldr`
+The form the pass measured is not "a copy of floats". The `ldl`/`ldr`
 pair is an **aggregate aligned on four bytes**, copied by a structure
 assignment, which the compiler cuts into **eight byte pieces** (`ldl` at
 base+7, `ldr` at base), plus one word when the rest is not a multiple of
@@ -253,7 +253,7 @@ address in the first register. The address of a global reads
 `(high << 16) + sext16(low)`, and a non canonical page needs a symbol **at
 the page**.
 
-What the wave also found is the sense the levels had stripped: the modules
+What the pass also found is the sense the levels had stripped: the modules
 import the shared game code **by name** — `BinkOpen`, `LIGHT_BeginFrame__Fv`,
 `MBOX_Receive__FiPP12HigMsgPacketPUi`,
 `dlib_displist_add_data_ul64__FP13DLIB_DISPLISTUlUl` — and the relocation
@@ -265,16 +265,16 @@ part: reloading a global after each store (the aliasing of GCC 2.9 merges
 the reads), a 128-bit constant that is *computed* rather than literal (the
 pinned `cc1` refuses the conversion), and `movn`.
 
-### The wave-22 campaign, and the form of a float copy
+### Float-copy families (second 21 October 2026 pass)
 
 The float class is much larger than the sixteen byte one — **14,184
-families** at 18,068 placements — and twenty lots took the first 2,400 of
-them, ranked by the number of placements they carry. The root re-proved
-every claimed row itself, and the wave added **2,383 placements** plus
-**three of the twelve bodies** that had been parked for two campaigns
+families** at 18,068 placements — and twenty batches took the first 2,400 of
+them, ranked by the number of placements they carry. The integrator re-proved
+every claimed row itself, and the pass added **2,383 placements** plus
+**three of the twelve bodies** that had been parked for two passes
 because they are larger than 412 bytes.
 
-The form the campaign measured is the twin of the sixteen byte one. The
+The form the pass measured is the twin of the sixteen byte one. The
 float copy of the retail is an assignment **field by field**, in the
 retail's exact order; a structure assignment gives `ldl`/`ldr`, which is the
 *other* class. The order of the assignments is the order of the
@@ -292,20 +292,20 @@ with the offset in the expression. And to make the compiler **reload** a
 global pointer after a write, the global has to be a **structure**.
 
 One of the three parked bodies turned out to be a **profile** wall, not a
-source wall: the source the wave-19 campaign had written, unchanged, gives
+source wall: the source written on 20 October 2026, unchanged, gives
 504 bytes under the pinned compiler and **512 exact bytes** under
-`gnu-ee-trial-divpad`. That is a correction to what the earlier waves
+`gnu-ee-trial-divpad`. That is a correction to what the earlier passes
 concluded, and it is recorded in
 [`matching-blockers.md`](../contributing/matching-blockers.md).
 
-### The wave-23 campaign, and the form of a float copy
+### Remaining float-copy families (third 21 October 2026 pass)
 
-The wave-23 campaign changed the way the work is divided: each agent proves
-a family at **one** placement, and the root extends it afterwards, proving
-every placement on its own bytes. Twenty lots took the first 2,400 of the
-remaining float families, and the root re-proved every claimed row itself.
+The third pass changed the way the work is divided: each agent proves
+a family at **one** placement, and the integrator extends it afterwards, proving
+every placement on its own bytes. Twenty batches took the first 2,400 of the
+remaining float families, and the integrator re-proved every claimed row itself.
 
-What the campaign measured, beyond what the wave-22 campaign had:
+What the pass measured, beyond what the second pass had:
 
 - the **order of the assignments** is a **rotation** of the source order: for
   the retail's `R1..Rn` the source writes `R1..R(n-2), Rn, R(n-1)`;
