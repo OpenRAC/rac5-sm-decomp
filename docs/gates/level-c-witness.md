@@ -1452,3 +1452,21 @@ returns 1 when the sound command queue drains and 0 on timeout, so its callers d
 it `int`; they stay exact at all of their placements. 369 placements in 21 forms stay
 held for prototype disagreements. All 21 complete USA modules remain exact, and the
 prototype review finds the same 1,779 disagreeing pairs as before, none introduced.
+
+The same day, a second attempt on the misses that are whole functions, and a prototype
+alignment of the forms the previous paragraph left held, add **242 placements** (15,316
+bytes by placement) from 137 sources. Counted by masked shape, accepted level bodies
+rise from 1,147,820 bytes in 7,819 shape units to 1,149,704 bytes in 7,846. 241
+placements use the pinned chain and one `sdk991111`. `-fexceptions` is measured for
+20 placements: with it the pinned `cc1` skips the `-O2` block merge in `flow.c`
+(`cygnus_merge_blocks`), which keeps the retail block order of a switch default or
+an early return. The game's code is C++ (mangled boot symbols, the frontend's `__throw`),
+and GCC 2.95 compiles C++ with exceptions on.
+`-fno-sched-interblock` is measured for 12. Each new source declares its callees as
+their accepted definitions (76 by a cast at the call that keeps the compiled type),
+and 126 accepted callers change 131 declarations the same way (34 only the declaration,
+97 with a cast at the call); all of them stay exact at all of their placements, and
+no reviewed family control source was edited. 469 placements in 27 forms stay held,
+most of them definitions that return a 64-bit value to callers that declare `int`.
+All 21 complete USA modules remain exact, and the prototype review finds the same
+1,779 disagreeing pairs as before, none introduced.

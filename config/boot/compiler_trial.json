@@ -154,7 +154,9 @@
     "src/boot/MEMCARD_GetWriteHeaderOnlyModeStatus__Fv.c",
     "src/boot/MEMCARD_Idle__Fv.c",
     "src/boot/MEMCARD_InitStateNode__FP19tMEMCARD_STATE_NODE.c",
+    "src/boot/MEMCARD_SetDanSkinUnlocked__FUi.c",
     "src/boot/MEMCARD_SetErrorIfWeStartedOperationFlow__Fv.c",
+    "src/boot/MEMCARD_SetHardcoreModeBit__FUib.c",
     "src/boot/MEMCARD_SetHeaderCreationDateDetail__FUi.c",
     "src/boot/MEMCARD_SetHeaderDetail__FUiUiUiUiUi.c",
     "src/boot/MEMCARD_SetMultiplayerSave__Fb.c",
@@ -175,6 +177,7 @@
     "src/boot/MatrixMode__Q34scee3Psp3GumQ44scee3Psp2Gu11EMatrixType.c",
     "src/boot/PART_Init__Fv.c",
     "src/boot/PAR_ClearGroup__FP9PAR_Group.c",
+    "src/boot/PAR_CreateGroup__FP9PAR_Groupi13PAR_BlockMode.c",
     "src/boot/PAR_CreateSystemInternal__FP10PAR_SystemUiPFPviPC9PAR_GroupPC29PAR_UpdateAndTesselateContext_iiiiPFP9PAR_Group_v.c",
     "src/boot/PAR_DestroyGroup__FP9PAR_Group.c",
     "src/boot/PAR_Emit__FPiP9PAR_Groupi.c",
@@ -1216,5 +1219,5 @@
       "729eddaa2d038baddf897a9c8c501d96a53b6443aa1179b194bacd474a522fbb"
     ]
   },
-  "expected_objects": 881
+  "expected_objects": 884
 }

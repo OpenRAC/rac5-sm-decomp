@@ -1369,3 +1369,13 @@ src/levels/02_rykan_v/LEVEL_02_171C18.c  -fno-schedule-insns
 src/levels/04_metalis/LEVEL_04_166598.c  -fno-schedule-insns
 src/levels/09_inside_clank/LEVEL_09_1A0718.c  -fno-expensive-optimizations
 src/levels/10_quodrona/LEVEL_10_18E018.c  -fno-schedule-insns
+
+# Boot bodies of at most 200 bytes accepted on 14 November 2026. Each route is the
+# measured one: the pinned chain does not reproduce these bodies (their pinned
+# negative controls differ); bodies the pinned chain also reproduces keep it.
+src/boot/PAR_CreateGroup__FP9PAR_Groupi13PAR_BlockMode.c    -mno-check-zero-division
+src/levels/01_pokitaru/LEVEL_01_015EE8.c  -fexceptions
+src/levels/shared/LEVEL_01_16F160.c  -fno-sched-interblock
+src/levels/shared/LEVEL_01_171330.c  -fexceptions
+src/levels/03_kalidon/LEVEL_03_193860.c  -fexceptions
+src/levels/15_giant_clank_metalis/LEVEL_15_029498.c  -fexceptions

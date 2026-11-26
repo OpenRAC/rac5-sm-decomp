@@ -1,6 +1,6 @@
 /* LEVEL_01:0x0BB2F0 -- when the guard word is set, runs a helper and mirrors its result into a global. */
 extern char D_00328A64[];
-extern void func_0BCBA0(void *, int *);
+extern int func_0BCBA0(void *, int *);
 extern int func_0BCA80(int a0);
 
 int func_0BB2F0(void)
