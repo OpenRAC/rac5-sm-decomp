@@ -1439,3 +1439,17 @@ object hashes were recorded from a minimal environment. No accepted source was
 edited. 52 placements in 7 forms stay held for prototype disagreements. All 21
 complete USA modules remain exact, and the prototype review finds the same 1,779
 disagreeing pairs as before, none introduced.
+
+Every open USA level body of at most 100 bytes, offered to new C on 26 November 2026,
+adds **338 placements** (22,676 bytes by placement) from 209 sources. Counted by
+masked shape, accepted level bodies rise from 1,145,728 bytes in 7,791 shape units to
+1,147,820 bytes in 7,819. 298 placements use the pinned chain and 40 `sdk991111`; 41
+are exact only with `ps2eeas`, whose object hashes were recorded from a minimal
+environment. Per-source options were measured for 9 sources: `-malign-functions=2`
+(62 placements), `-fno-delayed-branch` (16), `-fno-sched-interblock` (12),
+`-fno-schedule-insns` (3) and `-fno-expensive-optimizations` (1). 20 accepted sources
+change one declaration: `SND_FlushAndSync__FUi`, accepted in the boot the same day,
+returns 1 when the sound command queue drains and 0 on timeout, so its callers declare
+it `int`; they stay exact at all of their placements. 369 placements in 21 forms stay
+held for prototype disagreements. All 21 complete USA modules remain exact, and the
+prototype review finds the same 1,779 disagreeing pairs as before, none introduced.

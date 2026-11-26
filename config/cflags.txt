@@ -1355,3 +1355,17 @@ src/levels/19_multiplayer_04/LEVEL_19_128F98.c  -fno-gcse
 src/levels/23_skyboard_challax/LEVEL_23_12CE98.c  -fno-gcse
 src/levels/24_treehouse/LEVEL_24_131230.c  -fno-gcse
 src/levels/05_medical_outpost/LEVEL_05_17DF88.c  -fno-gcse
+
+# Boot bodies of at most 200 bytes accepted on 14 November 2026. Each route is the
+# measured one: the pinned chain does not reproduce these bodies (their pinned
+# negative controls differ); bodies the pinned chain also reproduces keep it.
+src/boot/VEC_MakeMatFromYawPitchRoll__FP4VEC3N20fff.c    gnu-ee-trial -O2 -G0
+src/levels/shared/FRONTEND_0055B0.c  -malign-functions=2
+src/levels/shared/FRONTEND_011ED0.c  -fno-delayed-branch
+src/levels/shared/FRONTEND_02129C.c  -malign-functions=2
+src/levels/shared/LEVEL_01_03C0E8.c  -malign-functions=2
+src/levels/shared/LEVEL_01_16F100.c  -fno-sched-interblock
+src/levels/02_rykan_v/LEVEL_02_171C18.c  -fno-schedule-insns
+src/levels/04_metalis/LEVEL_04_166598.c  -fno-schedule-insns
+src/levels/09_inside_clank/LEVEL_09_1A0718.c  -fno-expensive-optimizations
+src/levels/10_quodrona/LEVEL_10_18E018.c  -fno-schedule-insns

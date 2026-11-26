@@ -572,7 +572,9 @@
         "src/levels/22_skyboard_kalidon/LEVEL_22_01EC88.c",
         "src/levels/23_skyboard_challax/LEVEL_23_021EF0.c",
         "src/levels/24_treehouse/LEVEL_24_021AC0.c",
-        "src/levels/10_quodrona/LEVEL_10_19EAC8.c"
+        "src/levels/10_quodrona/LEVEL_10_19EAC8.c",
+        "src/levels/shared/FRONTEND_0055B0.c",
+        "src/levels/shared/LEVEL_01_03C0E8.c"
       ],
       "tools": {
         "assembler": "Ps2EeAs.exe",
