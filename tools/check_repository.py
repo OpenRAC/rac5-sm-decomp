@@ -26,6 +26,9 @@ LARGE_TRACKED = {
 }
 
 
+C_SUFFIXES = {".c", ".cc", ".cpp", ".cxx", ".h", ".hpp"}
+
+
 def size_limit(name: str) -> int:
     return LARGE_TRACKED.get(name.replace("\\", "/"), 1_000_000)
 
@@ -58,13 +61,21 @@ def check() -> list[str]:
             continue
         path = ROOT / name
         if path.exists():
+            source = path.suffix.lower() in C_SUFFIXES
             if path.stat().st_size > size_limit(name):
                 problems.append(f"{name}: unexpectedly large tracked file")
-            elif path.read_bytes()[:4] == b"\x7fELF":
-                problems.append(f"{name}: ELF bytes in a tracked file")
-            if path.suffix.lower() in {".c", ".cc", ".cpp", ".cxx", ".h", ".hpp"}:
-                problems.extend(f"{name}: {reason}" for reason in
-                                policy_errors(path.read_text(encoding="utf-8")))
+                head = b""
+            else:
+                # Read a whole file only when its text is checked as C source.
+                with path.open("rb") as handle:
+                    head = handle.read() if source else handle.read(4)
+                if head[:4] == b"\x7fELF":
+                    problems.append(f"{name}: ELF bytes in a tracked file")
+            if source:
+                # Same universal-newline text that Path.read_text() returns.
+                text = (head.decode("utf-8").replace("\r\n", "\n").replace("\r", "\n")
+                        if head else path.read_text(encoding="utf-8"))
+                problems.extend(f"{name}: {reason}" for reason in policy_errors(text))
     return problems
 
 
