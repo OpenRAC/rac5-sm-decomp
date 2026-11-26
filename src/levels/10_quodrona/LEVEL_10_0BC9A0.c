@@ -33,7 +33,7 @@ extern Big D_0023E540;
 
 extern int SND_PauseAtrac__Fbi(int a, int b);
 extern void SND_PausePositionalSounds__Fb(int a);
-extern void SND_FlushAndSync__FUi(unsigned int a);
+extern int SND_FlushAndSync__FUi(unsigned int a);
 extern void func_019EA8(int a, int b);
 extern void func_0B3DB8(char *p);
 extern int func_131AC0(void);
