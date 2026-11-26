@@ -12,22 +12,22 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`boot-symbols.md`](../build/boot-symbols.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **91,644 boot `.text` bytes in 713 C bodies**
+The current catalogue records **120,100 boot `.text` bytes in 867 C bodies**
 across several code areas, built by the locally reconstructed GNU EE chain and,
-for 180 of them, by one of six further pinned compilers
+for 293 of them, by one of six further pinned compilers
 ([witness evidence](compiler-witnesses.md)).
 All of them link together into the complete boot text while preserving the
 retail raw `PT_LOAD` bytes and program header
 ([combined witness](../gates/boot-c-witness.md#combined-provisional-c-witness)); the
 generated `config/boot/witness_boundaries.tsv` catalogue lists each linked body
 with its compiled extent, its following zero alignment and the kind of control
-transfer it ends in. Six hundred and ninety-three reviewed placements (88,948 bytes,
+transfer it ends in. Eight hundred and forty-seven reviewed placements (117,404 bytes,
 starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](../gates/boot-trial-gate.md) pins the isolated compiler identities,
-rebuilds all 713 objects from authored C and checks that full link in one run;
-its machine-readable report accepts 693 boot-only placements (88,948 bytes) after
+rebuilds all 867 objects from authored C and checks that full link in one run;
+its machine-readable report accepts 847 boot-only placements (117,404 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
 `nop`. An [isolated RAC5 short-loop threshold trial](compiler-loop-trial.md)
@@ -41,7 +41,7 @@ families still need controls before qualifying a general compiler profile.
 In particular, RAC2's reconstructed GNU EE-GCC game profile and its Sony SDK
 profile have **not** been qualified for Size Matters. The repository now has
 a [boot-only compiler profile](../../config/boot/compiler_trial.json) accepted
-for its 693 reviewed placements and one
+for its 847 reviewed placements and one
 [RAC5-only patch](../../tools/compiler/patches/0001-rac5-short-loop-six.patch).
 Its per-source compiler and options live in
 [`config/cflags.txt`](../../config/cflags.txt); it is not a game-wide C/C++

@@ -8,9 +8,10 @@ Thanks for helping. The rules live in [`AGENTS.md`](AGENTS.md) and
    rebuilt from public sources by `bash tools/compiler/build_gnu_ee.sh`
    ([getting the tools](docs/contributing/toolchain.md),
    [docs/build/building.md](docs/build/building.md)). The pinned USA input and the SNR2 and
-   boot metadata are verified: **693** narrowly accepted boot placements
-   (88,948 bytes), one 476-byte frontend function and two shared level
-   functions. The level compiler profiles, the complete function catalogue and
+   boot metadata are verified: **847** narrowly accepted boot placements
+   (117,404 bytes), one 476-byte frontend function, two shared level
+   functions and, counted separately, 79,703 accepted level-body placements.
+   The level compiler profiles, the complete function catalogue and
    the game-wide progress build remain open.
 2. **Choose a scope.** Check the open issues and pull requests, and keep one
    comment in the [coordination issue](https://github.com/OpenRAC/rac5-sm-decomp/issues/99)

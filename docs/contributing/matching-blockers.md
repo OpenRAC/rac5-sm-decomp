@@ -1073,9 +1073,10 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-The level scope is **32,794 measured placements** of 1,924,072 placement bytes carried by **23,237
-sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
-**693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
+At the 26 November 2026 snapshot (`progress/status.json`), the level scope is **79,703 measured
+placements** of 9,776,576 placement bytes carried by **62,966 sources**, and many bounded
+candidates remain outside the accepted scope. The boot keeps **847 accepted functions** covering
+117,404 of 498,900 bytes of `.text`. The remainder of this section records earlier dated additions.
 The eight newly accepted bounded families contribute 241 distinct C bodies
 and 252 placements (35,536 distinct-source bytes); their zero alignment tails
 are excluded. The 212-byte wrappers pass x/y/text and two scales in the
@@ -1095,7 +1096,7 @@ Four more bounded families (132, 100, 300 and 176 bytes) add **70 C sources,
 the measured data relocations and named `sqrtf` imports. Additional accepted
 wrappers now pass their consumed GPR and FPR arguments explicitly, without
 changing their pinned objects or linked retail bodies.
-The 713 linked C bodies cover 93,032 bytes including alignment. The profile
+The 867 linked boot C bodies cover 121,840 bytes including alignment. The profile
 files and their patches are the only place where a toolchain change is allowed
 to move a body.
 
