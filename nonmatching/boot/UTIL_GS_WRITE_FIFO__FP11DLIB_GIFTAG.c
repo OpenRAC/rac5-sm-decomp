@@ -1,21 +1,20 @@
 /* USA SCUS_976.15 boot: UTIL_GS_WRITE_FIFO__FP11DLIB_GIFTAG, 0x01E84050.
  * Observed body: 216 bytes, it fills its interval.
- * Not exact; no complete-program gate, promotion or C matching credit.
- * Measured 17 November 2026 after independent SN linking: pinned route 201 of 216
- * bytes equal (first difference at byte 126), gnu-ee-trial 147 of 216 (first
- * difference at byte 100); pre-screen on pinned and gnu-ee-trial-divpad: 48 of 54
- * words, sdk991111 far worse.
+ * Measured 26 November 2026: all 216 body bytes are exact after independent
+ * SN linking at the retail address under the rebuilt default GNU route, with
+ * -O2 -G0 and the default GNU assembler (gnu-ee-trial: 159/216, first
+ * difference at byte 100). The default tools are rebuilt, not hash-qualified. This is an unaccepted
+ * witness: complete-program integration, boundaries, types and qualification
+ * require separate review. No promotion or matching credit is claimed here.
  * Reconstructed from the retail boot. It walks a chain of GIF packets starting at
  * the tag: the quadword count of a packet is NLOOP*NREG+1 for the packed format
  * (FLG == 0, using a 64-bit multiply call) and NLOOP+1 otherwise, every quadword
  * is copied to the GIF FIFO at 0x10006000, and the walk stops after the packet
  * whose EOP bit is set.
- * Remaining difference: the quadword copy loop is scheduled differently. Retail
- * keeps the store in the loop body and fills the delay slot of a branch-likely
- * with the next load; the compiler here moves the store into the delay slot of
- * an ordinary branch and adds two nops. Everything else, including register
- * assignment, matches. Reopen when a source shape that makes the compiler pick
- * the branch-likely fill for this 128-bit copy loop is found.
+ * The source shape that mattered: the FIFO is a hardware register, so the store
+ * is through a volatile quadword lvalue. That keeps the store out of the branch
+ * delay slot and lets the compiler fill a branch-likely with the next load.
+ * Accepted boot sources access the 0x1000xxxx hardware registers the same way.
  */
 typedef unsigned long long u64;
 typedef unsigned int QW __attribute__((mode(TI)));
@@ -35,7 +34,7 @@ void UTIL_GS_WRITE_FIFO__FP11DLIB_GIFTAG(DLIB_GIFTAG *tag) {
         {
             QW *src = (QW *)tag;
             for (i = 0; i < n; i++) {
-                *(QW *)0x10006000 = src[i];
+                *(volatile QW *)0x10006000 = src[i];
             }
         }
         if (*(u64 *)tag & 0x8000) {

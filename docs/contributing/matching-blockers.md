@@ -2421,6 +2421,9 @@ independent SN link at the retail address: the three transition
 `MCPTRANS_DREAM_Animate__Ff` under the rebuilt default GNU route and
 `gnu-ee-trial`; `WAD_FindAssetsBySignature`, `PS2HEAP_Free__FPv` and (since
 26 November) `MCPI_InitializeMcpGlobals__Fv` under the default route only.
+Two more became exact on 26 November and are not yet in the gate below:
+`PS2HEAP_Malloc__FUi` (both routes) and `UTIL_GS_WRITE_FIFO__FP11DLIB_GIFTAG`
+(default route).
 On 26 November 2026 a complete boot gate on master `ef75f8a07` with these
 twelve bodies linked as provisional owners (default route,
 `--unpinned-tools`) passed: 879 exact objects, `.text` and the loaded segment
@@ -2462,6 +2465,31 @@ baseline. Source shapes that mattered:
   is now `void`, as the accepted wrapper declares it (still exact).
   `MCPTRANS_DREAM_Animate__Ff` keeps names only where existing sources or a
   callee give evidence; the other values keep their addresses.
+- `UTIL_GS_WRITE_FIFO`: the GIF FIFO at `0x10006000` is a hardware register,
+  written through a `volatile` quadword lvalue as accepted boot sources write
+  the `0x1000xxxx` registers; that keeps the store out of the loop's delay
+  slot, which the compiler then fills with the next load as retail does.
+- `PS2HEAP_Malloc__FUi`: register allocation, read from the `.lreg`/`.greg`
+  dumps (pass the dump flags one at a time; `-da` overflows a host buffer).
+  Global allocation ranks pseudos by references (loop references count
+  double) over live length. The size is rounded in place in the argument, and
+  the best-fit test records a new best block in two places (first fitting
+  block, then any smaller one) instead of one combined condition: the same
+  instructions, but the extra references rank the chosen block above the size
+  so the two take retail's saved registers. When two values swap saved
+  registers, compare their priorities in `.greg` before trying more shapes.
+- Remaining differences that point at the compiler rather than the source:
+  `SYSTEM_UploadMatrix` needs a 128-bit zero kept in a register (`por`)
+  before a quadword store, which our `cc1` always folds into the zero
+  register while the `sdk991111` compiler keeps it (that compiler differs
+  elsewhere in this body); `MCPFONT_DrawTextureSimpleArea` matches except its
+  prologue and epilogue, where retail saves the eight saved registers and the
+  register holding the tenth argument as quadwords in ascending order, with
+  no 128-bit value in the body.
+- `MEMCARD_ProcessClientRequests`: the handler arguments are the same in the
+  merged state blocks (the request detail word for the detail handlers,
+  none for the others), so differing arguments do not explain why retail keeps
+  four flag tests; the flag is the existing `memcard_multiplayer_save`.
 - Still open: the update counter `material_current` is compared unsigned in
   `MATERIAL_RegisterForUpdate`, while `MATERIAL_Init` declares it `int`. The
   boot program accesses that word only in these two functions, and
@@ -2469,14 +2497,85 @@ baseline. Source shapes that mattered:
   evidence of its type; aligning the accepted declaration changes no bytes
   but is left to review of that accepted file.
 
-The eight others stay measured trials with their remaining difference in the
-header: loop delay-slot filling (`UTIL_GS_WRITE_FIFO`), the 128-bit `sq`
-prologue with `$fp` (`MCPFONT_DrawTextureSimpleArea`), one size register
-(`PS2HEAP_Malloc`), a 128-bit zero kept in a register
-(`SYSTEM_UploadMatrix`), merged identical switch states
+The six others stay measured trials with their remaining difference in the
+header: the quadword-save prologue (`MCPFONT_DrawTextureSimpleArea`), a
+128-bit zero kept in a register (`SYSTEM_UploadMatrix`), merged identical
+switch states
 (`MEMCARD_ProcessClientRequests`), a double comparison constant built in
 integer registers by retail but loaded from memory by our output
 (`MATERIAL_RegisterForUpdate`), one float register swap
-(`MCPTRANS_UpdateStarStreaks`, 263 of 268 bytes under `gnu-ee-trial`) and
-division padding plus scheduling (`dlib_ms_screen_matrix`, close only under
-`gnu-ee-trial-divpad`, blocker 09).
+(`MCPTRANS_UpdateStarStreaks`, 264 of 268 bytes under `gnu-ee-trial` since a
+flag byte named one 0x10000 page too high was corrected) and division padding
+(`dlib_ms_screen_matrix`: exact under `gnu-ee-trial-divpad` since
+26 November once its sixteen stores follow the order the dumps require; the
+default route lacks only the two nops before the division, blocker 09).
+
+### USA boot bodies of 164–472 bytes (26 November 2026)
+
+Twenty further boot intervals of 264 to 496 bytes were reserved on
+26 November 2026; four of them (`VEC_MultiplyMatrix4`, `MultMatrix`,
+`customGsSyncPath`, `dlib_displist_send_dma`) are already classified as
+handwritten assembly in `config/handwritten_asm.tsv` and were released
+without C. A grouped complete boot gate on master `ef75f8a07` (default
+route with the four `gnu-ee-trial` sound bodies selected per file,
+`--unpinned-tools`) linked 51 exact retained bodies of this contributor's
+reserved scope as provisional owners, including the default-route ones
+below and in the previous section: 918 exact objects, `.text`, the loaded
+segment and the complete ELF exact, the 847 accepted bodies unchanged, and
+the promotion audit lists the 51 as ready for semantic review. It does not
+include the bodies exact only under a level profile, nor the two
+"extra result copy" bodies. Results after independent SN links at the
+retail addresses:
+
+- Exact under the rebuilt default GNU route and `gnu-ee-trial`:
+  `MODULE_LoadModule__FPCc` (400), `MODULE_StartModule__FiiPCvi` (456),
+  `MCP_UpdateRCPMLoadState__Fi` (a 164-byte body at the start of a 448-byte
+  interval), `SYSTEM_ActivateMicrocode__F13PS2_MICROCODE` (460) and
+  `VEC_MultiplyMatrix4By3` (432). The last two are the accepted level sources
+  of the same functions with their callees and data renamed to the boot
+  symbols. `MODULE_LoadModule` stores the address of `lib_main__FiPPc`, which
+  the reference symbol table lists as unresolved at address zero, rather than
+  a null constant.
+- Texture transfer helpers: `readTexPSMCT16__FiiiiiiPv` (444) and
+  `writeTexPSMT8__FiiiiiiPv` (456) are exact on both routes;
+  `readTexPSMCT32__FiiiiiiPv` is 372 of 408 bytes with the same instructions
+  except two swapped argument registers in the inner loop. What mattered: one
+  variable per swizzle step (page, offset in the page, block, offset in the
+  block, column), each written as a subtraction rather than `%`, so the
+  compiler moves the row terms out of the inner loop as retail does; the word
+  address accumulated one term at a time (a single expression is regrouped
+  and grows by eight bytes); and the last table lookup placed after the word
+  address is complete.
+- `RIBBON_ClearInactiveJoints` (a 240-byte body in a 384-byte interval) is
+  exact under the default route with the existing per-file option
+  `-mno-check-zero-division`; the iterator's node is read once into a local
+  before the clearing loop. `FOG_Update__FUi` (492) is exact only under
+  `gnu-ee-trial-divpad`. `BLOOM_Upsample` (444, two scheduling slots) and the
+  two speck emitter updates (456 each, `-fno-gcse`, the order of a dozen
+  loads and stores in one block copy) stay measured trials.
+- Exact only under `gnu-ee-trial-divpad`: the three `scee::Psp::Gum`
+  functions `Perspective` (416), `TexPerspective` (380) and `Ortho` (472).
+  Retail pads every float division with two nops, which the default route
+  does not do; compiling with the SDK assembler pinned for their accepted Gum
+  siblings does not add them, so the padding comes from the compiler. With
+  `FOG_Update`, `CAMERA_SetFovX`, `CAMERA_Reset` and `dlib_ms_screen_matrix`
+  this makes seven boot bodies that need the division padding of the level
+  profiles. `Ortho`
+  needed the three reciprocals scaled in place (`ix = ix + ix;` and so on):
+  being set twice moves the depth reciprocal from local to global allocation,
+  which gives it retail's callee-saved register.
+- The "extra result copy" class (`SND_IsATRACPaused`, 72 bytes, and
+  `MEMCARD_Saving__Fv`, 52 bytes, previously four bytes short after about
+  sixty forms) is exact on both routes when the result is held in a
+  one-member struct of one byte. The dumps show why: with any `int`, `char`,
+  `short` or enum local, the MIPS target widens the local to a full register
+  and CSE merges the comparison into it; a struct local is not widened, so
+  the copy from the comparison register survives as in retail. The retail
+  boot shows the same comparison-then-copy only in these two bodies and in two
+  others that then test the copy as a byte, which fits a one-byte C++ `bool`
+  in the original. Whether this plain-C stand-in for `bool` is acceptable is a
+  review question; the `int` forms (68 and 48 bytes) are the alternative.
+- Declarations to reconcile in review: `MODULE_LoadModule` uses the results
+  of `HIT_fseek__FPii9SEEKPARAM` and `HIT_fclose__FPi` (accepted as `void`);
+  `MCP_UpdateRCPMLoadState` needs `g_level_index` signed (a signed branch on
+  it), while the accepted `MCP_StartLevelModule__Fv` declares it `unsigned`.

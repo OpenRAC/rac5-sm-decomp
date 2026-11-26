@@ -1,18 +1,19 @@
 /* USA SCUS_976.15 boot: SND_IsATRACPaused__FP13ATRACInstance, 0x01E92528.
- * Observed body: 72 bytes; it fills its interval.
- * Measured 15 November 2026 with the rebuilt default GNU route, gnu-ee-trial
- * and gnu-ee-trial-divpad-blockmove, -O2 -G0, default GNU assembler and
- * independent SN link at the retail address: 68 compiled bytes, 49 equal
- * positions in the compared prefix, first differing byte +0x1C. The three
- * routes agree.
- * Not exact; no complete-program gate, promotion or C matching credit.
- * Returns whether a playing instance has its pause byte (+0x78) set.
- * Retail normalises the byte in one register and copies it to the saved
- * result; the compiler writes the result directly. MEMCARD_Saving__Fv has
- * the same extra copy. Boolean, byte and wider result types, conditional
- * expressions, early returns and inline helpers, in C and with a C++ front
- * end, all give this 68-byte form or an early-return form.
- * Reopen with evidence for a second use of the normalised value.
+ * Observed body: 72 bytes; it fills its interval. Measured 26 November 2026:
+ * all 72 body bytes are exact after independent SN linking at the retail
+ * address under the rebuilt default GNU route and gnu-ee-trial, with -O2 -G0
+ * and the default GNU assembler. The default tools are rebuilt, not
+ * hash-qualified. This is an unaccepted witness: complete-program integration,
+ * boundaries, types and qualification require separate review. No promotion or
+ * matching credit is claimed here. Reconstructed from the retail boot. Returns
+ * whether a playing instance has its pause byte (+0x78) set; a stopped
+ * instance reports not paused. The result variable must be a one-byte local
+ * that the compiler does not widen to a full register (the retail C++ bool).
+ * Every int or char local is widened, and the comparison is then written
+ * straight into it; a byte local that stays narrow keeps the comparison in a
+ * scratch register and copies it, which is the retail form. The one-member
+ * struct below is the plain-C stand-in for that bool and is the point
+ * reviewers must accept.
  */
 typedef struct ATRACInstance {
     unsigned char unknown[0x78];
@@ -20,13 +21,20 @@ typedef struct ATRACInstance {
     unsigned char tail[3];
 } ATRACInstance;
 
+/* Plain-C stand-in for the C++ bool of the original: one byte, not widened. */
+typedef struct {
+    unsigned char value;
+} bool8;
+
 extern int SND_IsATRACPlaying__FP13ATRACInstance(ATRACInstance *instance);
 
 int SND_IsATRACPaused__FP13ATRACInstance(ATRACInstance *instance)
 {
-    int paused = 0;
+    bool8 paused;
+
+    paused.value = 0;
     if (SND_IsATRACPlaying__FP13ATRACInstance(instance)) {
-        paused = instance->paused != 0;
+        paused.value = instance->paused != 0;
     }
-    return paused;
+    return paused.value;
 }
