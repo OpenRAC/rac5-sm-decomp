@@ -273,6 +273,7 @@
     "src/boot/TEXMGR_LoadTexture__FP15WAD_FILE_HEADER.c",
     "src/boot/TEXMGR_Soil__Fv.c",
     "src/boot/TEXMGR_SwizzleTexture__FP13SceGimPicture.c",
+    "src/boot/TJZIP_ParseRawDataBlock__FPPUcT0PUi.c",
     "src/boot/TexFilter__Q34scee3Psp2GuQ44scee3Psp2Gu18ETextureFilterModeT1.c",
     "src/boot/TexFunc__Q34scee3Psp2GuQ44scee3Psp2Gu16ETextureFunctionQ44scee3Psp2Gu22ETextureColorComponent.c",
     "src/boot/TexOffset__Q34scee3Psp2Guff.c",
@@ -288,6 +289,7 @@
     "src/boot/VEC_ConstructRotZMat3__FP7MATRIX3f.c",
     "src/boot/VEC_MakeMat3FromYawPitch__FP7MATRIX3ff.c",
     "src/boot/VEC_MakeMat3x4FromYawPitch__FP7MATRIX4ff.c",
+    "src/boot/VEC_MakeMatFromYawPitchRoll__FP4VEC3N20fff.c",
     "src/boot/VEC_MakeScaleMat__FP4VEC3N20fff.c",
     "src/boot/VEC_MulMat3Vec3__FP4VEC3PC7MATRIX3PC4VEC3.c",
     "src/boot/VEC_MulMat4Vec3ZeroW__FP4VEC3PC7MATRIX4PC4VEC3.c",
@@ -1202,5 +1204,5 @@
       "729eddaa2d038baddf897a9c8c501d96a53b6443aa1179b194bacd474a522fbb"
     ]
   },
-  "expected_objects": 867
+  "expected_objects": 869
 }

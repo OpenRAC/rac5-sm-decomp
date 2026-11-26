@@ -33,9 +33,9 @@ class GenProgressReportTests(unittest.TestCase):
         self.assertEqual(report["version"], 2)
         m = report["measures"]
         self.assertEqual(m["total_code"], "5171856")
-        self.assertEqual(m["matched_code"], "1262620")
-        self.assertAlmostEqual(m["matched_code_percent"], 24.4133, places=4)
-        self.assertEqual((m["matched_functions"], m["total_functions"]), (8678, 14409))
+        self.assertEqual(m["matched_code"], "1263272")
+        self.assertAlmostEqual(m["matched_code_percent"], 24.4259, places=4)
+        self.assertEqual((m["matched_functions"], m["total_functions"]), (8680, 14409))
         self.assertEqual(m["total_units"], len(report["units"]))
 
         # The headline is the boot .text plus the level code map, which
