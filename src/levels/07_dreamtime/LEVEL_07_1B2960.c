@@ -68,7 +68,7 @@ extern void func_0B7460(void *value);
 extern int func_1354B0(int a);
 extern void func_0B7508(void *a, void *b, void *c, void *d);
 extern int func_08A058(int a);
-extern int func_0A9330(void);
+extern long long func_0A9330(void);
 extern void func_089EB8(int a);
 extern void func_1B3160(Obj *o);
 extern void func_1B2B90(Obj *o);

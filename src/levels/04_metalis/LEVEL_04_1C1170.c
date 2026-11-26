@@ -15,7 +15,7 @@ extern struct Rec1B4170 D_00240EC0[];
 extern int func_024F58(int mode, int field);
 extern int func_03CEA0(int obj);
 extern unsigned int func_04DCA0(int obj, int kind, int *list, int a, int b, int c, int d, struct Rec1B4170 *rec, float range);
-extern int func_1C2480(int a, int b);
+extern long long func_1C2480(int a, int b);
 extern void func_1C0E10(char *self, int b);
 
 void func_1C1170(char *self, int a, int b)

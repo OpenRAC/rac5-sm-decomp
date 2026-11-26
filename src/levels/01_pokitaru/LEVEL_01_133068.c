@@ -3,7 +3,7 @@
 extern unsigned char D_00207058;
 
 int func_132F48(void);
-void func_1331C0(void);
+int func_1331C0(void);
 int func_132FE0(void);
 int func_133038(int a0);
 int func_0D7440(int a0, int a1, int a2);

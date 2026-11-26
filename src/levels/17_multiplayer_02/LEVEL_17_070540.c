@@ -1,4 +1,4 @@
-extern void func_07ABF8(int);
+extern int func_07ABF8(int);
 
 void func_070540(char *item)
 {

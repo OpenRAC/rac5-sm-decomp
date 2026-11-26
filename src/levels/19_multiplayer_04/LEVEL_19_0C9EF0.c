@@ -9,7 +9,7 @@ extern int D_001B585C;
 extern float D_001B5860;
 extern char *D_001E0228;
 extern int func_10F9D0(int id);
-extern int func_0C6C78(int h);
+extern long long func_0C6C78(int h);
 extern int func_110118(int a);
 extern int func_1102F8(int a);
 extern void func_024B18(int a, int b, int c);

@@ -19,7 +19,7 @@ extern float fabsf(float);
 extern float func_031ED0(long);
 extern int func_0791B0(int);
 extern int func_0791E8(int);
-extern int func_031E70(Obj *);
+extern long long func_031E70(Obj *);
 extern void func_042530(Obj *, int, float, float);
 
 void func_0427C8(Obj *obj, int a1, int a2, int a3, int in)

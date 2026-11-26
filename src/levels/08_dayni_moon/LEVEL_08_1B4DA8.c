@@ -30,7 +30,7 @@ struct Obj {
 extern struct G *D_0028496C;
 extern float D_0026FA38[];
 extern unsigned int func_01F898(void *a0, void *a1, void *a2, void *a3, int t0, unsigned int t1, void *t2);
-extern int func_0288B8(void);
+extern long long func_0288B8(void);
 extern void func_040D98(int a0, int a1, void *a2, int a3, void *t0, float f12);
 
 void func_1B4DA8(struct Obj *o)
@@ -46,6 +46,6 @@ void func_1B4DA8(struct Obj *o)
     y = ((struct Elem *)(g->p_40->base_04 + g->b_44 * 0x34))->p_10;
     r = func_01F898(loc + 0x20, loc, loc + 0x10, s1, y->w_04, y->b_00, g);
     if ((r & 0xFF) != 0) {
-        func_040D98(0, 1, s1, 0, o, D_0026FA38[func_0288B8()]);
+        func_040D98(0, 1, s1, 0, o, D_0026FA38[((int (*)(void))func_0288B8)()]);
     }
 }
