@@ -25,9 +25,12 @@ Thanks for helping. The rules live in [`AGENTS.md`](AGENTS.md) and
    publishable C/C++ body in `nonmatching/` and explain its measured difference
    and reopening condition. A scratch-only copy is not the shared record.
 4. **Check.** Run `python -m unittest discover -s tests -v`,
-   `python tools/check_repository.py` and `python tools/progress_status.py --check`.
+   `python tools/check_repository.py`, `python tools/progress_status.py --check`
+   and `python tools/check_doc_figures.py`.
    Regenerate metadata and progress with the relevant tool; never hand-edit
-   generated tables or progress claims.
+   generated tables or progress claims. After a regenerated snapshot,
+   `python tools/check_doc_figures.py --write` carries the new totals into the
+   documents that restate them.
 5. **Open a pull request.** Branch from `master` of your fork, keep the
    change focused, use short commits, and include your input version,
    evidence, commands, results and remaining limitations in the description.
@@ -77,6 +80,13 @@ Run `python tools/check_doc_links.py` to check relative Markdown destinations in
 Python's standard library and no game inputs. Diagnostics use repository-relative
 source paths and line numbers; exit status is 1 when a destination is missing or
 outside the repository, otherwise 0. Existing directories are valid destinations.
+
+`python tools/check_doc_figures.py` also needs no game input. It checks that the
+current totals restated in the progress, contributing, compiler and gate documents
+equal `progress/status.json` and `config/boot/witness_boundaries.tsv`, and that
+tracked Markdown other than `AGENTS.md` avoids the private working terms *wave*,
+*lot* and *kit*. Dated measurements are history and are not checked. When a
+listed sentence is reworded, update its pattern in the tool's `CLAIMS`.
 
 The scanner supports inline links/images, balanced parentheses, angle-delimited
 paths and single-line reference definitions (full, collapsed and shortcut uses).
