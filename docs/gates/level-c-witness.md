@@ -1426,3 +1426,15 @@ at all of their placements; no reviewed family control source was edited.
 64-bit view of a callee disagrees with its definition. All 21 complete USA modules
 remain exact, and the prototype review finds the same 1,779 disagreeing pairs as
 before, none introduced.
+
+USA level bodies of 401 to 800 bytes that the 22 November attempts had missed,
+offered again to new C on 25 and 26 November 2026, add **146 placements** (85,768
+bytes by placement) from 126 sources in 33 forms. Counted by masked shape, accepted
+level bodies rise from 1,125,904 bytes in 7,758 shape units to 1,145,728 bytes in
+7,791. 95 placements use `gnu-ee-trial-divpad`, 32 the pinned chain, 17
+`gnu-ee-trial` and 2 `gnu-ee-trial-divpad-blockmove`; one needs `-fno-gcse`. 14
+placements are exact only with `r5900-mfc1` and one only with `ps2eeas`, whose
+object hashes were recorded from a minimal environment. No accepted source was
+edited. 52 placements in 7 forms stay held for prototype disagreements. All 21
+complete USA modules remain exact, and the prototype review finds the same 1,779
+disagreeing pairs as before, none introduced.

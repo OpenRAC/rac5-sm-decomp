@@ -1354,3 +1354,4 @@ src/levels/18_multiplayer_03/LEVEL_18_156090.c  -fno-gcse
 src/levels/19_multiplayer_04/LEVEL_19_128F98.c  -fno-gcse
 src/levels/23_skyboard_challax/LEVEL_23_12CE98.c  -fno-gcse
 src/levels/24_treehouse/LEVEL_24_131230.c  -fno-gcse
+src/levels/05_medical_outpost/LEVEL_05_17DF88.c  -fno-gcse
