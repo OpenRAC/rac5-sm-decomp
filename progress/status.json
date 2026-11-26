@@ -7,7 +7,7 @@
   "boot": {
     "code_bytes": 498900,
     "zero_padding_bytes": 2760,
-    "accepted_c_bytes": 117404,
+    "accepted_c_bytes": 118056,
     "accepted_functions": [
       "MEMCARD_Idle__Fv",
       "MEMCARD_Busy__Fv",
@@ -138,6 +138,7 @@
       "VEC_SetVec3__FP4VEC3fff",
       "VEC_MakeMat3x4FromYawPitch__FP7MATRIX4ff",
       "VEC_MakeMat3FromYawPitch__FP7MATRIX3ff",
+      "VEC_MakeMatFromYawPitchRoll__FP4VEC3N20fff",
       "VEC_MakeScaleMat__FP4VEC3N20fff",
       "VFPU_Slerp__FP4QUATPC4QUATT1f",
       "Quat_ConvertToMatrix__FP7MATRIX4PC4QUAT",
@@ -301,6 +302,7 @@
       "WAD_FindAssetsByType__F14WAD_ASSET_TYPEP10WAD_HEADER",
       "_GLOBAL_$I$SHARED_WAD_wadLoad.cppKFbaaa",
       "SIG_CalcSignature__FPCci",
+      "TJZIP_ParseRawDataBlock__FPPUcT0PUi",
       "_GLOBAL_$I$SHARED_tjzip.cppTHcaaa",
       "CB_ARRAY_Init__FP14tCB_ARRAY_DATA",
       "PLATSYS_HIGSYS_TranslateLanguageCommonParam__FUi",
@@ -857,7 +859,7 @@
       "__udivdi3",
       "__umoddi3"
     ],
-    "scoped_code_percent": 23.53257166
+    "scoped_code_percent": 23.66325917
   },
   "levels": {
     "placements": [
@@ -1212,8 +1214,8 @@
       "raw_load_sha256": "4f4fb8fe218317dbd7a2f65ca4e64934d743d03e673dbd75220937cfc6fd47fb",
       "whole_elf_size": 856120,
       "whole_elf_sha256": "d8f1794a5b4f6bd7f70ca62ae11fb790d1c300c2a877ef1aef4c1855fd6575ac",
-      "counted_matches": 847,
-      "counted_bytes": 117404,
+      "counted_matches": 849,
+      "counted_bytes": 118056,
       "accepted_functions": [
         "MEMCARD_Idle__Fv",
         "MEMCARD_Busy__Fv",
@@ -1344,6 +1346,7 @@
         "VEC_SetVec3__FP4VEC3fff",
         "VEC_MakeMat3x4FromYawPitch__FP7MATRIX4ff",
         "VEC_MakeMat3FromYawPitch__FP7MATRIX3ff",
+        "VEC_MakeMatFromYawPitchRoll__FP4VEC3N20fff",
         "VEC_MakeScaleMat__FP4VEC3N20fff",
         "VFPU_Slerp__FP4QUATPC4QUATT1f",
         "Quat_ConvertToMatrix__FP7MATRIX4PC4QUAT",
@@ -1507,6 +1510,7 @@
         "WAD_FindAssetsByType__F14WAD_ASSET_TYPEP10WAD_HEADER",
         "_GLOBAL_$I$SHARED_WAD_wadLoad.cppKFbaaa",
         "SIG_CalcSignature__FPCci",
+        "TJZIP_ParseRawDataBlock__FPPUcT0PUi",
         "_GLOBAL_$I$SHARED_tjzip.cppTHcaaa",
         "CB_ARRAY_Init__FP14tCB_ARRAY_DATA",
         "PLATSYS_HIGSYS_TranslateLanguageCommonParam__FUi",
@@ -2396,11 +2400,11 @@
   },
   "public_inputs_sha256": {
     "target": "043f3679a3a7f4e861986aeed303dd30e344c837c34303fc8591b71271a0f96f",
-    "compiler_profile": "908abd57053da4c37cdf98669091d6095e6d1b67c7cee1810fc87d641b6698d5",
-    "per_source_cflags": "bff99735481a1d63459f157224bf219e7f7fe3a5a107fd9a1b3368c900f9874b",
+    "compiler_profile": "2acdcb6a2f0f5a38e87fbfe2af41bbf5e3a32158ef122f1a8470ed57899a40c1",
+    "per_source_cflags": "a61dbbd19adcdcc35a7657175753d15e2b42264873c640cd78622e5c807da518",
     "level_code_catalogue": "7e9185101e055457d591b1fbe55baa122a103ef99eae13b4761d0920ef249768",
     "level_module_catalogue": "ca38d187d892f1f1a62395b4ee49e50af45305ac8bd67507936387d77945a4ec",
-    "accepted_boot_c_sources_lf": "651facd009cc8889f3c4d4b686ab598b521ed5a3c4986b45f315da0d8dae4bfb",
+    "accepted_boot_c_sources_lf": "8800ac3f2069b41c63260eaa7ef472b0e34e231d122bef6c59536a7c4d7d8e00",
     "level_compiler_profile": "34df5da24ebfb8b738016b24865b356c0bcfde19f020839a8cf9953f7185f922",
     "accepted_level_c_source_lf": "da5daebdedc784152d8e995ef322eb8aa415a8e6368d4f79768c49d08275a8ad",
     "accepted_shared_buffer_c_source_lf": "8425fefc73b121bd3eb6ffc09e4c49bf6425958c0f5b63d638af3b11d6c6e387",

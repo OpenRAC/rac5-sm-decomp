@@ -1355,3 +1355,8 @@ src/levels/19_multiplayer_04/LEVEL_19_128F98.c  -fno-gcse
 src/levels/23_skyboard_challax/LEVEL_23_12CE98.c  -fno-gcse
 src/levels/24_treehouse/LEVEL_24_131230.c  -fno-gcse
 src/levels/05_medical_outpost/LEVEL_05_17DF88.c  -fno-gcse
+
+# Boot bodies of at most 200 bytes accepted on 14 November 2026. Each route is the
+# measured one: the pinned chain does not reproduce these bodies (their pinned
+# negative controls differ); bodies the pinned chain also reproduces keep it.
+src/boot/VEC_MakeMatFromYawPitchRoll__FP4VEC3N20fff.c    gnu-ee-trial -O2 -G0
