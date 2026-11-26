@@ -1081,6 +1081,22 @@
       ]
     ]
   },
+  "original_assembly": {
+    "table": "config/handwritten_asm.tsv",
+    "boot_units": 86,
+    "boot_bytes": 13120,
+    "level_units": 2,
+    "level_bytes": 596,
+    "level_placements": 40,
+    "classes": {
+      "cop0": 17,
+      "gp-store": 1,
+      "mmi": 13,
+      "vu0": 8,
+      "syscall": 49
+    },
+    "counted_as_c": false
+  },
   "function_inventory": {
     "candidate_entry_intervals": 124356,
     "bounded_candidate_intervals": 74051,
@@ -2420,6 +2436,7 @@
     "boot_zero_padding": "c2f438947f1b011b53339d08d8aadb8c73383e357bdd6f2bba4b0dc9c9aa2e16",
     "level_switch_body": "e5332627ffa1817ffa79178b85cd03a885c13eeb9721fbe1728d99330c32b0d3",
     "level_context_translation": "b22efea1dc6ee0d0e5661dab312042028fe6c8a213c6f7f260bd4ce00b4eac89",
-    "level_role_graph": "19657c4ff0d6df249d34694fae3367babfd368561e91593722076dd8b8fb4f32"
+    "level_role_graph": "19657c4ff0d6df249d34694fae3367babfd368561e91593722076dd8b8fb4f32",
+    "original_assembly": "c27f88c945b3bc69aab9cb63bb57c61641e461faa51e0cdc3343748c5202fac0"
   }
 }

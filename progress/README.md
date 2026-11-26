@@ -17,6 +17,12 @@ provisional controls. `FRONTEND.REL` and `LEVEL_01.REL` have exact complete-file
 replacement and measured relocated-image baselines. Their original non-code
 bytes are still inputs, and assembly equality is not C progress.
 
+The snapshot's `original_assembly` block restates
+[`config/handwritten_asm.tsv`](../config/handwritten_asm.tsv): **86 boot units
+(13,120 bytes) and 2 level shapes (596 bytes, 40 placements)** of retail code whose
+body holds an instruction no pinned C chain emits, or only syscall trampolines.
+It is finished work, counted in a column of its own and never as accepted C.
+
 The 21 level code intervals total 36,341,888 **bytes by placement**. They are
 candidate code intervals, not verified function sizes or unique game code.
 `LEVEL_15.REL` and `LEVEL_21.REL` already have identical complete interval

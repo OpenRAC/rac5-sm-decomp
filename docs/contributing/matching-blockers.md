@@ -52,6 +52,7 @@ is universally impossible are superseded where a later entry says so.
 | Store order | The order is a **permutation** of the source order, not one universal rotation. Sweep permutations; do not guess. |
 | Non-canonical page arithmetic | `lui 0x22` followed by `-0x78C` is **0x21F874**, not 0x217874: the immediate is sign-extended and added. `%hi` rounds. |
 | One body, two functions | A target may end with a second function; write both in one file and they link end to end (measurements at 128 bytes and at `LEVEL_20:0x02B088`). |
+| Original assembly | On 26 November 2026 `config/handwritten_asm.tsv` lists 86 boot units and 2 level shapes by OpenRAC/rac1-decomp's instruction rule (syscall trampolines, coprocessor 0, MMI, VU0, `$gp` stores). `tools/handwritten_asm.py` checks it, and the progress table counts it apart from C. See [the classification](#original-assembly-classification-26-november-2026). |
 | Boot GCC runtime library | On 13 November 2026 the nine remaining boot `libgcc` functions (`__divdi3`, `__moddi3`, `__udivdi3`, `__umoddi3`, `__muldi3`, `__fixdfdi`, `__do_global_dtors`, `__do_global_ctors`, `__unpack_f`; 6,836 body bytes) are exact from GCC's own `libgcc2.c`/`fp-bit.c` text as OpenRAC/rac1-decomp vendors it, under `sdk991111 -O2 -G0` (`__unpack_f` also under the pinned chain). Five need `longlong.h`'s original MIPS `umul_ppmm`, which AGENTS.md now allows as RAC2 does. Write such a function as the upstream module, not as rewritten C. |
 
 These summaries do not award additional matching credit or replace the build. Check current
@@ -2410,3 +2411,57 @@ read registers set by the preceding interval) and cannot be compiled alone; they
 need a boundary review before any retry. The object hashes of the 20 sources added
 with `ps2eeas` were first recorded from a full environment and were refreshed on
 22 November 2026 (PR #289; see the `Ps2EeAs` note).
+
+### Original assembly classification (26 November 2026)
+
+`config/handwritten_asm.tsv` now lists retail code by the rule OpenRAC/rac1-decomp
+states in `docs/game/asm-classification.md`, which rac2-decomp and rac3-decomp
+apply with `ASM_FUNC`: a report unit is original assembly when it is one routine
+that holds an instruction no pinned C chain emits, or nothing but syscall
+trampolines. Inline assembly is not C evidence here, so these bodies have no C
+form. `tools/handwritten_asm.py` checks the table against the catalogues in CI
+and, with `--retail`, each row's evidence against the retail bytes;
+`tools/progress_status.py` counts the rows in a column of their own. They are
+finished work but not C: neither the accepted C totals nor the ByteMatch report
+count them.
+
+Listed: **86 boot units (13,120 bytes) and 2 level shapes (596 bytes, 40
+placements)**. 49 units are syscall trampolines; 17 access coprocessor 0; 13 use
+128-bit MMI operations ee-gcc has no pattern for (the eight string routines,
+`memchr`, `memset`, `memcmp` and two YUV converters); 8 use VU0 macro
+instructions, two of them the level copies of `VEC_MultiplyMatrix4` and
+`customGsSyncPath`; `iSetTimerHandler` stores `$gp` itself. 42 rows have a
+relocation-masked identical twin that rac1, rac2 or rac3 keeps as handwritten
+assembly, and the row names it.
+
+Removed from the previous list:
+
+- `isceSifSendCmd`: accepted C now covers its 60-byte body; the rest of its
+  interval is unlabeled code with no such instruction.
+- `dlib_displist_send_dma__FP13DLIB_DISPLISTi`: its only special instruction is
+  `sync`, which `__builtin_rac5_sync` emits under `sdk991111sync`. It is open C
+  work again.
+- `scePadSetDmaCallback`: its `$gp` store is in the first of the two functions
+  its interval holds (see below).
+
+Left open for review rather than listed:
+
+- Evidence in one of several functions of an interval: `StartTimerSystemTime`,
+  `StartThread`, `scePadInit`, `EIntr`, `asyncPs2fioLseek` and
+  `scePowerOffHandler` (one `ei` each), `YUV_16_4x2_even` (MMI in the first of
+  two functions), `mixtoflat256format` (MMI in its last function) and
+  `scePadSetDmaCallback`. A reviewed boundary split would let the function with
+  the evidence be listed alone.
+- C and trampolines, or an inline `syscall`, in one interval: `Exit`, `kputs`,
+  `_InitSys`, `InitTLBFunctions`, `iWakeupThread` and `_exit`.
+- 128-bit moves only (`pcpyld`, `por`): `radmemcpy`, `radmemset`,
+  `radmemset16`, and 48 compiled units; ee-gcc emits these moves itself.
+- `sync` only: `SYSTEM_EndFrame__FbUi`, `sceGsSetDefClear`,
+  `sceSifWriteBackDCache` and four level units. rac1 lists its
+  `sceSifWriteBackDCache` from the local labels in the SDK library's symbol table,
+  evidence this project does not hold.
+- `iGetTimerSystemTime`: rac3 keeps an identical twin as handwritten assembly, but
+  its 76 bytes hold no instruction outside ee-gcc's output. List it once a reason
+  is recorded.
+- The five sound-state bodies with a code-1 `break` (blocker 16) remain a
+  maintainer decision.
