@@ -75,7 +75,7 @@ extern void func_069178(char *record);
 extern int func_056AC0(Object *object);
 extern void func_054738(Player *p);
 extern int func_063118(Player *p);
-extern void func_05BEE8(Player *p);
+extern int func_05BEE8(Player *p);
 extern void func_061770(Player *p);
 extern void func_043FE8(Player *p);
 extern void func_0442A0(Player *p);

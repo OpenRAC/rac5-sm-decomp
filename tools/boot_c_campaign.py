@@ -879,6 +879,8 @@ ACCEPTED_SOURCES = frozenset({
     "scePadRead",
     "iAllocTimerCounter",
     "sceGimPictureGetImagePixels__FP13SceGimPictureii",
+    "TJZIP_ParseRawDataBlock__FPPUcT0PUi",
+    "VEC_MakeMatFromYawPitchRoll__FP4VEC3N20fff",
 })
 
 
@@ -1332,6 +1334,9 @@ REPLACEMENTS = (
     Replacement("VEC_MakeMat3FromYawPitch__FP7MATRIX3ff", 0x01E77688, 0x01E77740,
                 "cacef90087b6d37756e2df3640ce3f77efd41124d6787c635b9e8db447529a24",
                 "76422282725a4d57e3ce35ce94bc6b8c998c06a6aabf80acd06f2ac166f325a9"),
+    Replacement("VEC_MakeMatFromYawPitchRoll__FP4VEC3N20fff", 0x01E77740, 0x01E77810,
+                "79955546c6160b03366f41265f4a0a2d03734e23b199cc645a3810e6b3893318",
+                "c69cc212a9ff66cc3cb6ec38d806c2c586b39bef62e84db2f301ea615b8adf81"),
     Replacement("VEC_MakeScaleMat__FP4VEC3N20fff", 0x01E77810, 0x01E77838,
                 "4b802ebfbfe14ad8c267775568da798d18769a6ebdd5e207bc6766ab460ed3c7",
                 "8efee60a691c0916e8c4f73e32ca78c8b81c91f9e5fc3f1670e75e0100d5b572"),
@@ -1833,6 +1838,9 @@ REPLACEMENTS = (
     Replacement("SIG_CalcSignature__FPCci", 0x01E8D280, 0x01E8D2E8,
                 "80d16071b3292df8355b74b1af02b3eb260a03186b7b195d46a30e08d9c97266",
                 "e0715ed77400f68512e1cea86eb7eb7b6d60b1157d37b951fdded0174b9d0123"),
+    Replacement("TJZIP_ParseRawDataBlock__FPPUcT0PUi", 0x01E8D780, 0x01E8D940,
+                "7981432e3c297f9c12bda69ffe31d129c490d4cdc24cd60ffe21dabce2330262",
+                "1ba91d858faf24aba14405418f35139c413182bb040c7a71448d4602ed1e9141"),
     Replacement("_GLOBAL_$I$SHARED_tjzip.cppTHcaaa", 0x01E8DBC8, 0x01E8DBE8,
                 "75ece57c911ebb31e1a98384be40cd97529dc12531e9c3f090fade36a5e41010",
                 "60b39952101c0365758a007efed5e218bed29d336ce52c14bf4ae80721c10f43"),
@@ -4277,6 +4285,8 @@ LINKER_SYMBOLS = (
     "g_nStaticDirectionalLights = 0x01EDD9B0;",
     "g_nStaticPointLights = 0x01EDD9B8;",
     "g_openFiles = 0x01F5F8B0;",
+    "g_pCallback = 0x01EF5CF4;",
+    "g_pCallbackAt = 0x01EF5CF8;",
     "g_pCurrentRenderTarget = 0x01EF6A14;",
     "g_pLevelWadData = 0x01EF5D14;",
     "g_pSkeletonInfo = 0x01F7E294;",

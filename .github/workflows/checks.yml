@@ -20,6 +20,8 @@ jobs:
         run: python tools/boot_promotion_audit.py --check
       - name: Check the boot zero padding table
         run: python tools/boot_zero_padding.py --check
+      - name: Check the original assembly table
+        run: python tools/handwritten_asm.py
       - name: Generate labelled ByteMatch estimate
         run: |
           python tools/bytematch_estimate.py --write

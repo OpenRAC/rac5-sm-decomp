@@ -3,7 +3,7 @@
 extern char D_00261A40[];
 extern char D_003E7BA0[];
 
-extern void func_0F8A50(char *s, char *o);
+extern void func_0F8A50(char *s);
 extern void func_088940(char *a0, char *a1, float f0, float f1, float f2, float f3, int a2, int a3, int t0, int t1, int t2, int t3);
 
 void func_189648(char *s2)
@@ -17,7 +17,7 @@ void func_189648(char *s2)
     *(float *)(s2 + 0x70) = 15.0f;
     s0 = *(char **)(s2 + 0x58) + 4;
     for (i = 0; i < 10; i++) {
-        func_0F8A50(s0, s2);
+        ((void (*)(char *s, char *o))func_0F8A50)(s0, s2);
         *(int *)(s0 + 0x1C) = (int)D_00261A40;
         s0 += 0x54;
     }

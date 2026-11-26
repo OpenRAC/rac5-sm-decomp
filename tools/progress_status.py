@@ -24,6 +24,8 @@ from boot_trial_gate import accepted_matches
 from boot_zero_padding import OUTPUT as BOOT_ZERO_PADDING
 from boot_zero_padding import read as boot_zero_padding
 from bytematch_estimate import report as bytematch_report
+from handwritten_asm import TABLE as ORIGINAL_ASSEMBLY
+from handwritten_asm import summary as original_assembly
 from level_context_translation import check_summary as check_context_summary
 from level_role_graph import check_summary as check_role_summary
 from level_program_gate import MEASURED_LOADS
@@ -395,6 +397,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
                        body_summary["assembler_profiles"],
                    "accepted_level_body_modules": body_summary["modules"],
                    "known_identical_full_intervals": duplicates},
+        "original_assembly": original_assembly(),
         "function_inventory": {
             "candidate_entry_intervals": inventory["entry_intervals"],
             "bounded_candidate_intervals":
@@ -541,6 +544,7 @@ def snapshot(evidence: dict[str, object]) -> dict[str, object]:
             "level_switch_body": digest(SWITCH_BODY),
             "level_context_translation": digest(CONTEXT_TRANSLATION),
             "level_role_graph": digest(ROLE_GRAPH),
+            "original_assembly": digest(ORIGINAL_ASSEMBLY),
         },
     }
 
@@ -557,22 +561,25 @@ def summary_table(status: dict[str, object]) -> str:
                     if row["module"] == "FRONTEND.REL")
     shape = json.loads(SHAPE_SCENARIO.read_text(encoding="utf-8"))
     estimate = bytematch_report(status, shape)["measures"]
+    original = status["original_assembly"]
     return "\n".join([
-        "| Scope | Code scope | Accepted C | Accepted functions |",
-        "| --- | --- | ---: | ---: |",
+        "| Scope | Code scope | Accepted C | Accepted functions "
+        "| Original assembly (finished, not C) |",
+        "| --- | --- | ---: | ---: | ---: |",
         f"| Boot `.text` | {boot['code_bytes']:,} bytes measured "
         f"| {boot['accepted_c_bytes']:,} bytes "
         f"({boot['scoped_code_percent']:.2f}%) "
-        f"| {len(boot['accepted_functions']):,} |",
+        f"| {len(boot['accepted_functions']):,} "
+        f"| {original['boot_bytes']:,} bytes in {original['boot_units']:,} units |",
         f"| Frontend (`FRONTEND.REL`) "
         f"| {frontend['candidate_code_bytes_by_placement']:,} candidate bytes "
         f"| {frontend['accepted_c_bytes']:,} bytes "
-        f"| {len(levels['accepted_frontend_functions']):,} |",
+        f"| {len(levels['accepted_frontend_functions']):,} | by shape, below |",
         f"| Levels (20 `LEVEL_*.REL`) "
         f"| {levels['candidate_code_bytes_by_placement']:,} candidate bytes by placement "
         f"| {levels['accepted_c_bytes_per_unique_source']:,} bytes "
         f"({levels['accepted_c_bytes_by_placement']:,} by placement) "
-        f"| {len(levels['accepted_shared_functions']):,} |",
+        f"| {len(levels['accepted_shared_functions']):,} | by shape, below |",
         f"| Level code (by masked shape, as the denominator) "
         f"| {levels['level_map_bytes']:,} candidate bytes, "
         f"{levels['level_map_functions']:,} candidate functions "
@@ -580,7 +587,15 @@ def summary_table(status: dict[str, object]) -> str:
         f"({levels['accepted_level_body_placement_bytes']:,} by placement, "
         f"{levels['accepted_level_body_unique_source_bytes']:,} by source) "
         f"| {levels['accepted_level_map_functions']:,} functions "
-        f"({levels['accepted_level_body_placements']:,} placements) |",
+        f"({levels['accepted_level_body_placements']:,} placements) "
+        f"| {original['level_bytes']:,} bytes in {original['level_units']:,} shapes "
+        f"({original['level_placements']:,} placements) |",
+        "",
+        "Original assembly is the retail code `config/handwritten_asm.tsv` lists by "
+        "the rule of OpenRAC/rac1-decomp: a body that holds an instruction no pinned "
+        "C chain emits, or nothing but syscall trampolines. It is finished work, but "
+        "no C source reproduces it, so neither the accepted C columns nor the "
+        "ByteMatch estimate below count it.",
         "",
         f"The ByteMatch estimate divides the **{int(estimate['matched_code']):,}** "
         f"accepted C bytes by a provisional "
