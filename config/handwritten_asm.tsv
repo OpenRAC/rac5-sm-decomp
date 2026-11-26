@@ -8,7 +8,7 @@
 #   gp-store     writes the $gp register itself
 #   vu0          inline VU0 microcode emitted by the retail macro
 # A name here is a measured verdict, not a guess: it records that the listed
-# waves tried C and the harness never reached the exact body. Reopening one
+# earlier attempts tried C and the harness never reached the exact body. Reopening one
 # needs a new tool (a compiler builtin or a policy decision), not another C
 # source form.
 symbol	address	class	reason	evidence
