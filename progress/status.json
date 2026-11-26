@@ -1041,28 +1041,28 @@
     "accepted_frontend_c_bytes": 476,
     "accepted_c_bytes_per_unique_source": 80,
     "accepted_c_bytes_by_placement": 1600,
-    "accepted_level_body_placements": 80283,
-    "accepted_level_body_unique_sources": 63312,
-    "accepted_level_body_placement_bytes": 9814568,
-    "accepted_level_body_unique_source_bytes": 8480708,
-    "accepted_level_body_masked_shape_bytes": 1149704,
-    "accepted_level_body_masked_shape_units": 7846,
+    "accepted_level_body_placements": 80429,
+    "accepted_level_body_unique_sources": 63423,
+    "accepted_level_body_placement_bytes": 9823900,
+    "accepted_level_body_unique_source_bytes": 8487988,
+    "accepted_level_body_masked_shape_bytes": 1150276,
+    "accepted_level_body_masked_shape_units": 7855,
     "level_map_bytes": 4675716,
     "level_map_zero_padding_bytes": 195520,
     "level_map_functions": 13094,
-    "accepted_level_map_bytes": 1149192,
-    "accepted_level_map_functions": 7886,
+    "accepted_level_map_bytes": 1149764,
+    "accepted_level_map_functions": 7895,
     "accepted_level_body_profiles": {
       "gnu-ee-trial": 3703,
       "gnu-ee-trial-divpad": 2617,
       "gnu-ee-trial-divpad-blockmove": 285,
-      "pinned": 72159,
+      "pinned": 72305,
       "sdk991111": 1477,
       "sdk991111sync": 42
     },
     "accepted_level_body_assembler_profiles": {
       "ee-frozen": 41,
-      "gnu-ee-trial": 79540,
+      "gnu-ee-trial": 79686,
       "ps2eeas": 445,
       "r5900-mfc1": 257
     },
@@ -2343,18 +2343,18 @@
       },
       "bodies": {
         "table": "config/levels/bodies.tsv",
-        "table_sha256": "d8d187afb3e3dcee35bd60f51952da9d679753c1ea9947c40b4cebc4eff7cea7",
+        "table_sha256": "848e919efecd81a260498e7a8de642efab3a6cb6ac2ed576035ca29f8f9fd608",
         "sources_table": "config/levels/body_sources.tsv",
-        "sources_table_sha256": "28cbb9bdc876b1dc6487bebd0fc288d118d9071f10d8ead2678a5ec276277319",
-        "placements": 80283,
-        "unique_sources": 63312,
-        "placement_bytes": 9814568,
-        "unique_source_bytes": 8480708,
+        "sources_table_sha256": "29a99cdf168298ec2df1216c8966dd62802a3287537f5519cc654e2aca8fd893",
+        "placements": 80429,
+        "unique_sources": 63423,
+        "placement_bytes": 9823900,
+        "unique_source_bytes": 8487988,
         "profiles": {
           "gnu-ee-trial": 3703,
           "gnu-ee-trial-divpad": 2617,
           "gnu-ee-trial-divpad-blockmove": 285,
-          "pinned": 72159,
+          "pinned": 72305,
           "sdk991111": 1477,
           "sdk991111sync": 42
         },
@@ -2368,7 +2368,7 @@
         },
         "assembler_profiles": {
           "ee-frozen": 41,
-          "gnu-ee-trial": 79540,
+          "gnu-ee-trial": 79686,
           "ps2eeas": 445,
           "r5900-mfc1": 257
         },
@@ -2432,7 +2432,7 @@
           "mismatches": 0
         },
         "batch_link_size": 25,
-        "body_batch_linker_invocations": 4634
+        "body_batch_linker_invocations": 4638
       },
       "provisional_controls": [
         "LEVEL_01.REL:0x190:24",
@@ -2462,7 +2462,7 @@
     "level_full_module_flow": "0a153c6a1fec77a20deed23d52846ccb8ce4f65f8349bceaac56ee969d608352",
     "level_split_dedupe": "b3b2a6e5526b06be3b7fbf1405910f3fa42ba48b444301e1ecc1cf847a08bb85",
     "level_shape_scenario": "0b84a17077582c211603f07ef2a0cf8299774270499681112890d513cdc2fe47",
-    "level_accepted_shapes": "52471197311f8e3f9938883ff17a7889c98aa63e49a12d60f53d3c5ca7624367",
+    "level_accepted_shapes": "f4ee223aa5faf146e52834c807f9598b9c9e891a28c12486436e041926846396",
     "boot_zero_padding": "c2f438947f1b011b53339d08d8aadb8c73383e357bdd6f2bba4b0dc9c9aa2e16",
     "level_switch_body": "e5332627ffa1817ffa79178b85cd03a885c13eeb9721fbe1728d99330c32b0d3",
     "level_context_translation": "b22efea1dc6ee0d0e5661dab312042028fe6c8a213c6f7f260bd4ce00b4eac89",

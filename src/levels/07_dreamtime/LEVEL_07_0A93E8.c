@@ -6,7 +6,7 @@ extern unsigned char D_0020B478;
 extern int D_0020B47C;
 extern char D_00225E98[];
 
-extern int func_0A9330(void);
+extern long long func_0A9330(void);
 extern void func_0A8000(int a, unsigned int b, int c, int d, int e, int f);
 extern int func_0A8038(int a);
 extern int func_0B6DE0(unsigned char value);

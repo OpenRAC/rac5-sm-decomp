@@ -11,7 +11,7 @@ extern void func_139EC0(unsigned char *out, void *src);
 extern void func_139F10(void *dst, void *src, float f);
 extern void func_139ED0(void *dst, void *src, float f);
 extern void func_139EA0(void *dst, void *src);
-extern int func_022148(void);
+extern long long func_022148(void);
 extern int func_0F5768(Obj *o);
 extern void func_1119C0(int unused, char *s);
 extern void func_139E58(void);

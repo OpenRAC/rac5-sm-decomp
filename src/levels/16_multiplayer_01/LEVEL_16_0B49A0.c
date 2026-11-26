@@ -20,7 +20,7 @@ extern char D_001AEBA0[];
 extern char D_001AEBC8[];
 
 extern unsigned int func_0794C8(int a);
-extern int func_095930(void);
+extern long long func_095930(void);
 extern Obj *func_0793B8(int a);
 extern Pad *func_0793F0(int a);
 extern int func_027E38(int a);

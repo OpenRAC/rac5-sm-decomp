@@ -7,7 +7,7 @@ typedef struct Ent {
 extern Ent D_00206F30[5];
 extern unsigned int D_00217000;
 extern void *memset(void *p, int c, unsigned int n);
-extern int func_027298(void);
+extern long long func_027298(void);
 extern void func_14D228(int cls, int arg);
 
 void func_14DDE0(int arg, unsigned int size)

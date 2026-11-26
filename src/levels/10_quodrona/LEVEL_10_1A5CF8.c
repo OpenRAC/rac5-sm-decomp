@@ -19,7 +19,7 @@ typedef struct Obj {
 
 extern float D_0022ED40[];
 extern int func_01BA68(Target **out, int max, char *pos, int a, int b, int c, int d, float range);
-extern int func_027B98(void);
+extern long long func_027B98(void);
 
 void func_1A5CF8(Obj *object)
 {
@@ -32,7 +32,7 @@ void func_1A5CF8(Obj *object)
     for (i = 0; i < count; i++) {
         h = targets[i]->handlers;
         if (h->hit != 0) {
-            h->hit(targets[i], 0, 3, object->pos, object->vel, (char *)object, D_0022ED40[func_027B98()]);
+            h->hit(targets[i], 0, 3, object->pos, object->vel, (char *)object, D_0022ED40[((int (*)(void))func_027B98)()]);
         }
     }
 }

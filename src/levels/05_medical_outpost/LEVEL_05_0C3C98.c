@@ -26,12 +26,12 @@ extern char D_001EFED0[];
 extern Chunk D_0029FBF0[];
 
 extern unsigned int func_0858E0(int a);
-extern int func_0A4F78(void);
+extern long long func_0A4F78(void);
 extern Obj *func_0857D0(int a);
 extern Pad *func_085808(int a);
 extern int func_029068(int a);
 extern void func_0C39D0(int *a, int *b);
-extern int func_0A4F18(void);
+extern long long func_0A4F18(void);
 extern int func_0B45C8(int a);
 extern void func_019DC0(int a, int b);
 extern int func_0BB028(int a);

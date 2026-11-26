@@ -13,7 +13,7 @@ extern float D_00270340[];
 extern float D_0026F55C;
 
 extern void func_1B6BB0(void);
-extern int func_0288B8(void);
+extern long long func_0288B8(void);
 extern void func_040D98(int a, int b, float *pos, int c, Obj *o, float f);
 extern void func_136C80(Obj *a, Obj *b, int c);
 
@@ -32,7 +32,7 @@ void func_1B6478(Obj *o)
         dx = p[0] - D_002843D0[12];
         dz = p[2] - D_002843D0[14];
         if (dx * dx + dz * dz <= 2.5f) {
-            func_040D98(0, 3, p, 0, o, D_00270340[func_0288B8()]);
+            func_040D98(0, 3, p, 0, o, D_00270340[((int (*)(void))func_0288B8)()]);
         }
     } else {
         func_136C80(o, o, o->w58);
