@@ -76,10 +76,19 @@ def runtime_primitive(tokens: list, index: int) -> bool:
     return False
 
 
+SYNTHETIC_PROBES = {"RAC5_WITNESS_PADDING", "RAC5_padding_sentinel"}
+# Every diagnostic below needs a word token equal to one of ASM_NAMES or
+# SYNTHETIC_PROBES, so a text containing none of these substrings has none.
+_TRIGGERS = ("asm", "RAC5_")
+
+
 def policy_errors(source: str) -> list[str]:
     """Return source-line diagnostics, ignoring comments and literal contents."""
     # C joins escaped newlines before tokenization, including inside identifiers.
     text = re.sub(r'\\\r?\n', '', source)
+    # Fast path, checked after the join so `as\<newline>m` is still caught.
+    if not any(trigger in text for trigger in _TRIGGERS):
+        return []
     # Line markers and includes do not belong to the following declaration.
     # Keep macro definitions visible; expanded input is checked again by the gate.
     text = re.sub(r'(?m)^[ \t]*#[ \t]*(?:(?:line[ \t]+)?\d+|include\b)[^\n]*', '', text)
@@ -89,7 +98,7 @@ def policy_errors(source: str) -> list[str]:
     problems = []
     for index, match in enumerate(tokens):
         value = match[0]
-        if match.lastgroup == "word" and value in {"RAC5_WITNESS_PADDING", "RAC5_padding_sentinel"}:
+        if match.lastgroup == "word" and value in SYNTHETIC_PROBES:
             line = text.count('\n', 0, match.start()) + 1
             problems.append(f"line {line}: synthetic alignment probes belong in private experiments")
         if match.lastgroup == "word" and value in ASM_NAMES:
