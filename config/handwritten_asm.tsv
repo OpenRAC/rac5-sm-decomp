@@ -1,34 +1,118 @@
-# Functions whose retail body is handwritten assembly, not compiler output from C.
-# One entry per line: symbol <TAB> address <TAB> class <TAB> reason <TAB> evidence.
-# Classes:
-#   mmi          R5900 MMI/vector instructions no available C form emits
-#   cop0         privileged coprocessor-0 access (mfc0/mtc0/eret)
-#   syscall      syscall-trampoline stubs
-#   sync         memory barrier with no pure-C form in the pinned chains
-#   gp-store     writes the $gp register itself
-#   vu0          inline VU0 microcode emitted by the retail macro
-# A name here is a measured verdict, not a guess: it records that the listed
-# earlier attempts tried C and the harness never reached the exact body. Reopening one
-# needs a new tool (a compiler builtin or a policy decision), not another C
-# source form.
-symbol	address	class	reason	evidence
-strcat	0x01EC63AC	mmi	handwritten r5900 string routine (lq/pcpyld/psubb)	w15/T07, w13/R10
-strchr	0x01EC64DC	mmi	handwritten r5900 string routine	w15/T07, w13/R10
-strcmp	0x01EC667C	mmi	handwritten r5900 string routine	w15/T07, w13/R10
-strcpy	0x01EC67C8	mmi	handwritten r5900 string routine	w15/T07, w13/R10
-strlen	0x01EC68E0	mmi	handwritten r5900 string routine	w15/T07, w13/R10
-strncat	0x01EC6A28	mmi	handwritten r5900 string routine	w15/T07, w13/R10
-strncmp	0x01EC6BE0	mmi	handwritten r5900 string routine	w15/T07, w13/R10
-strncpy	0x01EC6DA8	mmi	handwritten r5900 string routine	w15/T07, w13/R10
-isceSifSendCmd	0x01ED3B50	mmi	64-bit manual loop, not expressible in C	w10/b1
-VEC_MultiplyMatrix4__FP7MATRIX4PC7MATRIX4T1	0x01E76FE0	vu0	38 VU0 ops (sceVu0MulMatrix macro)	w13/C4, w14/T03, w15/T02
-MultMatrix__Q34scee3Psp3GumPC14ScePspFMatrix4	0x01E81DE8	vu0	38 VU0 ops	w14/T03, w14/R04
-LookAt__Q34scee3Psp3GumPC14ScePspFVector3N21	0x01E82410	vu0	38 VU0 ops	w14/T03, w14/R04
-customGsSyncPath__FiUs	0x01E847A0	vu0	cfc2.ni $vi29, no VU builtin in any pinned cc1	w14/T06
-dlib_displist_send_dma__FP13DLIB_DISPLISTi	0x01E93B08	sync	barrier plus manual DMA packet stores	w15/W-SYNC, w15/T04
-ENTRYPOINT	0x01E62508	cop0	crt0: padduw, mthi/mtlo/mtsah, mtc1 f0-f31, sync.p, ctc1, ei	w15/T01
-_kExitTLBHandler	0x01EDA7C0	cop0	eret/mtc0, $k0 only	w15/T10, w13/R11
-GetOsdConfigParam	0x01ED0D10	syscall	29 addiu/syscall/jr stubs	w15/H1
-EnableDmac	0x01ED17A0	cop0	mfc0 Status plus sync	w15/F01, w13/R10
-iSetTimerHandler	0x01ED9CB0	gp-store	stores $gp itself in 0x2C(s0)	w15/T10, w13/R11
-scePadSetDmaCallback	0x01EA4408	gp-store	writes $gp, no C spelling	w14/T06
+# Retail code written as assembly: original assembly, finished work that no C
+# source can or should reproduce. Read by tools/handwritten_asm.py (structure in
+# CI, the evidence against the retail bytes with --retail) and counted by
+# tools/progress_status.py in a column of its own, never as accepted C; the
+# ByteMatch report does not count it.
+#
+# The rule is the one OpenRAC/rac1-decomp states in docs/game/asm-classification.md
+# and rac2-decomp and rac3-decomp apply with ASM_FUNC: a function is original
+# assembly when it holds an instruction the pinned C chains never emit. Inline
+# assembly is not C evidence here (docs/gates/boot-match-scope.md), so such a
+# body has no C form. `sync` and `sync.p` alone are not evidence, because the
+# pinned sdk991111sync chain emits them from __builtin_rac5_sync. A row is one
+# whole report unit (a boot interval up to the next label, or a level shape
+# unit) that is one routine carrying the evidence, or only syscall trampolines;
+# a unit whose evidence lies in one of several functions stays open
+# (docs/contributing/matching-blockers.md lists them).
+#
+# scope    boot, or the level module of the shape unit's first placement
+# name     boot: the report unit label; levels: the shape unit name
+# start    boot: virtual address; levels: offset in the module
+# bytes    the unit's code bytes, as progress/report.json counts them
+# class    cop0      coprocessor-0 access (mfc0/mtc0/ei/di/eret)
+#          gp-store  stores the $gp register itself
+#          mmi       128-bit MMI operations ee-gcc has no pattern for (the moves
+#                    por/pcpyld/pcpyud alone do not count)
+#          vu0       VU0 macro instructions (COP2, lqc2/sqc2)
+#          syscall   nothing but syscall trampolines (addiu $v1 / syscall / jr $ra / nop)
+# evidence what the retail bytes hold, and the sister project that keeps an
+#          identical twin as handwritten assembly, when one does
+scope	name	start	bytes	class	evidence
+boot	_start	0x01E62508	576	cop0	the crt0 entry: coprocessor-0 ei, MMI padduw, mtsah, sync.p and syscalls; OpenRAC/rac3-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0013ADA8, src/boot_elf/core/13ADA8.c)
+boot	VEC_MultiplyMatrix4__FP7MATRIX4PC7MATRIX4T1	0x01E76FE0	348	vu0	VU0 macro instructions: 24 COP2 words, 4 lqc2/sqc2
+boot	MultMatrix__Q34scee3Psp3GumPC14ScePspFMatrix4	0x01E81DE8	364	vu0	VU0 macro instructions: 24 COP2 words, 4 lqc2/sqc2
+boot	LookAt__Q34scee3Psp3GumPC14ScePspFVector3N21	0x01E82410	1028	vu0	VU0 macro instructions: 24 COP2 words, 4 lqc2/sqc2
+boot	VsyncIntHand__Fi	0x01E83DB0	40	cop0	coprocessor-0 access: ei
+boot	customGsSyncPath__FiUs	0x01E847A0	260	vu0	VU0 macro instructions: 2 COP2 words
+boot	sceGsResetPath	0x01E9BDD8	160	vu0	VU0 macro instructions: 4 COP2 words; OpenRAC/rac3-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0012A950, src/boot_elf/core/12A950.c)
+boot	sceGsSyncPath	0x01E9BE78	136	vu0	VU0 macro instructions: 1 COP2 word; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_001244B8, src/core/001232F0.c)
+boot	RADTimerRead	0x01EAF868	140	cop0	coprocessor-0 access: mfc0 Count
+boot	YUV_32_4x2_even	0x01EB1AB0	880	mmi	128-bit MMI operations ee-gcc has no pattern for: pextlw, pextlh, pextlb, psubh, pmulth, pinteh, psubub, pextub, paddh, ppach, paddsh, psubuh, pextuh
+boot	YUV_32a_4x2_even	0x01EB1E20	1072	mmi	128-bit MMI operations ee-gcc has no pattern for: pextlw, pextlh, pextlb, psubh, pextuh, pmulth, pinteh, psubub, pextub, paddh, ppach, paddsh, psubuh
+boot	memcmp	0x01EC60B8	148	mmi	128-bit MMI operations ee-gcc has no pattern for: pxor; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_00115340, src/core/00115200.c)
+boot	memset	0x01EC62F4	184	mmi	128-bit MMI operations ee-gcc has no pattern for: pcpyh
+boot	strcat	0x01EC63AC	304	mmi	128-bit MMI operations ee-gcc has no pattern for: psubb, pnor, pand
+boot	strchr	0x01EC64DC	416	mmi	128-bit MMI operations ee-gcc has no pattern for: pnor, psubb, pand, pxor
+boot	strcmp	0x01EC667C	332	mmi	128-bit MMI operations ee-gcc has no pattern for: psubw, pnor, psubb, pand; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_00115544, src/core/00115200.c)
+boot	strcpy	0x01EC67C8	280	mmi	128-bit MMI operations ee-gcc has no pattern for: psubb, pnor, pand
+boot	strlen	0x01EC68E0	324	mmi	128-bit MMI operations ee-gcc has no pattern for: psubb, pnor, pand
+boot	strncat	0x01EC6A28	436	mmi	128-bit MMI operations ee-gcc has no pattern for: psubb, pnor, pand
+boot	strncmp	0x01EC6BE0	456	mmi	128-bit MMI operations ee-gcc has no pattern for: psubw, pnor, psubb, pand; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_001158F4, src/core/00115200.c)
+boot	strncpy	0x01EC6DA8	468	mmi	128-bit MMI operations ee-gcc has no pattern for: pnor, psubb, pand
+boot	memchr	0x01ECE168	236	mmi	128-bit MMI operations ee-gcc has no pattern for: pcpyh, pxor, pnor, psubb, pand
+boot	SetGsCrt	0x01ED0860	32	syscall	2 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	_Exit	0x01ED0880	32	syscall	2 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	_LoadExecPS2	0x01ED08A0	160	syscall	10 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	AddIntcHandler	0x01ED0940	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011A900, src/core/0011A830.c)
+boot	AddIntcHandler2	0x01ED0950	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011A900, src/core/0011A830.c)
+boot	RemoveIntcHandler	0x01ED0960	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011A920, src/core/0011A830.c)
+boot	AddDmacHandler	0x01ED0970	32	syscall	2 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	RemoveDmacHandler	0x01ED0990	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011A950, src/core/0011A830.c)
+boot	_EnableIntc	0x01ED09A0	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011A960, src/core/0011A830.c)
+boot	_DisableIntc	0x01ED09B0	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011A970, src/core/0011A830.c)
+boot	_EnableDmac	0x01ED09C0	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011A980, src/core/0011A830.c)
+boot	_DisableDmac	0x01ED09D0	144	syscall	9 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	CreateThread	0x01ED0A60	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011AA20, src/core/0011A830.c)
+boot	DeleteThread	0x01ED0A70	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011AA30, src/core/0011A830.c)
+boot	_StartThread	0x01ED0A80	32	syscall	2 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	ExitDeleteThread	0x01ED0AA0	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011AA60, src/core/0011A830.c)
+boot	TerminateThread	0x01ED0AB0	64	syscall	4 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	ChangeThreadPriority	0x01ED0AF0	32	syscall	2 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	RotateThreadReadyQueue	0x01ED0B10	64	syscall	4 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	GetThreadId	0x01ED0B50	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011AB10, src/core/0011A830.c)
+boot	ReferThreadStatus	0x01ED0B60	32	syscall	2 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	SleepThread	0x01ED0B80	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011AB40, src/core/0011A830.c)
+boot	WakeupThread	0x01ED0B90	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011AB50, src/core/0011A830.c)
+boot	_iWakeupThread	0x01ED0BA0	48	syscall	3 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	SuspendThread	0x01ED0BD0	112	syscall	7 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	EndOfHeap	0x01ED0C40	32	syscall	2 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	CreateSema	0x01ED0C60	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011AC20, src/core/0011A830.c)
+boot	DeleteSema	0x01ED0C70	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011AC30, src/core/0011A830.c)
+boot	SignalSema	0x01ED0C80	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011AC40, src/core/0011A830.c)
+boot	iSignalSema	0x01ED0C90	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011AC50, src/core/0011A830.c)
+boot	WaitSema	0x01ED0CA0	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011AC60, src/core/0011A830.c)
+boot	PollSema	0x01ED0CB0	80	syscall	5 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	SetOsdConfigParam	0x01ED0D00	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011ACC0, src/core/0011A830.c)
+boot	GetOsdConfigParam	0x01ED0D10	464	syscall	29 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	FlushCache	0x01ED0EE0	80	syscall	5 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	sceSifStopDma	0x01ED0F30	64	syscall	4 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	GetOsdConfigParam2	0x01ED0F70	48	syscall	3 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	GsPutIMR	0x01ED0FA0	48	syscall	3 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	SetVSyncFlag	0x01ED0FD0	48	syscall	3 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	sceSifDmaStat	0x01ED1000	32	syscall	2 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	_sceSifSetDma	0x01ED1020	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011AFE0, src/core/0011A830.c)
+boot	_isceSifSetDma	0x01ED1030	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011AFF0, src/core/0011A830.c)
+boot	sceSifSetDChain	0x01ED1040	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011B000, src/core/0011A830.c)
+boot	isceSifSetDChain	0x01ED1050	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011B010, src/core/0011A830.c)
+boot	sceSifSetReg	0x01ED1060	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011B020, src/core/0011A830.c)
+boot	sceSifGetReg	0x01ED1070	32	syscall	2 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	Deci2Call	0x01ED1090	48	syscall	3 syscall trampolines (addiu $v1 / syscall / jr $ra / nop) and nothing else
+boot	GetMemorySize	0x01ED10C0	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011B080, src/core/0011A830.c)
+boot	_InitTLB	0x01ED10D0	16	syscall	1 syscall trampoline (addiu $v1 / syscall / jr $ra / nop) and nothing else; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011B090, src/core/0011A830.c)
+boot	sbrk	0x01ED1330	172	cop0	coprocessor-0 access: mfc0 Status, di, ei; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011B270, src/core/0011B1E8.c)
+boot	_sceSDC	0x01ED13F8	164	cop0	coprocessor-0 access: mfc0 TagLo; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011B328, src/core/0011B1E8.c)
+boot	SyncDCache	0x01ED14A0	132	cop0	coprocessor-0 access: mfc0 Status
+boot	_sceIDC	0x01ED1528	164	cop0	coprocessor-0 access: mfc0 TagLo; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011B458, src/core/0011B1E8.c)
+boot	InvalidDCache	0x01ED15D0	132	cop0	coprocessor-0 access: mfc0 Status
+boot	QueryIntrContext	0x01ED1658	16	cop0	coprocessor-0 access: mfc0 Status; OpenRAC/rac3-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011F860, src/boot_elf/core/11F860.c)
+boot	DisableIntc	0x01ED1668	104	cop0	coprocessor-0 access: mfc0 Status; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011B588, src/core/0011B588.c)
+boot	EnableIntc	0x01ED16D0	104	cop0	coprocessor-0 access: mfc0 Status; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011B588, src/core/0011B588.c)
+boot	DisableDmac	0x01ED1738	104	cop0	coprocessor-0 access: mfc0 Status; OpenRAC/rac2-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011B588, src/core/0011B588.c)
+boot	EnableDmac	0x01ED17A0	320	cop0	coprocessor-0 access: mfc0 Status
+boot	DelayThread	0x01ED1A70	200	cop0	coprocessor-0 access: mfc0 Status; OpenRAC/rac3-decomp keeps a relocation-masked identical twin as handwritten assembly (func_0011FC78, src/boot_elf/core/11FBD8.c)
+boot	DIntr	0x01ED8AD0	80	cop0	coprocessor-0 access: mfc0 Status, di; OpenRAC/rac3-decomp keeps a relocation-masked identical twin as handwritten assembly (func_00124920, src/boot_elf/core/1245A0.c)
+boot	SetT2	0x01ED9240	112	cop0	coprocessor-0 access: mfc0 Status, di, mtc0 Status, mtc0 ErrorEPC, eret; OpenRAC/rac3-decomp keeps a relocation-masked identical twin as handwritten assembly (func_00125090, src/boot_elf/core/124FB8.c)
+boot	iSetTimerHandler	0x01ED9CB0	268	gp-store	stores $gp itself (1)
+boot	_kExitTLBHandler	0x01EDA7C0	284	cop0	coprocessor-0 access: mfc0 Status, mtc0 Status, mtc0 EPC, eret
+FRONTEND.REL	FRONTEND_01EA30	0x01EA30	336	vu0	VU0 macro instructions: 24 COP2 words, 4 lqc2/sqc2; the level copy (20 modules) of the boot VEC_MultiplyMatrix4__FP7MATRIX4PC7MATRIX4T1 listed above
+FRONTEND.REL	FRONTEND_006748	0x006748	260	vu0	VU0 macro instructions: 2 COP2 words; the level copy (20 modules) of the boot customGsSyncPath__FiUs listed above

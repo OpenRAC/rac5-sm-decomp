@@ -52,6 +52,7 @@ is universally impossible are superseded where a later entry says so.
 | Store order | The order is a **permutation** of the source order, not one universal rotation. Sweep permutations; do not guess. |
 | Non-canonical page arithmetic | `lui 0x22` followed by `-0x78C` is **0x21F874**, not 0x217874: the immediate is sign-extended and added. `%hi` rounds. |
 | One body, two functions | A target may end with a second function; write both in one file and they link end to end (measurements at 128 bytes and at `LEVEL_20:0x02B088`). |
+| Original assembly | On 26 November 2026 `config/handwritten_asm.tsv` lists 86 boot units and 2 level shapes by OpenRAC/rac1-decomp's instruction rule (syscall trampolines, coprocessor 0, MMI, VU0, `$gp` stores). `tools/handwritten_asm.py` checks it, and the progress table counts it apart from C. See [the classification](#original-assembly-classification-26-november-2026). |
 | Boot GCC runtime library | On 13 November 2026 the nine remaining boot `libgcc` functions (`__divdi3`, `__moddi3`, `__udivdi3`, `__umoddi3`, `__muldi3`, `__fixdfdi`, `__do_global_dtors`, `__do_global_ctors`, `__unpack_f`; 6,836 body bytes) are exact from GCC's own `libgcc2.c`/`fp-bit.c` text as OpenRAC/rac1-decomp vendors it, under `sdk991111 -O2 -G0` (`__unpack_f` also under the pinned chain). Five need `longlong.h`'s original MIPS `umul_ppmm`, which AGENTS.md now allows as RAC2 does. Write such a function as the upstream module, not as rewritten C. |
 
 These summaries do not award additional matching credit or replace the build. Check current
@@ -423,8 +424,9 @@ clamps, the normalization bypass and original float operations are retained;
 no unit-vector, host IEEE or repaired-domain assumption is added.
 
 **Boot raw-block parsing and shared quaternion source, 17 November 2026.**
-The retained [TJZIP raw-block parser](../../nonmatching/boot/TJZIP_ParseRawDataBlock__FPPUcT0PUi.c)
-reproduces all 444 linked body bytes under rebuilt default GNU and
+The [TJZIP raw-block parser](../../src/boot/TJZIP_ParseRawDataBlock__FPPUcT0PUi.c)
+(accepted on 26 November 2026 from a port of OpenRAC/rac-sac-decomp's matched C, which
+supersedes the retained attempt described here) reproduces all 444 linked body bytes under rebuilt default GNU and
 `gnu-ee-trial`, with `-O2 -G0`, GNU assembly and independent SN links. Both
 actual object and linked FUNC/text extents are 444 bytes; the following zero
 alignment word is excluded. The source adapts the repository's accepted level
@@ -513,14 +515,14 @@ that retail keeps, the header updater lost two pointer copies.
 The cause is the source shape, not the compiler. Retail matches code that names the stored
 object again in each statement. For the
 [Dan-skin setter](../../nonmatching/boot/MEMCARD_SetDanSkinUnlocked__FUi.c) and
-[widescreen setter](../../nonmatching/boot/MEMCARD_SetWideScreenToMemcard__FUi.c),
+[widescreen setter](../../src/boot/MEMCARD_SetWideScreenToMemcard__FUi.c),
 `flags &= ~BIT;` followed by `flags |= (enabled ? BIT : 0);` on the stored byte itself gives
 all 36 bytes: the second statement reuses the value the first one stored, the masked value
 therefore has two uses, and the byte extension between the two masks cannot be merged away.
-For the [header updater](../../nonmatching/boot/MEMCARD_SetHeaderDetail__FUiUiUiUiUi.c), four
+For the [header updater](../../src/boot/MEMCARD_SetHeaderDetail__FUiUiUiUiUi.c), four
 assignments that each index the header array again give all 52 bytes: the repeated address
-computations become register copies that stay separate. These three are exact local witnesses,
-not accepted matches. When a small accessor keeps a redundant mask, extension or register
+computations become register copies that stay separate. These three were exact local witnesses;
+the widescreen setter and the header updater were accepted on 26 November 2026. When a small accessor keeps a redundant mask, extension or register
 copy, try the repeated-object form before suspecting the compiler.
 
 The [hardcore setter](../../nonmatching/boot/MEMCARD_SetHardcoreModeBit__FUib.c) has the same
@@ -539,7 +541,7 @@ route and `gnu-ee-trial` (`-O2 -G0`, default GNU assembler); a seventh stays a m
 They are local witnesses, not accepted matches. Each one was a near miss or a discarded trial
 until its source shape changed:
 
-- [`MBOX_Send`](../../nonmatching/boot/MBOX_Send__FiP12HigMsgPacket.c),
+- [`MBOX_Send`](../../src/boot/MBOX_Send__FiP12HigMsgPacket.c) (accepted on 26 November 2026),
   [`MBOX_Poll`](../../nonmatching/boot/MBOX_Poll__FiPP12HigMsgPacket.c): a range test and a
   one-bit signed flag test written as two early returns lose the negation of the flag and move
   the failure return. Written as one condition, `if (index >= 16 || table[index].flag == 0)
@@ -1121,7 +1123,7 @@ These candidate entries have source-level C retained under `nonmatching/levels/`
 | [`0x00AB70`](../../src/levels/frontend/FRONTEND_00AB70.c) (accepted 22 November 2026) | 56 B | pinned: 56 B, first difference +2 | Recover the record-stride multiply and argument-bank setup for the local call. |
 | [`0x01E380`](../../src/levels/frontend/FRONTEND_01E380.c) (accepted 11 November 2026) | 60 B | pinned: 60 B, first difference +11 | Recover the masked-index register and final record comparison control flow. |
 | [`0x020698`](../../src/levels/frontend/FRONTEND_020698.c) (accepted 21 November 2026) | 64 B | pinned: 60 B, first difference +8 | Recover the flag set/clear branch and the two pointer reload lifetimes. |
-| [`0x020918`](../../nonmatching/levels/FRONTEND_020918.c) | 44 B | pinned: 40 B, first difference +2 | Recover the mask-expression order and the retail literal/register lifetimes. |
+| [`0x020918`](../../src/levels/frontend/FRONTEND_020918.c) (accepted 26 November 2026) | 44 B | pinned: 40 B, first difference +2 | Recover the mask-expression order and the retail literal/register lifetimes. |
 | [`0x0209B0`](../../src/levels/frontend/FRONTEND_0209B0.c) (accepted 9 November 2026) | 48 B | pinned: 44 B, first difference +20 | Recover the conditional masked return without shortening away the retail conditional move. |
 | [`0x021188`](../../src/levels/frontend/FRONTEND_021188.c) (accepted 9 November 2026) | 40 B | pinned: 40 B, first difference +28 | Recover the null-check and sign-test branch layout without the branch-likely shortening. |
 | [`0x021A00`](../../src/levels/frontend/FRONTEND_021A00.c) (accepted 9 November 2026) | 44 B | pinned: 44 B, first difference +8 | Recover the bounds-failure branch and stride-calculation lifetime. |
@@ -1147,7 +1149,7 @@ The following USA candidate bodies are raw-identical across the listed numbered 
 | [`0x0BCBA0`](../../nonmatching/levels/LEVEL_01_0BCBA0.c) | 60 B | 20 | pinned: 56 B, first difference +0 | Recover the owner-pointer lifetime and the two-stage count/output checks. |
 | [`0x129DF8`](../../src/levels/01_pokitaru/WAD_NextAssetByType__FP15WAD_FILE_HEADER_LEVEL_01.c) (accepted 9 November 2026) | 56 B | 20 | pinned: 56 B, first difference +8 | Recover the linked-list loop entry without the compiler shortening it to a branch-likely return. |
 | [`0x037238`](../../src/levels/shared/LEVEL_01_037238.c) (accepted 9 November 2026) | 52 B | 20 | pinned: 56 B, first difference +2 | Recover the insertion-loop entry and value truncation before the first comparison. |
-| [`0x03C0E8`](../../nonmatching/levels/LEVEL_01_03C0E8.c) | 52 B | 20 | pinned: 56 B, first difference +9 | Recover the retail 64-bit clear-mask materialization and final field update. |
+| [`0x03C0E8`](../../src/levels/shared/LEVEL_01_03C0E8.c) (accepted 26 November 2026) | 52 B | 20 | pinned: 56 B, first difference +9 | Recover the retail 64-bit clear-mask materialization and final field update. |
 | [`0x02E568`](../../src/levels/shared/LEVEL_01_02E568.c) (accepted 9 November 2026) | 48 B | 20 | pinned: 48 B, first difference +6 | Recover the three field-load lifetimes and subtraction register assignment. |
 | [`0x03BF08`](../../src/levels/01_pokitaru/LEVEL_01_03BF08.c) (accepted 11 November 2026) | 48 B | 20 | pinned: 48 B, first difference +2 | Recover the child-pointer and flag temporary registers while keeping the short signed clear mask. |
 | [`0x03BF60`](../../src/levels/01_pokitaru/LEVEL_01_03BF60.c) (accepted 10 November 2026) | 48 B | 20 | pinned: 48 B, first difference +2 | Recover the child-pointer and flag temporary registers while keeping the short signed clear mask. |
@@ -1181,7 +1183,7 @@ The following USA candidate bodies are raw-identical across the listed numbered 
 | [`LEVEL_10:0x088F10`](../../nonmatching/levels/LEVEL_10_088F10.c) | 48 B | 1 | pinned: 32 B, first difference +4 | Recover the nullable flag test without the compiler shortening the masked boolean expression. |
 | [`LEVEL_07:0x1C3468`](../../src/levels/07_dreamtime/LEVEL_07_1C3468.c) (accepted 9 November 2026) | 44 B | 1 | pinned: 44 B, first difference +8 | Recover the early-return branch and second-child preload schedule. |
 | [`LEVEL_09:0x1A01B0`](../../src/levels/09_inside_clank/LEVEL_09_1A01B0.c) (accepted 9 November 2026) | 44 B | 1 | pinned: 44 B, first difference +8 | Recover the early-return branch and second-child preload schedule. |
-| [`LEVEL_09:0x1A0718`](../../nonmatching/levels/LEVEL_09_1A0718.c) | 44 B | 1 | pinned: 44 B, first difference +2 | Recover the three-condition boolean accumulator and state-compare register lifetimes. |
+| [`LEVEL_09:0x1A0718`](../../src/levels/09_inside_clank/LEVEL_09_1A0718.c) (accepted 26 November 2026) | 44 B | 1 | pinned: 44 B, first difference +2 | Recover the three-condition boolean accumulator and state-compare register lifetimes. |
 | [`LEVEL_18:0x17A768`](../../src/levels/18_multiplayer_03/LEVEL_18_17A768.c) (accepted 9 November 2026) | 44 B | 1 | pinned: 44 B, first difference +8 | Recover the early-return branch and second-child preload schedule. |
 | [`LEVEL_02:0x166B00`](../../src/levels/02_rykan_v/LEVEL_02_166B00.c) (accepted 9 November 2026) | 40 B | 1 | pinned: 40 B, first difference +2 | Recover the byte-counter load, clear store and limit-pointer register order. |
 | [`LEVEL_02:0x1A3510`](../../src/levels/02_rykan_v/LEVEL_02_1A3510.c) (accepted 9 November 2026) | 40 B | 1 | pinned: 40 B, first difference +2 | Recover the byte-counter load, clear store and limit-pointer register order. |
@@ -1378,7 +1380,7 @@ keep useful C attempts under `nonmatching/levels/` without match credit:
   The retail retains an extra value transfer. A wider return reaches 44 bytes
   but selects a different conditional move.
 - Fifteen flag-mask queries (for example,
-  [`LEVEL_01:0x132F48`](../../nonmatching/levels/LEVEL_01_132F48.c)) link at 40
+  [`LEVEL_01:0x132F48`](../../src/levels/01_pokitaru/LEVEL_01_132F48.c) (accepted 26 November 2026)) link at 40
   instead of 44 bytes, first differing at byte 2 in register allocation.
   Direct C folds both masks into 28 bytes. Reopen these families with source
   or compiler evidence for the original value lifetimes and scheduling.
@@ -1936,7 +1938,7 @@ measured first differences and reopening conditions. The
 [frontend global reset](../../src/levels/frontend/FRONTEND_021668.c) (accepted 9 November 2026) has the
 correct 68-byte length after changing its source control flow, but first
 differs at byte 23 in its branch form and register use. The
-[68-byte forwarding helper](../../nonmatching/levels/LEVEL_01_0362D8.c) links
+[68-byte forwarding helper](../../src/levels/01_pokitaru/LEVEL_01_0362D8.c) (accepted 26 November 2026) links
 60 bytes after accounting for two additional call arguments; its stack
 argument convention remains unresolved. The other 301 candidate sites gain
 no match credit. Relocation-masked similarity alone does not qualify a shared
@@ -2144,7 +2146,7 @@ Forty-eight representative pure-C attempts for selected bodies of at most 200 by
 - **Register lifetimes and call ABI.** The [frontend table lookup](../../src/levels/frontend/FRONTEND_01F1A0.c) (accepted 10 November 2026) links 104/104 bytes but swaps two temporary registers from byte 62; its caller's second-argument type also needs review. The [global fade selector](../../src/levels/02_rykan_v/LEVEL_02_069E68.c) (accepted 22 November 2026) links 148/152 bytes and changes the branch at byte 8 because the global pointer and stack bound have different lifetimes. The [global state initializer](../../src/levels/01_pokitaru/LEVEL_01_035988.c) (accepted 14 November 2026) links 100/104 bytes and first differs at byte 2 in its base-register allocation.
 - **Control flow, delay slots and returns.** The [byte-store helper](../../src/levels/01_pokitaru/LEVEL_01_133FE8.c) (accepted 9 November 2026) links 132/132 bytes but lacks the retail callee-argument move in the call delay slot at byte 52. The [copy wrapper](../../src/levels/01_pokitaru/LEVEL_01_1EBBD0.c) (accepted 9 November 2026) uses the qualified `sdk991111` profile and preserves the named `memcpy` import, yet links 120/124 bytes: after an exact 92-byte prefix it emits a tail jump instead of the retail call and return. The [signed clamp](../../src/levels/01_pokitaru/LEVEL_01_0B9D20.c) (accepted 22 November 2026) links 140/140 bytes but selects a shift where retail uses a signed comparison at byte 92.
 - **Layout, aliasing and store order.** The [twelve-byte record copy](../../src/levels/shared/FRONTEND_015E68.c) (accepted 9 November 2026) links 144/140 bytes and differs from entry, leaving its alignment and copy-before-guard ABI open. The [rotation matrix](../../src/levels/shared/LEVEL_01_123F10.c) (accepted 14 November 2026) links 144/144 bytes but first changes the sine/cosine store and float-register schedule at byte 16. The [float-state initializer](../../src/levels/01_pokitaru/LEVEL_01_0589C0.c) (accepted 9 November 2026) links 192/196 bytes; constant loading and field-store order diverge from byte 13.
-- **Integer width and lowering.** The [packed 64-bit field return](../../src/levels/01_pokitaru/LEVEL_01_03B368.c) (accepted 11 November 2026) reproduces the initial unaligned load/copy but links 44/72 bytes; the remaining stack-word reconstruction and masks require a faithful source form. The [partial-product multiplication](../../nonmatching/levels/LEVEL_01_1EA410.c) has the correct 96-byte length but differs at entry in multiplier and register order. The [upper-coordinate helper](../../src/levels/01_pokitaru/LEVEL_01_0AD0C0.c) (accepted 14 November 2026) links 132/132 bytes and first differs at byte 26 in the operand order of two additions; preserve the original upper-Y calculation when reopening it.
+- **Integer width and lowering.** The [packed 64-bit field return](../../src/levels/01_pokitaru/LEVEL_01_03B368.c) (accepted 11 November 2026) reproduces the initial unaligned load/copy but links 44/72 bytes; the remaining stack-word reconstruction and masks require a faithful source form. The [partial-product multiplication](../../src/levels/shared/__muldi3_shared.c) (accepted 26 November 2026) has the correct 96-byte length but differs at entry in multiplier and register order. The [upper-coordinate helper](../../src/levels/01_pokitaru/LEVEL_01_0AD0C0.c) (accepted 14 November 2026) links 132/132 bytes and first differs at byte 26 in the operand order of two additions; preserve the original upper-Y calculation when reopening it.
 - **Assembler and alignment.** The [bit-mask helper](../../nonmatching/levels/LEVEL_02_0413B8.c) links 152/148 bytes with the qualified per-source `ps2eeas` route and first differs at byte 6. Its register/order mismatch and final alignment word remain unresolved; the GNU assembler gives a longer result.
 
 The 132-byte [resource-selection body](../../src/levels/01_pokitaru/LEVEL_01_089B60.c) (accepted 9 November 2026) has a separate **defined-behavior blocker**. An earlier C version linked exactly at 20 USA placements with `1U << item[-1]`, but `item[-1]` is a byte and a 32-bit C shift is undefined when it is at least 32. The R5900 variable shift uses only the low five bits. The reviewed direct callers in the representative level do not prove that the byte is in 0..31; their record pointers come from resource data, and an all-ones flag mask does not bound the shift. The retained defined C uses `1U << (item[-1] & 31U)` and links 136/132 bytes, first differing at byte 20 at all 20 placements. None of those placements receives match credit. Reopen only with a range proof covering every applicable producer/caller or a qualified compiler route that reproduces the retail from defined C.
@@ -2153,9 +2155,9 @@ The 132-byte [resource-selection body](../../src/levels/01_pokitaru/LEVEL_01_089
 
 In the reviewed USA selection, 45 representative pure-C attempts still differ from retail after isolated links. Their handoffs record 460 nonmatching placements; 18 representatives link at the retail length, 19 shorter and eight longer. These are measured source leads, not C match credit, and a masked form does not extend one representative's result to untested sites.
 
-- **Register lifetimes, branches and calls.** The [tag parser](../../nonmatching/levels/LEVEL_02_0390C0.c) links 112/112 bytes but first changes constant placement at +17; the [global scan](../../src/levels/02_rykan_v/LEVEL_02_07B648.c) (accepted 9 November 2026) links 72/80 bytes and loses the base copy and guarded load schedule at +18. The [previous-field call](../../nonmatching/levels/LEVEL_01_062DB8.c) links 148/148 bytes but differs at +52: recover its argument preparation without adding a parameter that contradicts the callee ABI. The [stack-argument forwarding body](../../nonmatching/levels/LEVEL_02_03AD20.c) links 60/68 bytes; establish the actual eight-argument contract before attempting its final stack slots.
+- **Register lifetimes, branches and calls.** The [tag parser](../../nonmatching/levels/LEVEL_02_0390C0.c) links 112/112 bytes but first changes constant placement at +17; the [global scan](../../src/levels/02_rykan_v/LEVEL_02_07B648.c) (accepted 9 November 2026) links 72/80 bytes and loses the base copy and guarded load schedule at +18. The [previous-field call](../../nonmatching/levels/LEVEL_01_062DB8.c) links 148/148 bytes but differs at +52: recover its argument preparation without adding a parameter that contradicts the callee ABI. The [stack-argument forwarding body](../../src/levels/02_rykan_v/LEVEL_02_03AD20.c) (accepted 26 November 2026) links 60/68 bytes; establish the actual eight-argument contract before attempting its final stack slots.
 - **Floating-point scheduling and assembler scope.** The [matrix product](../../nonmatching/levels/LEVEL_02_12EDC0.c) links 196/196 bytes but assigns the first float registers differently from +2; recover live ranges under a qualified compiler route. The [two-division body](../../nonmatching/levels/LEVEL_02_03B090.c) links 56/52 bytes: retail needs two latency words before its first division and one before its second, while the available division-padding route adds two to both. A route change needs per-source qualification and regression controls.
-- **Integer width, address expressions and defined behavior.** The [aligned-address helper](../../src/levels/shared/LEVEL_01_058738.c) (accepted 9 November 2026) links 60/60 bytes but first differs at +15 because retail uses aligned-address OR semantics rather than addition. The [64-bit mask builder](../../nonmatching/levels/LEVEL_02_041000.c) links 56/52 bytes and needs the original constant expansion. The [72-byte shift helper](../../src/levels/02_rykan_v/LEVEL_02_028C90.c) (accepted 9 November 2026) retains defined C and links 76 bytes, first differing at +48; its privately exact unmasked shift needs a proof that every applicable value is below 32, or a qualified route that matches from defined C.
+- **Integer width, address expressions and defined behavior.** The [aligned-address helper](../../src/levels/shared/LEVEL_01_058738.c) (accepted 9 November 2026) links 60/60 bytes but first differs at +15 because retail uses aligned-address OR semantics rather than addition. The [64-bit mask builder](../../src/levels/shared/LEVEL_01_03C0E8.c) (accepted 26 November 2026) links 56/52 bytes and needs the original constant expansion. The [72-byte shift helper](../../src/levels/02_rykan_v/LEVEL_02_028C90.c) (accepted 9 November 2026) retains defined C and links 76 bytes, first differing at +48; its privately exact unmasked shift needs a proof that every applicable value is below 32, or a qualified route that matches from defined C.
 - **Partial masked forms.** The [124-byte output helper](../../src/levels/02_rykan_v/LEVEL_02_05E888.c) (accepted 9 November 2026) has 12 nonmatching placements (132/124 bytes, first difference +60) alongside seven separately exact placements. Recover its stack loads and call behavior for the per-module output stub; do not promote the remaining 12 by masked similarity.
 - **Semantic holds.** The earlier 132-byte resource-selection shift at LEVEL_01.REL:0x089B60 described above remains uncredited without an input-range proof. The [124-byte byte conversion](../../src/levels/shared/LEVEL_01_132280.c) (accepted 9 November 2026) links 116/124 bytes without a redundant zero guard; the privately exact guarded C is held because that guard is unreachable after the lowercase-range test. Reopen only with credible source-level evidence for the guard or a natural defined C match. At the previous snapshot, the 68-byte setter at `LEVEL_02.REL:0x07BCA0` was locally exact but uncredited because accepted callers declared a zero-argument prototype; the measured resolution below supersedes that hold.
 
@@ -2409,3 +2411,57 @@ read registers set by the preceding interval) and cannot be compiled alone; they
 need a boundary review before any retry. The object hashes of the 20 sources added
 with `ps2eeas` were first recorded from a full environment and were refreshed on
 22 November 2026 (PR #289; see the `Ps2EeAs` note).
+
+### Original assembly classification (26 November 2026)
+
+`config/handwritten_asm.tsv` now lists retail code by the rule OpenRAC/rac1-decomp
+states in `docs/game/asm-classification.md`, which rac2-decomp and rac3-decomp
+apply with `ASM_FUNC`: a report unit is original assembly when it is one routine
+that holds an instruction no pinned C chain emits, or nothing but syscall
+trampolines. Inline assembly is not C evidence here, so these bodies have no C
+form. `tools/handwritten_asm.py` checks the table against the catalogues in CI
+and, with `--retail`, each row's evidence against the retail bytes;
+`tools/progress_status.py` counts the rows in a column of their own. They are
+finished work but not C: neither the accepted C totals nor the ByteMatch report
+count them.
+
+Listed: **86 boot units (13,120 bytes) and 2 level shapes (596 bytes, 40
+placements)**. 49 units are syscall trampolines; 17 access coprocessor 0; 13 use
+128-bit MMI operations ee-gcc has no pattern for (the eight string routines,
+`memchr`, `memset`, `memcmp` and two YUV converters); 8 use VU0 macro
+instructions, two of them the level copies of `VEC_MultiplyMatrix4` and
+`customGsSyncPath`; `iSetTimerHandler` stores `$gp` itself. 42 rows have a
+relocation-masked identical twin that rac1, rac2 or rac3 keeps as handwritten
+assembly, and the row names it.
+
+Removed from the previous list:
+
+- `isceSifSendCmd`: accepted C now covers its 60-byte body; the rest of its
+  interval is unlabeled code with no such instruction.
+- `dlib_displist_send_dma__FP13DLIB_DISPLISTi`: its only special instruction is
+  `sync`, which `__builtin_rac5_sync` emits under `sdk991111sync`. It is open C
+  work again.
+- `scePadSetDmaCallback`: its `$gp` store is in the first of the two functions
+  its interval holds (see below).
+
+Left open for review rather than listed:
+
+- Evidence in one of several functions of an interval: `StartTimerSystemTime`,
+  `StartThread`, `scePadInit`, `EIntr`, `asyncPs2fioLseek` and
+  `scePowerOffHandler` (one `ei` each), `YUV_16_4x2_even` (MMI in the first of
+  two functions), `mixtoflat256format` (MMI in its last function) and
+  `scePadSetDmaCallback`. A reviewed boundary split would let the function with
+  the evidence be listed alone.
+- C and trampolines, or an inline `syscall`, in one interval: `Exit`, `kputs`,
+  `_InitSys`, `InitTLBFunctions`, `iWakeupThread` and `_exit`.
+- 128-bit moves only (`pcpyld`, `por`): `radmemcpy`, `radmemset`,
+  `radmemset16`, and 48 compiled units; ee-gcc emits these moves itself.
+- `sync` only: `SYSTEM_EndFrame__FbUi`, `sceGsSetDefClear`,
+  `sceSifWriteBackDCache` and four level units. rac1 lists its
+  `sceSifWriteBackDCache` from the local labels in the SDK library's symbol table,
+  evidence this project does not hold.
+- `iGetTimerSystemTime`: rac3 keeps an identical twin as handwritten assembly, but
+  its 76 bytes hold no instruction outside ee-gcc's output. List it once a reason
+  is recorded.
+- The five sound-state bodies with a code-1 `break` (blocker 16) remain a
+  maintainer decision.
