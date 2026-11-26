@@ -423,8 +423,9 @@ clamps, the normalization bypass and original float operations are retained;
 no unit-vector, host IEEE or repaired-domain assumption is added.
 
 **Boot raw-block parsing and shared quaternion source, 17 November 2026.**
-The retained [TJZIP raw-block parser](../../nonmatching/boot/TJZIP_ParseRawDataBlock__FPPUcT0PUi.c)
-reproduces all 444 linked body bytes under rebuilt default GNU and
+The [TJZIP raw-block parser](../../src/boot/TJZIP_ParseRawDataBlock__FPPUcT0PUi.c)
+(accepted on 26 November 2026 from a port of OpenRAC/rac-sac-decomp's matched C, which
+supersedes the retained attempt described here) reproduces all 444 linked body bytes under rebuilt default GNU and
 `gnu-ee-trial`, with `-O2 -G0`, GNU assembly and independent SN links. Both
 actual object and linked FUNC/text extents are 444 bytes; the following zero
 alignment word is excluded. The source adapts the repository's accepted level
