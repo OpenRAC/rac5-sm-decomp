@@ -5,6 +5,8 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import os
+import re
 import sys
 import unittest
 from collections import defaultdict
@@ -38,8 +40,17 @@ def records(path: Path) -> list[dict[str, str]]:
 
 
 def source_digest(path: Path) -> str:
-    return hashlib.sha256(path.read_text(encoding="utf-8")
-                          .replace("\r\n", "\n").encode("utf-8")).hexdigest()
+    return text_digest(path.read_text(encoding="utf-8"))
+
+
+def text_digest(text: str) -> str:
+    return hashlib.sha256(text.replace("\r\n", "\n").encode("utf-8")).hexdigest()
+
+
+def fail_if(problems: list[str], test: unittest.TestCase) -> None:
+    """One assertion listing every failure, cheaper than a subTest per row."""
+    test.assertEqual(problems, [], f"{len(problems)} problem(s), first: "
+                     + (problems[0] if problems else ""))
 
 
 class LevelBodyTests(unittest.TestCase):
@@ -53,53 +64,79 @@ class LevelBodyTests(unittest.TestCase):
         cls.modules = {Path(row["path"]).name: row for row in records(MODULES)}
         cls.ends = {row["module"]: int(row["end_exclusive"], 16)
                     for row in records(INTERVALS)}
+        cls._texts: dict[str, str | None] = {}
+
+    @classmethod
+    def text(cls, source: str) -> str | None:
+        """Each source is read once for every test of the class."""
+        if source not in cls._texts:
+            path = ROOT / source
+            cls._texts[source] = (path.read_text(encoding="utf-8")
+                                  if path.is_file() else None)
+        return cls._texts[source]
 
     def test_schema_and_placement_bounds(self) -> None:
         self.assertEqual(list(self.rows[0]), HEADER)
+        problems: list[str] = []
         seen: set[tuple[str, int]] = set()
         spans: dict[str, list[tuple[int, int]]] = defaultdict(list)
         for row in self.rows:
-            with self.subTest(module=row["module"], offset=row["offset"]):
-                self.assertIn(row["module"], self.modules)
-                offset, size = int(row["offset"], 0), int(row["size"])
-                self.assertGreaterEqual(offset, 0x80)
-                self.assertGreater(size, 0)
-                self.assertEqual(size % 4, 0)
-                self.assertLessEqual(offset + size, self.ends[row["module"]])
-                self.assertNotIn((row["module"], offset), seen)
-                seen.add((row["module"], offset))
-                spans[row["module"]].append((offset, offset + size))
+            where = f"{row['module']}:{row['offset']}"
+            if row["module"] not in self.modules:
+                problems.append(f"{where}: unknown module")
+                continue
+            offset, size = int(row["offset"], 0), int(row["size"])
+            if offset < 0x80:
+                problems.append(f"{where}: offset below the module header")
+            if size <= 0 or size % 4:
+                problems.append(f"{where}: size {size} is not a positive word multiple")
+            if offset + size > self.ends[row["module"]]:
+                problems.append(f"{where}: placement ends past the code interval")
+            if (row["module"], offset) in seen:
+                problems.append(f"{where}: duplicate placement")
+            seen.add((row["module"], offset))
+            spans[row["module"]].append((offset, offset + size))
         for module, items in spans.items():
             items.sort()
             for left, right in zip(items, items[1:]):
-                self.assertLessEqual(left[1], right[0],
-                                     f"overlapping placements in {module}")
+                if left[1] > right[0]:
+                    problems.append(f"overlapping placements in {module} at {right[0]:#x}")
+        fail_if(problems, self)
 
     def test_sources_and_hashes(self) -> None:
         self.assertEqual(list(self.source_rows[0]), SOURCE_HEADER)
+        problems: list[str] = []
         sizes: dict[str, int] = {}
         for row in self.rows:
             source = row["source"]
-            with self.subTest(source=source):
-                self.assertIn(source, self.sources,
-                              "placement names a source the source table lacks")
-                prior = sizes.setdefault(source, int(row["size"]))
-                self.assertEqual(prior, int(row["size"]))
+            if source not in self.sources:
+                problems.append(f"{source}: placement names a source the source table lacks")
+            prior = sizes.setdefault(source, int(row["size"]))
+            if prior != int(row["size"]):
+                problems.append(f"{source}: placements disagree on its size")
+        digest = re.compile(r"^[0-9a-f]{64}$")
         for row in self.source_rows:
             source = row["source"]
-            with self.subTest(source=source):
-                self.assertTrue(valid_source(source), source)
-                path = ROOT / source
-                self.assertTrue(path.is_file(), f"missing source {source}")
-                self.assertEqual(source_digest(path), row["source_sha256_lf"])
-                self.assertRegex(row["source_sha256_lf"], r"^[0-9a-f]{64}$")
-                self.assertRegex(row["object_sha256"], r"^[0-9a-f]{64}$")
-                self.assertIn(row["profile"], PROFILES)
-                if row["as"] != "gnu-ee-trial":
-                    self.assertIn(row["as"], self.assembler_pins)
-                    self.assertIn(source, self.assembler_pins[row["as"]]["accepted_sources"])
-                self.assertIn(source, sizes,
-                              "source table carries a source no placement uses")
+            if not valid_source(source):
+                problems.append(f"{source}: invalid source path")
+            text = self.text(source)
+            if text is None:
+                problems.append(f"missing source {source}")
+            elif text_digest(text) != row["source_sha256_lf"]:
+                problems.append(f"{source}: source_sha256_lf does not match the file")
+            if not digest.match(row["source_sha256_lf"]) or not digest.match(row["object_sha256"]):
+                problems.append(f"{source}: malformed hash column")
+            if row["profile"] not in PROFILES:
+                problems.append(f"{source}: unknown profile {row['profile']}")
+            if row["as"] != "gnu-ee-trial":
+                pin = self.assembler_pins.get(row["as"])
+                if pin is None:
+                    problems.append(f"{source}: unknown assembler {row['as']}")
+                elif source not in pin["accepted_sources"]:
+                    problems.append(f"{source}: not accepted by assembler {row['as']}")
+            if source not in sizes:
+                problems.append(f"{source}: source table carries a source no placement uses")
+        fail_if(problems, self)
         selected = {row["source"] for row in self.source_rows
                     if row["as"] != "gnu-ee-trial"}
         qualified = {source for entry in self.assembler_pins.values()
@@ -108,8 +145,9 @@ class LevelBodyTests(unittest.TestCase):
 
     def test_every_body_file_is_referenced(self) -> None:
         referenced = {row["source"] for row in self.rows}
-        files = {path.relative_to(ROOT).as_posix()
-                 for path in (ROOT / "src/levels").rglob("*.c")}
+        files = {os.path.relpath(os.path.join(folder, name), ROOT).replace(os.sep, "/")
+                 for folder, _, names in os.walk(ROOT / "src/levels")
+                 for name in names if name.endswith(".c")}
         self.assertEqual(files - referenced, OWN_GATE_SOURCES)
 
     def test_sources_sit_in_their_module_directory(self) -> None:
@@ -121,15 +159,14 @@ class LevelBodyTests(unittest.TestCase):
         self.assertEqual(repeated_names(self.rows), [])
 
     def test_sources_pass_the_c_policy(self) -> None:
-        checked = set()
-        for row in self.rows:
-            if row["source"] in checked:
+        problems = []
+        for source in dict.fromkeys(row["source"] for row in self.rows):
+            text = self.text(source)
+            if text is None:
+                problems.append(f"missing source {source}")
                 continue
-            checked.add(row["source"])
-            with self.subTest(source=row["source"]):
-                self.assertEqual(
-                    policy_errors((ROOT / row["source"]).read_text(encoding="utf-8")),
-                    [])
+            problems.extend(f"{source}: {error}" for error in policy_errors(text))
+        fail_if(problems, self)
 
 
 if __name__ == "__main__":

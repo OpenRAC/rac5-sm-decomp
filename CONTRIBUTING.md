@@ -25,8 +25,8 @@ Thanks for helping. The rules live in [`AGENTS.md`](AGENTS.md) and
    publishable C/C++ body in `nonmatching/` and explain its measured difference
    and reopening condition. A scratch-only copy is not the shared record.
 4. **Check.** Run `python -m unittest discover -s tests -v`,
-   `python tools/check_repository.py`, `python tools/progress_status.py --check`
-   and `python tools/check_doc_figures.py`.
+   `python tools/check_repository.py`, `python tools/check_text_encoding.py`,
+   `python tools/progress_status.py --check` and `python tools/check_doc_figures.py`.
    Regenerate metadata and progress with the relevant tool; never hand-edit
    generated tables or progress claims. After a regenerated snapshot,
    `python tools/check_doc_figures.py --write` carries the new totals into the
@@ -137,6 +137,16 @@ or whether a linked file supports the surrounding claim.
 
 This is a manual audit tool, not a CI gate. Review each finding before changing
 a reference; a missing historical source is not evidence for a replacement path.
+
+## Checking text encoding
+
+Run `python tools/check_text_encoding.py` to check every tracked text file for
+invalid UTF-8 and for double encoding, where UTF-8 bytes were read as
+Windows-1252 or Latin-1 and saved again (an en dash then shows as three
+characters: a circumflexed `a`, a euro sign and a quotation mark). It
+reports a run only when re-encoding it yields one valid UTF-8 character, so
+correct accented text passes. `--fix` repairs those runs in place; invalid
+UTF-8 must be corrected by hand. CI runs this check.
 
 ## Review and promotion
 
