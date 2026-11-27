@@ -2,7 +2,8 @@
 """Reject invalid UTF-8 and double-encoded text in tracked text files.
 
 Double encoding happens when UTF-8 bytes are decoded as Windows-1252 (or
-Latin-1) and written back as UTF-8: an en dash becomes ``â€“``. The check
+Latin-1) and written back as UTF-8: an en dash becomes a circumflexed ``a``, a euro
+sign and a quotation mark. The check
 reports a run only when re-encoding it byte for byte yields one valid UTF-8
 non-ASCII character, so ordinary accented text is not flagged. ``--fix``
 repairs those runs in place. The tool needs only Python's standard library and
