@@ -42,7 +42,7 @@ is universally impossible are superseded where a later entry says so.
 
 | Topic | Verified update |
 | --- | --- |
-| Level body scope | On 27 November 2026 (after PR #311) `progress/status.json` records **82,771 placements** (10,413,564 placement bytes) in **65,498 sources**. History: PR #106 had brought the table to 7,997 placements (384,676 placement bytes) in 1,658 sources, with all 21 module hashes matching. |
+| Level body scope | PR #106 (merged) brings the table to **7,997 placements** (384,676 placement bytes) in **1,658 sources**; all 21 module hashes still match. |
 | Float copy class | PR #104 and PR #106 add 2,737 placements. The retail copies a float record **field by field** in its own order; an aggregate assignment belongs to the `ldl`/`ldr` class instead. |
 | Division padding and prologue order | PR #97 adds the `gnu-ee-trial-divpad` profile: two `nop` before `div.s`, and the retail's save order (general registers before floating-point ones). |
 | Sixteen-byte copies | PR #103 proves 469 placements. `lq`/`sq` come from a **scalar** `TImode` value, never from an aggregate assignment. |
@@ -1077,17 +1077,7 @@ link target, not a general rule for unresolved compiler calls.
 
 ## What is left
 
-On 27 November 2026 (after PR #311), [`progress/status.json`](../../progress/status.json)
-records **864 accepted boot functions** covering 119,008 of 498,900 bytes of `.text`,
-**82,771 accepted level-body placements** of 10,413,564 placement bytes carried by
-**65,498 sources** (8,140 relocation-masked shape units), and, counted apart from C,
-86 boot units and 2 level shapes of [original assembly](#original-assembly-classification-26-november-2026).
-Many bounded level candidates remain outside the accepted scope, and the snapshot lists
-the work still needed before a game-wide report: Ghidra-only, static-only and unbounded
-spans, masked relocation-target equivalence, and complete-program C gates for accepted
-level functions. Read that file, not this summary, for current counts.
-
-History (9 November 2026): the level scope was **32,794 measured placements** of 1,924,072 placement bytes carried by **23,237
+The level scope is **32,794 measured placements** of 1,924,072 placement bytes carried by **23,237
 sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
 **693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
 The eight newly accepted bounded families contribute 241 distinct C bodies

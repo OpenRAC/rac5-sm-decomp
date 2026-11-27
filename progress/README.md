@@ -28,7 +28,7 @@ candidate code intervals, not verified function sizes or unique game code.
 `LEVEL_15.REL` and `LEVEL_21.REL` already have identical complete interval
 hashes; smaller shared functions may occur elsewhere. `overall_percent` is
 therefore `null`. The only percentage in the snapshot is explicitly scoped to
-the boot `.text`: 119,008 / 498,900 bytes (23.85%).
+the boot `.text`: 88,948 / 498,900 bytes (17.83%).
 The [function-boundary and deduplication audit](../docs/research/level-function-inventory.md)
 now records 124,356 possible entry intervals, 74,051 stronger bounded
 candidates and an exact-duplicate upper bound of 33,168,892 candidate bytes.
