@@ -518,8 +518,8 @@ coherent caller graph; neither equal length nor tail trimming is a remedy.
 
 ## What is left
 
-At the 27 November 2026 snapshot (`progress/status.json`), the level scope is **82,774 measured
-placements** of 10,413,908 placement bytes carried by **65,501 sources**, and many bounded
+At the 27 November 2026 snapshot (`progress/status.json`), the level scope is **82,776 measured
+placements** of 10,414,136 placement bytes carried by **65,503 sources**, and many bounded
 candidates remain outside the accepted scope. The boot keeps **864 accepted functions** covering
 119,008 of 498,900 bytes of `.text`. [Original assembly](#original-assembly-classification-26-november-2026)
 (86 boot units and 2 level shapes in `config/handwritten_asm.tsv`) is counted apart from C. The remainder of this section records earlier dated additions.
@@ -2788,3 +2788,50 @@ Boundary and source-method cases remain separate:
 - The ordinary typed byte-loop endpoint at `LEVEL_03:0x18C090` differs by
   11 words, first at byte 40 (0x28). Reusing an unrelated float pointer only to alter
   alias analysis is retained privately for source-method review, not credited.
+
+### Context-assisted structural search (27 November 2026)
+
+The improved shared [OpenRAC permuter](https://github.com/OpenRAC/OpenRAC/pull/1002)
+enumerates applicable C transformations and stops when their sites are exhausted.
+The [backend guide](permuter.md) describes its bounds and acceptance limits.
+A measured use on twenty new USA level bodies produced two exact sources
+under the existing `pinned` / `gnu-ee-trial` route, without changing compiler flags.
+Full-program qualification passed across all 21 pinned USA modules, including
+both additions and their corrected callers.
+
+- `LEVEL_02:0x0CA3B8` (180 bytes) needs the flag word as the second argument
+  of `0BFFB8` and the loaded field as the second argument of `13A420`.
+  Restoring those values and the accepted local return contracts makes the C
+  exact without a permutation. Its complete boundary is unchanged.
+- `LEVEL_16:0x022C28` (48 bytes) forwards its live column argument to the
+  accepted `0220C8(unsigned int, int)` getter. That correction leaves six
+  differing words; a returning-branch guard makes it exact. Eight accepted
+  callers also need the same `int(unsigned int, int)` declaration, including
+  explicit forwarding in `021F10` and address/word conversions in `022238`.
+  Their corrected objects remain identical to the eight original object pins.
+  This reconciles the getter contract; unrelated historical declarations in
+  these callers remain outside this change.
+  Four other multiplayer getters have the same shape, but different local
+  callees and separate inconsistent callers. They remain uncredited: the
+  current resolver cannot reuse the literal `func_0220C8` binding there.
+- Retained sound callers need eight general-purpose arguments, four float
+  arguments and the accepted `Voice **` handle slot. The mixed event helper
+  uses `(Obj *, unsigned int, float, int, int, float)`, with the integer values
+  zero then one. Correct declarations alone do not resolve their scheduling
+  differences. `LEVEL_01:0x031268` must keep its flags as 64-bit
+  `unsigned long`; narrowing them for a smaller difference is not a remedy.
+- The retained `LEVEL_02:0x1156C8` path hash needs separate lookahead and main
+  cursors. The main cursor resumes at its old position plus one even after
+  scanning separators. The recovered C is 220 of 200 bytes, with 53 differing
+  words, and remains nonmatching. Host checks cover 97,657 finite inputs at
+  each of `-O0` and `-O2`; they do not establish EE-runtime correctness or a
+  byte match. Preserve this control flow before revisiting register lifetimes.
+
+The twenty-source search compiled 57 distinct normalized C inputs within three
+per body; all searches terminated with receipts. One exact required both Ghidra
+context and a real structural mutation. The other eighteen remain nonmatching,
+with nine contextually improved attempts retained in `nonmatching/levels/`.
+Constructor normalization can change code generation, so compare the actual
+compiled C rather than treating an older source comment as a fresh baseline.
+The earlier twenty-source evaluation used a different corpus and does not
+provide a controlled performance comparison.

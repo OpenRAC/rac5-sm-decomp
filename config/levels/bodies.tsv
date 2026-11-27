@@ -82773,3 +82773,5 @@ LEVEL_24.REL	0x1BBD80	268	src/levels/shared/__pack_f.c
 LEVEL_01.REL	0x10F6F0	140	src/levels/01_pokitaru/LEVEL_01_10F6F0.c
 LEVEL_04.REL	0x197870	80	src/levels/04_metalis/LEVEL_04_197870.c
 LEVEL_01.REL	0x096BE0	124	src/levels/01_pokitaru/ENGINE/par/LEVEL_01_096BE0.c
+LEVEL_02.REL	0x0CA3B8	180	src/levels/02_rykan_v/LEVEL_02_0CA3B8.c
+LEVEL_16.REL	0x022C28	48	src/levels/16_multiplayer_01/LEVEL_16_022C28.c

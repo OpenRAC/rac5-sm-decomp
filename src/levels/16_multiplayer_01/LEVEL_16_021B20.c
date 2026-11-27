@@ -1,6 +1,6 @@
 /* LEVEL_16:0x021B20 -- placement copy of LEVEL_01_023F40.c. */
 /* USA LEVEL_01.REL:0x023F40. Two-step call wrapper. */
-extern int func_022C28(int mode, int field);
+extern int func_022C28(unsigned int mode, int field);
 extern void func_021A00(void *object, void *value, int mode,
                         int converted, int extra);
 

@@ -40,7 +40,7 @@ extern unsigned int D_001A1AE4;
 extern int D_001E4188;
 extern char g_RENDEREFFECT_SWIRLY_Active;
 
-extern int func_022C28(int a, int b);
+extern int func_022C28(unsigned int mode, int field);
 extern void func_024F20(int index, unsigned char set, unsigned char clear);
 extern int func_02A4F0(Menu *m, int a, int b);
 extern void func_0211E8(void *p, int a, int b, int c);
