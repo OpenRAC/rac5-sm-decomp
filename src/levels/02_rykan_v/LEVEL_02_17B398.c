@@ -17,7 +17,7 @@ typedef struct {
 } Obj;
 
 extern char *D_0021BD54;
-extern void func_17B550(void);
+extern void func_17B550(void *);
 
 static inline int Resolve(State *s)
 {
@@ -67,6 +67,6 @@ int func_17B398(Obj *o)
         q++;
     } while (j < 4);
 done:
-    func_17B550();
+    ((void (*)(void))func_17B550)();
     return 1;
 }

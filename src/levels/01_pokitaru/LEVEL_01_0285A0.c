@@ -1,6 +1,6 @@
 /* LEVEL_01:0x0285A0 -- reads two counters, then updates a slot pair against a threshold table. */
 
-extern int func_028290(void);
+extern long long func_028290(void);
 extern unsigned int func_027408(unsigned int a0, unsigned int a1);
 extern void func_027480(unsigned int a0, unsigned int a1, unsigned int a2);
 extern unsigned int D_0020CCB8[];

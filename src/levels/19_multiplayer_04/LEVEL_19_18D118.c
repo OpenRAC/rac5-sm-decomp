@@ -1,6 +1,6 @@
 /* LEVEL_19:0x18D118 -- placement copy of LEVEL_01_1DB8C8.c: lazily loads a set of resource handles. */
 extern int func_0CBF98(int a, int b, int c, int d);
-extern int func_0CC5E0(int a, int b, int c, int d);
+extern void func_0CC5E0(int a, int b, int c, int d);
 
 extern int D_001BF8D4;
 extern int D_001BF8D8;
@@ -17,6 +17,6 @@ void func_18D118(void)
         D_001BF8DC = func_0CBF98(1, 0x8D, 3, 1);
         D_001BF8E0 = func_0CBF98(0, 0x8D, 1, 1);
         D_001BF8E8 = func_0CBF98(0, 0x30, 1, 1);
-        D_001BF8E4 = func_0CC5E0(0, 0xA, 1, 1);
+        D_001BF8E4 = ((int (*)(int a, int b, int c, int d))func_0CC5E0)(0, 0xA, 1, 1);
     }
 }

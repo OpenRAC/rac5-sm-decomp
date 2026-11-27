@@ -90,7 +90,7 @@ extern int func_038A68(char *object);
 extern void func_003B70(int a0);
 extern void func_003BF0(void);
 extern int func_027850(int a0, int a1);
-extern int func_0278A8(int a0);
+extern long long func_0278A8(int a0);
 extern void func_11C728(float *dst, float *src);
 extern void func_027930(int a, int b, float f, float *c);
 extern void func_027728(Obj *o, float *acc, float dt);

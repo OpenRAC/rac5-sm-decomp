@@ -5,7 +5,7 @@ extern char D_000D3FF8[];
 extern char D_000D3E80[];
 
 void func_0879E0(unsigned int *record, unsigned int first, unsigned int second, int third, int fourth, int fifth, unsigned int sixth);
-void func_087BB8(void *buf);
+int func_087BB8(void *buf);
 
 void func_0D4748(unsigned int a, unsigned int b, unsigned int c)
 {

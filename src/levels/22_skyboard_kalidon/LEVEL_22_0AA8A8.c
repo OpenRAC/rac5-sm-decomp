@@ -1,7 +1,7 @@
 /* LEVEL_22:0x0AA8A8 -- placement copy of LEVEL_01_0BC400.c: gated one-shot setter: runs helpers, sets a flag byte, returns 1 on success. */
 extern int func_016E80(int a);
 extern int func_016EB0(void);
-extern int func_095940(void);
+extern long long func_095940(void);
 extern void func_0AA760(int a);
 extern void func_016E40(int a, int b);
 

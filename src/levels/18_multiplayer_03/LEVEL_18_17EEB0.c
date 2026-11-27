@@ -67,7 +67,7 @@ typedef struct {
 } Ctx;
 
 extern World *D_001B5D20;
-extern void func_06F008(void *o, int f);
+extern void func_06F008(void *o);
 extern Obj *func_06EEF8(void *e, unsigned key, Ctx *c, int n);
 extern int func_17F300(Obj *o);
 extern Rec *func_021710(unsigned a, int b);
@@ -98,7 +98,7 @@ void func_17EEB0(Ctx *c)
     for (; p != end; p += 0x80) {
         Elem *el = (Elem *)p;
         if ((el->flags & 1) && el->link->p4 == c) {
-            func_06F008(p, 1);
+            ((void (*)(void *o, int f))func_06F008)(p, 1);
             break;
         }
     }
@@ -123,7 +123,7 @@ void func_17EEB0(Ctx *c)
     info->a = c;
     info->b = c;
     if (!func_17F300(o)) {
-        func_06F008(o, 1);
+        ((void (*)(void *o, int f))func_06F008)(o, 1);
         return;
     }
     info->mask = 0;

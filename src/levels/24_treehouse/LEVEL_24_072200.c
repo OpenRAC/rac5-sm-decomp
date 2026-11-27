@@ -26,7 +26,7 @@ typedef struct {
 } Fx07A7A0;
 
 extern unsigned short D_00263CB4;
-extern Fx07A7A0 *func_08C9C8(int a, int b, int c, int d, int e);
+extern Fx07A7A0 *func_08C9C8(int a, int b, int c, int d);
 extern void func_0724D0(void);
 
 static inline void scale3(Vec07A7A0 *d, Vec07A7A0 *s, float k)
@@ -53,7 +53,7 @@ static inline void add3(Vec07A7A0 *d, Vec07A7A0 *a, Vec07A7A0 *b)
 void func_072200(void *obj, Params07A7A0 *a, Vec07A7A0 *pos, Vec07A7A0 *dir)
 {
     Vec07A7A0 tmp;
-    Fx07A7A0 *e = func_08C9C8(1, 1, D_00263CB4, 0, 0);
+    Fx07A7A0 *e = ((Fx07A7A0 * (*)(int a, int b, int c, int d, int e))func_08C9C8)(1, 1, D_00263CB4, 0, 0);
 
     if (e != 0) {
         e->p8 = a->w0;

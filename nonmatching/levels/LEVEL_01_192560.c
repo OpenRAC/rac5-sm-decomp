@@ -1,8 +1,14 @@
-/* USA LEVEL_01.REL:0x192560, 216-byte candidate (21 November 2026).
- * Measured pinned: 18 differing words; first difference at 0x4.
- * Recover the observed types, statement order and lifetimes before retrying
- * the same mismatch class. No matching credit.
+/* USA LEVEL_01:192560, 216-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: default.
+ * Compiled 216 bytes: 13 differing words; first difference +0x4. No matching credit.
+ * Remaining issue: from 18 words: computing n = &r->node before the linked test gives the retail
+ * beqz with the node address in its delay slot; left: global-alloc order (retail node v1 / prev
+ * a1 / object t1, mine prev v1 / node a1 / object v1: prev priority 3/4 beats node 8/12)
+ * Reopen with new caller/type evidence or a source hypothesis that resolves the recorded
+ * difference without changing accepted callers.
  */
+
+/* LEVEL_01:0x192560 -- when the record is linked, unlinks its node; otherwise, if the object is idle and its target has a handler in its class, calls it with the global scale (halved in mode 2). */
 typedef struct Class {
     char pad_00[0x20];
     void (*fn)(float scale, void *target, int a, int b, int c, int d);
@@ -72,10 +78,12 @@ void func_192560(Obj *o)
     Cfg *c;
     Sub *s;
     float f;
+    Node *n;
 
     r = o->rec;
+    n = &r->node;
     if (r->w24 != 0) {
-        unlinkNode(&r->node);
+        unlinkNode(n);
         return;
     }
     t = r->target;

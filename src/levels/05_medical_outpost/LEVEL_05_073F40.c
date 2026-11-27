@@ -12,7 +12,7 @@ struct P { char pad[0xDC]; int cb; };
 struct Obj { char pad[0x48]; struct P *p; };
 extern int D_001E5444;
 extern struct E D_00225DB0[];
-extern int func_073EF0(struct Obj *o);
+extern long long func_073EF0(struct Obj *o);
 extern float *func_0741E8(struct Obj *o);
 extern void func_074238(void);
 

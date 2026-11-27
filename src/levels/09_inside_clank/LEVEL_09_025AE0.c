@@ -6,7 +6,7 @@ extern unsigned int D_001DDCD8;
 extern char D_002175E0[];
 extern char D_001F66D8[];
 extern int sprintf(char *buf, const char *fmt, ...);
-extern void func_0259D8(long long a, long long b, long long c, long long d, long long e, long long f, long long g);
+extern void func_0259D8(char *, int, int, int, int, int, int);
 
 void func_025AE0(int a0, int a1, int a2, int a3, int t0, int t1, int t2, int t3)
 {

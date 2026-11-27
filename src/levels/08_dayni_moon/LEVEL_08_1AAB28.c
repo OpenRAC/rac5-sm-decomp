@@ -1,7 +1,7 @@
 extern char D_001A9788[];
 extern void func_09E868(void *out, void *arg, const void *data,
                         int size, int first, int second, int third);
-extern void func_09EA40(void *out);
+extern int func_09EA40(void *out);
 
 void func_1AAB28(void *arg) {
     char local[16];

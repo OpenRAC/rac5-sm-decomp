@@ -1,6 +1,6 @@
 extern int func_05CAA0(void *p);
 extern void func_02CB80(int value, int flag);
-extern void func_02CD08(void);
+extern int func_02CD08(void);
 
 extern char D_1E4210[];
 extern int D_1A2C34;

@@ -2,7 +2,7 @@ extern char D_0010A758[];
 extern char D_0010A5E8[];
 extern void func_094040(void *out, unsigned int mode, const void *data,
                         int size, int first, int second, const void *extra);
-extern void func_094218(void *out);
+extern int func_094218(void *out);
 
 void func_10B4E8(unsigned int value) {
     char local[16];

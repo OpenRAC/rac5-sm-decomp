@@ -26,7 +26,7 @@ typedef struct {
     Sub *sub58;
 } Obj;
 
-void func_06F940(Obj *o, int a);
+void func_06F940(Obj *o);
 int func_013A40(void *p, int a, int b, float f);
 
 int func_161720(Obj *o, float f12)
@@ -45,7 +45,7 @@ int func_161720(Obj *o, float f12)
     f1 = s->y34 + f0 * f12;
     s->y34 = f1;
     if (f1 < -30.0f) {
-        func_06F940(o, 1);
+        ((void (*)(Obj *o, int a))func_06F940)(o, 1);
         return 0;
     }
     q = (Sub2 *)((char *)s + 0x84);

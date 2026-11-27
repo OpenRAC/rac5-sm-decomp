@@ -31,7 +31,7 @@ typedef struct {
 
 extern Pool D_0024A578[];
 extern Fx *D_003B0D44;
-extern int func_0822C8(float *buf, int arg);
+extern void func_0822C8(float *buf, int arg);
 extern void func_0EE1C8(unsigned int index, float *pos);
 extern void func_176A90(float *buf);
 extern void func_0807B0(Obj *o, Fx *fx, float a, float b, float c, float d, int e, int f, int g, int h, int i, int j);
@@ -51,7 +51,7 @@ void func_177D00(Obj *o, int flag)
     Slot *s = o->slot;
     Fx *fx;
 
-    if (func_0822C8(buf, (int)o)) {
+    if (((int (*)(float *buf, int arg))func_0822C8)(buf, (int)o)) {
         func_0EE1C8(0x1C, buf);
         if (flag) {
             func_176A90(buf);

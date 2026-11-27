@@ -11,12 +11,12 @@ extern int D_001C4B5C;
 extern unsigned char D_001D102C;
 extern char D_002F5310[];
 extern void func_0BDE10(void);
-extern void func_024460(long long a0, long long a1, long long a2, long long a3, long long a4, long long a5, long long a6);
+extern void func_024460(char *, int, int, char *, int, int, int);
 
 void func_0BDEC0(void)
 {
     D_001D102C = 0;
     D_001C4B58 = D_001D1034;
     D_001C4B5C = D_001D1038;
-    ((void (*)(char *, int, int, char *, int, int, int))func_024460)(D_002F5310, D_001D103D, D_001D1040, (char *)func_0BDE10, D_001D1044, D_001D1048, D_001D104C);
+    func_024460(D_002F5310, D_001D103D, D_001D1040, (char *)func_0BDE10, D_001D1044, D_001D1048, D_001D104C);
 }

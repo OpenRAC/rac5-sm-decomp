@@ -1,51 +1,46 @@
-/* USA LEVEL_15.REL:0x10D358, 232-byte candidate (21 November 2026).
- * Measured gnu-ee-trial-divpad --as: 27 differing words; first difference at
- * 0x4.
- * Recover the observed types, statement order and lifetimes before retrying
- * the same mismatch class. No matching credit.
+/* USA LEVEL_15:10D358, 232-byte candidate; measured 26 November 2026.
+ * Profile gnu-ee-trial-divpad, assembler gnu-ee-trial; options: default.
+ * Compiled 232 bytes: 8 differing words; first difference +0xB4. No matching credit.
+ * Remaining issue: FP scheduling in the normalise: inline Sub3(&v, t, &o->pos) gives the retail
+ * per-component difference (27 -> 8 words); left: the v.z stack load is hoisted above the dir
+ * stores (stack vs parameter = no alias), retail reloads it after them into f2;
+ * Scale3/array/pointer forms measured; LEVEL_21:10D358 same result
+ * Reopen only when new caller/type evidence or a source hypothesis resolves this measured
+ * difference without changing accepted bytes.
  */
-typedef struct {
-    char pad000[0xC0];
-    float pos[3];
-    char pad0CC[0x158];
-    float dir[3];
-} Obj;
 
+/* LEVEL_15:0x10D358 -- stores the unit direction from the object's position to a target point. */
+struct V3 {
+    float x, y, z;
+};
+struct Obj {
+    char pad0[0xC0];
+    struct V3 pos;
+    char pad1[0x224 - 0xCC];
+    struct V3 dir;
+};
 extern float sqrtf(float x);
 
-static __inline__ void Sub3(float *d, float *a, float *b)
+static __inline__ void Sub3(struct V3 *d, struct V3 *a, struct V3 *b)
 {
-    d[0] = a[0] - b[0];
-    d[1] = a[1] - b[1];
-    d[2] = a[2] - b[2];
+    d->x = a->x - b->x;
+    d->y = a->y - b->y;
+    d->z = a->z - b->z;
 }
 
-static __inline__ void Scale3(float *d, float k, float *s)
+void func_10D358(struct Obj *o, struct V3 *t)
 {
-    d[0] = k * s[0];
-    d[1] = k * s[1];
-    d[2] = k * s[2];
-}
-
-void func_10D358(Obj *o, float *target)
-{
-    float d[3];
-    float *pos;
-    float *dst;
-    float len2;
+    struct V3 v;
+    struct V3 *d = &o->dir;
+    float d2;
     float inv;
 
-    pos = o->pos;
-    dst = o->dir;
-    d[0] = target[0] - pos[0];
-    d[1] = target[1] - pos[1];
-    d[2] = target[2] - pos[2];
-    len2 = d[0] * d[0] + d[1] * d[1] + d[2] * d[2];
-    if (len2 < 2.384185791015625e-07f) {
+    Sub3(&v, t, &o->pos);
+    d2 = v.x * v.x + v.y * v.y + v.z * v.z;
+    if (d2 < 2.384185791015625e-07f)
         return;
-    }
-    inv = 1.0f / sqrtf(len2);
-    dst[0] = inv * d[0];
-    dst[1] = inv * d[1];
-    dst[2] = inv * d[2];
+    inv = 1.0f / sqrtf(d2);
+    o->dir.x = inv * v.x;
+    d->y = inv * v.y;
+    d->z = inv * v.z;
 }

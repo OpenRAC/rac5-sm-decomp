@@ -28,7 +28,7 @@ extern void func_0A7128(void);
 extern void func_0A7248(void);
 extern void func_066F98(int);
 extern void func_0298E0(int, int);
-extern void func_029A68(void);
+extern int func_029A68(void);
 
 extern float fabsf(float);
 

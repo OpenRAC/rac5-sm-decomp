@@ -369,8 +369,8 @@ batch links run serially to avoid contention in the pinned linker.
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (at the 26 November 2026 snapshot, **79,703 placements** in **62,966 sources**,
-**9,776,576 placement bytes**, **8,456,264 distinct-source bytes**). These are scoped matches, not a
+level-body scope (at the 27 November 2026 snapshot, **82,771 placements** in **65,498 sources**,
+**10,413,564 placement bytes**, **9,019,840 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
@@ -1453,3 +1453,85 @@ returns 1 when the sound command queue drains and 0 on timeout, so its callers d
 it `int`; they stay exact at all of their placements. 369 placements in 21 forms stay
 held for prototype disagreements. All 21 complete USA modules remain exact, and the
 prototype review finds the same 1,779 disagreeing pairs as before, none introduced.
+
+The same day, a second attempt on the misses that are whole functions, and a prototype
+alignment of the forms the previous paragraph left held, add **242 placements** (15,316
+bytes by placement) from 137 sources. Counted by masked shape, accepted level bodies
+rise from 1,147,820 bytes in 7,819 shape units to 1,149,704 bytes in 7,846. 241
+placements use the pinned chain and one `sdk991111`. `-fexceptions` is measured for
+20 placements: with it the pinned `cc1` skips the `-O2` block merge in `flow.c`
+(`cygnus_merge_blocks`), which keeps the retail block order of a switch default or
+an early return. The game's code is C++ (mangled boot symbols, the frontend's `__throw`),
+and GCC 2.95 compiles C++ with exceptions on.
+`-fno-sched-interblock` is measured for 12. Each new source declares its callees as
+their accepted definitions (76 by a cast at the call that keeps the compiled type),
+and 126 accepted callers change 131 declarations the same way (34 only the declaration,
+97 with a cast at the call); all of them stay exact at all of their placements, and
+no reviewed family control source was edited. 469 placements in 27 forms stay held,
+most of them definitions that return a 64-bit value to callers that declare `int`.
+All 21 complete USA modules remain exact, and the prototype review finds the same
+1,779 disagreeing pairs as before, none introduced.
+
+Most of those held definitions return a 64-bit value: a comparison result kept in a
+`long long`, as the accepted `LEVEL_16_078A30` already does (80 accepted level functions
+return `long long` on master). OpenRAC/rac1-decomp, rac2-decomp and rac3-decomp type such functions 64-bit and
+have their callers declare the same type (rac3 has 221 functions returning `long`,
+and 1,150 of their caller declarations say `long`). Done the same way here, 378
+accepted callers change 393 declarations from `int` (or a pointer) to `long long`:
+364 only the declaration, 29 with a cast at the call because the declaration alone
+changed their code. All of them stay exact at all of their placements, and no
+reviewed family control source was edited. That adds **146 placements** (9,332 bytes
+by placement) from 111 sources; counted by masked shape, accepted level bodies rise
+from 1,149,704 bytes in 7,846 shape units to 1,150,276 bytes in 7,855. 323 placements
+in 18 forms stay held: their callers are reviewed family controls, or they disagree
+on parameters as well. All 21 complete USA modules remain exact, and the prototype
+review finds the same 1,779 disagreeing pairs as before, none introduced.
+
+USA level bodies of 401 to 800 bytes that earlier attempts had missed, offered again
+to new C on 26 November 2026, add **413 placements** (220,836 bytes by placement) from
+389 sources. Counted by masked shape, accepted level bodies rise from 1,150,276 bytes
+in 7,855 shape units to 1,182,656 bytes in 7,916. 188 placements use
+`gnu-ee-trial-divpad`, 125 `gnu-ee-trial`, 80 the pinned chain and 20 `sdk991111`; 30
+are exact only with `ps2eeas` and 12 only with `r5900-mfc1`. Per-source options were
+measured for `-mno-check-zero-division` (34 placements), `-fno-gcse` (32),
+`-malign-functions=2` (25), `-fexceptions` (20), `-fno-force-mem` (2) and
+`-malign-loops=2` (2). 74 new sources were aligned with the accepted definitions of
+their callees (37 only the declaration, 52 with a cast at the call that keeps the
+compiled type, one cast dropped), and one accepted caller changes a declaration the
+same way and stays exact at all of its placements; no reviewed family control source was edited. 21 placements in 5 forms
+stay held for floating-point or structure parameter disagreements. All 21 complete USA
+modules remain exact, and the prototype review finds the same 1,779 disagreeing pairs
+as before, none introduced.
+
+USA level source and call-contract corrections completed on 27 November 2026 add
+**1,796 placements** (340,996 bytes by placement) from
+1,574 new C sources, on bodies of 104–284 bytes. The pinned native Linux
+gate recompiles all accepted sources, verifies named imports at every placement,
+and reproduces all 21 complete USA modules and both measured relocated images.
+The final module check resumed after a WSL/Windows linker transport timeout, using
+only the same build's freshly compiled objects after source, object, profile and
+flag checks. Every placement was relinked and every complete module was compared.
+Changed accepted callers reproduce their complete retail bodies. The independent
+prototype audit introduces no new disagreement. All compiler and assembler binary
+pins are unchanged.
+
+A further prototype reconciliation releases 86 of these placements; 133 candidate
+placements were initially held for return-bank, argument-width or arity conflicts
+and are resolved by the reconciliation below.
+107 useful unaccepted C attempts were retained with independently measured differences
+and reopening conditions. Uncertain body extents, artificial unused frame arrays
+and unresolved section padding receive no C credit; the details are recorded in
+[the matching blockers](../contributing/matching-blockers.md).
+
+The remaining signature corrections on 27 November 2026 add **133 placements**
+(27,832 bytes by placement) from 112 new C sources. 217 existing accepted sources
+change a declaration, return type or explicit argument forwarding; all remain
+exact at every placement. The runtime double typedefs, float packer, loader word
+arguments, node contexts, vector outputs and live float inputs are reconciled
+together with their callers. Reviewed source-role controls keep one normalized C
+form throughout each family and are requalified from the pinned disc. The pinned
+native Linux gate recompiles all accepted sources, checks named imports at every
+placement, and reproduces all 21 complete USA modules and both measured relocated
+images. Nineteen retained representatives now accepted are removed from `nonmatching`.
+None of these 133 placements remains held. Compiler and assembler binary
+pins are unchanged.

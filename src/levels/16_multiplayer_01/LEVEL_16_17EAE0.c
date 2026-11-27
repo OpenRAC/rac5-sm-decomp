@@ -6,14 +6,14 @@ typedef struct {
     float f70;
 } Obj;
 
-extern void func_17EB58(void *o);
+extern void func_17EB58(void *o, float);
 extern void func_17EC58(void *value);
 extern void func_17EC90(char *a0);
 
 void func_17EAE0(Obj *o, float dt)
 {
     if (o->state == 2) {
-        func_17EB58(o);
+        func_17EB58(o, dt);
     } else if (o->state == 1) {
         func_17EC58(o);
     } else if (o->state == 3) {

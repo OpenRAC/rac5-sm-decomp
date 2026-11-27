@@ -168,8 +168,9 @@ the source:
 
 | RAC5 source | Ported from | Upstream text and notice |
 | --- | --- | --- |
-| `src/levels/frontend/__throw.c`, `src/levels/frontend/__rethrow.c`, `src/levels/frontend/FRONTEND_024A70.c`, `src/levels/frontend/FRONTEND_0248D0.c` | OpenRAC/rac2-decomp `src/core/00120F00-unwind.c`, `001210E0-unwind.c`, `00120390.c`, `00120A30.c` | GCC `libgcc2.c` (`L_eh`), GNU GPL version 2 or later with the libgcc linking exception |
+| `src/levels/frontend/__throw_FRONTEND.c`, `src/levels/frontend/__rethrow.c`, `src/levels/frontend/FRONTEND_024A70.c`, `src/levels/frontend/FRONTEND_0248D0.c` | OpenRAC/rac2-decomp `src/core/00120F00-unwind.c`, `001210E0-unwind.c`, `00120390.c`, `00120A30.c` | GCC `libgcc2.c` (`L_eh`), GNU GPL version 2 or later with the libgcc linking exception |
 | `src/levels/frontend/FRONTEND_025958.c`, `src/levels/frontend/FRONTEND_025A58.c`, `src/levels/frontend/FRONTEND_025ED0.c`, `src/levels/frontend/FRONTEND_0266D0.c` | OpenRAC/rac2-decomp `src/core/001235C8.c`, `001236C8.c` (as carried by OpenRAC/rac3-decomp), `001232F0.c`, `001242A0.c` | GCC `frame.c`, GNU GPL version 2 or later with the libgcc linking exception |
+| `src/levels/shared/LEVEL_01_1ECBD0.c` | this project's `src/levels/frontend/FRONTEND_025958.c`, itself ported from OpenRAC/rac2-decomp `src/core/001235C8.c` | GCC `frame.c` `fde_merge`; GNU GPL version 2 or later with the libgcc linking exception. The corresponding public GCC 2.95.3 notice and immutable source link are retained in the placement source. |
 | `src/levels/frontend/FRONTEND_023528.c`, `src/levels/frontend/__muldi3_FRONTEND.c`, `src/levels/shared/__muldi3_shared.c` | this project's `src/boot/__unpack_d.c` and `src/boot/__muldi3.c` | GCC `fp-bit.c` and `libgcc2.c`, as in the sections above |
 | `src/levels/frontend/FRONTEND_025FB8.c` | OpenRAC/rac2-decomp `src/core/00123C28-rc2.c` | MIT License, Copyright (c) 2026 RC2 decomp contributions |
 | `src/boot/sceSifInitIopHeap.c` | OpenRAC/rac2-decomp `src/core/0011E740-rc2.c` | MIT License, Copyright (c) 2026 Forja contributors |
@@ -232,3 +233,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+
+## Optional matching workflow dependencies
+
+The level-C backend calls this repository's public compiler, ELF, relocation,
+source-policy and import-check APIs. It does not bundle a permutation engine.
+The shared wrapper is [OpenRAC/OpenRAC](https://github.com/OpenRAC/OpenRAC/tree/develop/tools/permuter),
+under GPL-3.0-or-later; its external engine is
+[simonlindholm/decomp-permuter at 8556c81d80d1c1af98a858c8f4dc951357f29139](https://github.com/simonlindholm/decomp-permuter/tree/8556c81d80d1c1af98a858c8f4dc951357f29139),
+under the MIT licence. Keep their notices with those separately installed tools.
+No proprietary tool or game input is distributed with this workflow.
+
+`tools/ghidra_structure_recovery/` contains authored context and driver code.
+Its preparation step reads the user's installed Ghidra 12.2 `BSim-src.zip`,
+checks the archive and individual source pins, and generates private adapters
+of `RetrieveUsesTask`, `MatchFunctionsTask` and `ComparePinningsTask`.
+The upstream source is [Ghidra at revision
+8ca9077040cc43cd790babcfccf19475622a3e9a](https://github.com/NationalSecurityAgency/ghidra/tree/8ca9077040cc43cd790babcfccf19475622a3e9a/Ghidra/Features/BSim/src/main/java/ghidra/features/bsim/gui/structs),
+licensed under Apache-2.0. The generated copies preserve the upstream copyright
+and licence headers, and the private runtime copy retains Ghidra's licence files.
+The algorithms, runtime, processor extension, generated sources and game
+fragments are not vendored in this repository. See the
+[workflow documentation](docs/contributing/ghidra-structure-recovery.md) for
+pins, declared adaptations and limitations.
