@@ -6532,8 +6532,8 @@ shared	LEVEL_01_096850	function	248	1	1	1	1	19	src/levels/01_pokitaru/ENGINE/par
 shared	LEVEL_01_096948	function	60	1	1	1	1	19	src/levels/01_pokitaru/ENGINE/par/LEVEL_01_096948.c		ENGINE/par.cpp
 shared	LEVEL_01_096988	function	408	1	0	1	0	19			ENGINE/par.cpp
 shared	LEVEL_01_096B20	function	188	1	1	1	1	19	src/levels/01_pokitaru/ENGINE/par/LEVEL_01_096B20.c		ENGINE/par.cpp
-shared	LEVEL_01_096BE0	function	116	1	0	1	0	13			ENGINE/par.cpp
-shared	LEVEL_01_096C54	fragment	8	1	0	0	0	13			ENGINE/par.cpp
+shared	LEVEL_01_096BE0	function	116	1	1	1	1	13	src/levels/01_pokitaru/ENGINE/par/LEVEL_01_096BE0.c		ENGINE/par.cpp
+shared	LEVEL_01_096C54	fragment	8	1	1	0	0	13	src/levels/01_pokitaru/ENGINE/par/LEVEL_01_096BE0.c		ENGINE/par.cpp
 shared	LEVEL_01_096C60	function	352	1	0	1	0	19			ENGINE/par.cpp
 shared	LEVEL_01_096DC0	function	1096	1	0	1	0	19			ENGINE/par.cpp
 shared	LEVEL_01_097208	function	152	1	1	1	1	13	src/levels/01_pokitaru/ENGINE/par/LEVEL_01_097208.c		ENGINE/par.cpp
@@ -9781,7 +9781,7 @@ shared	LEVEL_04_1972A0	function	408	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_197
 shared	LEVEL_04_197438	function	436	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_197438.c		
 shared	LEVEL_04_1975F0	function	196	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_1975F0.c		
 shared	LEVEL_04_197780	function	240	1	0	1	0	2			
-shared	LEVEL_04_197870	function	80	1	0	1	0	2			
+shared	LEVEL_04_197870	function	80	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_197870.c		
 shared	LEVEL_04_1978C0	function	936	1	0	1	0	2			
 shared	LEVEL_04_197C68	function	144	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_197C68.c		
 shared	LEVEL_04_197CF8	function	308	1	1	1	1	2	src/levels/04_metalis/LEVEL_04_197CF8.c		

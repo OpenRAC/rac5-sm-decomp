@@ -121,6 +121,18 @@ integer return, `mov.s $f12,$f0` a float return (`LEVEL_16:0x102C38`). The argum
 measurements date from 23 October 2026. Reopening: a source shape that emits arguments in the
 order `a2, a0, a1`.
 
+**Call-argument review, 27 November 2026.** Before treating a register-only
+near miss as a scheduling problem, compare the retained caller with its accepted
+callee and the actual argument registers. At `LEVEL_01:0x10F6F0`, the usage
+helper receives both the asset kind and consumed bytes, including alignment
+padding. At `LEVEL_04:0x197870`, the finish helper receives the owner and the
+record loaded from its `+0x58` field. Making those second arguments explicit
+reproduces the complete 140-byte and 80-byte bodies under the pinned route;
+no scheduling flag or register binding is needed. Together with the reviewed
+124-byte loop below, all three pass the pinned complete 21-module C gate;
+65,501 complete objects retain their expected hashes. Ghidra's inferred prototype
+alone is not evidence: follow the raw argument data flow and the callee's use.
+
 ### Blocker 03
 
 Prologue and entry-block ordering. Symptom: `sd $ra`, `lui`, `addiu $sp` and the first argument
@@ -331,6 +343,14 @@ level gate then passed with all 21 modules exact and no tolerance. When recordin
 new `Ps2EeAs` hash, check that the bit agrees with the other hashes of the same
 table.
 
+On 27 November 2026, a pinned level assembler invoked through WIBO produced
+another complete-object hash for `LEVEL_01_0023B0.c`: two bytes differed only
+in non-loadable `.mdebug`, while every other byte, including text, symbols,
+relocations and ELF headers, agreed. The same input assembly and pinned binary
+executed through native Windows reproduced the existing canonical object.
+Use the qualified execution environment before proposing a new hash alternative;
+neither clearing metadata nor changing an existing pin is a valid shortcut.
+
 ### Blocker 16
 
 What this toolchain has no spelling for. Measured: 128-bit computed constants (`dsll32`/`or`)
@@ -498,8 +518,8 @@ coherent caller graph; neither equal length nor tail trimming is a remedy.
 
 ## What is left
 
-At the 27 November 2026 snapshot (`progress/status.json`), the level scope is **82,771 measured
-placements** of 10,413,564 placement bytes carried by **65,498 sources**, and many bounded
+At the 27 November 2026 snapshot (`progress/status.json`), the level scope is **82,774 measured
+placements** of 10,413,908 placement bytes carried by **65,501 sources**, and many bounded
 candidates remain outside the accepted scope. The boot keeps **864 accepted functions** covering
 119,008 of 498,900 bytes of `.text`. [Original assembly](#original-assembly-classification-26-november-2026)
 (86 boot units and 2 level shapes in `config/handwritten_asm.tsv`) is counted apart from C. The remainder of this section records earlier dated additions.
@@ -2748,8 +2768,16 @@ declaration merely because the isolated body is byte-exact.
 
 Boundary and source-method cases remain separate:
 
-- `LEVEL_01:0x096BE0` compiles to 124 bytes against a 116-byte inventory entry;
-  establish ownership of the following loop tail before changing that boundary.
+- `LEVEL_01:0x096BE0` was measured at 124 compiled bytes against a 116-byte
+  inventory entry. On 27 November 2026, independent flow review established
+  the complete `[0x096BE0, 0x096C5C)` loop: four internal mismatch branches
+  reach its trailing back edge and delay slot. A fresh, unforced Ghidra function
+  recovers all 124 bytes. The module has a direct call to its entry, no observed
+  external direct or relocated entry into its interior/tail, and a separate
+  called function at `0x096C60`. The intervening four zero alignment bytes are
+  excluded. The unchanged retained C reproduces all 124 bytes; the old
+  116-byte prefix was not a complete function. Static scans do not establish
+  the absence of every possible computed indirect entry.
 - `LEVEL_16:0x1167A0` produces 280 bytes for a 276-byte body. The extra alignment
   word is not accepted by widening the body. The qualified per-source
   `-malign-functions=2` option resolves the separate 252-byte
