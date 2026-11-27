@@ -71,6 +71,11 @@ progress from symbol names.
 
 ## Preserve measured properties during corrections
 
+For bounded source search, see the [level-C permuter backend](docs/contributing/permuter.md).
+For field-layout proposals from an existing known structure, see
+[Ghidra structure recovery](docs/contributing/ghidra-structure-recovery.md).
+Both are optional development tools; their output does not grant matching credit.
+
 For automated source refinement, compare a measured baseline with the next
 candidate using [`tools/candidate_regression_guard.py`](tools/candidate_regression_guard.py).
 The input must come from trusted compiler and behavioral checks, rather than
