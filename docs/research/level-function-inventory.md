@@ -397,8 +397,8 @@ accepted level-body placement in the 20 measured modules with the same
 relocation mask and credits each masked shape once, at its largest accepted
 multiplicity in one module:
 [`accepted_shape_summary.json`](../../config/levels/accepted_shape_summary.json)
-records, at the 26 November 2026 snapshot, **1,145,728 bytes in 7,791 shape
-units** for 76,475 accepted placements (the 3,228 accepted `LEVEL_21.REL`
+records, at the 27 November 2026 snapshot, **1,225,640 bytes in 8,140 shape
+units** for 79,425 accepted placements (the 3,346 accepted `LEVEL_21.REL`
 placements repeat `LEVEL_15.REL`). Counting by source gives far more, because
 the address-variant copies of one function in several levels are separate
 sources: on 11 November 2026, the then 49,491 placements gave 694,544 shape
