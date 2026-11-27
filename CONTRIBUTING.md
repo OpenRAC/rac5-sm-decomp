@@ -69,6 +69,38 @@ progress from symbol names.
   Keep useful variants under `nonmatching/` with their provenance, without
   turning them into matching credit.
 
+## Preserve measured properties during corrections
+
+For automated source refinement, compare a measured baseline with the next
+candidate using [`tools/candidate_regression_guard.py`](tools/candidate_regression_guard.py).
+The input must come from trusted compiler and behavioral checks, rather than
+claims made by a code generator. The tool does not run those checks itself.
+
+Each JSON evaluation contains `target_id`, `reference_sha256`, `contract_sha256`,
+`source_sha256`, an optional `byte_diff_words`, and a `checks` object. Check values
+are `pass`, `fail` or `unknown`. The required check names are `source_policy`,
+`toolchain_pins`, `entry_identity` and `named_imports`; add the named behavioral
+properties actually measured. The contract digest must identify the reference
+placements and bindings, compiler route, test domain and check definitions.
+Changed contracts or check sets require a new baseline.
+
+```sh
+python tools/candidate_regression_guard.py baseline.json candidate.json
+```
+
+A property that passed must keep passing: a smaller instruction difference cannot
+override its regression, and an unknown result is not a pass. An improvement
+permits further local work only; no decision grants matching credit or replaces
+the type, boundary, placement and complete-program reviews.
+
+With `--restore --baseline-source baseline.c --working-source candidate.c
+--archive-dir rejected`, a rejected candidate is retained before the working file
+is restored. Both sources must match their measured hashes. Use a single writer:
+the stale-source check is not a cross-process lock. An integrating worker must
+also restore the corresponding recipe and measurement, rather than attach the
+rejected candidate's measurement to the restored source. A successful command exit means that the comparison ran;
+read its `decision` field to determine the outcome.
+
 ## Checking documentation links
 
 Run `python tools/check_doc_links.py` to check relative Markdown destinations in
