@@ -1,8 +1,14 @@
-/* USA LEVEL_08.REL:0x20FE50, 164-byte candidate (14 November 2026).
- * Measured pinned: 29 differing words; first difference at 0x4.
- * Recover the observed types, statement order and lifetimes before retrying
- * the same mismatch class. No matching credit.
+/* USA LEVEL_08:20FE50, 164-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: default.
+ * Byte-exact in an isolated link, but held for a local prototype conflict; no matching credit.
+ * Remaining issue: inline int Near() returning the compare, tested as (Near(..) & 0xFF) != 0
+ * (keeps both andi), and e->f08 read into a local before the first test (its load fills the
+ * first bc1t slot)
+ * Reopen with new caller/type evidence or a source hypothesis that resolves the recorded
+ * difference without changing accepted callers.
  */
+
+/* LEVEL_08:0x20FE50 -- walks a ring of link records and returns the first entry whose two float fields are both near the arguments. */
 typedef struct Link {
     char pad0[4];
     struct Link *next;
@@ -24,14 +30,9 @@ typedef struct {
 
 extern float fabsf(float v);
 
-static __inline__ unsigned char Near(float a, float b, float eps)
+static __inline__ int Near(float a, float b, float eps)
 {
-    unsigned char r = 1;
-
-    if (!(fabsf(a - b) < eps)) {
-        r = 0;
-    }
-    return r;
+    return fabsf(a - b) < eps;
 }
 
 Entry *func_20FE50(Link *head, float x, float y)
@@ -39,14 +40,15 @@ Entry *func_20FE50(Link *head, float x, float y)
     Link *node;
     Entry *e;
     Sample *samples;
+    float f;
 
     for (node = head->next; node != head; node = node->next) {
         e = (Entry *)((char *)node - 0xD4);
         samples = (Sample *)((char *)node - 0x70);
-        if (Near(samples[e->index].f00, x, 0.05f)) {
-            if (Near(e->f08, y, 0.01f)) {
+        f = e->f08;
+        if ((Near(samples[e->index].f00, x, 0.05f) & 0xFF) != 0) {
+            if ((Near(f, y, 0.01f) & 0xFF) != 0)
                 return e;
-            }
         }
     }
     return 0;

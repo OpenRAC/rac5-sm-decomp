@@ -1,5 +1,5 @@
 extern char *D_0020C62C;
-extern void func_0A6CD8(void);
+extern int func_0A6CD8(void);
 
 int func_027310(int force)
 {

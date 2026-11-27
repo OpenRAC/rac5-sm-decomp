@@ -1,7 +1,7 @@
 /* LEVEL_01:0x1AF2E8 -- packs six bit fields into one flag word and passes it with a local buffer to two helpers. */
 
 void func_096948(unsigned int *record, unsigned int first, unsigned int second, int third, int fourth, int fifth, unsigned int sixth);
-void func_096B20(void *buf);
+int func_096B20(void *buf);
 extern unsigned char D_001AE788[];
 
 void func_1AF2E8(unsigned int p0, unsigned int p1, unsigned int p2, unsigned int p3, unsigned int p4, unsigned int p5)

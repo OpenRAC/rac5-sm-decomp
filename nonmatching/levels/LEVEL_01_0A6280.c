@@ -1,8 +1,14 @@
-/* USA LEVEL_01.REL:0x0A6280, 252-byte candidate (21 November 2026).
- * Measured pinned: 4 differing words; first difference at 0x5C.
- * Recover the observed types, statement order and lifetimes before retrying
- * the same mismatch class. No matching credit.
+/* USA LEVEL_01:0A6280, 252-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: default.
+ * Compiled 252 bytes: 2 differing words; first difference +0x68. No matching credit.
+ * Remaining issue: same shape as FRONTEND:00ADF0 (Gum names): inline SetXY writing y first fixes
+ * the f1/f2 swap (4 -> 2 words); left: the m[15] store is scheduled ahead of the m[12]/m[13]
+ * stores; 120 orders measured
+ * Reopen only when new caller/type evidence or a source hypothesis resolves this measured
+ * difference without changing accepted bytes.
  */
+
+/* LEVEL_01:0x0A6280 -- when the fade record is active, draws its full-screen fade rectangle under a screen-space matrix: saves the current matrix, loads an identity-plus-offset matrix, draws, then restores the saved matrix. */
 typedef struct Fade {
     char pad00[8];
     unsigned int alpha;
@@ -21,6 +27,12 @@ extern void func_0A9018(void);
 extern void func_0A9400(void);
 extern void func_0A53C0(int a, int b, int c, int d, unsigned int e, unsigned int f);
 
+static __inline__ void SetXY(float *m, float x, float y)
+{
+    m[13] = y;
+    m[12] = x;
+}
+
 void func_0A6280(Fade *f)
 {
     float m[16];
@@ -35,12 +47,11 @@ void func_0A6280(Fade *f)
     func_0A9018();
     func_0A9400();
     memset(m, 0, 0x40);
-    m[12] = 1792.0f;
-    m[13] = 1840.0f;
     m[0] = 1.0f;
     m[5] = 1.0f;
     m[10] = 1.0f;
     m[15] = 1.0f;
+    SetXY(m, 1792.0f, 1840.0f);
     Gum_MatrixMode(5);
     Gum_StoreMatrix(saved);
     Gum_LoadMatrix(m);

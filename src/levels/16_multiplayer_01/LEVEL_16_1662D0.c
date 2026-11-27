@@ -7,7 +7,7 @@ typedef struct {
 extern void func_167430(Obj *o, float dt);
 extern int func_1668E8(Obj *o);
 extern void func_167BF0(Obj *o);
-extern void func_06F940(Obj *o, int a);
+extern void func_06F940(Obj *o);
 extern int func_166AC0(Obj *o);
 extern void func_1673D0(Obj *o);
 extern int func_167280(Obj *o, float dt);
@@ -27,7 +27,7 @@ void func_1662D0(Obj *o, float dt)
         func_1668E8(o);
         func_167BF0(o);
     } else if (st == 4) {
-        func_06F940(o, 1);
+        ((void (*)(Obj *o, int a))func_06F940)(o, 1);
     } else if (st == 3) {
         if (func_166AC0(o) == 0) {
             func_1673D0(o);

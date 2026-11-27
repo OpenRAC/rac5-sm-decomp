@@ -1,10 +1,16 @@
-/* USA LEVEL_04.REL:0x16F7D0 (14 November 2026): exact linked bytes under
- * pinned, held.
- * Its form stays out of the accepted set because a placement is defined unlike
- * the declaration in the accepted caller LEVEL_04_171AB8.
- * Reconcile the prototypes (EE ABI rules in AGENTS.md) before promotion. No
- * matching credit.
+/* USA LEVEL_04:16F7D0, 152-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: default.
+ * Byte-exact in an isolated link, but held for a local prototype conflict; no matching credit.
+ * Remaining issue: PROTOTYPE CONFLICT: retail keeps a1-a3 live into func_16FF90 (sub pointer
+ * goes to t0, a 1-arg call frees a2: 2 words), so the call passes all four incoming arguments;
+ * accepted LEVEL_04_16FF90.c is void(Obj *) and caller LEVEL_04_171AB8.c declares int
+ * func_16F7D0(int); declared here as a 4-arg callee (no cast)
+ * Reopen with new caller/type evidence or a source hypothesis that resolves the recorded
+ * difference without changing accepted callers.
  */
+
+/* LEVEL_04:0x16F7D0 -- returns zero in state 3, for the same link value, or when the squared distance between two positions exceeds four; otherwise calls a follow-up and returns one. */
+
 struct Vec3 {
     float x;
     float y;
@@ -25,7 +31,7 @@ struct Node3 {
     struct Sub *sub;
 };
 
-extern void func_16FF90(struct Node3 *a0);
+extern void func_16FF90(struct Node3 *a0, struct Node3 *a1, void *a2, void *a3);
 
 int func_16F7D0(struct Node3 *a0, struct Node3 *a1, void *a2, void *a3)
 {
@@ -50,7 +56,7 @@ int func_16F7D0(struct Node3 *a0, struct Node3 *a1, void *a2, void *a3)
     dz = q->z - p->z;
     d2 = dx * dx + dy * dy + dz * dz;
     if (!(4.0f < d2)) {
-        ((void (*)(struct Node3 *, struct Node3 *, void *, void *))func_16FF90)(a0, a1, a2, a3);
+        func_16FF90(a0, a1, a2, a3);
         return 1;
     }
     return 0;

@@ -4,7 +4,7 @@ typedef struct {
 } Obj;
 
 extern float D_001E07AC;
-extern int func_06F9A8(Obj *a, int b);
+extern void func_06F9A8(Obj *a);
 
 int f(Obj *a0)
 {
@@ -12,7 +12,7 @@ int f(Obj *a0)
 
     a0->v = t;
     if (t > 5.0f) {
-        func_06F9A8(a0, 1);
+        ((int (*)(Obj *a, int b))func_06F9A8)(a0, 1);
         return 1;
     }
     return 0;

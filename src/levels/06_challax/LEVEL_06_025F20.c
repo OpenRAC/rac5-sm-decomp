@@ -5,7 +5,7 @@ typedef struct Table {
 } Table;
 
 extern Table *D_001E2EAC;
-extern void func_025E88(unsigned int index, int entry, int arg);
+extern int func_025E88(unsigned int index, int entry);
 
 int func_025F20(int arg)
 {
@@ -13,7 +13,7 @@ int func_025F20(int arg)
 
     for (i = 0; i < 8; i++) {
         if (D_001E2EAC->entry[i] != 0)
-            func_025E88(i, D_001E2EAC->entry[i], arg);
+            ((void (*)(unsigned int index, int entry, int arg))func_025E88)(i, D_001E2EAC->entry[i], arg);
     }
     return 1;
 }

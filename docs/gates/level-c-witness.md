@@ -1501,3 +1501,22 @@ same way and stays exact at all of its placements; no reviewed family control so
 stay held for floating-point or structure parameter disagreements. All 21 complete USA
 modules remain exact, and the prototype review finds the same 1,779 disagreeing pairs
 as before, none introduced.
+
+USA level source and call-contract corrections completed on 27 November 2026 add
+**1,796 placements** (340,996 bytes by placement) from
+1,574 new C sources, on bodies of 104–284 bytes. The pinned native Linux
+gate recompiles all accepted sources, verifies named imports at every placement,
+and reproduces all 21 complete USA modules and both measured relocated images.
+The final module check resumed after a WSL/Windows linker transport timeout, using
+only the same build's freshly compiled objects after source, object, profile and
+flag checks. Every placement was relinked and every complete module was compared.
+Changed accepted callers reproduce their complete retail bodies. The independent
+prototype audit introduces no new disagreement. All compiler and assembler binary
+pins are unchanged.
+
+A further prototype reconciliation releases 86 of these placements; 133 candidate
+placements remain held for return-bank, argument-width or arity conflicts.
+107 useful unaccepted C attempts remain with independently measured differences
+and reopening conditions. Uncertain body extents, artificial unused frame arrays
+and unresolved section padding receive no C credit; the details are recorded in
+[the matching blockers](../contributing/matching-blockers.md).

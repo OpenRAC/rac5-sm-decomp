@@ -34,7 +34,7 @@ extern int func_0C0F10(int index);
 extern void func_08FE38(unsigned int value);
 extern int func_027A30(int kind, int mask);
 extern void func_02FD40(int a, int b);
-extern void func_02FEC8(void);
+extern int func_02FEC8(void);
 extern int func_0703C8(char *object);
 extern void func_041120(void *value);
 
