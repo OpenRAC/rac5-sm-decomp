@@ -1,0 +1,12 @@
+{
+  "cpp": "/path/to/qualified/cpp",
+  "compilers": {"pinned": "/path/to/qualified/cc1"},
+  "assemblers": {"gnu-ee-trial": "/path/to/qualified/as"},
+  "linker": "/path/to/qualified/ld.exe",
+  "linker_runner": ["/path/to/existing/loader"],
+  "modules": "/path/to/private/LVL",
+  "scratch": "/path/to/private/native-linux-scratch",
+  "retail": "/path/to/private/retail-cache",
+  "artifacts": "/path/to/private/evidence",
+  "targets": {}
+}
