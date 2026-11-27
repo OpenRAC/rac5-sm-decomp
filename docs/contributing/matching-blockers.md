@@ -559,6 +559,8 @@ and current totals come from [`progress/status.json`](../../progress/status.json
 | 22 November 2026 | ↳ [USA bodies of 401 to 800 bytes](#usa-bodies-of-401-to-800-bytes-22-november-2026) |
 | 22 November 2026 | ↳ [Sister-decompilation twins](#sister-decompilation-twins-22-november-2026) |
 | 15–17 November 2026 | [Retained USA boot attempts and reviews](#retained-usa-boot-attempts-and-reviews-1517-november-2026) |
+| 17 November 2026 | ↳ [USA boot bodies of 112–444 bytes](#usa-boot-bodies-of-112444-bytes-17-november-2026) |
+| 26 November 2026 | ↳ [USA boot bodies of 164–472 bytes](#usa-boot-bodies-of-164472-bytes-26-november-2026) |
 | 26 November 2026 | [Original assembly classification](#original-assembly-classification-26-november-2026) |
 | 26–27 November 2026 | [USA level sources and call contracts](#usa-level-sources-and-call-contracts-26-27-november-2026) |
 
@@ -2464,6 +2466,179 @@ state; invalid or indirect entry states remain unproven. `Spiral_EmitJoint`
 requires nonempty, sufficiently allocated point storage, whose complete
 caller invariant is not yet established. Preserve the one-time font
 registration flag and its failed-lookup behavior.
+
+#### USA boot bodies of 112–444 bytes (17 November 2026)
+
+Twenty open boot bodies of 112 to 444 bytes were attempted and are retained
+under `nonmatching/boot/`. Twelve reproduce every body byte after an
+independent SN link at the retail address: the three transition
+`*_StartSound__Fv` bodies, `VID_InitBink__Fv`,
+`MCP_FontPrintWindowSetStructDefaults`, `LIGHT_SetupLightsNearPoint`,
+`HEROSKIN_Init__Fv`, `TEXMGR_SetColorIndexWithColorTo` and
+`MCPTRANS_DREAM_Animate__Ff` under the rebuilt default GNU route and
+`gnu-ee-trial`; `WAD_FindAssetsBySignature`, `PS2HEAP_Free__FPv` and (since
+26 November) `MCPI_InitializeMcpGlobals__Fv` under the default route only.
+Two more became exact on 26 November and are not yet in the gate below:
+`PS2HEAP_Malloc__FUi` (both routes) and `UTIL_GS_WRITE_FIFO__FP11DLIB_GIFTAG`
+(default route).
+On 26 November 2026 a complete boot gate on master `ef75f8a07` with these
+twelve bodies linked as provisional owners (default route,
+`--unpinned-tools`) passed: 879 exact objects, `.text` and the loaded segment
+exact, complete ELF exact; the 847 accepted bodies are unchanged and the
+promotion audit lists the twelve as ready for semantic review. The rebuilt
+tools are not hash-qualified, so nothing is promoted. A static review of the
+retail boot found no direct transfer into the interior of any of the twelve
+bodies; the bytes after the shorter bodies are separately called static
+initializers or unreachable stack-adjustment fragments, left to the assembly
+baseline. Source shapes that mattered:
+
+- `WAD_FindAssetsBySignature`: the entry type is kept in a local that the
+  loop exit tests, and the null test after the loop is made on a copy of the
+  result pointer; testing the loop pointer directly merges the two exits.
+- `MCPTRANS_DREAM_Animate__Ff`: a local pointer assigned only after the
+  conditional block, and three adjacent stores written in the reverse of the
+  retail order.
+- Declarations reconciled on 25 November 2026 (master `ef75f8a07`, all still
+  exact on both routes): `VID_InitBink__Fv` returns `int`, and its only direct
+  caller, the retained `SND_InitScream__Fv` trial, now declares that result
+  and stays 552/552; `HEROSKIN_Init__Fv` stores the byte at `+0x2E0` as
+  `signed char`, as the accepted `HEROSKIN_TermSinglePlayer__Fv` does (the
+  accepted `HEROSKIN_InitSinglePlayer__Fv` declares that member `int` but
+  never accesses it), and places its table pointers at `+0x2D4`/`+0x2D8`
+  inside the padding of the accepted layout; the three `*_StartSound__Fv`
+  bodies use the callee prototypes of existing sources. The accepted
+  `SND_ConstructPositionalSound` definition lists twelve parameters while its
+  mangled name and accepted level callers have thirteen (two `bool`); this
+  needs its own review.
+- Declarations reviewed on 26 November 2026: `MCPI_InitializeMcpGlobals__Fv`
+  was parked as a scheduling difference after about twenty source forms, but
+  the cause was two declarations. Declaring the callee `HEROSKIN_Init__Fv`
+  `void`, as its exact definition is, fixes the order of the table address
+  halves (326 to 342 of 344 bytes), and the two remaining bytes were two font
+  tables named one 0x10000 page too high (`D_01EEDB20`/`D_01EEDF20` instead of
+  the reference symbols `FontTableNormal`/`FontTableJapanNormal`). Before
+  calling a difference "scheduling", compare the linked relocation fields and
+  the callee declarations with their definitions. `LIGHT_SetupLightsNearPoint`
+  is now `void`, as the accepted wrapper declares it (still exact).
+  `MCPTRANS_DREAM_Animate__Ff` keeps names only where existing sources or a
+  callee give evidence; the other values keep their addresses.
+- `UTIL_GS_WRITE_FIFO`: the GIF FIFO at `0x10006000` is a hardware register,
+  written through a `volatile` quadword lvalue as accepted boot sources write
+  the `0x1000xxxx` registers; that keeps the store out of the loop's delay
+  slot, which the compiler then fills with the next load as retail does.
+- `PS2HEAP_Malloc__FUi`: register allocation, read from the `.lreg`/`.greg`
+  dumps (pass the dump flags one at a time; `-da` overflows a host buffer).
+  Global allocation ranks pseudos by references (loop references count
+  double) over live length. The size is rounded in place in the argument, and
+  the best-fit test records a new best block in two places (first fitting
+  block, then any smaller one) instead of one combined condition: the same
+  instructions, but the extra references rank the chosen block above the size
+  so the two take retail's saved registers. When two values swap saved
+  registers, compare their priorities in `.greg` before trying more shapes.
+- Remaining differences that point at the compiler rather than the source:
+  `SYSTEM_UploadMatrix` needs a 128-bit zero kept in a register (`por`)
+  before a quadword store, which our `cc1` always folds into the zero
+  register while the `sdk991111` compiler keeps it (that compiler differs
+  elsewhere in this body); `MCPFONT_DrawTextureSimpleArea` matches except its
+  prologue and epilogue, where retail saves the eight saved registers and the
+  register holding the tenth argument as quadwords in ascending order, with
+  no 128-bit value in the body.
+- `MEMCARD_ProcessClientRequests`: the handler arguments are the same in the
+  merged state blocks (the request detail word for the detail handlers,
+  none for the others), so differing arguments do not explain why retail keeps
+  four flag tests; the flag is the existing `memcard_multiplayer_save`.
+- Still open: the update counter `material_current` is compared unsigned in
+  `MATERIAL_RegisterForUpdate`, while `MATERIAL_Init` declares it `int`. The
+  boot program accesses that word only in these two functions, and
+  `MATERIAL_Init` only stores zero, so the unsigned comparison is the only
+  evidence of its type; aligning the accepted declaration changes no bytes
+  but is left to review of that accepted file.
+
+The six others stay measured trials with their remaining difference in the
+header: the quadword-save prologue (`MCPFONT_DrawTextureSimpleArea`), a
+128-bit zero kept in a register (`SYSTEM_UploadMatrix`), merged identical
+switch states
+(`MEMCARD_ProcessClientRequests`), a double comparison constant built in
+integer registers by retail but loaded from memory by our output
+(`MATERIAL_RegisterForUpdate`), one float register swap
+(`MCPTRANS_UpdateStarStreaks`, 264 of 268 bytes under `gnu-ee-trial` since a
+flag byte named one 0x10000 page too high was corrected) and division padding
+(`dlib_ms_screen_matrix`: exact under `gnu-ee-trial-divpad` since
+26 November once its sixteen stores follow the order the dumps require; the
+default route lacks only the two nops before the division, blocker 09).
+
+#### USA boot bodies of 164–472 bytes (26 November 2026)
+
+Twenty further boot intervals of 264 to 496 bytes were reserved on
+26 November 2026; three of them (`VEC_MultiplyMatrix4`, `MultMatrix`,
+`customGsSyncPath`) are original assembly in `config/handwritten_asm.tsv`
+(VU0 macro instructions) and were released without C. A fourth,
+`dlib_displist_send_dma`, was released too while it was still listed; the
+classification below has since removed it, so it is open C work again
+(`sync` through `__builtin_rac5_sync` under `sdk991111sync`). A grouped
+complete boot gate on master `ef75f8a07` (default
+route with the four `gnu-ee-trial` sound bodies selected per file,
+`--unpinned-tools`) linked 51 exact retained bodies of this contributor's
+reserved scope as provisional owners, including the default-route ones
+below and in the previous section: 918 exact objects, `.text`, the loaded
+segment and the complete ELF exact, the 847 accepted bodies unchanged, and
+the promotion audit lists the 51 as ready for semantic review. It does not
+include the bodies exact only under a level profile, nor the two
+"extra result copy" bodies. Results after independent SN links at the
+retail addresses:
+
+- Exact under the rebuilt default GNU route and `gnu-ee-trial`:
+  `MODULE_LoadModule__FPCc` (400), `MODULE_StartModule__FiiPCvi` (456),
+  `MCP_UpdateRCPMLoadState__Fi` (a 164-byte body at the start of a 448-byte
+  interval), `SYSTEM_ActivateMicrocode__F13PS2_MICROCODE` (460) and
+  `VEC_MultiplyMatrix4By3` (432). The last two are the accepted level sources
+  of the same functions with their callees and data renamed to the boot
+  symbols. `MODULE_LoadModule` stores the address of `lib_main__FiPPc`, which
+  the reference symbol table lists as unresolved at address zero, rather than
+  a null constant.
+- Texture transfer helpers: `readTexPSMCT16__FiiiiiiPv` (444) and
+  `writeTexPSMT8__FiiiiiiPv` (456) are exact on both routes;
+  `readTexPSMCT32__FiiiiiiPv` is 372 of 408 bytes with the same instructions
+  except two swapped argument registers in the inner loop. What mattered: one
+  variable per swizzle step (page, offset in the page, block, offset in the
+  block, column), each written as a subtraction rather than `%`, so the
+  compiler moves the row terms out of the inner loop as retail does; the word
+  address accumulated one term at a time (a single expression is regrouped
+  and grows by eight bytes); and the last table lookup placed after the word
+  address is complete.
+- `RIBBON_ClearInactiveJoints` (a 240-byte body in a 384-byte interval) is
+  exact under the default route with the existing per-file option
+  `-mno-check-zero-division`; the iterator's node is read once into a local
+  before the clearing loop. `FOG_Update__FUi` (492) is exact only under
+  `gnu-ee-trial-divpad`. `BLOOM_Upsample` (444, two scheduling slots) and the
+  two speck emitter updates (456 each, `-fno-gcse`, the order of a dozen
+  loads and stores in one block copy) stay measured trials.
+- Exact only under `gnu-ee-trial-divpad`: the three `scee::Psp::Gum`
+  functions `Perspective` (416), `TexPerspective` (380) and `Ortho` (472).
+  Retail pads every float division with two nops, which the default route
+  does not do; compiling with the SDK assembler pinned for their accepted Gum
+  siblings does not add them, so the padding comes from the compiler. With
+  `FOG_Update`, `CAMERA_SetFovX`, `CAMERA_Reset` and `dlib_ms_screen_matrix`
+  this makes seven boot bodies that need the division padding of the level
+  profiles. `Ortho`
+  needed the three reciprocals scaled in place (`ix = ix + ix;` and so on):
+  being set twice moves the depth reciprocal from local to global allocation,
+  which gives it retail's callee-saved register.
+- The "extra result copy" class (`SND_IsATRACPaused`, 72 bytes, and
+  `MEMCARD_Saving__Fv`, 52 bytes, previously four bytes short after about
+  sixty forms) is exact on both routes when the result is held in a
+  one-member struct of one byte. The dumps show why: with any `int`, `char`,
+  `short` or enum local, the MIPS target widens the local to a full register
+  and CSE merges the comparison into it; a struct local is not widened, so
+  the copy from the comparison register survives as in retail. The retail
+  boot shows the same comparison-then-copy only in these two bodies and in two
+  others that then test the copy as a byte, which fits a one-byte C++ `bool`
+  in the original. Whether this plain-C stand-in for `bool` is acceptable is a
+  review question; the `int` forms (68 and 48 bytes) are the alternative.
+- Declarations to reconcile in review: `MODULE_LoadModule` uses the results
+  of `HIT_fseek__FPii9SEEKPARAM` and `HIT_fclose__FPi` (accepted as `void`);
+  `MCP_UpdateRCPMLoadState` needs `g_level_index` signed (a signed branch on
+  it), while the accepted `MCP_StartLevelModule__Fv` declares it `unsigned`.
 
 ### Original assembly classification (26 November 2026)
 

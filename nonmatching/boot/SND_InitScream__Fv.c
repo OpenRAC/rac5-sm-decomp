@@ -33,6 +33,10 @@
  *   do not decide. This file does not change that accepted source.
  * - The meaning of the seek mode value 2, the buffer element type and the
  *   variadic prototype of sceSdRemote are read from this body only.
+ * - VID_InitBink__Fv is declared as returning int, the result its retained
+ *   exact trial needs (it returns 0 or 1); the value is ignored here.
+ *   Remeasured 25 November 2026 on master ef75f8a07: still 552/552 under the
+ *   rebuilt default route and gnu-ee-trial with that declaration.
  */
 extern char D_01F1FFB0[];
 extern char D_01F1FFC8[];
@@ -41,7 +45,7 @@ extern char *g_VagWadEntries;
 extern int g_VagWadEntryCount;
 extern void *g_IOP_Buffer;
 
-extern void VID_InitBink__Fv(void);
+extern int VID_InitBink__Fv(void);
 extern void snd_StartSoundSystemEx(int mode);
 extern int sceSdRemote(int cmd, ...);
 extern void snd_PreAllocReverbWorkArea(int a, int b);
