@@ -82770,3 +82770,6 @@ LEVEL_24.REL	0x100718	108	src/levels/24_treehouse/LEVEL_24_100718.c
 LEVEL_24.REL	0x127FB0	252	src/levels/24_treehouse/LEVEL_24_127FB0.c
 LEVEL_24.REL	0x1BBB98	184	src/levels/24_treehouse/litodp_LEVEL_24.c
 LEVEL_24.REL	0x1BBD80	268	src/levels/shared/__pack_f.c
+LEVEL_01.REL	0x10F6F0	140	src/levels/01_pokitaru/LEVEL_01_10F6F0.c
+LEVEL_04.REL	0x197870	80	src/levels/04_metalis/LEVEL_04_197870.c
+LEVEL_01.REL	0x096BE0	124	src/levels/01_pokitaru/ENGINE/par/LEVEL_01_096BE0.c

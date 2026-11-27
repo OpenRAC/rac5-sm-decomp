@@ -5,8 +5,8 @@ after the private boot and level-program gates pass. It records **864 accepted
 boot C functions (119,008 bytes) in the 498,900-byte boot `.text`**, **one 476-byte C
 function in `FRONTEND.REL`**, plus **two shared C functions (8 + 72 bytes)
 at twenty numbered level placements** and, counted separately, the
-**82,771 accepted level-body placements**
-(10,413,564 placement bytes carried by 65,498 sources, 9,019,840 distinct-source
+**82,774 accepted level-body placements**
+(10,413,908 placement bytes carried by 65,501 sources, 9,020,184 distinct-source
 bytes; **1,225,640 bytes in 8,140 relocation-masked shape units** when each shape
 is counted once, at its largest per-module multiplicity, like the level
 denominator). The shared pair counts as two authored functions, not forty

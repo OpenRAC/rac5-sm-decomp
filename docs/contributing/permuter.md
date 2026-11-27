@@ -22,6 +22,24 @@ Use `--no-asm-passes`; generic empty-assembly constraints are not source evidenc
 This does not change the existing exceptions for exactly reviewed public
 runtime primitives.
 
+### Check that the enabled pass has a site
+
+The pinned upstream `perm_reverse_cond` transforms an `if` with an `else`, or a
+ternary expression. It cannot transform a plain `if` without an `else`, a loop
+condition, or a function with no such expression. Check the actual prepared AST
+before launching the search. In a measured 20-source use on 27 November 2026,
+only seven prepared functions had an admissible site.
+
+The upstream randomizer retries `RandomizationFailure` internally until a pass
+succeeds. With only this pass enabled and no site, that loop can prevent the
+worker from producing another candidate or observing its cooperative stop.
+The candidate ceiling does not bound these internal AST retries. Treat a source
+with no admissible site as inapplicable; preserve its baseline measurement and
+stop its isolated search rather than reporting nonexistent variants. A base
+that is already exact needs no further permutation. See the
+[pinned pass](https://github.com/simonlindholm/decomp-permuter/blob/8556c81d80d1c1af98a858c8f4dc951357f29139/src/randomizer.py#L1317)
+and [retry loop](https://github.com/simonlindholm/decomp-permuter/blob/8556c81d80d1c1af98a858c8f4dc951357f29139/src/randomizer.py#L2691).
+
 The wrapper's `matched` status means that isolated placements passed the
 checker. It does not promote source, change progress, run full-program gates or
 prove arbitrary behavior. Receipts keep `accepted=false`. Continue through the

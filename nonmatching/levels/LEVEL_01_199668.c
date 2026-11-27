@@ -1,7 +1,9 @@
-/* USA LEVEL_01.REL:0x199668, 168-byte candidate (14 November 2026).
- * Measured pinned: 2 differing words; first difference at 0x4C.
- * Recover the observed types, statement order and lifetimes before retrying
- * the same mismatch class. No matching credit.
+/* USA LEVEL_01.REL:0x199668, retained 168-byte C attempt (27 November 2026).
+ * Pinned route: 2 differing words, first at +0x5C; no matching credit.
+ * The returned descriptor is read as a callback pointer at offset zero, called
+ * with (record, owner, 2). DispatchPrefix is an observed partial view, not a
+ * recovered original class. The accepted lookup's int* interface is retained.
+ * Reopen with new callback/type evidence that resolves target-register choice.
  */
 struct Rec {
     char pad00[0xC];
@@ -17,6 +19,9 @@ struct Obj {
     char pad00[0x58];
     struct Rec *rec;
 };
+
+typedef void (*DispatchCallback)(char *, struct Obj *, int);
+struct DispatchPrefix { DispatchCallback callback; };
 
 extern void func_080B38(char *record);
 extern int *func_19B2A8(char *record);
@@ -36,7 +41,7 @@ void func_199668(struct Obj *o)
         rec->w3C = 0;
     }
     if (rec->w0C != 0) {
-        (*(void (**)(char *, struct Obj *, int))func_19B2A8(rec->w0C))(rec->w0C, o, 2);
+        ((struct DispatchPrefix *)func_19B2A8(rec->w0C))->callback(rec->w0C, o, 2);
     }
     func_097620((char *)rec + 0xD4);
     func_097620((char *)rec + 0x110);

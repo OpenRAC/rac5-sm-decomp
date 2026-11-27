@@ -1,3 +1,6 @@
+/* USA LEVEL_01.REL:0x10F6F0, complete 140-byte body.
+ * The usage helper receives both the asset kind and consumed bytes, including
+ * alignment padding. Its second argument is live in the retail call. */
 /* USA LEVEL_01:10F6F0, 140-byte candidate; measured 26 November 2026.
  * Profile pinned, assembler gnu-ee-trial; options: default.
  * Compiled 140 bytes: 13 differing words; first difference +0x38. No matching credit.
@@ -20,26 +23,28 @@ typedef struct Arena {
 } Arena;
 
 extern Arena D_00331738;
-extern void func_10F630(int arg);
+extern void func_10F630(int arg, int consumed);
 
 unsigned int func_10F6F0(unsigned int align, unsigned int size, int arg)
 {
-    Arena *a = &D_00331738;
-    unsigned int remaining = a->remaining;
-    unsigned int cursor;
-    unsigned int start;
-
-    if (size + align < remaining) {
-        cursor = a->cursor;
-        start = cursor - 1;
-        start += align;
-        start &= -align;
-        a->count = a->count + 1;
-        a->cursor = start + size;
-        a->last = start;
-        a->remaining = remaining - (start - cursor + size);
-        func_10F630(arg);
-        return start;
-    }
-    return 0;
+  Arena *a = &D_00331738;
+  unsigned int remaining = a->remaining;
+  unsigned int cursor;
+  unsigned int start;
+  unsigned int consumed;
+  if ((size + align) < remaining)
+  {
+    cursor = a->cursor;
+    start = cursor - 1;
+    start += align;
+    start &= -align;
+    a->count = a->count + 1;
+    a->cursor = start + size;
+    a->last = start;
+    consumed = (start - cursor) + size;
+    a->remaining = remaining - consumed;
+    func_10F630(arg, consumed);
+    return start;
+  }
+  return 0;
 }
