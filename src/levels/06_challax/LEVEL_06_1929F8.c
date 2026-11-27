@@ -3,7 +3,7 @@
 extern void func_0D82D0(char *a, int b, float c, float d);
 extern void func_192A88(char *o);
 extern void func_192680(int *p);
-extern int func_0389A0(char *record);
+extern void func_0389A0(char *record);
 
 void func_1929F8(char *a0, char *a1)
 {
@@ -16,7 +16,7 @@ void func_1929F8(char *a0, char *a1)
     func_0D82D0(s3 + 0x28, *(int *)(a1 + 0x59C), 4.0f, *(float *)(a1 + 0x368));
     func_192A88(a0);
     func_192680((int *)a0);
-    func_0389A0(a1);
+    ((int (*)(char *record))func_0389A0)(a1);
     *(float *)(s2 + 0x18) = 45.00089645385742f;
     *(char **)s3 = a1;
     a0[0x45] = 3;

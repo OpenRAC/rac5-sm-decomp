@@ -42,7 +42,7 @@ extern char D_00238AF8[][0x68];
 
 extern int func_02F850(unsigned char *object, void *owner);
 extern void func_165C78(char *record);
-extern int func_027B98(void);
+extern long long func_027B98(void);
 extern void func_013190(struct Seg0133E8 *o, struct Src0133E8 *s, int mode, int val);
 extern void func_0955E0(char *slot, struct Seg0133E8 *p, Vec3 *lo, Vec3 *hi, unsigned int bits);
 extern int func_16A450(Obj *self, Owner *owner, int extra, float f10, float f14);
@@ -82,7 +82,7 @@ void func_165A20(struct Src0133E8 *obj)
     st = obj->state;
     func_165C78((char *)st);
     tbl = D_00222D90;
-    idx = func_027B98();
+    idx = ((int (*)(void))func_027B98)();
     off = idx * 16 + 4;
     set = (D_00223780 - 1) * 0x40;
     st->f110 = *(float *)(off + set + (int)tbl);

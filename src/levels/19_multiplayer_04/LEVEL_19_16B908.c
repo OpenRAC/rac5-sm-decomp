@@ -4,7 +4,7 @@ typedef struct {
     float f_70;
 } Obj;
 
-void func_06F9A8(Obj *a0, int a1);
+void func_06F9A8(Obj *a0);
 
 void func_16B908(Obj *a0, float x)
 {
@@ -12,5 +12,5 @@ void func_16B908(Obj *a0, float x)
 
     a0->f_70 = left;
     if (left <= 0.0f)
-        func_06F9A8(a0, 1);
+        ((void (*)(Obj *a0, int a1))func_06F9A8)(a0, 1);
 }

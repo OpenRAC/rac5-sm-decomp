@@ -1,7 +1,7 @@
 /* LEVEL_05:0x106E40 -- masks and sets bit fields of its argument, then calls two helpers with a local buffer. */
 
 extern void func_094040(unsigned int *record, unsigned int first, unsigned int second, int third, int fourth, int fifth, unsigned int sixth);
-extern void func_094218(void *buf);
+extern int func_094218(void *buf);
 extern char D_001065D8[];
 
 void func_106E40(unsigned int flags)

@@ -17,7 +17,7 @@ extern int func_105EC0(int a, int b);
 extern int func_1063B8(int a, int b);
 extern int func_106498(int a, int b);
 extern int func_01FD00(int category, int selector);
-extern void func_01FF00(int a, int b, int c, int d);
+extern int func_01FF00(int a, int b, int c, int d);
 extern void func_021500(int a0, int a1, int a2, int a3, int t0, int t1, int t2, int t3);
 extern void func_021ED8(int a, int b, int c);
 extern int func_1059B8(int a);

@@ -11,7 +11,7 @@ extern char D_001C1E08[];
 extern char *strncpy(char *, const char *, unsigned);
 extern int strncmp(const char *, const char *, unsigned);
 extern int snprintf(char *, unsigned, const char *, ...);
-extern void func_0275B8(char *);
+extern void func_0275B8(void);
 
 int func_0275C8(char *dst, int size, char *src, int flag)
 {
@@ -62,7 +62,7 @@ int func_0275C8(char *dst, int size, char *src, int flag)
             res = 0;
             snprintf(dst, n, D_001C1DE0, D_001C1DE8, tail = buf + 0x1F);
             if (!flag)
-                func_0275B8(tail);
+                ((void (*)(char *))func_0275B8)(tail);
             *end = 0;
         } else {
             strncpy(dst, buf, n);
@@ -71,12 +71,12 @@ int func_0275C8(char *dst, int size, char *src, int flag)
     } else if (strncmp(D_001C1E08, buf, 0x19) == 0) {
         tail = buf + 0x19;
         if (!flag)
-            func_0275B8(tail);
+            ((void (*)(char *))func_0275B8)(tail);
         snprintf(dst, n, D_001C1DE0, D_001C1DE8, tail);
         *end = 0;
     } else {
         if (!flag)
-            func_0275B8(buf);
+            ((void (*)(char *))func_0275B8)(buf);
         snprintf(dst, n, D_001C1DE0, D_001C1DE8, buf);
         *end = 0;
     }

@@ -1,5 +1,5 @@
 extern void func_069530(void *);
-extern void func_06F008(void *, int);
+extern void func_06F008(void *);
 
 void func_047D30(char *context)
 {
@@ -11,7 +11,7 @@ void func_047D30(char *context)
 
     second = *(void **)(context + 0xDA4);
     if (second != 0) {
-        func_06F008(second, 1);
+        ((void (*)(void *, int))func_06F008)(second, 1);
         *(void **)(context + 0xDA4) = 0;
     }
 }

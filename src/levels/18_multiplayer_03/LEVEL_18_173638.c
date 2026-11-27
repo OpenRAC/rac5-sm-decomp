@@ -28,7 +28,7 @@ typedef struct {
 
 extern Fx *D_001BF828;
 extern int func_021ED8(int h, int key);
-extern void func_022110(int h, int a, int key, int b);
+extern int func_022110(int h, int a, int key, int b);
 extern void func_022088(int h, int key);
 extern void func_111C40(Ctx *c);
 extern void func_072BC8(Obj *o, Fx *fx, float a, float b, float c, float d,

@@ -1,6 +1,6 @@
 /* LEVEL_01:0x1DB8C8 -- lazily loads a set of resource handles. */
 extern int func_0DD080(int a, int b, int c, int d);
-extern int func_0DD6C8(int a, int b, int c, int d);
+extern void func_0DD6C8(int a, int b, int c, int d);
 
 extern int D_00209654;
 extern int D_00209658;
@@ -17,6 +17,6 @@ void func_1DB8C8(void)
         D_0020965C = func_0DD080(1, 0x8D, 3, 1);
         D_00209660 = func_0DD080(0, 0x8D, 1, 1);
         D_00209668 = func_0DD080(0, 0x30, 1, 1);
-        D_00209664 = func_0DD6C8(0, 0xA, 1, 1);
+        D_00209664 = ((int (*)(int a, int b, int c, int d))func_0DD6C8)(0, 0xA, 1, 1);
     }
 }

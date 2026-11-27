@@ -33,7 +33,7 @@ extern char D_0010D1B8[];
 
 extern int SND_PauseAtrac(int a, int b) __asm__("SND_PauseAtrac__Fbi");
 extern void SND_PausePositionalSounds(int a) __asm__("SND_PausePositionalSounds__Fb");
-extern void SND_FlushAndSync(unsigned int a) __asm__("SND_FlushAndSync__FUi");
+extern int SND_FlushAndSync(unsigned int a) __asm__("SND_FlushAndSync__FUi");
 
 extern void func_016950(int a, int b);
 extern void func_08BC40(char *s);

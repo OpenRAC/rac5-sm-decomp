@@ -18,7 +18,7 @@ struct Obj {
 extern float fmodf(float x, float y);
 extern void func_0130B0(float x);
 extern void func_0130C0(void);
-extern void func_06F008(struct Obj *o, int mode);
+extern void func_06F008(struct Obj *o);
 extern void func_168040(struct Obj *o, float dt);
 
 void func_167DE0(struct Obj *o, float dt)
@@ -32,7 +32,7 @@ void func_167DE0(struct Obj *o, float dt)
     rec->f08 = rec->f08 + dt;
     func_0130B0(rec->f44);
     if (o->flags & 0x200000) {
-        func_06F008(o, 1);
+        ((void (*)(struct Obj *o, int mode))func_06F008)(o, 1);
     } else {
         func_168040(o, dt);
         func_0130C0();

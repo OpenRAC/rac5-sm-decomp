@@ -26,7 +26,7 @@ struct G {
 };
 extern struct G D_002A11C0;
 extern char D_000EA160;
-extern struct Obj *func_093F38(int a, int b, int c, int d, int e);
+extern struct Obj *func_093F38(int a, int b, int c, int d);
 extern void func_0EA2A0(struct Obj *o);
 
 unsigned func_0E9F50(struct Obj **out, struct Cfg *cfg, struct Vec3 *pos)
@@ -39,7 +39,7 @@ unsigned func_0E9F50(struct Obj **out, struct Cfg *cfg, struct Vec3 *pos)
 
     p = out;
     n = 0;
-    while (n < cfg->n && (o = func_093F38(2, 3, D_002A11C0.h80, 1, 1)) != 0) {
+    while (n < cfg->n && (o = ((struct Obj * (*)(int a, int b, int c, int d, int e))func_093F38)(2, 3, D_002A11C0.h80, 1, 1)) != 0) {
         o->vt = &D_000EA160;
         d = &o->pos;
         sub = &o->s;

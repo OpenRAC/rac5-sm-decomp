@@ -14,7 +14,7 @@ extern void func_125BA0(float *, Obj *, void *);
 extern int func_1CE388(Obj *, float *, float *, float *, int, Cfg *, int);
 extern int func_1CE5F0(Obj *, int, int, Cfg *, int, float *, float *);
 extern int func_1CEE50(Obj *, int, float *, Cfg *);
-extern int func_1CF650(Obj *, int, float *, Cfg *, int);
+extern int func_1CF650(Obj *);
 
 static inline void spring(float *pos, float *vel, float target, float k, float damp, float limit, int steps)
 {
@@ -77,6 +77,6 @@ int func_1CE068(Obj *o, int p1, int p2, Cfg *cfg, int p4)
             }
         }
     }
-    r = func_1CF650(o, p1, dir, cfg, p4);
+    r = ((int (*)(Obj *, int, float *, Cfg *, int))func_1CF650)(o, p1, dir, cfg, p4);
     return r ? res : 1;
 }

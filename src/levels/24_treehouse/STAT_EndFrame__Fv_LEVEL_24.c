@@ -5,7 +5,7 @@ extern int D_001C73C4;
 extern long long D_001C73D0;
 extern int D_0026AD00[];
 extern void func_09A540(int a);
-extern void func_09C260(int a);
+extern void func_09C260(void);
 extern long long func_09C318(void);
 
 void STAT_EndFrame__Fv(void)
@@ -18,7 +18,7 @@ void STAT_EndFrame__Fv(void)
     D_001C73C4 = idx;
     D_001C73C0 = (idx + 1) & 0x1F;
     func_09A540(D_0026AEC4);
-    func_09C260(0xDEAD);
+    ((void (*)(int a))func_09C260)(0xDEAD);
     t = func_09C318();
     d = (int)(t - D_001C73D0);
     D_001C73D0 = t;

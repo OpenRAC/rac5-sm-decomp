@@ -30,7 +30,7 @@ extern int D_0021A7F0;
 extern Cell D_00219E00[][4];
 extern void *memset(void *, int, unsigned int);
 extern int func_1BBFD8(Obj *o);
-extern int func_028290(void);
+extern long long func_028290(void);
 
 int func_1B98C0(Obj *o)
 {
@@ -49,7 +49,7 @@ int func_1B98C0(Obj *o)
     if (o->owner->w34 == 0)
         return 0;
     base = (int)D_00219E00;
-    idx = func_028290() * 16;
+    idx = ((int (*)(void))func_028290)() * 16;
     g = (D_0021A7F0 - 1) * 64;
     r->value = *(float *)(idx + g + base);
     r->scale = 1.5f;

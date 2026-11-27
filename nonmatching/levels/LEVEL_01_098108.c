@@ -1,3 +1,14 @@
+/* USA LEVEL_01:098108, 236-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: -mno-check-zero-division.
+ * Compiled 236 bytes: 42 differing words; first difference +0x0. No matching credit.
+ * Remaining issue: draft stored owner[2] = first; retail stores block + 5 (first + 4) -- fixed,
+ * length now 236 = retail; left: register allocation (retail owner t2, result/first shared t1,
+ * last t3; ours owner t1, result a3) and the post-loop store order; merged result/first forms
+ * 232 B
+ * Reopen only when new caller/type evidence or a source hypothesis resolves this measured
+ * difference without changing accepted bytes.
+ */
+
 /* LEVEL_01.REL:0x098108 -- takes a node from a block-backed free list. */
 typedef unsigned int u32;
 
@@ -37,7 +48,7 @@ int *func_098108(int *owner)
         current[2] = address;
         current[1] = owner[2];
         *(int *)owner[2] = (int)current;
-        owner[2] = (int)first;
+        owner[2] = (int)(block + 5);
         block[0x22] = 1;
         result = first;
     } else {

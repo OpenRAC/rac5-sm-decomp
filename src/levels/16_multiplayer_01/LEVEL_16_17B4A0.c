@@ -1,6 +1,6 @@
 /* LEVEL_16:0x17B4A0 -- placement copy of LEVEL_01_1B63C8.c: clears a slot value, sets a flag byte, calls two helpers. */
 extern int func_17C158(unsigned char *);
-extern void func_06F940(void *, int);
+extern void func_06F940(void *);
 extern void func_128D60(void *);
 
 typedef struct Slot {
@@ -18,7 +18,7 @@ void func_17B4A0(unsigned char *state, int index)
     *(base + index + 0x84) = 1;
     if (func_17C158(state) != 0) {
         void *item;
-        func_06F940(state, 1);
+        ((void (*)(void *, int))func_06F940)(state, 1);
         item = *(void **)(base + 0x80);
         if (item != 0)
             func_128D60(item);

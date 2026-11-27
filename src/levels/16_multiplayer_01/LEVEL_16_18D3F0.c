@@ -4,13 +4,13 @@ typedef struct Obj {
     unsigned char b45;
 } Obj;
 
-extern void func_06F940(Obj *o, int mode);
+extern void func_06F940(Obj *o);
 extern void func_18D998(Obj *o, int mode);
 
 int func_18D3F0(Obj *o, int msg, int a2, int a3, int a4, int flag)
 {
     if (msg == 10 || msg == 11) {
-        func_06F940(o, 1);
+        ((void (*)(Obj *o, int mode))func_06F940)(o, 1);
         return 3;
     }
     if (flag == 0)

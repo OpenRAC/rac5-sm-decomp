@@ -7,7 +7,7 @@ typedef struct {
 } Obj;
 
 extern int func_094940(Obj *self);
-extern int func_094C18(void);
+extern long long func_094C18(void);
 extern int func_0AA7D0(void);
 extern void func_095340(float *a, float *b, float x, float z);
 extern void func_094F88(unsigned short a, unsigned short b);

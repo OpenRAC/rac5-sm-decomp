@@ -13,7 +13,7 @@ typedef struct Mgr {
     char pad[0xC];
     Link *list;
 } Mgr;
-extern Entry *func_20FE50(Link *list);
+extern Entry *func_20FE50(Link *list, float, float);
 extern void func_20F918(Entry *e);
 extern Entry *func_20F970(Mgr *m, float a, float b);
 
@@ -28,7 +28,7 @@ int func_210008(int unused, Entry **slot, Mgr *mgr, float fa, float fb)
 
     old = *slot;
     list = mgr->list;
-    e = func_20FE50(list);
+    e = func_20FE50(list, fa, fb);
 
     if (e == 0) {
         if (old != 0 && old->refs == 1) {

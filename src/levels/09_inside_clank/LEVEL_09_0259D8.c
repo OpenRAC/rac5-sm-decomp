@@ -1,6 +1,6 @@
-extern void func_0258D0(long long, long long, int, long long, long long, long long, long long, long long);
+extern void func_0258D0(char *, int, int, int, int, int, int, int);
 
-void func_0259D8(long long a, long long b, long long c, long long d, long long e, long long f, long long g)
+void func_0259D8(char *a, int b, int c, int d, int e, int f, int g)
 {
     func_0258D0(a, b, 0, c, d, e, f, g);
 }

@@ -12,7 +12,7 @@ struct Tab1DDD78 {
     unsigned char b10C;
 };
 
-extern unsigned char func_084C98(char *a0, int b, int c, int d, float f, float g);
+extern void func_084C98(char *a0, int b, float, int d, int, float);
 extern void func_168D58(void *p, int b, int c);
 
 void func_204CF0(char *a0)
@@ -23,7 +23,7 @@ void func_204CF0(char *a0)
 
     p = *(struct Tab1DDD78 **)(a0 + 0x58);
     p->b10C = 1;
-    func_084C98(a0, 1, 0, 1, 0.15000000596046448f, 0.0f);
+    ((unsigned char (*)(char *a0, int b, int c, int d, float f, float g))func_084C98)(a0, 1, 0, 1, 0.15000000596046448f, 0.0f);
     for (i = 0; i < 2; i++) {
         e = p->e[i];
         if (e != 0) {

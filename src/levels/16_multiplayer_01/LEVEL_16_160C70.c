@@ -27,7 +27,7 @@ struct Obj {
     struct Sub *p_58;
 };
 
-extern int func_160F10(struct Obj *o);
+extern long long func_160F10(struct Obj *o);
 extern int func_160DC0(struct Obj *o);
 
 static __inline__ void SubVec(float *d, float *a, float *b)

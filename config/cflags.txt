@@ -1161,7 +1161,7 @@ src/levels/24_treehouse/LEVEL_24_1977D8.c  -fno-gcse
 src/levels/24_treehouse/LEVEL_24_1995C0.c  -fno-gcse
 src/levels/24_treehouse/LEVEL_24_19A2B0.c  -fno-gcse
 src/levels/frontend/FRONTEND_0248D0.c  -fexceptions
-src/levels/frontend/__throw.c  -fexceptions
+src/levels/frontend/__throw_FRONTEND.c  -fexceptions
 src/levels/frontend/__rethrow.c  -fexceptions
 
 # Boot bodies ported on 22 November 2026 from byte-identical C of sister OpenRAC
@@ -1355,3 +1355,393 @@ src/levels/19_multiplayer_04/LEVEL_19_128F98.c  -fno-gcse
 src/levels/23_skyboard_challax/LEVEL_23_12CE98.c  -fno-gcse
 src/levels/24_treehouse/LEVEL_24_131230.c  -fno-gcse
 src/levels/05_medical_outpost/LEVEL_05_17DF88.c  -fno-gcse
+
+# Boot bodies of at most 200 bytes accepted on 14 November 2026. Each route is the
+# measured one: the pinned chain does not reproduce these bodies (their pinned
+# negative controls differ); bodies the pinned chain also reproduces keep it.
+src/boot/VEC_MakeMatFromYawPitchRoll__FP4VEC3N20fff.c    gnu-ee-trial -O2 -G0
+src/levels/shared/FRONTEND_0055B0.c  -malign-functions=2
+src/levels/shared/FRONTEND_011ED0.c  -fno-delayed-branch
+src/levels/shared/FRONTEND_02129C.c  -malign-functions=2
+src/levels/shared/LEVEL_01_03C0E8.c  -malign-functions=2
+src/levels/shared/LEVEL_01_16F100.c  -fno-sched-interblock
+src/levels/02_rykan_v/LEVEL_02_171C18.c  -fno-schedule-insns
+src/levels/04_metalis/LEVEL_04_166598.c  -fno-schedule-insns
+src/levels/09_inside_clank/LEVEL_09_1A0718.c  -fno-expensive-optimizations
+src/levels/10_quodrona/LEVEL_10_18E018.c  -fno-schedule-insns
+
+# Boot bodies of at most 200 bytes accepted on 14 November 2026. Each route is the
+# measured one: the pinned chain does not reproduce these bodies (their pinned
+# negative controls differ); bodies the pinned chain also reproduces keep it.
+src/boot/PAR_CreateGroup__FP9PAR_Groupi13PAR_BlockMode.c    -mno-check-zero-division
+src/levels/01_pokitaru/LEVEL_01_015EE8.c  -fexceptions
+src/levels/shared/LEVEL_01_16F160.c  -fno-sched-interblock
+src/levels/shared/LEVEL_01_171330.c  -fexceptions
+src/levels/03_kalidon/LEVEL_03_193860.c  -fexceptions
+src/levels/15_giant_clank_metalis/LEVEL_15_029498.c  -fexceptions
+src/levels/01_pokitaru/LEVEL_01_04D110.c  -fno-gcse -mno-check-zero-division
+src/levels/01_pokitaru/LEVEL_01_063628.c  -malign-functions=2
+src/levels/01_pokitaru/LEVEL_01_1551E8.c  -mno-check-zero-division
+src/levels/01_pokitaru/LEVEL_01_1BBA60.c  -fno-force-mem
+src/levels/01_pokitaru/__throw_LEVEL_01.c  -fexceptions
+src/levels/02_rykan_v/LEVEL_02_052038.c  -fno-gcse -mno-check-zero-division
+src/levels/02_rykan_v/LEVEL_02_068648.c  -malign-functions=2
+src/levels/02_rykan_v/LEVEL_02_15BA78.c  -mno-check-zero-division
+src/levels/02_rykan_v/LEVEL_02_16FC28.c  -fno-gcse
+src/levels/02_rykan_v/LEVEL_02_1A3740.c  -fno-gcse
+src/levels/02_rykan_v/__throw_LEVEL_02.c  -fexceptions
+src/levels/03_kalidon/LEVEL_03_04B370.c  -fno-gcse -mno-check-zero-division
+src/levels/03_kalidon/LEVEL_03_061FB0.c  -malign-functions=2
+src/levels/03_kalidon/LEVEL_03_154678.c  -mno-check-zero-division
+src/levels/03_kalidon/__throw_LEVEL_03.c  -fexceptions
+src/levels/04_metalis/LEVEL_04_04EAD0.c  -fno-gcse -mno-check-zero-division
+src/levels/04_metalis/LEVEL_04_065090.c  -malign-functions=2
+src/levels/04_metalis/LEVEL_04_0B6F68.c  -fno-gcse
+src/levels/04_metalis/LEVEL_04_161950.c  -mno-check-zero-division
+src/levels/04_metalis/LEVEL_04_16FF90.c  -fno-gcse -malign-functions=2
+src/levels/04_metalis/LEVEL_04_176F08.c  -fno-gcse
+src/levels/shared/LEVEL_04_1773F8.c  -malign-functions=2 -malign-loops=2
+src/levels/04_metalis/LEVEL_04_1CE920.c  -fno-force-mem
+src/levels/04_metalis/__throw_LEVEL_04.c  -fexceptions
+src/levels/05_medical_outpost/LEVEL_05_04AD40.c  -fno-gcse -mno-check-zero-division
+src/levels/05_medical_outpost/LEVEL_05_061290.c  -malign-functions=2
+src/levels/05_medical_outpost/LEVEL_05_150BD8.c  -mno-check-zero-division
+src/levels/05_medical_outpost/__throw_LEVEL_05.c  -fexceptions
+src/levels/06_challax/LEVEL_06_049808.c  -fno-gcse -mno-check-zero-division
+src/levels/06_challax/LEVEL_06_0603E8.c  -malign-functions=2
+src/levels/06_challax/LEVEL_06_14B8E0.c  -mno-check-zero-division
+src/levels/06_challax/__throw_LEVEL_06.c  -fexceptions
+src/levels/07_dreamtime/LEVEL_07_04D6E0.c  -fno-gcse -mno-check-zero-division
+src/levels/07_dreamtime/LEVEL_07_064330.c  -malign-functions=2
+src/levels/07_dreamtime/LEVEL_07_158528.c  -mno-check-zero-division
+src/levels/07_dreamtime/LEVEL_07_1DBE20.c  -mno-check-zero-division
+src/levels/07_dreamtime/__throw_LEVEL_07.c  -fexceptions
+src/levels/08_dayni_moon/LEVEL_08_052218.c  -fno-gcse -mno-check-zero-division
+src/levels/08_dayni_moon/LEVEL_08_068E50.c  -malign-functions=2
+src/levels/08_dayni_moon/LEVEL_08_0BC650.c  -fno-gcse
+src/levels/08_dayni_moon/LEVEL_08_167668.c  -mno-check-zero-division
+src/levels/08_dayni_moon/LEVEL_08_17B338.c  -fno-gcse -malign-functions=2
+src/levels/08_dayni_moon/LEVEL_08_1826F8.c  -fno-gcse
+src/levels/08_dayni_moon/LEVEL_08_1C1A48.c  -fno-gcse
+src/levels/08_dayni_moon/LEVEL_08_2022F0.c  -fno-gcse
+src/levels/08_dayni_moon/__throw_LEVEL_08.c  -fexceptions
+src/levels/09_inside_clank/LEVEL_09_0495F0.c  -fno-gcse -mno-check-zero-division
+src/levels/09_inside_clank/LEVEL_09_060228.c  -malign-functions=2
+src/levels/09_inside_clank/LEVEL_09_14E1C8.c  -mno-check-zero-division
+src/levels/09_inside_clank/LEVEL_09_1B5DD0.c  -mno-check-zero-division
+src/levels/09_inside_clank/__throw_LEVEL_09.c  -fexceptions
+src/levels/10_quodrona/LEVEL_10_04B7B8.c  -fno-gcse -mno-check-zero-division
+src/levels/10_quodrona/LEVEL_10_062458.c  -malign-functions=2
+src/levels/10_quodrona/LEVEL_10_153D08.c  -mno-check-zero-division
+src/levels/10_quodrona/__throw_LEVEL_10.c  -fexceptions
+src/levels/15_giant_clank_metalis/LEVEL_15_03E448.c  -fno-gcse -mno-check-zero-division
+src/levels/15_giant_clank_metalis/LEVEL_15_0548B8.c  -malign-functions=2
+src/levels/15_giant_clank_metalis/__throw_LEVEL_15.c  -fexceptions
+src/levels/16_multiplayer_01/LEVEL_16_048B30.c  -fno-gcse -mno-check-zero-division
+src/levels/16_multiplayer_01/LEVEL_16_056038.c  -malign-functions=2
+src/levels/16_multiplayer_01/LEVEL_16_1387E0.c  -fno-gcse -malign-functions=2
+src/levels/16_multiplayer_01/LEVEL_16_1618D0.c  -fno-gcse
+src/levels/16_multiplayer_01/__throw_LEVEL_16.c  -fexceptions
+src/levels/17_multiplayer_02/LEVEL_17_048390.c  -fno-gcse -mno-check-zero-division
+src/levels/17_multiplayer_02/LEVEL_17_055A68.c  -malign-functions=2
+src/levels/17_multiplayer_02/__throw_LEVEL_17.c  -fexceptions
+src/levels/18_multiplayer_03/LEVEL_18_047370.c  -fno-gcse -mno-check-zero-division
+src/levels/18_multiplayer_03/LEVEL_18_054B40.c  -malign-functions=2
+src/levels/18_multiplayer_03/LEVEL_18_188A38.c  -mno-check-zero-division
+src/levels/18_multiplayer_03/__throw_LEVEL_18.c  -fexceptions
+src/levels/19_multiplayer_04/LEVEL_19_047DC0.c  -fno-gcse -mno-check-zero-division
+src/levels/19_multiplayer_04/LEVEL_19_055498.c  -malign-functions=2
+src/levels/19_multiplayer_04/__throw_LEVEL_19.c  -fexceptions
+src/levels/20_multiplayer_lobby/LEVEL_20_042158.c  -fno-gcse -mno-check-zero-division
+src/levels/20_multiplayer_lobby/LEVEL_20_04F660.c  -malign-functions=2
+src/levels/20_multiplayer_lobby/__throw_LEVEL_20.c  -fexceptions
+src/levels/15_giant_clank_metalis/LEVEL_21_03E448.c  -fno-gcse -mno-check-zero-division
+src/levels/15_giant_clank_metalis/LEVEL_21_0548B8.c  -malign-functions=2
+src/levels/15_giant_clank_metalis/__throw_LEVEL_21.c  -fexceptions
+src/levels/22_skyboard_kalidon/LEVEL_22_0429B0.c  -fno-gcse -mno-check-zero-division
+src/levels/22_skyboard_kalidon/LEVEL_22_059230.c  -malign-functions=2
+src/levels/22_skyboard_kalidon/__throw_LEVEL_22.c  -fexceptions
+src/levels/23_skyboard_challax/LEVEL_23_046490.c  -fno-gcse -mno-check-zero-division
+src/levels/23_skyboard_challax/LEVEL_23_05CDE0.c  -malign-functions=2
+src/levels/23_skyboard_challax/__throw_LEVEL_23.c  -fexceptions
+src/levels/24_treehouse/LEVEL_24_046098.c  -fno-gcse -mno-check-zero-division
+src/levels/24_treehouse/LEVEL_24_05CC78.c  -malign-functions=2
+src/levels/24_treehouse/LEVEL_24_14B738.c  -mno-check-zero-division
+src/levels/24_treehouse/__throw_LEVEL_24.c  -fexceptions
+src/levels/frontend/FRONTEND_014F58.c  -fno-strength-reduce
+src/levels/frontend/__cp_pop_exception_FRONTEND.c  -fexceptions
+src/levels/01_pokitaru/LEVEL_01_025120.c  -fno-schedule-insns
+src/levels/shared/LEVEL_01_03C450.c  -malign-functions=2
+src/levels/01_pokitaru/LEVEL_01_08CDE0.c  -malign-functions=2
+src/levels/01_pokitaru/sceKernelGetSystemTimeLow__Fv_LEVEL_01.c  -malign-functions=2
+src/levels/01_pokitaru/LEVEL_01_0A6F58.c  -fno-strength-reduce
+src/levels/01_pokitaru/LEVEL_01_0B1470.c  -fexceptions
+src/levels/01_pokitaru/LEVEL_01_158CD8.c  -malign-functions=2
+src/levels/01_pokitaru/LEVEL_01_15A6C0.c  -malign-functions=2
+src/levels/shared/LEVEL_01_17DE50.c  -fno-gcse
+src/levels/01_pokitaru/LEVEL_01_1B27C0.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/01_pokitaru/LEVEL_01_1CF650.c  -fexceptions
+src/levels/01_pokitaru/LEVEL_01_1D1BD0.c  -fno-expensive-optimizations
+src/levels/01_pokitaru/LEVEL_01_1D7628.c  -fno-expensive-optimizations
+src/levels/01_pokitaru/__cp_pop_exception_LEVEL_01.c  -fexceptions
+src/levels/02_rykan_v/LEVEL_02_025A80.c  -fno-schedule-insns
+src/levels/02_rykan_v/LEVEL_02_0934B0.c  -malign-functions=2
+src/levels/02_rykan_v/sceKernelGetSystemTimeLow__Fv_LEVEL_02.c  -malign-functions=2
+src/levels/02_rykan_v/LEVEL_02_0AD868.c  -fno-strength-reduce
+src/levels/02_rykan_v/LEVEL_02_0B7D80.c  -fexceptions
+src/levels/02_rykan_v/LEVEL_02_167798.c  -malign-functions=2
+src/levels/02_rykan_v/LEVEL_02_1D06F0.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/02_rykan_v/LEVEL_02_1E47E0.c  -fexceptions
+src/levels/02_rykan_v/LEVEL_02_1E6868.c  -fno-expensive-optimizations
+src/levels/02_rykan_v/LEVEL_02_1EC2C0.c  -fno-expensive-optimizations
+src/levels/02_rykan_v/__cp_pop_exception_LEVEL_02.c  -fexceptions
+src/levels/03_kalidon/LEVEL_03_024FF0.c  -fno-schedule-insns
+src/levels/03_kalidon/LEVEL_03_08CA10.c  -malign-functions=2
+src/levels/03_kalidon/sceKernelGetSystemTimeLow__Fv_LEVEL_03.c  -malign-functions=2
+src/levels/03_kalidon/LEVEL_03_0A6CD8.c  -fno-strength-reduce
+src/levels/03_kalidon/LEVEL_03_0B11F0.c  -fexceptions
+src/levels/03_kalidon/LEVEL_03_156760.c  -malign-functions=2
+src/levels/03_kalidon/LEVEL_03_17AF10.c  -fno-gcse
+src/levels/03_kalidon/LEVEL_03_1938A8.c  -fexceptions
+src/levels/03_kalidon/LEVEL_03_1C78B0.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/03_kalidon/LEVEL_03_1E02E0.c  -fexceptions
+src/levels/03_kalidon/LEVEL_03_1E3BD0.c  -fno-expensive-optimizations
+src/levels/03_kalidon/LEVEL_03_1E9628.c  -fno-expensive-optimizations
+src/levels/03_kalidon/__cp_pop_exception_LEVEL_03.c  -fexceptions
+src/levels/04_metalis/LEVEL_04_024DA0.c  -fno-schedule-insns
+src/levels/04_metalis/LEVEL_04_08FED8.c  -malign-functions=2
+src/levels/04_metalis/sceKernelGetSystemTimeLow__Fv_LEVEL_04.c  -malign-functions=2
+src/levels/04_metalis/LEVEL_04_0AC168.c  -fno-strength-reduce
+src/levels/04_metalis/LEVEL_04_0B66C0.c  -fexceptions
+src/levels/04_metalis/LEVEL_04_164410.c  -malign-functions=2
+src/levels/04_metalis/LEVEL_04_1BF7C0.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/04_metalis/LEVEL_04_1E4638.c  -fexceptions
+src/levels/04_metalis/LEVEL_04_1E77A8.c  -fexceptions -mno-check-zero-division
+src/levels/04_metalis/LEVEL_04_1E8BB8.c  -fno-expensive-optimizations
+src/levels/04_metalis/LEVEL_04_1EE610.c  -fno-expensive-optimizations
+src/levels/04_metalis/__cp_pop_exception_LEVEL_04.c  -fexceptions
+src/levels/05_medical_outpost/LEVEL_05_0240B8.c  -fno-schedule-insns
+src/levels/05_medical_outpost/LEVEL_05_08A4D8.c  -malign-functions=2
+src/levels/05_medical_outpost/sceKernelGetSystemTimeLow__Fv_LEVEL_05.c  -malign-functions=2
+src/levels/05_medical_outpost/LEVEL_05_0A5518.c  -fno-strength-reduce
+src/levels/05_medical_outpost/LEVEL_05_0AFA30.c  -fexceptions
+src/levels/05_medical_outpost/LEVEL_05_152688.c  -malign-functions=2
+src/levels/05_medical_outpost/LEVEL_05_1AC930.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/05_medical_outpost/LEVEL_05_1BE7D8.c  -fexceptions
+src/levels/05_medical_outpost/LEVEL_05_1C0FC8.c  -fno-expensive-optimizations
+src/levels/05_medical_outpost/LEVEL_05_1C6A20.c  -fno-expensive-optimizations
+src/levels/05_medical_outpost/__cp_pop_exception_LEVEL_05.c  -fexceptions
+src/levels/06_challax/LEVEL_06_023828.c  -fno-schedule-insns
+src/levels/06_challax/LEVEL_06_085A30.c  -malign-functions=2
+src/levels/06_challax/sceKernelGetSystemTimeLow__Fv_LEVEL_06.c  -malign-functions=2
+src/levels/06_challax/LEVEL_06_0A1728.c  -fno-strength-reduce
+src/levels/06_challax/LEVEL_06_0ABC40.c  -fexceptions
+src/levels/06_challax/LEVEL_06_14E4F0.c  -malign-functions=2
+src/levels/06_challax/LEVEL_06_16AE98.c  -fno-gcse
+src/levels/06_challax/LEVEL_06_1A67C8.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/06_challax/LEVEL_06_1BBB28.c  -fexceptions
+src/levels/06_challax/LEVEL_06_1BF418.c  -fno-expensive-optimizations
+src/levels/06_challax/LEVEL_06_1C4E70.c  -fno-expensive-optimizations
+src/levels/06_challax/__cp_pop_exception_LEVEL_06.c  -fexceptions
+src/levels/07_dreamtime/LEVEL_07_0256E8.c  -fno-schedule-insns
+src/levels/07_dreamtime/LEVEL_07_08EC68.c  -malign-functions=2
+src/levels/07_dreamtime/sceKernelGetSystemTimeLow__Fv_LEVEL_07.c  -malign-functions=2
+src/levels/07_dreamtime/LEVEL_07_0A8F58.c  -fno-strength-reduce
+src/levels/07_dreamtime/LEVEL_07_0B3470.c  -fexceptions
+src/levels/07_dreamtime/LEVEL_07_15B378.c  -malign-functions=2
+src/levels/07_dreamtime/LEVEL_07_187F00.c  -fno-gcse
+src/levels/07_dreamtime/LEVEL_07_1C7C20.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/07_dreamtime/LEVEL_07_1DBC30.c  -fexceptions
+src/levels/07_dreamtime/LEVEL_07_1E0388.c  -fno-expensive-optimizations
+src/levels/07_dreamtime/LEVEL_07_1E5DE0.c  -fno-expensive-optimizations
+src/levels/07_dreamtime/__cp_pop_exception_LEVEL_07.c  -fexceptions
+src/levels/08_dayni_moon/LEVEL_08_0259A0.c  -fno-schedule-insns
+src/levels/08_dayni_moon/LEVEL_08_094D00.c  -malign-functions=2
+src/levels/08_dayni_moon/sceKernelGetSystemTimeLow__Fv_LEVEL_08.c  -malign-functions=2
+src/levels/08_dayni_moon/LEVEL_08_0B1850.c  -fno-strength-reduce
+src/levels/08_dayni_moon/LEVEL_08_0BBDA8.c  -fexceptions
+src/levels/08_dayni_moon/LEVEL_08_16B1A0.c  -malign-functions=2
+src/levels/08_dayni_moon/LEVEL_08_1984E8.c  -fno-gcse
+src/levels/08_dayni_moon/LEVEL_08_1E6558.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/08_dayni_moon/LEVEL_08_20BD10.c  -fexceptions
+src/levels/08_dayni_moon/LEVEL_08_20F378.c  -fexceptions -mno-check-zero-division
+src/levels/08_dayni_moon/LEVEL_08_212F28.c  -fno-expensive-optimizations
+src/levels/08_dayni_moon/LEVEL_08_218980.c  -fno-expensive-optimizations
+src/levels/08_dayni_moon/__cp_pop_exception_LEVEL_08.c  -fexceptions
+src/levels/09_inside_clank/LEVEL_09_024418.c  -fno-schedule-insns
+src/levels/09_inside_clank/LEVEL_09_089538.c  -malign-functions=2
+src/levels/09_inside_clank/sceKernelGetSystemTimeLow__Fv_LEVEL_09.c  -malign-functions=2
+src/levels/09_inside_clank/LEVEL_09_0A4208.c  -fno-strength-reduce
+src/levels/09_inside_clank/LEVEL_09_0AE720.c  -fexceptions
+src/levels/09_inside_clank/LEVEL_09_1504E0.c  -malign-functions=2
+src/levels/09_inside_clank/LEVEL_09_16EAD0.c  -fno-gcse
+src/levels/09_inside_clank/LEVEL_09_1A5588.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/09_inside_clank/LEVEL_09_1B5BE0.c  -fexceptions
+src/levels/09_inside_clank/LEVEL_09_1BA338.c  -fno-expensive-optimizations
+src/levels/09_inside_clank/LEVEL_09_1BFD90.c  -fno-expensive-optimizations
+src/levels/09_inside_clank/__cp_pop_exception_LEVEL_09.c  -fexceptions
+src/levels/10_quodrona/LEVEL_10_024A88.c  -fno-schedule-insns
+src/levels/10_quodrona/LEVEL_10_08D150.c  -malign-functions=2
+src/levels/10_quodrona/sceKernelGetSystemTimeLow__Fv_LEVEL_10.c  -malign-functions=2
+src/levels/10_quodrona/LEVEL_10_0A8070.c  -fno-strength-reduce
+src/levels/10_quodrona/LEVEL_10_0B2588.c  -fexceptions
+src/levels/10_quodrona/LEVEL_10_156940.c  -malign-functions=2
+src/levels/10_quodrona/LEVEL_10_17D4C8.c  -fno-gcse
+src/levels/10_quodrona/LEVEL_10_1C0048.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/10_quodrona/LEVEL_10_1D39F8.c  -fexceptions
+src/levels/10_quodrona/LEVEL_10_1D77E0.c  -fno-expensive-optimizations
+src/levels/10_quodrona/LEVEL_10_1DD238.c  -fno-expensive-optimizations
+src/levels/10_quodrona/__cp_pop_exception_LEVEL_10.c  -fexceptions
+src/levels/15_giant_clank_metalis/LEVEL_15_01F430.c  -fno-schedule-insns
+src/levels/15_giant_clank_metalis/LEVEL_15_02FEF0.c  -fno-gcse
+src/levels/15_giant_clank_metalis/LEVEL_15_070FF0.c  -malign-functions=2
+src/levels/15_giant_clank_metalis/sceKernelGetSystemTimeLow__Fv_LEVEL_15.c  -malign-functions=2
+src/levels/15_giant_clank_metalis/LEVEL_15_087820.c  -fno-strength-reduce
+src/levels/15_giant_clank_metalis/LEVEL_15_091D38.c  -fexceptions
+src/levels/15_giant_clank_metalis/LEVEL_15_1359B8.c  -fno-rerun-cse-after-loop
+src/levels/15_giant_clank_metalis/__cp_pop_exception_LEVEL_15.c  -fexceptions
+src/levels/16_multiplayer_01/LEVEL_16_022AC8.c  -fno-schedule-insns
+src/levels/16_multiplayer_01/LEVEL_16_06F940.c  -fno-gcse
+src/levels/16_multiplayer_01/LEVEL_16_07DFF0.c  -malign-functions=2
+src/levels/16_multiplayer_01/sceKernelGetSystemTimeLow__Fv_LEVEL_16.c  -malign-functions=2
+src/levels/16_multiplayer_01/LEVEL_16_09FE60.c  -fexceptions
+src/levels/16_multiplayer_01/LEVEL_16_11C6F0.c  -fno-gcse
+src/levels/16_multiplayer_01/LEVEL_16_17AA50.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/16_multiplayer_01/LEVEL_16_188210.c  -fexceptions
+src/levels/16_multiplayer_01/__cp_pop_exception_LEVEL_16.c  -fexceptions
+src/levels/17_multiplayer_02/LEVEL_17_022448.c  -fno-schedule-insns
+src/levels/17_multiplayer_02/LEVEL_17_06FF78.c  -fno-gcse
+src/levels/17_multiplayer_02/LEVEL_17_07EA30.c  -malign-functions=2
+src/levels/17_multiplayer_02/sceKernelGetSystemTimeLow__Fv_LEVEL_17.c  -malign-functions=2
+src/levels/17_multiplayer_02/LEVEL_17_09F358.c  -fexceptions
+src/levels/17_multiplayer_02/LEVEL_17_11C068.c  -fno-gcse
+src/levels/17_multiplayer_02/LEVEL_17_16D828.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/17_multiplayer_02/LEVEL_17_17B858.c  -fexceptions
+src/levels/17_multiplayer_02/__cp_pop_exception_LEVEL_17.c  -fexceptions
+src/levels/18_multiplayer_03/LEVEL_18_022110.c  -fno-schedule-insns
+src/levels/18_multiplayer_03/LEVEL_18_06F008.c  -fno-gcse
+src/levels/18_multiplayer_03/LEVEL_18_07D938.c  -malign-functions=2
+src/levels/18_multiplayer_03/sceKernelGetSystemTimeLow__Fv_LEVEL_18.c  -malign-functions=2
+src/levels/18_multiplayer_03/LEVEL_18_09EE70.c  -fexceptions
+src/levels/18_multiplayer_03/LEVEL_18_11B6E0.c  -fno-gcse
+src/levels/18_multiplayer_03/LEVEL_18_17D168.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/18_multiplayer_03/LEVEL_18_188848.c  -fexceptions
+src/levels/18_multiplayer_03/__cp_pop_exception_LEVEL_18.c  -fexceptions
+src/levels/19_multiplayer_04/LEVEL_19_022708.c  -fno-schedule-insns
+src/levels/19_multiplayer_04/LEVEL_19_06F9A8.c  -fno-gcse
+src/levels/19_multiplayer_04/LEVEL_19_07E4A0.c  -malign-functions=2
+src/levels/19_multiplayer_04/sceKernelGetSystemTimeLow__Fv_LEVEL_19.c  -malign-functions=2
+src/levels/19_multiplayer_04/LEVEL_19_09F6F0.c  -fexceptions
+src/levels/19_multiplayer_04/LEVEL_19_11D060.c  -fno-gcse
+src/levels/19_multiplayer_04/LEVEL_19_175368.c  -fno-cse-follow-jumps -fno-gcse
+src/levels/19_multiplayer_04/LEVEL_19_184FA8.c  -fexceptions
+src/levels/19_multiplayer_04/__cp_pop_exception_LEVEL_19.c  -fexceptions
+src/levels/20_multiplayer_lobby/LEVEL_20_01F770.c  -fno-schedule-insns
+src/levels/20_multiplayer_lobby/LEVEL_20_05E948.c  -fno-gcse
+src/levels/20_multiplayer_lobby/LEVEL_20_06BB78.c  -malign-functions=2
+src/levels/20_multiplayer_lobby/sceKernelGetSystemTimeLow__Fv_LEVEL_20.c  -malign-functions=2
+src/levels/20_multiplayer_lobby/LEVEL_20_08A558.c  -fexceptions
+src/levels/20_multiplayer_lobby/LEVEL_20_0EEA98.c  -fno-gcse
+src/levels/20_multiplayer_lobby/__cp_pop_exception_LEVEL_20.c  -fexceptions
+src/levels/15_giant_clank_metalis/LEVEL_21_01F430.c  -fno-schedule-insns
+src/levels/15_giant_clank_metalis/LEVEL_21_070FF0.c  -malign-functions=2
+src/levels/15_giant_clank_metalis/sceKernelGetSystemTimeLow__Fv_LEVEL_21.c  -malign-functions=2
+src/levels/15_giant_clank_metalis/LEVEL_21_087820.c  -fno-strength-reduce
+src/levels/15_giant_clank_metalis/LEVEL_21_091D38.c  -fexceptions
+src/levels/15_giant_clank_metalis/__cp_pop_exception_LEVEL_21.c  -fexceptions
+src/levels/22_skyboard_kalidon/LEVEL_22_01FF00.c  -fno-schedule-insns
+src/levels/22_skyboard_kalidon/LEVEL_22_07DDF0.c  -malign-functions=2
+src/levels/22_skyboard_kalidon/sceKernelGetSystemTimeLow__Fv_LEVEL_22.c  -malign-functions=2
+src/levels/22_skyboard_kalidon/LEVEL_22_095568.c  -fno-strength-reduce
+src/levels/22_skyboard_kalidon/LEVEL_22_09FA80.c  -fexceptions
+src/levels/22_skyboard_kalidon/LEVEL_22_13D1C0.c  -fno-expensive-optimizations
+src/levels/22_skyboard_kalidon/LEVEL_22_13E3C0.c  -fno-expensive-optimizations
+src/levels/22_skyboard_kalidon/__cp_pop_exception_LEVEL_22.c  -fexceptions
+src/levels/23_skyboard_challax/LEVEL_23_023168.c  -fno-schedule-insns
+src/levels/23_skyboard_challax/LEVEL_23_082A40.c  -malign-functions=2
+src/levels/23_skyboard_challax/sceKernelGetSystemTimeLow__Fv_LEVEL_23.c  -malign-functions=2
+src/levels/23_skyboard_challax/LEVEL_23_09DCC8.c  -fno-strength-reduce
+src/levels/23_skyboard_challax/LEVEL_23_0A81E0.c  -fexceptions
+src/levels/23_skyboard_challax/LEVEL_23_155080.c  -malign-functions=2
+src/levels/23_skyboard_challax/LEVEL_23_1A14E0.c  -fexceptions
+src/levels/23_skyboard_challax/LEVEL_23_1A3568.c  -fno-expensive-optimizations
+src/levels/23_skyboard_challax/LEVEL_23_1A8FC0.c  -fno-expensive-optimizations
+src/levels/23_skyboard_challax/__cp_pop_exception_LEVEL_23.c  -fexceptions
+src/levels/24_treehouse/LEVEL_24_022EA0.c  -fno-schedule-insns
+src/levels/24_treehouse/LEVEL_24_085E20.c  -malign-functions=2
+src/levels/24_treehouse/sceKernelGetSystemTimeLow__Fv_LEVEL_24.c  -malign-functions=2
+src/levels/24_treehouse/LEVEL_24_0A07D0.c  -fno-strength-reduce
+src/levels/24_treehouse/LEVEL_24_0AACE8.c  -fexceptions
+src/levels/24_treehouse/LEVEL_24_14CDB8.c  -malign-functions=2
+src/levels/24_treehouse/LEVEL_24_160FC0.c  -fno-gcse
+src/levels/24_treehouse/LEVEL_24_199B90.c  -fno-schedule-insns
+src/levels/24_treehouse/LEVEL_24_1A0048.c  -fexceptions
+src/levels/24_treehouse/LEVEL_24_1A3938.c  -fno-expensive-optimizations
+src/levels/24_treehouse/LEVEL_24_1A9390.c  -fno-expensive-optimizations
+src/levels/24_treehouse/__cp_pop_exception_LEVEL_24.c  -fexceptions
+src/levels/01_pokitaru/LEVEL_01_02FFC0.c  -malign-functions=2
+src/levels/01_pokitaru/LEVEL_01_049A88.c  -malign-functions=2
+src/levels/01_pokitaru/LEVEL_01_15B340.c  -mno-check-zero-division
+src/levels/01_pokitaru/LEVEL_01_1B7378.c  -mno-check-zero-division
+src/levels/02_rykan_v/LEVEL_02_04EA10.c  -malign-functions=2
+src/levels/shared/LEVEL_02_180460.c  -fexceptions
+src/levels/02_rykan_v/LEVEL_02_1D9B30.c  -mno-check-zero-division
+src/levels/03_kalidon/LEVEL_03_02FE48.c  -malign-functions=2
+src/levels/03_kalidon/LEVEL_03_047D48.c  -malign-functions=2
+src/levels/03_kalidon/LEVEL_03_1957E0.c  -fno-sched-interblock
+src/levels/03_kalidon/LEVEL_03_1CC468.c  -mno-check-zero-division
+src/levels/04_metalis/LEVEL_04_02FC60.c  -malign-functions=2
+src/levels/04_metalis/LEVEL_04_04B4A8.c  -malign-functions=2
+src/levels/04_metalis/LEVEL_04_1CA238.c  -mno-check-zero-division
+src/levels/04_metalis/LEVEL_04_1F4960.c  -malign-functions=2
+src/levels/05_medical_outpost/LEVEL_05_047688.c  -malign-functions=2
+src/levels/06_challax/LEVEL_06_02E438.c  -malign-functions=2
+src/levels/06_challax/LEVEL_06_0461B0.c  -malign-functions=2
+src/levels/07_dreamtime/LEVEL_07_04A058.c  -malign-functions=2
+src/levels/07_dreamtime/LEVEL_07_1CEBC0.c  -mno-check-zero-division
+src/levels/08_dayni_moon/LEVEL_08_0307D0.c  -malign-functions=2
+src/levels/08_dayni_moon/LEVEL_08_04EB90.c  -malign-functions=2
+src/levels/08_dayni_moon/LEVEL_08_18E4B8.c  -fno-expensive-optimizations
+src/levels/08_dayni_moon/LEVEL_08_1F33B8.c  -mno-check-zero-division
+src/levels/08_dayni_moon/LEVEL_08_21FF68.c  -malign-functions=2
+src/levels/09_inside_clank/LEVEL_09_045F68.c  -malign-functions=2
+src/levels/09_inside_clank/LEVEL_09_1AA140.c  -mno-check-zero-division
+src/levels/10_quodrona/LEVEL_10_048190.c  -malign-functions=2
+src/levels/10_quodrona/LEVEL_10_1C4C00.c  -mno-check-zero-division
+src/levels/15_giant_clank_metalis/LEVEL_15_03BA70.c  -malign-functions=2
+src/levels/16_multiplayer_01/LEVEL_16_02DE70.c  -malign-functions=2
+src/levels/16_multiplayer_01/LEVEL_16_045898.c  -malign-functions=2
+src/levels/16_multiplayer_01/LEVEL_16_134CC0.c  -fno-expensive-optimizations
+src/levels/17_multiplayer_02/LEVEL_17_0450F8.c  -malign-functions=2
+src/levels/17_multiplayer_02/LEVEL_17_134710.c  -fno-expensive-optimizations
+src/levels/18_multiplayer_03/LEVEL_18_0440D8.c  -malign-functions=2
+src/levels/18_multiplayer_03/LEVEL_18_133D68.c  -fno-expensive-optimizations
+src/levels/19_multiplayer_04/LEVEL_19_044B28.c  -malign-functions=2
+src/levels/19_multiplayer_04/LEVEL_19_1358E8.c  -fno-expensive-optimizations
+src/levels/20_multiplayer_lobby/LEVEL_20_03F9B8.c  -malign-functions=2
+src/levels/15_giant_clank_metalis/LEVEL_21_03BA70.c  -malign-functions=2
+src/levels/22_skyboard_kalidon/LEVEL_22_03F530.c  -malign-functions=2
+src/levels/23_skyboard_challax/LEVEL_23_042E68.c  -malign-functions=2
+src/levels/24_treehouse/LEVEL_24_042A70.c  -malign-functions=2
+src/levels/frontend/FRONTEND_018228.c  -fexceptions
+src/levels/01_pokitaru/LEVEL_01_0C81F0.c  -fexceptions
+src/levels/02_rykan_v/LEVEL_02_0CEB00.c  -fexceptions
+src/levels/03_kalidon/LEVEL_03_0C7FD8.c  -fexceptions
+src/levels/03_kalidon/LEVEL_03_163568.c  -malign-functions=2
+src/levels/04_metalis/LEVEL_04_0CDA08.c  -fexceptions
+src/levels/05_medical_outpost/LEVEL_05_0C6798.c  -fexceptions
+src/levels/06_challax/LEVEL_06_0C2AF0.c  -fexceptions
+src/levels/07_dreamtime/LEVEL_07_0CA250.c  -fexceptions
+src/levels/08_dayni_moon/LEVEL_08_0D3118.c  -fexceptions
+src/levels/09_inside_clank/LEVEL_09_0C54A0.c  -fexceptions
+src/levels/10_quodrona/LEVEL_10_0C9630.c  -fexceptions
+src/levels/15_giant_clank_metalis/LEVEL_15_0A8838.c  -fexceptions
+src/levels/16_multiplayer_01/LEVEL_16_0B6E60.c  -fexceptions
+src/levels/17_multiplayer_02/LEVEL_17_0B63A0.c  -fexceptions
+src/levels/18_multiplayer_03/LEVEL_18_0B5E38.c  -fexceptions
+src/levels/19_multiplayer_04/LEVEL_19_0B6738.c  -fexceptions
+src/levels/20_multiplayer_lobby/LEVEL_20_0A1390.c  -fexceptions
+src/levels/15_giant_clank_metalis/LEVEL_21_0A8838.c  -fexceptions
+src/levels/22_skyboard_kalidon/LEVEL_22_0B66A0.c  -fexceptions
+src/levels/23_skyboard_challax/LEVEL_23_0BEF90.c  -fexceptions
+src/levels/24_treehouse/LEVEL_24_0C1AB8.c  -fexceptions

@@ -1,37 +1,44 @@
-/* USA LEVEL_08.REL:0x20FD90, 188-byte candidate (14 November 2026).
- * Measured pinned: 17 differing words; first difference at 0x4.
- * Recover the observed types, statement order and lifetimes before retrying
- * the same mismatch class. No matching credit.
+/* USA LEVEL_08:20FD90, 188-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: default.
+ * Compiled 188 bytes: 10 differing words; first difference +0x4. No matching credit.
+ * Remaining issue: prologue order only: reading q->a into a local at the loop top fixed the
+ * argument load order (12 -> 10); remaining: retail copies a0, a1, t0, a3 and a2 (a2 in the call
+ * delay slot) into s3/s4/s0/s1/s5, ours copies a3 first and t0 last (sched2 tie);
+ * iterator/param/scheduling-flag variants unchanged
+ * Reopen with new caller/type evidence or a source hypothesis that resolves the recorded
+ * difference without changing accepted callers.
  */
-/* LEVEL_08:0x20FD90 -- runs the setup helper, then walks the table of 12-byte range entries and renders every non-empty range, finishing with the cleanup helper. */
-typedef struct Item {
-    char pad[0x90];
-} Item;
 
-typedef struct Range {
-    int w0;
-    Item *start;
-    Item *end;
-} Range;
+/* LEVEL_08:0x20FD90 -- walks a 12-byte record array, submits each non-empty span, then runs a tail call. */
+struct Rec {
+    int a;
+    int b;
+    int c;
+};
 
-extern void func_03A160(void *a0, void *a1, void *a2, Range *table, int count);
-extern void func_03A3A8(void *a0, int n, void *a2, void *a3, int w0, void *t1);
-extern void func_03A360(void *a0, void *a1);
+void func_03A160(void *p0, void *p1, void *p2, struct Rec *base);
+void func_03A3A8(int a, int count, void *p0, void *p1, int first, void *p2);
+void func_03A360(void *p0, void *p1);
 
-void func_20FD90(void *a0, void *a1, void *a2, Range *table, int count)
+void func_20FD90(void *p0, void *p1, void *p2, struct Rec *base, int count)
 {
-    Range *r;
-    Range *end;
+    struct Rec *end;
+    struct Rec *q;
     int n;
 
-    func_03A160(a0, a1, a2, table, count);
-    r = table;
-    end = r + count;
-    for (; r != end; r++) {
-        n = r->end - r->start;
+    q = base;
+    func_03A160(p0, p1, p2, base);
+    end = (struct Rec *)((char *)base + count * 12);
+    for (; q != end; q++) {
+        int b;
+        int a;
+
+        a = q->a;
+        b = q->b;
+        n = ((q->c - b) * 0x38E38E39) >> 4;
         if (n > 0) {
-            func_03A3A8(r->start, n, a0, a1, r->w0, a2);
+            func_03A3A8(b, n, p0, p1, a, p2);
         }
     }
-    func_03A360(a0, a1);
+    func_03A360(p0, p1);
 }
