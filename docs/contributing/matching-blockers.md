@@ -2469,12 +2469,12 @@ Left open for review rather than listed:
 - The five sound-state bodies with a code-1 `break` (blocker 16) remain a
   maintainer decision.
 
-## USA level sources and call contracts (26â€“27 November 2026)
+## USA level sources and call contracts (26-27 November 2026)
 
 The source updates cover 1,796 additional placements of 104â€“284 bytes
 (340,996 bytes by placement), carried by 1,574 new C sources.
 Independent links cover every new placement and every changed accepted caller.
-An additional 107 useful unaccepted C attempts retain measured differences
+An additional 107 useful unaccepted C attempts were retained with measured differences
 and reopening conditions in `nonmatching/levels/`.
 
 Prototype review must distinguish file-scope declarations from calls inside a
@@ -2487,12 +2487,28 @@ the result while retaining the callee's correct `int` declaration; an ordinary
 `(void)` expression still changes two words.
 
 The further prototype reconciliation releases 86 independently exact placements.
-The other 133 placements remain uncounted for return-bank, argument-width or
-arity disagreements, including declarations in reviewed source-role controls.
-Do not change just one member of a control family or replace a used float/double
-return contract by an integer declaration merely because the isolated body is
-byte-exact. A correction needs caller/callee evidence, coherent controls and the
-complete program checks.
+The remaining 133 placements were reconciled on 27 November 2026; none of this
+set remains held. GNU runtime typedefs with `__attribute__((mode(DF)))` must be
+read as double precision, even when their base token is `float`: the integer-to-double
+helpers already agree with their callers. The float packer and `__make_fp`
+constructor return `float`; treating their result as an integer is incorrect.
+
+The loader forwarding wrappers take a name pointer and six word arguments,
+not seven 64-bit arguments. Their callers now declare those word arguments
+consistently, and obsolete matching call-type casts are removed. Node wrappers
+forward their three live context arguments. Entry-point float parameters are
+also forwarded explicitly to the ring search and update helpers. The vector
+rotation and its forwarding wrapper return `void`; their callers consume only
+the output vectors. Cache lookups return the record index, and string lookups
+return a pointer, with an explicit conversion where an existing caller transports
+that pointer as an opaque 64-bit value.
+
+All affected reviewed source-role controls change coherently across their family;
+the source-role qualification is regenerated from the disc and the corrected C.
+Every changed caller and all 133 new placements reproduce their complete retail
+bodies, with no added prototype disagreement. Do not change just one member of a
+control family or replace a used float/double return contract by an integer
+declaration merely because the isolated body is byte-exact.
 
 Boundary and source-method cases remain separate:
 
@@ -2507,44 +2523,4 @@ Boundary and source-method cases remain separate:
   the original frame ownership instead of adding artificial storage.
 - The ordinary typed byte-loop endpoint at `LEVEL_03:0x18C090` differs by
   11 words, first at byte 40 (0x28). Reusing an unrelated float pointer only to alter
-  alias analysis is retained privately for source-method review, not credited.
-
-## USA level sources and call contracts (26â€“27 November 2026)
-
-The source updates cover 1,796 additional placements of 104â€“284 bytes
-(340,996 bytes by placement), carried by 1,574 new C sources.
-Independent links cover every new placement and every changed accepted caller.
-An additional 107 useful unaccepted C attempts retain measured differences
-and reopening conditions in `nonmatching/levels/`.
-
-Prototype review must distinguish file-scope declarations from calls inside a
-function: `scale * func_026D08()` is an arithmetic expression, not a pointer-return
-declaration. Correcting that review error releases candidates whose real float
-declarations already agree. Where a declaration changes an ignored return from
-`void` to `int`, recompile the caller: even an unused result can change register
-allocation. `LEVEL_22:0x0D4738` needs an EE-ABI call-type cast to discard
-the result while retaining the callee's correct `int` declaration; an ordinary
-`(void)` expression still changes two words.
-
-The further prototype reconciliation releases 86 independently exact placements.
-The other 133 placements remain uncounted for return-bank, argument-width or
-arity disagreements, including declarations in reviewed source-role controls.
-Do not change just one member of a control family or replace a used float/double
-return contract by an integer declaration merely because the isolated body is
-byte-exact. A correction needs caller/callee evidence, coherent controls and the
-complete program checks.
-
-Boundary and source-method cases remain separate:
-
-- `LEVEL_01:0x096BE0` compiles to 124 bytes against a 116-byte inventory entry;
-  establish ownership of the following loop tail before changing that boundary.
-- `LEVEL_16:0x1167A0` produces 280 bytes for a 276-byte body. The extra alignment
-  word is not accepted by widening the body. The qualified per-source
-  `-malign-functions=2` option resolves the separate 252-byte
-  `LEVEL_01:0x049A88` case, but does not resolve this one.
-- The ordinary C attempts at `LEVEL_10:0x176738` and `LEVEL_01:0x059840`, with
-  unused frame arrays removed, differ by 8 and 16 words respectively. Recover
-  the original frame ownership instead of adding artificial storage.
-- The ordinary typed byte-loop endpoint at `LEVEL_03:0x18C090` differs by
-  11 words, first at +40. Reusing an unrelated float pointer only to alter
   alias analysis is retained privately for source-method review, not credited.

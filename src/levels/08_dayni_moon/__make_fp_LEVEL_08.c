@@ -5,14 +5,14 @@ struct FourWords
     int third;
     int fourth;
 };
-extern void func_233C30(struct FourWords *);
+extern float func_233C30(struct FourWords *);
 
-void __make_fp(int first, int second, int third, int fourth)
+float __make_fp(int first, int second, int third, int fourth)
 {
     struct FourWords values;
     values.first = first;
     values.second = second;
     values.third = third;
     values.fourth = fourth;
-    func_233C30(&values);
+    return func_233C30(&values);
 }

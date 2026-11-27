@@ -9,7 +9,7 @@ typedef struct {
     Pair *p;
 } Obj;
 
-extern int func_1F51B0(int handle, float value);
+extern void func_1F51B0(int handle, float value);
 
 void func_1F5048(Obj *self, float value)
 {

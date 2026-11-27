@@ -7,7 +7,7 @@ extern char D_0027F0E0[];
 extern char D_00256758[];
 
 int sprintf(char *buf, const char *fmt, ...);
-void func_026FF8(long long a0, long long a1, long long a2, long long a3, long long a4, long long a5, long long a6);
+void func_026FF8(char *, int, int, int, int, int, int);
 
 void func_027038(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
