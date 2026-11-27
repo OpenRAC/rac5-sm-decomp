@@ -397,13 +397,15 @@ accepted level-body placement in the 20 measured modules with the same
 relocation mask and credits each masked shape once, at its largest accepted
 multiplicity in one module:
 [`accepted_shape_summary.json`](../../config/levels/accepted_shape_summary.json)
-records **694,544 bytes in 4,760 shape units** for 49,491 accepted placements
-(the 2,215 accepted `LEVEL_21.REL` placements repeat `LEVEL_15.REL`). Counted
-by source instead, the same placements give 5,586,376 bytes, because the
-address-variant copies of one function in several levels are separate sources.
+records, at the 27 November 2026 snapshot, **1,225,640 bytes in 8,140 shape
+units** for 79,425 accepted placements (the 3,346 accepted `LEVEL_21.REL`
+placements repeat `LEVEL_15.REL`). Counting by source gives far more, because
+the address-variant copies of one function in several levels are separate
+sources: on 11 November 2026, the then 49,491 placements gave 694,544 shape
+bytes but 5,586,376 bytes by source.
 The same pass counts **11,499 candidate shape units** under the maximum-per-module
 rule; the report uses them, with the 1,315 candidate boot code intervals, as its
-provisional candidate-function counts. Fifty-six accepted shapes (16,336 bytes)
+provisional candidate-function counts. Fifty-seven accepted shapes (16,360 bytes)
 do not coincide with a candidate unit because their accepted boundaries differ;
 they are still counted once each.
 
