@@ -1,5 +1,5 @@
 /* LEVEL_17:0x0956C0 -- placement copy of LEVEL_16_0961C8.c: tests one bit of a packed map byte after a helper check and two range checks. */
-extern int func_094E28(void);
+extern long long func_094E28(void);
 
 int func_0956C0(unsigned short x, unsigned short y)
 {

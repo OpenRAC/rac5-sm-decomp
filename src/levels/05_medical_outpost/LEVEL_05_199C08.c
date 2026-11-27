@@ -88,7 +88,7 @@ extern void func_1632D0(char *object, char *member, int value);
 extern void func_19B718(char *object);
 extern void func_19B170(void);
 extern void func_19AF70(void);
-extern int func_0270A8(void);
+extern long long func_0270A8(void);
 extern int func_07F460(float *lo, float *hi, Obj *o);
 extern void func_092968(Pool *pool, Rec *rec, float *lo, float *hi, unsigned int flags);
 
@@ -139,7 +139,7 @@ int func_199C08(Obj *o)
         func_19B718((char *)o);
     }
     tbl = D_00208D00;
-    off = func_0270A8() * 16 + 4;
+    off = ((int (*)(void))func_0270A8)() * 16 + 4;
     set = (D_002096F0 - 1) * 0x40;
     v = *(float *)(off + set + (int)tbl);
     rec->b2 = 2;

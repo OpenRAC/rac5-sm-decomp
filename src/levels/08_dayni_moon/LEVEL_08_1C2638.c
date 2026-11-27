@@ -3,7 +3,7 @@
 extern char D_00263A80[];
 extern int D_00264470;
 
-unsigned int func_0288B8(void);
+long long func_0288B8(void);
 void func_013450(char *a0, char *a1, int a2, int a3);
 void func_1C1258(char *a0, unsigned int a1, unsigned char a2);
 
@@ -17,7 +17,7 @@ void func_1C2638(char *obj)
 
     tbl = D_00263A80;
     s2 = *(char **)(obj + 0x58);
-    slot = func_0288B8();
+    slot = ((unsigned int (*)(void))func_0288B8)();
     off = (slot << 4) + 4;
     f = *(float *)&tbl[off + ((D_00264470 - 1) << 6)];
     *(int *)(s2 + 0x48) = 0;

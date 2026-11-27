@@ -66,7 +66,7 @@ extern Obj *func_024BF0(int h, int g);
 extern Info *func_024C38(int h, int g);
 extern int func_024AC8(int h, int g);
 extern int func_024B28(int h, int g);
-extern int func_024CF0(int h, int g);
+extern long long func_024CF0(int h, int g);
 extern float func_024EE8(int h, int g);
 extern int func_0B0708(int id, Rect *r, float f);
 extern int sprintf(char *, const char *, ...);

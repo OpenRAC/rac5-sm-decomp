@@ -1,8 +1,13 @@
-/* USA LEVEL_01.REL:0x059840, 280-byte candidate (21 November 2026).
- * Measured pinned: 20 differing words; first difference at 0x0.
- * Recover the observed types, statement order and lifetimes before retrying
- * the same mismatch class. No matching credit.
+/* USA LEVEL_01:059840, 280-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: default.
+ * Compiled 280 bytes: 16 differing words; first difference +0x0. No matching credit.
+ * Remaining issue: The unused frame array or unrelated pointer-type reuse was removed. Recover
+ * the original frame ownership or aliasing from caller and field evidence before retrying.
+ * Reopen only when new caller/type evidence or a source hypothesis resolves this measured
+ * difference without changing accepted bytes.
  */
+
+/* LEVEL_01:0x059840 -- gathers candidate entries around a position and returns the last one accepted by a test. */
 struct Ent {
     void *h;
     int pad_04;
@@ -21,6 +26,13 @@ extern struct Item **D_0022F7C8;
 extern struct Ent *D_00238F10;
 extern int func_095AA0(struct Item **list, struct Rec *r, float *o, float *o2, int a, int b);
 extern int func_084708(void *h, float *o);
+
+static __inline__ void Pick(struct Ent **best, struct Ent *e, float *o)
+{
+    if (func_084708(e->h, o)) {
+        *best = e;
+    }
+}
 
 struct Ent *func_059840(float *o)
 {
@@ -46,16 +58,11 @@ struct Ent *func_059840(float *o)
     end = p + n;
     for (; p != end; p++) {
         if ((*p)->kind == 7) {
-            e = (*p)->ent;
-            if (func_084708(e->h, o)) {
-                best = e;
-            }
+            Pick(&best, (*p)->ent, o);
         }
     }
     for (e = D_00238F10; e != 0; e = e->next) {
-        if (func_084708(e->h, o)) {
-            best = e;
-        }
+        Pick(&best, e, o);
     }
     return best;
 }

@@ -17,7 +17,7 @@ typedef struct {
 
 extern float D_0026F770[];
 
-extern int func_0288B8(void);
+extern long long func_0288B8(void);
 extern void func_0845F8(void *o, int flag);
 extern void func_0BCE20(int a, int b, float x, float y);
 extern void func_026EE0(void);
@@ -32,7 +32,7 @@ int func_1AEBE0(Obj *o, float dt)
     }
     s = o->state;
     old = s->timer;
-    s->timer = s->timer - dt / D_0026F770[func_0288B8()];
+    s->timer = s->timer - dt / D_0026F770[((int (*)(void))func_0288B8)()];
     if (0.6600000262260437f < old && s->timer <= 0.6600000262260437f) {
         s->stage = 1;
     } else if (0.33000001311302185f < old && s->timer <= 0.33000001311302185f) {

@@ -1,8 +1,15 @@
-/* USA LEVEL_01.REL:0x1394D0, 204-byte candidate (21 November 2026).
- * Measured pinned: 18 differing words; first difference at 0x8.
- * Recover the observed types, statement order and lifetimes before retrying
- * the same mismatch class. No matching credit.
+/* USA LEVEL_01:1394D0, 204-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: default.
+ * Compiled 204 bytes: 1 differing words; first difference +0x3C. No matching credit.
+ * Remaining issue: branch target: inline ReleaseSlot(&r->slots[i]) fixes the register assignment
+ * (was 18 words); retail beqz skips both clears (r->slots[i] = 0 inside the nonzero path) while
+ * ours lands on the second clear; putting that store inside the test merges the two givs and
+ * drops it (184 B); 15 forms tried
+ * Reopen with new caller/type evidence or a source hypothesis that resolves the recorded
+ * difference without changing accepted callers.
  */
+
+/* LEVEL_01:0x1394D0 -- callback: when the block is armed, releases its eight pointer slots (clearing the global when it matches), then unlinks the block's node and marks it done. */
 typedef struct Node {
     struct Node *next;
     char pad_04[0x10];
@@ -26,25 +33,27 @@ typedef struct Obj {
 extern int *D_001F6398;
 extern void func_097840(int *p);
 
+static __inline__ void ReleaseSlot(int **p)
+{
+    if (*p != 0) {
+        if (*p == D_001F6398) {
+            D_001F6398 = 0;
+        } else {
+            func_097840(*p);
+        }
+        *p = 0;
+    }
+}
+
 void func_1394D0(Obj *o)
 {
     Rec *r = o->rec;
-    int **slot;
     unsigned int i;
 
     if (r->armed != 0) {
-        slot = r->slots;
         for (i = 0; i < 8; i++) {
-            if (*slot != 0) {
-                if (*slot == D_001F6398) {
-                    D_001F6398 = 0;
-                } else {
-                    func_097840(*slot);
-                }
-                *slot = 0;
-            }
+            ReleaseSlot(&r->slots[i]);
             r->slots[i] = 0;
-            slot++;
         }
     }
     if (r->node.back != 0) {

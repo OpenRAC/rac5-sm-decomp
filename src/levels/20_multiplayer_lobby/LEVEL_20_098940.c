@@ -43,7 +43,7 @@ extern int func_081468(void *p);
 extern int func_081520(void *p);
 extern void func_0841C8(Overlay *o, short a, short b, short c, short d, unsigned int e);
 extern void func_0298E0(int a, int b);
-extern void func_029A68(void);
+extern int func_029A68(void);
 extern int func_096740(void);
 extern void func_096F50(void);
 extern void *memset(void *dst, int value, unsigned int size);

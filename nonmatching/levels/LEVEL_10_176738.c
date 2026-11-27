@@ -1,8 +1,13 @@
-/* USA LEVEL_10.REL:0x176738, 236-byte candidate (21 November 2026).
- * Measured pinned: 8 differing words; first difference at 0x0.
- * Recover the observed types, statement order and lifetimes before retrying
- * the same mismatch class. No matching credit.
+/* USA LEVEL_10:176738, 236-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: default.
+ * Compiled 236 bytes: 8 differing words; first difference +0x0. No matching credit.
+ * Remaining issue: The unused frame array or unrelated pointer-type reuse was removed. Recover
+ * the original frame ownership or aliasing from caller and field evidence before retrying.
+ * Reopen only when new caller/type evidence or a source hypothesis resolves this measured
+ * difference without changing accepted bytes.
  */
+
+/* LEVEL_10:0x176738 -- starts the object's effect with length 8, fills its 28-byte parameter block from a shared default, sets a scale of 0.1 on the owner and nudges the object's vector by 0.6 of the vector in its source record. */
 typedef struct {
     float x, y, z;
 } V3;

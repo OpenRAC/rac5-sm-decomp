@@ -12,22 +12,22 @@ The boot also retains 1,803 names in its embedded SNR2 table
 ([`boot-symbols.md`](../build/boot-symbols.md)); names and address ranges are useful
 for selecting witnesses but do not prove a compiler profile.
 
-The current catalogue records **91,644 boot `.text` bytes in 713 C bodies**
+The current catalogue records **121,704 boot `.text` bytes in 884 C bodies**
 across several code areas, built by the locally reconstructed GNU EE chain and,
-for 180 of them, by one of six further pinned compilers
+for 293 of them, by one of six further pinned compilers
 ([witness evidence](compiler-witnesses.md)).
 All of them link together into the complete boot text while preserving the
 retail raw `PT_LOAD` bytes and program header
 ([combined witness](../gates/boot-c-witness.md#combined-provisional-c-witness)); the
 generated `config/boot/witness_boundaries.tsv` catalogue lists each linked body
 with its compiled extent, its following zero alignment and the kind of control
-transfer it ends in. Six hundred and ninety-three reviewed placements (88,948 bytes,
+transfer it ends in. Eight hundred and sixty-four reviewed placements (119,008 bytes,
 starting with
 `MEMCARD_Busy__Fv`) are in `src/boot/`; the other bodies remain in
 `nonmatching/` pending their own acceptance reviews.
 The [boot gate](../gates/boot-trial-gate.md) pins the isolated compiler identities,
-rebuilds all 713 objects from authored C and checks that full link in one run;
-its machine-readable report accepts 693 boot-only placements (88,948 bytes) after
+rebuilds all 884 objects from authored C and checks that full link in one run;
+its machine-readable report accepts 864 boot-only placements (119,008 bytes) after
 passing, each from its own owned compiled range.
 The original trial compiler missed the `FOG_PreUpdate__Fv` loop by one extra
 `nop`. An [isolated RAC5 short-loop threshold trial](compiler-loop-trial.md)
@@ -41,7 +41,7 @@ families still need controls before qualifying a general compiler profile.
 In particular, RAC2's reconstructed GNU EE-GCC game profile and its Sony SDK
 profile have **not** been qualified for Size Matters. The repository now has
 a [boot-only compiler profile](../../config/boot/compiler_trial.json) accepted
-for its 693 reviewed placements and one
+for its 864 reviewed placements and one
 [RAC5-only patch](../../tools/compiler/patches/0001-rac5-short-loop-six.patch).
 Its per-source compiler and options live in
 [`config/cflags.txt`](../../config/cflags.txt); it is not a game-wide C/C++
@@ -256,7 +256,7 @@ the definitions this route introduces, and neither may stay.
   symbols came from it, nor which flags, headers or library versions the
   original build used.
 - **How much of Q is reachable is only sampled.** Of the 195 prologue-Q
-  symbols, 46 already have an authored body in the private kit; compiling those
+  symbols, 46 already had an authored body in private working sources; compiling those
   46 under this pin with `-O2 -G0` makes **25 byte-exact** and leaves 21 short
   (41/88 for `__do_global_dtors`, 26/120 for `__floatdidf`, 123/148 for
   `__cp_push_exception`). None of the 46 is exact under the pinned chain, so
@@ -388,8 +388,8 @@ bodies (361 → 363 witness bodies) and the uncatalogued count stayed at 55.
 
 ## The backlog, and the end of the uncatalogued spans
 
-Twenty bodies that earlier waves had verified were never integrated — the kit
-carried them, the campaign did not. They are now: `MCP_Update`,
+Twenty bodies that earlier passes had verified were never integrated — the private
+working sources carried them, the campaign did not. They are now: `MCP_Update`,
 `MCP_UpdateCameraCB`, `APP_Init`, three `SYSTEM_*` matrix queries, three
 `scee::Psp2Gu` setters, four `VEC_*` helpers, `__pack_f`, `__fpcmp_parts_d`,
 `copysign`, `_lo0bits`, `dlib_displist_base_offset_mscal`, `fiprintf` and
@@ -404,7 +404,7 @@ the span. The fifty-nine such entries are gone, the objects' own definitions
 take over at the same addresses, **no span is uncatalogued**, and the complete
 ELF is unchanged byte for byte.
 
-The rule is now mechanical in the private kit: a resolver reads the exported
+The rule is now mechanical in the private integration tooling: a resolver reads the exported
 objects' undefined symbols directly — never `ld.exe`'s demangled diagnostics,
 which are what made the RTTI batch look impossible — refuses to define a name a
 compiled body owns, and removes an absolute line a body has taken over.
@@ -563,8 +563,7 @@ matches, collected in
    saves the general purpose registers first.
 
 The profile is pinned per source as `gnu-ee-trial-divpad` in
-`config/boot/compiler_trial.json` (stage
-`/root/essai-rac5/gnu-ee-trial-divpad-20261020`, private), and the level
+`config/boot/compiler_trial.json` (built into a private local stage), and the level
 bodies name it in the `profile` column of `config/levels/body_sources.tsv`.
 
 Controls: the change is **additive**. The 177 level bodies accepted before

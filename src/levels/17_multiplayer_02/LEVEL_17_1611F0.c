@@ -4,7 +4,7 @@ typedef struct {
     float f_70;
 } Obj;
 
-extern void func_06FF78(Obj *self, int flag);
+extern void func_06FF78(Obj *self);
 
 void func_1611F0(Obj *self, float delta)
 {
@@ -12,5 +12,5 @@ void func_1611F0(Obj *self, float delta)
 
     self->f_70 = v;
     if (v <= 0.0f)
-        func_06FF78(self, 1);
+        ((void (*)(Obj *self, int flag))func_06FF78)(self, 1);
 }

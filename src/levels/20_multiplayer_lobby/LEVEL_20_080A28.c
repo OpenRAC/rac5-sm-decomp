@@ -25,7 +25,7 @@ extern float D_00107830;
 extern float D_00107834;
 
 extern int func_080010(int index);
-extern int func_080028(void);
+extern long long func_080028(void);
 
 void func_080A28(float px, float py, float *ox, float *oy)
 {

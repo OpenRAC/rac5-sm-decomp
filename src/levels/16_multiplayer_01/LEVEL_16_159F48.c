@@ -1,6 +1,6 @@
-extern void func_06F940(void *, int);
+extern void func_06F940(void *);
 
 void func_159F48(void *item)
 {
-    func_06F940(item, 1);
+    ((void (*)(void *, int))func_06F940)(item, 1);
 }

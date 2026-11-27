@@ -42,6 +42,8 @@ Every doc of this repository, by folder. New here? Read [building.md](build/buil
 |---|---|
 | [roadmap.md](contributing/roadmap.md) | The measured starting point and the order of work |
 | [matching-blockers.md](contributing/matching-blockers.md) | Walls met while matching, editable by everyone |
+| [permuter.md](contributing/permuter.md) | Bounded natural-C search with the shared OpenRAC wrapper |
+| [ghidra-structure-recovery.md](contributing/ghidra-structure-recovery.md) | Private structure proposals from known types with pinned Ghidra tasks |
 
 ## research/
 
@@ -58,6 +60,9 @@ Every doc of this repository, by folder. New here? Read [building.md](build/buil
 | `tools/disc.py` | Inspect, verify and extract the pinned USA disc |
 | `tools/elf.py` | Report the PS2 ELF metadata without publishing executable bytes |
 | `tools/rel.py` | The SNR2 level modules: inspect them and regenerate the metadata catalogues |
+| `tools/rac5_permuter_backend.py` | Isolated pinned compilation, placement and import checks for source search |
+| `tools/candidate_regression_guard.py` | Preserve previously passing properties during measured refinement |
+| `tools/ghidra_structure_recovery/run.py` | Run pinned structure recovery in a new private project |
 | `tools/boot_symbols.py` | The boot's embedded SNR2 symbol table and code-label bounds |
 | `tools/relocate.py` | Reconstruct a module at a measured load base (private baseline) |
 | `tools/boot_assembly.py` | Rebuild the boot `.text` and the file-backed load image |

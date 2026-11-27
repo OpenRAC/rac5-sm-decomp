@@ -1,9 +1,9 @@
 extern int D_001A5D30;
 extern int D_001A5D34;
-extern int func_094BC0(int, int);
+extern int func_094BC0(void);
 
 int func_094B90(void)
 {
     int second_value = D_001A5D34;
-    return func_094BC0(D_001A5D30, second_value);
+    return ((int (*)(int, int))func_094BC0)(D_001A5D30, second_value);
 }

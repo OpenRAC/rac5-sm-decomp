@@ -3,7 +3,7 @@ typedef struct { int kind; int val; int p; int pad; } Ev;
 extern int D_0020D12C;
 #define CNT (*(unsigned *)(D_0020D12C + 0x1C68))
 extern void func_000300(int p);
-extern void func_024DA0(int p, int a, int b, int c);
+extern int func_024DA0(int p, int a, int b, int c);
 
 void func_14FAC8(Ev *e)
 {

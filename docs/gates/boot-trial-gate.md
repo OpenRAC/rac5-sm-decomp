@@ -14,19 +14,19 @@ by a line feed, so a CRLF checkout turns it into `stray '\' in program` on any
 body with a macro continuation. `.gitattributes` pins `*.c` and `*.h` to LF for
 that reason; a Windows checkout without it cannot reproduce the gate.
 
-The current campaign contains 713 compiler-produced C objects. Its verified
-catalogue records 713 bodies (91,644 compiled bytes plus 1,388 zero alignment
-bytes). Of these, 693 reviewed placements supply 88,948 accepted C bytes.
+The current campaign contains 884 compiler-produced C objects. Its verified
+catalogue records 884 bodies (121,704 compiled bytes plus 1,776 zero alignment
+bytes). Of these, 864 reviewed placements supply 119,008 accepted C bytes.
 `tools/progress_status.py` regenerates the accepted totals; an object match
 alone does not grant C credit.
 Per-source compiler and options measured for one file are listed in
 [`config/cflags.txt`](../../config/cflags.txt) and applied by the gate; the profile
-keeps its global flags. Another pinned compiler handles 180 objects: 35 use
+keeps its global flags. Another pinned compiler handles 293 objects: 82 use
 SN ProDG 3.01 `ee-gcc2953` ([route P](../compiler/compiler-status.md#a-second-pinned-compiler-route-p)),
-127 use Sony SDK `2.9-ee-991111` ([route Q](../compiler/compiler-status.md#the-sony-sdk-compiler-route-q)),
-10 use its division-padding profile, four use the pre-patch GNU trial profile,
-three use the SDK synchronization profile and one uses the SDK quadword profile.
-Another pinned assembler handles 89 objects.
+188 use Sony SDK `2.9-ee-991111` ([route Q](../compiler/compiler-status.md#the-sony-sdk-compiler-route-q)),
+10 use its division-padding profile, eight use the pre-patch GNU trial profile,
+three use the SDK synchronization profile and two use the SDK quadword profile.
+Another pinned assembler handles 116 objects.
 
 Both original and preprocessed C inputs must pass `tools/c_source_policy.py`:
 no instruction assembly, fixed registers or raw instruction words. The standalone
@@ -109,7 +109,7 @@ are never committed.
 
 The result is in ignored `build/boot-trial-gate/report.json`. A passing report
 has `status: "passed_boot_only"`, `raw_load_and_header_exact: true`,
-`whole_elf_exact: true`, `counted_matches: 693` and `counted_bytes: 88948`.
+`whole_elf_exact: true`, `counted_matches: 864` and `counted_bytes: 119008`.
 The counted bytes are each accepted source's compiled `body_bytes`. A complete
 body may have one following zero word supplied by the linker's `ALIGN(8)`;
 the boundary catalogue verifies the retail zeros and direct-flow/label safety,

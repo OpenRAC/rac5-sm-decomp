@@ -5,7 +5,7 @@ typedef struct {
     float f_70;
 } Node;
 
-extern void func_06F008(Node *, int);
+extern void func_06F008(Node *);
 
 void func_16F748(Node *a0, float a1)
 {
@@ -13,5 +13,5 @@ void func_16F748(Node *a0, float a1)
 
     a0->f_70 = t;
     if (t <= 0.0f)
-        func_06F008(a0, 1);
+        ((void (*)(Node *, int))func_06F008)(a0, 1);
 }

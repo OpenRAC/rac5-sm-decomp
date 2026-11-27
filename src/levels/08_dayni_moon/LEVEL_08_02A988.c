@@ -1,7 +1,7 @@
 extern char D_002843D0[];
 extern int func_0243C0(void *ptr);
 extern int func_02A968(int value);
-extern int func_0691E0(void *ptr);
+extern long long func_0691E0(void *ptr);
 extern int func_08FE98(void);
 
 int func_02A988(void)
