@@ -363,13 +363,14 @@ repeated uses of one object, verifies each object hash before linking, then
 checks each output section's address, size, body bytes and named import calls.
 The complete module hash remains mandatory. The 25-object route reproduced
 all 21 USA modules and 33,620 accepted placements with 2,398 SN link invocations;
+at the 26 November 2026 snapshot it covers 79,703 placements with 4,617 invocations;
 batch links run serially to avoid contention in the pinned linker.
 
 The ignored `build/level-c-gate/report.json` starts as `incomplete` with zero
 matches on every run. A full pass reports the original scope (three accepted
 functions: **556 unique C body bytes**, **2,076 placement bytes**) and the
-level-body scope (**33,620 placements** in **23,999 sources**, **2,002,988 placement
-bytes**, **1,553,764 distinct-source bytes**). These are scoped matches, not a
+level-body scope (at the 27 November 2026 snapshot, **82,771 placements** in **65,498 sources**,
+**10,413,564 placement bytes**, **9,019,840 distinct-source bytes**). These are scoped matches, not a
 qualified game-wide percentage. More functions require their own boundaries,
 compiler controls and complete-program checks before their C bytes can be
 counted.
