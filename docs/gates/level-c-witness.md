@@ -1515,8 +1515,22 @@ prototype audit introduces no new disagreement. All compiler and assembler binar
 pins are unchanged.
 
 A further prototype reconciliation releases 86 of these placements; 133 candidate
-placements remain held for return-bank, argument-width or arity conflicts.
-107 useful unaccepted C attempts remain with independently measured differences
+placements were initially held for return-bank, argument-width or arity conflicts
+and are resolved by the reconciliation below.
+107 useful unaccepted C attempts were retained with independently measured differences
 and reopening conditions. Uncertain body extents, artificial unused frame arrays
 and unresolved section padding receive no C credit; the details are recorded in
 [the matching blockers](../contributing/matching-blockers.md).
+
+The remaining signature corrections on 27 November 2026 add **133 placements**
+(27,832 bytes by placement) from 112 new C sources. 217 existing accepted sources
+change a declaration, return type or explicit argument forwarding; all remain
+exact at every placement. The runtime double typedefs, float packer, loader word
+arguments, node contexts, vector outputs and live float inputs are reconciled
+together with their callers. Reviewed source-role controls keep one normalized C
+form throughout each family and are requalified from the pinned disc. The pinned
+native Linux gate recompiles all accepted sources, checks named imports at every
+placement, and reproduces all 21 complete USA modules and both measured relocated
+images. Nineteen retained representatives now accepted are removed from `nonmatching`.
+None of these 133 placements remains held. Compiler and assembler binary
+pins are unchanged.
