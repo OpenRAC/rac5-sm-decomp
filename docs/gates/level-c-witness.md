@@ -1485,3 +1485,19 @@ from 1,149,704 bytes in 7,846 shape units to 1,150,276 bytes in 7,855. 323 place
 in 18 forms stay held: their callers are reviewed family controls, or they disagree
 on parameters as well. All 21 complete USA modules remain exact, and the prototype
 review finds the same 1,779 disagreeing pairs as before, none introduced.
+
+USA level bodies of 401 to 800 bytes that earlier attempts had missed, offered again
+to new C on 26 November 2026, add **413 placements** (220,836 bytes by placement) from
+389 sources. Counted by masked shape, accepted level bodies rise from 1,150,276 bytes
+in 7,855 shape units to 1,182,656 bytes in 7,916. 188 placements use
+`gnu-ee-trial-divpad`, 125 `gnu-ee-trial`, 80 the pinned chain and 20 `sdk991111`; 30
+are exact only with `ps2eeas` and 12 only with `r5900-mfc1`. Per-source options were
+measured for `-mno-check-zero-division` (34 placements), `-fno-gcse` (32),
+`-malign-functions=2` (25), `-fexceptions` (20), `-fno-force-mem` (2) and
+`-malign-loops=2` (2). 74 new sources were aligned with the accepted definitions of
+their callees (37 only the declaration, 52 with a cast at the call that keeps the
+compiled type, one cast dropped), and one accepted caller changes a declaration the
+same way and stays exact at all of its placements; no reviewed family control source was edited. 21 placements in 5 forms
+stay held for floating-point or structure parameter disagreements. All 21 complete USA
+modules remain exact, and the prototype review finds the same 1,779 disagreeing pairs
+as before, none introduced.
