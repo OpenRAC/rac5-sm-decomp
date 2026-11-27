@@ -331,6 +331,19 @@ level gate then passed with all 21 modules exact and no tolerance. When recordin
 new `Ps2EeAs` hash, check that the bit agrees with the other hashes of the same
 table.
 
+On 27 November 2026, on another Windows 11 host, a complete boot gate on master
+88320879b launched from a WSL session failed on `ps2fioCreatePartition` with the
+same set bit (`0x20E0` against `0x30E0` in its `.mdebug`). The `.s` input and the
+assembler hash were unchanged from a passing 26 November run. On this host the
+environment size alone did change the result. Assembling the same `.s` with about
+5 KB of Windows environment set the bit. Adding one padding variable of 1,000 or
+3,000 bytes cleared it, through `WSLENV` as well; 10 or 100 bytes did not. With the
+padding exported, the complete gate passed with every pinned `ps2eeas` boot hash.
+The output filename also mattered: a one-character name gave the canonical object
+where `ps2fioCreatePartition.o` did not. Both observations fit the
+uninitialized-read explanation above. The workaround is a host setting, not a
+change to inputs, pins or objects.
+
 ### Blocker 16
 
 What this toolchain has no spelling for. Measured: 128-bit computed constants (`dsll32`/`or`)

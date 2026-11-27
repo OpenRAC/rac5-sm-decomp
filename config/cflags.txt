@@ -1745,3 +1745,8 @@ src/levels/15_giant_clank_metalis/LEVEL_21_0A8838.c  -fexceptions
 src/levels/22_skyboard_kalidon/LEVEL_22_0B66A0.c  -fexceptions
 src/levels/23_skyboard_challax/LEVEL_23_0BEF90.c  -fexceptions
 src/levels/24_treehouse/LEVEL_24_0C1AB8.c  -fexceptions
+nonmatching/boot/SND_FadeAllATRAC__Fff.c    gnu-ee-trial -O2 -G0
+nonmatching/boot/SND_PlayATRAC__FPCcPifb.c    gnu-ee-trial -O2 -G0
+nonmatching/boot/SND_PlayPositionalSound__FP14SND_PositionalUi.c    gnu-ee-trial -O2 -G0
+nonmatching/boot/SND_Play__FP9GDE_SoundffPP14SND_PositionalUi.c    gnu-ee-trial -O2 -G0
+nonmatching/boot/RIBBON_ClearInactiveJoints__FP20PAR_ParticleIteratorPC9PAR_Groupii.c  -mno-check-zero-division
