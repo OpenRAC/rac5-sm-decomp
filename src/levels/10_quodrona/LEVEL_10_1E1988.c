@@ -98,7 +98,7 @@ extern void *func_18C650(int a);
 extern void func_013190(struct Seg0133E8 *o, struct Src0133E8 *s, int mode, int val);
 extern void func_16D060(char *object, char *member, int value);
 extern void func_1E3160(Actor *o);
-extern int func_027B98(void);
+extern long long func_027B98(void);
 
 static __inline__ void Copy3(float *d, float *s)
 {
@@ -196,7 +196,7 @@ int func_1E1988(Actor *o, int arg)
     Relink(&cfg->w34, func_1E3160, o);
     rec->b68 = 0;
     tbl = D_00222D90;
-    r = func_027B98();
+    r = ((int (*)(void))func_027B98)();
     lvl = D_00223780 - 1;
     off = r * 16 + (lvl * 64 + 4);
     rec->f64 = *(float *)((char *)tbl + off);

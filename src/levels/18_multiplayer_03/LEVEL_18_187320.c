@@ -48,7 +48,7 @@ extern void func_102B70(Out *a0, Mat *a1, Vec *a2);
 extern int func_187660(Obj *o, Out *v, char *b1, char *b2, void *p2, Cfg *cfg, int z);
 extern int func_1877E8(Obj *o, void *p2, void *p3, Cfg *cfg, int r, char *b1, char *b2);
 extern int func_188048(Obj *o, void *p2, Out *v, Cfg *cfg);
-extern int func_188848(Obj *o, void *p2, Out *v, Cfg *cfg, int p5);
+extern int func_188848(Obj *o);
 
 static __inline__ int *MinA(int *a, int *b)
 {
@@ -121,5 +121,5 @@ int func_187320(Obj *o, void *p2, void *p3, Cfg *cfg, int p5)
             r = 2;
         }
     }
-    return func_188848(o, p2, &v, cfg, p5) != 0 ? r : 1;
+    return ((int (*)(Obj *o, void *p2, Out *v, Cfg *cfg, int p5))func_188848)(o, p2, &v, cfg, p5) != 0 ? r : 1;
 }

@@ -35,7 +35,7 @@ typedef struct {
 } Tbl_t;
 
 extern Tbl_t D_0027F540;
-extern Spawn_t *func_090320(int a, int b, int c, int d, int e);
+extern Spawn_t *func_090320(int a, int b, int c, int d);
 extern void func_0E5758(Spawn_t *s);
 extern void func_0E5618(void *);
 
@@ -52,7 +52,7 @@ int func_0E5500(Spawn_t **out, Def_t *def, Src_t *src, int kind, int flag)
     p = out;
     sp = &src->pos;
     while (n < def->count) {
-        s = func_090320(2, 3, D_0027F540.id, 1, 1);
+        s = ((Spawn_t * (*)(int a, int b, int c, int d, int e))func_090320)(2, 3, D_0027F540.id, 1, 1);
         if (s == 0)
             break;
         if (flag)

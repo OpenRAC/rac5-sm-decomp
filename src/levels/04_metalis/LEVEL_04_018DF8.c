@@ -39,7 +39,7 @@ extern int D_002257A8;
 extern int D_0024A0A0;
 extern int D_0024A090;
 extern int D_00234170;
-extern int func_065420(struct Q *q);
+extern long long func_065420(struct Q *q);
 extern int func_027098(int a, int b);
 extern void func_027110(int a, int b, int c);
 extern void func_0BE770(int *p, int n);

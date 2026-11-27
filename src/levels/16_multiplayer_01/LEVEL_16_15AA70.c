@@ -18,7 +18,7 @@ typedef struct Obj {
 } Obj;
 
 extern unsigned int func_196D18(float input);
-extern void func_06F940(Obj *o, int flag);
+extern void func_06F940(Obj *o);
 
 static __inline__ float Mix(float t, float a, float b)
 {
@@ -49,7 +49,7 @@ void func_15AA70(Obj *o)
         t = o->f70 - 0.033333335f;
         o->f70 = t;
         if (t <= 0.0f) {
-            func_06F940(o, 1);
+            ((void (*)(Obj *o, int flag))func_06F940)(o, 1);
             return;
         }
         c = func_196D18(Mix(t, 255.0f, 0.0f)) << 24;

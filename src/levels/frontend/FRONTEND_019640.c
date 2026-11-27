@@ -1,7 +1,7 @@
 
 extern int D_00030574[];
 
-void func_021150(void);
+int func_021150(void);
 
 void func_019640(void)
 {

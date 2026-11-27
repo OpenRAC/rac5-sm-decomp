@@ -1,0 +1,18 @@
+/* LEVEL_08:0x03C4F8 -- placement copy of LEVEL_01_037428.c: tests a flag bit in the record and compares a helper result to a constant. */
+extern char D_00003028[];
+extern void func_040F08(void *obj);
+extern int func_0010C0(int);
+
+long long func_03C4F8(char *record)
+{
+    long long r;
+    int t;
+
+    func_040F08(record);
+    r = 0;
+    if ((int)(*(long long *)(record + 0x968) >> 3) & 1) {
+        t = func_0010C0(0) == (int)D_00003028;
+        r = t;
+    }
+    return r;
+}

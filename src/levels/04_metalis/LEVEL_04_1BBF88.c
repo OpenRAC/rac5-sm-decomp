@@ -2,7 +2,7 @@
 
 extern char D_001BB898[];
 extern void func_099A40(unsigned int *record, unsigned int first, unsigned int second, int third, int fourth, int fifth, unsigned int sixth);
-extern void func_099C18(char *buf);
+extern int func_099C18(char *buf);
 
 void func_1BBF88(int a, int b, int c, int d, int e, int f)
 {

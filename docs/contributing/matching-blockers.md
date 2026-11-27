@@ -37,26 +37,13 @@ gates. A persistent personal issue comment is not required for blocker notes.
 
 ## Recent verified updates
 
-The entries below are dated measurements, not a fresh census. Older claims that a mechanism
-is universally impossible are superseded where a later entry says so.
-
-| Topic | Verified update |
-| --- | --- |
-| Level body scope | PR #106 (merged) brings the table to **7,997 placements** (384,676 placement bytes) in **1,658 sources**; all 21 module hashes still match. |
-| Float copy class | PR #104 and PR #106 add 2,737 placements. The retail copies a float record **field by field** in its own order; an aggregate assignment belongs to the `ldl`/`ldr` class instead. |
-| Division padding and prologue order | PR #97 adds the `gnu-ee-trial-divpad` profile: two `nop` before `div.s`, and the retail's save order (general registers before floating-point ones). |
-| Sixteen-byte copies | PR #103 proves 469 placements. `lq`/`sq` come from a **scalar** `TImode` value, never from an aggregate assignment. |
-| `movn` | A 23 October 2026 measurement gives a source form: `p = a2 ? (void *)a2 : (void *)buf;` emits `movn`; `if (a2 != 0) p = a2;` also works. The earlier note calling it inaccessible is superseded. |
-| Delay-slot filler | Measurements of 23 October 2026 confirm that the retail puts the **second** argument (or the input store) in a `jal` delay slot where the pinned `cc1` puts the first. Named locals, a local pointer and a wrapper structure do not move it. |
-| Prologue order | The retail emits `addiu $sp` before the first `lui` and orders entry-block materialisation differently. `void *p = s->p54;` declared **before** the first call reproduces the retail prologue; declared between two calls it shifts it. |
-| Store order | The order is a **permutation** of the source order, not one universal rotation. Sweep permutations; do not guess. |
-| Non-canonical page arithmetic | `lui 0x22` followed by `-0x78C` is **0x21F874**, not 0x217874: the immediate is sign-extended and added. `%hi` rounds. |
-| One body, two functions | A target may end with a second function; write both in one file and they link end to end (measurements at 128 bytes and at `LEVEL_20:0x02B088`). |
-| Original assembly | On 26 November 2026 `config/handwritten_asm.tsv` lists 86 boot units and 2 level shapes by OpenRAC/rac1-decomp's instruction rule (syscall trampolines, coprocessor 0, MMI, VU0, `$gp` stores). `tools/handwritten_asm.py` checks it, and the progress table counts it apart from C. See [the classification](#original-assembly-classification-26-november-2026). |
-| Boot GCC runtime library | On 13 November 2026 the nine remaining boot `libgcc` functions (`__divdi3`, `__moddi3`, `__udivdi3`, `__umoddi3`, `__muldi3`, `__fixdfdi`, `__do_global_dtors`, `__do_global_ctors`, `__unpack_f`; 6,836 body bytes) are exact from GCC's own `libgcc2.c`/`fp-bit.c` text as OpenRAC/rac1-decomp vendors it, under `sdk991111 -O2 -G0` (`__unpack_f` also under the pinned chain). Five need `longlong.h`'s original MIPS `umul_ppmm`, which AGENTS.md now allows as RAC2 does. Write such a function as the upstream module, not as rewritten C. |
-
-These summaries do not award additional matching credit or replace the build. Check current
-source before relying on any older count, profile or pending-PR label in the imported notes.
+Updates go directly into the relevant blocker entry, with their date. The summary table that
+stood here until 26 November 2026 has been folded into blockers 02–04, 06, 08–12 and the
+closed walls; the level-body totals it quoted are in [What is left](#what-is-left) and
+[`progress/status.json`](../../progress/status.json). Older claims that a mechanism is
+universally impossible are superseded where a later entry says so. These summaries do not award
+matching credit or replace the build; check current source before relying on any older count,
+profile or pending-PR label.
 
 ## Topic index
 
@@ -130,8 +117,9 @@ the `jal` delay slot where the pinned `cc1` places the first; named locals, a lo
 wrapper structure and a comma expression do not change it. Conversely, writing the store
 **before** the call puts it in the delay slot when the retail does (`LEVEL_07:0x1983F0`).
 Reading the delay slot also tells the return type of an erased call: `daddu $a0,$v0,$zero` is an
-integer return, `mov.s $f12,$f0` a float return (`LEVEL_16:0x102C38`). Reopening: a source shape
-that emits arguments in the order `a2, a0, a1`.
+integer return, `mov.s $f12,$f0` a float return (`LEVEL_16:0x102C38`). The argument-order
+measurements date from 23 October 2026. Reopening: a source shape that emits arguments in the
+order `a2, a0, a1`.
 
 ### Blocker 03
 
@@ -141,7 +129,8 @@ floating-point ones and materialises a local pointer before the first call. The 
 carries the RAC2 "increasing callee-saved saves" option, which inverts the order; reverting it
 and separating the two `reorg` hooks of the division-padding patch is the `gnu-ee-trial-divpad`
 profile (PR #97). Fifteen of thirty-three recorded failures in one set were this class, and
-`void *p = s->p54;` declared before the first call reproduces the retail prologue.
+`void *p = s->p54;` declared before the first call reproduces the retail prologue; declared
+between two calls, it shifts it. The retail also emits `addiu $sp` before the first `lui`.
 
 ### Blocker 04
 
@@ -183,7 +172,8 @@ bytes are four separate quadwords copied one at a time. The recipe is RAC1's:
 `typedef unsigned int u128 __attribute__((mode(TI), aligned(16)));`, one scalar per assignment,
 and the global named directly so its address takes the first register. `FRONTEND.REL:0x0061C0`
 (64 bytes) is identical to the retail this way, and the recipe rendered eight boot bodies exact
-out of eight.
+out of eight. The level pass of 21 October 2026 that measured this class with the `ldl`/`ldr`
+aggregate form of blocker 07 proved 469 placements (PR #103).
 
 ### Blocker 07
 
@@ -277,7 +267,8 @@ preserve two `lui`. `%hi` rounds: `lui 0x1A` with `lo −0x5324` is `0x0019ACDC`
 
 Two functions in one body. Measured: a target can end with a second function — a comparator
 `return *a0 - *a1;` in the last twenty bytes of `LEVEL_20:0x02B088`, for instance. Write both
-functions in the same file; they link end to end and one family then covers both.
+functions in the same file; they link end to end and one family then covers both. The same
+happens in a 128-byte body.
 
 ### Blocker 13
 
@@ -392,385 +383,20 @@ The same profile left 498 other retained C bodies nonmatching in a 500-body
 comparison, so these two results do not justify a global compiler switch.
 Regenerate `progress/status.json` after changing source profiles.
 
-**Boot draw dispatch and vector-angle timing, 17 November 2026.**
-The retained [DRAW_Render](../../nonmatching/boot/DRAW_Render__F10DRAW_LayerT0Ui.c)
-reproduces all 316 linked body bytes under rebuilt default GNU, `-O2 -G0`,
-GNU assembly and independent SN links. Trial emits 320 bytes, 270 equal
-positions in the compared 316-byte prefix, first difference +0x2C. The
-following zero word and separate 56-byte initializer are excluded. Separate
-original-layer and traversal-cursor lifetimes preserve the helper/callback
-order. The partial context view exposes unsigned halfword prefix counts,
-20-byte mesh records and callback heads; opaque fields remain opaque.
-Observed callers cover layers 0..31 in three ranges, with context zero.
-Callback payload is an opaque 32-bit ABI carrier; its historical type,
-ignored callback result, helper ignored-argument contracts, live node/storage
-and indirect-call domains remain review holds. Local raw equality is not
-qualification or accepted C credit.
+**R5900 assembler recipe, 27 November 2026 ([PR #307](https://github.com/OpenRAC/rac5-sm-decomp/pull/307)).**
+The public `r5900-mfc1` rebuild retained a top-down expansion of some 64-bit
+immediates that differed from the pinned assembler. Patch `0009` restores GNU's
+generic expansion for this route, with patched-source SHA-256 `afc3bc78…`.
+The rebuilt assembler reproduces the complete recorded object hashes for all
+271 current sources, including the 54 added since the initial 217-source check.
+The default assembler, source flags, object hashes and binary pin are unchanged.
+The rebuilt binary itself differs from its pin, so this regression check stays
+non-qualifying and adds no matching credit. See the
+[rebuild recipe and scope](toolchain.md#rebuilt-tools-have-other-hashes).
 
-The retained [VEC_AngleBetweenVectors](../../nonmatching/boot/VEC_AngleBetweenVectors__FPC4VEC3T0b.c)
-emits 312 FUNC/text bytes under default GNU and ordinary trial: 174/312 equal
-positions, first difference +0x34 against its 316-byte retail body. Apart from
-three affected branch displacements, the missing word is a square-root
-dependency delay. The known division-padding compiler emits 320 bytes,
-216/316 equal positions, first +0x34; it changes both division and square-root
-spacing. The known SN assembler does not resolve this difference. No dummy C
-or edited compiler output is used. Reopen with independently justified
-square-root/division scheduling and regression controls, rather than another
-arithmetic spelling. The following zero word and 72 orphan bytes are excluded.
-The encoded C++ boolean is represented only by a 32-bit ABI carrier in its
-valid 0/1 domain; the sole observed caller supplies zero. The original C++
-route and indirect callers remain unproved. Zero-length behavior, inclusive
-clamps, the normalization bypass and original float operations are retained;
-no unit-vector, host IEEE or repaired-domain assumption is added.
-
-**Boot raw-block parsing and shared quaternion source, 17 November 2026.**
-The [TJZIP raw-block parser](../../src/boot/TJZIP_ParseRawDataBlock__FPPUcT0PUi.c)
-(accepted on 26 November 2026 from a port of OpenRAC/rac-sac-decomp's matched C, which
-supersedes the retained attempt described here) reproduces all 444 linked body bytes under rebuilt default GNU and
-`gnu-ee-trial`, with `-O2 -G0`, GNU assembly and independent SN links. Both
-actual object and linked FUNC/text extents are 444 bytes; the following zero
-alignment word is excluded. The source adapts the repository's accepted level
-parser, using the boot callback's proven byte-pointer argument and return
-type rather than copying an integer-return declaration. The Decompress
-symbol's callback type and all three indirect argument/result flows agree.
-Only the named callback, threshold and signature-table globals are required.
-
-Independent instruction/state checks cover 353 cases, including all nonzero
-short markers, extended lengths through 65,535, null/mutating callbacks,
-header-source redirection, overlapping byte buffers and shared cursor cells.
-Original reloads and sequential byte/CRC/cursor effects remain; no bulk-copy,
-capacity guard or callback-purity assumption is added. Valid live storage,
-capacities, callback contracts and the same-array threshold-minus-32 pointer
-domain remain obligations. Local raw equality does not qualify tools or
-promote the retained source.
-
-The existing [shared Quat_Slerp source](../../src/levels/shared/Quat_Slerp__FP4QUATPC4QUATT1f.c)
-was reused unchanged for the 416-byte boot placement. Its existing
-`gnu-ee-trial-divpad` level route reproduces all 416 linked boot bytes, with
-the complete object equal to the already accepted level object pin. Default
-GNU emits 400 bytes, 259/400 equal positions, first difference +0x8; ordinary
-trial emits 408 bytes, 279/408 equal positions, first +0xCC. The exact route
-retains one named `acosf` and three `sinf` calls and the observed `f12` input.
-There is one authored definition: no boot source duplicate, flag override or
-accepted-source change is introduced. The compiler route remains level-only;
-this standalone boot measurement is not a complete boot gate or qualification.
-Keep explicit placement acceptance separate from the source's directory.
-Input snapshots, partial-overlap ordering, unclamped dot products and original
-floating-point comparisons are preserved; host IEEE edge cases are not a
-substitute for EE runtime evidence.
-
-**Further USA boot attempts, 17 November 2026.** Four retained sources use
-`-O2 -G0`, rebuilt GNU tools, GNU assembly and independent SN links. These are
-local measurements, not qualification or accepted C credit.
-
-| Source | Default GNU result | Remaining condition |
-| --- | --- | --- |
-| [Ascii2Sjis](../../nonmatching/boot/Ascii2Sjis__FUc.c) | 232/232 body bytes exact; trial agrees | Review the table access views and original caller domain before promotion. |
-| [PAR_PostInit](../../nonmatching/boot/PAR_PostInit__Fv.c) | 248/248 body bytes exact | Storage/capacity, allocation failure and indirect-caller invariants remain. |
-| [SIG_CalcCaseInsensitiveSignature](../../nonmatching/boot/SIG_CalcCaseInsensitiveSignature__FPCc.c) | 216 bytes, 121/216 equal positions, first difference +0x6 | Recover cached-control, raw-byte and cursor lifetimes and generated read scheduling. |
-| [DRAW_BeginUpdate](../../nonmatching/boot/DRAW_BeginUpdate__Fv.c) | 412 bytes, 247/412 equal positions against 420 retail bytes, first difference +0x62 | Reconcile the material-cache word type with its accepted zero writer. |
-
-For ASCII conversion, an effective punctuation-table index base and a used
-16-bit result joining the two lookup paths reproduce the body without register
-constraints. Only accessed halfword fields and an opaque remainder are exposed;
-no conversion-table initializers are imported. Independent checks cover all
-256 input bytes and their table-load traces, with additional synthetic tables.
-
-PAR initialization preserves the unconditional setup call, signed count guard,
-count reload after allocation, saved count across the pool calls, later byte and
-storage reloads, descriptor-page assignment and final lock store. Its second
-pool-count multiplication explicitly uses the observed low-32-bit wrap before
-target-int conversion. The existing allocator interface is reused and the two
-pool views remain opaque. Five thousand private mutable-helper scenarios
-corroborate these effects. Trial emits 252 bytes, 200/248 equal positions,
-first difference +0x2C; use default GNU for this local candidate.
-
-The signature function retains its separator lookahead quirk: a local cursor
-scans ahead, while the main cursor still advances by one byte. Repeated
-separators are not collapsed. Generated read scheduling remains different;
-result agreement on valid terminated strings is not an exact-body proof.
-Its observed 216-byte body excludes the following 16-byte tail containing
-nonzero words. Trial emits 224 bytes, 81/216 equal positions, first +0x6.
-Closed cursor/classification and iterator forms did not improve the retained C.
-
-DRAW uses the integer space-count views already established by accepted boot
-callers and keeps the accepted `DRAW_EndUpdate` int cache declaration. An
-unsigned-cache diagnostic reproduces all 420 bytes, but conflicts with that
-declaration and is not the retained boot candidate. A private declaration-only
-EndUpdate control preserves its complete pinned object; reviewed cache-word
-producers use an unsigned material argument and observed reads use equality.
-This supports a separate type-reconciliation review, not a silent change to a
-frozen interface. Trial leaves the correctly typed attempt at 416 bytes,
-249/416 equal positions, first +0x62. The following zero alignment word is
-excluded from the 420-byte observed body. Buffer/toggle/capacity and indirect
-entry obligations remain; do not add a dead use or register hint to gain bytes.
-
-**Boot memory-card helpers, 15 November 2026.** Four retained USA boot sources replace the
-14 November trials of the same names, measured after an independent SN link at their retail
-addresses under the rebuilt default GNU route, `gnu-ee-trial` and `sdk991111`, all with
-`-O2 -G0` and the same GNU assembler; the three routes agree on every linked text. Trials that
-kept one local copy, one pointer or a bitfield came out short: the setters lost a byte mask
-that retail keeps, the header updater lost two pointer copies.
-
-The cause is the source shape, not the compiler. Retail matches code that names the stored
-object again in each statement. For the
-[Dan-skin setter](../../nonmatching/boot/MEMCARD_SetDanSkinUnlocked__FUi.c) and
-[widescreen setter](../../src/boot/MEMCARD_SetWideScreenToMemcard__FUi.c),
-`flags &= ~BIT;` followed by `flags |= (enabled ? BIT : 0);` on the stored byte itself gives
-all 36 bytes: the second statement reuses the value the first one stored, the masked value
-therefore has two uses, and the byte extension between the two masks cannot be merged away.
-For the [header updater](../../src/boot/MEMCARD_SetHeaderDetail__FUiUiUiUiUi.c), four
-assignments that each index the header array again give all 52 bytes: the repeated address
-computations become register copies that stay separate. These three were exact local witnesses;
-the widescreen setter and the header updater were accepted on 26 November 2026. When a small accessor keeps a redundant mask, extension or register
-copy, try the repeated-object form before suspecting the compiler.
-
-The [hardcore setter](../../nonmatching/boot/MEMCARD_SetHardcoreModeBit__FUib.c) has the same
-two statements and is 48 compiled bytes, 30 equal positions, first difference at byte 16. Its
-mangled name carries a C++ `bool` parameter. Retail keeps a conditional move on the raw
-argument; a C `int` argument turns `enabled ? 1 : 0` into a comparison result that is ORed in.
-With a real `bool` parameter, the C++ front ends of three locally available SN packages
-(2.9-ee-991111, 2.95.2 and ProDG 2.95.3) each produce all 48 retail bytes from those two
-statements. The boot gate has no C++ route; this is the first boot body measured to need one,
-and `_GLOBAL_$I$SYSTEMS_memcard_ps2.cppBRcaaa` shows the unit was C++. Reopen when a C++ front
-end is qualified for boot sources.
-
-**Boot mailbox, WAD lookup and sound helpers, 16 November 2026.** Six retained USA boot sources
-are exact after an independent SN link at their retail addresses under the rebuilt default GNU
-route and `gnu-ee-trial` (`-O2 -G0`, default GNU assembler); a seventh stays a measured trial.
-They are local witnesses, not accepted matches. Each one was a near miss or a discarded trial
-until its source shape changed:
-
-- [`MBOX_Send`](../../src/boot/MBOX_Send__FiP12HigMsgPacket.c) (accepted on 26 November 2026),
-  [`MBOX_Poll`](../../nonmatching/boot/MBOX_Poll__FiPP12HigMsgPacket.c): a range test and a
-  one-bit signed flag test written as two early returns lose the negation of the flag and move
-  the failure return. Written as one condition, `if (index >= 16 || table[index].flag == 0)
-  return error;`, the negation stays and the failure return sits in the middle of the body.
-- [`MBOX_Create`](../../nonmatching/boot/MBOX_Create__FPCcUiPv.c): a signed index, a scan loop
-  with an empty body and a comparison with the bound after it. The result is a signed `int`:
-  a pointer or unsigned result loads the failure constant before the return instead of in its
-  delay slot. The accepted caller declares a pointer result and compiles identically either way.
-- [`GLOBALWAD_FindAssetsInWadBySignature`](../../nonmatching/boot/GLOBALWAD_FindAssetsInWadBySignature__FP13WadLocationIDUi14WAD_ASSET_TYPE13WadLocationID.c): when retail copies an
-  argument into a scratch register and loads small constants into that register only after each
-  call, the source has a second variable that starts as the argument and is assigned again
-  after every call, so it never lives across one.
-- [`SND_FindVag`](../../nonmatching/boot/SND_FindVag__FPCc.c): a second copy of a failure
-  constant at the end of the body, jumped over by the normal return, is a guard that wraps the
-  whole body (`if (table != 0) { ...; return found; } return -1;`), not an early return.
-- [`SND_Fixup`](../../nonmatching/boot/SND_Fixup__FUiPFP13WadLocationIDUi14WAD_ASSET_TYPE13WadLocationID_P15WAD_FILE_HEADER.c): the result is cleared before the call that
-  precedes its real assignment, and two adjacent stores are written in the opposite order.
-- [`SND_PauseAtrac`](../../nonmatching/boot/SND_PauseAtrac__Fbi.c) is still 160 compiled bytes
-  against 168: retail keeps its refusal path in line and one store out of a delay slot. Fifteen
-  forms of the refusal test did not change that. Its first parameter is a C++ `bool`.
-
-The [saving query](../../nonmatching/boot/MEMCARD_Saving__Fv.c) is unchanged: retail computes
-the comparison in one register and copies it to the result. About sixty C and C++ spellings of
-the same test (conditional expressions, `switch`, `goto`, inline helpers, `bool`, wider or
-narrower result types) give either the 48-byte form or an early-return form.
-`SND_IsATRACPaused__FP13ATRACInstance` has the same extra copy. Reopen with evidence for a
-second use of the comparison value or for the original helper structure.
-
-**Retained USA boot sources, 15 November 2026.** Seven sources under
-`nonmatching/boot/` reproduce their complete measured bodies in independent
-SN links with rebuilt GNU tools, `-O2 -G0`: `SYSTEM_SetDepthWrite__Fb`
-(240 bytes), `HIT_fread__FPvUiUiPi` (212), `TEXMGR_Initialize__Fv` (248),
-`VRAM_InitGraphics__Fv` (208), `MCPFONT_RegisterFontTextures__Fv` (216),
-`VEC_MakeMatFromYawPitchRoll__FP4VEC3N20fff` (208) and
-`Spiral_EmitJoint__FP12Spiral_GroupPC12Spiral_Pointb` (260). The last two
-need `gnu-ee-trial` for save order; the others also reproduce under the
-default route. `HIT_fread` additionally needs the existing
-`-mno-check-zero-division` option. These are retained, unaccepted sources;
-rebuilt tools do not qualify the profile or earn C credit.
-
-A temporary integration on master `37b245c6b` passed the complete boot gate:
-847 exact objects, 498,900 exact text bytes, 809,872 exact raw load bytes and
-the complete 856,120-byte ELF exact. Its 820 accepted bodies (108,824 bytes)
-were unchanged. The run used `--unpinned-tools`; the temporary integration
-and catalogue changes were removed from the retained-source contribution.
-Requalification and semantic review remain necessary before promotion.
-
-Useful source constraints: materializing the returned texture before
-publishing it resolves `TEXMGR_Initialize`'s address lifetime; member-store
-order resolves `VRAM_InitGraphics` (195/208, then 206/208, then exact).
-The original font-width attempts remained different: `MCPFONT_FontStringPixelLength`
-emits 216 bytes against 208, 63 equal positions in the compared prefix,
-first difference +0x1C (hoisted constant and an extra saved register);
-`MCP_FontStringPixelLength` emits 216/216 bytes, 202 equal positions,
-first difference +0x31 (index/width register allocation). Reopen with new
-evidence of those live ranges, rather than repeating the tested local forms.
-`PAR_Reset__Fv` emits 232 bytes under the default route and 236 under
-`gnu-ee-trial`, against 240 retail bytes; respectively 101/232 and 104/236
-compared positions agree, first difference +0x21. Its next useful experiment
-is recovery of the list/end-pointer representation, not a global profile change.
-
-A bounded follow-up on 15 November retained the same `PAR_Reset` attempt:
-keeping the block base live through direct field accesses and an explicit
-next-block value, then two store-order forms, still emits 232/236 bytes with
-first difference +0x21. Store order alone does not explain the missing body
-bytes or the extra live list-head value. Do not repeat those three forms.
-
-**Font-width resolution, 16 November 2026.** The retained
-[`MCPFONT_FontStringPixelLength`](../../nonmatching/boot/MCPFONT_FontStringPixelLength__FPCcUi.c)
-and [`MCP_FontStringPixelLength`](../../nonmatching/boot/MCP_FontStringPixelLength__FPCcUi.c)
-now reproduce all 208 and 216 bytes, respectively, with rebuilt default GNU
-and `gnu-ee-trial`, `-O2 -G0`, GNU assembly and independent SN links.
-MCPFONT's authored inline equality predicate removes the loop-held comparison
-constant and extra saved register, first reaching 194/208 equal positions.
-The source uses ordinary equality, with no explicit XOR or register constraint;
-the predicate is fully inlined and emits no extra function.
-
-Both functions then become locally exact by separating the 16-bit stored total
-from a wide per-glyph temporary. The temporary holds total + 1 (at most 65536)
-across the helper calls; adding the glyph byte then narrows the final sum.
-Neither local is exposed to the calls. This preserves wrapping, byte-prefix
-consumption, original out-of-count reads and the reviewed helper ABI.
-Allocation dumps explain the change: the wide temporary is allocated locally,
-while the narrow stored total does not cross either call and can reuse its
-register. The global index receives the other register. The prior single wide
-accumulator left both values to global allocation, which prioritized the index
-(21 weighted references over 66 instructions versus 10 over 32 for the width).
-Declaration/initialization changes and equivalent loop rewrites did not fix it.
-
-Independent checks verify actual object and linked text/FUNC sizes, exact raw
-body bytes, normal resolution of the two helper references and no absolute-symbol
-masks. Source and preprocessed C policy checks pass. A temporary integration
-passed with 842 exact objects, all 809,872 load bytes and the complete
-856,120-byte ELF exact. Both symbols were real compiled FUNC owners; all 840
-baseline replacement records and 820 accepted bodies stayed unchanged. Its
-mechanical audit leaves both ready for semantic review with no mechanical
-reason. Metadata was archived then restored; the receipt is historical for that
-restored checkout. The tools were unpinned: both sources remain in `nonmatching/`
-and no qualification or accepted C credit follows.
-This supersedes their earlier differing measurements, not the separate semantic
-and qualification obligations. Unchanged-body C/C++ frontend checks did not
-resolve either original attempt or identify the original compiler.
-
-For `PAR_Reset`, guarding a `do/while` traversal with the initial empty-list test
-still emits 232/236 bytes (default/trial), 87/90 equal positions, first difference
-+0x21. A later ordinary iterator-object representation resolves the missing
-sentinel lifetime. Address-based comparison examines the current and finishing
-iterators, and a value-returned previous iterator snapshots the reverse link
-before node reset. Combining this with the previously measured two-link-pair
-reset order reproduces all 240 bytes under default GNU. `gnu-ee-trial` instead
-emits 244 bytes, 191 equal positions, first difference +0x98 at loop padding.
-The helpers are fully inlined list operations, with no extra observable use or
-register constraint. Independent semantic review found no new regression;
-4,096 private differential scenarios corroborate the preserved traversal,
-self-links, free-chain rebuild and callback-visible state. Malformed lists,
-arbitrary storage/capacity and indirect-entry boundaries remain open. This new
-PAR candidate was not covered by the 842-object font experiment above.
-
-A subsequent integration on 16 November includes all thirteen retained boot
-candidates: the previous ten plus both font-width functions and `PAR_Reset`.
-It passed with 853 exact objects, 498,900 exact text bytes, 809,872 exact load
-bytes and the complete 856,120-byte ELF exact. All thirteen candidates were
-attributed to real compiled FUNC symbols (2,884 body bytes), without absolute
-symbol masks; the separate quaternion initializer stayed in the baseline.
-All 840 previous replacement records and 820 accepted bodies stayed unchanged.
-The mechanical audit leaves all thirteen ready for semantic review, with no
-mechanical reason. The manifest, audit, attribution and integration patch were
-archived and all temporary metadata restored. This used unpinned tools, so
-qualification and promotion remain separate and no accepted C credit follows.
-
-Two further retained boot sources reproduce their measured bodies after
-independent SN links: [`dlib_displist_set_texture_state`](../../nonmatching/boot/dlib_displist_set_texture_state__FP13DLIB_DISPLISTiUlUlUlUl.c)
-(204 bytes plus one zero alignment word, default GNU and `gnu-ee-trial`) and
-[`AdjustDLISTSize`](../../nonmatching/boot/AdjustDLISTSize__FUiPP6QWdataPUi.c)
-(240 bytes, default GNU). Both use `-O2 -G0` and the default GNU assembler;
-`AdjustDLISTSize` under `gnu-ee-trial` emits 244 bytes, 113 equal positions
-in the compared 240-byte prefix, first difference +0x58 in loop padding.
-The buffer-size fallback, optional outputs and original count expression
-are preserved. The direct boot path's capacity is corroborated below;
-arbitrary inputs and local prefix types still need review.
-
-**Buffer semantics, reviewed 15 November 2026 ([PR #274](https://github.com/OpenRAC/rac5-sm-decomp/pull/274)).** `g_dlibBufferSize` is a
-one-list count N of 16-byte elements. The initializer at `0x01E93A68`
-allocates 32N bytes with requested 64-byte alignment; its direct boot
-initialization chain passes N=`0x16000`. The two direct cache-allocation
-sites (`0x01E65DA4`, `0x01E66BA0`) request `0x200000` bytes.
-`UpdateBufferCacheState` selects S=`0x6000` elements per list, leaving
-exactly that cache tail in the `0x2C0000`-byte allocation, assuming
-successful allocation and normal initialization. The optional count output
-is nevertheless `0x260000`, overstating that tail by `0x60000`; the reviewed
-caller discards it. Preserve the expression and do not describe its result
-as remaining capacity. Arbitrary requests can wrap or yield S=0, which
-selects the original N-sized lists. Allocation failure, alias writes and
-indirect or imported use remain outside this direct-path proof.
-
-**Texture-state storage, reviewed 15 November 2026.** All five direct boot
-sites select mode 1 and pass the same four 64-bit payloads. For a well-formed
-16-byte-aligned list, the helper advances its cursor by seven quadwords
-(112 bytes): two framing words, four payload pairs and a reserved next-tag
-slot. Six new quadwords are written; the old chain tag is separately
-copied/backpatched, while the final slot is reserved without a store.
-The retail stored template gives a four-pair count, but it resides in
-writable data; its runtime value is not proved invariant. The helper chain
-does not check capacity or previously open packet state. Valid prior tag
-storage, a suitable template and caller headroom remain review obligations.
-The combined nine-candidate experiment passed a fresh complete boot gate
-on the same master: 849 exact objects, 498,900 exact text bytes, 809,872
-exact load bytes and the full 856,120-byte ELF exact. The 820 accepted
-bodies stayed unchanged. This used unpinned tools; temporary metadata
-and flags were restored after archiving and no body was promoted.
-
-[`Quat_ConvertToMatrixInternal<MATRIX4>`](../../nonmatching/boot/Quat_ConvertToMatrixInternal__H1Z7MATRIX4_PX01PC4QUAT_v.c)
-is now a **local exact candidate, 15 November 2026**. Adapting the explicit
-nine-product order and input snapshot already accepted in
-[`LEVEL_06_119B10.c`](../../src/levels/shared/LEVEL_06_119B10.c), with its
-packed MATRIX3 outputs mapped to the boot's four-float MATRIX4 stride,
-reproduces 184/184 bytes on the first retry. Independent SN links under
-rebuilt default GNU and `gnu-ee-trial`, `-O2 -G0`, default GNU assembler,
-agree. Both objects and linked ELFs have actual 184-byte text sections and
-184-byte non-absolute function symbols; no trimming, relocation or undefined
-external is involved. The separately called 56-byte initializer is excluded.
-
-The earlier retained row-order source gave 98/184 equal positions, first
-difference at entry; diagonal-first stores gave 81/184, first +2, and
-capturing input components alone did not change that object. Those are
-superseded measurements, not a reason to alter the compiler. The new
-candidate was then included in a temporary complete-boot integration with
-the other nine: **850 exact objects, 498,900 exact text bytes, 809,872 exact
-load bytes and the complete 856,120-byte ELF exact**. The canonical
-quaternion's absolute alias was removed for that experiment; its real
-compiled function symbol owns all 184 bytes, while the distinct
-`func_1E77FB8` alias and following initializer stay separate. All 840 prior
-replacement records and the 820 accepted bodies were unchanged. All ten
-candidates passed the mechanical promotion audit as ready for semantic
-review. The receipt, manifest, attribution checks and exact integration
-patch were archived, then the temporary metadata and flags were restored.
-This supersedes the earlier nine-candidate-only gate limit, but still uses
-unpinned tools: qualification and promotion remain pending, with no C credit
-added.
-
-All four quaternion components are read before the first output store.
-The internal body writes slots `0,1,2,4,5,6,8,9,10`; the accepted wrapper
-fills the other seven slots, completing all sixteen floats. No normalization
-occurs, and this review establishes no unit-norm input invariant. The input
-snapshot permits ordinary overlap of valid readable/writable storage at the
-machine level; do not invent a disjointness requirement. Storage alignment
-and C object-lifetime/effective-type obligations still apply.
-
-Before promotion, review the local prefix types and caller domains.
-The seven direct `HIT_fread` callers use nonzero unit sizes, but indirect
-callers and extreme size-zero callback results leave division semantics open.
-
-**REL caller follow-up, 16 November 2026.** All 21 USA module hashes were
-checked against the catalogue. Their 5,579 named symbols and 85,694 named
-relocations contain no `HIT_fread__FPvUiUiPi` symbol or reference, so there
-are no named imported calls whose unit-size argument can be classified.
-Scans of the catalogued code found no fixed direct jump/call to the boot
-entry `0x01E8C858`; aligned payload-word scans found no absolute entry
-address either. The twenty numbered modules have separately placed,
-accepted local copies; those are not evidence about callers of the boot
-body. These bounded pre-relocation scans do not exclude split/constructed
-pointers, runtime dispatch or arbitrary indirect use. The divisor-domain
-hold therefore remains open; this is not proof that zero is unreachable.
-
-The direct `VRAM_InitGraphics` caller establishes the allocator's initial
-state; invalid or indirect entry states remain unproven. `Spiral_EmitJoint`
-requires nonempty, sufficiently allocated point storage, whose complete
-caller invariant is not yet established. Preserve the one-time font
-registration flag and its failed-lookup behavior.
+Retained boot attempts and type reviews of 15–17 November 2026 that used these profiles are
+kept in the dated log under
+[Retained USA boot attempts and reviews](#retained-usa-boot-attempts-and-reviews-1517-november-2026).
 
 ### Blocker 18
 
@@ -863,9 +489,99 @@ coherent caller graph; neither equal length nor tail trimming is a remedy.
 | The 184-byte quaternion-to-matrix body | naming the nine products explicitly, in the order that fixes the allocation (`src/levels/shared/LEVEL_06_119B10.c`) |
 | The 416-byte `Quat_Slerp` body | the byte-identical twin in the boot gives the routine its name and prototype; the new profile reproduces the prologue order and the division padding (PR #97) |
 | Three of the twelve bodies above 412 bytes | a `VEC3` read instead of `VEC4`; pointer copies before the null test with matrix rows sixteen bytes apart; and one was a **profile** wall — the unchanged retained source gives 512 exact bytes under `gnu-ee-trial-divpad` |
-| The float copy class | the `ldl`/`ldr` pair is a four-byte-aligned aggregate copied by structure assignment; 469 placements proved (PR #103) |
+| The `ldl`/`ldr` aggregate copy class | the `ldl`/`ldr` pair is a four-byte-aligned aggregate copied by structure assignment; 469 placements proved (PR #103). The float copy itself is field by field (blocker 08) |
 | The 64-byte copy of `FRONTEND.REL:0x0061C0` | four separate quadwords; `lq`/`sq` come from a scalar `TImode`, and the global is named directly |
 | The sixteen-bit accessor and stub families | one authored source carried at every placement that holds the same bytes, each placement proved on its own |
+| Record initialization with `powf` | A new 472-byte C form reproduces 50 USA bodies at 51 placements. Keep the 16-byte head and the 64-byte record as separately named globals, and retain a pointer to the record across both `powf` calls; this reproduces the retail register lifetime and save order under `gnu-ee-trial`. The per-level colors and float constants are measured separately (4 November 2026) |
+| Block-move loop count and larger record initializers | A source-specific `gnu-ee-trial-divpad-blockmove` compiler profile fixes an RTL short-loop count that inserted two unnecessary `nop` words in 32-byte aggregate copies. It reproduces 41 further USA C bodies on 42 placements (22,020 distinct-source bytes): the earlier 536-byte near miss at `LEVEL_01:0x033E58`, its 540-byte sibling family, and four 528/532-byte bodies. The old 536-byte C linked at 544 bytes with its first difference at byte 16 under the base divpad profile; with the measured patch it links exactly. The original compiler remains pinned, 140 prior divpad objects retain their hashes, and two complete 21-module gates pass (4 November 2026) |
+| Boot GCC runtime library | on 13 November 2026 the nine remaining boot `libgcc` functions (`__divdi3`, `__moddi3`, `__udivdi3`, `__umoddi3`, `__muldi3`, `__fixdfdi`, `__do_global_dtors`, `__do_global_ctors`, `__unpack_f`; 6,836 body bytes) are exact from GCC's own `libgcc2.c`/`fp-bit.c` text as OpenRAC/rac1-decomp vendors it, under `sdk991111 -O2 -G0` (`__unpack_f` also under the pinned chain). Five need `longlong.h`'s original MIPS `umul_ppmm`, which AGENTS.md now allows as RAC2 does. Write such a function as the upstream module, not as rewritten C |
+
+## What is left
+
+At the 27 November 2026 snapshot (`progress/status.json`), the level scope is **82,771 measured
+placements** of 10,413,564 placement bytes carried by **65,498 sources**, and many bounded
+candidates remain outside the accepted scope. The boot keeps **864 accepted functions** covering
+119,008 of 498,900 bytes of `.text`. [Original assembly](#original-assembly-classification-26-november-2026)
+(86 boot units and 2 level shapes in `config/handwritten_asm.tsv`) is counted apart from C. The remainder of this section records earlier dated additions.
+The eight newly accepted bounded families contribute 241 distinct C bodies
+and 252 placements (35,536 distinct-source bytes); their zero alignment tails
+are excluded. The 212-byte wrappers pass x/y/text and two scales in the
+retail registers, but the callee's original formal C parameter order is not
+uniquely recoverable from the ABI. The six pointer roles in the 68-byte helper
+family and some callee types in the 128-byte vector family remain provisional.
+The accepted 40-byte `LEVEL_01:0x123DC8` wrapper now passes its output pointer
+explicitly while retaining the same compiled object and retail bytes.
+Six further bounded families (120, 168, 780, 680, 228 and 864 bytes) add
+**112 C sources, 115 placements and 41,692 distinct-source bytes**; their
+zero alignment tails are excluded. Fifty-nine already accepted C definitions
+also now make implicit call arguments or returns explicit without changing
+their pinned objects or linked retail bytes. Other source-level ABI contracts
+remain under review even where the compiled bytes match.
+Four more bounded families (132, 100, 300 and 176 bytes) add **70 C sources,
+73 placements and 12,584 distinct-source bytes**. Their accepted C retains
+the measured data relocations and named `sqrtf` imports. Additional accepted
+wrappers now pass their consumed GPR and FPR arguments explicitly, without
+changing their pinned objects or linked retail bodies.
+The 884 linked boot C bodies cover 123,480 bytes including alignment. The profile
+files and their patches are the only place where a toolchain change is allowed
+to move a body.
+
+## Provenance
+
+Issue #98 was the living wall register from the boot work to October 2026. Its body and comments
+remain on GitHub as dated history, including the measurements that later entries corrected. This
+document supersedes it as the active register. The maintainer imported the open and closed walls
+on 23 October 2026, added the measurements recorded up to that date, and keeps the counts above
+in step with `master`. Issue #99 remains the only reservation board.
+
+## Dated measurement log
+
+The sections below are dated measurement records, kept in date order. They are history, not a
+fresh census: later entries and the numbered blockers above supersede them where they disagree,
+and current totals come from [`progress/status.json`](../../progress/status.json).
+
+| Date | Record |
+| --- | --- |
+| 2–4 November 2026 | [Level C forms extended to further placements](#level-c-forms-extended-to-further-placements-24-november-2026) |
+| 4 November 2026 | [Retained module C attempts](#retained-module-c-attempts-4-november-2026) |
+| 4 November 2026 | [Further frontend C attempts](#further-frontend-c-attempts-4-november-2026) |
+| 4 November 2026 | [R5900 quad-save level prologues](#r5900-quad-save-level-prologues-4-november-2026) |
+| 4 November 2026 | [Further level C attempts](#further-level-c-attempts-4-november-2026) |
+| 4 November 2026 | [Corrected level-call hypotheses](#corrected-level-call-hypotheses-4-november-2026) |
+| 4 November 2026 | [Additional retained near misses](#additional-retained-near-misses-4-november-2026) |
+| 4 November 2026 | [Named import calls in accepted level bodies](#named-import-calls-in-accepted-level-bodies-4-november-2026) |
+| 5 November 2026 | [Qualified compiler-generated local multiplication](#qualified-compiler-generated-local-multiplication-5-november-2026) |
+| 5 November 2026 | [Bounded frontend C attempts of 64 bytes or less](#bounded-frontend-c-attempts-of-64-bytes-or-less-5-november-2026) |
+| 5 November 2026 | [Short raw-identical level-body candidates](#short-raw-identical-level-body-candidates-5-november-2026) |
+| 5 November 2026 | [Short local data relocations](#short-local-data-relocations-5-november-2026) |
+| November 2026 | [Bounded USA short-body near misses](#bounded-usa-short-body-near-misses-november-2026) |
+| November 2026 | ↳ [Further bounded USA short-body blockers](#further-bounded-usa-short-body-blockers-november-2026) |
+| November 2026 | ↳ [Later bounded USA short-body measurements](#later-bounded-usa-short-body-measurements-november-2026) |
+| 9 November 2026 | ↳ [USA bounded bodies of 68–76 bytes](#usa-bounded-bodies-of-6876-bytes-9-november-2026) |
+| 9 November 2026 | ↳ [USA bounded bodies of 61–120 bytes](#usa-bounded-bodies-of-61120-bytes-9-november-2026) |
+| 9 November 2026 | ↳ [USA bounded bodies of 100–200 bytes](#usa-bounded-bodies-of-100200-bytes-9-november-2026) |
+| 9 November 2026 | ↳ [Prototype review of the held 61–200-byte bodies](#prototype-review-of-the-held-61200-byte-bodies-9-november-2026) |
+| 9 November 2026 | ↳ [Retry passes over open forms of up to 200 bytes](#retry-passes-over-open-forms-of-up-to-200-bytes-9-november-2026) |
+| 9 November 2026 | ↳ [USA bounded bodies of 201–600 bytes](#usa-bounded-bodies-of-201600-bytes-9-november-2026) |
+| 13 November 2026 | [Bounded USA level source updates](#bounded-usa-level-source-updates-13-november-2026) |
+| 14 November 2026 | ↳ [USA bodies of at most 200 bytes](#usa-bodies-of-at-most-200-bytes-14-november-2026) |
+| 21 November 2026 | ↳ [USA bodies of 201 to 400 bytes](#usa-bodies-of-201-to-400-bytes-21-november-2026) |
+| 22 November 2026 | ↳ [USA bodies of 801 to 1,500 bytes and near-miss retries](#usa-bodies-of-801-to-1500-bytes-and-near-miss-retries-22-november-2026) |
+| 22 November 2026 | ↳ [USA bodies of 401 to 800 bytes](#usa-bodies-of-401-to-800-bytes-22-november-2026) |
+| 22 November 2026 | ↳ [Sister-decompilation twins](#sister-decompilation-twins-22-november-2026) |
+| 15–17 November 2026 | [Retained USA boot attempts and reviews](#retained-usa-boot-attempts-and-reviews-1517-november-2026) |
+| 17 November 2026 | ↳ [USA boot bodies of 112–444 bytes](#usa-boot-bodies-of-112444-bytes-17-november-2026) |
+| 26 November 2026 | ↳ [USA boot bodies of 164–472 bytes](#usa-boot-bodies-of-164472-bytes-26-november-2026) |
+| 26 November 2026 | [Original assembly classification](#original-assembly-classification-26-november-2026) |
+| 26–27 November 2026 | [USA level sources and call contracts](#usa-level-sources-and-call-contracts-26-27-november-2026) |
+
+### Level C forms extended to further placements (2–4 November 2026)
+
+These rows stood in the closed-walls table until 26 November 2026. Each records C forms that
+reproduced further USA level placements, checked by the complete module gate.
+
+| Forms | Result |
+| --- | --- |
 | Twelve-byte scalar global accessors | `return D_<address>;` or `D_<address> = value;`, with the address recovered by `page << 16` plus signed low immediate; 498 distinct C sources reproduce 528 USA level placements, each checked by the complete module gate (2 November 2026) |
 | Four short level body forms | A nonzero global test, a plain call wrapper, a wrapper passing zero first, and a pair of zero stores compile directly from C; 500 distinct sources reproduce 677 USA placements after excluding one self-calling wrapper that the compiler folds differently (2 November 2026) |
 | Plain 28-byte call wrappers | `void f(void) { target(); }` reproduces 500 further distinct USA level bodies with a frame, return-address save and restore, and one call; self-calling variants are excluded because the compiler folds their control flow (2 November 2026) |
@@ -884,15 +600,13 @@ coherent caller graph; neither equal length nor tail trimming is a remedy.
 | Reused C forms across level modules | Existing typed C forms extend to 732 further USA bodies at 751 placements. Each new source and placement is checked independently; the complete-module gate catches named local calls that an isolated probe accepts. Thirty-eight such calls use their measured address-named target so the full linker can resolve them (4 November 2026) |
 | Additional exact C forms | Existing typed forms extend to 629 more USA bodies at 675 placements. Each source's undefined symbols were checked against every target module before the complete gate; 46 extra placements share a byte-identical body and earn unique-source credit once (4 November 2026) |
 | Remaining known C forms | Previously accepted typed forms extend to 877 further USA bodies at 939 placements. All 62 extra placements of shared bodies are exact independently, and every new object resolves against its target modules before the complete gate (4 November 2026) |
-| Record initialization with `powf` | A new 472-byte C form reproduces 50 USA bodies at 51 placements. Keep the 16-byte head and the 64-byte record as separately named globals, and retain a pointer to the record across both `powf` calls; this reproduces the retail register lifetime and save order under `gnu-ee-trial`. The per-level colors and float constants are measured separately (4 November 2026) |
 | More record-initialization forms with `powf` | Four typed C forms of 308, 420, 436 and 464 bytes reproduce 55 further USA bodies at 55 placements (22,712 distinct-source bytes) under `gnu-ee-trial`. Each form uses a separately named head and record, initializes a local record and copies it after two `powf` calls. Within each structurally identical group, the varying head, record and optional data addresses were extracted per module; every linked placement and all 21 complete modules were checked (4 November 2026) |
-| Block-move loop count and larger record initializers | A source-specific `gnu-ee-trial-divpad-blockmove` compiler profile fixes an RTL short-loop count that inserted two unnecessary `nop` words in 32-byte aggregate copies. It reproduces 41 further USA C bodies on 42 placements (22,020 distinct-source bytes): the earlier 536-byte near miss at `LEVEL_01:0x033E58`, its 540-byte sibling family, and four 528/532-byte bodies. The old 536-byte C linked at 544 bytes with its first difference at byte 16 under the base divpad profile; with the measured patch it links exactly. The original compiler remains pinned, 140 prior divpad objects retain their hashes, and two complete 21-module gates pass (4 November 2026) |
 | Additional named record forms | Existing `gnu-ee-trial` compiles 44 further C sources at 45 USA placements (14,016 distinct-source bytes), including 252- and 268-byte records. Initial zero-address call placeholders were corrected to the retail `memset`, `cosf` and `sinf` import names before promotion; all 127 new placements passed an import-identity audit and both complete-module gates (4 November 2026) |
 | UI initialization families | Two related 1,120- and 924-byte C forms reproduce 38 further sources at 40 USA placements (38,836 distinct-source bytes) under `gnu-ee-trial-divpad`. A common callee's return type is `int`, supported by both retail return paths; correcting the 1,120-byte declarations preserves every exact object. LEVEL_15/21 share one source per form, each linked independently. Return/delay slots and following zero alignment words were reviewed separately (4 November 2026) |
 | Further 632-, 644- and 192-byte C families | Three typed C forms reproduce 77 additional USA sources on 81 placements (32,184 distinct-source bytes). The 632-byte form retains both named `memset` imports; the 644-byte form keeps its 18 named imports and three local calls; the 192-byte form keeps six local calls. Four extra placements reuse an identical source and are checked separately. The 644-byte bodies' trailing zero alignment word is excluded from C credit. Each source and placement passes two complete 21-module gates (4 November 2026) |
 | Additional known C forms | Four previously accepted forms extend to 54 further USA bodies at 55 placements. Address-named and file-scope symbol aliases are retained only where the compiler produces the exact body and every target module resolves them (4 November 2026) |
 
-## Retained module C attempts (4 November 2026)
+### Retained module C attempts (4 November 2026)
 
 These USA frontend and level sources are useful hypotheses, retained in
 `nonmatching/levels/` without C credit. Each result is from an isolated linked
@@ -905,7 +619,7 @@ not been claimed.
 | [`FRONTEND.REL:0x00A150`](../../nonmatching/levels/FRONTEND_00A150.c), 1,168 bytes | Pinned GNU EE: 1,116 bytes; first difference at body byte 8. The one call and eight branches are present in both, but the candidate is 52 bytes short. | Review packet-construction field types, live ranges and the full frontend boundary before extending to levels. |
 | [`FRONTEND.REL:0x00DD40`](../../nonmatching/levels/FRONTEND_00DD40.c), 1,896 bytes | Pinned GNU EE: 1,800 bytes; first difference at body byte 260, initially a branch displacement; first different code shape at byte 308. | Reconstruct text-wrap control flow and local variable lifetimes; confirm other module boundaries separately. |
 | [`FRONTEND.REL:0x016200`](../../nonmatching/levels/FRONTEND_016200.c), 1,924 bytes | `gnu-ee-trial-divpad`: 1,736 bytes; first difference at body byte 92. The C retains the order of 74 call targets but only 18 of the reference's 21 branches. A separate zero alignment word follows each reviewed body and earns no C credit. | Recover the missing control-flow paths and floating-point live ranges; verify every placement before promotion. |
-| [`0x01A398`](../../nonmatching/levels/LEVEL_01_01A398.c), 244 bytes | Pinned GNU EE: 236 bytes; first difference at body byte 6. Both direct global indexing and local pointer spelling had this mismatch. | Review the global access and copy structure, including whether scalar float stores express the candidate body. |
+| [`0x01A398`](../../src/levels/01_pokitaru/LEVEL_01_01A398.c) (accepted 27 November 2026), 244 bytes | Pinned GNU EE: 236 bytes; first difference at body byte 6. Both direct global indexing and local pointer spelling had this mismatch. | Review the global access and copy structure, including whether scalar float stores express the candidate body. |
 | [`0x0340B8`](../../nonmatching/levels/LEVEL_01_0340B8.c), 1,192 bytes | Pinned GNU EE: 1,084 bytes; first difference at body byte 0. The candidate and reference have eight calls, but their stack frames and mask tests differ. | Reconstruct temporary groups and mask/control flow, then recheck the candidate bound and source identity. |
 | [`0x0532F8`](../../src/levels/01_pokitaru/LEVEL_01_0532F8.c) (accepted 22 November 2026), 428 bytes | `gnu-ee-trial`: 428 bytes; first difference at body byte 48 in scheduling the head stores around `memset`. The retained head-field order reduces differing words from 15 to 13, but none of 24 equivalent orders matched. Aggregate initialization, local head pointer, call naming and prototype variants also remained different. | Change the source-level call-shape or qualified compiler hypothesis; another store-order permutation adds no evidence. |
 | [`0x0876B8`](../../nonmatching/levels/LEVEL_01_0876B8.c), 1,840 bytes | Pinned GNU EE: 1,836 bytes; first difference at body byte 0. The source retains the pad API calls and 68-byte copy, but saves an extra register and uses a 64-byte rather than 48-byte stack frame. | Review the lifetime of the pad-mode return value and related register allocation; verify other family members only after this body matches. |
@@ -925,7 +639,7 @@ not been claimed.
 | [`0x1255B0`](../../src/levels/shared/LEVEL_01_1255B0.c) (accepted 22 November 2026), 544 bytes | Pinned GNU EE: 544 bytes; first difference at body byte 32. Equal length is not a match. | Review floating-point temporary lifetimes and save order against caller and callee evidence. |
 | [`0x19BFF0`](../../nonmatching/levels/LEVEL_01_19BFF0.c), 520 bytes | Pinned GNU EE: 476 bytes; first difference at body byte 4. A decompiler also flagged an unreachable block. | Confirm the full boundary and original control flow; resolve the random factor's semantics before relying on this source. |
 
-## Further frontend C attempts (4 November 2026)
+### Further frontend C attempts (4 November 2026)
 
 The sources below preserve useful C hypotheses without match credit. Each
 number is an isolated linked comparison of the USA `FRONTEND.REL`
@@ -949,7 +663,7 @@ excluded from its C size.
 | [`0x01F9A0`](../../nonmatching/levels/FRONTEND_01F9A0.c), 984 bytes | Pinned GNU EE links 968 bytes, first difference at byte 12. | Recover the parameter and local-variable live ranges. |
 | [`0x024A70`](../../src/levels/frontend/FRONTEND_024A70.c) (accepted 22 November 2026), 816 bytes | `sdk991111` links 760 bytes, first difference at byte 8; its frame agrees more closely than GNU's but the body is incomplete. | Reconstruct the packed node traversal and saved-value lifetimes. |
 
-## R5900 quad-save level prologues (4 November 2026)
+### R5900 quad-save level prologues (4 November 2026)
 
 A bounded USA-level scan found **236 candidate placements in 14 normalized
 shapes** whose prologues save `$s0`–`$s7` and `$fp` with `sq`, then `$ra`
@@ -963,7 +677,7 @@ This is not a qualified general replacement. Reopen with a C body and a
 measured per-source profile that match all 948 linked bytes, then prove its
 20 placements and the complete-module gates. No C bytes are credited.
 
-## Further level C attempts (4 November 2026)
+### Further level C attempts (4 November 2026)
 
 These `LEVEL_01.REL` sources are retained hypotheses with **no C credit**.
 Each measurement below is a linked comparison of the representative body
@@ -984,10 +698,10 @@ record layout has not been independently confirmed.
 | [`0x112B28`](../../nonmatching/levels/LEVEL_01_112B28.c), 1,068 bytes | `gnu-ee-trial-divpad` links 1,052 bytes, first difference at byte 108 in the first square root's FP destination register. | Recover five local FP slots and fallback branches before testing siblings. |
 | [`0x1210A0`](../../src/levels/01_pokitaru/LEVEL_01_1210A0.c) (accepted 22 November 2026), 1,084 bytes | `gnu-ee-trial-divpad` links 1,100 bytes, first difference at byte 60 in floating-point load order. | Review vector products, small-norm fallback and the extra frame words. |
 | [`0x129968`](../../nonmatching/levels/LEVEL_01_129968.c), 1,056 bytes | Pinned GNU EE links 1,044 bytes; first difference at byte 76 is a branch displacement after an exact prologue. | Recover error-path lengths and allocation lifetime while keeping the observed calls. |
-| [`0x08CDE0`](../../nonmatching/levels/LEVEL_01_08CDE0.c), 188 bytes | Pinned GNU EE links 192 bytes, first difference at byte 14 in mask-register allocation; the 20 related placements have no exact result. | Confirm bitfield layout and aliasing, then relink the pilot before checking siblings. |
+| [`0x08CDE0`](../../src/levels/01_pokitaru/LEVEL_01_08CDE0.c) (accepted 27 November 2026), 188 bytes | Earlier measurement: pinned GNU EE linked 192 bytes, first differing at byte 14 in mask-register allocation. The replacement is accepted on 26 November 2026. | Resolved for the independently linked placements; other candidates still require their own checks. |
 | [`0x1D1248`](../../src/levels/01_pokitaru/LEVEL_01_1D1248.c) (accepted 9 November 2026), 160 bytes | Pinned GNU EE links 160 bytes, first difference at byte 8 in saved-register allocation; all 26 related placements retain that mismatch. | Recover the lifetimes of the global base, output and input cursors, loop end and choice table. |
 
-## Corrected level-call hypotheses (4 November 2026)
+### Corrected level-call hypotheses (4 November 2026)
 
 These C sources retain useful, nonmatching reconstructions. Each result is an
 isolated full-body linked comparison of USA `LEVEL_01.REL`; equal length does
@@ -1006,7 +720,7 @@ of the hypothesis.
 | [`0x083E38`](../../nonmatching/levels/LEVEL_01_083E38.c), 1,068 bytes | `gnu-ee-trial-divpad`: 1,056 bytes | Body byte 60 | Resolve the first branch displacement, later register choices and division padding. | The accepted `func_125E78` uses 12/64/12-byte buffers. The trailing payload layout and outer item-array length remain runtime hypotheses. |
 | [`0x01EF20`](../../nonmatching/levels/LEVEL_01_01EF20.c), 1,168 bytes | `gnu-ee-trial-divpad`: 1,168 bytes | Body byte 340 | Resolve the square-root padding class while preserving vector and matrix buffers. | The caller assumes a nonnegative count and readable 40-byte records. |
 
-## Additional retained near misses (4 November 2026)
+### Additional retained near misses (4 November 2026)
 
 These C files are retained as hypotheses in `nonmatching/`. Each measurement
 below is an isolated full-body linked comparison with the USA retail module.
@@ -1031,11 +745,11 @@ provisional where the retail callee has not established them.
 | [`LEVEL_01:0x19CEB0`](../../src/levels/01_pokitaru/LEVEL_01_19CEB0.c) (accepted 11 November 2026), 436 bytes | `gnu-ee-trial`: 428 bytes; first difference at byte 76 in the x-coordinate load. Four local calls are eight bytes early in the C. | Recover the x/y/z load-and-store order while preserving callee register flow. | The local callee's detailed prototype is an ABI hypothesis from retail register use. |
 | [`LEVEL_01:0x1B4330`](../../nonmatching/levels/LEVEL_01_1B4330.c), 628 bytes | `gnu-ee-trial-divpad`: 588 bytes; first difference at byte 6 in register allocation. | Recover basis-local scheduling and record-search control flow before other placements. | One `sqrtf` import and two local calls are measured; record and service types remain provisional. |
 | [`LEVEL_01:0x1CAAE8`](../../nonmatching/levels/LEVEL_01_1CAAE8.c), 296 bytes | Pinned GNU EE: 276 bytes; first difference at byte 1 in the object-pointer register (`t4` retail, `t2` compiled). | Recover the pointer and float-temporary lifetimes or copy shape, then relink the pilot. | No calls or imports; both lazy record initializations are retained but field roles are provisional. |
-| [`FRONTEND:0x0073B8`](../../nonmatching/levels/FRONTEND_0073B8.c), 284 bytes | `gnu-ee-trial`: 284 bytes; first difference at byte 172 in UI-field load scheduling. | Recover the four UI-field register live ranges or qualify a new compiler profile. | Three named display-list calls and the two named data imports are retained; the local UI state is 20 bytes. |
+| [`FRONTEND:0x0073B8`](../../src/levels/frontend/SYSTEM_SetAlphaTestMode__FbUcUi_FRONTEND.c) (accepted 27 November 2026), 284 bytes | `gnu-ee-trial`: 284 bytes; first difference at byte 172 in UI-field load scheduling. | Recover the four UI-field register live ranges or qualify a new compiler profile. | Three named display-list calls and the two named data imports are retained; the local UI state is 20 bytes. |
 
 | [`LEVEL_01:0x001740`](../../nonmatching/levels/LEVEL_01_001740.c), 260 bytes | Pinned GNU EE: 260 bytes; first difference at body byte 9 in float-register allocation. All 20 structural placements retain two named local calls but none matches. | Recover the float-register lifetime and field-store order while preserving the 64-byte copy and call identities. | Record field roles and the registration helper's return type remain provisional. |
 
-## Named import calls in accepted level bodies (4 November 2026)
+### Named import calls in accepted level bodies (4 November 2026)
 
 An audit of the earlier accepted corpus found **592 wrong C import names**
 at named `R_MIPS_26` call sites in 496 placements and 246 sources. The
@@ -1060,7 +774,7 @@ estimate; it is not new decompilation coverage. The historical audit and
 full per-site proof remain private, with names, counts and limits recorded
 here for contributors.
 
-## Qualified compiler-generated local multiplication (5 November 2026)
+### Qualified compiler-generated local multiplication (5 November 2026)
 
 Twenty C sources adapted from the public GCC 2.95.3 `fp-bit.c` multiplication
 path reproduce **21 bounded 680-byte placements** (13,600 distinct-source
@@ -1073,43 +787,7 @@ in force for every source without such a row. Both individual and batched
 complete-module gates reproduce all 21 USA modules; this is a measured local
 link target, not a general rule for unresolved compiler calls.
 
-## What is left
-
-The level scope is **32,794 measured placements** of 1,924,072 placement bytes carried by **23,237
-sources**, and many bounded candidates remain outside the accepted scope. The boot keeps
-**693 accepted functions** covering 88,948 of 498,900 bytes of `.text`.
-The eight newly accepted bounded families contribute 241 distinct C bodies
-and 252 placements (35,536 distinct-source bytes); their zero alignment tails
-are excluded. The 212-byte wrappers pass x/y/text and two scales in the
-retail registers, but the callee's original formal C parameter order is not
-uniquely recoverable from the ABI. The six pointer roles in the 68-byte helper
-family and some callee types in the 128-byte vector family remain provisional.
-The accepted 40-byte `LEVEL_01:0x123DC8` wrapper now passes its output pointer
-explicitly while retaining the same compiled object and retail bytes.
-Six further bounded families (120, 168, 780, 680, 228 and 864 bytes) add
-**112 C sources, 115 placements and 41,692 distinct-source bytes**; their
-zero alignment tails are excluded. Fifty-nine already accepted C definitions
-also now make implicit call arguments or returns explicit without changing
-their pinned objects or linked retail bytes. Other source-level ABI contracts
-remain under review even where the compiled bytes match.
-Four more bounded families (132, 100, 300 and 176 bytes) add **70 C sources,
-73 placements and 12,584 distinct-source bytes**. Their accepted C retains
-the measured data relocations and named `sqrtf` imports. Additional accepted
-wrappers now pass their consumed GPR and FPR arguments explicitly, without
-changing their pinned objects or linked retail bodies.
-The 713 linked C bodies cover 93,032 bytes including alignment. The profile
-files and their patches are the only place where a toolchain change is allowed
-to move a body.
-
-## Provenance
-
-Issue #98 was the living wall register from the boot work to October 2026. Its body and comments
-remain on GitHub as dated history, including the measurements that later entries corrected. This
-document supersedes it as the active register. The maintainer imported the open and closed walls
-on 23 October 2026, added the measurements recorded up to that date, and keeps the counts above
-in step with `master`. Issue #99 remains the only reservation board.
-
-## Bounded frontend C attempts of 64 bytes or less (5 November 2026)
+### Bounded frontend C attempts of 64 bytes or less (5 November 2026)
 
 These candidate entries have source-level C retained under `nonmatching/levels/`. The listed objects are isolated linked trials against the pinned USA frontend, not accepted matches. Accepted bounded frontend entries, including `0x020968`, pass the complete 21-module gate as C. Each retained source records a concrete next experiment; equal length alone earns no credit.
 
@@ -1138,7 +816,7 @@ accepted [C source](../../src/levels/frontend/FRONTEND_020968.c) uses a signed
 `(flags & 0x40000) > 0` comparison. It links exactly at the frontend and 15
 level placements, and the complete 21-module gate passes (5 November 2026).
 
-## Short raw-identical level-body candidates (5 November 2026)
+### Short raw-identical level-body candidates (5 November 2026)
 
 The following USA candidate bodies are raw-identical across the listed numbered levels and contain no body relocations. This is boundary and code-shape evidence only; each retained C source differs in an isolated linked trial and none of its placements earns C credit. In this short-body scope, 237 reviewed families have passed the complete 21-module gate as accepted C. Eight 16–32-byte forms cover 148 linked placements with 168 distinct-source bytes: a floating-point constant return, conditional field assignment, two unsigned range tests, a range-length accessor, a state store, a floating-point affine result and three field clears. Another 23 source forms add 429 exact placements and 296 distinct-source bytes; two more placements reuse an existing qualified C source. A further 38 source forms of 8–64 bytes add 340 exact placements and 924 distinct-source bytes. The next 46 short forms add 121 exact placements and 1,164 distinct-source bytes. Eleven more sources cover 98 exact placements, including repeated uses inside a module, while adding 204 distinct-source bytes. Forty-eight isolated 8–32-byte sources add 48 exact placements and 824 distinct-source bytes; one 24-byte candidate interval remains uncounted pending boundary review. Twenty-one isolated 36–64-byte C sources add 21 exact placements and 1,048 distinct-source bytes; 18 further C hypotheses remain uncounted. Each new placement was linked independently before the complete-module gate.
 
@@ -1146,7 +824,7 @@ The following USA candidate bodies are raw-identical across the listed numbered 
 | --- | ---: | ---: | --- | --- |
 | [`0x0B9800`](../../src/levels/01_pokitaru/LEVEL_01_0B9800.c) (accepted 9 November 2026) | 64 B | 20 | pinned: 64 B, first difference +24 | Recover the array-index shift before the record-stride multiply and their temporary-register lifetimes. |
 | [`0x058738`](../../src/levels/shared/LEVEL_01_058738.c) (accepted 9 November 2026) | 60 B | 20 | pinned: 60 B, first difference +15 | Recover the local zero-float and stack pointer selection after the initial field load. |
-| [`0x0BCBA0`](../../nonmatching/levels/LEVEL_01_0BCBA0.c) | 60 B | 20 | pinned: 56 B, first difference +0 | Recover the owner-pointer lifetime and the two-stage count/output checks. |
+| [`0x0BCBA0`](../../src/levels/shared/LEVEL_01_0BCBA0.c) (accepted 26 November 2026) | 60 B | 20 | pinned: 56 B, first difference +0 | Recover the owner-pointer lifetime and the two-stage count/output checks. |
 | [`0x129DF8`](../../src/levels/01_pokitaru/WAD_NextAssetByType__FP15WAD_FILE_HEADER_LEVEL_01.c) (accepted 9 November 2026) | 56 B | 20 | pinned: 56 B, first difference +8 | Recover the linked-list loop entry without the compiler shortening it to a branch-likely return. |
 | [`0x037238`](../../src/levels/shared/LEVEL_01_037238.c) (accepted 9 November 2026) | 52 B | 20 | pinned: 56 B, first difference +2 | Recover the insertion-loop entry and value truncation before the first comparison. |
 | [`0x03C0E8`](../../src/levels/shared/LEVEL_01_03C0E8.c) (accepted 26 November 2026) | 52 B | 20 | pinned: 56 B, first difference +9 | Recover the retail 64-bit clear-mask materialization and final field update. |
@@ -1155,7 +833,7 @@ The following USA candidate bodies are raw-identical across the listed numbered 
 | [`0x03BF60`](../../src/levels/01_pokitaru/LEVEL_01_03BF60.c) (accepted 10 November 2026) | 48 B | 20 | pinned: 48 B, first difference +2 | Recover the child-pointer and flag temporary registers while keeping the short signed clear mask. |
 | [`0x0A60C8`](../../src/levels/shared/LEVEL_01_0A60C8.c) (accepted 9 November 2026) | 48 B | 20 | pinned: 48 B, first difference +4 | Recover the packed high-byte extraction and alpha mask scheduling before field stores. |
 | [`0x0D83C8`](../../src/levels/01_pokitaru/LEVEL_01_0D83C8.c) (accepted 9 November 2026) | 48 B | 20 | pinned: 48 B, first difference +12 | Recover the unsigned-range and zero-sentinel branch layout without reordering the half-width subtraction. |
-| [`0x0294C0`](../../nonmatching/levels/LEVEL_01_0294C0.c) | 44 B | 20 | pinned: 40 B, first difference +4 | Recover the nested byte-flag tests and the retail boolean return lifetime that adds one operation. |
+| [`0x0294C0`](../../src/levels/shared/LEVEL_01_0294C0.c) (accepted 26 November 2026) | 44 B | 20 | pinned: 40 B, first difference +4 | Recover the nested byte-flag tests and the retail boolean return lifetime that adds one operation. |
 | [`0x134F68`](../../src/levels/01_pokitaru/LEVEL_01_134F68.c) (accepted 22 November 2026) | 52 B | 15 | pinned: 52 B, first difference +24 | Recover the record field-store and zero-fill grouping after the first six exact operations. |
 | [`0x08BE88`](../../src/levels/01_pokitaru/LEVEL_01_08BE88.c) (accepted 9 November 2026) | 36 B | 20 | pinned: 36 B, first difference +12 | Recover the byte and zero-store ordering while retaining the signed -1 constant and the final delay-slot store. |
 | [`0x09FB18`](../../src/levels/shared/LEVEL_01_09FB18.c) (now accepted) | 36 B | 20 | pinned: 36 B, first difference +8 | Recover the self-linked node pointer-store order relative to the four zeroed fields. |
@@ -1167,8 +845,8 @@ The following USA candidate bodies are raw-identical across the listed numbered 
 | [`LEVEL_03:0x039678`](../../src/levels/shared/LEVEL_03_039678.c) (accepted 9 November 2026) | 64 B | 7 | pinned: 64 B, first difference +22 | Recover the callback ABI or source-level lifetime that assigns the nested pointer loads to the retail temporaries. |
 | [`LEVEL_02:0x1805A0`](../../src/levels/shared/LEVEL_02_1805A0.c) (accepted 9 November 2026) | 60 B | 4 | pinned: 60 B, first difference +18 | Recover the indexed slot access shape that assigns the byte index and slot base to the retail temporaries. |
 | [`LEVEL_08:0x20FA38`](../../src/levels/shared/CORE/Lightweight/LW_Anim/LEVEL_08_20FA38.c) (accepted 9 November 2026) | 64 B | 3 | pinned: 64 B, first difference +13 | Recover the original list-initialization loop and end-pointer lifetime before rechecking the shared sites. |
-| [`LEVEL_04:0x165538`](../../nonmatching/levels/LEVEL_04_165538.c) | 48 B | 3 | pinned: 44 B, first difference +16 | Retain the second byte comparison's result lifetime and final boolean move without artificial compiler steering. |
-| [`LEVEL_22:0x1311A0`](../../nonmatching/levels/LEVEL_22_1311A0.c) | 64 B | 2 | pinned: 64 B, first difference +2 | Recover the selector source and child-pointer register lifetime around the early sentinel return. |
+| [`LEVEL_04:0x165538`](../../src/levels/shared/LEVEL_04_165538.c) (accepted 26 November 2026) | 48 B | 3 | pinned: 44 B, first difference +16 | Retain the second byte comparison's result lifetime and final boolean move without artificial compiler steering. |
+| [`LEVEL_22:0x1311A0`](../../src/levels/shared/LEVEL_22_1311A0.c) (accepted 26 November 2026) | 64 B | 2 | pinned: 64 B, first difference +2 | Recover the selector source and child-pointer register lifetime around the early sentinel return. |
 | [`LEVEL_15:0x11D580`](../../nonmatching/levels/LEVEL_15_11D580.c) | 44 B | 2 | pinned: 40 B, first difference +28; `gnu-ee-trial-divpad`: 56 B | Qualify a source-specific division schedule with controls for prior accepted division bodies. |
 | [`LEVEL_22:0x131218`](../../src/levels/shared/LEVEL_22_131218.c) (accepted 9 November 2026) | 44 B | 2 | pinned: 44 B, first difference +4 | Recover the null and index-bound branch ordering before retrying both sites. |
 | [`LEVEL_08:0x1AE4C0`](../../src/levels/08_dayni_moon/LEVEL_08_1AE4C0.c) (accepted 11 November 2026) | 24 B candidate interval | 1 | pinned empty C: 8 B, first difference +0 | Review the two return sequences and incoming references to establish actual function ownership before C promotion. |
@@ -1191,7 +869,7 @@ The following USA candidate bodies are raw-identical across the listed numbered 
 | [`LEVEL_16:0x1599E8`](../../src/levels/16_multiplayer_01/LEVEL_16_1599E8.c) (accepted 9 November 2026) | 40 B | 1 | pinned: 32 B, first difference +2 | Recover the two independent stride calculations; the compiler shortens the conditional stride. |
 | [`LEVEL_16:0x177F60`](../../src/levels/16_multiplayer_01/LEVEL_16_177F60.c) (accepted 9 November 2026) | 40 B | 1 | pinned: 40 B, first difference +2 | Recover the byte-counter load, clear store and limit-pointer register order. |
 
-## Short local data relocations (5 November 2026)
+### Short local data relocations (5 November 2026)
 
 Forty-four site-specific 12- and 16-byte C sources in USA levels 01–06 link
 exactly at their reviewed placements (664 distinct and placement bytes). Each
@@ -1375,7 +1053,7 @@ keep useful C attempts under `nonmatching/levels/` without match credit:
   indexed-address setup are scheduled in the opposite order. Typed record
   and operand-order forms and qualified compiler routes did not restore it.
 - Twenty boolean-return bodies (for example,
-  [`LEVEL_01:0x0639B8`](../../nonmatching/levels/LEVEL_01_0639B8.c)) link at 40
+  [`LEVEL_01:0x0639B8`](../../src/levels/01_pokitaru/LEVEL_01_0639B8.c) (accepted 26 November 2026)) link at 40
   instead of 44 bytes; the first difference at byte 8 is the branch span.
   The retail retains an extra value transfer. A wider return reaches 44 bytes
   but selects a different conditional move.
@@ -1474,7 +1152,7 @@ all 21 complete modules pass. Forty-three sites retain useful C attempts
 without match credit:
 
 - Twenty two-global boolean tests (for example,
-  [`LEVEL_01:0x0A7330`](../../nonmatching/levels/LEVEL_01_0A7330.c)) link 44
+  [`LEVEL_01:0x0A7330`](../../src/levels/01_pokitaru/LEVEL_01_0A7330.c) (accepted 26 November 2026)) link 44
   bytes against 48 retail bytes. The first difference is the branch span
   at byte 12; retail keeps an additional boolean transfer. Wide-return and
   local-result forms and five qualified `cc1` routes did not reproduce it.
@@ -1815,9 +1493,10 @@ with measured first differences and specific reopening conditions. The
 [140-byte frontend division](../../src/levels/frontend/FRONTEND_012600.c) (accepted 22 November 2026)
 requires the source-specific `-mno-check-zero-division` flag to reach the
 correct length but still differs at byte 36. The
-[108-byte float packet](../../nonmatching/levels/LEVEL_01_1D1BD0.c) has a
-callee signature corroborated as float, float, pointer, pointer, int; its
-linked 112-byte C body first differs at byte 12. The other 341 candidate
+[108-byte float packet](../../src/levels/01_pokitaru/LEVEL_01_1D1BD0.c) (accepted 27 November 2026) has a
+callee signature corroborated as float, float, pointer, pointer, int. Its earlier
+112-byte attempt first differed at byte 12; the 26 November replacement reproduces
+the complete 108-byte body. The other 341 candidate
 sites have no new matching credit from this review. Relocation-masked
 similarity alone still does not establish C source identity.
 
@@ -1866,7 +1545,7 @@ first differs at byte 4 in 64-bit mask construction. The
 [196-byte pointer clamp](../../src/levels/01_pokitaru/LEVEL_01_055018.c) (accepted 9 November 2026) links to
 200 bytes and first differs at byte 2. The qualified SDK, GNU trial and
 division-pad compiler routes emit the same 200-byte object for that source. The
-[196-byte refcounted list removal](../../nonmatching/levels/FRONTEND_025390.c)
+[196-byte refcounted list removal](../../src/levels/frontend/__cp_pop_exception_FRONTEND.c) (accepted 27 November 2026)
 links 220 bytes and first differs at byte 8 because the fallback call extends
 the link-pointer lifetime. The
 [200-byte path CRC](../../nonmatching/levels/LEVEL_01_10F380.c) links 108 bytes
@@ -1960,7 +1639,7 @@ Previous source and placement pins remain unchanged.
 
 Thirteen other representative C attempts remain under `nonmatching/levels/`
 with measured first differences and reopening conditions. The
-[global sentinel test](../../nonmatching/levels/LEVEL_01_0A6958.c) links 48
+[global sentinel test](../../src/levels/01_pokitaru/LEVEL_01_0A6958.c) (accepted 26 November 2026) links 48
 rather than 68 bytes, while the
 [halfword bit update](../../src/levels/16_multiplayer_01/LEVEL_16_024FE8.c) (accepted 9 November 2026) links 64 bytes
 and first differs at byte 2. The other 159 candidate sites receive no match
@@ -2139,7 +1818,7 @@ evidence adds:
   accepts only imports/exports and `func_`/`D_<address>`. A shared source must
   be expanded to per-site sources with the measured names before promotion.
 
-## Bounded USA short-body near misses (November 2026)
+### Bounded USA short-body near misses (November 2026)
 
 Forty-eight representative pure-C attempts for selected bodies of at most 200 bytes were recompiled and linked at their stated USA sites. All 48 remain nonmatching; their forms account for 414 individually measured nonmatching placements, with no C match credit. Twenty-two representatives link at the retail length, twenty are shorter, and six are longer. A matching length or relocation-masked shape does not extend a measurement to untested placements. The useful sources are retained under `nonmatching/levels/` with their first differences and reopening conditions.
 
@@ -2147,15 +1826,15 @@ Forty-eight representative pure-C attempts for selected bodies of at most 200 by
 - **Control flow, delay slots and returns.** The [byte-store helper](../../src/levels/01_pokitaru/LEVEL_01_133FE8.c) (accepted 9 November 2026) links 132/132 bytes but lacks the retail callee-argument move in the call delay slot at byte 52. The [copy wrapper](../../src/levels/01_pokitaru/LEVEL_01_1EBBD0.c) (accepted 9 November 2026) uses the qualified `sdk991111` profile and preserves the named `memcpy` import, yet links 120/124 bytes: after an exact 92-byte prefix it emits a tail jump instead of the retail call and return. The [signed clamp](../../src/levels/01_pokitaru/LEVEL_01_0B9D20.c) (accepted 22 November 2026) links 140/140 bytes but selects a shift where retail uses a signed comparison at byte 92.
 - **Layout, aliasing and store order.** The [twelve-byte record copy](../../src/levels/shared/FRONTEND_015E68.c) (accepted 9 November 2026) links 144/140 bytes and differs from entry, leaving its alignment and copy-before-guard ABI open. The [rotation matrix](../../src/levels/shared/LEVEL_01_123F10.c) (accepted 14 November 2026) links 144/144 bytes but first changes the sine/cosine store and float-register schedule at byte 16. The [float-state initializer](../../src/levels/01_pokitaru/LEVEL_01_0589C0.c) (accepted 9 November 2026) links 192/196 bytes; constant loading and field-store order diverge from byte 13.
 - **Integer width and lowering.** The [packed 64-bit field return](../../src/levels/01_pokitaru/LEVEL_01_03B368.c) (accepted 11 November 2026) reproduces the initial unaligned load/copy but links 44/72 bytes; the remaining stack-word reconstruction and masks require a faithful source form. The [partial-product multiplication](../../src/levels/shared/__muldi3_shared.c) (accepted 26 November 2026) has the correct 96-byte length but differs at entry in multiplier and register order. The [upper-coordinate helper](../../src/levels/01_pokitaru/LEVEL_01_0AD0C0.c) (accepted 14 November 2026) links 132/132 bytes and first differs at byte 26 in the operand order of two additions; preserve the original upper-Y calculation when reopening it.
-- **Assembler and alignment.** The [bit-mask helper](../../nonmatching/levels/LEVEL_02_0413B8.c) links 152/148 bytes with the qualified per-source `ps2eeas` route and first differs at byte 6. Its register/order mismatch and final alignment word remain unresolved; the GNU assembler gives a longer result.
+- **Assembler and alignment.** The [bit-mask helper](../../src/levels/shared/LEVEL_01_03C450.c) (accepted 27 November 2026) earlier linked 152/148 bytes with the qualified per-source `ps2eeas` route and first differed at byte 6. The 26 November replacement reproduces the complete 148-byte body; its measured `-malign-functions=2` option removes the final alignment word.
 
 The 132-byte [resource-selection body](../../src/levels/01_pokitaru/LEVEL_01_089B60.c) (accepted 9 November 2026) has a separate **defined-behavior blocker**. An earlier C version linked exactly at 20 USA placements with `1U << item[-1]`, but `item[-1]` is a byte and a 32-bit C shift is undefined when it is at least 32. The R5900 variable shift uses only the low five bits. The reviewed direct callers in the representative level do not prove that the byte is in 0..31; their record pointers come from resource data, and an all-ones flag mask does not bound the shift. The retained defined C uses `1U << (item[-1] & 31U)` and links 136/132 bytes, first differing at byte 20 at all 20 placements. None of those placements receives match credit. Reopen only with a range proof covering every applicable producer/caller or a qualified compiler route that reproduces the retail from defined C.
 
-### Further bounded USA short-body blockers (November 2026)
+#### Further bounded USA short-body blockers (November 2026)
 
 In the reviewed USA selection, 45 representative pure-C attempts still differ from retail after isolated links. Their handoffs record 460 nonmatching placements; 18 representatives link at the retail length, 19 shorter and eight longer. These are measured source leads, not C match credit, and a masked form does not extend one representative's result to untested sites.
 
-- **Register lifetimes, branches and calls.** The [tag parser](../../nonmatching/levels/LEVEL_02_0390C0.c) links 112/112 bytes but first changes constant placement at +17; the [global scan](../../src/levels/02_rykan_v/LEVEL_02_07B648.c) (accepted 9 November 2026) links 72/80 bytes and loses the base copy and guarded load schedule at +18. The [previous-field call](../../nonmatching/levels/LEVEL_01_062DB8.c) links 148/148 bytes but differs at +52: recover its argument preparation without adding a parameter that contradicts the callee ABI. The [stack-argument forwarding body](../../src/levels/02_rykan_v/LEVEL_02_03AD20.c) (accepted 26 November 2026) links 60/68 bytes; establish the actual eight-argument contract before attempting its final stack slots.
+- **Register lifetimes, branches and calls (earlier measurements).** The [tag parser](../../src/levels/shared/CORE/Lightweight/LW_Model/LEVEL_01_034678.c) (accepted 27 November 2026) links 112/112 bytes but first changes constant placement at +17; the [global scan](../../src/levels/02_rykan_v/LEVEL_02_07B648.c) (accepted 9 November 2026) links 72/80 bytes and loses the base copy and guarded load schedule at +18. The [previous-field call](../../src/levels/01_pokitaru/LEVEL_01_062DB8.c) (accepted 27 November 2026) links 148/148 bytes but differs at +52: recover its argument preparation without adding a parameter that contradicts the callee ABI. The [stack-argument forwarding body](../../src/levels/02_rykan_v/LEVEL_02_03AD20.c) (accepted 26 November 2026) earlier linked 60/68 bytes. The tag parser, previous-field call and stack-argument forwarding body now reproduce their complete retail extents after the 26 November source and prototype corrections; the global scan records an older result.
 - **Floating-point scheduling and assembler scope.** The [matrix product](../../nonmatching/levels/LEVEL_02_12EDC0.c) links 196/196 bytes but assigns the first float registers differently from +2; recover live ranges under a qualified compiler route. The [two-division body](../../nonmatching/levels/LEVEL_02_03B090.c) links 56/52 bytes: retail needs two latency words before its first division and one before its second, while the available division-padding route adds two to both. A route change needs per-source qualification and regression controls.
 - **Integer width, address expressions and defined behavior.** The [aligned-address helper](../../src/levels/shared/LEVEL_01_058738.c) (accepted 9 November 2026) links 60/60 bytes but first differs at +15 because retail uses aligned-address OR semantics rather than addition. The [64-bit mask builder](../../src/levels/shared/LEVEL_01_03C0E8.c) (accepted 26 November 2026) links 56/52 bytes and needs the original constant expansion. The [72-byte shift helper](../../src/levels/02_rykan_v/LEVEL_02_028C90.c) (accepted 9 November 2026) retains defined C and links 76 bytes, first differing at +48; its privately exact unmasked shift needs a proof that every applicable value is below 32, or a qualified route that matches from defined C.
 - **Partial masked forms.** The [124-byte output helper](../../src/levels/02_rykan_v/LEVEL_02_05E888.c) (accepted 9 November 2026) has 12 nonmatching placements (132/124 bytes, first difference +60) alongside seven separately exact placements. Recover its stack loads and call behavior for the per-module output stub; do not promote the remaining 12 by masked similarity.
@@ -2173,28 +1852,28 @@ complete-program gate passes 21/21 modules with no named-import mismatch.
 This fixes the previous local ABI hold, without claiming indirect-call or
 runtime validation, PAL matches, or a game-wide function denominator.
 
-### Later bounded USA short-body measurements (November 2026)
+#### Later bounded USA short-body measurements (November 2026)
 
 In this reviewed USA selection, 42 representative pure-C attempts still differ from retail at 669 individually tested placements; none of those placements earns C match credit. Seventeen representatives link at the retail length, 23 shorter and two longer. Across all 1,229 selected sites, 489 have accepted C, 669 are measured nonmatches, and 71 remain semantic holds; none is untested. A matching length or masked form does not prove source identity.
 
-- **Register and loop lifetimes.** The [signed bit extractor](../../nonmatching/levels/LEVEL_02_03BE70.c) links 88/92 bytes, first difference +36: recover the separate result-register transfer. The [record linker](../../src/levels/shared/ENGINE/par/LEVEL_01_098018.c) (accepted 9 November 2026) links 92/92 bytes, first difference +10: recover its first-pointer register and source multiplication, and establish the count-zero domain before promoting a replacement.
+- **Register and loop lifetimes.** The [signed bit extractor](../../src/levels/02_rykan_v/LEVEL_02_03BE70.c) (accepted 26 November 2026) links 88/92 bytes, first difference +36: recover the separate result-register transfer. The [record linker](../../src/levels/shared/ENGINE/par/LEVEL_01_098018.c) (accepted 9 November 2026) links 92/92 bytes, first difference +10: recover its first-pointer register and source multiplication, and establish the count-zero domain before promoting a replacement.
 - **Floating-point allocation.** The [weighted-coordinate body](../../nonmatching/levels/LEVEL_02_121690.c) links 160/160 bytes but differs from entry in the absolute-value and accumulator FPR schedule. The [three-product update](../../src/levels/shared/LEVEL_01_055C38.c) (accepted 9 November 2026) links 92/96 bytes, first difference +4 in its stack spills. Reopen these with measured live ranges or a qualified per-source compiler route, preserving the original arithmetic order.
-- **Calls and return flow.** The [two-argument caller](../../src/levels/01_pokitaru/LEVEL_01_1B63C8.c) (accepted 9 November 2026) links 116/116 bytes, first difference +42, while its accepted callee still declares one argument; reconcile both sides of that ABI before credit. The [guarded getter](../../nonmatching/levels/LEVEL_02_07AA10.c) links 92/96 bytes, first difference +28: retain its pointer-key contract while restoring the boolean temporary and branch schedule.
+- **Calls and return flow.** The [two-argument caller](../../src/levels/01_pokitaru/LEVEL_01_1B63C8.c) (accepted 9 November 2026) links 116/116 bytes, first difference +42, while its accepted callee still declares one argument; reconcile both sides of that ABI before credit. The [guarded getter](../../src/levels/02_rykan_v/LEVEL_02_07AA10.c) (accepted 26 November 2026) links 92/96 bytes, first difference +28: retain its pointer-key contract while restoring the boolean temporary and branch schedule.
 - **Defined operations and unexplained frames.** The [byte-indexed bit update](../../src/levels/02_rykan_v/LEVEL_02_027CB8.c) (accepted 9 November 2026) links 80/84 bytes, first difference +2; an explicit low-five-bit shift mask is needed for defined behavior over all byte values. The [global division body](../../nonmatching/levels/LEVEL_02_09DB78.c) links 104/88 bytes, first difference +4; establish a nonzero divisor invariant or defined divide-zero behavior before promotion. The [empty body](../../src/levels/shared/LEVEL_01_049780.c) (accepted 9 November 2026) links 8/12 bytes from plain C, first difference +0; explain the retail transient frame rather than adding dead or volatile locals for bytes.
 
 **Semantic holds, separately uncredited.** Five defined C witnesses are retained separately under `nonmatching/levels/`: the [168-byte list walker](../../src/levels/01_pokitaru/LEVEL_01_154D58.c) (accepted 9 November 2026) needs a nonzero record-count invariant; the [136-byte float conversion](../../src/levels/01_pokitaru/LEVEL_01_06AD30.c) (accepted 9 November 2026) needs a finite, bounded input; and the [80-byte selector](../../src/levels/01_pokitaru/LEVEL_01_025098.c) (accepted 9 November 2026) needs a non-null callee result on all paths. The [76-byte wrapper](../../src/levels/01_pokitaru/LEVEL_01_16B020.c) (accepted 11 November 2026) and [72-byte wrapper](../../src/levels/01_pokitaru/LEVEL_01_144050.c) (accepted 10 November 2026) link byte-exact in isolation but remain uncredited because accepted callers use conflicting ABI declarations. The [80-byte return-code wrapper](../../src/levels/02_rykan_v/LEVEL_02_0DE010.c) (accepted 9 November 2026) and [72-byte four-call wrapper](../../src/levels/01_pokitaru/LEVEL_01_0B6EC0.c) (accepted 9 November 2026) use defined natural C that links 80/80 bytes (first difference +34) and 52/72 bytes (first difference +6), respectively; their privately exact XOR test and one-iteration loop have no independent source justification. None of these holds is C match credit. Reopen only with the stated range, ABI or source evidence and then repeat isolated links and the complete-program gate.
 
-### USA bounded bodies of 68–76 bytes (9 November 2026)
+#### USA bounded bodies of 68–76 bytes (9 November 2026)
 
 This USA selection covers the 40–76-byte bounded candidates whose relocation-masked form had no retained attempt. Nine representative pure-C attempts still differ from retail and earn no credit; 25 other forms are byte-exact but held for ABI review. Equal length is not a match.
 
 - **Loop induction.** The [pool-slot claim](../../src/levels/shared/LEVEL_16_15D9A8.c) (accepted 14 November 2026) and its [0x2D0-displacement sibling](../../src/levels/shared/LEVEL_16_14D788.c) (accepted 9 November 2026) link 68/68 bytes under `sdk991111`, first difference +8: the retail keeps the pool base as the induction pointer and reads the slot flag by displacement, while the compiler folds the displacement into the pointer; the pinned and `gnu-ee-trial` profiles keep a separate counter (60 bytes). Find a loop or element form that keeps the displacement out of the induction variable.
 - **Address constants and register choice.** The [clamped counter decrement](../../src/levels/18_multiplayer_03/LEVEL_18_114188.c) (accepted 9 November 2026) links 68/72 bytes, first difference +4: the retail adds the 0x18 field offset after materialising the global, the compiler folds it into the address constant. The [table-entry division](../../src/levels/10_quodrona/LEVEL_10_173168.c) (accepted 14 November 2026) needs `gnu-ee-trial-divpad` for its division and links 72/72 bytes, first difference +8, with the index product in another register. The [timer start or stop](../../src/levels/10_quodrona/LEVEL_10_19B498.c) (accepted 11 November 2026) links 68/68 bytes, first difference +4: the retail places the float zero in the second float argument register; establish that parameter from callee or caller evidence before retrying.
-- **Branch and tail layout.** The [mode selector](../../nonmatching/levels/LEVEL_22_11BBC0.c) (68/68 bytes, +28) becomes a conditional move in every measured form and profile; the [identifier test](../../nonmatching/levels/LEVEL_07_1983A8.c) (68/72 bytes, +24) lacks the retail copy of the comparison into a second result register; the [kind-to-class mapping](../../nonmatching/levels/LEVEL_03_193860.c) (68/68 bytes, +28) keeps a separate case-3 block where the retail shares one return; the [leading-entry count](../../src/levels/16_multiplayer_01/LEVEL_16_168C98.c) (accepted 9 November 2026) (68/68 bytes, +4) fills the first delay slot with the counter reset instead of the list base. Recover the original statement shapes; do not add dead code.
+- **Branch and tail layout.** The [mode selector](../../src/levels/22_skyboard_kalidon/LEVEL_22_11BBC0.c) (accepted 26 November 2026) (68/68 bytes, +28) becomes a conditional move in every measured form and profile; the [identifier test](../../src/levels/07_dreamtime/LEVEL_07_1983A8.c) (accepted 26 November 2026) (68/72 bytes, +24) lacks the retail copy of the comparison into a second result register; the [kind-to-class mapping](../../src/levels/03_kalidon/LEVEL_03_193860.c) (accepted 26 November 2026) (68/68 bytes, +28) keeps a separate case-3 block where the retail shares one return; the [leading-entry count](../../src/levels/16_multiplayer_01/LEVEL_16_168C98.c) (accepted 9 November 2026) (68/68 bytes, +4) fills the first delay slot with the counter reset instead of the list base. Recover the original statement shapes; do not add dead code.
 
 **ABI holds, separately uncredited.** Twenty-five forms (78 placements) link byte-exact, but their prototypes disagree with an accepted callee definition or with accepted callers. The largest are the [resource registration](../../src/levels/01_pokitaru/LEVEL_01_1D4138.c) (accepted 11 November 2026) (13 placements; the accepted callee is defined with four `long long` parameters and no return value), the [sub-record reset](../../src/levels/01_pokitaru/LEVEL_01_0EFB00.c) (accepted 11 November 2026) (12 placements; it passes an argument to the shared empty stub), the [tag-and-mask update](../../src/levels/03_kalidon/LEVEL_03_177C18.c) (accepted 9 November 2026) (7 placements) and the [bounded table cell](../../src/levels/16_multiplayer_01/LEVEL_16_0220C8.c) (accepted 11 November 2026) (5 placements; the accepted callers disagree with each other). Reopen by reconciling those prototypes while keeping every accepted object hash, then relink each placement and rerun the complete-module gate.
 
-### USA bounded bodies of 61–120 bytes (9 November 2026)
+#### USA bounded bodies of 61–120 bytes (9 November 2026)
 
 Parallel attempts covered the 240 smallest relocation-masked forms of 61–120 bytes that had no retained attempt. Eighty-two representative pure-C attempts still differ from retail and earn no credit; 35 of them link at a different length. The eleven closest attempts (equal length, at most four differing words) are retained under `nonmatching/levels/` with their measured first difference and a reopening condition:
 
@@ -2204,17 +1883,17 @@ Parallel attempts covered the 240 smallest relocation-masked forms of 61–120 b
 
 **ABI holds, separately uncredited.** In the same selection and the extended accepted families, 219 placements in 63 forms link byte-exact but disagree with an accepted callee definition or accepted callers: 78 conflicts differ only between pointer and integer arguments, 64 in the argument count and 49 in whether a value is returned. Many involve shared stubs such as `FRONTEND_0025B0.c` and `FRONTEND_001E08.c`. Reopen them together by reconciling those prototypes while keeping every accepted object hash, then relink each placement and rerun the complete-module gate.
 
-### USA bounded bodies of 100–200 bytes (9 November 2026)
+#### USA bounded bodies of 100–200 bytes (9 November 2026)
 
 Parallel attempts covered the 748 relocation-masked forms of 100–200 bytes that had no retained attempt; 124 forms are now accepted. The other attempts stay outside the repository for a measured retry pass and earn no credit.
 
 **ABI holds, separately uncredited.** In this selection 748 placements in 104 forms link byte-exact (102,236 placement bytes) but disagree with an accepted callee definition or accepted callers. Of the 1,007 conflicts, 322 differ in the argument count, 291 only between pointer and integer arguments, 273 in whether a value is returned and 121 in other argument classes. The largest group uses the return value of accepted per-level helpers that are defined as `void` (for example [LEVEL_03_0FB398.c](../../src/levels/03_kalidon/LEVEL_03_0FB398.c)); many others pass arguments to the empty shared stub [FRONTEND_001E08.c](../../src/levels/shared/FRONTEND_001E08.c), which is defined without parameters at 2,219 placements. One representative per form is retained under `nonmatching/levels/`. Reopen them by reconciling those prototypes with the accepted definitions and callers while keeping every accepted object hash, then relink each placement and rerun the complete-module gate.
 
-### Prototype review of the held 61–200-byte bodies (9 November 2026)
+#### Prototype review of the held 61–200-byte bodies (9 November 2026)
 
 Two rules that keep every linked byte released 142 of the held placements: a caller's `void` declaration of a callee whose accepted definition returns a value now takes that return class, and accepted parameterless constant stubs whose callers pass arguments moved to six typed stub sources at 127 placements. The other **899 byte-exact placements in 175 forms** (108,520 placement bytes) stay held, with one representative each under `nonmatching/levels/`. Most remaining conflicts differ between pointer and integer arguments or in the argument count. Casting at each call would only hide the disagreement: when a caller passes small integer constants where an accepted definition declares pointers, the accepted definition is the likelier error. Reopen them per callee family: recover the parameter types from the callee body and all of its callers, correct the accepted definition and every accepted caller while each keeps its object hash, then relink the held placements and rerun the complete-module gate.
 
-### Retry passes over open forms of up to 200 bytes (9 November 2026)
+#### Retry passes over open forms of up to 200 bytes (9 November 2026)
 
 Two retry passes restarted from earlier attempts: of 446 forms with a retained attempt, 37 now match, and of 200 forms whose first attempt in the 61–200-byte selections did not match, 29 do. Their 211 retained files left `nonmatching/levels/`; the entries above that cited them are marked accepted and link the accepted sources. The remaining attempts stay outside the repository for a further measured pass and earn no credit.
 
@@ -2226,7 +1905,7 @@ A third retry pass and a review of address variants of accepted sources matched 
 
 The rest of the third retry pass matched 57 more forms; their 148 retained files left `nonmatching/levels/` and the entries above that cited them now link the accepted sources. **Withdrawn or refused exact C:** [FRONTEND:0x0249D8](../../nonmatching/levels/alternatives/FRONTEND_0249D8_volatile.c) links 140/140 bytes only because a callee's return type points at a `volatile` 64-bit value, which forces the retail 64-bit load; it was accepted in #229 and is withdrawn, with its earlier [attempt](../../src/levels/frontend/FRONTEND_0249D8.c) (accepted 11 November 2026) restored. [FRONTEND:0x012600](../../nonmatching/levels/alternatives/FRONTEND_012600_zero_temp.c) and its 20 level copies link 140/140 bytes only through a local zero temporary in a clamp; the natural `if (quotient < 0) quotient = 0;` links 144 bytes (19 differing words, first at +0x34). Retry both by recovering the natural types and control flow. **ABI holds:** 305 byte-exact placements in 23 forms (35,904 placement bytes) stay held, with representatives under `nonmatching/levels/` or its `alternatives/` directory.
 
-### USA bounded bodies of 201–600 bytes (9 November 2026)
+#### USA bounded bodies of 201–600 bytes (9 November 2026)
 
 Never-attempted forms of 201–300 and 401–600 bytes are being worked in parallel; 113 forms are accepted so far, and their nonmatching attempts stay outside the repository for a measured retry. **ABI holds:** 395 byte-exact placements in 49 forms (98,656 placement bytes) disagree with accepted callers or callees — larger bodies call more accepted helpers, so a higher share is held. Their representatives are under `nonmatching/levels/`. Reopen them like the other ABI holds above.
 
@@ -2256,7 +1935,7 @@ A second round of prototype corrections releases 1,059 held placements in 161 fo
 
 A third round of prototype corrections releases 113 held placements: 97 more accepted functions were retyped in 255 accepted sources and the byte-exact held callers of 78 more accepted functions now declare them as defined. A second correction of the [LEVEL_01:0x1337C8](../../src/levels/01_pokitaru/LEVEL_01_1337C8.c) getter family to an unused argument was withdrawn for the reason recorded above (its FRONTEND member is called without one), so its twenty held callers stay held. 34 retained representatives of now-accepted placements left `nonmatching/levels/` (three of them from its `alternatives/` directory). About 600 held placements remain, in a long tail of about 420 distinct caller/callee disagreements; the largest is a twenty-level getter family whose held callers declare `void` while its accepted definition returns `int`.
 
-A fourth round of prototype corrections releases 79 held placements: 38 more accepted functions were retyped in 419 accepted sources. A third correction of the [LEVEL_01:0x1337C8](../../src/levels/01_pokitaru/LEVEL_01_1337C8.c) getter family to an unused argument was withdrawn for the reason recorded above. The prototype review now reads `long` and `unsigned long` as 64-bit, as they are under this compiler (`sizeof (long)` is 8 under both profiles), which raises the count of caller/callee disagreements on `master` from 1,691 to 1,753. [LEVEL_01:0x0CAA30](../../src/levels/01_pokitaru/LEVEL_01_0CAA30.c) (accepted 11 November 2026) (2,096 bytes) links exactly at fifteen placements but stays held: it passes three floats to the accepted wrapper at `LEVEL_01:0x0B7B58`, whose definition forwards only three pointers to `LEVEL_01:0x0B7978`. [LEVEL_01:0x063628](../../nonmatching/levels/LEVEL_01_063628.c) (676 bytes) reproduces all of its function bytes only with the qualified `ps2eeas` route, but that assembler aligns its text section to 8 bytes and pads it to 680, so the gate's section check rejects it; under the base assembler one word differs. The return-0 stub source [FRONTEND:0x0025B0](../../src/levels/shared/FRONTEND_0025B0.c) is accepted at 407 placements that are different retail functions, and their held callers declare them in eight incompatible ways (197 held placements, 54,292 bytes); one shared prototype cannot serve them all, so those placements need typed stub sources per caller class. 36 retained representatives of now-accepted placements left `nonmatching/levels/` (four of them from its `alternatives/` directory). About 560 held placements remain.
+A fourth round of prototype corrections releases 79 held placements: 38 more accepted functions were retyped in 419 accepted sources. A third correction of the [LEVEL_01:0x1337C8](../../src/levels/01_pokitaru/LEVEL_01_1337C8.c) getter family to an unused argument was withdrawn for the reason recorded above. The prototype review now reads `long` and `unsigned long` as 64-bit, as they are under this compiler (`sizeof (long)` is 8 under both profiles), which raises the count of caller/callee disagreements on `master` from 1,691 to 1,753. [LEVEL_01:0x0CAA30](../../src/levels/01_pokitaru/LEVEL_01_0CAA30.c) (accepted 11 November 2026) (2,096 bytes) links exactly at fifteen placements but stays held: it passes three floats to the accepted wrapper at `LEVEL_01:0x0B7B58`, whose definition forwards only three pointers to `LEVEL_01:0x0B7978`. [LEVEL_01:0x063628](../../src/levels/01_pokitaru/LEVEL_01_063628.c) (accepted 26 November 2026) (676 bytes) reproduces all of its function bytes only with the qualified `ps2eeas` route, but that assembler aligns its text section to 8 bytes and pads it to 680, so the gate's section check rejects it; under the base assembler one word differs. The return-0 stub source [FRONTEND:0x0025B0](../../src/levels/shared/FRONTEND_0025B0.c) is accepted at 407 placements that are different retail functions, and their held callers declare them in eight incompatible ways (197 held placements, 54,292 bytes); one shared prototype cannot serve them all, so those placements need typed stub sources per caller class. 36 retained representatives of now-accepted placements left `nonmatching/levels/` (four of them from its `alternatives/` directory). About 560 held placements remain.
 
 A fifth round releases 22 held placements: the byte-exact held callers of 61 more accepted functions now declare them as they are defined. The held caller at `LEVEL_16:0x11D978` is exact with its corrected declaration only under another compiler profile than the one it is held with, and is checked again later. Fourteen newly exact forms of 420–700 bytes (245 placements, 121,616 bytes) are held because their prototypes disagree with accepted code: their callers declare `void` for local callees whose accepted definitions return `int`, pass arguments that the accepted definitions do not take, or are declared otherwise by the accepted callers of their own function. Among them, `LEVEL_01:0x0B7978` takes three floats before its four integer arguments, while the accepted wrapper [LEVEL_01:0x0B7B58](../../src/levels/01_pokitaru/LEVEL_01_0B7B58.c) and its copies in the other levels declare only the four integers and forward no floats; it waits, with [LEVEL_01:0x0CAA30](../../src/levels/01_pokitaru/LEVEL_01_0CAA30.c) (accepted 11 November 2026), for those wrappers to forward the floats that their callers pass. Three retained representatives of now-accepted placements left `nonmatching/levels/`. About 800 held placements remain.
 
@@ -2270,7 +1949,7 @@ Copies of accepted shapes at pointer-only and nonzero-tail candidate bodies: 1,1
 
 Pointer-only and nonzero-tail bodies written as new C (11 November 2026): 680 placements in 59 forms stay held because their callers or callees disagree with an accepted prototype; 21 of the forward disagreements involve callees named after their boot twins, which the review saw only once it read definitions of any name. About 2,320 held placements remain.
 
-## Bounded USA level source updates (13 November 2026)
+### Bounded USA level source updates (13 November 2026)
 
 The reviewed C now supplies 123 additional placements of at most 200 bytes,
 17,640 bytes by placement. This adds 117 source files, including one explicitly
@@ -2316,7 +1995,7 @@ under both linker runtimes before the full-module check. Known whole-object
 alternatives address only assembler debug metadata, as documented in blocker 15.
 The provisional masked-shape denominator and runtime-behavior limitations remain.
 
-### USA bodies of at most 200 bytes (14 November 2026)
+#### USA bodies of at most 200 bytes (14 November 2026)
 
 Every open level body of at most 200 bytes (1,154 relocation-masked forms, every
 candidate kind) and every open boot interval of at most 200 bytes outside the
@@ -2339,7 +2018,22 @@ that end in a normal return. The 34 nonmatching bodies of `0x01EC8400`-`0x01ED0E
 are kernel system-call stubs that no C reproduces. 51 boot near misses within 30
 differing words are retained under `nonmatching/boot/`.
 
-### USA bodies of 801 to 1,500 bytes and near-miss retries (22 November 2026)
+#### USA bodies of 201 to 400 bytes (21 November 2026)
+
+Every open level body of 201 to 400 bytes (875 relocation-masked forms, every
+candidate kind; forms held for prototypes were left out) was attempted, in two
+passes. 333 forms were exact; 1,633 placements are accepted. 588 placements in 73
+forms stay held because a placement declares a callee unlike its accepted
+definition or is defined unlike an accepted caller's declaration; one
+representative of each is retained under `nonmatching/levels/` with the
+disagreement in its header. 235 near misses within 30 differing words are
+retained there too. Several entries are tail fragments without a prologue (they
+read registers set by the preceding interval) and cannot be compiled alone; they
+need a boundary review before any retry. The object hashes of the 20 sources added
+with `ps2eeas` were first recorded from a full environment and were refreshed on
+22 November 2026 (PR #289; see the `Ps2EeAs` note).
+
+#### USA bodies of 801 to 1,500 bytes and near-miss retries (22 November 2026)
 
 Every open level body of 801 to 1,500 bytes (658 relocation-masked forms, every
 candidate kind) was attempted, and 30 forms were exact, about one in twenty. Even
@@ -2360,7 +2054,7 @@ exact (45 of the earlier retries, 26 of the 401-800 byte misses and 6 of the lar
 bodies), and 74 of them are accepted with 364 address variants. One entry is exact
 only with a per-file `-fno-force-mem`, which is not a recorded option; it is left out.
 
-### USA bodies of 401 to 800 bytes (22 November 2026)
+#### USA bodies of 401 to 800 bytes (22 November 2026)
 
 Every open level body of 401 to 800 bytes (1,027 relocation-masked forms, every
 candidate kind; forms held for prototypes were left out) was attempted, and 112
@@ -2381,7 +2075,7 @@ registers or constants. A grid of 36 compiler routes (four `cc1` profiles, three
 assemblers, `-fno-gcse` and `-mno-check-zero-division`) made none of the 83 exact;
 they need source changes.
 
-### Sister-decompilation twins (22 November 2026)
+#### Sister-decompilation twins (22 November 2026)
 
 A scan of every unmatched USA function against the matched C of OpenRAC/rac1,
 rac2, rac3, rac4 and Secret Agent Clank, and against this project's own matched C,
@@ -2397,20 +2091,565 @@ boot route; `sceCdRead` (23 words) and `atexit` (20 words) differ; `sceGsResetPa
 `sceGsSyncPath` and `sceSifCallRpc` rely on inline assembly in their sister source.
 The retained ones are under `nonmatching/`.
 
-### USA bodies of 201 to 400 bytes (21 November 2026)
+### Retained USA boot attempts and reviews (15–17 November 2026)
 
-Every open level body of 201 to 400 bytes (875 relocation-masked forms, every
-candidate kind; forms held for prototypes were left out) was attempted, in two
-passes. 333 forms were exact; 1,633 placements are accepted. 588 placements in 73
-forms stay held because a placement declares a callee unlike its accepted
-definition or is defined unlike an accepted caller's declaration; one
-representative of each is retained under `nonmatching/levels/` with the
-disagreement in its header. 235 near misses within 30 differing words are
-retained there too. Several entries are tail fragments without a prologue (they
-read registers set by the preceding interval) and cannot be compiled alone; they
-need a boundary review before any retry. The object hashes of the 20 sources added
-with `ps2eeas` were first recorded from a full environment and were refreshed on
-22 November 2026 (PR #289; see the `Ps2EeAs` note).
+These reports stood under blocker 17 until 26 November 2026; their order and wording are
+unchanged, so "above" and "below" refer to paragraphs of this section.
+
+**Boot draw dispatch and vector-angle timing, 17 November 2026.**
+The retained [DRAW_Render](../../nonmatching/boot/DRAW_Render__F10DRAW_LayerT0Ui.c)
+reproduces all 316 linked body bytes under rebuilt default GNU, `-O2 -G0`,
+GNU assembly and independent SN links. Trial emits 320 bytes, 270 equal
+positions in the compared 316-byte prefix, first difference +0x2C. The
+following zero word and separate 56-byte initializer are excluded. Separate
+original-layer and traversal-cursor lifetimes preserve the helper/callback
+order. The partial context view exposes unsigned halfword prefix counts,
+20-byte mesh records and callback heads; opaque fields remain opaque.
+Observed callers cover layers 0..31 in three ranges, with context zero.
+Callback payload is an opaque 32-bit ABI carrier; its historical type,
+ignored callback result, helper ignored-argument contracts, live node/storage
+and indirect-call domains remain review holds. Local raw equality is not
+qualification or accepted C credit.
+
+The retained [VEC_AngleBetweenVectors](../../nonmatching/boot/VEC_AngleBetweenVectors__FPC4VEC3T0b.c)
+emits 312 FUNC/text bytes under default GNU and ordinary trial: 174/312 equal
+positions, first difference +0x34 against its 316-byte retail body. Apart from
+three affected branch displacements, the missing word is a square-root
+dependency delay. The known division-padding compiler emits 320 bytes,
+216/316 equal positions, first +0x34; it changes both division and square-root
+spacing. The known SN assembler does not resolve this difference. No dummy C
+or edited compiler output is used. Reopen with independently justified
+square-root/division scheduling and regression controls, rather than another
+arithmetic spelling. The following zero word and 72 orphan bytes are excluded.
+The encoded C++ boolean is represented only by a 32-bit ABI carrier in its
+valid 0/1 domain; the sole observed caller supplies zero. The original C++
+route and indirect callers remain unproved. Zero-length behavior, inclusive
+clamps, the normalization bypass and original float operations are retained;
+no unit-vector, host IEEE or repaired-domain assumption is added.
+
+**Boot raw-block parsing and shared quaternion source, 17 November 2026.**
+The [TJZIP raw-block parser](../../src/boot/TJZIP_ParseRawDataBlock__FPPUcT0PUi.c)
+(accepted on 26 November 2026 from a port of OpenRAC/rac-sac-decomp's matched C, which
+supersedes the retained attempt described here) reproduces all 444 linked body bytes under rebuilt default GNU and
+`gnu-ee-trial`, with `-O2 -G0`, GNU assembly and independent SN links. Both
+actual object and linked FUNC/text extents are 444 bytes; the following zero
+alignment word is excluded. The source adapts the repository's accepted level
+parser, using the boot callback's proven byte-pointer argument and return
+type rather than copying an integer-return declaration. The Decompress
+symbol's callback type and all three indirect argument/result flows agree.
+Only the named callback, threshold and signature-table globals are required.
+
+Independent instruction/state checks cover 353 cases, including all nonzero
+short markers, extended lengths through 65,535, null/mutating callbacks,
+header-source redirection, overlapping byte buffers and shared cursor cells.
+Original reloads and sequential byte/CRC/cursor effects remain; no bulk-copy,
+capacity guard or callback-purity assumption is added. Valid live storage,
+capacities, callback contracts and the same-array threshold-minus-32 pointer
+domain remain obligations. Local raw equality does not qualify tools or
+promote the retained source.
+
+The existing [shared Quat_Slerp source](../../src/levels/shared/Quat_Slerp__FP4QUATPC4QUATT1f.c)
+was reused unchanged for the 416-byte boot placement. Its existing
+`gnu-ee-trial-divpad` level route reproduces all 416 linked boot bytes, with
+the complete object equal to the already accepted level object pin. Default
+GNU emits 400 bytes, 259/400 equal positions, first difference +0x8; ordinary
+trial emits 408 bytes, 279/408 equal positions, first +0xCC. The exact route
+retains one named `acosf` and three `sinf` calls and the observed `f12` input.
+There is one authored definition: no boot source duplicate, flag override or
+accepted-source change is introduced. The compiler route remains level-only;
+this standalone boot measurement is not a complete boot gate or qualification.
+Keep explicit placement acceptance separate from the source's directory.
+Input snapshots, partial-overlap ordering, unclamped dot products and original
+floating-point comparisons are preserved; host IEEE edge cases are not a
+substitute for EE runtime evidence.
+
+**Further USA boot attempts, 17 November 2026.** Four retained sources use
+`-O2 -G0`, rebuilt GNU tools, GNU assembly and independent SN links. These are
+local measurements, not qualification or accepted C credit.
+
+| Source | Default GNU result | Remaining condition |
+| --- | --- | --- |
+| [Ascii2Sjis](../../nonmatching/boot/Ascii2Sjis__FUc.c) | 232/232 body bytes exact; trial agrees | Review the table access views and original caller domain before promotion. |
+| [PAR_PostInit](../../nonmatching/boot/PAR_PostInit__Fv.c) | 248/248 body bytes exact | Storage/capacity, allocation failure and indirect-caller invariants remain. |
+| [SIG_CalcCaseInsensitiveSignature](../../nonmatching/boot/SIG_CalcCaseInsensitiveSignature__FPCc.c) | 216 bytes, 121/216 equal positions, first difference +0x6 | Recover cached-control, raw-byte and cursor lifetimes and generated read scheduling. |
+| [DRAW_BeginUpdate](../../nonmatching/boot/DRAW_BeginUpdate__Fv.c) | 412 bytes, 247/412 equal positions against 420 retail bytes, first difference +0x62 | Reconcile the material-cache word type with its accepted zero writer. |
+
+For ASCII conversion, an effective punctuation-table index base and a used
+16-bit result joining the two lookup paths reproduce the body without register
+constraints. Only accessed halfword fields and an opaque remainder are exposed;
+no conversion-table initializers are imported. Independent checks cover all
+256 input bytes and their table-load traces, with additional synthetic tables.
+
+PAR initialization preserves the unconditional setup call, signed count guard,
+count reload after allocation, saved count across the pool calls, later byte and
+storage reloads, descriptor-page assignment and final lock store. Its second
+pool-count multiplication explicitly uses the observed low-32-bit wrap before
+target-int conversion. The existing allocator interface is reused and the two
+pool views remain opaque. Five thousand private mutable-helper scenarios
+corroborate these effects. Trial emits 252 bytes, 200/248 equal positions,
+first difference +0x2C; use default GNU for this local candidate.
+
+The signature function retains its separator lookahead quirk: a local cursor
+scans ahead, while the main cursor still advances by one byte. Repeated
+separators are not collapsed. Generated read scheduling remains different;
+result agreement on valid terminated strings is not an exact-body proof.
+Its observed 216-byte body excludes the following 16-byte tail containing
+nonzero words. Trial emits 224 bytes, 81/216 equal positions, first +0x6.
+Closed cursor/classification and iterator forms did not improve the retained C.
+
+DRAW uses the integer space-count views already established by accepted boot
+callers and keeps the accepted `DRAW_EndUpdate` int cache declaration. An
+unsigned-cache diagnostic reproduces all 420 bytes, but conflicts with that
+declaration and is not the retained boot candidate. A private declaration-only
+EndUpdate control preserves its complete pinned object; reviewed cache-word
+producers use an unsigned material argument and observed reads use equality.
+This supports a separate type-reconciliation review, not a silent change to a
+frozen interface. Trial leaves the correctly typed attempt at 416 bytes,
+249/416 equal positions, first +0x62. The following zero alignment word is
+excluded from the 420-byte observed body. Buffer/toggle/capacity and indirect
+entry obligations remain; do not add a dead use or register hint to gain bytes.
+
+**Boot memory-card helpers, 15 November 2026.** Four retained USA boot sources replace the
+14 November trials of the same names, measured after an independent SN link at their retail
+addresses under the rebuilt default GNU route, `gnu-ee-trial` and `sdk991111`, all with
+`-O2 -G0` and the same GNU assembler; the three routes agree on every linked text. Trials that
+kept one local copy, one pointer or a bitfield came out short: the setters lost a byte mask
+that retail keeps, the header updater lost two pointer copies.
+
+The cause is the source shape, not the compiler. Retail matches code that names the stored
+object again in each statement. For the
+[Dan-skin setter](../../src/boot/MEMCARD_SetDanSkinUnlocked__FUi.c) and
+[widescreen setter](../../src/boot/MEMCARD_SetWideScreenToMemcard__FUi.c),
+`flags &= ~BIT;` followed by `flags |= (enabled ? BIT : 0);` on the stored byte itself gives
+all 36 bytes: the second statement reuses the value the first one stored, the masked value
+therefore has two uses, and the byte extension between the two masks cannot be merged away.
+For the [header updater](../../src/boot/MEMCARD_SetHeaderDetail__FUiUiUiUiUi.c), four
+assignments that each index the header array again give all 52 bytes: the repeated address
+computations become register copies that stay separate. These three were exact local witnesses;
+all three were accepted on 26 November 2026. When a small accessor keeps a redundant mask, extension or register
+copy, try the repeated-object form before suspecting the compiler.
+
+The [hardcore setter](../../src/boot/MEMCARD_SetHardcoreModeBit__FUib.c) has the same
+two statements and is 48 compiled bytes, 30 equal positions, first difference at byte 16. Its
+mangled name carries a C++ `bool` parameter. Retail keeps a conditional move on the raw
+argument; a C `int` argument turns `enabled ? 1 : 0` into a comparison result that is ORed in.
+With a real `bool` parameter, the C++ front ends of three locally available SN packages
+(2.9-ee-991111, 2.95.2 and ProDG 2.95.3) each produce all 48 retail bytes from those two
+statements. The boot gate has no C++ route; this is the first boot body measured to need one,
+and `_GLOBAL_$I$SYSTEMS_memcard_ps2.cppBRcaaa` shows the unit was C++. Superseded on 26 November
+2026: the pinned C chain gives all 48 bytes when the bit is cleared in memory first and the flag
+byte is read back into an `unsigned char` local (`flags &= ~1; f = flags; v = f | 1; if (!enabled)
+v = f; flags = v;`), so the conditional move is on the reloaded byte; the body is accepted.
+
+**Boot mailbox, WAD lookup and sound helpers, 16 November 2026.** Six retained USA boot sources
+are exact after an independent SN link at their retail addresses under the rebuilt default GNU
+route and `gnu-ee-trial` (`-O2 -G0`, default GNU assembler); a seventh stays a measured trial.
+They are local witnesses, not accepted matches. Each one was a near miss or a discarded trial
+until its source shape changed:
+
+- [`MBOX_Send`](../../src/boot/MBOX_Send__FiP12HigMsgPacket.c) (accepted on 26 November 2026),
+  [`MBOX_Poll`](../../nonmatching/boot/MBOX_Poll__FiPP12HigMsgPacket.c): a range test and a
+  one-bit signed flag test written as two early returns lose the negation of the flag and move
+  the failure return. Written as one condition, `if (index >= 16 || table[index].flag == 0)
+  return error;`, the negation stays and the failure return sits in the middle of the body.
+- [`MBOX_Create`](../../nonmatching/boot/MBOX_Create__FPCcUiPv.c): a signed index, a scan loop
+  with an empty body and a comparison with the bound after it. The result is a signed `int`:
+  a pointer or unsigned result loads the failure constant before the return instead of in its
+  delay slot. The accepted caller declares a pointer result and compiles identically either way.
+- [`GLOBALWAD_FindAssetsInWadBySignature`](../../nonmatching/boot/GLOBALWAD_FindAssetsInWadBySignature__FP13WadLocationIDUi14WAD_ASSET_TYPE13WadLocationID.c): when retail copies an
+  argument into a scratch register and loads small constants into that register only after each
+  call, the source has a second variable that starts as the argument and is assigned again
+  after every call, so it never lives across one.
+- [`SND_FindVag`](../../nonmatching/boot/SND_FindVag__FPCc.c): a second copy of a failure
+  constant at the end of the body, jumped over by the normal return, is a guard that wraps the
+  whole body (`if (table != 0) { ...; return found; } return -1;`), not an early return.
+- [`SND_Fixup`](../../nonmatching/boot/SND_Fixup__FUiPFP13WadLocationIDUi14WAD_ASSET_TYPE13WadLocationID_P15WAD_FILE_HEADER.c): the result is cleared before the call that
+  precedes its real assignment, and two adjacent stores are written in the opposite order.
+- [`SND_PauseAtrac`](../../nonmatching/boot/SND_PauseAtrac__Fbi.c) is still 160 compiled bytes
+  against 168: retail keeps its refusal path in line and one store out of a delay slot. Fifteen
+  forms of the refusal test did not change that. Its first parameter is a C++ `bool`.
+
+The [saving query](../../nonmatching/boot/MEMCARD_Saving__Fv.c) is unchanged: retail computes
+the comparison in one register and copies it to the result. About sixty C and C++ spellings of
+the same test (conditional expressions, `switch`, `goto`, inline helpers, `bool`, wider or
+narrower result types) give either the 48-byte form or an early-return form.
+`SND_IsATRACPaused__FP13ATRACInstance` has the same extra copy. Reopen with evidence for a
+second use of the comparison value or for the original helper structure.
+
+**Retained USA boot sources, 15 November 2026.** Seven sources under
+`nonmatching/boot/` reproduce their complete measured bodies in independent
+SN links with rebuilt GNU tools, `-O2 -G0`: `SYSTEM_SetDepthWrite__Fb`
+(240 bytes), `HIT_fread__FPvUiUiPi` (212), `TEXMGR_Initialize__Fv` (248),
+`VRAM_InitGraphics__Fv` (208), `MCPFONT_RegisterFontTextures__Fv` (216),
+`VEC_MakeMatFromYawPitchRoll__FP4VEC3N20fff` (208) and
+`Spiral_EmitJoint__FP12Spiral_GroupPC12Spiral_Pointb` (260). The last two
+need `gnu-ee-trial` for save order; the others also reproduce under the
+default route. `HIT_fread` additionally needs the existing
+`-mno-check-zero-division` option. These are retained, unaccepted sources;
+rebuilt tools do not qualify the profile or earn C credit.
+
+A temporary integration on master `37b245c6b` passed the complete boot gate:
+847 exact objects, 498,900 exact text bytes, 809,872 exact raw load bytes and
+the complete 856,120-byte ELF exact. Its 820 accepted bodies (108,824 bytes)
+were unchanged. The run used `--unpinned-tools`; the temporary integration
+and catalogue changes were removed from the retained-source contribution.
+Requalification and semantic review remain necessary before promotion.
+
+Useful source constraints: materializing the returned texture before
+publishing it resolves `TEXMGR_Initialize`'s address lifetime; member-store
+order resolves `VRAM_InitGraphics` (195/208, then 206/208, then exact).
+The original font-width attempts remained different: `MCPFONT_FontStringPixelLength`
+emits 216 bytes against 208, 63 equal positions in the compared prefix,
+first difference +0x1C (hoisted constant and an extra saved register);
+`MCP_FontStringPixelLength` emits 216/216 bytes, 202 equal positions,
+first difference +0x31 (index/width register allocation). Reopen with new
+evidence of those live ranges, rather than repeating the tested local forms.
+`PAR_Reset__Fv` emits 232 bytes under the default route and 236 under
+`gnu-ee-trial`, against 240 retail bytes; respectively 101/232 and 104/236
+compared positions agree, first difference +0x21. Its next useful experiment
+is recovery of the list/end-pointer representation, not a global profile change.
+
+A bounded follow-up on 15 November retained the same `PAR_Reset` attempt:
+keeping the block base live through direct field accesses and an explicit
+next-block value, then two store-order forms, still emits 232/236 bytes with
+first difference +0x21. Store order alone does not explain the missing body
+bytes or the extra live list-head value. Do not repeat those three forms.
+
+**Font-width resolution, 16 November 2026.** The retained
+[`MCPFONT_FontStringPixelLength`](../../nonmatching/boot/MCPFONT_FontStringPixelLength__FPCcUi.c)
+and [`MCP_FontStringPixelLength`](../../nonmatching/boot/MCP_FontStringPixelLength__FPCcUi.c)
+now reproduce all 208 and 216 bytes, respectively, with rebuilt default GNU
+and `gnu-ee-trial`, `-O2 -G0`, GNU assembly and independent SN links.
+MCPFONT's authored inline equality predicate removes the loop-held comparison
+constant and extra saved register, first reaching 194/208 equal positions.
+The source uses ordinary equality, with no explicit XOR or register constraint;
+the predicate is fully inlined and emits no extra function.
+
+Both functions then become locally exact by separating the 16-bit stored total
+from a wide per-glyph temporary. The temporary holds total + 1 (at most 65536)
+across the helper calls; adding the glyph byte then narrows the final sum.
+Neither local is exposed to the calls. This preserves wrapping, byte-prefix
+consumption, original out-of-count reads and the reviewed helper ABI.
+Allocation dumps explain the change: the wide temporary is allocated locally,
+while the narrow stored total does not cross either call and can reuse its
+register. The global index receives the other register. The prior single wide
+accumulator left both values to global allocation, which prioritized the index
+(21 weighted references over 66 instructions versus 10 over 32 for the width).
+Declaration/initialization changes and equivalent loop rewrites did not fix it.
+
+Independent checks verify actual object and linked text/FUNC sizes, exact raw
+body bytes, normal resolution of the two helper references and no absolute-symbol
+masks. Source and preprocessed C policy checks pass. A temporary integration
+passed with 842 exact objects, all 809,872 load bytes and the complete
+856,120-byte ELF exact. Both symbols were real compiled FUNC owners; all 840
+baseline replacement records and 820 accepted bodies stayed unchanged. Its
+mechanical audit leaves both ready for semantic review with no mechanical
+reason. Metadata was archived then restored; the receipt is historical for that
+restored checkout. The tools were unpinned: both sources remain in `nonmatching/`
+and no qualification or accepted C credit follows.
+This supersedes their earlier differing measurements, not the separate semantic
+and qualification obligations. Unchanged-body C/C++ frontend checks did not
+resolve either original attempt or identify the original compiler.
+
+For `PAR_Reset`, guarding a `do/while` traversal with the initial empty-list test
+still emits 232/236 bytes (default/trial), 87/90 equal positions, first difference
++0x21. A later ordinary iterator-object representation resolves the missing
+sentinel lifetime. Address-based comparison examines the current and finishing
+iterators, and a value-returned previous iterator snapshots the reverse link
+before node reset. Combining this with the previously measured two-link-pair
+reset order reproduces all 240 bytes under default GNU. `gnu-ee-trial` instead
+emits 244 bytes, 191 equal positions, first difference +0x98 at loop padding.
+The helpers are fully inlined list operations, with no extra observable use or
+register constraint. Independent semantic review found no new regression;
+4,096 private differential scenarios corroborate the preserved traversal,
+self-links, free-chain rebuild and callback-visible state. Malformed lists,
+arbitrary storage/capacity and indirect-entry boundaries remain open. This new
+PAR candidate was not covered by the 842-object font experiment above.
+
+A subsequent integration on 16 November includes all thirteen retained boot
+candidates: the previous ten plus both font-width functions and `PAR_Reset`.
+It passed with 853 exact objects, 498,900 exact text bytes, 809,872 exact load
+bytes and the complete 856,120-byte ELF exact. All thirteen candidates were
+attributed to real compiled FUNC symbols (2,884 body bytes), without absolute
+symbol masks; the separate quaternion initializer stayed in the baseline.
+All 840 previous replacement records and 820 accepted bodies stayed unchanged.
+The mechanical audit leaves all thirteen ready for semantic review, with no
+mechanical reason. The manifest, audit, attribution and integration patch were
+archived and all temporary metadata restored. This used unpinned tools, so
+qualification and promotion remain separate and no accepted C credit follows.
+
+Two further retained boot sources reproduce their measured bodies after
+independent SN links: [`dlib_displist_set_texture_state`](../../nonmatching/boot/dlib_displist_set_texture_state__FP13DLIB_DISPLISTiUlUlUlUl.c)
+(204 bytes plus one zero alignment word, default GNU and `gnu-ee-trial`) and
+[`AdjustDLISTSize`](../../nonmatching/boot/AdjustDLISTSize__FUiPP6QWdataPUi.c)
+(240 bytes, default GNU). Both use `-O2 -G0` and the default GNU assembler;
+`AdjustDLISTSize` under `gnu-ee-trial` emits 244 bytes, 113 equal positions
+in the compared 240-byte prefix, first difference +0x58 in loop padding.
+The buffer-size fallback, optional outputs and original count expression
+are preserved. The direct boot path's capacity is corroborated below;
+arbitrary inputs and local prefix types still need review.
+
+**Buffer semantics, reviewed 15 November 2026 ([PR #274](https://github.com/OpenRAC/rac5-sm-decomp/pull/274)).** `g_dlibBufferSize` is a
+one-list count N of 16-byte elements. The initializer at `0x01E93A68`
+allocates 32N bytes with requested 64-byte alignment; its direct boot
+initialization chain passes N=`0x16000`. The two direct cache-allocation
+sites (`0x01E65DA4`, `0x01E66BA0`) request `0x200000` bytes.
+`UpdateBufferCacheState` selects S=`0x6000` elements per list, leaving
+exactly that cache tail in the `0x2C0000`-byte allocation, assuming
+successful allocation and normal initialization. The optional count output
+is nevertheless `0x260000`, overstating that tail by `0x60000`; the reviewed
+caller discards it. Preserve the expression and do not describe its result
+as remaining capacity. Arbitrary requests can wrap or yield S=0, which
+selects the original N-sized lists. Allocation failure, alias writes and
+indirect or imported use remain outside this direct-path proof.
+
+**Texture-state storage, reviewed 15 November 2026.** All five direct boot
+sites select mode 1 and pass the same four 64-bit payloads. For a well-formed
+16-byte-aligned list, the helper advances its cursor by seven quadwords
+(112 bytes): two framing words, four payload pairs and a reserved next-tag
+slot. Six new quadwords are written; the old chain tag is separately
+copied/backpatched, while the final slot is reserved without a store.
+The retail stored template gives a four-pair count, but it resides in
+writable data; its runtime value is not proved invariant. The helper chain
+does not check capacity or previously open packet state. Valid prior tag
+storage, a suitable template and caller headroom remain review obligations.
+The combined nine-candidate experiment passed a fresh complete boot gate
+on the same master: 849 exact objects, 498,900 exact text bytes, 809,872
+exact load bytes and the full 856,120-byte ELF exact. The 820 accepted
+bodies stayed unchanged. This used unpinned tools; temporary metadata
+and flags were restored after archiving and no body was promoted.
+
+[`Quat_ConvertToMatrixInternal<MATRIX4>`](../../nonmatching/boot/Quat_ConvertToMatrixInternal__H1Z7MATRIX4_PX01PC4QUAT_v.c)
+is now a **local exact candidate, 15 November 2026**. Adapting the explicit
+nine-product order and input snapshot already accepted in
+[`LEVEL_06_119B10.c`](../../src/levels/shared/LEVEL_06_119B10.c), with its
+packed MATRIX3 outputs mapped to the boot's four-float MATRIX4 stride,
+reproduces 184/184 bytes on the first retry. Independent SN links under
+rebuilt default GNU and `gnu-ee-trial`, `-O2 -G0`, default GNU assembler,
+agree. Both objects and linked ELFs have actual 184-byte text sections and
+184-byte non-absolute function symbols; no trimming, relocation or undefined
+external is involved. The separately called 56-byte initializer is excluded.
+
+The earlier retained row-order source gave 98/184 equal positions, first
+difference at entry; diagonal-first stores gave 81/184, first +2, and
+capturing input components alone did not change that object. Those are
+superseded measurements, not a reason to alter the compiler. The new
+candidate was then included in a temporary complete-boot integration with
+the other nine: **850 exact objects, 498,900 exact text bytes, 809,872 exact
+load bytes and the complete 856,120-byte ELF exact**. The canonical
+quaternion's absolute alias was removed for that experiment; its real
+compiled function symbol owns all 184 bytes, while the distinct
+`func_1E77FB8` alias and following initializer stay separate. All 840 prior
+replacement records and the 820 accepted bodies were unchanged. All ten
+candidates passed the mechanical promotion audit as ready for semantic
+review. The receipt, manifest, attribution checks and exact integration
+patch were archived, then the temporary metadata and flags were restored.
+This supersedes the earlier nine-candidate-only gate limit, but still uses
+unpinned tools: qualification and promotion remain pending, with no C credit
+added.
+
+All four quaternion components are read before the first output store.
+The internal body writes slots `0,1,2,4,5,6,8,9,10`; the accepted wrapper
+fills the other seven slots, completing all sixteen floats. No normalization
+occurs, and this review establishes no unit-norm input invariant. The input
+snapshot permits ordinary overlap of valid readable/writable storage at the
+machine level; do not invent a disjointness requirement. Storage alignment
+and C object-lifetime/effective-type obligations still apply.
+
+Before promotion, review the local prefix types and caller domains.
+The seven direct `HIT_fread` callers use nonzero unit sizes, but indirect
+callers and extreme size-zero callback results leave division semantics open.
+
+**REL caller follow-up, 16 November 2026.** All 21 USA module hashes were
+checked against the catalogue. Their 5,579 named symbols and 85,694 named
+relocations contain no `HIT_fread__FPvUiUiPi` symbol or reference, so there
+are no named imported calls whose unit-size argument can be classified.
+Scans of the catalogued code found no fixed direct jump/call to the boot
+entry `0x01E8C858`; aligned payload-word scans found no absolute entry
+address either. The twenty numbered modules have separately placed,
+accepted local copies; those are not evidence about callers of the boot
+body. These bounded pre-relocation scans do not exclude split/constructed
+pointers, runtime dispatch or arbitrary indirect use. The divisor-domain
+hold therefore remains open; this is not proof that zero is unreachable.
+
+The direct `VRAM_InitGraphics` caller establishes the allocator's initial
+state; invalid or indirect entry states remain unproven. `Spiral_EmitJoint`
+requires nonempty, sufficiently allocated point storage, whose complete
+caller invariant is not yet established. Preserve the one-time font
+registration flag and its failed-lookup behavior.
+
+#### USA boot bodies of 112–444 bytes (17 November 2026)
+
+Twenty open boot bodies of 112 to 444 bytes were attempted and are retained
+under `nonmatching/boot/`. Twelve reproduce every body byte after an
+independent SN link at the retail address: the three transition
+`*_StartSound__Fv` bodies, `VID_InitBink__Fv`,
+`MCP_FontPrintWindowSetStructDefaults`, `LIGHT_SetupLightsNearPoint`,
+`HEROSKIN_Init__Fv`, `TEXMGR_SetColorIndexWithColorTo` and
+`MCPTRANS_DREAM_Animate__Ff` under the rebuilt default GNU route and
+`gnu-ee-trial`; `WAD_FindAssetsBySignature`, `PS2HEAP_Free__FPv` and (since
+26 November) `MCPI_InitializeMcpGlobals__Fv` under the default route only.
+Two more became exact on 26 November and are not yet in the gate below:
+`PS2HEAP_Malloc__FUi` (both routes) and `UTIL_GS_WRITE_FIFO__FP11DLIB_GIFTAG`
+(default route).
+On 26 November 2026 a complete boot gate on master `ef75f8a07` with these
+twelve bodies linked as provisional owners (default route,
+`--unpinned-tools`) passed: 879 exact objects, `.text` and the loaded segment
+exact, complete ELF exact; the 847 accepted bodies are unchanged and the
+promotion audit lists the twelve as ready for semantic review. The rebuilt
+tools are not hash-qualified, so nothing is promoted. A static review of the
+retail boot found no direct transfer into the interior of any of the twelve
+bodies; the bytes after the shorter bodies are separately called static
+initializers or unreachable stack-adjustment fragments, left to the assembly
+baseline. Source shapes that mattered:
+
+- `WAD_FindAssetsBySignature`: the entry type is kept in a local that the
+  loop exit tests, and the null test after the loop is made on a copy of the
+  result pointer; testing the loop pointer directly merges the two exits.
+- `MCPTRANS_DREAM_Animate__Ff`: a local pointer assigned only after the
+  conditional block, and three adjacent stores written in the reverse of the
+  retail order.
+- Declarations reconciled on 25 November 2026 (master `ef75f8a07`, all still
+  exact on both routes): `VID_InitBink__Fv` returns `int`, and its only direct
+  caller, the retained `SND_InitScream__Fv` trial, now declares that result
+  and stays 552/552; `HEROSKIN_Init__Fv` stores the byte at `+0x2E0` as
+  `signed char`, as the accepted `HEROSKIN_TermSinglePlayer__Fv` does (the
+  accepted `HEROSKIN_InitSinglePlayer__Fv` declares that member `int` but
+  never accesses it), and places its table pointers at `+0x2D4`/`+0x2D8`
+  inside the padding of the accepted layout; the three `*_StartSound__Fv`
+  bodies use the callee prototypes of existing sources. The accepted
+  `SND_ConstructPositionalSound` definition lists twelve parameters while its
+  mangled name and accepted level callers have thirteen (two `bool`); this
+  needs its own review.
+- Declarations reviewed on 26 November 2026: `MCPI_InitializeMcpGlobals__Fv`
+  was parked as a scheduling difference after about twenty source forms, but
+  the cause was two declarations. Declaring the callee `HEROSKIN_Init__Fv`
+  `void`, as its exact definition is, fixes the order of the table address
+  halves (326 to 342 of 344 bytes), and the two remaining bytes were two font
+  tables named one 0x10000 page too high (`D_01EEDB20`/`D_01EEDF20` instead of
+  the reference symbols `FontTableNormal`/`FontTableJapanNormal`). Before
+  calling a difference "scheduling", compare the linked relocation fields and
+  the callee declarations with their definitions. `LIGHT_SetupLightsNearPoint`
+  is now `void`, as the accepted wrapper declares it (still exact).
+  `MCPTRANS_DREAM_Animate__Ff` keeps names only where existing sources or a
+  callee give evidence; the other values keep their addresses.
+- `UTIL_GS_WRITE_FIFO`: the GIF FIFO at `0x10006000` is a hardware register,
+  written through a `volatile` quadword lvalue as accepted boot sources write
+  the `0x1000xxxx` registers; that keeps the store out of the loop's delay
+  slot, which the compiler then fills with the next load as retail does.
+- `PS2HEAP_Malloc__FUi`: register allocation, read from the `.lreg`/`.greg`
+  dumps (pass the dump flags one at a time; `-da` overflows a host buffer).
+  Global allocation ranks pseudos by references (loop references count
+  double) over live length. The size is rounded in place in the argument, and
+  the best-fit test records a new best block in two places (first fitting
+  block, then any smaller one) instead of one combined condition: the same
+  instructions, but the extra references rank the chosen block above the size
+  so the two take retail's saved registers. When two values swap saved
+  registers, compare their priorities in `.greg` before trying more shapes.
+- Remaining differences that point at the compiler rather than the source:
+  `SYSTEM_UploadMatrix` needs a 128-bit zero kept in a register (`por`)
+  before a quadword store, which our `cc1` always folds into the zero
+  register while the `sdk991111` compiler keeps it (that compiler differs
+  elsewhere in this body); `MCPFONT_DrawTextureSimpleArea` matches except its
+  prologue and epilogue, where retail saves the eight saved registers and the
+  register holding the tenth argument as quadwords in ascending order, with
+  no 128-bit value in the body.
+- `MEMCARD_ProcessClientRequests`: the handler arguments are the same in the
+  merged state blocks (the request detail word for the detail handlers,
+  none for the others), so differing arguments do not explain why retail keeps
+  four flag tests; the flag is the existing `memcard_multiplayer_save`.
+- Still open: the update counter `material_current` is compared unsigned in
+  `MATERIAL_RegisterForUpdate`, while `MATERIAL_Init` declares it `int`. The
+  boot program accesses that word only in these two functions, and
+  `MATERIAL_Init` only stores zero, so the unsigned comparison is the only
+  evidence of its type; aligning the accepted declaration changes no bytes
+  but is left to review of that accepted file.
+
+The six others stay measured trials with their remaining difference in the
+header: the quadword-save prologue (`MCPFONT_DrawTextureSimpleArea`), a
+128-bit zero kept in a register (`SYSTEM_UploadMatrix`), merged identical
+switch states
+(`MEMCARD_ProcessClientRequests`), a double comparison constant built in
+integer registers by retail but loaded from memory by our output
+(`MATERIAL_RegisterForUpdate`), one float register swap
+(`MCPTRANS_UpdateStarStreaks`, 264 of 268 bytes under `gnu-ee-trial` since a
+flag byte named one 0x10000 page too high was corrected) and division padding
+(`dlib_ms_screen_matrix`: exact under `gnu-ee-trial-divpad` since
+26 November once its sixteen stores follow the order the dumps require; the
+default route lacks only the two nops before the division, blocker 09).
+
+#### USA boot bodies of 164–472 bytes (26 November 2026)
+
+Twenty further boot intervals of 264 to 496 bytes were reserved on
+26 November 2026; three of them (`VEC_MultiplyMatrix4`, `MultMatrix`,
+`customGsSyncPath`) are original assembly in `config/handwritten_asm.tsv`
+(VU0 macro instructions) and were released without C. A fourth,
+`dlib_displist_send_dma`, was released too while it was still listed; the
+classification below has since removed it, so it is open C work again
+(`sync` through `__builtin_rac5_sync` under `sdk991111sync`). A grouped
+complete boot gate on master `ef75f8a07` (default
+route with the four `gnu-ee-trial` sound bodies selected per file,
+`--unpinned-tools`) linked 51 exact retained bodies of this contributor's
+reserved scope as provisional owners, including the default-route ones
+below and in the previous section: 918 exact objects, `.text`, the loaded
+segment and the complete ELF exact, the 847 accepted bodies unchanged, and
+the promotion audit lists the 51 as ready for semantic review. It does not
+include the bodies exact only under a level profile, nor the two
+"extra result copy" bodies. Results after independent SN links at the
+retail addresses:
+
+- Exact under the rebuilt default GNU route and `gnu-ee-trial`:
+  `MODULE_LoadModule__FPCc` (400), `MODULE_StartModule__FiiPCvi` (456),
+  `MCP_UpdateRCPMLoadState__Fi` (a 164-byte body at the start of a 448-byte
+  interval), `SYSTEM_ActivateMicrocode__F13PS2_MICROCODE` (460) and
+  `VEC_MultiplyMatrix4By3` (432). The last two are the accepted level sources
+  of the same functions with their callees and data renamed to the boot
+  symbols. `MODULE_LoadModule` stores the address of `lib_main__FiPPc`, which
+  the reference symbol table lists as unresolved at address zero, rather than
+  a null constant.
+- Texture transfer helpers: `readTexPSMCT16__FiiiiiiPv` (444) and
+  `writeTexPSMT8__FiiiiiiPv` (456) are exact on both routes;
+  `readTexPSMCT32__FiiiiiiPv` is 372 of 408 bytes with the same instructions
+  except two swapped argument registers in the inner loop. What mattered: one
+  variable per swizzle step (page, offset in the page, block, offset in the
+  block, column), each written as a subtraction rather than `%`, so the
+  compiler moves the row terms out of the inner loop as retail does; the word
+  address accumulated one term at a time (a single expression is regrouped
+  and grows by eight bytes); and the last table lookup placed after the word
+  address is complete.
+- `RIBBON_ClearInactiveJoints` (a 240-byte body in a 384-byte interval) is
+  exact under the default route with the existing per-file option
+  `-mno-check-zero-division`; the iterator's node is read once into a local
+  before the clearing loop. `FOG_Update__FUi` (492) is exact only under
+  `gnu-ee-trial-divpad`. `BLOOM_Upsample` (444, two scheduling slots) and the
+  two speck emitter updates (456 each, `-fno-gcse`, the order of a dozen
+  loads and stores in one block copy) stay measured trials.
+- Exact only under `gnu-ee-trial-divpad`: the three `scee::Psp::Gum`
+  functions `Perspective` (416), `TexPerspective` (380) and `Ortho` (472).
+  Retail pads every float division with two nops, which the default route
+  does not do; compiling with the SDK assembler pinned for their accepted Gum
+  siblings does not add them, so the padding comes from the compiler. With
+  `FOG_Update`, `CAMERA_SetFovX`, `CAMERA_Reset` and `dlib_ms_screen_matrix`
+  this makes seven boot bodies that need the division padding of the level
+  profiles. `Ortho`
+  needed the three reciprocals scaled in place (`ix = ix + ix;` and so on):
+  being set twice moves the depth reciprocal from local to global allocation,
+  which gives it retail's callee-saved register.
+- The "extra result copy" class (`SND_IsATRACPaused`, 72 bytes, and
+  `MEMCARD_Saving__Fv`, 52 bytes, previously four bytes short after about
+  sixty forms) is exact on both routes when the result is held in a
+  one-member struct of one byte. The dumps show why: with any `int`, `char`,
+  `short` or enum local, the MIPS target widens the local to a full register
+  and CSE merges the comparison into it; a struct local is not widened, so
+  the copy from the comparison register survives as in retail. The retail
+  boot shows the same comparison-then-copy only in these two bodies and in two
+  others that then test the copy as a byte, which fits a one-byte C++ `bool`
+  in the original. Whether this plain-C stand-in for `bool` is acceptable is a
+  review question; the `int` forms (68 and 48 bytes) are the alternative.
+- Declarations to reconcile in review: `MODULE_LoadModule` uses the results
+  of `HIT_fseek__FPii9SEEKPARAM` and `HIT_fclose__FPi` (accepted as `void`);
+  `MCP_UpdateRCPMLoadState` needs `g_level_index` signed (a signed branch on
+  it), while the accepted `MCP_StartLevelModule__Fv` declares it `unsigned`.
 
 ### Original assembly classification (26 November 2026)
 
@@ -2465,3 +2704,59 @@ Left open for review rather than listed:
   is recorded.
 - The five sound-state bodies with a code-1 `break` (blocker 16) remain a
   maintainer decision.
+
+### USA level sources and call contracts (26-27 November 2026)
+
+The source updates cover 1,796 additional placements of 104–284 bytes
+(340,996 bytes by placement), carried by 1,574 new C sources.
+Independent links cover every new placement and every changed accepted caller.
+An additional 107 useful unaccepted C attempts were retained with measured differences
+and reopening conditions in `nonmatching/levels/`.
+
+Prototype review must distinguish file-scope declarations from calls inside a
+function: `scale * func_026D08()` is an arithmetic expression, not a pointer-return
+declaration. Correcting that review error releases candidates whose real float
+declarations already agree. Where a declaration changes an ignored return from
+`void` to `int`, recompile the caller: even an unused result can change register
+allocation. `LEVEL_22:0x0D4738` needs an EE-ABI call-type cast to discard
+the result while retaining the callee's correct `int` declaration; an ordinary
+`(void)` expression still changes two words.
+
+The further prototype reconciliation releases 86 independently exact placements.
+The remaining 133 placements were reconciled on 27 November 2026; none of this
+set remains held. GNU runtime typedefs with `__attribute__((mode(DF)))` must be
+read as double precision, even when their base token is `float`: the integer-to-double
+helpers already agree with their callers. The float packer and `__make_fp`
+constructor return `float`; treating their result as an integer is incorrect.
+
+The loader forwarding wrappers take a name pointer and six word arguments,
+not seven 64-bit arguments. Their callers now declare those word arguments
+consistently, and obsolete matching call-type casts are removed. Node wrappers
+forward their three live context arguments. Entry-point float parameters are
+also forwarded explicitly to the ring search and update helpers. The vector
+rotation and its forwarding wrapper return `void`; their callers consume only
+the output vectors. Cache lookups return the record index, and string lookups
+return a pointer, with an explicit conversion where an existing caller transports
+that pointer as an opaque 64-bit value.
+
+All affected reviewed source-role controls change coherently across their family;
+the source-role qualification is regenerated from the disc and the corrected C.
+Every changed caller and all 133 new placements reproduce their complete retail
+bodies, with no added prototype disagreement. Do not change just one member of a
+control family or replace a used float/double return contract by an integer
+declaration merely because the isolated body is byte-exact.
+
+Boundary and source-method cases remain separate:
+
+- `LEVEL_01:0x096BE0` compiles to 124 bytes against a 116-byte inventory entry;
+  establish ownership of the following loop tail before changing that boundary.
+- `LEVEL_16:0x1167A0` produces 280 bytes for a 276-byte body. The extra alignment
+  word is not accepted by widening the body. The qualified per-source
+  `-malign-functions=2` option resolves the separate 252-byte
+  `LEVEL_01:0x049A88` case, but does not resolve this one.
+- The ordinary C attempts at `LEVEL_10:0x176738` and `LEVEL_01:0x059840`, with
+  unused frame arrays removed, differ by 8 and 16 words respectively. Recover
+  the original frame ownership instead of adding artificial storage.
+- The ordinary typed byte-loop endpoint at `LEVEL_03:0x18C090` differs by
+  11 words, first at byte 40 (0x28). Reusing an unrelated float pointer only to alter
+  alias analysis is retained privately for source-method review, not credited.

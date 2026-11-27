@@ -18,6 +18,13 @@ class SourcePolicyTests(unittest.TestCase):
         source = '#ifdef RAC5_WITNESS_PADDING\nint RAC5_padding_sentinel(int x) { return x; }\n#endif'
         self.assertTrue(any("alignment probes" in error for error in policy_errors(source)))
 
+    def test_fast_path_still_sees_names_joined_by_line_continuations(self):
+        # The substring pre-filter runs after continuations are joined.
+        self.assertEqual(len(policy_errors('void f(void) { as\\\nm("nop"); }\n')), 1)
+        self.assertEqual(len(policy_errors('void f(void) { __as\\\r\nm__("nop"); }\n')), 1)
+        self.assertEqual(len(policy_errors('int RAC5_\\\nWITNESS_PADDING;\n')), 1)
+        self.assertEqual(policy_errors('int plain(int a) { return a + 1; }\n'), [])
+
     def test_comments_literals_and_symbol_only_labels_are_allowed(self):
         source = '''#include "header.h"
 // asm("nop") and register bindings in explanatory text do not emit code.

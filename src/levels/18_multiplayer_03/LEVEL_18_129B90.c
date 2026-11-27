@@ -66,7 +66,7 @@ extern const unsigned int D_001D23F4;
 extern Rec *func_035D20(Key *k);
 extern void func_087CF8(int *address);
 extern int func_036BF8(Key *k, Other *other);
-extern void func_06F008(int *h, int a);
+extern void func_06F008(int *h);
 
 static __inline__ void Unlink(Link *l)
 {
@@ -128,7 +128,7 @@ int func_129B90(Obj *o, int a1, int a2, int a3, int a4, Other *other)
                 return 0;
             if (*(int **)((char *)d + 0x28) == 0)
                 return 0;
-            func_06F008(*(int **)((char *)d + 0x28), 1);
+            ((void (*)(int *h, int a))func_06F008)(*(int **)((char *)d + 0x28), 1);
             return 3;
         }
     }

@@ -1,4 +1,4 @@
-extern int func_0A70B0(void);
+extern long long func_0A70B0(void);
 extern void func_0B5088(void *);
 extern void func_0B5308(void *, void *, int, int, void *, void *, void *);
 

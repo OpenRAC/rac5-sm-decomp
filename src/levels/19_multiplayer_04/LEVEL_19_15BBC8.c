@@ -16,7 +16,7 @@ struct Rec15BBC8 {
     unsigned char b_A8;
 };
 
-int func_06F9A8(struct Obj15BBC8 *o, int a);
+void func_06F9A8(struct Obj15BBC8 *o);
 int func_15D040(char *a, int b);
 int func_15B170(struct Obj15BBC8 *o, int a, int b);
 unsigned char func_15D0C0(char *a);
@@ -28,7 +28,7 @@ int func_15BBC8(struct Obj15BBC8 *o)
 
     q = (struct Rec15BBC8 *)o->p_58;
     if (o->f_34 <= 0.0f) {
-        func_06F9A8(o, 1);
+        ((int (*)(struct Obj15BBC8 *o, int a))func_06F9A8)(o, 1);
         return 0;
     }
     r = func_15D040((char *)o + 0x30, *(int *)(q->p_A0 + 0xFC));

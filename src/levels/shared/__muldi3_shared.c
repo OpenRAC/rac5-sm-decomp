@@ -1,4 +1,4 @@
-/* LEVEL_01:0x1EA410 -- 64-bit multiply (libgcc __muldi3 from three 32-bit partial products). Same text as the accepted src/levels/frontend/__muldi3.c (FRONTEND:0x023390). */
+/* LEVEL_01:0x1EA410 -- 64-bit multiply (libgcc __muldi3 from three 32-bit partial products). Same text as the accepted src/levels/frontend/__muldi3_FRONTEND.c (FRONTEND:0x023390). */
 /* __muldi3: the L_muldi3 module of GCC's libgcc2.c,
  * public GCC revision 31cf01446d (1999-09-09), the libgcc source OpenRAC/rac1-decomp
  * and OpenRAC/rac2-decomp rebuild. Below is the upstream text in file order, unchanged:

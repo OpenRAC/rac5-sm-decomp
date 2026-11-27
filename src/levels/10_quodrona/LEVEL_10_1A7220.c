@@ -29,7 +29,7 @@ extern float D_0022EFC8[];
 
 void func_123D68(float *buf, float *v, float *c);
 unsigned int func_01BA68(struct Ent1A7220 **list, int max, float *buf, int a, int b, int c, int d, float r);
-int func_027B98(void);
+long long func_027B98(void);
 
 void func_1A7220(struct Obj1A7220 *o)
 {
@@ -54,7 +54,7 @@ void func_1A7220(struct Obj1A7220 *o)
             if (e != own->self_00) {
                 c = e->c_40;
                 if (c->fn_20 != 0) {
-                    c->fn_20(list[i], 0, 3, o->p_30, o->p_20, o, D_0022EFC8[func_027B98()]);
+                    c->fn_20(list[i], 0, 3, o->p_30, o->p_20, o, D_0022EFC8[((int (*)(void))func_027B98)()]);
                 }
             }
         }

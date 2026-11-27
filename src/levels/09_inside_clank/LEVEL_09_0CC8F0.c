@@ -19,7 +19,7 @@ extern void func_0CDAE8(void);
 extern int func_0B0F50(int v);
 extern int func_024550(int a, int b, int c, int d);
 extern int func_0238C0(int a, int b);
-extern void func_024418(int a, int b, int c, int d);
+extern int func_024418(int a, int b, int c, int d);
 extern void func_14F398(void);
 extern int func_0D60A8(int *a, int b);
 

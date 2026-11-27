@@ -100,7 +100,7 @@ Counts are accepted sources on 21 November 2026.
 | `gnu-ee-trial-divpad-blockmove` | 250 level sources | `gnu-ee-trial-divpad` with [`0004`](../../tools/compiler/patches/0004-rac5-blockmove-loopcount.patch) | `build_gnu_ee.sh gnu-ee-trial-divpad-blockmove` |
 | `sdk991111` | 172 boot sources, 1,105 level sources | Sony EE-GCC 2.9-ee-991111-01: the GPL sources of the SDK's GNU toolchain in the public snapshot [SSXModding/ps2-ee-toolchain](https://github.com/SSXModding/ps2-ee-toolchain) at `b595ded`, with [`sdk/bison-grammar.patch`](../../tools/compiler/patches/sdk/bison-grammar.patch), built like OpenRAC/rac2-decomp's `tools/compiler/sdk/build.py` | `build_gnu_ee.sh sdk991111` |
 | `sdk991111sync`, `sdk991111sq`, `sdk-divpad` | 3 boot and 40 level, 2 boot, 10 boot sources | `sdk991111` with [`rac5-sync`](../../tools/compiler/rac5-sync), [`rac5-sq`](../../tools/compiler/rac5-sq) or `0002` | `build_gnu_ee.sh` with that selector |
-| `r5900-mfc1` assembler | 217 level sources | the pinned chain's assembler with [`0008-rac5-gas-r5900-mfc1.patch`](../../tools/compiler/patches/0008-rac5-gas-r5900-mfc1.patch), the assembler of OpenRAC/rac2-decomp's recipe at `e07c4844`, and [`0009-rac5-gas-r5900-generic-dli.patch`](../../tools/compiler/patches/0009-rac5-gas-r5900-generic-dli.patch) | `build_gnu_ee.sh r5900-mfc1` |
+| `r5900-mfc1` assembler | 271 level sources | the pinned chain's assembler with [`0008-rac5-gas-r5900-mfc1.patch`](../../tools/compiler/patches/0008-rac5-gas-r5900-mfc1.patch), the assembler of OpenRAC/rac2-decomp's recipe at `e07c4844`, and [`0009-rac5-gas-r5900-generic-dli.patch`](../../tools/compiler/patches/0009-rac5-gas-r5900-generic-dli.patch) | `build_gnu_ee.sh r5900-mfc1` |
 | `ee-sdk` assembler | 59 boot sources | GNU assembler 2.9-ee-991111; the pinned binary is distributed in decomp.me's public `ee-gcc2.9-991111-01` archive. The public source rebuild and `span5` have measured differences and are not interchangeable with it. | extract the exact binary as described below |
 | `ee-frozen` assembler | 3 level sources | a privately recovered EE assembler, whose sources are not public; the public archive's own assembler, unpatched, assembles these three sources to the same objects (12 November 2026) | `build_gnu_ee.sh ee-frozen` builds that equivalent |
 | `prodg2953` | 79 boot sources | SN Systems ProDG for PlayStation 2 3.01 | your own copy |
@@ -198,7 +198,22 @@ recorded objects have GNU's generic `li -1; dsll 5; dsrl 4`, while the rule emit
 `ori`/`dsll` chain. `0009` removes the rule from this assembler only, giving
 `afc3bc78…`. With it, a rebuilt `r5900-mfc1` assembles all 217 sources of its route to
 their recorded objects; without it, the 21 `sdk991111` sources of the route differ
-(measured 26 November 2026). The base assembler keeps the rule. `0004` was written against a copy whose
+(measured 26 November 2026). The base assembler keeps the rule.
+
+On 27 November 2026, the recipe was rebuilt and checked against all **271**
+currently selected level sources: the 54 additions since that measurement and
+all 217 earlier sources. Each source used its pinned preprocessor and compiler,
+its recorded profile and per-source flags, and the rebuilt assembler. All 271
+complete relocatable objects reproduce their recorded SHA-256, with no source,
+flag or object-pin changes. The patched `tc-mips.c` hashes to `afc3bc78…`.
+The rebuilt assembler hashes to
+`9db50d602586c5584a7e5a4ddbe91c9a0b2dfcbc989bb6810eefe617b7a77124`,
+which differs from the existing binary pin: this is an object-regression check
+with `qualifying_tools: false`, not a new matching qualification or a complete
+module/linker gate. The existing pinned assembler remains unchanged. This
+measures the current sources, not every possible 64-bit immediate expansion.
+
+`0004` was written against a copy whose
 surrounding lines moved, so the script applies it with fuzz 3 and checks the result.
 `0005` and `0006` are this project's R5900 assembler rules: short-loop
 padding to a five-word target-to-branch span, the load-to-base `nop` at a branch

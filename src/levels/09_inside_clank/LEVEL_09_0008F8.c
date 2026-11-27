@@ -9,7 +9,7 @@ extern void func_026550(int a, int b, int c);
 extern struct Slot *func_0008D0(int id);
 extern void func_0B0EE8(int a, int b, unsigned int c);
 extern int func_0B0810(int a);
-extern void func_0B0F18(int a);
+extern int func_0B0F18(int a);
 extern int func_12B448(int a);
 extern void func_0B0C78(int a, int b, unsigned int c);
 extern void func_026488(int a, int b, int c);

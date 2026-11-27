@@ -9,7 +9,7 @@ struct Q {
     unsigned int v_20;
 };
 
-extern int func_021B48(void *o, void *x);
+extern long long func_021B48(void *o, void *x);
 extern struct Rec *func_021A48(void *o, void *x);
 extern void *func_0225A8(void *o, void *x);
 extern struct Q *func_021AF0(void *o, void *x, int n);

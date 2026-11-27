@@ -31,7 +31,7 @@ typedef struct Cfg {
 
 extern Cfg D_001CF1A8;
 extern float D_001E09B0;
-extern void func_06F008(char *obj, int a1);
+extern void func_06F008(char *obj);
 
 static __inline__ int GetMode(Cfg *c)
 {
@@ -61,7 +61,7 @@ void func_127460(char *obj)
     t = d->first;
     if (t == 0 || d->second == 0 || (d->second->flags & 0xF) != 1) {
 fail:
-        func_06F008(obj, 1);
+        ((void (*)(char *obj, int a1))func_06F008)(obj, 1);
         return;
     }
     d = (Data *)((char *)d + 0xC);
@@ -80,6 +80,6 @@ fail:
         r = cls->fn(f, t, s->b, s->c, pos, d, obj);
     }
     if (r == 3) {
-        func_06F008(obj, 1);
+        ((void (*)(char *obj, int a1))func_06F008)(obj, 1);
     }
 }

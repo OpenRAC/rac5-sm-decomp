@@ -11,7 +11,7 @@ typedef struct {
 } Obj;
 
 extern void func_144C48(char *p);
-extern void func_06F9A8(char *p, int on);
+extern void func_06F9A8(char *p);
 
 void func_170D40(Obj *o)
 {
@@ -21,5 +21,5 @@ void func_170D40(Obj *o)
     for (i = 0; i < 3; i++)
         func_144C48(s->handle[i]);
     if (s->extra != 0)
-        func_06F9A8(s->extra, 1);
+        ((void (*)(char *p, int on))func_06F9A8)(s->extra, 1);
 }

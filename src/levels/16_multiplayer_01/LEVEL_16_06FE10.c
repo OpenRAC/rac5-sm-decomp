@@ -1,4 +1,4 @@
-extern void func_07A180(int);
+extern int func_07A180(int);
 
 void func_06FE10(char *item)
 {

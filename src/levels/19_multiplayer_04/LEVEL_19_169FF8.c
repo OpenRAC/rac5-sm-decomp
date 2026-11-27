@@ -39,7 +39,7 @@ static inline void Mad3(float *o, float *a, float k)
 }
 
 extern unsigned short D_0024E47C;
-extern Fx *func_0852D0(int a, int b, unsigned short c, int d, int e);
+extern Fx *func_0852D0(int a, int b, unsigned short c, int d);
 extern void func_16A340(void);
 
 void func_169FF8(Ob *o, float *p, void *a2, float *s, float *r, int k)
@@ -48,7 +48,7 @@ void func_169FF8(Ob *o, float *p, void *a2, float *s, float *r, int k)
     float t[3];
     float zero;
     Ext *e;
-    fx = func_0852D0(3, 1, D_0024E47C, 0, 1);
+    fx = ((Fx * (*)(int a, int b, unsigned short c, int d, int e))func_0852D0)(3, 1, D_0024E47C, 0, 1);
     if (!fx) return;
     e = &fx->ext;
     fx->fn = func_16A340;

@@ -10,7 +10,7 @@ extern void func_0B4038(void);
 extern void func_094F58(void);
 extern int func_095450(void);
 extern int func_095160(void);
-extern int func_0951C0(void);
+extern long long func_0951C0(void);
 extern void func_094F68(void);
 extern void func_095BC0(float *a, float *b, float x, float y);
 extern void func_0B4440(short a, short b);

@@ -1,10 +1,18 @@
-/* USA LEVEL_01.REL:0x0B8D98, 200-byte candidate (14 November 2026).
- * Measured pinned: 16 differing words; first difference at 0x0.
- * Recover the observed types, statement order and lifetimes before retrying
- * the same mismatch class. No matching credit.
+/* USA LEVEL_01:0B8D98, 200-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: default.
+ * Compiled 200 bytes: 8 differing words; first difference +0x0. No matching credit.
+ * Remaining issue: register only: decision trees now identical and length 200 = retail (unsigned
+ * state switch, mode switch with case 1 / case 2 and case 0 sharing the default handler); retail
+ * computes the first element address into a1 (not tied to the mult result), so the saved index
+ * lands in a2; ours ties it and keeps the index in a1; pointer-local / unsigned / stepped-
+ * pointer variants unchanged
+ * Reopen with new caller/type evidence or a source hypothesis that resolves the recorded
+ * difference without changing accepted callers.
  */
+
+/* LEVEL_01:0x0B8D98 -- for panels in state 2, 3, 5 or 8, dispatches on the panel mode word to one of three handlers. */
 typedef struct Panel {
-    int state;
+    unsigned int state;
     char pad04[0x38 - 4];
 } Panel;
 
@@ -30,7 +38,6 @@ void func_0B8D98(int index)
             func_0B89F8(index);
             break;
         case 0:
-            break;
         default:
             func_0B8020(index);
             break;
