@@ -96,9 +96,9 @@ caller bytes. Sources without a qualified row keep strict symbol resolution.
   not resolve a name from the retail bytes it is proving; a source that needs
   that fails with the unresolved names.
 - `object_sha256` covers the whole object file, so it depends on the source
-  basename (the ELF file symbol). Distinct lot sources that share a basename
-  are stored with a lot or module suffix; their object hash is the gate's
-  measurement for the stored name, not the lot's original hash.
+  basename (the ELF file symbol). Distinct batch sources that share a basename
+  are stored with a batch or module suffix; their object hash is the gate's
+  measurement for the stored name, not the batch's original hash.
 - `tools/level_c_gate.py --refresh-bodies` recomputes both hash columns of the
   source table after a full pass. An ordinary run verifies them and fails on a
   stale row.
