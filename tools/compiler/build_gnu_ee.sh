@@ -19,7 +19,9 @@
 #                 its cc1: gnu-ee-trial-divpad + patches/0004-rac5-blockmove-loopcount.patch
 #   r5900-mfc1    the level assembler of the same name: the archive + 0000
 #                 + patches/0008-rac5-gas-r5900-mfc1.patch, which gives the assembler sources of
-#                 rac2-decomp's recipe at commit e07c4844
+#                 rac2-decomp's recipe at commit e07c4844,
+#                 + patches/0009-rac5-gas-r5900-generic-dli.patch, which removes that recipe's
+#                 top-down 64-bit immediate expansion (the pinned binary uses GNU's generic one)
 #   sdk991111     cpp, cc1 and the xgcc driver of Sony EE-GCC 2.9-ee-991111-01: the GPL sources of
 #                 the SDK's GNU toolchain, from the public snapshot SSXModding/ps2-ee-toolchain at
 #                 commit b595ded (fetched with git; SDK_SOURCE may name a local clone), with
@@ -242,9 +244,10 @@ SUMS
     mkdir -p "$OUT/$selector" && cp "$W/$selector/build/gcc/cc1" "$OUT/$selector/"
     ;;
   r5900-mfc1)
-    tree "$selector" "$P/0000-rac5-pinned-base.patch" "$P/0008-rac5-gas-r5900-mfc1.patch"
+    tree "$selector" "$P/0000-rac5-pinned-base.patch" "$P/0008-rac5-gas-r5900-mfc1.patch" \
+      "$P/0009-rac5-gas-r5900-generic-dli.patch"
     sums "$selector" <<'SUMS'
-35a06b9ab08420b29503c6bb97d954ddb3d65571326f6f54ba3f315ad6aac029  gas/config/tc-mips.c
+afc3bc78dad9e53dfb1d9745800addad15c5095b6bd41c5d035f03901bd5188e  gas/config/tc-mips.c
 SUMS
     build_gas "$selector" "$OUT/$selector/as"
     ;;

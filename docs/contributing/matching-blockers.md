@@ -383,6 +383,17 @@ The same profile left 498 other retained C bodies nonmatching in a 500-body
 comparison, so these two results do not justify a global compiler switch.
 Regenerate `progress/status.json` after changing source profiles.
 
+**R5900 assembler recipe, 27 November 2026 ([PR #307](https://github.com/OpenRAC/rac5-sm-decomp/pull/307)).**
+The public `r5900-mfc1` rebuild retained a top-down expansion of some 64-bit
+immediates that differed from the pinned assembler. Patch `0009` restores GNU's
+generic expansion for this route, with patched-source SHA-256 `afc3bc78…`.
+The rebuilt assembler reproduces the complete recorded object hashes for all
+271 current sources, including the 54 added since the initial 217-source check.
+The default assembler, source flags, object hashes and binary pin are unchanged.
+The rebuilt binary itself differs from its pin, so this regression check stays
+non-qualifying and adds no matching credit. See the
+[rebuild recipe and scope](toolchain.md#rebuilt-tools-have-other-hashes).
+
 Retained boot attempts and type reviews of 15–17 November 2026 that used these profiles are
 kept in the dated log under
 [Retained USA boot attempts and reviews](#retained-usa-boot-attempts-and-reviews-1517-november-2026).

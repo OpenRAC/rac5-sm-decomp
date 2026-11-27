@@ -66,6 +66,7 @@ class ToolPinsTests(unittest.TestCase):
                       "0004-rac5-blockmove-loopcount.patch",
                       "0005-rac5-gas-span5.patch", "0006-rac5-gas-span5b.patch",
                       "0007-rac5-gnu-ee-trial.patch", "0008-rac5-gas-r5900-mfc1.patch",
+                      "0009-rac5-gas-r5900-generic-dli.patch",
                       "sdk/bison-grammar.patch",
                       "lombyte/0020-gas-absolute-unknown-symbol.patch",
                       "lombyte/0027-gas-inline-float-literals.patch"):
