@@ -256,7 +256,7 @@ the definitions this route introduces, and neither may stay.
   symbols came from it, nor which flags, headers or library versions the
   original build used.
 - **How much of Q is reachable is only sampled.** Of the 195 prologue-Q
-  symbols, 46 already have an authored body in the private kit; compiling those
+  symbols, 46 already had an authored body in private working sources; compiling those
   46 under this pin with `-O2 -G0` makes **25 byte-exact** and leaves 21 short
   (41/88 for `__do_global_dtors`, 26/120 for `__floatdidf`, 123/148 for
   `__cp_push_exception`). None of the 46 is exact under the pinned chain, so
@@ -388,8 +388,8 @@ bodies (361 → 363 witness bodies) and the uncatalogued count stayed at 55.
 
 ## The backlog, and the end of the uncatalogued spans
 
-Twenty bodies that earlier waves had verified were never integrated — the kit
-carried them, the campaign did not. They are now: `MCP_Update`,
+Twenty bodies that earlier passes had verified were never integrated — the private
+working sources carried them, the campaign did not. They are now: `MCP_Update`,
 `MCP_UpdateCameraCB`, `APP_Init`, three `SYSTEM_*` matrix queries, three
 `scee::Psp2Gu` setters, four `VEC_*` helpers, `__pack_f`, `__fpcmp_parts_d`,
 `copysign`, `_lo0bits`, `dlib_displist_base_offset_mscal`, `fiprintf` and
@@ -404,7 +404,7 @@ the span. The fifty-nine such entries are gone, the objects' own definitions
 take over at the same addresses, **no span is uncatalogued**, and the complete
 ELF is unchanged byte for byte.
 
-The rule is now mechanical in the private kit: a resolver reads the exported
+The rule is now mechanical in the private integration tooling: a resolver reads the exported
 objects' undefined symbols directly — never `ld.exe`'s demangled diagnostics,
 which are what made the RTTI batch look impossible — refuses to define a name a
 compiled body owns, and removes an absolute line a body has taken over.
@@ -563,8 +563,7 @@ matches, collected in
    saves the general purpose registers first.
 
 The profile is pinned per source as `gnu-ee-trial-divpad` in
-`config/boot/compiler_trial.json` (stage
-`/root/essai-rac5/gnu-ee-trial-divpad-20261020`, private), and the level
+`config/boot/compiler_trial.json` (built into a private local stage), and the level
 bodies name it in the `profile` column of `config/levels/body_sources.tsv`.
 
 Controls: the change is **additive**. The 177 level bodies accepted before
