@@ -2811,6 +2811,11 @@ both additions and their corrected callers.
   Their corrected objects remain identical to the eight original object pins.
   This reconciles the getter contract; unrelated historical declarations in
   these callers remain outside this change.
+  The reviewed `getter(mode, field) > 1` proxy family also includes controls in
+  levels 17–20. Their getter declarations must change coherently with the level
+  16 control, even though signedness alone changes none of their object bytes.
+  Regenerating the pinned source-role audit from the disc preserves all 3,385
+  reviewed placements and updates only this family's normalized C identity.
   Four other multiplayer getters have the same shape, but different local
   callees and separate inconsistent callers. They remain uncredited: the
   current resolver cannot reuse the literal `func_0220C8` binding there.
@@ -2835,3 +2840,10 @@ Constructor normalization can change code generation, so compare the actual
 compiled C rather than treating an older source comment as a fresh baseline.
 The earlier twenty-source evaluation used a different corpus and does not
 provide a controlled performance comparison.
+
+Before the complete-program gate, check the affected source-role controls as a
+family, not just the changed function's callers. The family checker includes
+declarations in its C identity: a caller can keep its exact object and still
+invalidate that evidence if only one member is retyped. Reconcile and measure
+the complete control set, regenerate its evidence, then freeze the sources and
+placement/source tables for the program build.
