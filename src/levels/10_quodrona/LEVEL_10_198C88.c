@@ -105,7 +105,7 @@ extern void func_02F7F0(Head *h);
 extern int func_02F850(Head *h, Obj *o);
 extern int func_0823F0(Vec4 *a, Vec4 *b, Obj *o);
 extern void func_0958E0(Entry *e, Node *n, Vec4 *a, Vec4 *b, unsigned int fl);
-extern int func_027B98(void);
+extern long long func_027B98(void);
 extern void func_199438(Obj *o, int n);
 extern void func_199540(Obj *o, int n);
 extern void func_19AB98(void);
@@ -188,7 +188,7 @@ int func_198C88(Obj *o)
         func_0958E0(&D_00238AF8[far], n, &p0, &p1, all);
     }
     n->w_1C = 0;
-    n->f_24 = D_0022DD30[func_027B98()];
+    n->f_24 = D_0022DD30[((int (*)(void))func_027B98)()];
     n->w_2C = 0xFF00FF00;
     n->f_38 = 60.0f;
     n->w_28 = 0;

@@ -1,7 +1,7 @@
 /* LEVEL_16:0x022D20 -- resets all channel slots and then applies the channel setup for the current mode. */
 extern int D_001D04A0;
 
-extern void func_022AC8(int ch, int a, int x, int b);
+extern int func_022AC8(int ch, int a, int x, int b);
 extern void func_022A40(int ch, int x);
 extern int func_112BD0(int a);
 extern int func_112E00(void);

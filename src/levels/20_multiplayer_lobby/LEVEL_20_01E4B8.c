@@ -21,7 +21,7 @@ typedef struct {
 } Part;
 
 extern void func_01D8F0(Rec *r, float t);
-extern void func_05E948(Part *p, int mode);
+extern void func_05E948(Part *p);
 extern void func_05EA28(Part *p);
 
 void func_01E4B8(Rec *r, int mode)
@@ -38,7 +38,7 @@ void func_01E4B8(Rec *r, int mode)
             part = (Part *)r->link;
             r->state = 12;
             if (part != 0) {
-                func_05E948(part, 1);
+                ((void (*)(Part *p, int mode))func_05E948)(part, 1);
                 if ((part->flags & 6) != 0) {
                     func_05EA28(part);
                 }

@@ -24,7 +24,7 @@ typedef struct {
 extern char *func_018440(void);
 extern int func_076698(int a, char *b);
 extern void func_073660(Obj *o, Item *item, char **slot, int a, int b, int c, int d, int e, float f0, float f1, float f2, float f3);
-extern void func_06F9A8(Obj *o, int v);
+extern void func_06F9A8(Obj *o);
 extern void func_0737C8(char *record);
 
 void func_16B520(Obj *o)
@@ -45,7 +45,7 @@ void func_16B520(Obj *o)
             it = r->item8;
             if (it != 0)
                 func_073660(o, it, 0, 0, 0, 0, 0, 1, it->f14, it->f18, it->f1C, it->f20);
-            func_06F9A8(o, 1);
+            ((void (*)(Obj *o, int v))func_06F9A8)(o, 1);
         }
     } else if (r->b18 != 0 && r->wC != 0) {
         func_0737C8(r->wC);

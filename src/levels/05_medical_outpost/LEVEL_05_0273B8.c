@@ -1,6 +1,6 @@
 /* LEVEL_05:0x0273B8 -- placement copy of LEVEL_01_0285A0.c: reads two counters, then updates a slot pair against a threshold table. */
 
-extern int func_0270A8(void);
+extern long long func_0270A8(void);
 extern unsigned int func_026148(unsigned int a0, unsigned int a1);
 extern void func_0261C0(unsigned int a0, unsigned int a1, unsigned int a2);
 extern unsigned int D_001FBBB8[];

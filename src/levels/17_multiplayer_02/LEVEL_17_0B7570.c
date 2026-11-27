@@ -4,8 +4,8 @@ int func_10FA00(void);
 int func_10F1D0(int a);
 char *func_10E8A8(int a);
 int sprintf(char *buf, const char *fmt, ...);
-int func_0C5B88(int a, char *b, int c, char *d);
-int func_0C5BC0(int a);
+void func_0C5B88(int a, char *b, int c, char *d);
+void func_0C5BC0(int a);
 extern char D_0026B0E8[];
 
 void func_0B7570(void)
@@ -27,6 +27,6 @@ void func_0B7570(void)
     s0 = D_0026B0E8;
     sprintf(s0, func_10E8A8(0x6E6), s1);
     s1 = (int)func_10E8A8(0x30B);
-    func_0C5B88(3, s0, s1, func_10E8A8(0x218));
-    func_0C5BC0(10);
+    ((int (*)(int a, char *b, int c, char *d))func_0C5B88)(3, s0, s1, func_10E8A8(0x218));
+    ((int (*)(int a))func_0C5BC0)(10);
 }

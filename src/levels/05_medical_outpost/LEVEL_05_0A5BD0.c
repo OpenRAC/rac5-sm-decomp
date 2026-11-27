@@ -1,5 +1,5 @@
 int func_0A4F78(char *a0);
-int func_0A58F0(void);
+long long func_0A58F0(void);
 int func_0BA998(void);
 void func_0A6260(float *x, float *y, float f12, float f13);
 void func_0A5C60(unsigned short a0, unsigned short a1);

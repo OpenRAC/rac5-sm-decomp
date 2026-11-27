@@ -36,7 +36,7 @@ extern int D_001B48A4;
 extern unsigned int func_112E00(void);
 extern int func_112E48(void);
 extern void func_0176D8(char *a0);
-extern void func_06F940(int a, int b);
+extern void func_06F940(int a);
 extern void func_1784C0();
 extern void func_159930(float f, int a, int b, Obj *o, int c, int d, void *fn, int e);
 extern int func_11DA48(unsigned int a, unsigned int b);
@@ -95,7 +95,7 @@ int func_177320(Obj *self)
         return 0;
     if (func_112E00() != 0) {
         if ((((Res *)rec->fourth)->flags & 1) != 0)
-            func_06F940(rec->fourth, 1);
+            ((void (*)(int a, int b))func_06F940)(rec->fourth, 1);
         else
             func_0176D8((char *)rec->fourth);
         func_1784C0(self);

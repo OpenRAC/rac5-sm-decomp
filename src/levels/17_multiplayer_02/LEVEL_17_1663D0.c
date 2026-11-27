@@ -27,7 +27,7 @@ extern char D_001C01B8[];
 
 extern void func_0EDA60(int h, int a, int b, void *p, float x, float y);
 extern void func_0D3560(int a0, float *pos, void *p, float f0, float f1, float f2, float f3, float f4, float f5, unsigned int color, float f6, int t0, int t1, float f7, int t2, int t3, int s0, unsigned int s1);
-extern void func_06FF78(void *o, int a);
+extern void func_06FF78(void *o);
 
 static __inline__ void Snd(int h, int a, int b, void *p)
 {
@@ -51,5 +51,5 @@ void func_1663D0(struct Obj1C1E38 *o, int a, int b)
         }
         n->prev = 0;
     }
-    func_06FF78(o, 1);
+    ((void (*)(void *o, int a))func_06FF78)(o, 1);
 }

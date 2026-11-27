@@ -1,8 +1,17 @@
-/* USA LEVEL_01.REL:0x1842C8, 224-byte candidate (21 November 2026).
- * Measured pinned: 10 differing words; first difference at 0x78.
- * Recover the observed types, statement order and lifetimes before retrying
- * the same mismatch class. No matching credit.
+/* USA LEVEL_01:1842C8, 224-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: default.
+ * Compiled 224 bytes: 6 differing words; first difference +0x94. No matching credit.
+ * Remaining issue: schedule/register: retail installs the hook callback before clearing the link
+ * word but keeps the node in a1 and the callback in a2; the retail statement order gives node
+ * v1/callback a1 (10 w), the order with the link clear first gets the registers but swaps the
+ * two blocks (6 w; 720 orders, inline reset/hook helpers, 6 flags x 3 profiles); func_183EC8
+ * called with (o, entry) as retail passes the entry in a1 although its accepted definition takes
+ * one parameter and ignores a1 (conflict)
+ * Reopen with new caller/type evidence or a source hypothesis that resolves the recorded
+ * difference without changing accepted callers.
  */
+
+/* LEVEL_01:0x1842C8 -- state handler: picks a table entry by level index, resets the node and installs a callback. */
 struct Hook {
     char pad_00[0xE0];
     void (*cb_E0)(void);
@@ -71,8 +80,8 @@ void func_1842C8(struct Obj *o)
     m->w_40 = 0;
     m->b_1C = 0;
     m->w_34 = 0;
-    m->owner->mid_59C->hook_48->cb_E0 = func_03C810;
     o->link_48->w_DC = 0;
+    m->owner->mid_59C->hook_48->cb_E0 = func_03C810;
     w->f_FEC = 0;
     func_1E8F70((char *)n + 0x230);
     func_17E5F0((char *)n + 0x44);

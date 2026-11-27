@@ -22,7 +22,7 @@ struct Act {
 extern float D_0022DD38[];
 extern void func_17F648(char *item, int value);
 extern void func_17F670(void *a);
-extern int func_027B98(void);
+extern long long func_027B98(void);
 
 void func_199438(struct Act *a, int ns)
 {
@@ -42,7 +42,7 @@ void func_199438(struct Act *a, int ns)
     case 2:
         if (o->f30)
             func_17F648(o->f30, (int)&c->f54);
-        c->f30 = D_0022DD38[func_027B98()];
+        c->f30 = D_0022DD38[((int (*)(void))func_027B98)()];
         o->f29 = 3;
         break;
     case 4:

@@ -12,7 +12,7 @@ extern Ent_187558 D_002122F8[];
 extern void func_076268(void *p, int a1);
 extern void func_187AE0(void *o, int a1);
 extern void func_1860B0(void *o, int a1);
-extern void func_02ED10(void *o, float *p, int a2);
+extern int func_02ED10(void *o, float *p, int a2);
 
 int func_187558(char *a0)
 {

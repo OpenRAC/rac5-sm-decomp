@@ -19,7 +19,7 @@ extern MATRIX4N30 g_CameraInv1; /* 0x01FD1930 */
 extern void snd_SetMasterVolume(int bus, int volume);
 extern void VEC_InverseMat4__FP7MATRIX4PC7MATRIX4(MATRIX4N30 *out,
                                                  const MATRIX4N30 *in);
-extern void SND_UpdateStandard__Fv(void);
+extern int SND_UpdateStandard__Fv(void);
 extern void snd_FlushSoundCommands(void);
 
 int SND_Update__FPC7MATRIX4N30(const MATRIX4N30 *camera,

@@ -37,7 +37,7 @@ typedef struct {
 
 extern void func_017D60(Vec4 *a0);
 extern int func_075B30(void *a, float *p);
-extern void func_06F008(char *record, int k);
+extern void func_06F008(char *record);
 extern void func_146BD8(Obj *o);
 extern void func_1491C8(Own *own, Info *info);
 extern char *func_146DE8(Own *own, char *buf, float dt, unsigned char *flag);
@@ -62,11 +62,11 @@ void func_146A88(Obj *o, float dt)
         if (func_075B30(info->target, &v.x) != 0) {
             for (i = 0; i < 12; i++) {
                 if (own->slots[i].rec != 0) {
-                    func_06F008(own->slots[i].rec, 0);
+                    ((void (*)(char *record, int k))func_06F008)(own->slots[i].rec, 0);
                 }
             }
             if (info->f16 != 0) {
-                func_06F008((char *)o, 0);
+                ((void (*)(char *record, int k))func_06F008)((char *)o, 0);
                 return;
             }
         }

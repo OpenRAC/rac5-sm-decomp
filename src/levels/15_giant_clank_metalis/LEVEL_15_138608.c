@@ -23,7 +23,7 @@ extern void func_138568(float *dst, void *src, float scale);
 extern void func_138538(float *dst, void *src);
 extern void func_138558(float *dst, void *src);
 extern unsigned int func_0F5768(void *src);
-extern unsigned int func_022148(void);
+extern long long func_022148(void);
 extern void func_1067D0(void *a, void *b);
 
 void func_138608(void *unused, Rec *r)

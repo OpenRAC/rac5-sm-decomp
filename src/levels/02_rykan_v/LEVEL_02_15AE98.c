@@ -31,7 +31,7 @@ extern char D_0022CE08[];
 extern char D_0022CE28[];
 
 extern Fx *func_0A6508(int *out, char *name, int n);
-extern int func_028A78(void);
+extern long long func_028A78(void);
 extern void func_052538(int n);
 extern void func_12D100(void *dst, void *link, Vec3 *pos, int z);
 extern void func_1585B8(Fx *fx, float s, float c, char *a, char *b);

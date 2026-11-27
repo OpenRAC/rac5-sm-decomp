@@ -1,7 +1,7 @@
 /* LEVEL_02:0x1CD6C8 -- placement copy of LEVEL_01_1AF2E8.c: packs six bit fields into one flag word and passes it with a local buffer to two helpers. */
 
 void func_09D018(unsigned int *record, unsigned int first, unsigned int second, int third, int fourth, int fifth, unsigned int sixth);
-void func_09D1F0(void *buf);
+int func_09D1F0(void *buf);
 extern unsigned char D_001CCB68[];
 
 void func_1CD6C8(unsigned int p0, unsigned int p1, unsigned int p2, unsigned int p3, unsigned int p4, unsigned int p5)

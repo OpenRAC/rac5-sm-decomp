@@ -40,7 +40,7 @@ typedef struct {
 
 extern unsigned short D_002B25F4;
 extern Vec3 D_00231808;
-extern Rec *func_096CC0(int a, int b, unsigned short c, int d, int e);
+extern Rec *func_096CC0(int a, int b, unsigned short c, int d);
 extern void func_1C55C0(void);
 
 static __inline__ void VecCopy(Vec3 *d, Vec3 *s)
@@ -72,7 +72,7 @@ void func_1C34F8(Obj *o, int a, int b)
     Vec3 loc;
 
     s = o->sub_58;
-    r = func_096CC0(1, 1, D_002B25F4, 0, 0);
+    r = ((Rec * (*)(int a, int b, unsigned short c, int d, int e))func_096CC0)(1, 1, D_002B25F4, 0, 0);
     if (r != 0) {
         r->w_08 = s->w_24;
         r->w_1C = s->w_24 & 0xFFFFFF;

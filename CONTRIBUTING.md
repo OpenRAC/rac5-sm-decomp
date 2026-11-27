@@ -8,9 +8,9 @@ Thanks for helping. The rules live in [`AGENTS.md`](AGENTS.md) and
    rebuilt from public sources by `bash tools/compiler/build_gnu_ee.sh`
    ([getting the tools](docs/contributing/toolchain.md),
    [docs/build/building.md](docs/build/building.md)). The pinned USA input and the SNR2 and
-   boot metadata are verified: **847** narrowly accepted boot placements
-   (117,404 bytes), one 476-byte frontend function, two shared level
-   functions and, counted separately, 79,703 accepted level-body placements.
+   boot metadata are verified: **864** narrowly accepted boot placements
+   (119,008 bytes), one 476-byte frontend function, two shared level
+   functions and, counted separately, 82,771 accepted level-body placements.
    The level compiler profiles, the complete function catalogue and
    the game-wide progress build remain open.
 2. **Choose a scope.** Check the open issues and pull requests, and keep one
@@ -72,6 +72,43 @@ progress from symbol names.
   paths, generated screening output and toolchain experiments stay out of Git.
   Keep useful variants under `nonmatching/` with their provenance, without
   turning them into matching credit.
+
+## Preserve measured properties during corrections
+
+For bounded source search, see the [level-C permuter backend](docs/contributing/permuter.md).
+For field-layout proposals from an existing known structure, see
+[Ghidra structure recovery](docs/contributing/ghidra-structure-recovery.md).
+Both are optional development tools; their output does not grant matching credit.
+
+For automated source refinement, compare a measured baseline with the next
+candidate using [`tools/candidate_regression_guard.py`](tools/candidate_regression_guard.py).
+The input must come from trusted compiler and behavioral checks, rather than
+claims made by a code generator. The tool does not run those checks itself.
+
+Each JSON evaluation contains `target_id`, `reference_sha256`, `contract_sha256`,
+`source_sha256`, an optional `byte_diff_words`, and a `checks` object. Check values
+are `pass`, `fail` or `unknown`. The required check names are `source_policy`,
+`toolchain_pins`, `entry_identity` and `named_imports`; add the named behavioral
+properties actually measured. The contract digest must identify the reference
+placements and bindings, compiler route, test domain and check definitions.
+Changed contracts or check sets require a new baseline.
+
+```sh
+python tools/candidate_regression_guard.py baseline.json candidate.json
+```
+
+A property that passed must keep passing: a smaller instruction difference cannot
+override its regression, and an unknown result is not a pass. An improvement
+permits further local work only; no decision grants matching credit or replaces
+the type, boundary, placement and complete-program reviews.
+
+With `--restore --baseline-source baseline.c --working-source candidate.c
+--archive-dir rejected`, a rejected candidate is retained before the working file
+is restored. Both sources must match their measured hashes. Use a single writer:
+the stale-source check is not a cross-process lock. An integrating worker must
+also restore the corresponding recipe and measurement, rather than attach the
+rejected candidate's measurement to the restored source. A successful command exit means that the comparison ran;
+read its `decision` field to determine the outcome.
 
 ## Checking documentation links
 

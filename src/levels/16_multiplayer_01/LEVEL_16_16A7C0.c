@@ -1,0 +1,23 @@
+/* LEVEL_16:0x16A7C0 -- resets the object's state bytes, clears its 12-byte data block, sets the marker byte and the all-ones word, then looks up a global sound once and sets the fallback flag when it is missing; reports success. */
+extern void *memset(void *, int, unsigned int);
+extern int GLOBALWAD_FindGlobalSound__FUi(unsigned int id);
+extern int D_001BE098;
+extern unsigned char D_001BE09C;
+
+int func_16A7C0(char *obj)
+{
+    *(unsigned char *)(obj + 0x45) = 0;
+    *(unsigned char *)(obj + 0x46) = 3;
+    memset(*(void **)(obj + 0x58), 0, 0xC);
+    *(unsigned char *)(obj + 0x77) = 0x20;
+    *(unsigned int *)(obj + 0x68) = 0xFFFFFFFFu;
+    if (D_001BE098 == 0) {
+        D_001BE098 = GLOBALWAD_FindGlobalSound__FUi(0xBD506DCCu);
+        if (D_001BE098 == 0) {
+            if (D_001BE09C == 0) {
+                D_001BE09C = 1;
+            }
+        }
+    }
+    return 1;
+}

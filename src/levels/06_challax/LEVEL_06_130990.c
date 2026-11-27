@@ -2,7 +2,7 @@
 
 extern int func_130980(char *);
 extern void func_130CA8();
-extern void func_11A210();
+extern void func_11A210(void *, void *);
 extern int func_130A38(char *);
 
 void func_130990(char *a0, int a1)
@@ -22,7 +22,7 @@ void func_130990(char *a0, int a1)
         sub = *(char **)(a0 + 0x58);
         *(int *)(sub + 0x74) = a1;
         if (a1 != 0) {
-            func_11A210(sub + 0x78, a1);
+            ((void (*)())func_11A210)(sub + 0x78, a1);
         }
         v = func_130A38(a0);
         func_130CA8(a0, v & 0xFF, 1);

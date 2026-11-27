@@ -66,7 +66,7 @@ extern int func_02FC68(Info *i, O *o);
 extern void func_178540(int a, O *o, void *p);
 extern void func_0133E8(A *a, O *o, int x, int y);
 extern void func_0970F8(T *t, A *a, V3 *p, V3 *q, unsigned f);
-extern int func_0285F0(void);
+extern long long func_0285F0(void);
 extern int func_177D80(int h, O *o, unsigned char *out);
 extern unsigned char func_177A40(int h, O *o, int s, void *pos, void *dir, void *tab, int z);
 extern char D_001733E0[];
@@ -138,7 +138,7 @@ int func_1718F8(O *o)
         info->b29 = 3;
     }
     tab = D_0022EB00;
-    n = func_0285F0();
+    n = ((int (*)(void))func_0285F0)();
     off = n * 16 + 4;
     off += (D_0022F4F0 - 1) * 64;
     sp = *(float *)(tab + off);

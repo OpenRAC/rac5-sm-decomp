@@ -7,7 +7,7 @@ typedef struct {
     float f_70;
 } Obj;
 
-extern void func_06F008(Obj *self, int flag);
+extern void func_06F008(Obj *self);
 
 int func_18F300(Obj *self)
 {
@@ -15,7 +15,7 @@ int func_18F300(Obj *self)
 
     self->f_70 = v;
     if (v > 5.0f) {
-        func_06F008(self, 1);
+        ((void (*)(Obj *self, int flag))func_06F008)(self, 1);
         return 1;
     }
     return 0;

@@ -35,7 +35,7 @@ extern Tab0E88A8 D_00263C80;
 
 void func_0DFF38(struct Obj0E88A8 *o);
 void func_0E0078(Obj0E88A8 *o);
-Obj0E88A8 *func_08C9C8(int a, int b, int c, int d, int e);
+Obj0E88A8 *func_08C9C8(int a, int b, int c, int d);
 
 static inline void Copy3(float *dst, float *src)
 {
@@ -59,9 +59,9 @@ int func_0DFDF8(Obj0E88A8 **out, Cfg0E88A8 *cfg, Src0E88A8 *src, int a3, int fla
     n = 0;
     while (n < cfg->f_2C) {
         if (n == 0 && flag_b) {
-            p = func_08C9C8(1, 3, D_00263C80.h_78, 1, 1);
+            p = ((Obj0E88A8 * (*)(int a, int b, int c, int d, int e))func_08C9C8)(1, 3, D_00263C80.h_78, 1, 1);
         } else {
-            p = func_08C9C8(0, 1, D_00263C80.h_78, 1, 1);
+            p = ((Obj0E88A8 * (*)(int a, int b, int c, int d, int e))func_08C9C8)(0, 1, D_00263C80.h_78, 1, 1);
         }
         if (p == 0) {
             break;

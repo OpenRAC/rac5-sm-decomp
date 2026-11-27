@@ -61,7 +61,7 @@ extern void func_038C18(Obj *o);
 extern int func_033CC0(Obj *o);
 extern void func_11ECD0(Vec4 *a, Blob *b, Vec4 *c);
 extern float *func_0011D8(void);
-extern int func_033C30(Obj *o);
+extern long long func_033C30(Obj *o);
 extern void func_00D5C8(float *out);
 extern void func_1200A8(float *a, float *b, float *c, float *d, float *e);
 extern void func_032238(Vec4 *pos, int flag);

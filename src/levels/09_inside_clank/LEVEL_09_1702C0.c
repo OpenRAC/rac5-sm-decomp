@@ -16,7 +16,7 @@ struct Ent {
 };
 
 extern struct Ent D_001F17A8[];
-extern int func_07EF68(float *out, struct Obj *o);
+extern void func_07EF68(float *out, struct Obj *o);
 
 static __inline__ void Copy3(float *d, float *s)
 {
@@ -32,7 +32,7 @@ int func_1702C0(float *lo, float *hi, struct Obj *o)
     float t;
 
     rec = o->rec;
-    if (func_07EF68(v, o) == 0) {
+    if (((int (*)(float *out, struct Obj *o))func_07EF68)(v, o) == 0) {
         return 0;
     }
     Copy3(lo, v);
