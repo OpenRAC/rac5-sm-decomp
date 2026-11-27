@@ -233,3 +233,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+
+## Optional matching workflow dependencies
+
+The level-C backend calls this repository's public compiler, ELF, relocation,
+source-policy and import-check APIs. It does not bundle a permutation engine.
+The shared wrapper is [OpenRAC/OpenRAC](https://github.com/OpenRAC/OpenRAC/tree/develop/tools/permuter),
+under GPL-3.0-or-later; its external engine is
+[simonlindholm/decomp-permuter at 8556c81d80d1c1af98a858c8f4dc951357f29139](https://github.com/simonlindholm/decomp-permuter/tree/8556c81d80d1c1af98a858c8f4dc951357f29139),
+under the MIT licence. Keep their notices with those separately installed tools.
+No proprietary tool or game input is distributed with this workflow.
+
+`tools/ghidra_structure_recovery/` contains authored context and driver code.
+Its preparation step reads the user's installed Ghidra 12.2 `BSim-src.zip`,
+checks the archive and individual source pins, and generates private adapters
+of `RetrieveUsesTask`, `MatchFunctionsTask` and `ComparePinningsTask`.
+The upstream source is [Ghidra at revision
+8ca9077040cc43cd790babcfccf19475622a3e9a](https://github.com/NationalSecurityAgency/ghidra/tree/8ca9077040cc43cd790babcfccf19475622a3e9a/Ghidra/Features/BSim/src/main/java/ghidra/features/bsim/gui/structs),
+licensed under Apache-2.0. The generated copies preserve the upstream copyright
+and licence headers, and the private runtime copy retains Ghidra's licence files.
+The algorithms, runtime, processor extension, generated sources and game
+fragments are not vendored in this repository. See the
+[workflow documentation](docs/contributing/ghidra-structure-recovery.md) for
+pins, declared adaptations and limitations.
