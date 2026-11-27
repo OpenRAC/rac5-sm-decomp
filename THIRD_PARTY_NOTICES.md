@@ -193,7 +193,7 @@ the patched files keep their FSF notices.
   `patches/lombyte/0027-gas-inline-float-literals.patch` are unchanged copies of
   patches of [Lombyte](https://github.com/lombyte-project/Lombyte)'s `sce-991111b`
   stack, as carried by [OpenRAC/rac2-decomp](https://github.com/OpenRAC/rac2-decomp).
-  MIT License, Copyright (c) 2026 Mateusz KÅ‚ysz.
+  MIT License, Copyright (c) 2026 Mateusz Kłysz.
 - `patches/0000-rac5-pinned-base.patch` combines that stack (same notice) with the
   compiler and assembler edits of OpenRAC/rac2-decomp, licensed GPL-3.0; the notice of
   that project's earlier MIT releases is in its `THIRD_PARTY_NOTICES.md`.

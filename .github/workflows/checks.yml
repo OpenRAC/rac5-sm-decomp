@@ -42,5 +42,7 @@ jobs:
           python tools/level_called_boundaries.py --check
           python tools/level_family_identity.py --check
           python tools/level_split_dedupe.py --check
+      - name: Tracked text is valid UTF-8 without double encoding
+        run: python tools/check_text_encoding.py
       - name: No game data or build artifacts in the repository
         run: python tools/check_repository.py

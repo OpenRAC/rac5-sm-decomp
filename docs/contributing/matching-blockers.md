@@ -89,7 +89,7 @@ Register allocation on long bodies (the dominant wall). Symptom: the instruction
 right and only the register numbers differ. Measured: the available `cc1` profiles derive from
 the same GCC 2.9 `reload.c` allocator, so changing profile cannot resolve a floating-point
 allocation difference (October 2026). Four compiler hypotheses were refuted for the thirteen
-bodies above 412 bytes â€” the seven pinned profiles, the RAC1 ASTRA tree, the RAC1 production
+bodies above 412 bytes — the seven pinned profiles, the RAC1 ASTRA tree, the RAC1 production
 stack and the pinned tree with the division padding. Reopening condition: the authentic source
 of the routine, or a source whose live ranges match the retail's. One lead remains open: the
 retail copies pointer parameters with `daddu rd,rs,$zero`, a 64-bit copy, where the pinned chain
@@ -148,7 +148,7 @@ profile (PR #97). Fifteen of thirty-three recorded failures in one set were this
 Store order is a permutation, not one rotation. Symptom: a group of stores to the same record is
 right in content and wrong in order. Measured: write order is the retail's order, but the
 compiler moves stores; an early measurement described a rotation, a later one found a full
-permutation (`f_B4, f_04, b_35, â€¦` at `LEVEL_06:0x182760`, found after 120 trials). The reset
+permutation (`f_B4, f_04, b_35, …` at `LEVEL_06:0x182760`, found after 120 trials). The reset
 form `f_00, f_0C, f_08, f_04` reproduces the 56-byte family. Reopening: sweep permutations with
 a tool, not by hand.
 
@@ -207,7 +207,7 @@ Division padding and the prologue save order. Measured in the SDK libm units: ev
 preceded by two `nop`, and no division sits in a delay slot. The assembler is not responsible;
 the compiler is. `tools/compiler/patches/0002-rac5-div-pad.patch` and
 `0003-rac5-upstream-saves-divpad.patch` define the `gnu-ee-trial-divpad` profile (cc1
-`d7f3fb64â€¦`), which reproduced the 20 `Quat_Slerp` placements without regression on the 177
+`d7f3fb64…`), which reproduced the 20 `Quat_Slerp` placements without regression on the 177
 accepted level sources (PR #97). `sdk-divpad` is the same idea for the SDK compiler.
 
 **Boot camera unit, 14 November 2026.** `gnu-ee-trial-divpad` pads every division. Retail boot
@@ -271,11 +271,11 @@ Non-canonical pages and symbol naming. Measured: an address is `(page << 16) + s
 `lui 0x22` followed by `-0x78C` is **0x21F874**. A non-canonical page needs a symbol **at the
 page** with the offset in the expression (`extern char D_001D0000[];`). A field at `+0x10` is
 often a distinct symbol (two `lui`), and two distinct symbols on the same page are needed to
-preserve two `lui`. `%hi` rounds: `lui 0x1A` with `lo âˆ’0x5324` is `0x0019ACDC`, not `0x001AACDC`.
+preserve two `lui`. `%hi` rounds: `lui 0x1A` with `lo −0x5324` is `0x0019ACDC`, not `0x001AACDC`.
 
 ### Blocker 12
 
-Two functions in one body. Measured: a target can end with a second function â€” a comparator
+Two functions in one body. Measured: a target can end with a second function — a comparator
 `return *a0 - *a1;` in the last twenty bytes of `LEVEL_20:0x02B088`, for instance. Write both
 functions in the same file; they link end to end and one family then covers both.
 
@@ -299,10 +299,10 @@ This is an authoring rule, not a matching wall.
 ### Blocker 15
 
 The assembler is chosen per object. Measured: the pinned GNU `as` is the only one that reproduces
-the retail on the boot objects (0 divergence on its twin, 1â€“2 on the others, about 200 for
+the retail on the boot objects (0 divergence on its twin, 1–2 on the others, about 200 for
 `Ps2EeAs`). `config/cflags.txt` therefore carries an `as=NAME` selector next to the compiler
 selector; `ee-sdk` needs `-G0` for libm, and `sceKernelGetSystemTimeLow__Fv` is exact only under
-`Ps2EeAs`. `li.d`/`dli` is chosen by `cc1` (`mips.c:2377/2383`), not by the assembler â€” the
+`Ps2EeAs`. `li.d`/`dli` is chosen by `cc1` (`mips.c:2377/2383`), not by the assembler — the
 earlier "assembler gap" diagnosis is superseded.
 On 2 November 2026, a fresh full-object recompilation found 19 more pinned
 `Ps2EeAs` hash variants: each differs by one or two bytes only in non-loadable
@@ -864,7 +864,7 @@ coherent caller graph; neither equal length nor tail trimming is a remedy.
 | A call the loader patches | the module holds a zero target; the symbol carries its address in its name |
 | The 184-byte quaternion-to-matrix body | naming the nine products explicitly, in the order that fixes the allocation (`src/levels/shared/LEVEL_06_119B10.c`) |
 | The 416-byte `Quat_Slerp` body | the byte-identical twin in the boot gives the routine its name and prototype; the new profile reproduces the prologue order and the division padding (PR #97) |
-| Three of the twelve bodies above 412 bytes | a `VEC3` read instead of `VEC4`; pointer copies before the null test with matrix rows sixteen bytes apart; and one was a **profile** wall â€” the unchanged retained source gives 512 exact bytes under `gnu-ee-trial-divpad` |
+| Three of the twelve bodies above 412 bytes | a `VEC3` read instead of `VEC4`; pointer copies before the null test with matrix rows sixteen bytes apart; and one was a **profile** wall — the unchanged retained source gives 512 exact bytes under `gnu-ee-trial-divpad` |
 | The float copy class | the `ldl`/`ldr` pair is a four-byte-aligned aggregate copied by structure assignment; 469 placements proved (PR #103) |
 | The 64-byte copy of `FRONTEND.REL:0x0061C0` | four separate quadwords; `lq`/`sq` come from a scalar `TImode`, and the global is named directly |
 | The sixteen-bit accessor and stub families | one authored source carried at every placement that holds the same bytes, each placement proved on its own |
@@ -954,9 +954,9 @@ excluded from its C size.
 ## R5900 quad-save level prologues (4 November 2026)
 
 A bounded USA-level scan found **236 candidate placements in 14 normalized
-shapes** whose prologues save `$s0`â€“`$s7` and `$fp` with `sq`, then `$ra`
+shapes** whose prologues save `$s0`–`$s7` and `$fp` with `sq`, then `$ra`
 with `sd`; none is accepted C. Pinned GNU EE and `sdk991111` use doubleword
-saves. The boot-only `sdk991111sq` route saves `$s0`â€“`$s7` as quadwords but
+saves. The boot-only `sdk991111sq` route saves `$s0`–`$s7` as quadwords but
 leaves `$fp` doubleword and reverses the retail slot order. A private opt-in
 cc1 corrected the widths and slot order on a register-pressure witness, yet
 pure C for `LEVEL_01.REL:0x0A2630` linked **656/948 bytes**, first differing
@@ -1142,7 +1142,7 @@ level placements, and the complete 21-module gate passes (5 November 2026).
 
 ## Short raw-identical level-body candidates (5 November 2026)
 
-The following USA candidate bodies are raw-identical across the listed numbered levels and contain no body relocations. This is boundary and code-shape evidence only; each retained C source differs in an isolated linked trial and none of its placements earns C credit. In this short-body scope, 237 reviewed families have passed the complete 21-module gate as accepted C. Eight 16â€“32-byte forms cover 148 linked placements with 168 distinct-source bytes: a floating-point constant return, conditional field assignment, two unsigned range tests, a range-length accessor, a state store, a floating-point affine result and three field clears. Another 23 source forms add 429 exact placements and 296 distinct-source bytes; two more placements reuse an existing qualified C source. A further 38 source forms of 8â€“64 bytes add 340 exact placements and 924 distinct-source bytes. The next 46 short forms add 121 exact placements and 1,164 distinct-source bytes. Eleven more sources cover 98 exact placements, including repeated uses inside a module, while adding 204 distinct-source bytes. Forty-eight isolated 8â€“32-byte sources add 48 exact placements and 824 distinct-source bytes; one 24-byte candidate interval remains uncounted pending boundary review. Twenty-one isolated 36â€“64-byte C sources add 21 exact placements and 1,048 distinct-source bytes; 18 further C hypotheses remain uncounted. Each new placement was linked independently before the complete-module gate.
+The following USA candidate bodies are raw-identical across the listed numbered levels and contain no body relocations. This is boundary and code-shape evidence only; each retained C source differs in an isolated linked trial and none of its placements earns C credit. In this short-body scope, 237 reviewed families have passed the complete 21-module gate as accepted C. Eight 16–32-byte forms cover 148 linked placements with 168 distinct-source bytes: a floating-point constant return, conditional field assignment, two unsigned range tests, a range-length accessor, a state store, a floating-point affine result and three field clears. Another 23 source forms add 429 exact placements and 296 distinct-source bytes; two more placements reuse an existing qualified C source. A further 38 source forms of 8–64 bytes add 340 exact placements and 924 distinct-source bytes. The next 46 short forms add 121 exact placements and 1,164 distinct-source bytes. Eleven more sources cover 98 exact placements, including repeated uses inside a module, while adding 204 distinct-source bytes. Forty-eight isolated 8–32-byte sources add 48 exact placements and 824 distinct-source bytes; one 24-byte candidate interval remains uncounted pending boundary review. Twenty-one isolated 36–64-byte C sources add 21 exact placements and 1,048 distinct-source bytes; 18 further C hypotheses remain uncounted. Each new placement was linked independently before the complete-module gate.
 
 | Representative | Retail body | Candidate placements | Best isolated trial | Reopening condition |
 | --- | ---: | ---: | --- | --- |
@@ -1195,7 +1195,7 @@ The following USA candidate bodies are raw-identical across the listed numbered 
 
 ## Short local data relocations (5 November 2026)
 
-Forty-four site-specific 12- and 16-byte C sources in USA levels 01â€“06 link
+Forty-four site-specific 12- and 16-byte C sources in USA levels 01–06 link
 exactly at their reviewed placements (664 distinct and placement bytes). Each
 body has one local HI16/LO16 relocation pair; none calls a named import. The
 sources express seven small data-access forms with the correct address for
@@ -1203,7 +1203,7 @@ their own module. Byte similarity across levels alone does not justify a
 shared source. The complete 21-module gate verifies the linked addresses and
 retail bytes for all accepted placements.
 
-Another 147 site-specific 12- and 16-byte C bodies in USA levels 07â€“24 link
+Another 147 site-specific 12- and 16-byte C bodies in USA levels 07–24 link
 exactly (2,180 distinct and placement bytes). They use 147 local HI16 and 149
 local LO16 relocations; two bodies read and clear the same byte through two
 LO16 sites. None has a named import. For `LEVEL_24:0x1A5B78`, Ghidra did not
@@ -1305,7 +1305,7 @@ from 256 C sources (10,240 placement and distinct-source bytes). Eleven
 retain local data references or both local call targets. All 21 complete
 modules remain exact.
 
-Another 91 reviewed 40-byte placements in levels 19â€“24 link exactly from
+Another 91 reviewed 40-byte placements in levels 19–24 link exactly from
 91 C sources (3,640 placement and distinct-source bytes). Seven further
 40-byte placements remain nonmatching with retained C because they reproduce
 the signed-test or boolean-conversion differences documented below. The
@@ -1681,7 +1681,7 @@ the already accepted [168-byte source](../../src/levels/shared/LEVEL_01_088EC0.c
 without adding a source. All 21 complete USA modules remain exact, and
 all previously accepted object pins are unchanged.
 
-Seventeen other reviewed C hypotheses from the same 140â€“196-byte scope
+Seventeen other reviewed C hypotheses from the same 140–196-byte scope
 remain in `nonmatching/` with their first difference and reopening
 condition. The [164-byte float clamp](../../src/levels/01_pokitaru/LEVEL_01_0023B0.c) (accepted 9 November 2026)
 differs only in one branch destination after natural C restructuring.
@@ -1692,7 +1692,7 @@ unresolved ownership. Five qualified `cc1` routes did not resolve the
 other representative differences.
 
 Four new shared C sources and four existing sources cover 112 exact USA
-placements of 84â€“152 bytes (11,908 placement bytes, 388 new
+placements of 84–152 bytes (11,908 placement bytes, 388 new
 distinct-source bytes). Thirty-five placements reuse the existing sources
 after independent exact links. The new C sources cover a
 [100-byte float step](../../src/levels/shared/LEVEL_01_001940.c),
@@ -1778,7 +1778,7 @@ change this mismatch. The 20 candidate sites remain uncounted until a
 source-level lifetime or narrowly qualified compiler remedy reproduces
 all retail bytes and the complete modules.
 
-Another 463 relocation-bearing candidate bodies of 68â€“100 bytes have matching
+Another 463 relocation-bearing candidate bodies of 68–100 bytes have matching
 Ghidra body extents. Pure C under the pinned GNU EE route reproduces **260
 placements from 211 authored sources** (23,600 placement bytes and 19,236
 distinct-source bytes). Forty-nine placements reuse a canonical source after
@@ -1799,7 +1799,7 @@ bytes but differs from its first byte. These receive no C credit. The
 relocation-masked shapes used to select the sites were research leads; they
 did not by themselves establish source sharing or match status.
 
-Another 424 relocation-bearing candidate sites of 104â€“152 bytes have
+Another 424 relocation-bearing candidate sites of 104–152 bytes have
 Ghidra-corroborated complete body extents. Four pure C forms reproduce **83
 placements from 79 authored sources** (11,700 placement bytes and 11,136
 distinct-source bytes). Four placements reuse canonical C after independent
@@ -1824,7 +1824,7 @@ the complete 108-byte body. The other 341 candidate
 sites have no new matching credit from this review. Relocation-masked
 similarity alone still does not establish C source identity.
 
-Another 394 relocation-bearing candidate sites of 80â€“100 bytes have
+Another 394 relocation-bearing candidate sites of 80–100 bytes have
 Ghidra-corroborated complete body extents. Six pure C forms reproduce **117
 placements from 112 authored sources** (10,508 placement bytes and 10,068
 distinct-source bytes). Five placements reuse canonical C after independent
@@ -1849,7 +1849,7 @@ state check that must not be introduced as purposeless C. The other 277
 candidate sites receive no new matching credit from this review. Their
 masked structural similarity is not a source-identity proof.
 
-Another 409 relocation-bearing candidate sites of 156â€“200 bytes have
+Another 409 relocation-bearing candidate sites of 156–200 bytes have
 Ghidra-corroborated complete body extents. Four pure C forms reproduce **82
 placements from 78 authored sources** (15,492 placement bytes and 14,736
 distinct-source bytes) under the default pinned route. Four placements reuse
@@ -1877,7 +1877,7 @@ and differs from its first byte; its separator scan remains unresolved.
 The other 327 candidate sites receive no new matching credit; masked
 structural similarity remains a research lead only.
 
-Another 363 bounded USA candidate placements of 104â€“196 bytes were reviewed
+Another 363 bounded USA candidate placements of 104–196 bytes were reviewed
 without relocations. Twenty raw-identical groups each have matching Ghidra
 body extents and one normalized pseudocode form across their sites. This
 supports source-sharing experiments but does not qualify a shared C source.
@@ -1898,7 +1898,7 @@ compiler routes did not resolve the mismatch. All 363 placements remain
 uncounted until the source reproduces each complete body and the full-module
 gate passes.
 
-Another 402 bounded USA relocation-bearing candidate sites of 76â€“80 bytes
+Another 402 bounded USA relocation-bearing candidate sites of 76–80 bytes
 have Ghidra-corroborated complete body extents. Five pure C forms reproduce
 **122 placements from 107 authored sources** (9,512 placement bytes and 8,324
 distinct-source bytes) under the default pinned route. Fifteen placements
@@ -1923,7 +1923,7 @@ The other 280
 candidate sites receive no new match credit. A relocation-masked form remains
 a research lead until every claimed placement links exactly.
 
-Another 402 bounded USA relocation-bearing candidate sites of 68â€“76 bytes
+Another 402 bounded USA relocation-bearing candidate sites of 68–76 bytes
 have Ghidra-corroborated complete body extents and one normalized pseudocode
 form per selected group. Five pure C forms reproduce **101 placements from
 96 authored sources** (7,192 placement bytes and 6,836 distinct-source bytes)
@@ -1969,7 +1969,7 @@ rather than 68 bytes, while the
 and first differs at byte 2. The other 159 candidate sites receive no match
 credit. Relocation-masked similarity alone does not qualify source reuse.
 
-Another 353 bounded USA relocation-bearing candidate sites of 72â€“84 bytes
+Another 353 bounded USA relocation-bearing candidate sites of 72–84 bytes
 have Ghidra-corroborated complete body extents. Nine pure C forms reproduce
 **158 placements from 153 authored sources** (12,236 placement bytes and
 11,844 distinct-source bytes) under the default pinned route. Five placements
@@ -1995,7 +1995,7 @@ normalized Ghidra pseudocode variants, so its apparent structural similarity
 does not by itself establish a shared C definition.
 
 Another 385 bounded USA relocation-bearing candidate sites were reviewed:
-366 sites of 84â€“100 bytes and 19 sites of an 80-byte named ATRAC stop wrapper.
+366 sites of 84–100 bytes and 19 sites of an 80-byte named ATRAC stop wrapper.
 All have Ghidra-corroborated complete body extents. Six pure C forms reproduce
 **119 placements from 113 authored sources** (11,120 placement bytes and
 10,560 distinct-source bytes) under the default pinned route. Six placements
@@ -2017,7 +2017,7 @@ with measured first differences and reopening conditions. The other 266
 candidate sites receive no match credit. Previous source and placement pins
 remain unchanged.
 
-Another 478 bounded USA relocation-bearing candidate sites of 104â€“128 bytes
+Another 478 bounded USA relocation-bearing candidate sites of 104–128 bytes
 have Ghidra-corroborated complete body extents. Five pure C forms reproduce
 **124 placements from 118 authored sources** (15,204 placement bytes and
 14,468 distinct-source bytes) under the default pinned route. Six placements
@@ -2042,7 +2042,7 @@ bytes but differs from the start of its prologue. The other 354 candidate
 sites receive no match credit. Previous source and placement pins remain
 unchanged.
 
-Another 410 bounded USA candidate sites of 129â€“175 bytes were measured in
+Another 410 bounded USA candidate sites of 129–175 bytes were measured in
 November 2026. Thirteen C forms reproduced 268 placements exactly; see
 `docs/gates/level-c-witness.md`. Seven representative forms remain blocked, each
 retained under `nonmatching/levels/` and none counted:
@@ -2066,7 +2066,7 @@ retained under `nonmatching/levels/` and none counted:
   instruction by instruction, but the prologue loses a second `heap` register
   and merges the guard's `end - heap` with the count's.
 
-Another 1,666 bounded USA candidate sites of 129â€“200 bytes were measured in
+Another 1,666 bounded USA candidate sites of 129–200 bytes were measured in
 November 2026. Seventeen C forms reproduced 361 placements exactly; see
 `docs/gates/level-c-witness.md`. Forty-seven representative forms remain blocked and
 are retained under `nonmatching/levels/` with their measured difference and a
@@ -2093,7 +2093,7 @@ One form needs a measured flag rather than new C: `LEVEL_02.REL:0x0C07A0`
 links 200 bytes only with `-mno-check-zero-division`. Two exact forms require
 the `gnu-ee-trial-divpad` profile (see `level-c-witness.md`).
 
-Another 1,206 bounded USA candidates of 104â€“200 bytes were measured in two
+Another 1,206 bounded USA candidates of 104–200 bytes were measured in two
 later scopes. Twenty forms reproduced 459 placements exactly; twenty-eight
 representative forms remain blocked and are retained under
 `nonmatching/levels/` with measured differences and reopening conditions. The
@@ -2118,7 +2118,7 @@ Two forms need a different allocation behaviour rather than a new source form:
 `LEVEL_02.REL:0x0E3A10` and `LEVEL_03.REL:0x0B9E58` differ only in the register
 holding a live temporary, across all six qualified cc1 profiles.
 
-Another 559 bounded USA candidates of 148â€“192 bytes were measured in the next
+Another 559 bounded USA candidates of 148–192 bytes were measured in the next
 scope. Eighteen forms reproduced 334 placements exactly; twelve representative
 forms remain blocked and are retained under `nonmatching/levels/`. The new
 evidence adds:
@@ -2187,9 +2187,9 @@ In this reviewed USA selection, 42 representative pure-C attempts still differ f
 
 **Semantic holds, separately uncredited.** Five defined C witnesses are retained separately under `nonmatching/levels/`: the [168-byte list walker](../../src/levels/01_pokitaru/LEVEL_01_154D58.c) (accepted 9 November 2026) needs a nonzero record-count invariant; the [136-byte float conversion](../../src/levels/01_pokitaru/LEVEL_01_06AD30.c) (accepted 9 November 2026) needs a finite, bounded input; and the [80-byte selector](../../src/levels/01_pokitaru/LEVEL_01_025098.c) (accepted 9 November 2026) needs a non-null callee result on all paths. The [76-byte wrapper](../../src/levels/01_pokitaru/LEVEL_01_16B020.c) (accepted 11 November 2026) and [72-byte wrapper](../../src/levels/01_pokitaru/LEVEL_01_144050.c) (accepted 10 November 2026) link byte-exact in isolation but remain uncredited because accepted callers use conflicting ABI declarations. The [80-byte return-code wrapper](../../src/levels/02_rykan_v/LEVEL_02_0DE010.c) (accepted 9 November 2026) and [72-byte four-call wrapper](../../src/levels/01_pokitaru/LEVEL_01_0B6EC0.c) (accepted 9 November 2026) use defined natural C that links 80/80 bytes (first difference +34) and 52/72 bytes (first difference +6), respectively; their privately exact XOR test and one-iteration loop have no independent source justification. None of these holds is C match credit. Reopen only with the stated range, ABI or source evidence and then repeat isolated links and the complete-program gate.
 
-### USA bounded bodies of 68â€“76 bytes (9 November 2026)
+### USA bounded bodies of 68–76 bytes (9 November 2026)
 
-This USA selection covers the 40â€“76-byte bounded candidates whose relocation-masked form had no retained attempt. Nine representative pure-C attempts still differ from retail and earn no credit; 25 other forms are byte-exact but held for ABI review. Equal length is not a match.
+This USA selection covers the 40–76-byte bounded candidates whose relocation-masked form had no retained attempt. Nine representative pure-C attempts still differ from retail and earn no credit; 25 other forms are byte-exact but held for ABI review. Equal length is not a match.
 
 - **Loop induction.** The [pool-slot claim](../../src/levels/shared/LEVEL_16_15D9A8.c) (accepted 14 November 2026) and its [0x2D0-displacement sibling](../../src/levels/shared/LEVEL_16_14D788.c) (accepted 9 November 2026) link 68/68 bytes under `sdk991111`, first difference +8: the retail keeps the pool base as the induction pointer and reads the slot flag by displacement, while the compiler folds the displacement into the pointer; the pinned and `gnu-ee-trial` profiles keep a separate counter (60 bytes). Find a loop or element form that keeps the displacement out of the induction variable.
 - **Address constants and register choice.** The [clamped counter decrement](../../src/levels/18_multiplayer_03/LEVEL_18_114188.c) (accepted 9 November 2026) links 68/72 bytes, first difference +4: the retail adds the 0x18 field offset after materialising the global, the compiler folds it into the address constant. The [table-entry division](../../src/levels/10_quodrona/LEVEL_10_173168.c) (accepted 14 November 2026) needs `gnu-ee-trial-divpad` for its division and links 72/72 bytes, first difference +8, with the index product in another register. The [timer start or stop](../../src/levels/10_quodrona/LEVEL_10_19B498.c) (accepted 11 November 2026) links 68/68 bytes, first difference +4: the retail places the float zero in the second float argument register; establish that parameter from callee or caller evidence before retrying.
@@ -2197,9 +2197,9 @@ This USA selection covers the 40â€“76-byte bounded candidates whose relocat
 
 **ABI holds, separately uncredited.** Twenty-five forms (78 placements) link byte-exact, but their prototypes disagree with an accepted callee definition or with accepted callers. The largest are the [resource registration](../../src/levels/01_pokitaru/LEVEL_01_1D4138.c) (accepted 11 November 2026) (13 placements; the accepted callee is defined with four `long long` parameters and no return value), the [sub-record reset](../../src/levels/01_pokitaru/LEVEL_01_0EFB00.c) (accepted 11 November 2026) (12 placements; it passes an argument to the shared empty stub), the [tag-and-mask update](../../src/levels/03_kalidon/LEVEL_03_177C18.c) (accepted 9 November 2026) (7 placements) and the [bounded table cell](../../src/levels/16_multiplayer_01/LEVEL_16_0220C8.c) (accepted 11 November 2026) (5 placements; the accepted callers disagree with each other). Reopen by reconciling those prototypes while keeping every accepted object hash, then relink each placement and rerun the complete-module gate.
 
-### USA bounded bodies of 61â€“120 bytes (9 November 2026)
+### USA bounded bodies of 61–120 bytes (9 November 2026)
 
-Parallel attempts covered the 240 smallest relocation-masked forms of 61â€“120 bytes that had no retained attempt. Eighty-two representative pure-C attempts still differ from retail and earn no credit; 35 of them link at a different length. The eleven closest attempts (equal length, at most four differing words) are retained under `nonmatching/levels/` with their measured first difference and a reopening condition:
+Parallel attempts covered the 240 smallest relocation-masked forms of 61–120 bytes that had no retained attempt. Eighty-two representative pure-C attempts still differ from retail and earn no credit; 35 of them link at a different length. The eleven closest attempts (equal length, at most four differing words) are retained under `nonmatching/levels/` with their measured first difference and a reopening condition:
 
 - **Statement and scheduling order.** [LEVEL_04:0x14F6F8](../../src/levels/04_metalis/LEVEL_04_14F6F8.c) (accepted 9 November 2026) and [LEVEL_04:0x1DDE00](../../src/levels/04_metalis/LEVEL_04_1DDE00.c) (accepted 9 November 2026) schedule a load or a constant before the counter update; [LEVEL_16:0x15D590](../../src/levels/16_multiplayer_01/LEVEL_16_15D590.c) (accepted 9 November 2026) fills its first loop delay slot differently; [LEVEL_16:0x021FA8](../../src/levels/16_multiplayer_01/LEVEL_16_021FA8.c) (accepted 14 November 2026) leaves empty a delay slot in which the retail copies the table pointer.
 - **Register order.** [LEVEL_15:0x029980](../../src/levels/15_giant_clank_metalis/CORE/Lightweight/LW_Model/LEVEL_15_029980.c) (accepted 9 November 2026) differs only in the order of two prologue saves under `gnu-ee-trial`; [LEVEL_07:0x1DC8A8](../../src/levels/07_dreamtime/LEVEL_07_1DC8A8.c) (accepted 22 November 2026) swaps the registers of two float constants; [LEVEL_01:0x000A08](../../src/levels/01_pokitaru/LEVEL_01_000A08.c) (accepted 11 November 2026) swaps two table-base loads.
@@ -2207,19 +2207,19 @@ Parallel attempts covered the 240 smallest relocation-masked forms of 61â€“
 
 **ABI holds, separately uncredited.** In the same selection and the extended accepted families, 219 placements in 63 forms link byte-exact but disagree with an accepted callee definition or accepted callers: 78 conflicts differ only between pointer and integer arguments, 64 in the argument count and 49 in whether a value is returned. Many involve shared stubs such as `FRONTEND_0025B0.c` and `FRONTEND_001E08.c`. Reopen them together by reconciling those prototypes while keeping every accepted object hash, then relink each placement and rerun the complete-module gate.
 
-### USA bounded bodies of 100â€“200 bytes (9 November 2026)
+### USA bounded bodies of 100–200 bytes (9 November 2026)
 
-Parallel attempts covered the 748 relocation-masked forms of 100â€“200 bytes that had no retained attempt; 124 forms are now accepted. The other attempts stay outside the repository for a measured retry pass and earn no credit.
+Parallel attempts covered the 748 relocation-masked forms of 100–200 bytes that had no retained attempt; 124 forms are now accepted. The other attempts stay outside the repository for a measured retry pass and earn no credit.
 
 **ABI holds, separately uncredited.** In this selection 748 placements in 104 forms link byte-exact (102,236 placement bytes) but disagree with an accepted callee definition or accepted callers. Of the 1,007 conflicts, 322 differ in the argument count, 291 only between pointer and integer arguments, 273 in whether a value is returned and 121 in other argument classes. The largest group uses the return value of accepted per-level helpers that are defined as `void` (for example [LEVEL_03_0FB398.c](../../src/levels/03_kalidon/LEVEL_03_0FB398.c)); many others pass arguments to the empty shared stub [FRONTEND_001E08.c](../../src/levels/shared/FRONTEND_001E08.c), which is defined without parameters at 2,219 placements. One representative per form is retained under `nonmatching/levels/`. Reopen them by reconciling those prototypes with the accepted definitions and callers while keeping every accepted object hash, then relink each placement and rerun the complete-module gate.
 
-### Prototype review of the held 61â€“200-byte bodies (9 November 2026)
+### Prototype review of the held 61–200-byte bodies (9 November 2026)
 
 Two rules that keep every linked byte released 142 of the held placements: a caller's `void` declaration of a callee whose accepted definition returns a value now takes that return class, and accepted parameterless constant stubs whose callers pass arguments moved to six typed stub sources at 127 placements. The other **899 byte-exact placements in 175 forms** (108,520 placement bytes) stay held, with one representative each under `nonmatching/levels/`. Most remaining conflicts differ between pointer and integer arguments or in the argument count. Casting at each call would only hide the disagreement: when a caller passes small integer constants where an accepted definition declares pointers, the accepted definition is the likelier error. Reopen them per callee family: recover the parameter types from the callee body and all of its callers, correct the accepted definition and every accepted caller while each keeps its object hash, then relink the held placements and rerun the complete-module gate.
 
 ### Retry passes over open forms of up to 200 bytes (9 November 2026)
 
-Two retry passes restarted from earlier attempts: of 446 forms with a retained attempt, 37 now match, and of 200 forms whose first attempt in the 61â€“200-byte selections did not match, 29 do. Their 211 retained files left `nonmatching/levels/`; the entries above that cited them are marked accepted and link the accepted sources. The remaining attempts stay outside the repository for a further measured pass and earn no credit.
+Two retry passes restarted from earlier attempts: of 446 forms with a retained attempt, 37 now match, and of 200 forms whose first attempt in the 61–200-byte selections did not match, 29 do. Their 211 retained files left `nonmatching/levels/`; the entries above that cited them are marked accepted and link the accepted sources. The remaining attempts stay outside the repository for a further measured pass and earn no credit.
 
 **ABI holds, separately uncredited.** 294 byte-exact placements in 22 forms (25,784 placement bytes) disagree with an accepted callee definition or accepted callers after the two prototype rules. Their representative sources are under `nonmatching/levels/`; for 16 forms that already had a retained attempt, the byte-exact candidate sits beside it under [`nonmatching/levels/alternatives/`](../../nonmatching/levels/alternatives/) with an `_abi_hold` suffix. Reopen them like the other ABI holds above.
 
@@ -2229,9 +2229,9 @@ A third retry pass and a review of address variants of accepted sources matched 
 
 The rest of the third retry pass matched 57 more forms; their 148 retained files left `nonmatching/levels/` and the entries above that cited them now link the accepted sources. **Withdrawn or refused exact C:** [FRONTEND:0x0249D8](../../nonmatching/levels/alternatives/FRONTEND_0249D8_volatile.c) links 140/140 bytes only because a callee's return type points at a `volatile` 64-bit value, which forces the retail 64-bit load; it was accepted in #229 and is withdrawn, with its earlier [attempt](../../src/levels/frontend/FRONTEND_0249D8.c) (accepted 11 November 2026) restored. [FRONTEND:0x012600](../../nonmatching/levels/alternatives/FRONTEND_012600_zero_temp.c) and its 20 level copies link 140/140 bytes only through a local zero temporary in a clamp; the natural `if (quotient < 0) quotient = 0;` links 144 bytes (19 differing words, first at +0x34). Retry both by recovering the natural types and control flow. **ABI holds:** 305 byte-exact placements in 23 forms (35,904 placement bytes) stay held, with representatives under `nonmatching/levels/` or its `alternatives/` directory.
 
-### USA bounded bodies of 201â€“600 bytes (9 November 2026)
+### USA bounded bodies of 201–600 bytes (9 November 2026)
 
-Never-attempted forms of 201â€“300 and 401â€“600 bytes are being worked in parallel; 113 forms are accepted so far, and their nonmatching attempts stay outside the repository for a measured retry. **ABI holds:** 395 byte-exact placements in 49 forms (98,656 placement bytes) disagree with accepted callers or callees â€” larger bodies call more accepted helpers, so a higher share is held. Their representatives are under `nonmatching/levels/`. Reopen them like the other ABI holds above.
+Never-attempted forms of 201–300 and 401–600 bytes are being worked in parallel; 113 forms are accepted so far, and their nonmatching attempts stay outside the repository for a measured retry. **ABI holds:** 395 byte-exact placements in 49 forms (98,656 placement bytes) disagree with accepted callers or callees — larger bodies call more accepted helpers, so a higher share is held. Their representatives are under `nonmatching/levels/`. Reopen them like the other ABI holds above.
 
 A further 60 of those forms are accepted. **Not yet accepted:** `FRONTEND:0x0233F8` is exact only with the `ee-frozen` assembler route and reconstructs the soft-float packing routine of GNU libgcc's `fp-bit`; it needs a provenance and licence review against the public GNU source, like the boot `__pack_d`, before acceptance; its attempt stays private until then. **ABI holds:** 472 byte-exact placements in 40 forms (146,416 placement bytes) stay held, with representatives under `nonmatching/levels/`.
 
@@ -2261,7 +2261,7 @@ A third round of prototype corrections releases 113 held placements: 97 more acc
 
 A fourth round of prototype corrections releases 79 held placements: 38 more accepted functions were retyped in 419 accepted sources. A third correction of the [LEVEL_01:0x1337C8](../../src/levels/01_pokitaru/LEVEL_01_1337C8.c) getter family to an unused argument was withdrawn for the reason recorded above. The prototype review now reads `long` and `unsigned long` as 64-bit, as they are under this compiler (`sizeof (long)` is 8 under both profiles), which raises the count of caller/callee disagreements on `master` from 1,691 to 1,753. [LEVEL_01:0x0CAA30](../../src/levels/01_pokitaru/LEVEL_01_0CAA30.c) (accepted 11 November 2026) (2,096 bytes) links exactly at fifteen placements but stays held: it passes three floats to the accepted wrapper at `LEVEL_01:0x0B7B58`, whose definition forwards only three pointers to `LEVEL_01:0x0B7978`. [LEVEL_01:0x063628](../../src/levels/01_pokitaru/LEVEL_01_063628.c) (accepted 26 November 2026) (676 bytes) reproduces all of its function bytes only with the qualified `ps2eeas` route, but that assembler aligns its text section to 8 bytes and pads it to 680, so the gate's section check rejects it; under the base assembler one word differs. The return-0 stub source [FRONTEND:0x0025B0](../../src/levels/shared/FRONTEND_0025B0.c) is accepted at 407 placements that are different retail functions, and their held callers declare them in eight incompatible ways (197 held placements, 54,292 bytes); one shared prototype cannot serve them all, so those placements need typed stub sources per caller class. 36 retained representatives of now-accepted placements left `nonmatching/levels/` (four of them from its `alternatives/` directory). About 560 held placements remain.
 
-A fifth round releases 22 held placements: the byte-exact held callers of 61 more accepted functions now declare them as they are defined. The held caller at `LEVEL_16:0x11D978` is exact with its corrected declaration only under another compiler profile than the one it is held with, and is checked again later. Fourteen newly exact forms of 420â€“700 bytes (245 placements, 121,616 bytes) are held because their prototypes disagree with accepted code: their callers declare `void` for local callees whose accepted definitions return `int`, pass arguments that the accepted definitions do not take, or are declared otherwise by the accepted callers of their own function. Among them, `LEVEL_01:0x0B7978` takes three floats before its four integer arguments, while the accepted wrapper [LEVEL_01:0x0B7B58](../../src/levels/01_pokitaru/LEVEL_01_0B7B58.c) and its copies in the other levels declare only the four integers and forward no floats; it waits, with [LEVEL_01:0x0CAA30](../../src/levels/01_pokitaru/LEVEL_01_0CAA30.c) (accepted 11 November 2026), for those wrappers to forward the floats that their callers pass. Three retained representatives of now-accepted placements left `nonmatching/levels/`. About 800 held placements remain.
+A fifth round releases 22 held placements: the byte-exact held callers of 61 more accepted functions now declare them as they are defined. The held caller at `LEVEL_16:0x11D978` is exact with its corrected declaration only under another compiler profile than the one it is held with, and is checked again later. Fourteen newly exact forms of 420–700 bytes (245 placements, 121,616 bytes) are held because their prototypes disagree with accepted code: their callers declare `void` for local callees whose accepted definitions return `int`, pass arguments that the accepted definitions do not take, or are declared otherwise by the accepted callers of their own function. Among them, `LEVEL_01:0x0B7978` takes three floats before its four integer arguments, while the accepted wrapper [LEVEL_01:0x0B7B58](../../src/levels/01_pokitaru/LEVEL_01_0B7B58.c) and its copies in the other levels declare only the four integers and forward no floats; it waits, with [LEVEL_01:0x0CAA30](../../src/levels/01_pokitaru/LEVEL_01_0CAA30.c) (accepted 11 November 2026), for those wrappers to forward the floats that their callers pass. Three retained representatives of now-accepted placements left `nonmatching/levels/`. About 800 held placements remain.
 
 A sixth round releases 130 held placements. `LEVEL_01:0x0B7978` and [LEVEL_01:0x0CAA30](../../src/levels/01_pokitaru/LEVEL_01_0CAA30.c) are accepted now that the wrapper at `LEVEL_01:0x0B7B58` and its copies forward the three floats; the slab clip at `LEVEL_01:0x00BAB0` is accepted now that its callers pass the upper bound they hold in their second float argument; `LEVEL_01:0x0895C8` takes the unused third argument that its callers pass, and three forms only needed their callers to declare `int` callees as `int`. Four newly exact forms (53 placements) stay held: two pass an argument to accepted functions that are defined without parameters (`LEVEL_01:0x0D5C98` and `LEVEL_16:0x0793B8`), one passes two to the return-0 stub, and one declares the accepted `LEVEL_01:0x10F660` with 32-bit arguments and a pointer result where its definition takes three 64-bit arguments and returns nothing. One retained representative of a now-accepted placement left `nonmatching/levels/`. About 720 held placements remain.
 
@@ -2471,7 +2471,7 @@ Left open for review rather than listed:
 
 ## USA level sources and call contracts (26-27 November 2026)
 
-The source updates cover 1,796 additional placements of 104â€“284 bytes
+The source updates cover 1,796 additional placements of 104–284 bytes
 (340,996 bytes by placement), carried by 1,574 new C sources.
 Independent links cover every new placement and every changed accepted caller.
 An additional 107 useful unaccepted C attempts were retained with measured differences
