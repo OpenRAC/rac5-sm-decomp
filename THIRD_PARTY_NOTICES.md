@@ -170,6 +170,7 @@ the source:
 | --- | --- | --- |
 | `src/levels/frontend/__throw_FRONTEND.c`, `src/levels/frontend/__rethrow.c`, `src/levels/frontend/FRONTEND_024A70.c`, `src/levels/frontend/FRONTEND_0248D0.c` | OpenRAC/rac2-decomp `src/core/00120F00-unwind.c`, `001210E0-unwind.c`, `00120390.c`, `00120A30.c` | GCC `libgcc2.c` (`L_eh`), GNU GPL version 2 or later with the libgcc linking exception |
 | `src/levels/frontend/FRONTEND_025958.c`, `src/levels/frontend/FRONTEND_025A58.c`, `src/levels/frontend/FRONTEND_025ED0.c`, `src/levels/frontend/FRONTEND_0266D0.c` | OpenRAC/rac2-decomp `src/core/001235C8.c`, `001236C8.c` (as carried by OpenRAC/rac3-decomp), `001232F0.c`, `001242A0.c` | GCC `frame.c`, GNU GPL version 2 or later with the libgcc linking exception |
+| `src/levels/shared/LEVEL_01_1ECBD0.c` | this project's `src/levels/frontend/FRONTEND_025958.c`, itself ported from OpenRAC/rac2-decomp `src/core/001235C8.c` | GCC `frame.c` `fde_merge`; GNU GPL version 2 or later with the libgcc linking exception. The corresponding public GCC 2.95.3 notice and immutable source link are retained in the placement source. |
 | `src/levels/frontend/FRONTEND_023528.c`, `src/levels/frontend/__muldi3_FRONTEND.c`, `src/levels/shared/__muldi3_shared.c` | this project's `src/boot/__unpack_d.c` and `src/boot/__muldi3.c` | GCC `fp-bit.c` and `libgcc2.c`, as in the sections above |
 | `src/levels/frontend/FRONTEND_025FB8.c` | OpenRAC/rac2-decomp `src/core/00123C28-rc2.c` | MIT License, Copyright (c) 2026 RC2 decomp contributions |
 | `src/boot/sceSifInitIopHeap.c` | OpenRAC/rac2-decomp `src/core/0011E740-rc2.c` | MIT License, Copyright (c) 2026 Forja contributors |
@@ -192,7 +193,7 @@ the patched files keep their FSF notices.
   `patches/lombyte/0027-gas-inline-float-literals.patch` are unchanged copies of
   patches of [Lombyte](https://github.com/lombyte-project/Lombyte)'s `sce-991111b`
   stack, as carried by [OpenRAC/rac2-decomp](https://github.com/OpenRAC/rac2-decomp).
-  MIT License, Copyright (c) 2026 Mateusz Kłysz.
+  MIT License, Copyright (c) 2026 Mateusz KÅ‚ysz.
 - `patches/0000-rac5-pinned-base.patch` combines that stack (same notice) with the
   compiler and assembler edits of OpenRAC/rac2-decomp, licensed GPL-3.0; the notice of
   that project's earlier MIT releases is in its `THIRD_PARTY_NOTICES.md`.

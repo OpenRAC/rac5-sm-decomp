@@ -1,7 +1,7 @@
 /* LEVEL_03:0x10BDA8 -- placement copy of LEVEL_01_10E0E0.c: packs six small fields into one control word, then runs two table routines on a stack buffer. */
 
 extern void func_096578(unsigned int *record, unsigned int first, unsigned int second, int third, int fourth, int fifth, unsigned int sixth);
-extern void func_096750(void *a0);
+extern int func_096750(void *a0);
 extern char D_0010AC40[];
 
 void func_10BDA8(unsigned int a0, unsigned int a1, unsigned int a2, unsigned int a3, unsigned int a4, unsigned int a5)

@@ -12,7 +12,7 @@ typedef struct {
 } Effect;
 typedef struct { char pad[0x20]; V3 p20; char pad2[4]; V3 p30; char pad3[0x58 - 0x3C]; Effect **slot; } Actor;
 extern unsigned short D_002AF2C8;
-extern Effect *func_09A298(int a, int b, int c, int d, int e);
+extern Effect *func_09A298(int a, int b, int c, int d);
 
 void func_17B1C0(Actor *o)
 {
@@ -23,7 +23,7 @@ void func_17B1C0(Actor *o)
     V3 *da;
     V3 *db;
 
-    e = func_09A298(3, 1, D_002AF2C8, 1, 0);
+    e = ((Effect * (*)(int a, int b, int c, int d, int e))func_09A298)(3, 1, D_002AF2C8, 1, 0);
     if (e) {
         pa = &o->p20;
         pb = &o->p30;

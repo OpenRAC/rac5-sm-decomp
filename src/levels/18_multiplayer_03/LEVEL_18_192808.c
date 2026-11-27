@@ -1,6 +1,6 @@
 extern char D_0018FDC0[];
 extern void func_086E78(void *, void *, void *, int, int, int, void *);
-extern void func_087050(void *);
+extern int func_087050(void *);
 
 void func_192808(void *first, void *second)
 {

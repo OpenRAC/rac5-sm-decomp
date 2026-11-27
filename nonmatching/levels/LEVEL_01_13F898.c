@@ -1,49 +1,56 @@
-/* USA LEVEL_01.REL:0x13F898, 272-byte candidate (21 November 2026).
- * Measured gnu-ee-trial: 15 differing words; first difference at 0xD4.
- * Recover the observed types, statement order and lifetimes before retrying
- * the same mismatch class. No matching credit.
+/* USA LEVEL_01:13F898, 272-byte candidate; measured 26 November 2026.
+ * Profile gnu-ee-trial, assembler ee-frozen; options: default.
+ * Compiled 272 bytes: 3 differing words; first difference +0xCC. No matching credit.
+ * Remaining issue: single nop before the inline sqrt.s: retail mtc1/swc1/add.s/nop/sqrt.s; ee-
+ * frozen puts its nop after the mtc1 (3 words), pinned/gnu-ee-trial/r5900-mfc1 emit none (268 B,
+ * 15 words), divpad emits two (276 B), ps2eeas 272 B/15 words; swept 6 profiles x 4 assemblers;
+ * same single-pad wall class as div.s
+ * Reopen only when new caller/type evidence or a source hypothesis resolves this measured
+ * difference without changing accepted bytes.
  */
-extern float atan2f(float, float);
-extern float sqrtf(float);
 
-typedef struct {
-    char pad00[0x30];
-    float pos[3];
-} Parent;
-
-typedef struct {
-    Parent *parent;
-    char pad04[0xC];
-    float from[3];
-    char pad1C[0xC];
-    float angle;
+/* LEVEL_01:0x13F898 -- recomputes relative offsets to a target and derives an angle and a length. */
+struct V3 {
+    float x;
+    float y;
+    float z;
+};
+struct T {
+    char pad[0x30];
+    struct V3 pos;
+};
+struct AL {
+    float ang;
     float len;
-    float pos[3];
-} Obj;
+};
+struct O {
+    struct T *t;
+    char pad4[0xC];
+    struct V3 a;
+    char pad1c[0xC];
+    struct AL al;
+    struct V3 pos;
+};
+extern float atan2f(float y, float x);
+extern float sqrtf(float x);
 
-static __inline__ void Sub3(float *r, float *a, float *b)
+void func_13F898(struct O *o, struct V3 *p, float k)
 {
-    r[0] = a[0] - b[0];
-    r[1] = a[1] - b[1];
-    r[2] = a[2] - b[2];
-}
-
-static __inline__ void Double3(float *v)
-{
-    v[0] = v[0] + v[0];
-    v[1] = v[1] + v[1];
-    v[2] = v[2] + v[2];
-}
-
-void func_13F898(Obj *o, float *v, float f)
-{
-    float d[3];
-    float *q;
-
-    Sub3(d, v, o->parent->pos);
-    Sub3(o->pos, o->from, o->parent->pos);
-    Double3(o->pos);
-    q = &o->angle;
-    q[0] = atan2f(f, 0.5f);
-    q[1] = sqrtf(f * f + 0.25f);
+    struct V3 d;
+    struct T *t = o->t;
+    struct V3 *tp = &t->pos;
+    struct V3 *ap = &o->a;
+    struct V3 *op = &o->pos;
+    struct AL *al = &o->al;
+    d.x = p->x - tp->x;
+    d.y = p->y - tp->y;
+    d.z = p->z - tp->z;
+    op->x = ap->x - tp->x;
+    op->y = ap->y - tp->y;
+    op->z = ap->z - tp->z;
+    op->x = op->x + op->x;
+    op->y = op->y + op->y;
+    op->z = op->z + op->z;
+    al->ang = atan2f(k, 0.5f);
+    al->len = sqrtf(k * k + 0.25f);
 }

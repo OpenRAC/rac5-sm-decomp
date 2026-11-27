@@ -5,7 +5,7 @@ typedef struct Sub { char pad0[4]; V3 vel; char pad10[0x1C - 0x10]; float f1C; }
 typedef struct Obj { char pad0[0x30]; V3 pos; char pad3C[0x58 - 0x3C]; Sub *sub; } Obj;
 extern int func_015558(int a, float f);
 extern void func_167390(Obj *o);
-extern void func_06F940(Obj *o, int a);
+extern void func_06F940(Obj *o);
 extern void func_1038C0(M *dst, char *src, float f);
 extern void func_1040F8(Obj *a, Obj *b, M *c);
 extern int func_1671C8(Obj *o);
@@ -21,7 +21,7 @@ int func_167280(Obj *o, float dt)
 
     if (func_015558(0, o->pos.y)) {
         func_167390(o);
-        func_06F940(o, 1);
+        ((void (*)(Obj *o, int a))func_06F940)(o, 1);
         return 0;
     }
     f = s->f1C;

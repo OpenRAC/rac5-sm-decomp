@@ -1,8 +1,13 @@
-/* USA FRONTEND.REL:0x023E40 (22 November 2026): exact linked bytes under
- * sdk991111, ported from a sister decompilation twin, held.
- * Its placement declares func_0233F8 unlike its accepted definition.
- * Reconcile the prototypes before promotion. No matching credit.
+/* USA FRONTEND:023E40, 184-byte candidate; measured 26 November 2026.
+ * Profile sdk991111, assembler gnu-ee-trial; options: default.
+ * Byte-exact in an isolated link, but held for a local prototype conflict; no matching credit.
+ * Remaining issue: litodp (fp-bit.c) port; exact at the registered 184 B now (earlier size
+ * mismatch gone); pinned is 180 B; func_0233F8 double(ptr) agrees with accepted dpadd/dpsub;
+ * address variants for the coordinator
+ * Reopen with new caller/type evidence or a source hypothesis that resolves the recorded
+ * difference without changing accepted callers.
  */
+
 /* FRONTEND:0x023E40 -- converts a signed 32-bit integer to a double. Ported from rac5-sm-decomp src/boot/litodp.c (litodp). */
 /* fp-bit.c, double precision (GCC 2.9 config/fp-bit.c), adapted without
    headers.  Source: https://github.com/gcc-mirror/gcc/blob/7f236610e99c7a11fb18f056b6446b3c7c40979c/gcc/config/fp-bit.c */

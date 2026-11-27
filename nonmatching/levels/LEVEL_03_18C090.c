@@ -1,55 +1,73 @@
-/* USA LEVEL_03.REL:0x18C090, 256-byte candidate (21 November 2026).
- * Measured pinned: 16 differing words; first difference at 0x28.
- * Recover the observed types, statement order and lifetimes before retrying
- * the same mismatch class. No matching credit.
+/* USA LEVEL_03:18C090, 256-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: default.
+ * Compiled 256 bytes: 11 differing words; first difference +0x28. No matching credit.
+ * Remaining issue: The unused frame array or unrelated pointer-type reuse was removed. Recover
+ * the original frame ownership or aliasing from caller and field evidence before retrying.
+ * Reopen only when new caller/type evidence or a source hypothesis resolves this measured
+ * difference without changing accepted bytes.
  */
-typedef struct {
-    char pad00[8];
-    int w08;
-    char pad0C[0x26 - 0xC];
-    unsigned char near[5];
-    unsigned char far[5];
-} Rec;
 
-typedef struct {
-    char pad00[0x30];
-    float x;
-    float y;
-    float z;
+/* LEVEL_03:0x18C090 -- picks a side by facing and fires the five slot callbacks. */
+typedef struct Info {
+    char pad0[8];
+    void *target;
+    char pad0C[0x1A];
+    unsigned char front[5];
+    unsigned char back[5];
+} Info;
+
+typedef struct Obj {
+    char pad0[0x30];
+    float pos[3];
     char pad3C[0x18];
-    Rec *rec;
+    Info *info;
 } Obj;
 
+typedef struct Vecs {
+    float v[4];
+    float d[3];
+} Vecs;
+
+static __inline__ void Sub3(float *r, float *a, float *b)
+{
+    r[0] = a[0] - b[0];
+    r[1] = a[1] - b[1];
+    r[2] = a[2] - b[2];
+}
+
 extern void func_01A0B0(float *out);
-extern int func_084588(int a, float *p);
-extern void func_0180C0(int id, int a);
+extern int func_084588(void *target, float *dir);
+extern void func_0180C0(int id, int arg);
 
 void func_18C090(Obj *o)
 {
-    float v[4];
-    float w[3];
+    Vecs t;
     float *p;
-    Rec *r;
-    unsigned char *q;
+    Info *info;
+    unsigned char *s;
+    unsigned char *arr;
     unsigned char *end;
 
-    r = o->rec;
-    p = &o->x;
-    func_01A0B0(v);
-    w[0] = v[0] - o->x;
-    w[1] = v[1] - p[1];
-    w[2] = v[2] - p[2];
-    if (r->w08 != 0) {
-        if (func_084588(r->w08, v) == 0) {
+    p = o->pos;
+    info = o->info;
+    func_01A0B0(t.v);
+    Sub3(t.d, t.v, o->pos);
+    if (info->target != 0) {
+        if (func_084588(info->target, t.v) == 0) {
             return;
         }
     }
-    q = (w[0] * o->x + w[1] * p[1] + w[2] * p[2] < 0.0f) ? r->near : r->far;
-    end = q + 5;
+    if (t.d[0] * o->pos[0] + t.d[1] * p[1] + t.d[2] * p[2] < 0.0f) {
+        arr = info->back;
+    } else {
+        arr = info->front;
+    }
+    s = arr;
+    end = s + 5;
     do {
-        if (*q != 0xFF) {
-            func_0180C0(*q, 0);
+        if (*s != 0xFF) {
+            func_0180C0(*s, 0);
         }
-        q++;
-    } while (q < end);
+        s++;
+    } while (s < end);
 }

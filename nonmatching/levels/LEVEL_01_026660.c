@@ -1,10 +1,16 @@
-/* USA LEVEL_01.REL:0x026660 (21 November 2026): exact linked bytes under
- * pinned, held.
- * Its form stays out of the accepted set because a placement is defined unlike
- * the declaration in the accepted caller LEVEL_01_026768.
- * Reconcile the prototypes (EE ABI rules in AGENTS.md) before promotion. No
- * matching credit.
+/* USA LEVEL_01:026660, 260-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: default.
+ * Byte-exact in an isolated link; local declarations still conflict with accepted definitions or
+ * callers. No matching credit.
+ * Remaining issue: draft re-tried exact; CONFLICT: accepted caller LEVEL_01_026768 declares
+ * func_026660(long long, long long, int, long long x5); the definition needs char* /int params
+ * (long long params add dsll32/dsra32 truncations, 304 B), so the caller declaration should
+ * become (char *, int, int, int, int, int, int, int)
+ * Reopen only when new caller/type evidence or a source hypothesis resolves this measured
+ * difference without changing accepted bytes.
  */
+
+/* LEVEL_01:0x026660 -- queues a load request when none is pending: copies the name into the request buffer, stores the six request parameters and clears two result bytes. */
 extern char *strncpy(char *dst, const char *src, unsigned int n);
 
 extern unsigned char D_001F3ED0;

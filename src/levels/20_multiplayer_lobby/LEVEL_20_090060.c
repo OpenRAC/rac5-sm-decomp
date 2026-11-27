@@ -20,7 +20,7 @@ extern Player *func_0E5858(int i);
 extern Target *func_01EE10(int a, int b);
 extern void func_0907F8(unsigned int index, unsigned int value);
 extern void *func_01EC50(unsigned int a0, int a1);
-extern int func_01EEC8(unsigned int o, int x);
+extern long long func_01EEC8(unsigned int o, int x);
 extern int func_01F8D0(int mode, int field);
 extern void func_090E20(int idx);
 extern float func_01EFE8(int a, int b);

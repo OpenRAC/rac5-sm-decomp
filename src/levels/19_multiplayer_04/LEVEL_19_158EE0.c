@@ -2,7 +2,7 @@
 extern char D_002E5758[];
 extern int sprintf(char *buf, const char *fmt, ...);
 extern char *func_113490(int v);
-extern void func_06F9A8(int h, int f);
+extern void func_06F9A8(int h);
 extern char *func_10F9D0(int id);
 extern char *func_115AC8(int t);
 extern void func_0A78A8(int slot, char *text, int a, int b);
@@ -22,7 +22,7 @@ void func_158EE0(char *o, unsigned char st)
         break;
     case 4:
         if (*(int *)ctl != 0) {
-            func_06F9A8(*(int *)ctl, 1);
+            ((void (*)(int h, int f))func_06F9A8)(*(int *)ctl, 1);
             *(int *)ctl = 0;
         }
         if (*(int *)(ctl + 8) == *(int *)(ply + 0xFC)) {

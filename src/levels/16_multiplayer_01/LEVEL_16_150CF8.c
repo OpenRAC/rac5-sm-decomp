@@ -1,0 +1,51 @@
+/* LEVEL_16:0x150CF8 -- steps a damped spring on an object's angle, several times per frame. */
+typedef struct Ext { char pad0[0x20]; float ang; float vel; } Ext;
+typedef struct Obj { char pad0[0x58]; Ext *ext; } Obj;
+typedef struct Spring { float k; float damp; float limit; } Spring;
+extern Spring D_001D3FF8;
+extern float D_0019AD24;
+extern void func_1038F0(float *out, float a);
+extern void func_1040F8(Obj *a, Obj *b, float *m);
+
+void func_150CF8(Obj *o, float dt)
+{
+    float m[12];
+    int a;
+    int two;
+    int *q;
+    int n;
+    Ext *e;
+    float x;
+    float k, damp, limit;
+    float *pa;
+    float *pv;
+    float target;
+    e = o->ext;
+    func_1038F0(m, e->ang * dt);
+    func_1040F8(o, o, m);
+    target = 4.712389f;
+    two = 2;
+    a = (int)(D_0019AD24 * 59.998802f);
+    q = &a;
+    if (!(a < two))
+        q = &two;
+    n = *q;
+    k = D_001D3FF8.k;
+    damp = D_001D3FF8.damp;
+    limit = D_001D3FF8.limit;
+    pa = &e->ang;
+    pv = &e->vel;
+    if (n > 0) {
+        do {
+            x = (target - *pa) * k - *pv * damp;
+            *pv = x;
+            if (limit < x) {
+                *pv = limit;
+            } else if (x < -limit) {
+                *pv = -limit;
+            }
+            *pa = *pa + *pv;
+            n--;
+        } while (n != 0);
+    }
+}

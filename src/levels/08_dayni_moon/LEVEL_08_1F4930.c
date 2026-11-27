@@ -4,7 +4,7 @@ struct Actor {
     float d[3];
 };
 
-extern int func_08A488(float *a, struct Actor *o);
+extern void func_08A488(float *a, struct Actor *o);
 extern void func_12BAA0(float *a, float *out, float *v);
 
 static __inline__ void Copy3(float *d, float *s)
@@ -25,7 +25,7 @@ int func_1F4930(float *a, float *out, struct Actor *o)
 {
     float v[3];
 
-    if (func_08A488(a, o) == 0) {
+    if (((int (*)(float *a, struct Actor *o))func_08A488)(a, o) == 0) {
         return 0;
     }
     Copy3(out, a);

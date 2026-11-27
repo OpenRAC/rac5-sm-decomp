@@ -1,10 +1,17 @@
-/* USA LEVEL_01.REL:0x1EB0A8 (21 November 2026): exact linked bytes under
- * pinned, held.
- * Its form stays out of the accepted set because a placement is defined unlike
- * the declaration in the accepted caller __make_fp_LEVEL_01.
- * Reconcile the prototypes (EE ABI rules in AGENTS.md) before promotion. No
- * matching credit.
+/* USA LEVEL_01:1EB0A8, 268-byte candidate; measured 26 November 2026.
+ * Profile pinned, assembler gnu-ee-trial; options: default.
+ * Byte-exact in an isolated link; local declarations still conflict with accepted definitions or
+ * callers. No matching credit.
+ * Remaining issue: fp-bit __pack_f (float func_1EB0A8(fp_number_type *)); CONFLICT on the caller
+ * side only: accepted src/levels/01_pokitaru/__make_fp_LEVEL_01.c declares void
+ * func_1EB0A8(struct FourWords *); fp-bit __make_fp returns pack_d(&in), so that caller should
+ * become FLO_type __make_fp(...) { ... return func_1EB0A8(&in); } (same bytes, f0 passes
+ * through); cannot be fixed from this definition (a void body would drop the f0 result)
+ * Reopen only when new caller/type evidence or a source hypothesis resolves this measured
+ * difference without changing accepted bytes.
  */
+
+/* LEVEL_01:0x1EB0A8 -- fp-bit.c single precision pack (GCC 2.9 config/fp-bit.c), copy of the accepted boot __pack_f. */
 typedef unsigned int USItype;
 typedef unsigned short UHItype;
 

@@ -1,0 +1,51 @@
+/* LEVEL_07:0x1A2678 -- placement copy of LEVEL_01_1916C8.c: compares a record with a global object and a float field, using an optional helper result. */
+struct Q1916C8 {
+    char pad0[0x18];
+    void *f18;
+};
+
+struct P1916C8 {
+    char pad0[0x34];
+    float f34;
+    char pad38[0x45 - 0x38];
+    unsigned char b45;
+    char pad46[0x58 - 0x46];
+    struct Q1916C8 *f58;
+};
+
+struct G1916C8 {
+    char pad0[0x34];
+    float f34;
+    char pad38[0x334 - 0x38];
+    void *f334;
+};
+
+extern struct G1916C8 D_0024AA40;
+extern int func_15A898(void *arg0);
+
+int func_1A2678(struct P1916C8 *p)
+{
+    struct Q1916C8 *q;
+    struct G1916C8 *g;
+    int r;
+    int b;
+
+    q = p->f58;
+    r = 0;
+    if (q->f18 != 0) {
+        r = func_15A898(q->f18);
+    }
+    g = &D_0024AA40;
+    if (g->f334 == p) {
+        b = p->b45;
+    } else {
+        if (r == 0) {
+            return 0;
+        }
+        b = p->b45;
+    }
+    if (b == 1 || g->f34 - p->f34 < 0.5f) {
+        return 1;
+    }
+    return 0;
+}

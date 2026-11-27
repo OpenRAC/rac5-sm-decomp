@@ -38,7 +38,7 @@ struct Ent {
     unsigned short pad;
 };
 extern struct Ent D_002B25C0[];
-extern struct Fx *func_096CC0(int a, int b, int c, int d, int e);
+extern struct Fx *func_096CC0(int a, int b, int c, int d);
 extern void func_075408(struct Vec3 *a, struct Vec3 *b, void *c, struct Def *d);
 extern void func_075A00(void);
 extern int rand(void);
@@ -58,7 +58,7 @@ struct Fx *func_075198(void *owner, struct Def *def, struct Src *src)
     } else {
         r = 0;
     }
-    fx = func_096CC0(0, 1, D_002B25C0[def->list[r]].id, 1, 1);
+    fx = ((struct Fx * (*)(int a, int b, int c, int d, int e))func_096CC0)(0, 1, D_002B25C0[def->list[r]].id, 1, 1);
     if (fx == 0) {
         return 0;
     }

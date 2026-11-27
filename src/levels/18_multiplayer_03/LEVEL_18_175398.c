@@ -23,7 +23,7 @@ extern char D_00175948[];
 
 extern void func_0899A0(char *a, struct Obj *o, int b, int idx);
 extern int func_1756D0(struct Obj *o);
-extern void func_06F008(struct Obj *o, int flag);
+extern void func_06F008(struct Obj *o);
 
 static __inline__ void Scale3(float *out, float *in, float k)
 {
@@ -63,6 +63,6 @@ void func_175398(struct Obj *o, float dt)
         }
     }
     if (func_1756D0(o) != 0) {
-        func_06F008(o, 1);
+        ((void (*)(struct Obj *o, int flag))func_06F008)(o, 1);
     }
 }
