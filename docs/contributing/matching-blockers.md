@@ -2776,6 +2776,15 @@ complete-program gate or a qualification. The sources are in `nonmatching/boot/`
   class matches, but retail hoists all four loop constants into saved float
   registers, while this route hoists only two and reloads 17.0 and 0.1 on each
   inner iteration.
+- `MCPTRANS_SHRINK_Animate` (696 bytes, default route and `gnu-ee-trial`) is exact
+  with a measured closing statement order: one vector computed into z and copied to
+  y and x, and the second spiral's height computed first (the natural order gives
+  628). It reads the timer and ramp as floats, while the accepted
+  `MCPTRANS_SHRINK_Shutdown` declares them `int`.
+- `MCPTRANS_UpdateCamera` (612-byte body) is exact only with `gnu-ee-trial-divpad`
+  followed by Ps2EeAs: the full 616-byte span, padding word included. With GNU `as`
+  it is 611 of 612, because the clamp's join label lands after a hazard `nop`. No
+  boot route combines those two today.
 - `SYSTEM_BuildUploadVecs` is blocked like the DMA tags below: its first quadword
   is a 128-bit word-shift chain (46 of 184 bytes through a union).
 
