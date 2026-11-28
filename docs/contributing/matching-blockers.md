@@ -2738,6 +2738,30 @@ complete-program gate or a qualification. The sources are in `nonmatching/boot/`
   the same positive form in source order 1, 3, 2, 4. Mixing polarities between the
   state pairs lets the compiler cross-jump them into two blocks (324 bytes).
 
+**New retained bodies, exact locally (no C before):**
+- `AsciiString2Sjis` (152 bytes, default route and `gnu-ee-trial`). The swapped
+  halfword is built from separate low and high `int` temporaries, low first. The
+  8 bytes before the next label are not claimed.
+- `MCPTRANS_SHRINK_UpdateCamera`, `MCPTRANS_FALL_UpdateCamera` and
+  `MCPTRANS_DREAM_UpdateCamera` (168 bytes each, default route). They copy the
+  identity matrix and advance a timer, and they return the matrix address, which
+  retail leaves in `$v0`. The accepted caller `MCP_UpdateCameraCB` declares them
+  `void`, and the SpeckEmitter sources declare two of the matrices `float[]`, so
+  the prototypes and declarations need reconciling.
+- `Push__t5Stack…tMEMCARD_STATE_NODE` (120 bytes, default route and
+  `gnu-ee-trial`), through an inline `IsFull` test. Its count must be `unsigned`
+  (a signed count gives 119 of 120), while the accepted `Reset` declares it `int`.
+  The following unnamed 56-byte routine is not covered.
+- `VRAM_Alloc` (180 bytes, default route and `gnu-ee-trial`). The count is read once
+  into a local, the rounding takes two statements, and the offset update is
+  `+= 0x2000 + sz`. It reads the per-type totals as `unsigned int`; the accepted
+  `VRAM_Initialize` declares them `char[]`.
+- `PS2HEAP_Init` (first C attempt, 151 of 184): the loop and store schedule match.
+  Four prologue registers are permuted, and the first four stores after the loop are
+  in another order.
+- `SYSTEM_BuildUploadVecs` is blocked like the DMA tags below: its first quadword
+  is a 128-bit word-shift chain (46 of 184 bytes through a union).
+
 **Improved, not exact:**
 - `SIG_CalcCaseInsensitiveSignature`: 165/216, up from 121. The separator test now
   reuses the loop byte. Retail keeps a separate copy of the cursor for the
@@ -2778,6 +2802,13 @@ complete-program gate or a qualification. The sources are in `nonmatching/boot/`
   counter decrement sits after the second call before scheduling, but the first
   scheduling pass hoists it ahead of the first call. About twenty loop forms
   leave it there.
+- *128-bit DMA tags (Blocker 16).* `dlib_displist_send_dma` (380 bytes) can use
+  `__builtin_rac5_sync` under `sdk991111sync` for its `sync`, but its end tag
+  (`0xF0000000`) is a 128-bit shift and or chain stored with one `sq`. Every
+  available `cc1` refuses such an operation. Union, aligned-struct and initializer
+  spellings go through memory: the body is 20 bytes shorter, 64 of 360 bytes equal.
+  So the removal from the assembly list does not make it reachable yet.
+  `dlib_displist_add_call` (60 bytes) is blocked the same way: 10 to 13 of 60 bytes.
 - *Register tie after a block move.* `MCPTRANS_UpdateStarStreaks` stays at
   264/268 after about forty further shapes, including a statement-expression model
   of the C++ constructor and copy.
