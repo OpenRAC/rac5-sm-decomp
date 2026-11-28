@@ -2743,6 +2743,10 @@ complete-program gate or a qualification. The sources are in `nonmatching/boot/`
   reuses the loop byte. Retail keeps a separate copy of the cursor for the
   lookahead scan.
 
+- `func_1E92FC0`: 763/792 under `gnu-ee-trial`, up from 492. The camera distance now
+  comes from one inline helper. Only the angle conversion differs: retail loads pi
+  before 180 and puts one `nop` before the multiply-fed division.
+
 **New constraints:**
 - *Padding before square roots only.* A private `cc1` built from the
   `gnu-ee-trial-divpad` tree, padding `sqrt.s` and `rsqrt.s` but not `div.s`, makes
