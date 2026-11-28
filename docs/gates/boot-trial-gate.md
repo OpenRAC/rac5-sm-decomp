@@ -14,8 +14,8 @@ by a line feed, so a CRLF checkout turns it into `stray '\' in program` on any
 body with a macro continuation. `.gitattributes` pins `*.c` and `*.h` to LF for
 that reason; a Windows checkout without it cannot reproduce the gate.
 
-The current campaign contains 965 compiler-produced C objects. Its verified
-catalogue records 965 bodies (145,156 compiled bytes plus 1,908 zero alignment
+The current campaign contains 974 compiler-produced C objects. Its verified
+catalogue records 974 bodies (148,032 compiled bytes plus 1,912 zero alignment
 bytes). Of these, 864 reviewed placements supply 119,008 accepted C bytes.
 `tools/progress_status.py` regenerates the accepted totals; an object match
 alone does not grant C credit.
@@ -92,7 +92,7 @@ Windows driver: it is staged in the Windows-visible ignored
 front end cannot stat a DrvFs path, so it is staged under `--output-dir`,
 which must therefore be on the Linux filesystem for either route; a pin may
 also name its own staging directory, or `--extra-stage SELECTOR=DIRECTORY`
-overrides it. The pinned GNU assembler handles 848 objects; the remaining 117
+overrides it. The pinned GNU assembler handles 857 objects; the remaining 117
 use their declared, hash-pinned per-source assembler. The compiler step
 exports only the objects to
 ignored `build/boot-compiled-objects/`, then checks the committed boot symbol
