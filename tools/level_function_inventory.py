@@ -114,9 +114,12 @@ def control_flow(data: bytes, code_end: int) -> tuple[set[int], set[int], list[t
     return calls, returns, edges
 
 
-def module_rows(module: str, data: bytes, code_end: int, exports: set[int]) -> list[dict]:
+def module_rows(
+    module: str, data: bytes, code_end: int, exports: set[int], *,
+    flow: tuple[set[int], set[int], list[tuple[int, int]]] | None = None,
+) -> list[dict]:
     relocs, pointers = relocations(data, code_end)
-    calls, returns, edges = control_flow(data, code_end)
+    calls, returns, edges = control_flow(data, code_end) if flow is None else flow
     starts = sorted({CODE_START, *calls, *pointers, *exports})
     sites = sorted(relocs)
     ordered_returns = sorted(returns)
