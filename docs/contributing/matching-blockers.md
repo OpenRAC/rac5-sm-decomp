@@ -2733,6 +2733,11 @@ complete-program gate or a qualification. The sources are in `nonmatching/boot/`
   The loop is written `if (!(v > limit)) { reload; if (!(v > limit)) continue; }`.
   A `<=` form is also exact, but it changes the NaN case.
 
+- `MEMCARD_ProcessClientRequests` (372 bytes, default route and `gnu-ee-trial`; the
+  15 jump-table words equal the retail table). The four flag-test blocks must all use
+  the same positive form in source order 1, 3, 2, 4. Mixing polarities between the
+  state pairs lets the compiler cross-jump them into two blocks (324 bytes).
+
 **Improved, not exact:**
 - `SIG_CalcCaseInsensitiveSignature`: 165/216, up from 121. The separator test now
   reuses the loop byte. Retail keeps a separate copy of the cursor for the
@@ -2759,6 +2764,16 @@ complete-program gate or a qualification. The sources are in `nonmatching/boot/`
   before delay-slot filling. The delay-slot pass moves the zero result twice, then
   inverts the branch to the epilogue. A private C++ front end built from the
   pinned sources gives the same 160 bytes with real `bool` types.
+- *Quadword callee saves.* `MCPFONT_DrawTextureSimpleArea` differs only in its
+  save area: retail stores s0-s7 and fp as quadwords in 16-byte slots. A private
+  `gnu-ee-trial` build that restores the R5900 TImode slot anchor for those
+  registers, which patch 0000 neutralises, makes it exact with the source
+  unchanged. Retail mostly saves with `sd`, so this could only be a per-source
+  profile, after regression controls.
+- *First-pass scheduling across calls.* In `BLOOM_Upsample` (312 of 444) the loop
+  counter decrement sits after the second call before scheduling, but the first
+  scheduling pass hoists it ahead of the first call. About twenty loop forms
+  leave it there.
 - *Register tie after a block move.* `MCPTRANS_UpdateStarStreaks` stays at
   264/268 after about forty further shapes, including a statement-expression model
   of the C++ constructor and copy.

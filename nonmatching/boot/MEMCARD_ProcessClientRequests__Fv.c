@@ -1,9 +1,10 @@
 /* USA SCUS_976.15 boot: MEMCARD_ProcessClientRequests__Fv, 0x01E64848.
  * Observed body: 372 bytes, followed by 4 bytes of alignment (the interval is 376).
- * Measured 26 November 2026: 324 compiled bytes (81 instructions against 93), 114 of 372
- * bytes equal and the first differing byte at 20 (independent SN link), under the
- * pinned and gnu-ee-trial profiles.
- * Not exact; no complete-program gate, promotion or C matching credit.
+ * Measured 28 November 2026: all 372 body bytes are exact after an independent link
+ * at the retail address under the rebuilt default GNU route and gnu-ee-trial, -O2 -G0,
+ * and the 15 jump-table words equal the retail table at 0x01F1C050 (offsets from the
+ * function start). Local exactness with rebuilt tools is not qualification, promotion
+ * or C matching credit; the table placement still needs the complete-program gate.
  * Reconstructed from the retail boot. When the card layer is idle it dispatches on
  * the pending client request (a 15-entry jump table): states 1 and 2 call the
  * first handler pair and states 3 and 4 the second pair, choosing by the
@@ -18,16 +19,12 @@
  * against the retail body: the four flag-test blocks pass the same detail value, so the
  * bodies really are identical per pair. The flag is the accepted global
  * memcard_multiplayer_save (0x01F4A65F); it is ordinary memory here, not volatile.
- * Remaining difference: retail keeps four separate flag-test blocks, in the order of
- * states 1, 3, 2, 4 (states 1 and 3 test with the call as the branch target and fall into
- * a jump to the state 8 or 9 body, states 2 and 4 with the call falling through), 93
- * instructions in all, while the compiler cross-jumps the identical state pairs into two
- * test blocks (81 instructions). Polarity forms (both assignments to the pairs), case order 1,3,2,4,
- * early-break forms, fall-through, goto into the state 8/9 bodies, int-returning handler
- * declarations and a separate flag global were tried without effect.
- * Reopen when a source shape is found that keeps the test blocks of states 1 and 3 from
- * being merged into those of 2 and 4; the handlers have no accepted definition yet, so
- * their prototypes are unverified.
+ * The four flag-test blocks stay separate when all four use the same positive form
+ * (flag set: multiplayer handler; otherwise the detail handler when detail < 4) in the
+ * source order 1, 3, 2, 4. Mixing polarities between the pairs lets the compiler
+ * cross-jump them into two blocks (324 bytes, 81 instructions); the uniform form in
+ * natural order 1, 2, 3, 4 keeps four blocks in the wrong order (333 of 372).
+ * The handlers have no accepted definition yet, so their prototypes are unverified.
  */
 typedef struct {
     unsigned char pad[0x14];
@@ -58,14 +55,12 @@ void MEMCARD_ProcessClientRequests__Fv(void) {
         case 0:
             break;
         case 1:
-            if (!memcard_multiplayer_save) {
-                if ((unsigned int)CL[55] < 4) func_1E644E8(CL[55]);
-            } else func_1E645A8();
+            if (memcard_multiplayer_save) func_1E645A8();
+            else if ((unsigned int)CL[55] < 4) func_1E644E8(CL[55]);
             break;
         case 3:
-            if (!memcard_multiplayer_save) {
-                if ((unsigned int)CL[55] < 4) func_1E647C0(CL[55]);
-            } else func_1E647F8();
+            if (memcard_multiplayer_save) func_1E647F8();
+            else if ((unsigned int)CL[55] < 4) func_1E647C0(CL[55]);
             break;
         case 2:
             if (memcard_multiplayer_save) func_1E645A8();

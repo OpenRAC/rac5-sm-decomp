@@ -15,6 +15,13 @@
  * quad-save compiler (sdk991111sq) assigns the slots in reverse order. No source shape
  * changes this. Reopen when a route that quad-saves all callee-saved registers in retail
  * slot order is available.
+ * 28 November 2026: a private gnu-ee-trial build in which the R5900 patch
+ * keeps the TImode slot anchor for s0-s7 and fp (ra stays DImode), the
+ * neutralisation in patch 0000 being reverted, reproduces all 244 bytes with
+ * this source unchanged. Retail mostly saves with sd, so such a build could
+ * only be a per-source profile, and it has no public patch, provenance or
+ * regression controls yet. Register-precision attributes on the nine
+ * registers give quadword stores but keep 8-byte slots (192 of 244).
  */
 extern void TEXMGR_SetCurrent__FUi(unsigned int tex);
 extern void UTIL_DrawTexturedRect__FssssffffUiUi(short x, short y, short w, short h, float u0, float v0, float u1, float v1, unsigned int c0, unsigned int c1);

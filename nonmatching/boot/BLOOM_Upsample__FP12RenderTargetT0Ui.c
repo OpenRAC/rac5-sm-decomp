@@ -22,6 +22,15 @@
  * (ratio << 6) in the call, and the loop is while (--n >= 0). To reopen: find
  * the source form that keeps the counter decrement after the second call and
  * the zero argument after the prologue stores.
+ * 28 November 2026 (gnu-ee-trial, -mno-check-zero-division): still 312 of 444
+ * equal bytes, first difference +44; the default route gives 302, and the
+ * divpad route is identical (no float division). Without scheduling the loop
+ * counter decrement sits right after the second call, as in retail; the first
+ * scheduling pass hoists it ahead of the first call. About twenty loop forms
+ * (pre/post decrement, separate counters, signed or unsigned, while/for/do)
+ * leave that hoist in place or worsen the body. Reopen with a first-pass
+ * schedule that keeps a call-crossing counter update below the calls, or with
+ * a source form that gives the decrement a real dependence on the second call.
  */
 typedef struct RenderTarget {
     int unk0;
