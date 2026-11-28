@@ -5,11 +5,11 @@ typedef struct {
     float z;
 } V3;
 
-extern int func_082B48(V3 *a0, int a1);
+extern void func_082B48(V3 *a0, int a1);
 
 int func_193D40(V3 *src, V3 *dst, int arg)
 {
-    int r = func_082B48(src, arg);
+    int r = ((int (*)(V3 *a0, int a1))func_082B48)(src, arg);
 
     if (r != 0) {
         dst->x = src->x;

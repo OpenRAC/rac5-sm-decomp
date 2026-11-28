@@ -3,7 +3,7 @@ extern int D_001ED970;
 
 extern int func_0254B8(void *value);
 extern void func_023248(long long value, int state);
-extern void func_025540(int index);
+extern int func_025540(int index);
 
 int func_022FB8(int index, int apply)
 {

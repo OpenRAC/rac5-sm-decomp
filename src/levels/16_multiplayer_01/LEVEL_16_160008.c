@@ -16,7 +16,7 @@ typedef struct {
 } Obj;
 
 extern void func_160758(Obj *object, int kind, int code);
-extern void func_06F940(Obj *object, int flag);
+extern void func_06F940(Obj *object);
 
 int func_160008(Obj *object, int event, float dt)
 {
@@ -30,7 +30,7 @@ int func_160008(Obj *object, int event, float dt)
         return 0;
     }
     if (t <= 0.0f) {
-        func_06F940(object, 1);
+        ((void (*)(Obj *object, int flag))func_06F940)(object, 1);
         return 3;
     }
     state->armed = 1;

@@ -3,7 +3,7 @@ extern char D_00102110[];
 extern char D_00101F50[];
 extern void func_08F748(unsigned int *out, unsigned int mode, unsigned int data,
                         int size, int first, int second, unsigned int extra);
-extern void func_08F920(unsigned int *out);
+extern int func_08F920(unsigned int *out);
 
 void func_1028E8(unsigned int value) {
     unsigned int local[4];

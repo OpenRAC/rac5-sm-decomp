@@ -4,10 +4,10 @@ typedef struct {
     float f_70;
 } Obj;
 
-extern void func_06F9A8(Obj *o, int a);
+extern void func_06F9A8(Obj *o);
 
 void func_17B928(Obj *a0)
 {
     if (a0->f_70 > 2.5f)
-        func_06F9A8(a0, 1);
+        ((void (*)(Obj *o, int a))func_06F9A8)(a0, 1);
 }

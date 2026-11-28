@@ -1501,3 +1501,24 @@ same way and stays exact at all of its placements; no reviewed family control so
 stay held for floating-point or structure parameter disagreements. All 21 complete USA
 modules remain exact, and the prototype review finds the same 1,779 disagreeing pairs
 as before, none introduced.
+
+USA level bodies of 104 to 224 bytes, almost all missed by earlier attempts, offered
+again to new C on 26 and 27 November 2026, add **1,263 placements** (205,728 bytes by
+placement) from 1,095 sources. Counted by masked shape, accepted level bodies rise
+from 1,182,656 bytes in 7,916 shape units to 1,207,028 bytes in 8,064. 1,086 placements
+use the pinned chain, 99 `gnu-ee-trial`, 42 `sdk991111` and 36 `gnu-ee-trial-divpad`;
+73 are exact only with `ps2eeas` and 21 only with `r5900-mfc1`. Per-source options were
+measured for `-malign-functions=2` (73 placements), `-fexceptions` (60), `-fno-gcse`
+(45), `-fno-expensive-optimizations` (26), `-fno-schedule-insns` (21),
+`-fno-strength-reduce` (16), `-fno-cse-follow-jumps` (14), `-mno-check-zero-division`
+(2) and `-fno-rerun-cse-after-loop` (2). OpenRAC/rac2-decomp sets
+`-fno-strength-reduce` and `-fno-cse-follow-jumps` per file the same way; no sister
+project uses `-fno-rerun-cse-after-loop`, which keeps the loop-preheader copy of an
+object base that the second CSE pass otherwise folds (`LEVEL_15:0x1359B8`). 391
+accepted callers change a declaration to the accepted definition (186 only the
+declaration, 205 with a cast at the call), and 25 more declare a 64-bit return as
+`long long`; all stay exact at all of their placements. One caller whose code changed
+with the new declaration was left as it was, so its callee stays held. No reviewed
+family control source was edited. 71 placements in 8 forms stay held. All 21 complete
+USA modules remain exact, and the prototype review finds the same 1,779 disagreeing
+pairs as before, none introduced.

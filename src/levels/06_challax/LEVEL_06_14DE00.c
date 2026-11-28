@@ -11,7 +11,7 @@ struct Obj {
 extern int rand(void);
 extern float cosf(float x);
 extern float sinf(float x);
-extern void func_02ED10(float *dst, float *src, int flag);
+extern int func_02ED10(float *dst, float *src, int flag);
 
 void func_14DE00(struct Obj *o)
 {

@@ -9,7 +9,7 @@ struct Obj {
 extern char D_00201040[];
 
 extern int func_022CC8(int s, int a);
-extern void func_022EA0(int a, int b, int c, int d);
+extern int func_022EA0(int a, int b, int c, int d);
 extern int func_07E278(void *a, void *p);
 extern char *func_127FB0(int id);
 extern void func_0AED38(int a, void *b, void *c, int d);

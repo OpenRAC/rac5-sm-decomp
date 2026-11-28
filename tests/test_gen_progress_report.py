@@ -33,9 +33,9 @@ class GenProgressReportTests(unittest.TestCase):
         self.assertEqual(report["version"], 2)
         m = report["measures"]
         self.assertEqual(m["total_code"], "5171856")
-        self.assertEqual(m["matched_code"], "1301152")
-        self.assertAlmostEqual(m["matched_code_percent"], 25.1583, places=4)
-        self.assertEqual((m["matched_functions"], m["total_functions"]), (8820, 14409))
+        self.assertEqual(m["matched_code"], "1325524")
+        self.assertAlmostEqual(m["matched_code_percent"], 25.6296, places=4)
+        self.assertEqual((m["matched_functions"], m["total_functions"]), (8968, 14409))
         self.assertEqual(m["total_units"], len(report["units"]))
 
         # The headline is the boot .text plus the level code map, which
@@ -56,8 +56,8 @@ class GenProgressReportTests(unittest.TestCase):
         _by_module, unique_bytes, unique_sources = gen_progress_report.accepted_us_level_bodies(
             json.loads(gen_progress_report.STATUS.read_text(encoding="utf-8"))
         )
-        self.assertEqual(unique_bytes, 8696348)
-        self.assertEqual(unique_sources, 63812)
+        self.assertEqual(unique_bytes, 8875964)
+        self.assertEqual(unique_sources, 64907)
 
     def test_map_tiles_follow_the_source_tree_and_sum_to_the_headline(self) -> None:
         units = self.us["units"]

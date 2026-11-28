@@ -1,5 +1,5 @@
 /* LEVEL_16:0x132AC8 -- placement copy of LEVEL_01_14DDA0.c: walks the object's record array and, for each active record, starts its follow-up (with 1 when the record's owner flag is set) then updates it. */
-extern void func_06F940(char *object, int a1);
+extern void func_06F940(char *object);
 extern void func_132B48(char *object);
 
 void func_132AC8(char *object)
@@ -12,7 +12,7 @@ void func_132AC8(char *object)
     while (rec != end) {
         if (*(int *)(rec + 0x64) & 1) {
             if (*(int *)(*(char **)(rec + 0x58) + 0xA4) & 1) {
-                func_06F940(rec, 1);
+                ((void (*)(char *object, int a1))func_06F940)(rec, 1);
             }
             func_132B48(rec);
         }

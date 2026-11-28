@@ -95,7 +95,7 @@ extern Obj D_0022F6F8[];
 
 extern void func_0DC828(void *obj, Range *r, void *c);
 extern int func_0145D0(float *pos, float *dst, void *w, void *z, float f);
-extern void func_030AB8(Link *link, float *pos, int one);
+extern int func_030AB8(Link *link, float *pos, int one);
 extern void func_095858(Obj *o, unsigned int index);
 extern void func_095270(Obj *entry, Sub *sub, float *a, float *b, unsigned int flags);
 extern int func_07CAB8(char *a0, int a1);

@@ -56,7 +56,7 @@ extern void func_21DED0(Part *p, Obj *o, int cell, int flag, unsigned int *tick)
 extern float func_0849E8(Obj *o);
 extern float func_084A18(Obj *o);
 extern void func_0BC650(int a, int b, float f0, float f1);
-extern void func_1FAB38(int cell, Obj *o);
+extern int func_1FAB38(int cell, Obj *o);
 extern int func_1FABB8(int cell, Obj *o, void *cb, int v);
 extern void func_20EE98(void *a, Obj *o, int cell, float t);
 extern void func_16EED0(void);

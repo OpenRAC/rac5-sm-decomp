@@ -25,7 +25,7 @@ struct Obj033C38 {
 
 extern char D_001A3598[];
 
-void func_06F008(void *p, int flag);
+void func_06F008(void *p);
 
 void func_032508(struct Obj033C38 *o)
 {
@@ -43,33 +43,33 @@ void func_032508(struct Obj033C38 *o)
             n->prev = 0;
         }
         if (o->p_5B4 != 0) {
-            func_06F008(o->p_5B4, 1);
+            ((void (*)(void *p, int flag))func_06F008)(o->p_5B4, 1);
             o->p_5B4 = 0;
         }
         if (o->p_5A4 != 0) {
-            func_06F008(o->p_5A4, 1);
+            ((void (*)(void *p, int flag))func_06F008)(o->p_5A4, 1);
             o->p_5A4 = 0;
         }
         if (o->p_5A8 != 0) {
-            func_06F008(o->p_5A8, 1);
+            ((void (*)(void *p, int flag))func_06F008)(o->p_5A8, 1);
             o->p_5A8 = 0;
         }
         if (o->p_5A0 != 0) {
-            func_06F008(o->p_5A0, 1);
+            ((void (*)(void *p, int flag))func_06F008)(o->p_5A0, 1);
             o->p_5A0 = 0;
         }
         if (o->p_5AC != 0) {
-            func_06F008(o->p_5AC, 1);
+            ((void (*)(void *p, int flag))func_06F008)(o->p_5AC, 1);
             o->p_5AC = 0;
         }
         for (i = 0; i < 6; i++) {
             if (o->p_5B8[i] != 0) {
-                func_06F008(o->p_5B8[i], 1);
+                ((void (*)(void *p, int flag))func_06F008)(o->p_5B8[i], 1);
                 o->p_5B8[i] = 0;
             }
         }
         if (o->p_59C != 0) {
-            func_06F008(o->p_59C, 1);
+            ((void (*)(void *p, int flag))func_06F008)(o->p_59C, 1);
             o->p_59C = 0;
         }
         o->w_F4 = 0;
