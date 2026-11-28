@@ -555,7 +555,7 @@ Four more bounded families (132, 100, 300 and 176 bytes) add **70 C sources,
 the measured data relocations and named `sqrtf` imports. Additional accepted
 wrappers now pass their consumed GPR and FPR arguments explicitly, without
 changing their pinned objects or linked retail bodies.
-The 884 linked boot C bodies cover 123,480 bytes including alignment. The profile
+The 926 linked boot C bodies cover 135,400 bytes including alignment. The profile
 files and their patches are the only place where a toolchain change is allowed
 to move a body.
 
