@@ -1750,3 +1750,13 @@ nonmatching/boot/SND_PlayATRAC__FPCcPifb.c    gnu-ee-trial -O2 -G0
 nonmatching/boot/SND_PlayPositionalSound__FP14SND_PositionalUi.c    gnu-ee-trial -O2 -G0
 nonmatching/boot/SND_Play__FP9GDE_SoundffPP14SND_PositionalUi.c    gnu-ee-trial -O2 -G0
 nonmatching/boot/RIBBON_ClearInactiveJoints__FP20PAR_ParticleIteratorPC9PAR_Groupii.c  -mno-check-zero-division
+nonmatching/boot/CAMERA_Reset__Fv.c  gnu-ee-trial-divpad -O2 -G0
+nonmatching/boot/FOG_Update__FUi.c  gnu-ee-trial-divpad -O2 -G0
+nonmatching/boot/Ortho__Q34scee3Psp3Gumffffff.c  gnu-ee-trial-divpad -O2 -G0
+nonmatching/boot/Perspective__Q34scee3Psp3Gumffff.c  gnu-ee-trial-divpad -O2 -G0
+nonmatching/boot/TexPerspective__Q34scee3Psp3Gumffffff.c  gnu-ee-trial-divpad -O2 -G0
+nonmatching/boot/SND_UpdateATRAC__Fv.c  gnu-ee-trial-divpad -O2 -G0
+nonmatching/boot/dlib_ms_screen_matrix__FPfiiiiii.c  gnu-ee-trial-divpad -O2 -G0
+nonmatching/boot/func_1E92B40.c  gnu-ee-trial-divpad -O2 -G0
+nonmatching/boot/GLOBALWAD_CopyAndFix__FP15WAD_FILE_HEADERRP15WAD_FILE_HEADERPvUiRUi.c  gnu-ee-trial-divpad-blockmove -O2 -G0
+nonmatching/boot/SND_Init__Fv.c  gnu-ee-trial-divpad-blockmove -O2 -G0
