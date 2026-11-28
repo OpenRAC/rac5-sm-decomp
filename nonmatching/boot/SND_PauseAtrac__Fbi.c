@@ -28,8 +28,19 @@
  * char return type, paused stored as (pause != 0) (136), the lock assigned
  * with a ternary (152). Callee, array and lock declarations follow the
  * accepted sources (the callee returns int; the lock is an int).
- * The first parameter is a C++ bool in the mangled name. Reopen with a C++
- * front end for the boot or with evidence for the original refusal test.
+ * The first parameter is a C++ bool in the mangled name.
+ * 28 November 2026: without delayed-branch filling (-fno-delayed-branch, a
+ * diagnostic only) this source already has retail's refusal layout; the
+ * delay-slot pass moves the zero result into the jump's slot, then into the
+ * branch, and inverts the branch to the epilogue. Retail's form needs a code
+ * label between the zero result and that jump at that stage. A private C++
+ * front end built from the pinned sources gives the same 160 bytes with a
+ * bool parameter, return or callee. A volatile lock read once reaches 38 of
+ * 42 aligned words, with only the refusal differing (160 bytes, 65 equal
+ * positions); the only evidence for that qualifier is this fit, so it is not
+ * adopted. Reopen with a source construct that leaves such a label (a second
+ * path into the refusal, for instance) or with a measured difference in the
+ * delayed-branch pass.
  */
 typedef struct {
     unsigned char bytes[0x79];

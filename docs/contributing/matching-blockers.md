@@ -2707,6 +2707,62 @@ retail addresses:
   `MCP_UpdateRCPMLoadState` needs `g_level_index` signed (a signed branch on
   it), while the accepted `MCP_StartLevelModule__Fv` declares it `unsigned`.
 
+### Retained USA boot near misses revisited (28 November 2026)
+
+These are isolated measurements: rebuilt tools, -O2 -G0, an independent link at the
+retail address with relocations resolved to retail symbols. They are not a
+complete-program gate or a qualification. The sources are in `nonmatching/boot/`.
+
+**Now exact locally (sources updated):**
+- `DRAW_BeginUpdate` (420 bytes, default route). The material-cache word is
+  `unsigned`: retail resets it with a two-instruction all-ones constant, which this
+  route emits only for an `unsigned int` lvalue. The accepted level source declares
+  the same object unsigned. Accepted `DRAW_EndUpdate` still declares it `int`; it
+  compiles to the same bytes either way, but its declaration must be reconciled
+  before promotion.
+- `readTexPSMCT32` (408 bytes, default route and `gnu-ee-trial`). The address is
+  summed left to right: page, start and block in one statement, then the column
+  and the table word in separate statements, with the table word read first. Of 48
+  measured splits only this one is exact.
+- `MCPTRANS_FALL_SpeckEmitterUpdate` and `MCPTRANS_DREAM_SpeckEmitterUpdate` (456
+  bytes each, `gnu-ee-trial`). The rate global is read once into a local; reading
+  it three times reloads it. The retained 12-float copy order is required.
+- `MATERIAL_RegisterForUpdate` (320 bytes, default route or `gnu-ee-trial`, with the
+  per-source `as=ps2eeas` route). The double comparison constant was an assembler
+  difference: `cc1` emits `li.d`, and only Ps2EeAs expands it inline as retail does.
+  The loop is written `if (!(v > limit)) { reload; if (!(v > limit)) continue; }`.
+  A `<=` form is also exact, but it changes the NaN case.
+
+**Improved, not exact:**
+- `SIG_CalcCaseInsensitiveSignature`: 165/216, up from 121. The separator test now
+  reuses the loop byte. Retail keeps a separate copy of the cursor for the
+  lookahead scan.
+
+**New constraints:**
+- *Padding before square roots only.* A private `cc1` built from the
+  `gnu-ee-trial-divpad` tree, padding `sqrt.s` and `rsqrt.s` but not `div.s`, makes
+  `VEC_AngleBetweenVectors` (316 bytes) and `CAMERA_SetFovX` (280 bytes) exact
+  with their retained sources unchanged. In retail game code most `sqrt.s` sites
+  have two `nop`, and many `div.s` sites after `mtc1` have one. There are
+  counter-sites (nine `add.s`→`sqrt.s` sites without padding), so such a route
+  would be opt-in per source. It is a hypothesis: no public patch, regression
+  controls or qualification exist.
+- *128-bit zero stores.* `SYSTEM_UploadMatrix` reaches the retail opcode sequence
+  except one missing `por`. This happens once its display-list fields are typed
+  `int`, so that `dl->cur` is re-read after each store. Retail C code loads a
+  128-bit zero into a register (`por`) before `sq`. The default route stores it
+  from `$zero`: the expanded RTL is the same, so the cause is the 128-bit move
+  pattern. About 20 boot functions use the `por`/`sq` form, among them
+  `DRAW_PostUpdate`, `FlushTexTransform`, `MATERIAL_Activate` and
+  `UTIL_Draw2DLine`. They are probably blocked the same way.
+- *Delayed-branch filling.* `SND_PauseAtrac` already has the retail refusal layout
+  before delay-slot filling. The delay-slot pass moves the zero result twice, then
+  inverts the branch to the epilogue. A private C++ front end built from the
+  pinned sources gives the same 160 bytes with real `bool` types.
+- *Register tie after a block move.* `MCPTRANS_UpdateStarStreaks` stays at
+  264/268 after about forty further shapes, including a statement-expression model
+  of the C++ constructor and copy.
+
 ### Original assembly classification (26 November 2026)
 
 `config/handwritten_asm.tsv` now lists retail code by the rule OpenRAC/rac1-decomp

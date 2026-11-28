@@ -28,9 +28,18 @@
  * Load order, store order, limit locals, pointer locals, nested scopes,
  * passing the copy by value and moving the copy were all measured without
  * changing that schedule.
- * Reopen when a plain C shape moves the scheduled position of that address
- * computation or of the base address relative to the limit constant, or
- * when the original C++ shape (constructor plus copy) can be modelled.
+ * 28 November 2026, all 264/268 or worse under gnu-ee-trial: both comparison
+ * spellings, early returns, an empty then-arm, file-scope and local const or
+ * static limits, the limit as 40 * pi / 180 (same bits; a double literal
+ * changes the bits), a statement-expression temporary modelling the C++
+ * constructor and copy (same stack layout as retail, same allocation),
+ * inline constructor or maker helpers (202 to 292 bytes), struct assignment,
+ * memcpy (removes the copy), memset spellings, array or union views, and
+ * both divpad routes. The constant and x tie on references and live length;
+ * the constant wins because the first scheduling pass puts the copy's
+ * destination address first, its register having been folded into the
+ * block move. Reopen when a plain C shape keeps that destination in a
+ * register used inside the block, or with a qualified C++ front end.
  */
 typedef struct { float x, y, z; } VEC3;
 extern VEC3 D_01F66F00;

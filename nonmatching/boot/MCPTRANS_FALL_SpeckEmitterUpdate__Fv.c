@@ -1,12 +1,13 @@
 /* USA SCUS_976.15 boot: MCPTRANS_FALL_SpeckEmitterUpdate__Fv, 0x01E6D598.
- * Observed body: 456 bytes, filling its interval. Measured 26 November 2026:
- * not exact. Under the pinned route at -O2 -G0 -fno-gcse (a per-file flag the
- * repository already uses for 306 boot sources) the compiled body has the same
- * size and the same instructions apart from the order of about a dozen loads
- * and stores in the block that copies the emitter box and the four copied
- * vectors; without -fno-gcse it is 66 of 114 words and gnu-ee-trial gives 464
- * bytes. The audit result with equal bytes and first differing byte is in the
- * report. Not exact; no complete-program gate, promotion or C matching credit.
+ * Observed body: 456 bytes, filling its interval. Measured 28 November 2026:
+ * all 456 body bytes are exact after an independent link at the retail
+ * address under rebuilt gnu-ee-trial, -O2 -G0, default GNU assembler (with or
+ * without -fno-gcse). The rate is read once into a local used by the zero
+ * test, the reciprocal and the budget sum; reading the global three times
+ * reloads it (the 26 November form: 394 of 456 bytes under the pinned route
+ * with -fno-gcse, 464 bytes under gnu-ee-trial). The pinned route with the
+ * local gives 448 bytes. Local exactness with rebuilt tools is not
+ * qualification, promotion or C matching credit.
  * Reconstructed from the retail boot. It builds a box emitter on the stack
  * from the sum and difference of a centre vector and a half-extent vector,
  * copies a 4x3 float block (the source has a padding word after each triple)
@@ -17,10 +18,9 @@
  * fraction and the display handle are reached through locals (a pointer to the
  * stack emitter, a pointer to the carried value and a handle read after the
  * copy), which gives the callee-saved registers of the retail; the zero-rate
- * test is written with != so the divide comes first. To reopen: find the
- * statement order of the 12-float copy (the retail stores the first float,
- * then the third triple, then the first two triples' rest) that makes the
- * scheduler reproduce the retail load order.
+ * test is written with != so the divide comes first. The 12-float copy keeps its retail
+ * store order (first float, then the third triple, then the rest of the
+ * first two triples); natural index order gives 440 of 456 bytes.
  */
 typedef struct { float x, y, z; } VEC3;
 typedef struct { float m[16]; } SRC;
@@ -47,7 +47,7 @@ void MCPTRANS_FALL_SpeckEmitterUpdate__Fv(void) {
     int h;
     GCSPAR_StreckBoxEmitter *pe = &e;
     float *pacc = &D_01EF07B8;
-    float inv, acc, total, n;
+    float inv, acc, total, n, rate;
     float *s = D_01F67CC8;
     DST *d = &D_01F67C88;
     pe->lo.x = D_01EF0758[0] - D_01EF0768[0];
@@ -71,9 +71,10 @@ void MCPTRANS_FALL_SpeckEmitterUpdate__Fv(void) {
     pe->dst = d;
     h = D_01EF07A4;
     pe->aux = D_01EF0778;
-    if (D_01EF0750 != 0.0f) inv = 1.0f / D_01EF0750; else inv = 0.0f;
+    rate = D_01EF0750;
+    if (rate != 0.0f) inv = 1.0f / rate; else inv = 0.0f;
     acc = *pacc;
-    total = acc + D_01EF0750;
+    total = acc + rate;
     n = floorf(total);
     if (n > 0.0f) {
         EmitParticles__FiPC23GCSPAR_StreckBoxEmitteriff(h, pe, (int)n, (1.0f - acc) * inv, inv);
