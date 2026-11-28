@@ -4495,7 +4495,7 @@
       "placements": 5,
       "body_bytes": 36,
       "accepted_C_controls": 5,
-      "normalized_C_sha256": "4fcce12698f154e86f1708d76893046f53bfeaa6f03a833fe37360ecdf1d4d69",
+      "normalized_C_sha256": "be1412f0d2b50d398144d477154eba69e3c6ea2886c5ddb44e2ff07dc054166b",
       "caller_context_sha256": "38122a4e6634c3e231942041d6a879835f6907bede5222129679e3b906d06a9c",
       "data_window_sha256": {},
       "local_callee_roles": {

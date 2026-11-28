@@ -21,7 +21,7 @@ extern Target *func_022110(int a, int b);
 extern void func_0A6278(unsigned int index, unsigned int value);
 extern void *func_021F50(unsigned int a0, int a1);
 extern long long func_0221C8(unsigned int o, int x);
-extern int func_022C28(int mode, int field);
+extern int func_022C28(unsigned int mode, int field);
 extern void func_0A68A0(int idx);
 extern float func_0222E8(int a, int b);
 extern void func_0A6290(float v, int idx);

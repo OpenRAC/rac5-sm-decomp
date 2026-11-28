@@ -15,14 +15,16 @@ The boot, C++, driver-routed sources and whole-program promotion are outside
 this adapter. An unfinished body needs explicit reviewed bounds; a next label
 does not establish its size.
 
-The initial profile enables only upstream `perm_reverse_cond`. A transformation
+The initial profile enables only upstream `perm_reverse_cond`. The improved
+wrapper proposed in [OpenRAC #1002](https://github.com/OpenRAC/OpenRAC/pull/1002)
+uses a finite list of applicable C transformations instead. A transformation
 is a hypothesis, not a guarantee of semantic preservation: floating-point
 conditions, NaNs, signed arithmetic, aliases and side effects still need review.
 Use `--no-asm-passes`; generic empty-assembly constraints are not source evidence.
 This does not change the existing exceptions for exactly reviewed public
 runtime primitives.
 
-### Check that the enabled pass has a site
+### Check applicability before searching
 
 The pinned upstream `perm_reverse_cond` transforms an `if` with an `else`, or a
 ternary expression. It cannot transform a plain `if` without an `else`, a loop
@@ -30,7 +32,7 @@ condition, or a function with no such expression. Check the actual prepared AST
 before launching the search. In a measured 20-source use on 27 November 2026,
 only seven prepared functions had an admissible site.
 
-The upstream randomizer retries `RandomizationFailure` internally until a pass
+The initial upstream randomizer retries `RandomizationFailure` internally until a pass
 succeeds. With only this pass enabled and no site, that loop can prevent the
 worker from producing another candidate or observing its cooperative stop.
 The candidate ceiling does not bound these internal AST retries. Treat a source
@@ -39,6 +41,16 @@ stop its isolated search rather than reporting nonexistent variants. A base
 that is already exact needs no further permutation. See the
 [pinned pass](https://github.com/simonlindholm/decomp-permuter/blob/8556c81d80d1c1af98a858c8f4dc951357f29139/src/randomizer.py#L1317)
 and [retry loop](https://github.com/simonlindholm/decomp-permuter/blob/8556c81d80d1c1af98a858c8f4dc951357f29139/src/randomizer.py#L2691).
+
+The improved wrapper enumerates eligible branch reversals, adjacent uninitialized
+declaration swaps, early-return guards and guarded `do` loops. It rejects unsafe
+scope moves, address-taken declaration swaps and unsupported control transfers.
+Every variant starts from the same base. `result.json` records applicability and
+the reason a search stopped; no remaining site is an ordinary completion. An exact
+base stops before a variant is requested. Deadlines and manual stops also interrupt
+upstream retries and clean up only the search's own worker/compiler processes.
+The original three-source ceiling still applies across a baseline, a contextual
+correction and any permutation; restarting a command does not reset that rule.
 
 The wrapper's `matched` status means that isolated placements passed the
 checker. It does not promote source, change progress, run full-program gates or
@@ -51,6 +63,9 @@ Use the shared OpenRAC wrapper with the RAC5 profile and total-candidate ceiling
 The integration was qualified against OpenRAC
 `b989ec9aa05cc8dba2a262219ca500c45ae0b9d4` and external decomp-permuter
 `8556c81d80d1c1af98a858c8f4dc951357f29139`. No permutation engine is vendored here.
+The improved search is implemented in OpenRAC commit
+`94460886a10b0a57d81523789437a27618dfb960`, proposed in the pull request above;
+do not assume an older installed wrapper has these stop and applicability fixes.
 
 Copy [the runtime example](../../config/permuter-runtime.example.json) to a
 private directory and fill in the locally installed qualified tools and your
@@ -88,10 +103,20 @@ python3 "$RAC5_BACKEND" --repo "$OPENRAC_SOURCE_RAC5_NTSC" \
 Then run from the shared OpenRAC checkout:
 
 ```sh
+# Standalone baseline diagnosis, when no search is needed:
 python3 tools/permuter base rac5/ntsc FUNCTION --no-asm-passes --keep-work
+
+# A search already includes its own baseline:
 python3 tools/permuter run rac5/ntsc FUNCTION -j1 --max-candidates 3 \
   --seconds 60 --no-asm-passes --keep-work --out /path/to/private/result
 ```
+
+Choose contextual corrections before compiling. For an unchanged source, use one
+bounded search rather than a baseline-only command followed by the same constructor
+again. If Ghidra evidence justifies a changed seed, measure the original once and
+allow at most that seed plus one further variant. Keep the actual source hashes and
+distinguish compiler invocations from distinct C hypotheses: a repeated baseline is
+verification work, not another source candidate or a renewed allowance.
 
 The ceiling includes the constructor's baseline. A fourth candidate or multiple
 workers are refused before compilation. Keep each search tied to an explicit

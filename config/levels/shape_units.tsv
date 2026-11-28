@@ -5566,7 +5566,6 @@ shared	LEVEL_01_0250E8	function	52	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_02
 shared	LEVEL_01_025120	function	224	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_025120.c		
 shared	LEVEL_01_025200	function	84	1	1	1	1	14	src/levels/01_pokitaru/LEVEL_01_025200.c		
 shared	LEVEL_01_025258	function	128	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_025258.c		
-shared	LEVEL_01_0252D8	function	48	1	0	1	0	19			
 shared	LEVEL_01_025308	fragment	12	1	0	0	0	14			
 shared	LEVEL_01_0254F0	function	76	1	1	1	1	6	src/levels/01_pokitaru/LEVEL_01_0254F0.c		
 shared	LEVEL_01_025540	function	64	1	1	1	1	6	src/levels/01_pokitaru/LEVEL_01_025540.c		
@@ -6934,7 +6933,6 @@ shared	LEVEL_01_0C36E8	function	132	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0
 shared	LEVEL_01_0C3770	function	156	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C3770.c		
 shared	LEVEL_01_0C3810	function	72	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C3810.c		
 shared	LEVEL_01_0C3928	function	296	2	2	2	2	19	src/levels/01_pokitaru/LEVEL_01_0C3928.c		
-shared	LEVEL_01_0C3AA8	function	180	1	0	1	0	19			
 shared	LEVEL_01_0C3B60	function	448	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C3B60.c		
 shared	LEVEL_01_0C3D20	function	240	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C3D20.c		
 shared	LEVEL_01_0C3E38	function	356	1	1	1	1	19	src/levels/01_pokitaru/LEVEL_01_0C3E38.c		
@@ -9119,6 +9117,7 @@ shared	LEVEL_02_08AFDC	fragment	32	1	0	0	0	2
 shared	LEVEL_02_0A3080	function	544	1	0	1	0	3			
 shared	LEVEL_02_0A6BE0	function	44	1	1	1	1	3	src/levels/02_rykan_v/LEVEL_02_0A6BE0.c		
 shared	LEVEL_02_0A6C0C	fragment	8	1	0	0	0	3			
+shared	LEVEL_02_0CA3B8	function	180	1	1	1	1	19	src/levels/02_rykan_v/LEVEL_02_0CA3B8.c		
 shared	LEVEL_02_0D1338	function	60	1	1	1	1	4	src/levels/02_rykan_v/LEVEL_02_0D1338.c		
 shared	LEVEL_02_0D1378	function	72	1	1	1	1	4	src/levels/02_rykan_v/LEVEL_02_0D1378.c		
 shared	LEVEL_02_0F1E30	fragment	76	1	0	0	0	14			
@@ -10500,6 +10499,7 @@ shared	LEVEL_16_0228B8	function	40	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_
 shared	LEVEL_16_0228E0	function	72	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_0228E0.c		
 shared	LEVEL_16_022A40	function	80	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_022A40.c		
 shared	LEVEL_16_022AC8	function	224	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_022AC8.c		
+shared	LEVEL_16_022C28	function	48	1	1	1	1	19	src/levels/16_multiplayer_01/LEVEL_16_022C28.c		
 shared	LEVEL_16_022C58	function	164	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_022C58.c		
 shared	LEVEL_16_022D20	function	480	1	1	1	1	5	src/levels/16_multiplayer_01/LEVEL_16_022D20.c		
 shared	LEVEL_16_024B08	fragment	4	1	0	0	0	5			

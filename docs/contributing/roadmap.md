@@ -97,8 +97,8 @@
    accepted 16-byte boot placement. The
    [level C gate](../gates/level-c-witness.md) accepts two authored C functions,
    8 and 72 bytes, at twenty level placements, plus a 476-byte frontend
-   initializer. Separately, the level-body table accepts 82,774 placements
-   carried by 65,501 sources. Other functions still need reviewed
+   initializer. Separately, the level-body table accepts 82,776 placements
+   carried by 65,503 sources. Other functions still need reviewed
    boundaries, compiler profiles and placement
    checks. The [scoped progress snapshot](../../progress/README.md) records
    measured status without publishing a premature game-wide percentage.

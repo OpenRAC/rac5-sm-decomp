@@ -4,7 +4,7 @@ typedef struct Entry {
     int active;
 } Entry;
 
-extern int func_022C28(int mode, int field);
+extern int func_022C28(unsigned int mode, int field);
 extern Entry *func_022170(int a, int b, int c);
 
 long long func_0221C8(int mode, int field)

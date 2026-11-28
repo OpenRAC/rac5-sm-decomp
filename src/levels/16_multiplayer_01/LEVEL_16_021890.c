@@ -1,5 +1,5 @@
 /* USA LEVEL_16.REL:0x021890. Two-step call wrapper. */
-extern int func_022C28(int mode, int field);
+extern int func_022C28(unsigned int mode, int field);
 extern void func_021758(void *object, void *value, int mode,
                         int converted, int extra);
 
