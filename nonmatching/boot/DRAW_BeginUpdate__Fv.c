@@ -3,24 +3,28 @@
  * src/levels/01_pokitaru/DRAW_BeginUpdate__Fv_LEVEL_01.c, with boot addresses
  * checked against the owner's pinned body, caller and adjacent accepted code.
  * Observed 420-byte body; the following zero alignment word is excluded.
- * Measured 17 November 2026, -O2 -G0, GNU assembly and independent SN links:
- * rebuilt default GNU emits 412 bytes, 247 equal positions in the compared
- * 412-byte prefix; gnu-ee-trial emits 416 bytes, 249 equal positions in its
- * 416-byte prefix. Both first differ at +0x62. Not exact; no gate or C credit.
+ * Measured 28 November 2026, -O2 -G0, default GNU assembler and an
+ * independent link at the retail address: all 420 body bytes are exact under
+ * the rebuilt default GNU route (gnu-ee-trial: 424 bytes, not exact). The
+ * 17 November int view emitted 412 bytes, first difference at +0x62.
+ * The material-cache word is unsigned. Evidence for the type: retail resets
+ * it with a two-instruction all-ones constant; storing -1 or 0xFFFFFFFFu into
+ * an int lvalue gives a single instruction on this route, and the same store
+ * into an unsigned int lvalue gives the two-instruction form. The accepted
+ * level source of this function already declares the same object unsigned.
+ * Accepted DRAW_EndUpdate, which only stores zero, compiles identically
+ * with either declaration; its int declaration still has to be reconciled
+ * with this one in review (that changes its source hash, not its bytes).
  * Offset 8 is an integer space count, consistent with accepted DRAW_Init and
- * DRAW_ReserveMemory. The material-cache declaration remains int, matching
- * accepted DRAW_EndUpdate; its all-ones reset becomes the target int value -1.
- * A diagnostic unsigned cache view reproduces the 420 bytes, but that view
- * is not retained because it conflicts with the existing declaration.
- * Reopen after separate evidence/review of the cache-word type and a checked
- * declaration reconciliation, not register forcing or artificial operations.
+ * DRAW_ReserveMemory.
  * These node/context views expose only observed fields and opaque bytes;
  * context stride 0x170C and the 32-node pool are independently corroborated.
  * The original one-context loop, toggle, 20-byte end reserve, untouched node
  * payload, next links and 256-byte clear remain. Valid initialized buffers,
  * toggle values, storage/capacity and indirect-entry bounds still need review.
- * No normalization, allocation or guard is added. Qualification, complete-
- * program integration, acceptance and promotion remain separate obligations.
+ * No normalization, allocation or guard is added. Local exactness with
+ * rebuilt tools is not qualification; complete-program integration,
+ * acceptance and promotion remain separate obligations.
  */
 typedef struct DrawBeginNode {
     struct DrawBeginNode *next;
@@ -49,7 +53,7 @@ extern DrawBeginContext D_01F67E50[];
 extern unsigned char *g_draw_vertTail[1];
 extern int g_draw_vertSpace[1];
 extern unsigned char *g_draw_currentMesh[1];
-extern int g_draw_currentMaterial[1];
+extern unsigned int g_draw_currentMaterial[1];
 extern int g_draw_preRenderContextSpace[1];
 extern char *g_draw_preRenderContextTail[1];
 extern void *memset(void *dst, int value, unsigned int size);

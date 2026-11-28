@@ -261,6 +261,29 @@ other indirect entries and original source types remain review obligations.
 The following eight bytes retain unknown ownership in the assembly baseline
 and are excluded from this source. No C is promoted.
 
+**Boot route proposal, 28 November 2026.** Ten retained boot bodies were routed
+per source to the unchanged level profiles: `gnu-ee-trial-divpad` for
+`CAMERA_Reset`, `FOG_Update`, `Ortho`, `Perspective`, `TexPerspective`,
+`SND_UpdateATRAC`, `dlib_ms_screen_matrix` and `func_1E92B40`, and
+`gnu-ee-trial-divpad-blockmove` for `GLOBALWAD_CopyAndFix` and `SND_Init`. These
+are 4,656 body bytes. No compiler, patch or pin changed, and no accepted body
+changed route. The complete boot gate was run on the branch of PR #315 with rebuilt
+tools, so it is not a qualification. It passed with 936 exact objects and the
+complete ELF exact, and the 864 accepted bodies were unchanged. The promotion audit
+lists all ten as `ready_for_semantic_review`. `func_1E92F40` (124 bytes, exact
+under the same profile) cannot join yet. An unnamed body must fill its campaign
+span, and campaign spans must be 8-byte aligned, so its 124 bytes cannot fit. The
+following word at `0x01E92FBC` has no known owner. Reopen it with an ownership
+decision for that word, or a named owner for the whole interval.
+`CAMERA_Reset` names the word at `0x01EDE330` `camera_state`; the accepted sources
+call it `camera_current` or `g_camera`, so the three names need reconciling in
+review.
+The same alignment rule keeps out three more anonymous boot entries that are exact
+under the default GNU route: `func_1E92AB0` (140 bytes), `func_1E92D78` (108) and
+`func_1E92E60` (52). Their four exact neighbours (`func_1E92DE8`, `func_1E92E48`,
+`func_1E92E98` and `func_1E932D8`) fill 8-byte aligned spans, and they joined the
+campaign on 28 November 2026 (PR stacked on #317).
+
 ### Blocker 10
 
 `movn`. An earlier note called it inaccessible; a 23 October 2026 measurement gives a source
@@ -350,6 +373,19 @@ relocations and ELF headers, agreed. The same input assembly and pinned binary
 executed through native Windows reproduced the existing canonical object.
 Use the qualified execution environment before proposing a new hash alternative;
 neither clearing metadata nor changing an existing pin is a valid shortcut.
+
+On 27 November 2026, on another Windows 11 host, a complete boot gate on master
+88320879b launched from a WSL session failed on `ps2fioCreatePartition` with the
+same set bit (`0x20E0` against `0x30E0` in its `.mdebug`). The `.s` input and the
+assembler hash were unchanged from a passing 26 November run. On this host the
+environment size alone did change the result. Assembling the same `.s` with about
+5 KB of Windows environment set the bit. Adding one padding variable of 1,000 or
+3,000 bytes cleared it, through `WSLENV` as well; 10 or 100 bytes did not. With the
+padding exported, the complete gate passed with every pinned `ps2eeas` boot hash.
+The output filename also mattered: a one-character name gave the canonical object
+where `ps2fioCreatePartition.o` did not. Both observations fit the
+uninitialized-read explanation above. The workaround is a host setting, not a
+change to inputs, pins or objects.
 
 ### Blocker 16
 
@@ -542,7 +578,7 @@ Four more bounded families (132, 100, 300 and 176 bytes) add **70 C sources,
 the measured data relocations and named `sqrtf` imports. Additional accepted
 wrappers now pass their consumed GPR and FPR arguments explicitly, without
 changing their pinned objects or linked retail bodies.
-The 884 linked boot C bodies cover 123,480 bytes including alignment. The profile
+The 974 linked boot C bodies cover 149,944 bytes including alignment. The profile
 files and their patches are the only place where a toolchain change is allowed
 to move a body.
 
@@ -2670,6 +2706,138 @@ retail addresses:
   of `HIT_fseek__FPii9SEEKPARAM` and `HIT_fclose__FPi` (accepted as `void`);
   `MCP_UpdateRCPMLoadState` needs `g_level_index` signed (a signed branch on
   it), while the accepted `MCP_StartLevelModule__Fv` declares it `unsigned`.
+
+### Retained USA boot near misses revisited (28 November 2026)
+
+These are isolated measurements: rebuilt tools, -O2 -G0, an independent link at the
+retail address with relocations resolved to retail symbols. They are not a
+complete-program gate or a qualification. The sources are in `nonmatching/boot/`.
+
+**Now exact locally (sources updated):**
+- `DRAW_BeginUpdate` (420 bytes, default route). The material-cache word is
+  `unsigned`: retail resets it with a two-instruction all-ones constant, which this
+  route emits only for an `unsigned int` lvalue. The accepted level source declares
+  the same object unsigned. Accepted `DRAW_EndUpdate` still declares it `int`; it
+  compiles to the same bytes either way, but its declaration must be reconciled
+  before promotion.
+- `readTexPSMCT32` (408 bytes, default route and `gnu-ee-trial`). The address is
+  summed left to right: page, start and block in one statement, then the column
+  and the table word in separate statements, with the table word read first. Of 48
+  measured splits only this one is exact.
+- `MCPTRANS_FALL_SpeckEmitterUpdate` and `MCPTRANS_DREAM_SpeckEmitterUpdate` (456
+  bytes each, `gnu-ee-trial`). The rate global is read once into a local; reading
+  it three times reloads it. The retained 12-float copy order is required.
+- `MATERIAL_RegisterForUpdate` (320 bytes, default route or `gnu-ee-trial`, with the
+  per-source `as=ps2eeas` route). The double comparison constant was an assembler
+  difference: `cc1` emits `li.d`, and only Ps2EeAs expands it inline as retail does.
+  The loop is written `if (!(v > limit)) { reload; if (!(v > limit)) continue; }`.
+  A `<=` form is also exact, but it changes the NaN case.
+
+- `MEMCARD_ProcessClientRequests` (372 bytes, default route and `gnu-ee-trial`; the
+  15 jump-table words equal the retail table). The four flag-test blocks must all use
+  the same positive form in source order 1, 3, 2, 4. Mixing polarities between the
+  state pairs lets the compiler cross-jump them into two blocks (324 bytes).
+
+**New retained bodies, exact locally (no C before):**
+- `AsciiString2Sjis` (152 bytes, default route and `gnu-ee-trial`). The swapped
+  halfword is built from separate low and high `int` temporaries, low first. The
+  8 bytes before the next label are not claimed.
+- `MCPTRANS_SHRINK_UpdateCamera`, `MCPTRANS_FALL_UpdateCamera` and
+  `MCPTRANS_DREAM_UpdateCamera` (168 bytes each, default route). They copy the
+  identity matrix and advance a timer, and they return the matrix address, which
+  retail leaves in `$v0`. The accepted caller `MCP_UpdateCameraCB` declares them
+  `void`, and the SpeckEmitter sources declare two of the matrices `float[]`, so
+  the prototypes and declarations need reconciling.
+- `Push__t5Stack…tMEMCARD_STATE_NODE` (120 bytes, default route and
+  `gnu-ee-trial`), through an inline `IsFull` test. Its count must be `unsigned`
+  (a signed count gives 119 of 120), while the accepted `Reset` declares it `int`.
+  The following unnamed 56-byte routine is not covered.
+- `VRAM_Alloc` (180 bytes, default route and `gnu-ee-trial`). The count is read once
+  into a local, the rounding takes two statements, and the offset update is
+  `+= 0x2000 + sz`. It reads the per-type totals as `unsigned int`; the accepted
+  `VRAM_Initialize` declares them `char[]`.
+- `PS2HEAP_Init` (first C attempt, 151 of 184): the loop and store schedule match.
+  Four prologue registers are permuted, and the first four stores after the loop are
+  in another order.
+- `writeTexPSMT4` (592 bytes, default route and `gnu-ee-trial`) is exact in the
+  style of its siblings. The block offset is computed after the width is halved.
+- `LOAD_CHARACTER_SkinGdeFile` (first attempt, 382 of 440): the control flow, the
+  frame and the calls match, but the nested-loop register allocation differs.
+- `SpiralSphere_Start` (first attempt, 246 of 364 under `gnu-ee-trial`). The compiler
+  output is instruction-identical apart from two `nop` that the GNU assembler puts
+  before the loop label: a coprocessor hazard after `mtc1` and the loop alignment.
+  Ps2EeAs removes those two but also another one that retail keeps (360 bytes).
+- `VRAM_RenderTo` (632 bytes, default route, `gnu-ee-trial` and divpad) is exact.
+  Each packet has its own cursor, and the header words are written in order. The VRAM
+  address is read through an `unsigned int` view of the target, which keeps the
+  global store ahead of the loads as in retail (an ordinary member read gives 477).
+  Review whether that access form is justified.
+- `RENDEREFFECT_Init` (first attempt, 564 of 588 bytes compiled). Every instruction
+  class matches, but retail hoists all four loop constants into saved float
+  registers, while this route hoists only two and reloads 17.0 and 0.1 on each
+  inner iteration.
+- `MCPTRANS_SHRINK_Animate` (696 bytes, default route and `gnu-ee-trial`) is exact
+  with a measured closing statement order: one vector computed into z and copied to
+  y and x, and the second spiral's height computed first (the natural order gives
+  628). It reads the timer and ramp as floats, while the accepted
+  `MCPTRANS_SHRINK_Shutdown` declares them `int`.
+- `MCPTRANS_UpdateCamera` (612-byte body) is exact only with `gnu-ee-trial-divpad`
+  followed by Ps2EeAs: the full 616-byte span, padding word included. With GNU `as`
+  it is 611 of 612, because the clamp's join label lands after a hazard `nop`. No
+  boot route combines those two today.
+- `SYSTEM_BuildUploadVecs` is blocked like the DMA tags below: its first quadword
+  is a 128-bit word-shift chain (46 of 184 bytes through a union).
+
+**Improved, not exact:**
+- `SIG_CalcCaseInsensitiveSignature`: 165/216, up from 121. The separator test now
+  reuses the loop byte. Retail keeps a separate copy of the cursor for the
+  lookahead scan.
+
+- `func_1E92FC0`: 763/792 under `gnu-ee-trial`, up from 492. The camera distance now
+  comes from one inline helper. Only the angle conversion differs: retail loads pi
+  before 180 and puts one `nop` before the multiply-fed division.
+
+**New constraints:**
+- *Padding before square roots only.* A private `cc1` built from the
+  `gnu-ee-trial-divpad` tree, padding `sqrt.s` and `rsqrt.s` but not `div.s`, makes
+  `VEC_AngleBetweenVectors` (316 bytes) and `CAMERA_SetFovX` (280 bytes) exact
+  with their retained sources unchanged. In retail game code most `sqrt.s` sites
+  have two `nop`, and many `div.s` sites after `mtc1` have one. There are
+  counter-sites (nine `add.s`→`sqrt.s` sites without padding), so such a route
+  would be opt-in per source. It is a hypothesis: no public patch, regression
+  controls or qualification exist.
+- *128-bit zero stores.* `SYSTEM_UploadMatrix` reaches the retail opcode sequence
+  except one missing `por`. This happens once its display-list fields are typed
+  `int`, so that `dl->cur` is re-read after each store. Retail C code loads a
+  128-bit zero into a register (`por`) before `sq`. The default route stores it
+  from `$zero`: the expanded RTL is the same, so the cause is the 128-bit move
+  pattern. About 20 boot functions use the `por`/`sq` form, among them
+  `DRAW_PostUpdate`, `FlushTexTransform`, `MATERIAL_Activate` and
+  `UTIL_Draw2DLine`. They are probably blocked the same way.
+- *Delayed-branch filling.* `SND_PauseAtrac` already has the retail refusal layout
+  before delay-slot filling. The delay-slot pass moves the zero result twice, then
+  inverts the branch to the epilogue. A private C++ front end built from the
+  pinned sources gives the same 160 bytes with real `bool` types.
+- *Quadword callee saves.* `MCPFONT_DrawTextureSimpleArea` differs only in its
+  save area: retail stores s0-s7 and fp as quadwords in 16-byte slots. A private
+  `gnu-ee-trial` build that restores the R5900 TImode slot anchor for those
+  registers, which patch 0000 neutralises, makes it exact with the source
+  unchanged. Retail mostly saves with `sd`, so this could only be a per-source
+  profile, after regression controls.
+- *First-pass scheduling across calls.* In `BLOOM_Upsample` (312 of 444) the loop
+  counter decrement sits after the second call before scheduling, but the first
+  scheduling pass hoists it ahead of the first call. About twenty loop forms
+  leave it there.
+- *128-bit DMA tags (Blocker 16).* `dlib_displist_send_dma` (380 bytes) can use
+  `__builtin_rac5_sync` under `sdk991111sync` for its `sync`, but its end tag
+  (`0xF0000000`) is a 128-bit shift and or chain stored with one `sq`. Every
+  available `cc1` refuses such an operation. Union, aligned-struct and initializer
+  spellings go through memory: the body is 20 bytes shorter, 64 of 360 bytes equal.
+  So the removal from the assembly list does not make it reachable yet.
+  `dlib_displist_add_call` (60 bytes) is blocked the same way: 10 to 13 of 60 bytes.
+- *Register tie after a block move.* `MCPTRANS_UpdateStarStreaks` stays at
+  264/268 after about forty further shapes, including a statement-expression model
+  of the C++ constructor and copy.
 
 ### Original assembly classification (26 November 2026)
 

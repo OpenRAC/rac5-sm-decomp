@@ -20,6 +20,18 @@
  * The two-element camera array assumes a count of at most two, which this
  * body does not establish. Reopen with a qualified padding rule and
  * evidence for the camera loop's original form.
+ * 28 November 2026: with the squared camera distance taken from one inline
+ * helper in the two comparison branches, gnu-ee-trial (-O2 -G0) gives 792
+ * bytes, 763 equal, first difference +0x1E0; the whole camera loop is then
+ * instruction-identical to retail. The pinned route gives 753; both divpad
+ * routes 808 bytes (they pad both divisions). The remaining seven words are
+ * the angle conversion: retail loads pi before 180, uses other float
+ * registers, and has one nop before the multiply-fed division and none after
+ * the float-to-integer move. No rewrite of the conversion (five forms) moved
+ * pi first; dividing before multiplying changes the arithmetic and is
+ * rejected. The helper's name and existence are provisional. Reopen with a
+ * qualified division-padding rule for this case or with evidence of the
+ * original conversion form.
  */
 typedef struct { float x, y, z; } VEC3;
 typedef struct { float m[16]; } MATRIX4;
@@ -57,6 +69,14 @@ extern float sqrtf(float);
 extern float fabsf(float);
 extern int func_1E92E98(float);
 
+static inline float DistSq(const VEC3 *a, const VEC3 *b)
+{
+    float x = a->x - b->x;
+    float y = a->y - b->y;
+    float z = a->z - b->z;
+    return (x * x + y * y) + z * z;
+}
+
 void func_1E92FC0(SND_Positional *p, int *volumeOut, int *panOut)
 {
     int pan = 0;
@@ -81,20 +101,10 @@ void func_1E92FC0(SND_Positional *p, int *volumeOut, int *panOut)
 
                 for (i = 0; i < g_snd.camera_count; i++) {
                     if (!matrix) {
-                        const VEC3 *b = &g_snd.camera[i].position;
-                        const VEC3 *a = &p->position;
-                        float x = a->x - b->x;
-                        float y = a->y - b->y;
-                        float z = a->z - b->z;
                         matrix = &g_snd.camera[i].inverse;
-                        best = (x * x + y * y) + z * z;
+                        best = DistSq(&p->position, &g_snd.camera[i].position);
                     } else {
-                        const VEC3 *b = &g_snd.camera[i].position;
-                        const VEC3 *a = &p->position;
-                        float x = a->x - b->x;
-                        float y = a->y - b->y;
-                        float z = a->z - b->z;
-                        float distance = (x * x + y * y) + z * z;
+                        float distance = DistSq(&p->position, &g_snd.camera[i].position);
                         if (distance < best) {
                             best = distance;
                             matrix = &g_snd.camera[i].inverse;

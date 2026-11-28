@@ -18,6 +18,15 @@
  * result pointer) shape this caller uses, which differs from the accepted
  * definition of that callee and needs reconciling.
  * Reopen with a form that computes the result's address before the test.
+ * 28 November 2026: the callback at 0x01E91EA8 takes the name the accepted
+ * sibling SND_FixupSoundSignatures uses (snd_LoadBankCallback). Default and
+ * both divpad routes: 334 of 348 bytes, first difference +0x44; gnu-ee-trial
+ * emits 356 bytes. Retail stores the zero result ahead of the load_banks test
+ * and forms the result's stack address before the callback address; this
+ * route puts the store in the delay slot and folds every pointer form of the
+ * result address back into a direct stack reference. Moving or initialising
+ * the store, writing it in both branches, volatile, helpers (static or inline)
+ * and other bool widths were measured without improvement (80 to 334).
  */
 extern void snd_BankLoadFromIOP_CB(void *wad, void *callback, int *result);
 extern int snd_FlushSoundCommands(void);
@@ -27,7 +36,7 @@ extern void snd_ResolveBankXREFS(void);
 extern unsigned int
 SND_Fixup__FUiPFP13WadLocationIDUi14WAD_ASSET_TYPE13WadLocationID_P15WAD_FILE_HEADER(
     unsigned int id, void *callback);
-extern void func_1E91EA8(void);
+extern void snd_LoadBankCallback(void); /* 0x01E91EA8 */
 
 unsigned int
 SND_FixupSoundSignaturesIOP__FPUiPvPFP13WadLocationIDUi14WAD_ASSET_TYPE13WadLocationID_P15WAD_FILE_HEADERb(
@@ -45,7 +54,7 @@ SND_FixupSoundSignaturesIOP__FPUiPvPFP13WadLocationIDUi14WAD_ASSET_TYPE13WadLoca
     data++;
     result = 0;
     if (load_banks) {
-        snd_BankLoadFromIOP_CB(wad, (void *)func_1E91EA8, &result);
+        snd_BankLoadFromIOP_CB(wad, (void *)snd_LoadBankCallback, &result);
         while (snd_FlushSoundCommands())
             DelayThread(5000);
         if (!result)

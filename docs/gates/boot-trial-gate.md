@@ -14,19 +14,21 @@ by a line feed, so a CRLF checkout turns it into `stray '\' in program` on any
 body with a macro continuation. `.gitattributes` pins `*.c` and `*.h` to LF for
 that reason; a Windows checkout without it cannot reproduce the gate.
 
-The current campaign contains 884 compiler-produced C objects. Its verified
-catalogue records 884 bodies (121,704 compiled bytes plus 1,776 zero alignment
+The current campaign contains 974 compiler-produced C objects. Its verified
+catalogue records 974 bodies (148,032 compiled bytes plus 1,912 zero alignment
 bytes). Of these, 864 reviewed placements supply 119,008 accepted C bytes.
 `tools/progress_status.py` regenerates the accepted totals; an object match
 alone does not grant C credit.
 Per-source compiler and options measured for one file are listed in
 [`config/cflags.txt`](../../config/cflags.txt) and applied by the gate; the profile
-keeps its global flags. Another pinned compiler handles 293 objects: 82 use
+keeps its global flags. Another pinned compiler handles 311 objects: 82 use
 SN ProDG 3.01 `ee-gcc2953` ([route P](../compiler/compiler-status.md#a-second-pinned-compiler-route-p)),
 188 use Sony SDK `2.9-ee-991111` ([route Q](../compiler/compiler-status.md#the-sony-sdk-compiler-route-q)),
-10 use its division-padding profile, eight use the pre-patch GNU trial profile,
+10 use its division-padding profile, 16 use the pre-patch GNU trial profile,
 three use the SDK synchronization profile and two use the SDK quadword profile.
-Another pinned assembler handles 116 objects.
+Ten provisional witnesses use the GNU division-padding level profiles: eight use
+`gnu-ee-trial-divpad` and two use `gnu-ee-trial-divpad-blockmove`.
+Another pinned assembler handles 117 objects.
 
 Both original and preprocessed C inputs must pass `tools/c_source_policy.py`:
 no instruction assembly, fixed registers or raw instruction words. The standalone
@@ -90,7 +92,7 @@ Windows driver: it is staged in the Windows-visible ignored
 front end cannot stat a DrvFs path, so it is staged under `--output-dir`,
 which must therefore be on the Linux filesystem for either route; a pin may
 also name its own staging directory, or `--extra-stage SELECTOR=DIRECTORY`
-overrides it. The pinned GNU assembler handles 624 objects; the remaining 89
+overrides it. The pinned GNU assembler handles 857 objects; the remaining 117
 use their declared, hash-pinned per-source assembler. The compiler step
 exports only the objects to
 ignored `build/boot-compiled-objects/`, then checks the committed boot symbol
