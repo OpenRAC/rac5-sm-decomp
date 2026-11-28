@@ -154,12 +154,43 @@ Among the unowned bytes, **555,123 are nonzero**, spread over **12,384 gaps**;
 relocated-pointer candidate. These are review priorities, not 12,384 newly
 declared functions: embedded data and missed code both remain possible.
 
-The 21 `called_function_lead` cases illustrate why function entries and body
-ownership need separate decisions. In each module a 24-byte predecessor ends
-with an indirect call; its return reaches the following 32-byte segment, which
-also has an external direct call and a return. The code-only and full-module
-Ghidra passes partition that shared continuation differently. Neither
-partition alone proves the number of source functions. Likewise, at commit
+All 21 `called_function_lead` cases belong to the historical GNU C++ exception
+runtime. Each pinned module contains five adjacent relocated frame-description
+entries that share one CIE and give these body sizes in order: 24 bytes for
+`std::terminate`, 16 for `__default_unexpected`, 16 for `std::set_terminate`,
+16 for `std::set_unexpected` and 24 for `std::unexpected`. The 32-byte
+Ghidra region combines the default wrapper and the following setter. The
+wrapper calls the preceding terminate dispatcher, whose initial handler
+reaches the named `abort` import. The unexpected dispatcher initially reaches
+the wrapper through a relocated handler slot. The direct-edge scan found
+zero incoming direct transfers to the wrapper in the 21 placements.
+The setter has its own frame-description entry and returns the previous
+terminate handler. The separate extents agree with the accepted setter
+placements. The historical GNU implementation corroborates these roles.
+See [exception.cc](https://github.com/gcc-mirror/gcc/blob/7f236610e99c7a11fb18f056b6446b3c7c40979c/gcc/cp/exception.cc#L36-L79)
+and [libgcc2.c](https://github.com/gcc-mirror/gcc/blob/7f236610e99c7a11fb18f056b6446b3c7c40979c/gcc/libgcc2.c#L3037-L3052).
+
+A wider scan on `782bce7a` found 586 frame-description entries covering
+49,568 code bytes across the 21 USA modules. All 399 entries that overlap
+accepted C agree with its extent. The static inventory marks the remaining
+187 as having no return before the next candidate start. In 61 of those,
+a relocated exception-region pointer cuts the provisional interval before
+a return still inside the described frame. The other 126 contain no
+`jr ra` within their frame. These are boundary observations.
+
+The second measured legacy CIE layout has an empty augmentation. Its
+2,052 frame-description entries cover 191,432 bytes. On `ca63e300`, 1,907
+agree exactly with accepted extents and 145 have no accepted overlap. The
+empty CIE layout supplies range evidence. Exception-table cut annotations
+apply to the measured `eh` layout.
+
+With Rabbitizer 1.16.2, run
+`python tools/level_unwind_boundaries.py baserom/SCUS_976.15.iso` to reproduce
+the return-cut classifications. The command validates the disc and module
+pins and prints a JSON review report. Each positive row records the
+candidate start, inventory limit and frame end.
+
+At commit
 `d7f99c0b`, the 33,620 accepted C placements occupy only 1,649 masked static
 shapes. One 56-byte shape occurs 416 times in a single module, so one masked
 hash cannot stand for one distinct function.
