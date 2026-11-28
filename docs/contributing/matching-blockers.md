@@ -278,6 +278,11 @@ decision for that word, or a named owner for the whole interval.
 `CAMERA_Reset` names the word at `0x01EDE330` `camera_state`; the accepted sources
 call it `camera_current` or `g_camera`, so the three names need reconciling in
 review.
+The same alignment rule keeps out three more anonymous boot entries that are exact
+under the default GNU route: `func_1E92AB0` (140 bytes), `func_1E92D78` (108) and
+`func_1E92E60` (52). Their four exact neighbours (`func_1E92DE8`, `func_1E92E48`,
+`func_1E92E98` and `func_1E932D8`) fill 8-byte aligned spans, and they joined the
+campaign on 28 November 2026 (PR stacked on #317).
 
 ### Blocker 10
 
@@ -573,7 +578,7 @@ Four more bounded families (132, 100, 300 and 176 bytes) add **70 C sources,
 the measured data relocations and named `sqrtf` imports. Additional accepted
 wrappers now pass their consumed GPR and FPR arguments explicitly, without
 changing their pinned objects or linked retail bodies.
-The 936 linked boot C bodies cover 140,072 bytes including alignment. The profile
+The 959 linked boot C bodies cover 144,624 bytes including alignment. The profile
 files and their patches are the only place where a toolchain change is allowed
 to move a body.
 
