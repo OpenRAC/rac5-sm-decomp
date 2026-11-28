@@ -1762,3 +1762,6 @@ nonmatching/boot/GLOBALWAD_CopyAndFix__FP15WAD_FILE_HEADERRP15WAD_FILE_HEADERPvU
 nonmatching/boot/SND_Init__Fv.c  gnu-ee-trial-divpad-blockmove -O2 -G0
 nonmatching/boot/HIT_fread__FPvUiUiPi.c  -mno-check-zero-division
 nonmatching/boot/Spiral_EmitJoint__FP12Spiral_GroupPC12Spiral_Pointb.c  gnu-ee-trial -O2 -G0
+nonmatching/boot/MCPTRANS_FALL_SpeckEmitterUpdate__Fv.c  gnu-ee-trial -O2 -G0
+nonmatching/boot/MCPTRANS_DREAM_SpeckEmitterUpdate__Fv.c  gnu-ee-trial -O2 -G0
+nonmatching/boot/MATERIAL_RegisterForUpdate__FP12Material_PS2.c  as=ps2eeas
