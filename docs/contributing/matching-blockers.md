@@ -261,6 +261,24 @@ other indirect entries and original source types remain review obligations.
 The following eight bytes retain unknown ownership in the assembly baseline
 and are excluded from this source. No C is promoted.
 
+**Boot route proposal, 28 November 2026.** Ten retained boot bodies were routed
+per source to the unchanged level profiles: `gnu-ee-trial-divpad` for
+`CAMERA_Reset`, `FOG_Update`, `Ortho`, `Perspective`, `TexPerspective`,
+`SND_UpdateATRAC`, `dlib_ms_screen_matrix` and `func_1E92B40`, and
+`gnu-ee-trial-divpad-blockmove` for `GLOBALWAD_CopyAndFix` and `SND_Init`. These
+are 4,656 body bytes. No compiler, patch or pin changed, and no accepted body
+changed route. The complete boot gate was run on the branch of PR #315 with rebuilt
+tools, so it is not a qualification. It passed with 936 exact objects and the
+complete ELF exact, and the 864 accepted bodies were unchanged. The promotion audit
+lists all ten as `ready_for_semantic_review`. `func_1E92F40` (124 bytes, exact
+under the same profile) cannot join yet. An unnamed body must fill its campaign
+span, and campaign spans must be 8-byte aligned, so its 124 bytes cannot fit. The
+following word at `0x01E92FBC` has no known owner. Reopen it with an ownership
+decision for that word, or a named owner for the whole interval.
+`CAMERA_Reset` names the word at `0x01EDE330` `camera_state`; the accepted sources
+call it `camera_current` or `g_camera`, so the three names need reconciling in
+review.
+
 ### Blocker 10
 
 `movn`. An earlier note called it inaccessible; a 23 October 2026 measurement gives a source
@@ -350,6 +368,19 @@ relocations and ELF headers, agreed. The same input assembly and pinned binary
 executed through native Windows reproduced the existing canonical object.
 Use the qualified execution environment before proposing a new hash alternative;
 neither clearing metadata nor changing an existing pin is a valid shortcut.
+
+On 27 November 2026, on another Windows 11 host, a complete boot gate on master
+88320879b launched from a WSL session failed on `ps2fioCreatePartition` with the
+same set bit (`0x20E0` against `0x30E0` in its `.mdebug`). The `.s` input and the
+assembler hash were unchanged from a passing 26 November run. On this host the
+environment size alone did change the result. Assembling the same `.s` with about
+5 KB of Windows environment set the bit. Adding one padding variable of 1,000 or
+3,000 bytes cleared it, through `WSLENV` as well; 10 or 100 bytes did not. With the
+padding exported, the complete gate passed with every pinned `ps2eeas` boot hash.
+The output filename also mattered: a one-character name gave the canonical object
+where `ps2fioCreatePartition.o` did not. Both observations fit the
+uninitialized-read explanation above. The workaround is a host setting, not a
+change to inputs, pins or objects.
 
 ### Blocker 16
 
@@ -542,7 +573,7 @@ Four more bounded families (132, 100, 300 and 176 bytes) add **70 C sources,
 the measured data relocations and named `sqrtf` imports. Additional accepted
 wrappers now pass their consumed GPR and FPR arguments explicitly, without
 changing their pinned objects or linked retail bodies.
-The 884 linked boot C bodies cover 123,480 bytes including alignment. The profile
+The 936 linked boot C bodies cover 140,072 bytes including alignment. The profile
 files and their patches are the only place where a toolchain change is allowed
 to move a body.
 
