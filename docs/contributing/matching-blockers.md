@@ -2759,6 +2759,23 @@ complete-program gate or a qualification. The sources are in `nonmatching/boot/`
 - `PS2HEAP_Init` (first C attempt, 151 of 184): the loop and store schedule match.
   Four prologue registers are permuted, and the first four stores after the loop are
   in another order.
+- `writeTexPSMT4` (592 bytes, default route and `gnu-ee-trial`) is exact in the
+  style of its siblings. The block offset is computed after the width is halved.
+- `LOAD_CHARACTER_SkinGdeFile` (first attempt, 382 of 440): the control flow, the
+  frame and the calls match, but the nested-loop register allocation differs.
+- `SpiralSphere_Start` (first attempt, 246 of 364 under `gnu-ee-trial`). The compiler
+  output is instruction-identical apart from two `nop` that the GNU assembler puts
+  before the loop label: a coprocessor hazard after `mtc1` and the loop alignment.
+  Ps2EeAs removes those two but also another one that retail keeps (360 bytes).
+- `VRAM_RenderTo` (632 bytes, default route, `gnu-ee-trial` and divpad) is exact.
+  Each packet has its own cursor, and the header words are written in order. The VRAM
+  address is read through an `unsigned int` view of the target, which keeps the
+  global store ahead of the loads as in retail (an ordinary member read gives 477).
+  Review whether that access form is justified.
+- `RENDEREFFECT_Init` (first attempt, 564 of 588 bytes compiled). Every instruction
+  class matches, but retail hoists all four loop constants into saved float
+  registers, while this route hoists only two and reloads 17.0 and 0.1 on each
+  inner iteration.
 - `SYSTEM_BuildUploadVecs` is blocked like the DMA tags below: its first quadword
   is a 128-bit word-shift chain (46 of 184 bytes through a union).
 
